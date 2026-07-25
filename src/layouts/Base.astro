@@ -1,0 +1,123 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Optional extra JSON-LD objects, serialised into their own script tags. */
+  schema?: object[];
+}
+
+const { title, description, schema = [] } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const navItems = [
+  { href: '/how-it-works/', label: 'How it works' },
+  { href: '/pricing/', label: 'Pricing' },
+  { href: '/faq/', label: 'FAQ' },
+  { href: '/about/', label: 'About' },
+  { href: '/contact/', label: 'Contact' },
+];
+
+const currentPath = Astro.url.pathname;
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': new URL('/#organization', Astro.site).href,
+  name: 'Noven',
+  url: Astro.site?.href,
+  description:
+    'Noven helps service businesses get found and recommended when their customers ask AI assistants — ChatGPT, Google, Copilot and Perplexity — who to use.',
+  knowsAbout: [
+    'AI assistant visibility for businesses',
+    'How AI assistants recommend businesses',
+    'Structured business information',
+  ],
+};
+---
+
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical.href} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Noven" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.href} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,650;14..32,700&display=swap"
+    />
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    {schema.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="wordmark" href="/">Noven</a>
+        <nav class="site-nav" aria-label="Main">
+          {
+            navItems.map((item) => (
+              <a
+                href={item.href}
+                aria-current={
+                  currentPath === item.href || currentPath === item.href.replace(/\/$/, '')
+                    ? 'page'
+                    : undefined
+                }
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer-cols">
+          <div>
+            <a class="wordmark" href="/">Noven</a>
+            <p>
+              Helping service businesses get found when their customers ask AI assistants who to
+              use.
+            </p>
+          </div>
+          <div>
+            <ul class="footer-nav">
+              {navItems.map((item) => (
+                <li>
+                  <a href={item.href}>{item.label}</a>
+                </li>
+              ))}
+            </ul>
+            <p>
+              Start with the <a href="/pricing/">£30 audit</a> — an honest look at where you stand
+              today.
+            </p>
+          </div>
+        </div>
+        <p class="footer-small">
+          &copy; {new Date().getFullYear()} Noven. [PLACEHOLDER: registered company name, company
+          number and registered address.]
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

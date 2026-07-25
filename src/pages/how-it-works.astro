@@ -1,0 +1,150 @@
+---
+import Base from '../layouts/Base.astro';
+
+const title = 'How it works — Noven';
+const description =
+  'How Noven gets your business found by AI assistants: a £30 audit of where you stand, a one-off Foundation setup, and an ongoing monthly plan to keep you visible.';
+
+const howToSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'AI assistant visibility for service businesses',
+  serviceType: 'Business visibility in AI assistant recommendations',
+  provider: { '@id': new URL('/#organization', Astro.site).href },
+  areaServed: 'GB',
+  description:
+    'Noven audits how AI assistants such as ChatGPT, Google, Copilot and Perplexity currently answer questions about a business, fixes what is blocking the business from being found, and maintains that visibility month to month.',
+};
+---
+
+<Base title={title} description={description} schema={[howToSchema]}>
+  <section class="hero">
+    <div class="wrap">
+      <h1>How does Noven get you found?</h1>
+      <p class="lede">
+        Three stages, in order: find out where you stand, fix what's in the way, then keep you
+        visible as the AI systems change. Each stage only makes sense if the previous one says
+        it's worth doing.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <ol class="steps">
+        <li>
+          <span class="step-num" aria-hidden="true">1</span>
+          <div>
+            <h3>The audit — £30, one-off</h3>
+            <p>
+              We start by asking the major AI assistants the questions your customers would ask —
+              in your service area, in your specialism — and recording exactly what they say. We
+              check whether they know your business exists, what they believe about you, whether
+              it's accurate, and who they recommend instead of you.
+            </p>
+            <p>
+              Then we look at why. We check what the AI crawlers can and can't read on your
+              website, whether the basic facts about your business are consistent across the
+              places these systems draw from, and whether anything on your site answers the
+              questions being asked.
+            </p>
+            <p>
+              You get a short written report in plain English: where you show up today, what's
+              blocking you, and what we'd do about it. If you're already in good shape, the report
+              says so and we don't try to sell you the next stage.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num" aria-hidden="true">2</span>
+          <div>
+            <h3>The Foundation — £350, one-off</h3>
+            <p>
+              This is the setup work that makes your business readable and credible to AI
+              systems. Working on your existing website — we don't rebuild websites — the
+              Foundation typically covers:
+            </p>
+            <ul>
+              <li>
+                Making sure AI crawlers are allowed in and can read your pages as plain text, not
+                just as a rendered app.
+              </li>
+              <li>
+                Adding structured data: machine-readable statements of who you are, what you do,
+                where you operate and what you charge, in the format these systems are built to
+                consume.
+              </li>
+              <li>
+                Getting the basic facts about your business — name, services, location, contact
+                details — consistent everywhere they appear online.
+              </li>
+              <li>
+                Writing or restructuring key pages so they directly answer the questions your
+                customers ask, in language an assistant can quote.
+              </li>
+            </ul>
+            <p>
+              The exact scope comes from your audit, so you're never paying for work you don't
+              need.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num" aria-hidden="true">3</span>
+          <div>
+            <h3>Ongoing — from £75 a month</h3>
+            <p>
+              AI assistants re-crawl, re-rank and change their sources continually, so visibility
+              is something you maintain, not something you buy once. The monthly plans exist at
+              three levels of effort: <strong>Maintain</strong> keeps what the Foundation built
+              current and checks how you're showing up; <strong>Grow</strong> adds new
+              answer-focused content each month so you appear for more of your customers'
+              questions; <strong>Lead</strong> is for businesses that want to be the default
+              recommendation in their field. Details are on the
+              <a href="/pricing/">pricing page</a>.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section-tint">
+    <div class="wrap split">
+      <div>
+        <h2>What don't we do?</h2>
+      </div>
+      <div>
+        <p>
+          <strong>We don't guarantee recommendations.</strong> Nobody controls what an AI
+          assistant says, and anyone promising you a guaranteed spot in its answers is guessing
+          or lying. What we do is make sure everything these systems demonstrably rely on is in
+          place for your business — and show you, in plain before-and-after terms, how you're
+          showing up.
+        </p>
+        <p>
+          <strong>We don't build websites.</strong> The work happens on the site you already
+          have. If your site has problems beyond our scope, the audit will say so honestly.
+        </p>
+        <p>
+          <strong>We don't do lock-ins.</strong> The audit and Foundation are one-off payments.
+          Monthly plans roll month to month. [PLACEHOLDER: confirm cancellation notice period.]
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Ready to find out where you stand?</h2>
+      <p>
+        The audit costs £30 and tells you exactly where you appear today — including the awkward
+        finding that you might not need us.
+      </p>
+      <div class="cta-row">
+        <a class="btn" href="/contact/">Book the £30 audit</a>
+        <a href="/pricing/">See full pricing</a>
+      </div>
+    </div>
+  </section>
+</Base>
