@@ -41,5 +41,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-# [PLACEHOLDER] Update the domain below when the production domain is confirmed.
-Sitemap: https://www.noven.co.uk/sitemap-index.xml
+Sitemap: https://novenstudio.co.uk/sitemap-index.xml

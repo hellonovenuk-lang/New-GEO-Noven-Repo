@@ -1,9 +1,10 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// [PLACEHOLDER] Replace with the real production domain before launch,
-// then update the Sitemap line in public/robots.txt to match.
+// Production domain. If the Netlify primary domain is set to the www variant
+// instead, change this to match and update the Sitemap line in
+// public/robots.txt — the two must always agree.
 export default defineConfig({
-  site: 'https://www.noven.co.uk',
+  site: 'https://novenstudio.co.uk',
   integrations: [sitemap()],
 });

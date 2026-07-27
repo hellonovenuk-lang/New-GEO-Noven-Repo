@@ -21,13 +21,16 @@ pricing, FAQ, about, contact, 404), fully readable by AI crawlers, with
 machine-readable business facts and a sitemap. It builds clean and is ready to
 deploy the moment we have a domain.
 
-The contact email is live on the site, so a customer can now reach us.
+The site now carries real business facts throughout: contact email, the Wirral,
+Kieran Smith trading as a sole trader, no VAT, one working day for the audit,
+two working days to reply. The domain `novenstudio.co.uk` is confirmed and set.
 
-What doesn't exist yet: a live domain, a way to take payment, and a repeatable
-process for doing the audit we're selling.
+Three things are still missing: the founder bio, a cancellation notice period,
+and an address for service of documents.
 
-**Biggest remaining blocker:** the site isn't deployed anywhere, so nobody can
-read it. Domain and hosting is the next thing to clear.
+**Biggest remaining blocker:** the site isn't deployed, so nobody can read it.
+The domain currently serves the old website, so switching it over is the next
+real step — and the thing that makes Noven exist publicly.
 
 ---
 
@@ -40,23 +43,44 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
 
 - [x] **Contact email address** — `hello.noven.uk@gmail.com`, live on the
       contact page and in the site's machine-readable business facts
-- [ ] Phone number, or a decision that we don't offer one
-- [ ] Reply time we're willing to promise (e.g. "within one working day")
-- [ ] Location — "based in ___, working across the UK"
-- [ ] Founder name and short bio for the About page (photo optional)
-- [ ] Registered company name, company number, registered address (footer)
-- [ ] Whether prices include VAT
-- [ ] Cancellation notice period for monthly plans (appears in three places)
-- [ ] Audit turnaround time — how long from payment to report
-- [ ] Typical Foundation delivery time
+- [x] Phone number — we don't offer one. Email only, and the contact page and
+      FAQ now say why rather than leaving it looking like an omission.
+- [x] Reply time — within two working days
+- [x] Location — the Wirral, working with clients across the UK, remotely
+- [x] Founder name — Kieran Smith, sole trader trading as Noven
+- [x] Business identity for the footer — sole trader, so no company number
+- [x] VAT — not registered, so no VAT to add. Stated on the pricing page.
+- [x] Audit turnaround — one working day from confirming scope and payment
+- [x] Foundation delivery — we reply within two working days with a plan and a
+      date; the work itself depends on client access and information
+- [ ] **Founder bio** — still a placeholder on the About page. Two or three
+      sentences on background and what led to Noven. This is the one a
+      cautious buyer reads hardest, so it's worth doing properly.
+- [ ] **Cancellation notice period** for monthly plans (appears in three
+      places: pricing, FAQ, how it works)
+- [ ] **Address for service of documents.** Trading under a business name as a
+      sole trader carries a legal disclosure requirement to show your name and
+      an address where documents can be served, including on the website. A
+      home address is uncomfortable; the usual answers are a virtual office
+      address or a PO box style service. Worth 20 minutes of checking before
+      launch — it's the only outstanding item with a legal edge to it.
 
 ### 1b. Domain and hosting
 
-- [ ] Confirm and buy the domain (site currently assumes `noven.co.uk` — unconfirmed)
-- [ ] Update the domain in `site/astro.config.mjs` and `site/public/robots.txt`
-- [ ] Connect the repo to Netlify (`netlify.toml` is already set up correctly)
-- [ ] Point DNS, confirm HTTPS works
-- [ ] Set up the business email address on the domain
+- [x] Domain confirmed and owned — `novenstudio.co.uk`
+- [x] Domain set in `site/astro.config.mjs` and `site/public/robots.txt`
+- [ ] **Decide apex vs www.** Both files currently use the bare
+      `novenstudio.co.uk`. Whichever one Netlify treats as primary, the two
+      files must match it, or the canonical links and sitemap point at the
+      redirecting version.
+- [ ] **Point Netlify at this repo — note the old site is currently live on
+      this domain.** Deploying replaces it. Worth loading the new site on a
+      Netlify preview URL first and reading it end to end before switching.
+- [ ] Confirm HTTPS works after the switch
+- [ ] Decide whether to keep any URLs from the old site alive, and redirect
+      them in `netlify.toml` if so — otherwise anything linking to the old
+      site starts hitting a 404
+- [ ] Consider a `hello@novenstudio.co.uk` address to replace the Gmail one
 
 ### 1c. Taking money
 
@@ -71,9 +95,12 @@ The site says payment is arranged "by reply". Decide the actual mechanism:
 
 ### 1d. Legal basics
 
+- [x] Sole trader vs limited company — sole trader to begin with
 - [ ] Privacy notice page — we'll be handling client business data and email
 - [ ] Terms of service, or a short plain-English version of what we promise
-- [ ] Decide sole trader vs limited company (the footer text depends on it)
+- [ ] Register as self-employed with HMRC if not already done
+- [ ] Keep an eye on the VAT threshold as revenue grows — not a launch concern,
+      but the pricing page states we aren't registered, so it has to stay true
 
 ### 1e. Launch checks
 
@@ -223,10 +250,9 @@ monthly plan gets something real every month.
 
 Written down rather than guessed at. Answer them as they become relevant.
 
-- Is `noven.co.uk` the domain, and do we own it?
-- Sole trader or limited company?
-- Are we VAT registered?
-- Which trade and which area do we go after first?
+- Which trade and which area do we go after first? Being in the Wirral gives us
+  a credible local answer — "accountants in the Wirral" or similar — and a
+  local first client is far easier to get than a cold national one.
 - How much time per week is there for delivery? This caps everything.
 - Is there any existing contact who could be client number one?
 
@@ -240,13 +266,19 @@ what's next. Newest at the top.
 ### 2026-07-27
 - Reviewed the whole repo and confirmed the site builds clean (7 pages + sitemap).
 - Wrote this roadmap.
-- Added the contact email `hello.noven.uk@gmail.com` to the contact page and to
-  the site's machine-readable business facts. The site can now take an enquiry.
-- **State:** website content is done and contactable; launch is blocked on a
-  confirmed domain, a way to take payment, and a repeatable audit process.
-  Nine owner facts still outstanding in Phase 1a.
-- **Next session:** confirm the domain and deploy, and collect the remaining
-  Phase 1a facts.
+- Filled in almost all of Phase 1a from real owner facts: contact email, no
+  phone (with the reason stated rather than the gap left showing), two working
+  day reply, the Wirral, Kieran Smith as sole trader, not VAT registered, one
+  working day audit turnaround, Foundation timing framed honestly around client
+  access. Domain set to `novenstudio.co.uk` in the config and robots file.
+- Added a "Who will I actually be dealing with?" FAQ. A one-person business is
+  an advantage with this buyer if we say it plainly, and a worry if we hide it.
+- Added the founder to the site's machine-readable business facts.
+- **State:** the site reads as a real business now rather than a template.
+  Three facts outstanding — founder bio, cancellation notice, address for
+  service. Nothing else blocks deployment.
+- **Next session:** deploy to Netlify on a preview URL, read it end to end,
+  then switch the domain over from the old site.
 - **Worth deciding soon:** a Gmail address works to launch, but an address on
   the Noven domain reads as more established to the businesses we're
   approaching — and we sell consistent, credible business information.
