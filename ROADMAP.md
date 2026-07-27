@@ -102,8 +102,39 @@ The site says payment is arranged "by reply". Decide the actual mechanism:
 - [ ] Keep an eye on the VAT threshold as revenue grows — not a launch concern,
       but the pricing page states we aren't registered, so it has to stay true
 
+### 1d-2. Brand assets — found during the demo deploy check
+
+The committed logo (`assets/logo.svg`) is a 1920×1920 tile: a cream `#FAF7EF`
+square with the wordmark "Noven." centred in indigo `#241F7C`. **It is not used
+on the website at all** — it was never copied into `site/public/`, so it isn't
+even deployed.
+
+Instead the header, the footer and the favicon all set the word "Noven" in
+Inter. That's retyping the logo, which the standing rules in `CLAUDE.md`
+specifically forbid. The site palette also doesn't match the real brand: the
+accent is `#1c4d99` against the brand's `#241F7C`, and the page tint is
+`#f7f6f3` against the brand's `#FAF7EF`. Close but not equal, which reads worse
+than either matching properly or being plainly different.
+
+- [ ] **Get a wordmark-only logo file** — horizontal, transparent or cream
+      background, trimmed to the lettering. The square tile can't go in a site
+      header: at header height the lettering would be unreadable.
+- [ ] **Get a monogram or icon version for the favicon** — the square tile
+      renders as an illegible smudge at 16px, because the lettering is only
+      about 15% of the tile's height.
+- [ ] Copy the supplied assets into `site/public/` so they actually deploy
+- [ ] Replace the retyped header and footer wordmark with the real asset
+- [ ] Replace the retyped "N" favicon with the real asset
+- [ ] Align the site palette to the brand indigo and cream
+
+Until there are proper assets, nothing here should be guessed at — cropping the
+tile to fake a wordmark is still altering the logo.
+
 ### 1e. Launch checks
 
+- [x] Verified what the build actually publishes: 6 pages plus a 404, every
+      canonical URL correct, all JSON-LD parses as valid, the sitemap lists the
+      right 6 URLs, robots.txt ships. No technical faults found.
 - [ ] Read every page top to bottom with fresh eyes, out loud
 - [ ] Check the site on a phone
 - [ ] Submit the sitemap to Google Search Console and Bing Webmaster Tools
@@ -262,6 +293,18 @@ Written down rather than guessed at. Answer them as they become relevant.
 
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
+
+### 2026-07-27 (later — demo deploy)
+- Netlify linked to the repo, publishing `main` to a demo URL.
+- Checked the built output rather than trusting the build: canonicals, JSON-LD,
+  sitemap and robots.txt are all correct. No technical faults.
+- **Found:** the committed logo isn't on the site at all, and the header,
+  footer and favicon retype the wordmark in Inter — against the standing brand
+  rule. The palette also doesn't match the brand indigo and cream. Logged in
+  section 1d-2. Needs proper assets from the owner before it can be fixed.
+- Note: every page on the demo declares its canonical as `novenstudio.co.uk`,
+  which currently serves the old site. That's correct for the final state and
+  stops the demo being indexed as a duplicate — but don't be surprised by it.
 
 ### 2026-07-27
 - Reviewed the whole repo and confirmed the site builds clean (7 pages + sitemap).
