@@ -184,31 +184,6 @@ em {
   background: color-mix(in srgb, var(--navy) 16%, transparent);
 }
 
-/* A quiet marker for a small piece of metadata. Sentence case, never caps —
-   caps eyebrows are the house style of every generated page on the internet. */
-.tag {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.01em;
-  color: var(--ink-faint);
-  display: flex;
-  align-items: center;
-  gap: var(--s2);
-  margin: 0 0 var(--s4);
-  max-width: none;
-}
-
-.tag::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--rule);
-}
-
-.tag--brass {
-  color: var(--brass);
-}
-
 /* ---------------------------------------------------------------- 4 layout */
 
 .wrap {
@@ -863,14 +838,6 @@ li a:hover {
 
 .section--invert strong {
   color: var(--inv-text);
-}
-
-.section--invert .tag {
-  color: var(--inv-faint);
-}
-
-.section--invert .tag::after {
-  background: var(--inv-rule);
 }
 
 .section--invert a {

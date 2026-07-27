@@ -106,40 +106,40 @@ const priceRecord = plans.map((p) => ({
         </div>
 
         <ul class="levels">
-              <li class="level">
-                <span class="level-name">Maintain</span>
-                <p>
-                  Keeps what the Foundation built working: your information stays current and
-                  consistent, we monitor how the assistants answer questions about you, and we fix
-                  things when they drift.
-                </p>
-                <span class="level-price">{money(monthlies[0].price)} /month</span>
-              </li>
-              <li class="level">
-                <span class="level-name">Grow</span>
-                <p>
-                  Everything in Maintain, plus new answer-focused content each month, so over time
-                  you show up for more of the questions your customers actually ask — more
-                  specialisms, more locations, more situations.
-                </p>
-                <span class="level-price">{money(monthlies[1].price)} /month</span>
-              </li>
-              <li class="level">
-                <span class="level-name">Lead</span>
-                <p>
-                  For businesses that want to be the default recommendation in their field.
-                  Everything in Grow at a faster pace and broader coverage, plus a quarterly written
-                  review of where you stand against the competitors the assistants name.
-                </p>
-                <span class="level-price">{money(monthlies[2].price)} /month</span>
-              </li>
-            </ul>
+          <li class="level">
+            <span class="level-name">Maintain</span>
+            <p>
+              Keeps what the Foundation built working: your information stays current and
+              consistent, we monitor how the assistants answer questions about you, and we fix
+              things when they drift.
+            </p>
+            <span class="level-price">{money(monthlies[0].price)} /month</span>
+          </li>
+          <li class="level">
+            <span class="level-name">Grow</span>
+            <p>
+              Everything in Maintain, plus new answer-focused content each month, so over time you
+              show up for more of the questions your customers actually ask — more specialisms,
+              more locations, more situations.
+            </p>
+            <span class="level-price">{money(monthlies[1].price)} /month</span>
+          </li>
+          <li class="level">
+            <span class="level-name">Lead</span>
+            <p>
+              For businesses that want to be the default recommendation in their field. Everything
+              in Grow at a faster pace and broader coverage, plus a quarterly written review of
+              where you stand against the competitors the assistants name.
+            </p>
+            <span class="level-price">{money(monthlies[2].price)} /month</span>
+          </li>
+        </ul>
       </div>
 
       <div class="price-block" data-reveal>
         <div class="price-grid">
           <div class="price-head">
-            <p class="tag">The same list, in machine form</p>
+            <h2>The same list, in machine form</h2>
           </div>
           <div>
             <p>
@@ -163,7 +163,6 @@ const priceRecord = plans.map((p) => ({
   <section class="section section--invert">
     <div class="wrap split">
       <div data-reveal>
-        <p class="tag">The obvious question</p>
         <h2>Why is the audit only {money(audit.price)}?</h2>
       </div>
       <div data-reveal>
