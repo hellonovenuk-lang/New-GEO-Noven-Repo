@@ -14,6 +14,13 @@ explicitly overrides them.
 - Credibility over design flair. The site must never look AI-generated.
   Specifically banned: all-caps eyebrow tags, symmetric three-column feature
   rows, glowing gradients, buzzwords, and repeated calls-to-action.
+- Use the `frontend-design` skill for distinctive visual design guidance when
+  reshaping UI or building new pages. It helps with aesthetic direction,
+  typography, and intentional design choices.
+- Use the `ui-ux-pro-max` skill when designing or reviewing any UI elements:
+  pages, components, color schemes, typography, layout, accessibility, or
+  animations. It provides design intelligence with 192 color palettes, 74 font
+  pairings, 98 UX guidelines, and best practices across modern web stacks.
 
 ## Facts
 
