@@ -127,30 +127,41 @@ brand is a heavier geometric sans in the new colours. Different artwork, not a
 recolour, so the old files must be replaced rather than tinted, and nothing can
 be rebuilt from their vectors.
 
-Five assets were sent as chat attachments, which don't reach the filesystem, so
-they still need delivering as files — committed to the repo directly, or pasted
-as SVG source.
+Six SVGs were supplied and are now in the repo. All are true vector paths —
+no embedded raster, no live text, no font dependencies — so they stay sharp at
+any size and work as static files.
 
-Review of the five:
+**Originals live untouched in `assets/brand/`.** The web copies in
+`site/public/` differ only in their `viewBox`, trimmed to the artwork's own
+bounds. No path data was altered, so the letterforms are exactly as drawn.
 
-| Asset | Verdict |
-|---|---|
-| 1. Primary logo, light | Lettering is ~15% of the tile height. Needs a trimmed horizontal version for the header. |
-| 2. Favicon mark "N." | Too much padding, and navy on transparent disappears in a dark browser tab. Use asset 4 instead. |
-| 3. Logo on dark | Fine if genuinely transparent; unusable if the white background is baked in. Needs trimming too. |
-| 4. Circle avatar | Strongest of the set. Fills its frame, high contrast. Use for the favicon as well as social. |
-| 5. Email banner | Right ~45% is empty, so it reads unbalanced. "AI Visibility Services" also breaks the language rule — see below. |
+Measured content, as a share of each original's frame:
 
-- [ ] **Wordmark trimmed to the lettering, transparent, SVG** — header/footer
-- [ ] **Circle mark as SVG** — favicon
-- [ ] **White wordmark trimmed, transparent, SVG** — for any dark section
-- [ ] Confirm assets 1 and 3 are transparent, not white-backed
-- [ ] Replace `assets/logo.svg` and `assets/logo.png` with the new mark
-- [ ] Copy the assets into `site/public/` so they actually deploy
-- [ ] Replace the retyped header and footer wordmark with the real asset
-- [ ] Replace the retyped "N" favicon with the real asset
-- [ ] Move `--accent` and `--paper-tint` in `global.css` to `#170969`/`#fffefa`
-- [ ] Check the logo in the header on a phone as well as desktop
+| Asset | Filled | Outcome |
+|---|---|---|
+| Logo Primary | 71% × 16% | Trimmed → `site/public/logo.svg`, header and footer |
+| Logo Dark | 80% × 16% | Trimmed → `site/public/logo-dark.svg`, held for future dark use |
+| Social Avatar | 60% × 60% | Trimmed → `site/public/favicon.svg` |
+| Favicon | 40% × 29% | **Not used** — too much padding, and navy on transparent vanishes in a dark browser tab |
+| Email Banner | 51% × 40% | Not a website asset. See the language flag below. |
+| Brand Pattern | 92% × 91% | Not used yet |
+
+- [x] Wordmark in the header and footer, replacing the retyped Inter text
+- [x] Favicon replaced with the circle mark — verified legible at 16px and
+      32px against both light and dark browser chrome
+- [x] `assets/logo.svg` and `assets/logo.png` replaced; they were the old mark
+- [x] Palette moved to the brand: `--accent` `#170969`, `--paper` `#fffefa`
+- [x] Logo added to the site's machine-readable business facts
+- [x] Contrast checked — every text pair passes WCAG AA, most AAA
+- [x] Checked on desktop and at phone width
+
+**The brand is two colours and nothing else.** Every asset uses only `#170969`
+and `#fffefa`; the lighter tones in the banner and pattern are those same two
+at reduced opacity. The site palette now follows that, so the section tint and
+rules are the only derived values.
+
+**The supplied "Favicon" asset is the one thing I'd not use.** The circle
+avatar does the job better at every size. Worth knowing if it's used elsewhere.
 
 **Language flag on the email banner.** It reads "AI Visibility Services", which
 is category jargon — the words a competitor uses, not the words a customer
@@ -322,6 +333,18 @@ Written down rather than guessed at. Answer them as they become relevant.
 
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
+
+### 2026-07-27 (later still — brand assets)
+- Brand assets supplied as SVG and packaged. Originals kept untouched in
+  `assets/brand/`; web copies trimmed to the artwork and wired into the header,
+  footer and favicon. Palette moved to the brand navy and warm white.
+- The site no longer retypes the logo anywhere, so it's back inside the
+  standing rules.
+- Two things for the owner: the supplied "Favicon" asset isn't the right one to
+  use anywhere small, and the email banner's "AI Visibility Services" line
+  still needs rewording.
+- **Next session:** merge to `main` so the demo picks it up, then the founder
+  bio and the cancellation notice period.
 
 ### 2026-07-27 (later — demo deploy)
 - Netlify linked to the repo, publishing `main` to a demo URL.

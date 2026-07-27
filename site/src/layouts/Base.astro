@@ -28,6 +28,7 @@ const organizationSchema = {
   '@id': new URL('/#organization', Astro.site).href,
   name: 'Noven',
   url: Astro.site?.href,
+  logo: new URL('/logo.svg', Astro.site).href,
   email: 'hello.noven.uk@gmail.com',
   contactPoint: {
     '@type': 'ContactPoint',
@@ -77,7 +78,9 @@ const organizationSchema = {
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="wrap">
-        <a class="wordmark" href="/">Noven</a>
+        <a class="wordmark" href="/">
+          <img src="/logo.svg" alt="Noven" width="1066" height="236" />
+        </a>
         <nav class="site-nav" aria-label="Main">
           {
             navItems.map((item) => (
@@ -105,7 +108,9 @@ const organizationSchema = {
       <div class="wrap">
         <div class="footer-cols">
           <div>
-            <a class="wordmark" href="/">Noven</a>
+            <a class="wordmark" href="/">
+              <img src="/logo.svg" alt="Noven" width="1066" height="236" />
+            </a>
             <p>
               Helping service businesses get found when their customers ask AI assistants who to
               use.
