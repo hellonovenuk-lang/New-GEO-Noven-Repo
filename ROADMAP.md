@@ -117,27 +117,47 @@ accent is `#1c4d99` against the brand's `#241F7C`, and the page tint is
 than either matching properly or being plainly different.
 
 **Decided:** the owner is supplying the real brand assets and the site palette
-will be matched to them. Nothing here gets guessed at or derived in the
-meantime — cropping the tile to fake a wordmark is still altering the logo.
+will be matched to them. Nothing here gets guessed at or derived.
 
-Waiting on from the owner:
+**Confirmed brand colours:** deep navy `#170969`, warm white `#fffefa`.
 
-- [ ] **A wordmark-only logo file** — horizontal, trimmed to the lettering,
-      transparent background. The square tile can't go in a site header: at
-      header height the lettering would be unreadable.
-- [ ] **A monogram or icon for the favicon** — the square tile renders as an
-      illegible smudge at 16px, because the lettering is only about 15% of the
-      tile's height.
-- [ ] **The brand colour values**, so the palette matches rather than
-      approximates.
+**The committed logo is out of date.** `assets/logo.svg` and `assets/logo.png`
+are the *old* mark — a neutral grotesque in `#241F7C` on `#FAF7EF`. The new
+brand is a heavier geometric sans in the new colours. Different artwork, not a
+recolour, so the old files must be replaced rather than tinted, and nothing can
+be rebuilt from their vectors.
 
-Then:
+Five assets were sent as chat attachments, which don't reach the filesystem, so
+they still need delivering as files — committed to the repo directly, or pasted
+as SVG source.
 
-- [ ] Copy the supplied assets into `site/public/` so they actually deploy
+Review of the five:
+
+| Asset | Verdict |
+|---|---|
+| 1. Primary logo, light | Lettering is ~15% of the tile height. Needs a trimmed horizontal version for the header. |
+| 2. Favicon mark "N." | Too much padding, and navy on transparent disappears in a dark browser tab. Use asset 4 instead. |
+| 3. Logo on dark | Fine if genuinely transparent; unusable if the white background is baked in. Needs trimming too. |
+| 4. Circle avatar | Strongest of the set. Fills its frame, high contrast. Use for the favicon as well as social. |
+| 5. Email banner | Right ~45% is empty, so it reads unbalanced. "AI Visibility Services" also breaks the language rule — see below. |
+
+- [ ] **Wordmark trimmed to the lettering, transparent, SVG** — header/footer
+- [ ] **Circle mark as SVG** — favicon
+- [ ] **White wordmark trimmed, transparent, SVG** — for any dark section
+- [ ] Confirm assets 1 and 3 are transparent, not white-backed
+- [ ] Replace `assets/logo.svg` and `assets/logo.png` with the new mark
+- [ ] Copy the assets into `site/public/` so they actually deploy
 - [ ] Replace the retyped header and footer wordmark with the real asset
 - [ ] Replace the retyped "N" favicon with the real asset
-- [ ] Move `--accent` and `--paper-tint` in `global.css` to the brand values
-- [ ] Check the logo against the header on a phone as well as a desktop
+- [ ] Move `--accent` and `--paper-tint` in `global.css` to `#170969`/`#fffefa`
+- [ ] Check the logo in the header on a phone as well as desktop
+
+**Language flag on the email banner.** It reads "AI Visibility Services", which
+is category jargon — the words a competitor uses, not the words a customer
+uses. The standing rules ban search-industry jargon, and the whole site
+deliberately avoids it: the homepage says "when your customers ask an AI who to
+use, the answer should include you." The banner should say something in that
+voice instead, or the first impression contradicts every page it links to.
 
 ### 1e. Launch checks
 
