@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.svg" alt="Noven logo" width="400">
+</p>
+
 # Noven
 
 Noven helps businesses get found by AI assistants.
