@@ -102,8 +102,79 @@ The site says payment is arranged "by reply". Decide the actual mechanism:
 - [ ] Keep an eye on the VAT threshold as revenue grows — not a launch concern,
       but the pricing page states we aren't registered, so it has to stay true
 
+### 1d-2. Brand assets — found during the demo deploy check
+
+The committed logo (`assets/logo.svg`) is a 1920×1920 tile: a cream `#FAF7EF`
+square with the wordmark "Noven." centred in indigo `#241F7C`. **It is not used
+on the website at all** — it was never copied into `site/public/`, so it isn't
+even deployed.
+
+Instead the header, the footer and the favicon all set the word "Noven" in
+Inter. That's retyping the logo, which the standing rules in `CLAUDE.md`
+specifically forbid. The site palette also doesn't match the real brand: the
+accent is `#1c4d99` against the brand's `#241F7C`, and the page tint is
+`#f7f6f3` against the brand's `#FAF7EF`. Close but not equal, which reads worse
+than either matching properly or being plainly different.
+
+**Decided:** the owner is supplying the real brand assets and the site palette
+will be matched to them. Nothing here gets guessed at or derived.
+
+**Confirmed brand colours:** deep navy `#170969`, warm white `#fffefa`.
+
+**The committed logo is out of date.** `assets/logo.svg` and `assets/logo.png`
+are the *old* mark — a neutral grotesque in `#241F7C` on `#FAF7EF`. The new
+brand is a heavier geometric sans in the new colours. Different artwork, not a
+recolour, so the old files must be replaced rather than tinted, and nothing can
+be rebuilt from their vectors.
+
+Six SVGs were supplied and are now in the repo. All are true vector paths —
+no embedded raster, no live text, no font dependencies — so they stay sharp at
+any size and work as static files.
+
+**Originals live untouched in `assets/brand/`.** The web copies in
+`site/public/` differ only in their `viewBox`, trimmed to the artwork's own
+bounds. No path data was altered, so the letterforms are exactly as drawn.
+
+Measured content, as a share of each original's frame:
+
+| Asset | Filled | Outcome |
+|---|---|---|
+| Logo Primary | 71% × 16% | Trimmed → `site/public/logo.svg`, header and footer |
+| Logo Dark | 80% × 16% | Trimmed → `site/public/logo-dark.svg`, held for future dark use |
+| Social Avatar | 60% × 60% | Trimmed → `site/public/favicon.svg` |
+| Favicon | 40% × 29% | **Not used** — too much padding, and navy on transparent vanishes in a dark browser tab |
+| Email Banner | 51% × 40% | Not a website asset. See the language flag below. |
+| Brand Pattern | 92% × 91% | Not used yet |
+
+- [x] Wordmark in the header and footer, replacing the retyped Inter text
+- [x] Favicon replaced with the circle mark — verified legible at 16px and
+      32px against both light and dark browser chrome
+- [x] `assets/logo.svg` and `assets/logo.png` replaced; they were the old mark
+- [x] Palette moved to the brand: `--accent` `#170969`, `--paper` `#fffefa`
+- [x] Logo added to the site's machine-readable business facts
+- [x] Contrast checked — every text pair passes WCAG AA, most AAA
+- [x] Checked on desktop and at phone width
+
+**The brand is two colours and nothing else.** Every asset uses only `#170969`
+and `#fffefa`; the lighter tones in the banner and pattern are those same two
+at reduced opacity. The site palette now follows that, so the section tint and
+rules are the only derived values.
+
+**The supplied "Favicon" asset is the one thing I'd not use.** The circle
+avatar does the job better at every size. Worth knowing if it's used elsewhere.
+
+**Language flag on the email banner.** It reads "AI Visibility Services", which
+is category jargon — the words a competitor uses, not the words a customer
+uses. The standing rules ban search-industry jargon, and the whole site
+deliberately avoids it: the homepage says "when your customers ask an AI who to
+use, the answer should include you." The banner should say something in that
+voice instead, or the first impression contradicts every page it links to.
+
 ### 1e. Launch checks
 
+- [x] Verified what the build actually publishes: 6 pages plus a 404, every
+      canonical URL correct, all JSON-LD parses as valid, the sitemap lists the
+      right 6 URLs, robots.txt ships. No technical faults found.
 - [ ] Read every page top to bottom with fresh eyes, out loud
 - [ ] Check the site on a phone
 - [ ] Submit the sitemap to Google Search Console and Bing Webmaster Tools
@@ -262,6 +333,30 @@ Written down rather than guessed at. Answer them as they become relevant.
 
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
+
+### 2026-07-27 (later still — brand assets)
+- Brand assets supplied as SVG and packaged. Originals kept untouched in
+  `assets/brand/`; web copies trimmed to the artwork and wired into the header,
+  footer and favicon. Palette moved to the brand navy and warm white.
+- The site no longer retypes the logo anywhere, so it's back inside the
+  standing rules.
+- Two things for the owner: the supplied "Favicon" asset isn't the right one to
+  use anywhere small, and the email banner's "AI Visibility Services" line
+  still needs rewording.
+- **Next session:** merge to `main` so the demo picks it up, then the founder
+  bio and the cancellation notice period.
+
+### 2026-07-27 (later — demo deploy)
+- Netlify linked to the repo, publishing `main` to a demo URL.
+- Checked the built output rather than trusting the build: canonicals, JSON-LD,
+  sitemap and robots.txt are all correct. No technical faults.
+- **Found:** the committed logo isn't on the site at all, and the header,
+  footer and favicon retype the wordmark in Inter — against the standing brand
+  rule. The palette also doesn't match the brand indigo and cream. Logged in
+  section 1d-2. Needs proper assets from the owner before it can be fixed.
+- Note: every page on the demo declares its canonical as `novenstudio.co.uk`,
+  which currently serves the old site. That's correct for the final state and
+  stops the demo being indexed as a duplicate — but don't be surprised by it.
 
 ### 2026-07-27
 - Reviewed the whole repo and confirmed the site builds clean (7 pages + sitemap).
