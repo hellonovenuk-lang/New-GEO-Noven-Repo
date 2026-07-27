@@ -1,0 +1,396 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face {
+    font-family: 'IBM Plex Mono';
+    src: url('fonts/IBMPlexMono-400.woff2') format('woff2');
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: 'IBM Plex Mono';
+    src: url('fonts/IBMPlexMono-500.woff2') format('woff2');
+    font-weight: 500;
+  }
+  @font-face {
+    font-family: 'IBM Plex Sans';
+    src: url('fonts/IBMPlexSans-400.woff2') format('woff2');
+    font-weight: 100 900;
+  }
+
+  :root {
+    --ink: #16161d;
+    --ink-faint: #6a6f7c;
+    --paper: #fffefa;
+    --paper-2: #f7f5ef;
+    --rule: #e2dfd6;
+    --rule-soft: #ece9e1;
+    --navy: #170969;
+    --navy-deep: #0c0438;
+    --brass: #8a6a28;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { width: 540px; height: 540px; }
+  body {
+    background: var(--paper);
+    font-family: var(--sans);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .stage { position: absolute; inset: 0; padding: 26px; }
+
+  .caption {
+    font-size: 11px;
+    line-height: 14px;
+    color: var(--ink-faint);
+    letter-spacing: 0.01em;
+  }
+
+  /* ---- chat panel ---- */
+  .chat {
+    margin-top: 10px;
+    height: 52px;
+    border: 1.5px solid var(--rule);
+    border-radius: 3px;
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    padding: 0 9px 0 14px;
+    gap: 10px;
+  }
+  .q {
+    flex: 1;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+  .cursor {
+    display: inline-block;
+    width: 7px;
+    height: 15px;
+    background: var(--navy);
+    margin-left: 1px;
+    flex: none;
+  }
+  .cursor.off { visibility: hidden; }
+  .send {
+    width: 34px;
+    height: 34px;
+    border-radius: 3px;
+    background: var(--navy);
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .send.pressed { background: var(--navy-deep); }
+
+  /* ---- connector ---- */
+  .connector {
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .connector .dots { display: flex; gap: 7px; }
+  .connector .dots i {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--rule);
+  }
+  .connector.live .dots i { background: var(--brass); }
+
+  /* ---- cards ---- */
+  .cards-wrap { margin-top: 6px; }
+  .cards {
+    margin-top: 30px;
+    height: 168px;             /* 140 card + headroom for winner scale */
+    position: relative;
+  }
+  .card {
+    position: absolute;
+    top: 14px;
+    width: 100px;
+    height: 140px;
+    border: 1.5px solid var(--rule);
+    border-radius: 3px;
+    background: var(--paper);
+    padding: 10px;
+    opacity: 1;
+  }
+  .card.winner-lift { border-color: var(--navy); border-width: 2px; padding: 9.5px; }
+  .site-head { display: flex; align-items: center; gap: 5px; margin-bottom: 9px; }
+  .site-head i {
+    width: 7px; height: 7px; border-radius: 50%;
+    border: 1.5px solid var(--rule); background: var(--paper-2);
+  }
+  .site-head b { height: 4px; border-radius: 2px; background: var(--rule); width: 42px; }
+  .greek { height: 4px; border-radius: 2px; background: var(--rule-soft); margin-bottom: 6px; }
+  .divider { border-top: 1.5px dashed var(--rule); margin: 9px -10px 9px; }
+  .card.winner-lift .divider { margin: 9px -9.5px 9px; }
+  .machine { position: relative; height: 56px; }
+  .machine .row { height: 4px; border-radius: 2px; background: var(--navy); opacity: .82; margin-bottom: 6px; }
+  .machine .stub { height: 4px; border-radius: 2px; background: var(--rule); width: 20px; margin-bottom: 8px; }
+  .machine .empty {
+    width: 56px; height: 26px;
+    border: 1.5px dashed var(--rule);
+    border-radius: 3px;
+  }
+  .check {
+    position: absolute;
+    right: -2px; bottom: -2px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--brass);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ---- answer ---- */
+  .answer { margin-top: 20px; }
+  .rows { margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }
+  .row-slot {
+    height: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .rank {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--rule); flex: none;
+  }
+  .slot-bar {
+    position: relative;
+    flex: 1;
+    height: 16px;
+    border: 1.5px dashed var(--rule);
+    border-radius: 3px;
+  }
+  .fill {
+    position: absolute;
+    left: -1.5px; top: -1.5px;
+    height: 16px;
+    border-radius: 3px;
+    width: 0;
+  }
+  .fill.first { background: var(--navy); }
+  .fill.rest { background: var(--rule); }
+  .row-check {
+    position: absolute;
+    top: 0px;
+    width: 15px; height: 15px; border-radius: 50%;
+    background: var(--brass);
+    display: none;
+    align-items: center; justify-content: center;
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="caption">Someone asks an AI assistant</div>
+
+  <div class="chat">
+    <div class="q"><span id="qtext"></span><span class="cursor" id="cursor"></span></div>
+    <div class="send" id="send">
+      <svg width="13" height="10" viewBox="0 0 14 10" fill="none">
+        <path d="M9 1l4 4-4 4M13 5H1" stroke="#fffefa" stroke-width="1.5" stroke-linecap="square"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="connector" id="connector"><div class="dots"><i></i><i></i><i></i></div></div>
+
+  <div class="cards-wrap">
+    <div class="caption" id="cards-cap" style="opacity:0">It reads what each business&rsquo;s website says about them</div>
+    <div class="cards" id="cards"></div>
+  </div>
+
+  <div class="answer">
+    <div class="caption" id="ans-cap" style="opacity:0">The names it gives back</div>
+    <div class="rows" id="rows"></div>
+  </div>
+</div>
+
+<script>
+const QUESTION = "Who’s a good commercial solicitor near Manchester?";
+const N = QUESTION.length;
+
+// ---- build cards ----
+// Winner is index 1. Others have sparse machine zones.
+const CARD_X = [49, 163, 277, 391]; // left positions, 100 wide + 14 gap, centred in 540
+const cardsEl = document.getElementById('cards');
+const cardEls = [];
+for (let j = 0; j < 4; j++) {
+  const winner = j === 1;
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.style.left = CARD_X[j] + 'px';
+  let machine;
+  if (winner) {
+    machine = `<div class="machine">
+      <div class="row" style="width:72px"></div>
+      <div class="row" style="width:54px"></div>
+      <div class="row" style="width:63px"></div>
+      <div class="row" style="width:40px"></div>
+      <div class="check"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#fffefa" stroke-width="1.6" stroke-linecap="square"/></svg></div>
+    </div>`;
+  } else {
+    const stub = [26, 18, 30][j > 1 ? j - 2 : 0];
+    machine = `<div class="machine">
+      <div class="stub" style="width:${stub}px"></div>
+      <div class="empty"></div>
+    </div>`;
+  }
+  const g1 = [64, 70, 58, 66][j], g2 = [44, 52, 48, 38][j];
+  el.innerHTML = `
+    <div class="site-head"><i></i><b></b></div>
+    <div class="greek" style="width:${g1}px"></div>
+    <div class="greek" style="width:${g2}px"></div>
+    <div class="divider"></div>
+    ${machine}`;
+  cardsEl.appendChild(el);
+  cardEls.push(el);
+}
+
+// ---- build answer rows ----
+const rowsEl = document.getElementById('rows');
+const fills = [], checks = [];
+for (let r = 0; r < 3; r++) {
+  const slot = document.createElement('div');
+  slot.className = 'row-slot';
+  slot.innerHTML = `<span class="rank"></span>
+    <span class="slot-bar">
+      <span class="fill ${r === 0 ? 'first' : 'rest'}"></span>
+      <span class="row-check"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#fffefa" stroke-width="1.6" stroke-linecap="square"/></svg></span>
+    </span>`;
+  rowsEl.appendChild(slot);
+  fills.push(slot.querySelector('.fill'));
+  checks.push(slot.querySelector('.row-check'));
+}
+
+const qtext = document.getElementById('qtext');
+const cursor = document.getElementById('cursor');
+const send = document.getElementById('send');
+const connector = document.getElementById('connector');
+const cardsCap = document.getElementById('cards-cap');
+const ansCap = document.getElementById('ans-cap');
+
+const ease = t => t < 0 ? 0 : t > 1 ? 1 : t * t * (3 - 2 * t);
+
+// End-state transforms per card (winner slides to centre-front, losers recede)
+const END_T = [
+  { x: -28, y: 16, s: 0.92, o: 0.32 },
+  { x:  57, y: -11, s: 1.14, o: 1 },     // winner: centre of canvas
+  { x:  20, y: 16, s: 0.92, o: 0.32 },
+  { x:  12, y: 16, s: 0.92, o: 0.32 },
+];
+
+function setCards(prog, entered) {
+  // prog: 0 = neutral row (state S), 1 = sorted (state E)
+  // entered: array of per-card entrance opacity/rise (phase A)
+  for (let j = 0; j < 4; j++) {
+    const el = cardEls[j];
+    const t = END_T[j];
+    const p = ease(prog);
+    const x = t.x * p, y = t.y * p, s = 1 + (t.s - 1) * p;
+    let o = 1 + (t.o - 1) * p;
+    let rise = 0;
+    if (entered) { o = Math.min(o, entered[j]); rise = (1 - entered[j]) * 10; }
+    el.style.transform = `translate(${x}px, ${y + rise}px) scale(${s})`;
+    el.style.opacity = o;
+    el.classList.toggle('winner-lift', j === 1 && p > 0.55);
+  }
+}
+
+function setAnswer(p1, p2, p3, checkP) {
+  // pN: fill progress of row N; checkP: check pop progress
+  const w = fills[0].parentElement.getBoundingClientRect().width;
+  const widths = [0.62, 0.48, 0.55];
+  [p1, p2, p3].forEach((p, r) => {
+    fills[r].style.width = (w * widths[r] * ease(p)) + 'px';
+  });
+  const c = checks[0];
+  if (checkP > 0) {
+    c.style.display = 'flex';
+    const s = 0.4 + 0.6 * ease(checkP);
+    c.style.left = (w * 0.62 + 8) + 'px';
+    c.style.transform = `scale(${s})`;
+  } else {
+    c.style.display = 'none';
+  }
+}
+
+// ---------- public API ----------
+// Phase A: frames 0..(A_LEN-1). Phase C: outro frames 0..(C_LEN-1).
+const A = {
+  typeStart: 4,          // brief hold before typing
+  get typeEnd() { return this.typeStart + N; },
+  get blinkEnd() { return this.typeEnd + 10; },
+  get pressEnd() { return this.blinkEnd + 4; },
+  get capEnd() { return this.pressEnd + 4; },
+  get cardsEnd() { return this.capEnd + 16; },
+  get holdEnd() { return this.cardsEnd + 8; },
+};
+window.A_LEN = A.holdEnd;
+window.B_LEN = 34;
+window.C_LEN = 46;
+window.TAIL_LEN = 26;
+
+window.setFrameA = function (i) {
+  const chars = Math.max(0, Math.min(N, i - A.typeStart));
+  qtext.textContent = QUESTION.slice(0, chars);
+  // cursor blinks while idle, solid while typing, solid at the end (matches S)
+  let on = true;
+  if (i < A.typeStart || (i >= A.typeEnd && i < A.blinkEnd)) on = (i % 16) < 9;
+  if (i >= A.blinkEnd) on = true;
+  cursor.classList.toggle('off', !on);
+  send.classList.toggle('pressed', i >= A.blinkEnd && i < A.pressEnd);
+  connector.classList.toggle('live', i >= A.pressEnd);
+  cardsCap.style.opacity = i >= A.pressEnd ? Math.min(1, (i - A.pressEnd) / 4) : 0;
+  ansCap.style.opacity = cardsCap.style.opacity;
+  const entered = [];
+  for (let j = 0; j < 4; j++) {
+    const startF = A.capEnd + j * 2;
+    entered.push(ease((i - startF) / 7));
+  }
+  setCards(0, i >= A.capEnd ? entered : [0, 0, 0, 0]);
+  setAnswer(0, 0, 0, 0);
+};
+
+window.setStateS = function () {
+  window.setFrameA(A.holdEnd - 1);
+};
+
+window.setStateE = function () {
+  window.setStateS();
+  setCards(1, null);
+};
+
+// Phase B: the sort. Cards settle into place on a single eased ramp, so the
+// hand-off from A (prog 0) and into C (prog 1) has no visible seam.
+window.setFrameB = function (m) {
+  window.setStateS();
+  setCards(m / (window.B_LEN - 1), null);
+};
+
+window.setFrameC = function (k) {
+  window.setStateE();
+  connector.classList.add('live');
+  setAnswer((k - 1) / 8, (k - 6) / 8, (k - 10) / 8, (k - 8) / 6);
+};
+
+window.getHoleRect = function () {
+  const r = cardsEl.getBoundingClientRect();
+  return { x: 0, y: Math.floor(r.top - 12), w: 540, h: Math.ceil(r.height + 34) };
+};
+</script>
+</body>
+</html>
