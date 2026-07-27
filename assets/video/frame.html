@@ -29,6 +29,10 @@
     --navy: #170969;
     --navy-deep: #0c0438;
     --brass: #8a6a28;
+    /* Warm enough to sit with the paper rather than read as an error state.
+       Used once, as a single pulse — see setCards(). */
+    --terracotta: #a6472a;
+    --terracotta-tint: #f9ece5;
     --mono: 'IBM Plex Mono', monospace;
     --sans: 'IBM Plex Sans', sans-serif;
   }
@@ -138,7 +142,20 @@
   .divider { border-top: 1.5px dashed var(--rule); margin: 9px -10px 9px; }
   .card.winner-lift .divider { margin: 9px -9.5px 9px; }
   .machine { position: relative; height: 56px; }
-  .machine .row { height: 4px; border-radius: 2px; background: var(--navy); opacity: .82; margin-bottom: 6px; }
+  /* The complete business: a solid block where the others have a hole. Filled
+     rather than lined, so the difference reads at a glance. */
+  .machine .filled {
+    position: absolute;
+    inset: 0 0 0 0;
+    background: var(--navy);
+    border-radius: 3px;
+    padding: 9px 8px;
+  }
+  .machine .fbar {
+    height: 4px; border-radius: 2px;
+    background: rgba(255, 254, 250, 0.62);
+    margin-bottom: 6px;
+  }
   .machine .stub { height: 4px; border-radius: 2px; background: var(--rule); width: 20px; margin-bottom: 8px; }
   .machine .empty {
     width: 56px; height: 26px;
@@ -236,10 +253,12 @@ for (let j = 0; j < 4; j++) {
   let machine;
   if (winner) {
     machine = `<div class="machine">
-      <div class="row" style="width:72px"></div>
-      <div class="row" style="width:54px"></div>
-      <div class="row" style="width:63px"></div>
-      <div class="row" style="width:40px"></div>
+      <div class="filled">
+        <div class="fbar" style="width:64px"></div>
+        <div class="fbar" style="width:48px"></div>
+        <div class="fbar" style="width:56px"></div>
+        <div class="fbar" style="width:34px"></div>
+      </div>
       <div class="check"><svg width="8" height="7" viewBox="0 0 8 7" fill="none"><path d="M1 3.5L3 5.5L7 1" stroke="#fffefa" stroke-width="1.6" stroke-linecap="square"/></svg></div>
     </div>`;
   } else {
@@ -286,16 +305,33 @@ const ansCap = document.getElementById('ans-cap');
 const ease = t => t < 0 ? 0 : t > 1 ? 1 : t * t * (3 - 2 * t);
 
 // End-state transforms per card (winner slides to centre-front, losers recede)
+// The winner grows in its own column rather than sliding to centre: at 1.14
+// it would otherwise sit on top of the card in slot 2. The other three are
+// pushed outwards, away from it, which is the "moved aside" beat.
 const END_T = [
-  { x: -28, y: 16, s: 0.92, o: 0.32 },
-  { x:  57, y: -11, s: 1.14, o: 1 },     // winner: centre of canvas
-  { x:  20, y: 16, s: 0.92, o: 0.32 },
-  { x:  12, y: 16, s: 0.92, o: 0.32 },
+  { x: -14, y: 16, s: 0.90, o: 0.30 },
+  { x:   0, y: -12, s: 1.14, o: 1 },
+  { x:  14, y: 16, s: 0.90, o: 0.30 },
+  { x:  20, y: 16, s: 0.90, o: 0.30 },
 ];
 
-function setCards(prog, entered) {
+// Mix two #rrggbb strings. Kept explicit rather than leaning on CSS
+// colour-mix so a frame renders identically on any Chromium build.
+function mix(a, b, t) {
+  const p = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+  const [r1, g1, b1] = p(a), [r2, g2, b2] = p(b);
+  const c = (x, y) => Math.round(x + (y - x) * t);
+  return `rgb(${c(r1, r2)}, ${c(g1, g2)}, ${c(b1, b2)})`;
+}
+
+const RULE = '#e2dfd6', PAPER = '#fffefa';
+const TERRA = '#a6472a', TERRA_TINT = '#f9ece5';
+
+function setCards(prog, entered, pulse) {
   // prog: 0 = neutral row (state S), 1 = sorted (state E)
   // entered: array of per-card entrance opacity/rise (phase A)
+  // pulse: 0..1, the single warm flare on the three incomplete businesses
+  const q = pulse || 0;
   for (let j = 0; j < 4; j++) {
     const el = cardEls[j];
     const t = END_T[j];
@@ -307,6 +343,14 @@ function setCards(prog, entered) {
     el.style.transform = `translate(${x}px, ${y + rise}px) scale(${s})`;
     el.style.opacity = o;
     el.classList.toggle('winner-lift', j === 1 && p > 0.55);
+
+    // The winner never flares; the other three carry the flag. No blur or
+    // shadow anywhere — the colour alone does the work.
+    const k = j === 1 ? 0 : q;
+    el.style.borderColor = k ? mix(RULE, TERRA, k) : '';
+    el.style.background = k ? mix(PAPER, TERRA_TINT, k) : '';
+    const box = el.querySelector('.machine .empty');
+    if (box) box.style.borderColor = k ? mix(RULE, TERRA, k) : '';
   }
 }
 
@@ -340,9 +384,14 @@ const A = {
   get holdEnd() { return this.cardsEnd + 8; },
 };
 window.A_LEN = A.holdEnd;
+window.P_LEN = 24;
 window.B_LEN = 34;
 window.C_LEN = 46;
 window.TAIL_LEN = 26;
+
+// The flare decays to a residue rather than to nothing, so the three
+// incomplete businesses stay legibly marked once they've fallen back.
+const RESID = 0.24;
 
 window.setFrameA = function (i) {
   const chars = Math.max(0, Math.min(N, i - A.typeStart));
@@ -371,14 +420,27 @@ window.setStateS = function () {
 
 window.setStateE = function () {
   window.setStateS();
-  setCards(1, null);
+  setCards(1, null, RESID);
+};
+
+// Phase P: one warm pulse across the three businesses whose information the
+// assistant can't read. Rises, holds a beat, falls back to RESID — a single
+// flare, never a repeating flash.
+window.setFrameP = function (k) {
+  window.setStateS();
+  const up = 7, hold = 13, last = window.P_LEN - 1;
+  let q;
+  if (k <= up) q = ease(k / up);
+  else if (k <= hold) q = 1;
+  else q = 1 - (1 - RESID) * ease((k - hold) / (last - hold));
+  setCards(0, null, q);
 };
 
 // Phase B: the sort. Cards settle into place on a single eased ramp, so the
-// hand-off from A (prog 0) and into C (prog 1) has no visible seam.
+// hand-off from P (prog 0) and into C (prog 1) has no visible seam.
 window.setFrameB = function (m) {
   window.setStateS();
-  setCards(m / (window.B_LEN - 1), null);
+  setCards(m / (window.B_LEN - 1), null, RESID);
 };
 
 window.setFrameC = function (k) {

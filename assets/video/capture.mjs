@@ -29,13 +29,27 @@ const shot = () =>
 
 const lens = await page.evaluate(() => ({
   a: window.A_LEN,
+  p: window.P_LEN,
   b: window.B_LEN,
   c: window.C_LEN,
   tail: window.TAIL_LEN,
 }));
 
+// The question is the one piece of real copy on screen, and a misspelling in
+// it would undo the point of the video. Fail the render rather than ship it.
+const EXPECTED = 'Who’s a good commercial solicitor near Manchester?';
+await page.evaluate((n) => window.setFrameA(n - 1), lens.a);
+const shown = await page.evaluate(() => document.getElementById('qtext').textContent);
+if (shown !== EXPECTED) {
+  throw new Error(`question mismatch:\n  got      ${JSON.stringify(shown)}\n  expected ${JSON.stringify(EXPECTED)}`);
+}
+
 for (let i = 0; i < lens.a; i++) {
   await page.evaluate((i) => window.setFrameA(i), i);
+  await shot();
+}
+for (let k = 0; k < lens.p; k++) {
+  await page.evaluate((k) => window.setFrameP(k), k);
   await shot();
 }
 for (let m = 0; m < lens.b; m++) {

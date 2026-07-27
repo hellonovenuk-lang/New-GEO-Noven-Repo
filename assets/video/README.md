@@ -26,8 +26,25 @@ is VP8-only, which is why the encode uses `ffmpeg-static` instead.
 The fonts in `fonts/` are the same latin subsets the site loads from Google
 Fonts, vendored here so a render never depends on the network.
 
+`capture.mjs` asserts the typed question matches `EXPECTED` character for
+character and throws rather than rendering if it doesn't. The question is the
+only real copy on screen; a misspelling in it would undo the point of the
+video, so it fails loudly instead of quietly.
+
 ## Timing
 
-202 frames at 30fps, about 6.7 seconds, four phases in `capture.mjs`: the
-question types out, four businesses appear, they sort, the answer fills in.
-The last phase holds so the loop has a beat of rest before it restarts.
+226 frames at 30fps, about 7.5 seconds, five phases in `capture.mjs`: the
+question types out, four businesses appear, the three with nothing to read
+pulse once in terracotta, they fall back while the complete one grows, and
+the answer fills in. The last phase holds so the loop has a beat of rest
+before it restarts.
+
+The pulse decays to a residue rather than to nothing (`RESID`), so the three
+stay marked after they recede. It fires once — a repeating flash would be
+both an accessibility problem and the fastest way to make the page look
+templated.
+
+`higgsfield-try-01.mp4` and `-02.mp4` are generated attempts kept for
+comparison. The terracotta pulse and the filled-block-versus-empty-box
+contrast came from those; the generations themselves drift in colour, soften
+toward the end, and the second one misspelled the query.
