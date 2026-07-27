@@ -116,19 +116,28 @@ accent is `#1c4d99` against the brand's `#241F7C`, and the page tint is
 `#f7f6f3` against the brand's `#FAF7EF`. Close but not equal, which reads worse
 than either matching properly or being plainly different.
 
-- [ ] **Get a wordmark-only logo file** — horizontal, transparent or cream
-      background, trimmed to the lettering. The square tile can't go in a site
-      header: at header height the lettering would be unreadable.
-- [ ] **Get a monogram or icon version for the favicon** — the square tile
-      renders as an illegible smudge at 16px, because the lettering is only
-      about 15% of the tile's height.
+**Decided:** the owner is supplying the real brand assets and the site palette
+will be matched to them. Nothing here gets guessed at or derived in the
+meantime — cropping the tile to fake a wordmark is still altering the logo.
+
+Waiting on from the owner:
+
+- [ ] **A wordmark-only logo file** — horizontal, trimmed to the lettering,
+      transparent background. The square tile can't go in a site header: at
+      header height the lettering would be unreadable.
+- [ ] **A monogram or icon for the favicon** — the square tile renders as an
+      illegible smudge at 16px, because the lettering is only about 15% of the
+      tile's height.
+- [ ] **The brand colour values**, so the palette matches rather than
+      approximates.
+
+Then:
+
 - [ ] Copy the supplied assets into `site/public/` so they actually deploy
 - [ ] Replace the retyped header and footer wordmark with the real asset
 - [ ] Replace the retyped "N" favicon with the real asset
-- [ ] Align the site palette to the brand indigo and cream
-
-Until there are proper assets, nothing here should be guessed at — cropping the
-tile to fake a wordmark is still altering the logo.
+- [ ] Move `--accent` and `--paper-tint` in `global.css` to the brand values
+- [ ] Check the logo against the header on a phone as well as a desktop
 
 ### 1e. Launch checks
 
