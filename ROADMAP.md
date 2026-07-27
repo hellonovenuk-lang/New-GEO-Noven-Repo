@@ -21,11 +21,13 @@ pricing, FAQ, about, contact, 404), fully readable by AI crawlers, with
 machine-readable business facts and a sitemap. It builds clean and is ready to
 deploy the moment we have a domain.
 
-What doesn't exist yet: a contact email on the site, a live domain, a way to
-take payment, and a repeatable process for doing the audit we're selling.
+The contact email is live on the site, so a customer can now reach us.
 
-**Blocking everything:** a customer who reads the site today cannot contact us.
-That's the single most urgent fix.
+What doesn't exist yet: a live domain, a way to take payment, and a repeatable
+process for doing the audit we're selling.
+
+**Biggest remaining blocker:** the site isn't deployed anywhere, so nobody can
+read it. Domain and hosting is the next thing to clear.
 
 ---
 
@@ -36,7 +38,8 @@ That's the single most urgent fix.
 These are all marked `[PLACEHOLDER]` in the site. Nothing else in Phase 1
 matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
 
-- [ ] **Contact email address** — the only sales channel on the site
+- [x] **Contact email address** — `hello.noven.uk@gmail.com`, live on the
+      contact page and in the site's machine-readable business facts
 - [ ] Phone number, or a decision that we don't offer one
 - [ ] Reply time we're willing to promise (e.g. "within one working day")
 - [ ] Location — "based in ___, working across the UK"
@@ -237,8 +240,13 @@ what's next. Newest at the top.
 ### 2026-07-27
 - Reviewed the whole repo and confirmed the site builds clean (7 pages + sitemap).
 - Wrote this roadmap.
-- **State:** website content is done; launch is blocked on owner-supplied facts
-  (contact email above all), a confirmed domain, a way to take payment, and a
-  repeatable audit process.
-- **Next session:** collect the Phase 1a facts and fill in every `[PLACEHOLDER]`,
-  then get the site deployed.
+- Added the contact email `hello.noven.uk@gmail.com` to the contact page and to
+  the site's machine-readable business facts. The site can now take an enquiry.
+- **State:** website content is done and contactable; launch is blocked on a
+  confirmed domain, a way to take payment, and a repeatable audit process.
+  Nine owner facts still outstanding in Phase 1a.
+- **Next session:** confirm the domain and deploy, and collect the remaining
+  Phase 1a facts.
+- **Worth deciding soon:** a Gmail address works to launch, but an address on
+  the Noven domain reads as more established to the businesses we're
+  approaching — and we sell consistent, credible business information.

@@ -28,6 +28,14 @@ const organizationSchema = {
   '@id': new URL('/#organization', Astro.site).href,
   name: 'Noven',
   url: Astro.site?.href,
+  email: 'hello.noven.uk@gmail.com',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'sales and enquiries',
+    email: 'hello.noven.uk@gmail.com',
+    areaServed: 'GB',
+    availableLanguage: 'English',
+  },
   description:
     'Noven helps service businesses get found and recommended when their customers ask AI assistants — ChatGPT, Google, Copilot and Perplexity — who to use.',
   knowsAbout: [
