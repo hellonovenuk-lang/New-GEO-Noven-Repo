@@ -334,6 +334,38 @@ Written down rather than guessed at. Answer them as they become relevant.
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
 
+### 2026-07-27 (latest — premium redesign)
+- Reshaped the whole site to feel like a top-end firm rather than a document.
+  The design idea: this business sells the gap between what a person reads and
+  what a machine reads, so the page speaks in two voices — Newsreader (serif)
+  for everything meant for a human, IBM Plex Mono for everything meant for a
+  machine, IBM Plex Sans between them.
+- **The signature is "the record"** — a panel on the homepage and pricing page
+  showing the facts exactly as an assistant reads them. It is generated from
+  `site/src/data/business.ts`, the same module that builds the JSON-LD, so the
+  visible panel and the structured data cannot drift apart. The homepage says
+  this out loud and invites the reader to check it, which is the only proof a
+  business with no case studies can honestly offer.
+- New `site/src/data/business.ts` is now the single source of truth for every
+  business fact and price. **Change a price there, not in a page** — the
+  pricing copy, the Offer structured data and the record panel all read from
+  it.
+- Motion added and kept disciplined: hero words rise on load, sections reveal
+  on scroll, reading progress on the header. All of it is gated behind a `.js`
+  class that only JavaScript can add, so with JS off — or for a crawler that
+  never runs it — nothing is hidden. Verified: 0 hidden elements across all 7
+  pages with JavaScript disabled, and again under `prefers-reduced-motion`.
+- Checked contrast on every rendered text node across all 7 pages: no failures
+  against WCAG AA.
+- Cut the repeated calls-to-action. The site now asks once per page, in the
+  footer, plus one contextual ask in the homepage hero.
+- **Still outstanding, unchanged:** founder bio, cancellation notice period,
+  address for service. All three are marked on the pages with a loud
+  `[PLACEHOLDER]` block so they cannot be mistaken for finished copy.
+- **New gap found:** there is no Open Graph image, so links shared to
+  LinkedIn or WhatsApp will preview as bare text. Needs a 1200×630 PNG built
+  from the brand assets — SVG is not reliably supported by the platforms.
+
 ### 2026-07-27 (later still — brand assets)
 - Brand assets supplied as SVG and packaged. Originals kept untouched in
   `assets/brand/`; web copies trimmed to the artwork and wired into the header,

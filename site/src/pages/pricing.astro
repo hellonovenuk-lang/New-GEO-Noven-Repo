@@ -1,181 +1,172 @@
 ---
 import Base from '../layouts/Base.astro';
+import Record from '../components/Record.astro';
+import { business, plan, money, monthlies, plans, offerSchema } from '../data/business';
 
 const title = 'Pricing — Noven';
 const description =
   'Noven pricing in plain numbers: a £30 audit, a £350 one-off Foundation setup, and ongoing monthly plans at £75 (Maintain), £125 (Grow) and £250 (Lead). No lock-ins.';
 
+const audit = plan('audit');
+const foundation = plan('foundation');
+const maintain = plan('maintain');
+
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  name: 'AI assistant visibility for service businesses',
-  serviceType: 'Business visibility in AI assistant recommendations',
+  name: business.serviceName,
+  serviceType: business.serviceType,
   provider: { '@id': new URL('/#organization', Astro.site).href },
-  areaServed: 'GB',
+  areaServed: business.areaServed,
   description:
     'One service in three stages: a £30 audit of how AI assistants currently answer questions about your business, a £350 one-off Foundation setup that makes your business readable and credible to those systems, and ongoing monthly plans that keep you visible.',
-  offers: [
-    {
-      '@type': 'Offer',
-      name: 'Audit',
-      price: '30',
-      priceCurrency: 'GBP',
-      description:
-        'One-off written report on how AI assistants currently answer questions about your business, what they believe about you, and what is blocking you from being recommended.',
-    },
-    {
-      '@type': 'Offer',
-      name: 'Foundation',
-      price: '350',
-      priceCurrency: 'GBP',
-      description:
-        'One-off setup on your existing website: crawler access, structured data, consistent business facts, and pages that answer the questions your customers ask AI assistants.',
-    },
-    {
-      '@type': 'Offer',
-      name: 'Maintain (monthly)',
-      price: '75',
-      priceCurrency: 'GBP',
-      description:
-        'Monthly plan to stay found: keeps your information current, monitors how AI assistants answer questions about your business, and fixes drift. £75 per month.',
-    },
-    {
-      '@type': 'Offer',
-      name: 'Grow (monthly)',
-      price: '125',
-      priceCurrency: 'GBP',
-      description:
-        'Monthly plan to get found more: everything in Maintain, plus new answer-focused content each month so you appear for more of the questions your customers ask. £125 per month.',
-    },
-    {
-      '@type': 'Offer',
-      name: 'Lead (monthly)',
-      price: '250',
-      priceCurrency: 'GBP',
-      description:
-        'Monthly plan for businesses that want to be the default recommendation in their field: everything in Grow, at a faster pace and broader coverage, with a quarterly written review. £250 per month.',
-    },
-  ],
+  offers: offerSchema(),
 };
+
+// The same numbers that generate the Offer data above.
+const priceRecord = plans.map((p) => ({
+  key: p.name.toLowerCase(),
+  value: `${money(p.price)} ${p.cadence}`,
+}));
 ---
 
 <Base title={title} description={description} schema={[serviceSchema]}>
-  <section class="hero">
+  <section class="hero hero--rules">
     <div class="wrap">
       <h1>What does Noven cost?</h1>
-      <p class="lede">
-        One service, three stages, plain numbers. You start with a £30 audit, and every stage
-        after that is only worth buying if the one before says so.
+      <p class="lede" data-reveal>
+        One service, three stages, plain numbers. You start with a {money(audit.price)} audit, and
+        every stage after that is only worth buying if the one before says so.
       </p>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <div class="price-block" style="border-top: none; padding-top: 0;">
-        <div class="price-line">
-          <h2>Audit</h2>
-          <span class="price">£30 <small>one-off</small></span>
-        </div>
-        <p>
-          A written report on where your business currently stands with the major AI assistants —
-          ChatGPT, Google's AI results, Copilot and Perplexity. We ask them the questions your
-          customers ask, record what comes back, and diagnose why. You'll have the report within
-          one working day of us confirming scope and payment.
-        </p>
-        <p>You get:</p>
-        <ul>
-          <li>What each assistant currently says when asked about businesses like yours.</li>
-          <li>What they know and believe about your business, and whether it's accurate.</li>
-          <li>The specific things blocking you, in plain English.</li>
-          <li>Our honest recommendation — including "you're fine, don't spend more money."</li>
-        </ul>
-        <div class="cta-row" style="margin-top: 1.5rem;">
-          <a class="btn" href="/contact/">Book the £30 audit</a>
+      <div class="price-block" data-reveal>
+        <div class="price-grid">
+          <div class="price-head">
+            <h2>Audit</h2>
+            <span class="price">{money(audit.price)} <small>one-off</small></span>
+          </div>
+          <div>
+            <p>
+              A written report on where your business currently stands with the major AI assistants
+              — ChatGPT, Google's AI results, Copilot and Perplexity. We ask them the questions your
+              customers ask, record what comes back, and diagnose why. You'll have the report within
+              one working day of us confirming scope and payment.
+            </p>
+            <p>You get:</p>
+            <ul class="ticks">
+              <li>What each assistant currently says when asked about businesses like yours.</li>
+              <li>What they know and believe about your business, and whether it's accurate.</li>
+              <li>The specific things blocking you, in plain English.</li>
+              <li>Our honest recommendation — including "you're fine, don't spend more money."</li>
+            </ul>
+          </div>
         </div>
       </div>
 
-      <div class="price-block">
-        <div class="price-line">
-          <h2>Foundation</h2>
-          <span class="price">£350 <small>one-off</small></span>
-        </div>
-        <p>
-          The setup that gets you visible, scoped by your audit and done on the website you
-          already have. It covers crawler access for the AI systems, structured machine-readable
-          facts about your business, consistency of those facts across the web, and pages that
-          directly answer the questions your customers ask.
-        </p>
-        <p>
-          We'll come back to you within two working days of you booking it with a plan and a
-          date. How long the work itself takes depends mostly on you — how quickly we get access
-          to your website and the information we need. We'll tell you what we're waiting on, and
-          we won't leave you guessing.
-        </p>
-      </div>
-
-      <div class="price-block">
-        <div class="price-line">
-          <h2>Ongoing</h2>
-          <span class="price">from £75 <small>per month</small></span>
-        </div>
-        <p>
-          The assistants change constantly, so staying visible is maintenance, not magic. Pick the
-          level of effort that matches your ambition — all three are the same service, at
-          different intensities, and you can move between them.
-        </p>
-
-        <div class="price-block" style="margin-top: 1.5rem;">
-          <div class="price-line">
-            <h3>Maintain — stay found</h3>
-            <span class="price">£75 <small>/month</small></span>
+      <div class="price-block" data-reveal>
+        <div class="price-grid">
+          <div class="price-head">
+            <h2>Foundation</h2>
+            <span class="price">{money(foundation.price)} <small>one-off</small></span>
           </div>
-          <p>
-            Keeps what the Foundation built working: your information stays current and
-            consistent, we monitor how the assistants answer questions about you, and we fix
-            things when they drift.
-          </p>
-        </div>
-
-        <div class="price-block">
-          <div class="price-line">
-            <h3>Grow — get found more</h3>
-            <span class="price">£125 <small>/month</small></span>
+          <div>
+            <p>
+              The setup that gets you visible, scoped by your audit and done on the website you
+              already have. It covers crawler access for the AI systems, structured machine-readable
+              facts about your business, consistency of those facts across the web, and pages that
+              directly answer the questions your customers ask.
+            </p>
+            <p>
+              We'll come back to you within two working days of you booking it with a plan and a
+              date. How long the work itself takes depends mostly on you — how quickly we get access
+              to your website and the information we need. We'll tell you what we're waiting on, and
+              we won't leave you guessing.
+            </p>
           </div>
-          <p>
-            Everything in Maintain, plus new answer-focused content each month, so over time you
-            show up for more of the questions your customers actually ask — more specialisms,
-            more locations, more situations.
-          </p>
-        </div>
-
-        <div class="price-block">
-          <div class="price-line">
-            <h3>Lead — front of mind</h3>
-            <span class="price">£250 <small>/month</small></span>
-          </div>
-          <p>
-            For businesses that want to be the default recommendation in their field. Everything
-            in Grow at a faster pace and broader coverage, plus a quarterly written review of
-            where you stand against the competitors the assistants name.
-          </p>
         </div>
       </div>
 
-      <p style="margin-top: 2rem;">
-        The prices above are what you pay. Noven isn't VAT registered, so there's no VAT to add.
-        Monthly plans roll month to month — no long contracts. [PLACEHOLDER: confirm cancellation
-        notice period.]
-      </p>
+      <div class="price-block" data-reveal>
+        <div class="price-grid">
+          <div class="price-head">
+            <h2>Ongoing</h2>
+            <span class="price">from {money(maintain.price)} <small>per month</small></span>
+          </div>
+          <div>
+            <p>
+              The assistants change constantly, so staying visible is maintenance, not magic. All
+              three levels are the same service at different intensities, and you can move between
+              them. Each one includes everything above it.
+            </p>
+          </div>
+        </div>
+
+        <ul class="levels">
+              <li class="level">
+                <span class="level-name">Maintain</span>
+                <p>
+                  Keeps what the Foundation built working: your information stays current and
+                  consistent, we monitor how the assistants answer questions about you, and we fix
+                  things when they drift.
+                </p>
+                <span class="level-price">{money(monthlies[0].price)} /month</span>
+              </li>
+              <li class="level">
+                <span class="level-name">Grow</span>
+                <p>
+                  Everything in Maintain, plus new answer-focused content each month, so over time
+                  you show up for more of the questions your customers actually ask — more
+                  specialisms, more locations, more situations.
+                </p>
+                <span class="level-price">{money(monthlies[1].price)} /month</span>
+              </li>
+              <li class="level">
+                <span class="level-name">Lead</span>
+                <p>
+                  For businesses that want to be the default recommendation in their field.
+                  Everything in Grow at a faster pace and broader coverage, plus a quarterly written
+                  review of where you stand against the competitors the assistants name.
+                </p>
+                <span class="level-price">{money(monthlies[2].price)} /month</span>
+              </li>
+            </ul>
+      </div>
+
+      <div class="price-block" data-reveal>
+        <div class="price-grid">
+          <div class="price-head">
+            <p class="tag">The same list, in machine form</p>
+          </div>
+          <div>
+            <p>
+              These are the prices an AI assistant reads from this page — generated from the same
+              numbers as the list above, which is exactly the job Noven does for clients.
+            </p>
+            <Record
+              caption="Prices as an assistant reads them"
+              rows={priceRecord}
+              note="The prices above are what you pay. Noven isn't VAT registered, so there's no VAT to add. Monthly plans roll month to month — no long contracts."
+            />
+            <p class="flag" style="margin-top: 1.5rem;">
+              [PLACEHOLDER: confirm cancellation notice period.]
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="section section-tint">
+  <section class="section section--invert">
     <div class="wrap split">
-      <div>
-        <h2>Why is the audit only £30?</h2>
+      <div data-reveal>
+        <p class="tag">The obvious question</p>
+        <h2>Why is the audit only {money(audit.price)}?</h2>
       </div>
-      <div>
+      <div data-reveal>
         <p>
           Because finding out where you stand should be an easy decision, not a leap of faith. The
           audit is real work and stands on its own — you could take the report to someone else, or

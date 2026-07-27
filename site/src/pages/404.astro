@@ -6,13 +6,17 @@ const description = 'This page doesn’t exist. Head back to the Noven homepage.
 ---
 
 <Base title={title} description={description}>
-  <section class="hero">
+  <section class="hero hero--rules">
     <div class="wrap">
       <h1>That page doesn't exist</h1>
-      <p class="lede">
+      <p class="lede" data-reveal>
         The address may be wrong, or the page may have moved. Everything on this site is reachable
         from the <a href="/">homepage</a>.
       </p>
+      <div class="cta-row" data-reveal>
+        <a class="btn btn--ghost" href="/">Back to the homepage</a>
+        <a href="/how-it-works/">See how it works</a>
+      </div>
     </div>
   </section>
 </Base>

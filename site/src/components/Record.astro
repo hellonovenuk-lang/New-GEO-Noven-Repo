@@ -1,0 +1,38 @@
+---
+/* The record: a page's facts as a machine reads them.
+ *
+ * This is the one device the site is built around. It only tells the truth if
+ * the values passed in come from src/data/business.ts — the same module that
+ * generates the JSON-LD in the head — so pages should never hand it a literal
+ * they typed by hand.
+ */
+
+interface Props {
+  /** Sentence-case caption. Says what this panel is, in the reader's words. */
+  caption: string;
+  rows: { key: string; value: string }[];
+  /** Optional note under the rows, e.g. how to check the claim for yourself. */
+  note?: string;
+  class?: string;
+}
+
+const { caption, rows, note, class: className = '' } = Astro.props;
+---
+
+<figure class:list={['record', className]}>
+  <figcaption class="record-head">
+    <span class="record-dot" aria-hidden="true"></span>
+    {caption}
+  </figcaption>
+  <dl class="record-body">
+    {
+      rows.map((row) => (
+        <div class="record-row">
+          <dt class="record-key">{row.key}</dt>
+          <dd class="record-val">{row.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+  {note && <div class="record-foot" set:html={note} />}
+</figure>

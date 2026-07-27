@@ -1,0 +1,19 @@
+---
+/* A statement line — the serif, set large, used once per page to turn from one
+ * argument to the next. It carries an idea the page has earned by that point,
+ * never a slogan. The qualification sits beside it, small, because that is the
+ * shape of every claim this business makes.
+ */
+
+interface Props {
+  /** Optional supporting line alongside, in the body face. */
+  cite?: string;
+}
+
+const { cite } = Astro.props;
+---
+
+<div class="statement-band" data-reveal>
+  <p class="statement"><slot /></p>
+  {cite && <p class="statement-cite">{cite}</p>}
+</div>

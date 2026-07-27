@@ -1,9 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
+import { money, plan } from '../data/business';
 
 const title = 'Frequently asked questions — Noven';
 const description =
   'Plain answers about getting your business found by AI assistants: how recommendations work, what the £30 audit covers, timescales, guarantees, and which assistants Noven covers.';
+
+const audit = plan('audit');
 
 // Single source of truth: this array renders the visible FAQ and the
 // FAQPage structured data, so the two can never drift apart.
@@ -98,13 +101,16 @@ const faqSchema = {
     },
   })),
 };
+
+/** Paragraphs are authored plain, but owner placeholders must stand out. */
+const isFlag = (text: string) => text.trim().startsWith('[PLACEHOLDER');
 ---
 
 <Base title={title} description={description} schema={[faqSchema]}>
-  <section class="hero">
+  <section class="hero hero--rules">
     <div class="wrap">
       <h1>Frequently asked questions</h1>
-      <p class="lede">
+      <p class="lede" data-reveal>
         Plain answers, including the ones that don't flatter us. If your question isn't here,
         <a href="/contact/">ask us directly</a>.
       </p>
@@ -115,26 +121,32 @@ const faqSchema = {
     <div class="wrap">
       {
         faqs.map((item) => (
-          <div class="faq-item">
+          <div class="qa" data-reveal>
             <h2>{item.q}</h2>
-            {item.a.map((para) => (
-              <p>{para}</p>
-            ))}
+            <div class="qa-answer">
+              {item.a.map((para) =>
+                isFlag(para) ? <p class="flag">{para}</p> : <p>{para}</p>,
+              )}
+            </div>
           </div>
         ))
       }
     </div>
   </section>
 
-  <section class="section section-tint">
-    <div class="wrap">
-      <h2>Still weighing it up?</h2>
-      <p>
-        The £30 audit answers the only question that really matters: where does your business show
-        up today, and what's in the way?
-      </p>
-      <div class="cta-row">
-        <a class="btn" href="/contact/">Book the £30 audit</a>
+  <section class="section section--invert">
+    <div class="wrap split">
+      <div data-reveal>
+        <p class="tag">Test it yourself</p>
+        <h2>Don't take our word for any of this.</h2>
+      </div>
+      <div data-reveal>
+        <p>
+          Every answer above is also published as structured data on this page, which is what an
+          assistant reads when someone asks it about Noven. Ask ChatGPT or Perplexity what the
+          {money(audit.price)} audit includes, and compare its answer with this page. That is the
+          whole method, run on ourselves.
+        </p>
       </div>
     </div>
   </section>

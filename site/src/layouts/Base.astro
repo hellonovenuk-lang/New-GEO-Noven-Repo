@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { business, plan, money } from '../data/business';
 
 interface Props {
   title: string;
@@ -17,31 +18,35 @@ const navItems = [
   { href: '/pricing/', label: 'Pricing' },
   { href: '/faq/', label: 'FAQ' },
   { href: '/about/', label: 'About' },
-  { href: '/contact/', label: 'Contact' },
 ];
 
 const currentPath = Astro.url.pathname;
+const isCurrent = (href: string) =>
+  currentPath === href || currentPath === href.replace(/\/$/, '');
 
+const audit = plan('audit');
+
+// Built from src/data/business.ts, the same module the visible record panels
+// read from — so the two can never disagree.
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   '@id': new URL('/#organization', Astro.site).href,
-  name: 'Noven',
+  name: business.name,
   url: Astro.site?.href,
   logo: new URL('/logo.svg', Astro.site).href,
-  email: 'hello.noven.uk@gmail.com',
+  email: business.email,
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'sales and enquiries',
-    email: 'hello.noven.uk@gmail.com',
-    areaServed: 'GB',
+    email: business.email,
+    areaServed: business.areaServed,
     availableLanguage: 'English',
   },
-  description:
-    'Noven helps service businesses get found and recommended when their customers ask AI assistants — ChatGPT, Google, Copilot and Perplexity — who to use.',
+  description: business.description,
   founder: {
     '@type': 'Person',
-    name: 'Kieran Smith',
+    name: business.founder,
   },
   knowsAbout: [
     'AI assistant visibility for businesses',
@@ -60,44 +65,69 @@ const organizationSchema = {
     <link rel="canonical" href={canonical.href} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#170969" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Noven" />
+    <meta property="og:site_name" content={business.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical.href} />
+    <meta property="og:locale" content="en_GB" />
+    <meta name="twitter:card" content="summary" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,650;14..32,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap"
     />
+
     <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
     {schema.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+
+    {/* Set before first paint, so reveal-state styles never flash. */}
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
   </head>
+
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header">
+
+    <header class="site-header" data-header>
       <div class="wrap">
         <a class="wordmark" href="/">
-          <img src="/logo.svg" alt="Noven" width="1066" height="236" />
+          <img src="/logo.svg" alt="Noven — home" width="1066" height="236" />
         </a>
-        <nav class="site-nav" aria-label="Main">
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          data-nav-toggle
+        >
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+          Menu
+        </button>
+
+        <nav class="site-nav" id="site-nav" aria-label="Main">
           {
             navItems.map((item) => (
-              <a
-                href={item.href}
-                aria-current={
-                  currentPath === item.href || currentPath === item.href.replace(/\/$/, '')
-                    ? 'page'
-                    : undefined
-                }
-              >
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
                 {item.label}
               </a>
             ))
           }
+          <a
+            class="nav-cta"
+            href="/contact/"
+            aria-current={isCurrent('/contact/') ? 'page' : undefined}
+          >
+            Book the {money(audit.price)} audit
+          </a>
         </nav>
       </div>
+      <div class="progress" data-progress aria-hidden="true"></div>
     </header>
 
     <main id="main">
@@ -106,36 +136,153 @@ const organizationSchema = {
 
     <footer class="site-footer">
       <div class="wrap">
-        <div class="footer-cols">
-          <div>
-            <a class="wordmark" href="/">
-              <img src="/logo.svg" alt="Noven" width="1066" height="236" />
-            </a>
-            <p>
-              Helping service businesses get found when their customers ask AI assistants who to
-              use.
+        {/* The site asks once, here, at the end of every page. */}
+        <div class="footer-top">
+          <div data-reveal>
+            <h2>Find out where your business stands.</h2>
+            <p class="cta-note" style="margin-top: 0;">
+              The {money(audit.price)} audit is a written report on where you show up today and what's
+              in the way. If you're already in good shape, it says so.
             </p>
+            <div class="cta-row">
+              <a class="btn" href="/contact/">
+                Book the {money(audit.price)} audit
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+                  <path
+                    d="M9 1l4 4-4 4M13 5H1"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="square"></path>
+                </svg>
+              </a>
+            </div>
           </div>
-          <div>
+          <div data-reveal>
             <ul class="footer-nav">
               {navItems.map((item) => (
                 <li>
                   <a href={item.href}>{item.label}</a>
                 </li>
               ))}
+              <li><a href="/contact/">Contact</a></li>
             </ul>
-            <p>
-              Start with the <a href="/pricing/">£30 audit</a> — an honest look at where you stand
-              today.
-            </p>
           </div>
         </div>
-        <p class="footer-small">
-          &copy; {new Date().getFullYear()} Noven. Noven is a trading name of Kieran Smith, a sole
-          trader based in the Wirral, UK. [PLACEHOLDER: address for service of documents — see
-          ROADMAP.md, this is a legal disclosure requirement for trading under a business name.]
+
+        <div class="footer-bottom">
+          <div>
+            <a class="wordmark" href="/">
+              <img src="/logo-dark.svg" alt="Noven — home" width="1194" height="236" />
+            </a>
+          </div>
+          <p class="footer-small">
+            &copy; {new Date().getFullYear()} {business.name}. {business.legalNote} Based in {
+              business.basedIn
+            }, working with clients across the {business.areaServedLabel}. Not VAT registered, so
+            the prices shown are the prices you pay.
+          </p>
+        </div>
+        <p class="flag" style="margin-top: 2rem;">
+          [PLACEHOLDER: address for service of documents — see ROADMAP.md. This is a legal
+          disclosure requirement for trading under a business name.]
         </p>
       </div>
     </footer>
+
+    <script>
+      // Progressive enhancement only. Every behaviour here is additive: with
+      // this script blocked, the page still reads and navigates correctly.
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      /* Reveal on scroll. */
+      const revealables = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if ('IntersectionObserver' in window && !reduced.matches) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              const el = entry.target as HTMLElement;
+              // Siblings revealed together cascade rather than land at once.
+              const siblings = el.parentElement
+                ? Array.from(el.parentElement.querySelectorAll('[data-reveal]'))
+                : [];
+              const index = Math.min(siblings.indexOf(el), 5);
+              el.style.setProperty('--reveal-delay', `${Math.max(index, 0) * 70}ms`);
+              el.classList.add('is-in');
+              io.unobserve(el);
+            });
+          },
+          { rootMargin: '0px 0px -12% 0px', threshold: 0.05 },
+        );
+        revealables.forEach((el) => io.observe(el));
+      } else {
+        revealables.forEach((el) => el.classList.add('is-in'));
+      }
+
+      /* Hero headline: words rise out of their own clipped boxes. Only run on
+         a plain-text heading, so marked-up headings are left alone. */
+      const heading = document.querySelector<HTMLElement>('.hero h1');
+      if (heading && heading.children.length === 0) {
+        const words = (heading.textContent || '').trim().split(/\s+/);
+        heading.textContent = '';
+        words.forEach((word, i) => {
+          const outer = document.createElement('span');
+          outer.className = 'word';
+          const inner = document.createElement('span');
+          inner.textContent = word;
+          inner.style.setProperty('--word-delay', `${i * 45}ms`);
+          outer.appendChild(inner);
+          heading.appendChild(outer);
+          if (i < words.length - 1) heading.appendChild(document.createTextNode(' '));
+        });
+        requestAnimationFrame(() => heading.classList.add('is-in'));
+      }
+
+      /* Header state and reading progress. */
+      const header = document.querySelector<HTMLElement>('[data-header]');
+      const progress = document.querySelector<HTMLElement>('[data-progress]');
+      let ticking = false;
+
+      const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const y = window.scrollY;
+          header?.classList.toggle('is-stuck', y > 8);
+          if (progress) {
+            const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+            const ratio = scrollable > 0 ? Math.min(y / scrollable, 1) : 0;
+            progress.style.transform = `scaleX(${ratio})`;
+          }
+          ticking = false;
+        });
+      };
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      /* Small-screen navigation. */
+      const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+      const nav = document.getElementById('site-nav');
+
+      const closeNav = () => {
+        toggle?.setAttribute('aria-expanded', 'false');
+        nav?.classList.remove('is-open');
+      };
+
+      toggle?.addEventListener('click', () => {
+        const open = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!open));
+        nav?.classList.toggle('is-open', !open);
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeNav();
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) closeNav();
+      });
+    </script>
   </body>
 </html>

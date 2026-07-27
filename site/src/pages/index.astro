@@ -1,42 +1,83 @@
 ---
 import Base from '../layouts/Base.astro';
+import Record from '../components/Record.astro';
+import Statement from '../components/Statement.astro';
+import { business, plan, money } from '../data/business';
 
 const title = 'Noven — Get found when customers ask AI who to use';
 const description =
   'Noven helps accountants, solicitors, clinics, consultancies and agencies get found and recommended when customers ask ChatGPT, Google, Copilot or Perplexity who to use. Start with a £30 audit.';
+
+const audit = plan('audit');
+const foundation = plan('foundation');
+const maintain = plan('maintain');
+
+// Read from the same module that builds this page's structured data, so the
+// panel below shows what an assistant genuinely reads here.
+const record = [
+  { key: 'name', value: business.name },
+  { key: 'what it does', value: business.serviceName },
+  { key: 'run by', value: business.founder },
+  { key: 'based in', value: business.basedInShort },
+  { key: 'serves', value: business.areaServedLabel },
+  { key: 'starts at', value: `${money(audit.price)} (${audit.name.toLowerCase()})` },
+  { key: 'contact', value: business.email },
+];
 ---
 
 <Base title={title} description={description}>
   <section class="hero">
-    <div class="wrap">
-      <h1>When your customers ask an AI who to use, the answer should include you.</h1>
-      <p class="lede">
-        People increasingly ask ChatGPT, Google, Copilot and Perplexity to recommend an accountant,
-        a solicitor, a clinic or a consultancy — instead of scrolling through search results. Noven
-        does the work that gets your business into those answers.
-      </p>
-      <div class="cta-row">
-        <a class="btn" href="/contact/">Book the £30 audit</a>
-        <a href="/how-it-works/">See how it works</a>
+    <div class="wrap hero-grid">
+      <div>
+        <h1>When your customers ask an AI who to use, the answer should include you.</h1>
+        <p class="lede" data-reveal>
+          People increasingly ask ChatGPT, Google, Copilot and Perplexity to recommend an
+          accountant, a solicitor, a clinic or a consultancy — instead of scrolling through search
+          results. Noven does the work that gets your business into those answers.
+        </p>
+        <div data-reveal>
+          <div class="cta-row">
+            <a class="btn" href="/contact/">
+              Book the {money(audit.price)} audit
+              <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+                <path
+                  d="M9 1l4 4-4 4M13 5H1"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="square"></path>
+              </svg>
+            </a>
+            <a href="/how-it-works/">See how it works</a>
+          </div>
+          <p class="cta-note">
+            A written report on where you currently show up, and what's in the way. No obligation
+            beyond the {money(audit.price)}.
+          </p>
+        </div>
       </div>
-      <p class="cta-note" style="margin-top: 1rem;">
-        The audit is a written report on where you currently show up, and what's in the way. No
-        obligation beyond the £30.
-      </p>
+
+      <div data-reveal>
+        <Record
+          caption="What an assistant reads on this page"
+          rows={record}
+          note="Every line here is generated from the same file as this page's structured data, so what you see and what a machine reads cannot drift apart. Ask an assistant what Noven does and what it charges, then compare."
+        />
+      </div>
     </div>
   </section>
 
   <section class="section">
-    <div class="wrap split">
-      <div>
+    <div class="wrap split split--sticky">
+      <div data-reveal>
+        <p class="tag">The shift</p>
         <h2>Why does this matter now?</h2>
       </div>
-      <div>
+      <div data-reveal>
         <p>
-          Buying habits have changed. Someone who needs a professional service used to type a
-          query into Google and compare the results themselves. Now, many of them ask an AI
-          assistant a direct question — <em>"Who's a good commercial solicitor near
-          Manchester?"</em> — and get a short list of named businesses back.
+          Buying habits have changed. Someone who needs a professional service used to type a query
+          into Google and compare the results themselves. Now, many of them ask an AI assistant a
+          direct question — <em>"Who's a good commercial solicitor near Manchester?"</em> — and get
+          a short list of named businesses back.
         </p>
         <p>
           If your business isn't in that short list, you're not losing a ranking position. You're
@@ -51,54 +92,83 @@ const description =
     </div>
   </section>
 
-  <section class="section section-tint">
-    <div class="wrap split">
-      <div>
-        <h2>What does Noven actually do?</h2>
+  <section class="section section--tint">
+    <div class="wrap">
+      <div class="split" style="margin-bottom: 3rem;">
+        <div data-reveal>
+          <p class="tag">The work</p>
+          <h2>What does Noven actually do?</h2>
+        </div>
+        <div data-reveal>
+          <p>
+            Noven makes your business easy for AI assistants to find, understand and recommend. In
+            practice that means three kinds of work.
+          </p>
+        </div>
       </div>
-      <div>
-        <p>
-          Noven makes your business easy for AI assistants to find, understand and recommend. In
-          practice that means three kinds of work:
-        </p>
-        <ul>
-          <li style="margin-bottom: 0.9rem;">
-            <strong>We find out where you stand.</strong> We ask the major AI assistants the
-            questions your customers ask, record what they say about you and your competitors, and
-            trace why.
-          </li>
-          <li style="margin-bottom: 0.9rem;">
-            <strong>We fix what's blocking you.</strong> Most businesses are invisible to these
-            systems for mundane, correctable reasons: information the crawlers can't read,
-            inconsistent facts across the web, or pages that never answer the questions customers
-            actually ask.
-          </li>
-          <li>
-            <strong>We keep you visible.</strong> The assistants and their sources change
-            constantly. Ongoing plans keep your information current and extend your coverage to
-            more of the questions that matter to you.
-          </li>
-        </ul>
-        <p>
-          It's methodical work, not a trick. There is no button we press that makes an AI
-          recommend you — there is a set of things these systems demonstrably rely on, and we make
-          sure you have them.
-        </p>
+
+      <div class="stages">
+        <div class="stage" data-reveal>
+          <div class="stage-head">
+            <h3>We find out where you stand.</h3>
+          </div>
+          <div class="stage-body">
+            <p>
+              We ask the major AI assistants the questions your customers ask, record what they say
+              about you and your competitors, and trace why.
+            </p>
+          </div>
+        </div>
+        <div class="stage" data-reveal>
+          <div class="stage-head">
+            <h3>We fix what's blocking you.</h3>
+          </div>
+          <div class="stage-body">
+            <p>
+              Most businesses are invisible to these systems for mundane, correctable reasons:
+              information the crawlers can't read, inconsistent facts across the web, or pages that
+              never answer the questions customers actually ask.
+            </p>
+          </div>
+        </div>
+        <div class="stage" data-reveal>
+          <div class="stage-head">
+            <h3>We keep you visible.</h3>
+          </div>
+          <div class="stage-body">
+            <p>
+              The assistants and their sources change constantly. Ongoing plans keep your
+              information current and extend your coverage to more of the questions that matter to
+              you.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="section">
-    <div class="wrap split">
-      <div>
+    <div class="wrap">
+      <Statement
+        cite="There is no button we press that makes an AI recommend you. There is a set of things these systems demonstrably rely on, and we make sure you have them."
+      >
+        It's methodical work, <em>not a trick.</em>
+      </Statement>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split split--sticky">
+      <div data-reveal>
+        <p class="tag">The fit</p>
         <h2>Who is this for?</h2>
       </div>
-      <div>
+      <div data-reveal>
         <p>
-          Noven works with service businesses whose customers research and compare before buying:
-          accountants, solicitors, private clinics, consultancies and agencies. If a client is
-          worth hundreds or thousands of pounds to you, being one of the three names an AI
-          suggests is worth taking seriously.
+          Service businesses whose customers research and compare before buying: accountants,
+          solicitors, private clinics, consultancies and agencies. If a client is worth hundreds or
+          thousands of pounds to you, being one of the three names an AI suggests is worth taking
+          seriously.
         </p>
         <p>
           It's a poor fit if your customers buy on impulse, or if you already have more work than
@@ -108,53 +178,54 @@ const description =
     </div>
   </section>
 
-  <section class="section section-tint">
+  <section class="section section--invert">
     <div class="wrap split">
-      <div>
+      <div data-reveal>
+        <p class="tag">The honest bit</p>
         <h2>Where's the proof?</h2>
       </div>
       <div>
-        <p>
-          An honest answer: Noven is a new business, and we don't yet have client case studies to
-          show you. We won't invent any, and we'd encourage you to be suspicious of anyone in this
-          field who shows you numbers that can't be checked.
-        </p>
-        <p>
-          What we can show you is this website. It's built exactly the way we build for clients —
-          plain, fast pages that assistants can read, structured information about the business,
-          and a <a href="/faq/">real FAQ</a> that answers the questions people actually ask. Try
-          it yourself: ask ChatGPT or Perplexity what Noven does and how much it costs, and see
-          what comes back.
-        </p>
-        <p>
-          [PLACEHOLDER: client case studies will be published here, with permission, as the first
-          engagements complete.]
-        </p>
+        <div data-reveal>
+          <p>
+            Noven is a new business, and we don't yet have client case studies to show you. We won't
+            invent any, and we'd encourage you to be suspicious of anyone in this field who shows
+            you numbers that can't be checked.
+          </p>
+          <p>
+            What we can show you is this website. It's built exactly the way we build for clients —
+            plain, fast pages that assistants can read, structured information about the business,
+            and a <a href="/faq/">real FAQ</a> that answers the questions people actually ask. Try
+            it yourself: ask ChatGPT or Perplexity what Noven does and how much it costs, and see
+            what comes back.
+          </p>
+          <p class="flag">
+            [PLACEHOLDER: client case studies will be published here, with permission, as the first
+            engagements complete.]
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="section">
-    <div class="wrap split">
-      <div>
+    <div class="wrap split split--sticky">
+      <div data-reveal>
+        <p class="tag">The numbers</p>
         <h2>What does it cost?</h2>
       </div>
-      <div>
+      <div data-reveal>
         <p>
-          One service, priced in plain numbers. It starts with a <strong>£30 audit</strong> of
-          where you currently show up. If there's work worth doing, the
-          <strong>£350 Foundation</strong> setup gets you visible, and a monthly plan from
-          <strong>£75</strong> keeps you that way. Full details, including what's in each part,
-          are on the <a href="/pricing/">pricing page</a>.
+          One service, priced in plain numbers. It starts with a
+          <strong>{money(audit.price)} audit</strong> of where you currently show up. If there's
+          work worth doing, the <strong>{money(foundation.price)} Foundation</strong> setup gets you
+          visible, and a monthly plan from <strong>{money(maintain.price)}</strong> keeps you that
+          way. Full details, including what's in each part, are on the
+          <a href="/pricing/">pricing page</a>.
         </p>
         <p>
           The audit is deliberately cheap so that finding out where you stand is an easy decision.
           If the audit shows you're already in good shape, we'll say so, and that's the end of it.
         </p>
-        <div class="cta-row">
-          <a class="btn" href="/contact/">Book the £30 audit</a>
-          <a href="/pricing/">See full pricing</a>
-        </div>
       </div>
     </div>
   </section>
