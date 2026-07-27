@@ -340,12 +340,21 @@ what's next. Newest at the top.
   what a machine reads, so the page speaks in two voices — Newsreader (serif)
   for everything meant for a human, IBM Plex Mono for everything meant for a
   machine, IBM Plex Sans between them.
-- **The signature is "the record"** — a panel on the homepage and pricing page
-  showing the facts exactly as an assistant reads them. It is generated from
-  `site/src/data/business.ts`, the same module that builds the JSON-LD, so the
-  visible panel and the structured data cannot drift apart. The homepage says
-  this out loud and invites the reader to check it, which is the only proof a
-  business with no case studies can honestly offer.
+- **The signature is the code block** — the homepage and pricing page show the
+  page's own JSON-LD, syntax-coloured and line-numbered. It is not a
+  representation of the structured data, it *is* the structured data: the
+  layout and the visible block render the same object through the same
+  serialiser, so on the homepage the block on screen is byte-for-byte the
+  block in `<head>`. The head JSON-LD is pretty-printed rather than minified
+  specifically so "view source and compare" survives someone actually doing
+  it. That is the only proof a business with no case studies can honestly
+  offer.
+  - Built from `src/lib/json-code.ts`, whose output is verified to match
+    `JSON.stringify(value, null, 2)` exactly. **If you change that file, check
+    that property still holds** — the site's central claim rests on it.
+  - The pricing block is labelled "abridged" because it shows the offers
+    without the surrounding Service fields. Keep that label if the contents
+    stay partial.
 - New `site/src/data/business.ts` is now the single source of truth for every
   business fact and price. **Change a price there, not in a page** — the
   pricing copy, the Offer structured data and the record panel all read from

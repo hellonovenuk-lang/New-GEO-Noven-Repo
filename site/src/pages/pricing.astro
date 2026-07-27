@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import Record from '../components/Record.astro';
-import { business, plan, money, monthlies, plans, offerSchema } from '../data/business';
+import Code from '../components/Code.astro';
+import { business, plan, money, monthlies, offerSchema } from '../data/business';
 
 const title = 'Pricing — Noven';
 const description =
@@ -23,11 +23,9 @@ const serviceSchema = {
   offers: offerSchema(),
 };
 
-// The same numbers that generate the Offer data above.
-const priceRecord = plans.map((p) => ({
-  key: p.name.toLowerCase(),
-  value: `${money(p.price)} ${p.cadence}`,
-}));
+// Just the offers, lifted out of the object above — the whole Service block
+// would bury the prices in surrounding boilerplate.
+const offersOnly = { '@type': 'Service', name: business.serviceName, offers: offerSchema() };
 ---
 
 <Base title={title} description={description} schema={[serviceSchema]}>
@@ -143,13 +141,15 @@ const priceRecord = plans.map((p) => ({
           </div>
           <div>
             <p>
-              These are the prices an AI assistant reads from this page — generated from the same
-              numbers as the list above, which is exactly the job Noven does for clients.
+              These are the prices an AI assistant reads from this page, written in the format
+              those systems are built to consume. It comes from the same numbers as the list above,
+              so the two can't disagree — which is exactly the job Noven does for clients.
             </p>
-            <Record
-              caption="Prices as an assistant reads them"
-              rows={priceRecord}
-              note="The prices above are what you pay. Noven isn't VAT registered, so there's no VAT to add. Monthly plans roll month to month — no long contracts."
+            <Code
+              caption="The prices, as an AI assistant reads them"
+              label="Noven's prices as JSON-LD offers"
+              data={offersOnly}
+              note="Abridged from this page's structured data — the offers, without the surrounding business details. The prices above are what you pay. Noven isn't VAT registered, so there's no VAT to add."
             />
             <p class="flag" style="margin-top: 1.5rem;">
               [PLACEHOLDER: confirm cancellation notice period.]

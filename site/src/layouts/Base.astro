@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import { business, plan, money } from '../data/business';
+import { organizationSchema } from '../data/schema';
+import { toSource } from '../lib/json-code';
 
 interface Props {
   title: string;
@@ -26,34 +28,10 @@ const isCurrent = (href: string) =>
 
 const audit = plan('audit');
 
-// Built from src/data/business.ts, the same module the visible record panels
-// read from — so the two can never disagree.
-const organizationSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  '@id': new URL('/#organization', Astro.site).href,
-  name: business.name,
-  url: Astro.site?.href,
-  logo: new URL('/logo.svg', Astro.site).href,
-  email: business.email,
-  contactPoint: {
-    '@type': 'ContactPoint',
-    contactType: 'sales and enquiries',
-    email: business.email,
-    areaServed: business.areaServed,
-    availableLanguage: 'English',
-  },
-  description: business.description,
-  founder: {
-    '@type': 'Person',
-    name: business.founder,
-  },
-  knowsAbout: [
-    'AI assistant visibility for businesses',
-    'How AI assistants recommend businesses',
-    'Structured business information',
-  ],
-};
+// The same object the homepage renders as a visible code block. Pretty-printed
+// rather than minified so that "view source and compare" is a real invitation
+// — the bytes in the head match the bytes on the page.
+const orgSchema = organizationSchema(Astro.site);
 ---
 
 <html lang="en-GB">
@@ -81,8 +59,8 @@ const organizationSchema = {
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap"
     />
 
-    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
-    {schema.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+    <script type="application/ld+json" set:html={toSource(orgSchema)} />
+    {schema.map((obj) => <script type="application/ld+json" set:html={toSource(obj)} />)}
 
     {/* Set before first paint, so reveal-state styles never flash. */}
     <script is:inline>

@@ -1,8 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
-import Record from '../components/Record.astro';
+import Code from '../components/Code.astro';
 import Statement from '../components/Statement.astro';
-import { business, plan, money } from '../data/business';
+import { plan, money } from '../data/business';
+import { organizationSchema } from '../data/schema';
 
 const title = 'Noven — Get found when customers ask AI who to use';
 const description =
@@ -12,17 +13,9 @@ const audit = plan('audit');
 const foundation = plan('foundation');
 const maintain = plan('maintain');
 
-// Read from the same module that builds this page's structured data, so the
-// panel below shows what an assistant genuinely reads here.
-const record = [
-  { key: 'name', value: business.name },
-  { key: 'what it does', value: business.serviceName },
-  { key: 'run by', value: business.founder },
-  { key: 'based in', value: business.basedInShort },
-  { key: 'serves', value: business.areaServedLabel },
-  { key: 'starts at', value: `${money(audit.price)} (${audit.name.toLowerCase()})` },
-  { key: 'contact', value: business.email },
-];
+// Not a copy of the structured data — the structured data. The layout renders
+// this exact object into the page head.
+const orgSchema = organizationSchema(Astro.site);
 ---
 
 <Base title={title} description={description}>
@@ -57,10 +50,11 @@ const record = [
       </div>
 
       <div data-reveal>
-        <Record
-          caption="What an assistant reads on this page"
-          rows={record}
-          note="Every line here is generated from the same file as this page's structured data, so what you see and what a machine reads cannot drift apart. Ask an assistant what Noven does and what it charges, then compare."
+        <Code
+          caption="What an AI assistant reads on this page"
+          label="Noven's structured data, as JSON-LD"
+          data={orgSchema}
+          note="This is the real thing — the same block sits in this page's source, and it's the part a visitor never sees. Most business websites have nothing here at all."
         />
       </div>
     </div>

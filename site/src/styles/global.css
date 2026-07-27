@@ -705,34 +705,32 @@ li a:hover {
 
 /* ------------------------------------------------------------- 8 the record */
 
-/* The signature. Every fact shown here is read straight from the same data
-   that generates this page's structured data, so the panel is not an
-   illustration of the product — it is the product, on display. */
-.record {
+/* The signature. This is the page's own structured data, rendered as the code
+   it actually is — same object, same formatting as the block in the <head>.
+   It is not an illustration of the product; it is the product, on display. */
+.code {
   /* figure carries a 40px UA margin — reset it or the panel loses 80px. */
   margin: 0;
   border: 1px solid var(--rule);
   border-radius: 3px;
-  background: var(--paper);
+  background: var(--paper-2);
   font-family: var(--mono);
-  font-size: 0.8rem;
-  line-height: 1.55;
-  max-width: 32rem;
+  max-width: 34rem;
   overflow: hidden;
 }
 
-.record-head {
+.code-head {
   display: flex;
   align-items: center;
   gap: 0.6rem;
   padding: 0.7rem 1rem;
   border-bottom: 1px solid var(--rule);
-  background: var(--paper-2);
   color: var(--ink-faint);
   font-size: 0.75rem;
+  line-height: 1.4;
 }
 
-.record-dot {
+.code-dot {
   width: 5px;
   height: 5px;
   border-radius: 50%;
@@ -740,84 +738,147 @@ li a:hover {
   flex: none;
 }
 
-.record-body {
-  margin: 0;
-  padding: 0.35rem 0;
+.code-scroll {
+  max-height: min(26rem, 62vh);
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: var(--paper);
 }
 
-.record-row {
+.code-scroll:focus-visible {
+  outline-offset: -2px;
+}
+
+.code-pre {
+  margin: 0;
+  padding: 0.9rem 0;
+  font-size: 0.76rem;
+  line-height: 1.75;
+  counter-reset: codeline;
+}
+
+/* Line numbers come from a counter, so selecting the block copies the code
+   and not the numbering. */
+.code-line {
   display: grid;
-  grid-template-columns: 7.25rem minmax(0, 1fr);
-  gap: 0.5rem 0.9rem;
-  padding: 0.5rem 1rem;
-  border-top: 1px solid var(--rule-soft);
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 0.75rem;
+  padding-right: 1rem;
 }
 
-.record-row:first-child {
-  border-top: none;
+/* Long string values wrap inside the code column rather than forcing the
+   whole block sideways. */
+.code-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
-.record-key {
+/* Line numbers stay the lightest thing in the block, but still clear AA —
+   they are text, and code blocks conventionally under-serve them. */
+.code-line::before {
+  counter-increment: codeline;
+  content: counter(codeline);
+  text-align: right;
+  color: var(--ink-faint);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.code-line:hover {
+  background: color-mix(in srgb, var(--brass) 7%, transparent);
+}
+
+/* Syntax colours. Keys brass, values ink, structure faint — the same three
+   voices the rest of the page uses. */
+.tk-key {
   color: var(--brass);
-  margin: 0;
-  overflow-wrap: anywhere;
 }
 
-.record-val {
+.tk-meta {
+  color: var(--navy);
+  font-weight: 500;
+}
+
+.tk-str {
   color: var(--ink);
-  margin: 0;
-  overflow-wrap: anywhere;
 }
 
-.record-foot {
-  padding: 0.7rem 1rem;
+.tk-num,
+.tk-bool,
+.tk-null {
+  color: var(--navy);
+}
+
+.tk-punct,
+.tk-indent {
+  color: var(--ink-soft);
+}
+
+.code-foot {
+  padding: 0.75rem 1rem;
   border-top: 1px solid var(--rule);
-  background: var(--paper-2);
   color: var(--ink-faint);
   font-size: 0.72rem;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
-.record-foot a {
+.code-foot a {
   color: inherit;
 }
 
-@media (max-width: 30rem) {
-  .record-row {
-    grid-template-columns: 1fr;
-    gap: 0.15rem;
-  }
-}
-
 /* On the navy ground. */
-.section--invert .record,
-.record--invert {
-  background: color-mix(in srgb, var(--paper) 5%, transparent);
+.section--invert .code {
+  background: color-mix(in srgb, #000 18%, transparent);
   border-color: var(--inv-rule);
 }
 
-.section--invert .record-head,
-.section--invert .record-foot,
-.record--invert .record-head,
-.record--invert .record-foot {
-  background: transparent;
+.section--invert .code-scroll {
+  background: color-mix(in srgb, #000 12%, transparent);
+}
+
+.section--invert .code-head,
+.section--invert .code-foot {
   border-color: var(--inv-rule);
   color: var(--inv-faint);
 }
 
-.section--invert .record-row,
-.record--invert .record-row {
-  border-color: color-mix(in srgb, var(--inv-rule) 60%, transparent);
+.section--invert .code-line::before {
+  color: var(--inv-faint);
 }
 
-.section--invert .record-key,
-.record--invert .record-key {
+.section--invert .code-line:hover {
+  background: color-mix(in srgb, var(--inv-brass) 10%, transparent);
+}
+
+.section--invert .tk-key {
   color: var(--inv-brass);
 }
 
-.section--invert .record-val,
-.record--invert .record-val {
+.section--invert .tk-str {
   color: var(--inv-text);
+}
+
+.section--invert .tk-meta,
+.section--invert .tk-num,
+.section--invert .tk-bool,
+.section--invert .tk-null {
+  color: #9fd0ff;
+}
+
+.section--invert .tk-punct,
+.section--invert .tk-indent {
+  color: var(--inv-faint);
+}
+
+@media (max-width: 30rem) {
+  .code-pre {
+    font-size: 0.72rem;
+  }
+
+  .code-line {
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+    gap: 0.5rem;
+  }
 }
 
 /* ------------------------------------------------- 9 page furniture */
