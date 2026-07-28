@@ -25,9 +25,10 @@ The site now carries real business facts throughout: contact email, the Wirral,
 Kieran Smith trading as a sole trader, no VAT, one working day for the audit,
 two working days to reply. The domain `novenstudio.co.uk` is confirmed and set.
 
-The founder bio and the cancellation terms are now written. Two supporting
-values are wired but unset — the founder's photograph and LinkedIn URL — and
-the address for service is deliberately deferred until we're closer to revenue.
+The founder bio and the cancellation terms are now written, and the founder's
+photograph is committed and live on the About page. One supporting value is
+still wired but unset — the LinkedIn URL — and the address for service is
+deliberately deferred until we're closer to revenue.
 
 **Biggest remaining blocker:** the site isn't deployed, so nobody can read it.
 The domain currently serves the old website, so switching it over is the next
@@ -63,16 +64,17 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
       date; the work itself depends on client access and information
 - [x] **Founder bio** — written and live on the About page: nearly ten years in
       operations at a global shipping company, and finding this problem by
-      chance while building websites. Two supporting pieces are still open:
+      chance while building websites. One supporting piece is still open:
   - [ ] **LinkedIn URL** — set `founderLinkedIn` in `src/data/business.ts`.
         One value, two uses: it links from the About page and joins the
         founder in the structured data as `sameAs`. Nearly ten years at one
         employer is the most checkable thing we have, and right now a cautious
         reader has no way to check it.
-  - [ ] **Founder photograph** — add the file to `site/public/` and set
-        `founderPhoto` in `src/data/business.ts`. The About page has a place
-        waiting for it under "Who's behind it?", and the schema picks it up as
-        the Person's `image`. Owner has supplied one; it needs committing.
+  - [x] **Founder photograph** — the owner's photograph is committed at
+        `site/public/founder-portrait.webp` (880x1100) and set as
+        `founderPhoto` in `src/data/business.ts`. It shows under "Who's behind
+        it?" on the About page and joins the founder in the structured data as
+        the Person's `image`.
 - [x] **Former employer named** — Maersk, confirmed by the owner. It reads in
       the bio and appears as the founder's `alumniOf` in the structured data,
       both from `founderFormerEmployer` in `src/data/business.ts`. Plain text
@@ -423,7 +425,28 @@ Written down rather than guessed at. Answer them as they become relevant.
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
 
-### 2026-07-28 (latest — the link card, and the record's wide-screen home)
+### 2026-07-28 (latest — the founder photograph)
+- **The founder's photograph is in.** The owner's file lives in the separate
+  `hellonovenuk-lang/Noven` asset repo at
+  `public/brand/website/founder-portrait.webp`; it is copied here byte-for-byte
+  as `site/public/founder-portrait.webp` and set as `founderPhoto` in
+  `src/data/business.ts`. 880×1100, 48 KB, already the 4:5 the About page
+  assumed.
+- Nothing else needed changing, which was the point of how it was built: one
+  value in `business.ts` turned on the portrait under "Who's behind it?", the
+  `image` on the founder's Person in the structured data, and the removal of
+  the on-page placeholder flag — all three from that single edit. Verified in
+  the built output rather than assumed.
+- The `<img>` now carries the file's real intrinsic dimensions instead of the
+  600×750 stand-in, plus `loading="lazy"` and `decoding="async"`. Same ratio
+  either way, so no layout shift; it's just no longer a guess. Checked the
+  rendered section at 1280px and 390px.
+- **Worth remembering:** the brand and image assets live in a *second* repo
+  (`hellonovenuk-lang/Noven`), not this one. Asset paths the owner gives are
+  likely relative to that repo's root, not this site's.
+- **Still outstanding:** the LinkedIn URL — now the last unset founder fact.
+
+### 2026-07-28 (the link card, and the record's wide-screen home)
 - The site now ships a link-preview image, closing the gap found during the
   redesign: `site/public/og.png`, 1200×630, declared on every page. Sharing a
   link to LinkedIn or WhatsApp now shows the brand instead of bare text.
