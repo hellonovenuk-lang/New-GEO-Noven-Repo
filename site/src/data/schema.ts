@@ -24,6 +24,18 @@ export function organizationSchema(site: URL | undefined) {
     founder: {
       '@type': 'Person',
       name: business.founder,
+      // A statement about the founder, not a claim of any relationship between
+      // the two businesses: `alumniOf` nested under `founder` says one person
+      // used to work somewhere, which is all it says.
+      alumniOf: {
+        '@type': 'Organization',
+        name: business.founderFormerEmployer,
+      },
+      // Only stated once true. An empty sameAs or a photo that doesn't exist
+      // would be exactly the kind of unreliable business information we're
+      // paid to remove from other people's sites.
+      ...(business.founderPhoto ? { image: at(business.founderPhoto) } : {}),
+      ...(business.founderLinkedIn ? { sameAs: [business.founderLinkedIn] } : {}),
     },
     areaServed: business.areaServed,
     contactPoint: {

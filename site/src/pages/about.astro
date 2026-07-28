@@ -96,6 +96,13 @@ const description =
     <div class="wrap split">
       <div data-reveal>
         <h2>Who's behind it?</h2>
+        {
+          business.founderPhoto && (
+            <figure class="founder-photo">
+              <img src={business.founderPhoto} alt={business.founder} width="600" height="750" />
+            </figure>
+          )
+        }
       </div>
       <div>
         <div data-reveal>
@@ -103,11 +110,36 @@ const description =
             Noven is run by {business.founder}, from {business.basedIn}. One person does the work —
             when you email Noven, you're emailing him, and the report you get back is one he wrote.
           </p>
-          <p class="flag">
-            [PLACEHOLDER: Kieran's background and relevant experience, and what led him to start
-            Noven — two or three sentences. This is the part a cautious buyer reads hardest, so it
-            needs to be specific and true. A photograph is optional but helps.]
+          <p>
+            Kieran spent nearly ten years in operations at {business.founderFormerEmployer}, making
+            sure containers were sent and arrived as planned. That work is mostly about keeping
+            information accurate and consistent across systems that don't naturally agree, which is
+            a large part of what this work is too. He came across this problem by chance while
+            building a few websites, and found it interesting enough to build a business around.
+            {
+              business.founderLinkedIn && (
+                <>
+                  {' '}The full work history is on <a href={business.founderLinkedIn}>LinkedIn</a>.
+                </>
+              )
+            }
           </p>
+          {
+            !business.founderLinkedIn && (
+              <p class="flag">
+                [PLACEHOLDER: LinkedIn profile URL — set `founderLinkedIn` in
+                src/data/business.ts. It links here and joins the structured data as `sameAs`.]
+              </p>
+            )
+          }
+          {
+            !business.founderPhoto && (
+              <p class="flag">
+                [PLACEHOLDER: founder photograph — add the file to site/public and set
+                `founderPhoto` in src/data/business.ts.]
+              </p>
+            )
+          }
           <p>
             Noven works with clients across the {business.areaServedLabel}, and the work is done
             remotely — there's nothing about it that needs us in the same room.

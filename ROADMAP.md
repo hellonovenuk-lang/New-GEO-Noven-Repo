@@ -25,12 +25,20 @@ The site now carries real business facts throughout: contact email, the Wirral,
 Kieran Smith trading as a sole trader, no VAT, one working day for the audit,
 two working days to reply. The domain `novenstudio.co.uk` is confirmed and set.
 
-Three things are still missing: the founder bio, a cancellation notice period,
-and an address for service of documents.
+The founder bio and the cancellation terms are now written. Two supporting
+values are wired but unset — the founder's photograph and LinkedIn URL — and
+the address for service is deliberately deferred until we're closer to revenue.
 
 **Biggest remaining blocker:** the site isn't deployed, so nobody can read it.
 The domain currently serves the old website, so switching it over is the next
 real step — and the thing that makes Noven exist publicly.
+
+**How the remaining work is sequenced.** Nothing on the site takes a payment,
+so the site can go public before the money and legal plumbing exists. Section
+1c holds everything that must be true before the first person *pays* us, which
+is a later moment than launch — including the bank account and the service
+address, both of which have lead times and shouldn't wait for the day a client
+says yes.
 
 ---
 
@@ -53,17 +61,53 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
 - [x] Audit turnaround — one working day from confirming scope and payment
 - [x] Foundation delivery — we reply within two working days with a plan and a
       date; the work itself depends on client access and information
-- [ ] **Founder bio** — still a placeholder on the About page. Two or three
-      sentences on background and what led to Noven. This is the one a
-      cautious buyer reads hardest, so it's worth doing properly.
-- [ ] **Cancellation notice period** for monthly plans (appears in three
-      places: pricing, FAQ, how it works)
-- [ ] **Address for service of documents.** Trading under a business name as a
-      sole trader carries a legal disclosure requirement to show your name and
-      an address where documents can be served, including on the website. A
-      home address is uncomfortable; the usual answers are a virtual office
-      address or a PO box style service. Worth 20 minutes of checking before
-      launch — it's the only outstanding item with a legal edge to it.
+- [x] **Founder bio** — written and live on the About page: nearly ten years in
+      operations at a global shipping company, and finding this problem by
+      chance while building websites. Two supporting pieces are still open:
+  - [ ] **LinkedIn URL** — set `founderLinkedIn` in `src/data/business.ts`.
+        One value, two uses: it links from the About page and joins the
+        founder in the structured data as `sameAs`. Nearly ten years at one
+        employer is the most checkable thing we have, and right now a cautious
+        reader has no way to check it.
+  - [ ] **Founder photograph** — add the file to `site/public/` and set
+        `founderPhoto` in `src/data/business.ts`. The About page has a place
+        waiting for it under "Who's behind it?", and the schema picks it up as
+        the Person's `image`. Owner has supplied one; it needs committing.
+- [x] **Former employer named** — Maersk, confirmed by the owner. It reads in
+      the bio and appears as the founder's `alumniOf` in the structured data,
+      both from `founderFormerEmployer` in `src/data/business.ts`. Plain text
+      only: never the Maersk logo, never anything implying they endorse Noven.
+- [x] **Cancellation terms** — decided and live in all three places (pricing,
+      FAQ, how it works): monthly plans roll month to month, no minimum term,
+      **no notice period**. Tell us before the next payment date and there
+      isn't one; the month already paid for runs to the end, with no
+      part-month refunds.
+      - Chosen against the agency norm (3-month minimum plus 30 days' notice)
+        because that norm belongs to £2,000–8,000/month retainers with staff
+        allocated. At £75–250 a notice period costs more in friction and
+        chasing than it can ever recover, and the Foundation being a separate
+        one-off already covers the front-loaded-work risk.
+      - There is no statutory cooling-off period to satisfy: the Consumer
+        Contracts Regulations 2013 cover consumers, not businesses buying in
+        the course of business, so these terms are purely ours to set.
+      - It also survives the undecided payment mechanism in 1c — it reads the
+        same whether collection ends up manual or automatic.
+      - If clients ever do start taking a month and leaving, add a minimum term
+        *then*. Not before we have met the problem.
+- [ ] **Address for service of documents — deferred pre-revenue, by decision.**
+      Trading under a business name as a sole trader carries a legal disclosure
+      requirement to show your name and an address where documents can be
+      served, including on the website. The requirement is an address where
+      post reaches us — **not** necessarily a home address, so a virtual office
+      or service-address provider satisfies it.
+      **Do not use the home address here.** This site is built so AI crawlers
+      can read the business facts and repeat them confidently — explicit
+      crawler permissions, structured data on every page, a sitemap. That is
+      the product, and it works against us on this one field: a home address in
+      that footer gets crawled, cached, repeated by assistants and swept up by
+      anything that scrapes structured markup. It is also a one-way door —
+      the footer can be edited, the indexes and archives cannot.
+      Scheduled in 1c. The footer placeholder stays visible until it's set.
 
 ### 1b. Domain and hosting
 
@@ -82,23 +126,68 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
       site starts hitting a 404
 - [ ] Consider a `hello@novenstudio.co.uk` address to replace the Gmail one
 
-### 1c. Taking money
+### 1c. Between launch and the first payment
 
-The site says payment is arranged "by reply". Decide the actual mechanism:
+**The decision, made deliberately:** the site goes public before the money and
+legal plumbing is finished. Nothing on the site takes a payment — every page
+asks people to email — so publishing commits us to nothing we cannot honour.
+Everything in this section has to be true before the first person actually
+*pays* us, which is a different and later moment.
 
-- [ ] Business bank account in place
+This is the one place the phase definitions don't line up: "Phase 1 is done
+when a stranger can read the site, understand the offer, email us, and pay us
+£30." The site can go live before that is true. This section is the rest of it.
+
+**The trigger is an event, not a date.** "Before the first payment" could be a
+fortnight away if outreach lands. Two items below cannot be started on the day
+someone says yes, so they need starting first.
+
+#### Has a lead time — start these before they're needed
+
+- [ ] **Business bank account.** Anything from a day with a digital provider to
+      several weeks with a high street bank, so it's the long pole. Worth
+      checking whether the existing personal account's terms permit business
+      use in the meantime — most banks' terms don't, and a £30 transfer is
+      still business use.
+- [ ] **Address for service of documents.** Deliberately deferred pre-revenue
+      (see 1a). A virtual office or service-address provider satisfies the
+      disclosure requirement without publishing a home address, and runs about
+      £20–60/year. **This one should land before we are visibly trading**, not
+      merely before the first payment — and see the note in 1a about why this
+      site in particular is the wrong place for a home address.
+
+#### Before money changes hands
+
 - [ ] How the £30 audit gets paid — bank transfer, a payment link, or an invoice
 - [ ] How the £350 Foundation gets paid
 - [ ] How monthly plans get collected (this matters most — manual collection
-      stops being viable somewhere around client five)
+      stops being viable somewhere around client five). Note the cancellation
+      terms in 1a were written to read the same whichever way this goes, so
+      this decision doesn't reopen the copy.
 - [ ] A simple invoice or receipt we can send
 
-### 1d. Legal basics
+#### Before we hold a client's information
+
+- [ ] Privacy notice page — we'll be handling client business data and email.
+      Due before the first client sends us anything, not before launch, since
+      the site collects nothing on its own.
+- [ ] Terms of service, or a short plain-English version of what we promise.
+      Most of it is already written across the site — the cancellation terms,
+      "we don't guarantee outcomes", "we don't build websites". This is mostly
+      a job of collecting what we've already committed to in one place.
+
+#### Has its own legal clock
+
+- [ ] **Register as self-employed with HMRC.** The general rule is registration
+      for Self Assessment by 5 October following the end of the tax year in
+      which trading began — so trading started in 2026/27 means October 2027.
+      There is also a £1,000 trading allowance below which registration may not
+      be required at all, which may cover the first few months. Both worth
+      confirming against current HMRC guidance rather than taking from here.
+
+### 1d. Standing decisions, and things to keep true
 
 - [x] Sole trader vs limited company — sole trader to begin with
-- [ ] Privacy notice page — we'll be handling client business data and email
-- [ ] Terms of service, or a short plain-English version of what we promise
-- [ ] Register as self-employed with HMRC if not already done
 - [ ] Keep an eye on the VAT threshold as revenue grows — not a launch concern,
       but the pricing page states we aren't registered, so it has to stay true
 
@@ -334,7 +423,72 @@ Written down rather than guessed at. Answer them as they become relevant.
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
 
-### 2026-07-27 (latest — premium redesign)
+### 2026-07-28 (latest — the link card, and the record's wide-screen home)
+- The site now ships a link-preview image, closing the gap found during the
+  redesign: `site/public/og.png`, 1200×630, declared on every page. Sharing a
+  link to LinkedIn or WhatsApp now shows the brand instead of bare text.
+- It's rendered from `assets/og/og.html` by headless Chromium — the same
+  approach as the homepage animation, and the same materials: brand navy, warm
+  white, the committed wordmark referenced as-is, and the homepage headline in
+  Newsreader. **The headline is deliberately duplicated there** — if it changes
+  on the homepage, change `og.html` and re-render (command in
+  `assets/og/README.md`).
+- The structured-data panel decision is made and done: on wide screens it lives
+  in "Where's the proof?", directly under the paragraph that claims
+  "structured information about the business" — the claim above, the evidence
+  below — using the navy-ground code styling `global.css` already had waiting.
+  Below 60rem it stays hidden, because the hero shows the record there. The
+  page holds exactly one visible copy of the record at every width; the two
+  breakpoints are paired, and both files say so in comments.
+- Verified in the built output, not just the source: at 1440px the hero shows
+  the film and the proof section shows the record; at 700px the hero shows the
+  record and the proof section shows none.
+- **The founder bio is written**, from the owner's own facts: nearly ten years
+  in operations at a global shipping company, and coming across this problem by
+  chance while building a few websites. The bridge between the two is real
+  rather than decorative — shipping operations is largely about keeping
+  information consistent across systems that don't agree, which is a fair
+  description of this work too. It deliberately doesn't claim a marketing
+  background, because there isn't one, and the page around it already trades on
+  saying so.
+- **Maersk is named.** Vagueness about the one checkable fact we have would
+  have contradicted the argument the rest of the site makes. It also appears as
+  the founder's `alumniOf` in the structured data — nested under `founder`, so
+  it says one person used to work there and nothing more. Verified after the
+  change that both homepage code blocks are still byte-identical to the JSON-LD
+  in the head, which is the property the whole design rests on.
+- Two supporting facts are wired but unset: `founderLinkedIn` and
+  `founderPhoto` in `src/data/business.ts`. Both are null, and everything that
+  consumes them is conditional — no empty `sameAs`, no broken image, and a
+  loud flag on the page until each is supplied. Setting either one value
+  updates both the page and the structured data.
+- **Cancellation terms written** — see 1a. Stated once, the same way, in all
+  three places.
+- **Found while doing it:** the cancellation placeholder was being published
+  into the FAQPage structured data, because the FAQ answers feed both the
+  visible page and the JSON-LD from one array. So `[PLACEHOLDER: confirm
+  cancellation notice period.]` was in the machine-readable answer an assistant
+  reads. Fixed by the same edit. Worth remembering that **anything written into
+  `faqs` in `faq.astro` is published to assistants**, not just to readers — the
+  coupling is the point of the design, and it cuts both ways.
+- **The roadmap is now sequenced around launch rather than around topic.** New
+  section 1c, "Between launch and the first payment", replaces the old "Taking
+  money" and "Legal basics" lists. The insight worth keeping: the site takes no
+  payments and collects nothing, so publishing it commits us to nothing we
+  cannot honour — but the bank account and the service address both have lead
+  times, so "do it when someone says yes" is too late for those two.
+- **Address for service deferred pre-revenue, by the owner's decision.** The
+  reasoning is written into 1a so it isn't relitigated: the requirement is an
+  address where post reaches us, not a home address, and this site is
+  specifically the wrong place to publish a home one — everything that makes it
+  good at being read by assistants makes that field harder to take back.
+- **Still outstanding:** founder photo and LinkedIn URL (both wired, waiting on
+  values), the mobile cut of the animation, and the email banner's wording.
+- **Next session:** Netlify. Point it at the repo, decide apex vs www so the
+  canonicals and sitemap match, read the preview end to end, then switch the
+  domain from the old site.
+
+### 2026-07-27 (premium redesign)
 - Reshaped the whole site to feel like a top-end firm rather than a document.
   The design idea: this business sells the gap between what a person reads and
   what a machine reads, so the page speaks in two voices — Newsreader (serif)

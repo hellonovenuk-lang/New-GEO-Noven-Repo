@@ -873,6 +873,21 @@ li a:hover {
   color: inherit;
 }
 
+/* The record's home on wide screens, inside "Where's the proof?". Paired with
+   the hero: below 60rem the hero shows the record and this stays hidden; at
+   60rem and up the hero shows the film and the record appears here. Keep the
+   two breakpoints in step or the page shows the record twice, or not at all. */
+.proof-record {
+  display: none;
+}
+
+@media (min-width: 60rem) {
+  .proof-record {
+    display: block;
+    margin-top: var(--s5);
+  }
+}
+
 /* On the navy ground. */
 .section--invert .code {
   background: color-mix(in srgb, #000 18%, transparent);
@@ -1256,6 +1271,23 @@ li a:hover {
 
 .section--invert .ticks li::before {
   background: var(--inv-brass);
+}
+
+/* The founder's photograph, sat under the heading it belongs to rather than
+   floated beside the prose — the left column of that split is otherwise empty
+   navy, and a face is the right thing to put in it. Modest on purpose: this is
+   a one-person business being plain about it, not a profile page. */
+.founder-photo {
+  margin: var(--s5) 0 0;
+  max-width: 15rem;
+}
+
+.founder-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+  border: 1px solid var(--inv-rule);
 }
 
 /* Unresolved facts. Deliberately loud — these are for the owner, not the
