@@ -434,6 +434,15 @@ questions — all on the client's existing site. We don't build websites.
 
 ### 3c. Monthly plans (£75 / £125 / £250)
 
+**Proposed in `ops/service-tiers.md` — written, not yet decided or applied.**
+Three verbs rather than three intensities: Maintain holds your position, Grow
+closes the gaps, Lead beats the competitors being named ahead of you. Question
+counts double at each step (10 / 25 / 50), which is checkable in a way "faster
+pace" isn't. The upgrade engine is the monthly record itself: it reports the gaps
+and doesn't close them, so the client sees the same gap every month and nobody
+has to sell anything. The file also carries the proposed copy for the pricing
+page and `business.ts`, awaiting the owner's review.
+
 - [ ] Define what actually happens each month at each level, concretely enough
       that a client would recognise the value
 - [ ] Decide how we check and report visibility each month
