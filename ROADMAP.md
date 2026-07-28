@@ -69,8 +69,23 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
       the bio and appears as the founder's `alumniOf` in the structured data,
       both from `founderFormerEmployer` in `src/data/business.ts`. Plain text
       only: never the Maersk logo, never anything implying they endorse Noven.
-- [ ] **Cancellation notice period** for monthly plans (appears in three
-      places: pricing, FAQ, how it works)
+- [x] **Cancellation terms** — decided and live in all three places (pricing,
+      FAQ, how it works): monthly plans roll month to month, no minimum term,
+      **no notice period**. Tell us before the next payment date and there
+      isn't one; the month already paid for runs to the end, with no
+      part-month refunds.
+      - Chosen against the agency norm (3-month minimum plus 30 days' notice)
+        because that norm belongs to £2,000–8,000/month retainers with staff
+        allocated. At £75–250 a notice period costs more in friction and
+        chasing than it can ever recover, and the Foundation being a separate
+        one-off already covers the front-loaded-work risk.
+      - There is no statutory cooling-off period to satisfy: the Consumer
+        Contracts Regulations 2013 cover consumers, not businesses buying in
+        the course of business, so these terms are purely ours to set.
+      - It also survives the undecided payment mechanism in 1c — it reads the
+        same whether collection ends up manual or automatic.
+      - If clients ever do start taking a month and leaving, add a minimum term
+        *then*. Not before we have met the problem.
 - [ ] **Address for service of documents.** Trading under a business name as a
       sole trader carries a legal disclosure requirement to show your name and
       an address where documents can be served, including on the website. A
@@ -386,8 +401,17 @@ what's next. Newest at the top.
   consumes them is conditional — no empty `sameAs`, no broken image, and a
   loud flag on the page until each is supplied. Setting either one value
   updates both the page and the structured data.
-- **Still outstanding, unchanged:** cancellation notice period, address for
-  service, the mobile cut of the animation, and the email banner's wording.
+- **Cancellation terms written** — see 1a. Stated once, the same way, in all
+  three places.
+- **Found while doing it:** the cancellation placeholder was being published
+  into the FAQPage structured data, because the FAQ answers feed both the
+  visible page and the JSON-LD from one array. So `[PLACEHOLDER: confirm
+  cancellation notice period.]` was in the machine-readable answer an assistant
+  reads. Fixed by the same edit. Worth remembering that **anything written into
+  `faqs` in `faq.astro` is published to assistants**, not just to readers — the
+  coupling is the point of the design, and it cuts both ways.
+- **Still outstanding:** address for service, founder photo and LinkedIn URL,
+  the mobile cut of the animation, and the email banner's wording.
 
 ### 2026-07-27 (premium redesign)
 - Reshaped the whole site to feel like a top-end firm rather than a document.
