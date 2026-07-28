@@ -426,7 +426,10 @@ questions — all on the client's existing site. We don't build websites.
 
 - [ ] Write the Foundation checklist, mapped to what the audit found
 - [ ] Work out how we get access to a client's website safely, and what we do
-      when we can't (their site is on a platform we can't edit)
+      when we can't (their site is on a platform we can't edit). **Ask for it in
+      two stages:** the Foundation asks for access *to do the setup*; taking a
+      monthly plan is where we ask to keep it. A "no" to the second shouldn't
+      threaten the first. See `ops/service-tiers.md` section 3.
 - [ ] Decide what happens when the client's site is too broken for the
       Foundation to work — the audit is supposed to say so honestly
 - [ ] Agree what we hand over at the end, and how we show what changed
@@ -451,9 +454,20 @@ has to sell anything.
       are the numbers that check confirms or changes. **The Maintain figure is
       the one that matters most:** at an hour a month it scales past twenty
       clients, at three hours it caps the business around eight.
-- [ ] **Decide who publishes the Grow and Lead answer pages** — us directly, or
-      us writing and the client publishing. Changes the access we need and the
-      time each page takes. Same open question as the client-access item in 3b.
+- [x] **Decided who publishes the Grow and Lead answer pages: we do.** The
+      client approves the words, we publish them. Structured data doesn't
+      survive copy-paste, so the client-publishes path costs us more time and
+      delivers a worse page. Reasoning and the arguments against are in
+      `ops/service-tiers.md` section 3.
+- [x] **Defined what an answer page is** — not a blog post, not an FAQ entry:
+      one question, one permanent page, one URL, built from facts only that
+      business has. It's the Foundation's fourth bullet continued monthly, which
+      means every Foundation is practice for Grow. Guard rail against sprawl and
+      the full definition are in `ops/service-tiers.md` section 3.
+- [ ] **Write the publishing fallback into onboarding** — where we can't get
+      publish rights, we hand over a complete file with the structured data
+      intact plus a one-page paste instruction, then verify it live afterwards.
+      That verification is billable time inside the plan, not a favour.
 - [ ] Decide how we check and report visibility each month
 - [ ] Write the monthly client update — short and readable
 - [ ] Define the quarterly review promised on the Lead plan
@@ -500,7 +514,44 @@ Written down rather than guessed at. Answer them as they become relevant.
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
 
-### 2026-07-28 (latest — the monthly levels say what they actually are)
+### 2026-07-28 (latest — what an answer page is, and who publishes it)
+- **"Answer page" was doing undefined work in the Grow and Lead descriptions.**
+  Now defined: not a blog post (dated, buried by the next one, decays), not an
+  FAQ entry (one line among twenty on a page that's strongly about nothing).
+  **One question, one permanent page, one URL**, built from facts only that
+  business has. Written up in `ops/service-tiers.md` section 3.
+- **It isn't a new product — it's the Foundation's fourth bullet continued
+  monthly.** That matters for the owner's confidence: every Foundation delivered
+  is practice for Grow, and no new skill has to appear between them.
+- **Decided: we publish the pages ourselves.** The client approves the words, we
+  publish them. **Structured data does not survive copy-paste** — a visual
+  editor strips the JSON-LD, the heading hierarchy and the internal links, so
+  what lands is prose with the product removed. We'd have to verify it
+  afterwards anyway, which makes the client-publishes path *more* of our time
+  for a worse page, and it's the exact mechanism by which facts drift.
+- **The arguments against are real and are recorded, not dismissed** — ongoing
+  publish rights is a bigger ask than one-off Foundation access; twenty live
+  admin logins is a security surface that pulls on the ICO obligations in 1c;
+  blame attaches to whoever touched the site last; some platforms and some
+  regulated clients simply won't allow it. Hence a named fallback and a
+  two-stage access request rather than a flat rule.
+- **No site copy changed, and that was checked rather than assumed.** The FAQ
+  already says *"You will not need to write anything yourself unless you want
+  to"* and asks for *"access to update your website (or a contact for whoever
+  manages it)"* — both paths were already anticipated, so the decision needed no
+  new promise. "We don't build websites" in how-it-works still holds: publishing
+  a page on a site someone already has is not building them one.
+- **A guard rail went in with it.** Two pages a month at Lead is twenty-four a
+  year. If we can't write ~400 words that only that business could write, it's
+  an FAQ line, not a page. Thin pages hurt.
+- **Merged to `main` at the owner's request**, again overriding the standing
+  "finish on an unmerged branch" rule in `CLAUDE.md`. Explicit call, not a new
+  default.
+- **Next session:** unchanged — the LinkedIn URL (steps in 1a), then Netlify:
+  apex vs www, read the preview end to end, then switch the domain off the old
+  site. Zoho Mail's DNS records are worth doing in that same sitting.
+
+### 2026-07-28 (the monthly levels say what they actually are)
 - **The three monthly plans now do three different jobs rather than three
   intensities of one job.** Maintain holds the position the Foundation built,
   Grow closes the gaps, Lead gets you named ahead of competitors rather than
