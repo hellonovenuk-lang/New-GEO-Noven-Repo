@@ -3,8 +3,9 @@
 **Internal document.** Decides what we deliver at each price, how long each one
 is allowed to take, and why a client would move up. Written 2026-07-28.
 
-**Status: proposed, not live.** The copy in section 4 has not been applied to the
-site. Nothing here is committed until the owner says so.
+**Status: live as of 2026-07-28.** The copy in section 4 is applied to the
+site. The question counts and time budgets remain estimates until the first
+delivery is timed — see section 8.
 
 This closes the open item in roadmap 3c — "define what actually happens each
 month at each level, concretely enough that a client would recognise the value."
@@ -53,8 +54,8 @@ Each level is a different thing the client wants, not more of the same thing.
 | Grow | **Expand** | Close the gaps — show up for questions you currently miss. |
 | Lead | **Compete** | Be named *instead of* the competitors currently named ahead of you. |
 
-"Faster pace and broader coverage" — the current Lead wording — is not a verb. A
-client cannot self-select against it, which means every upgrade becomes a
+"Faster pace and broader coverage" — the wording Lead used to carry — is not a
+verb. A client cannot self-select against it, which means every upgrade becomes a
 conversation we have to have. Hold, expand, compete can be chosen from the page
 without asking us anything.
 
@@ -107,11 +108,13 @@ calls and time, and it is honest — unlike "faster pace", it can be checked.
 
 ---
 
-## 4. Proposed copy
+## 4. The copy, as published
 
-Not yet applied to the site. Two versions of each, because the visible copy and
-the machine-readable description come from the same source and must agree —
-`business.ts` feeds both the pricing page and the structured data.
+Applied to the site on 2026-07-28. Two versions of each, because the visible copy
+and the machine-readable description come from the same source and must agree —
+`business.ts` feeds both the pricing page and the structured data. **Change a
+level here and change it in both places**, or a client and an assistant end up
+being told different things, which is the one failure this business cannot have.
 
 ### Pricing page — the intro to the "Ongoing" block
 
@@ -171,17 +174,23 @@ surrounding page, and they carry the price.
 > quarterly written review of the competitors being named ahead of you and why.
 > £250 per month.
 
-### Files this touches, if approved
+### Where this copy lives
 
-1. `site/src/data/business.ts` — the three `schemaDescription` fields, and the
-   `summary` fields if we want those to match the new verbs
+1. `site/src/data/business.ts` — the three `schemaDescription` fields. **Done.**
 2. `site/src/pages/pricing.astro` — the three `.level` descriptions and the
-   "Ongoing" intro paragraph
-3. `site/src/pages/faq.astro` — **check before editing.** Anything in the `faqs`
-   array is published into the FAQPage structured data as well as the visible
-   page, so a half-updated answer gets repeated by the assistants themselves.
-4. `site/src/pages/how-it-works.astro` — check for any description of what the
-   monthly plans include
+   "Ongoing" intro paragraph. **Done.**
+3. `site/src/pages/how-it-works.astro` — the sentence summarising the three
+   levels in stage 03. **Done.**
+4. `site/src/pages/faq.astro` — checked, no change needed. No FAQ answer
+   describes what a level includes; the only mention is that moving between
+   levels works like cancelling. **Keep it that way** — anything written into
+   the `faqs` array is published into the FAQPage structured data as well as the
+   visible page, so a level description added there is a third place that can
+   drift out of step.
+
+Verified after the change: the build is clean at 7 pages, all JSON-LD parses,
+and both homepage code panels are still byte-identical to the JSON-LD in the
+head — the property the homepage's whole argument rests on.
 
 ---
 
@@ -280,3 +289,8 @@ them.** That is lucky, and it is a reason not to disturb the structure.
   are written by us and published by the client, or published by us directly.
   That changes the access we need and the time each page takes, and it is the
   same open question roadmap 3b raises about client website access.
+- **Found while applying the copy:** every plan in `business.ts` carries a
+  `summary` field, documented as "used in the record panels", and **nothing
+  reads it.** Left alone rather than churned — the existing values still fit the
+  new framing — but it is either dead code to delete or a panel someone intended
+  and never built. Worth five minutes next time that file is open.

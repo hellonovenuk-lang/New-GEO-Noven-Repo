@@ -91,7 +91,7 @@ export const monthlies: Plan[] = [
     price: 75,
     summary: 'Stay found.',
     schemaDescription:
-      'Monthly plan to stay found: keeps your information current, monitors how AI assistants answer questions about your business, and fixes drift. £75 per month.',
+      'Monthly plan to hold your position: ten questions your customers ask, put to the AI assistants five times each every month, with a written record of where you appeared and which questions you are still missing from. Business facts kept current and corrected when they drift. £75 per month.',
   },
   {
     id: 'grow',
@@ -100,7 +100,7 @@ export const monthlies: Plan[] = [
     price: 125,
     summary: 'Get found more.',
     schemaDescription:
-      'Monthly plan to get found more: everything in Maintain, plus new answer-focused content each month so you appear for more of the questions your customers ask. £125 per month.',
+      'Monthly plan to close the gaps: everything in Maintain across twenty-five questions, plus one new page each month answering a question you are currently missing from. £125 per month.',
   },
   {
     id: 'lead',
@@ -109,7 +109,7 @@ export const monthlies: Plan[] = [
     price: 250,
     summary: 'Front of mind.',
     schemaDescription:
-      'Monthly plan for businesses that want to be the default recommendation in their field: everything in Grow, at a faster pace and broader coverage, with a quarterly written review. £250 per month.',
+      'Monthly plan for businesses that want to be the first name an assistant gives: fifty questions checked fortnightly, two new answer pages each month, and a quarterly written review of the competitors being named ahead of you and why. £250 per month.',
   },
 ];
 

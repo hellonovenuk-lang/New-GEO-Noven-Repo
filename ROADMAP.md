@@ -434,17 +434,26 @@ questions — all on the client's existing site. We don't build websites.
 
 ### 3c. Monthly plans (£75 / £125 / £250)
 
-**Proposed in `ops/service-tiers.md` — written, not yet decided or applied.**
-Three verbs rather than three intensities: Maintain holds your position, Grow
-closes the gaps, Lead beats the competitors being named ahead of you. Question
-counts double at each step (10 / 25 / 50), which is checkable in a way "faster
-pace" isn't. The upgrade engine is the monthly record itself: it reports the gaps
+**Decided and live — see `ops/service-tiers.md` for the full reasoning.** Three
+verbs rather than three intensities: Maintain holds your position, Grow closes
+the gaps, Lead beats the competitors being named ahead of you. Question counts
+double at each step (10 / 25 / 50), which is checkable in a way "faster pace"
+never was. The upgrade engine is the monthly record itself: it reports the gaps
 and doesn't close them, so the client sees the same gap every month and nobody
-has to sell anything. The file also carries the proposed copy for the pricing
-page and `business.ts`, awaiting the owner's review.
+has to sell anything.
 
-- [ ] Define what actually happens each month at each level, concretely enough
-      that a client would recognise the value
+- [x] **Define what actually happens each month at each level**, concretely
+      enough that a client would recognise the value. Live on the pricing page,
+      in how-it-works, and in the structured data.
+- [ ] **Validate the numbers by doing it.** 10/25/50 questions at 5 runs each,
+      and the one-hour Maintain budget, are estimates — nothing has been timed.
+      Roadmap 3a already says to do the first one end to end and time it; these
+      are the numbers that check confirms or changes. **The Maintain figure is
+      the one that matters most:** at an hour a month it scales past twenty
+      clients, at three hours it caps the business around eight.
+- [ ] **Decide who publishes the Grow and Lead answer pages** — us directly, or
+      us writing and the client publishing. Changes the access we need and the
+      time each page takes. Same open question as the client-access item in 3b.
 - [ ] Decide how we check and report visibility each month
 - [ ] Write the monthly client update — short and readable
 - [ ] Define the quarterly review promised on the Lead plan
@@ -491,7 +500,59 @@ Written down rather than guessed at. Answer them as they become relevant.
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
 
-### 2026-07-28 (latest — third-party services researched)
+### 2026-07-28 (latest — the monthly levels say what they actually are)
+- **The three monthly plans now do three different jobs rather than three
+  intensities of one job.** Maintain holds the position the Foundation built,
+  Grow closes the gaps, Lead gets you named ahead of competitors rather than
+  alongside them. Live on the pricing page, in how-it-works, and in the
+  structured data. Full reasoning in `ops/service-tiers.md`.
+- **Question counts are now stated: 10, 25, 50, asked five times each.** That is
+  a promise a client can check, which "faster pace and broader coverage" never
+  was. It also maps to our real costs in both API calls and time, so the price
+  steps are defensible from the inside as well as the outside.
+- **The upgrade path is the monthly record, and it required no new copy.**
+  Maintain reports which questions you're missing from and doesn't close them.
+  The client reads the same unclosed gap every month; some will be content to
+  hold position and that's a fine outcome, some will ask us to fix it. Nobody
+  has to sell anything, which is the only version of this that fits the site.
+  Grow to Lead runs on a different and stronger trigger — a named competitor.
+- **Market research changed the framing.** UK local search agencies start around
+  £395+VAT/month and typically charge £500–1,500; agencies doing this work
+  specifically quote $1,500–10,000. **We are roughly a fifth of the UK floor,
+  and Lead is still cheaper than the cheapest agency's entry package.** That's a
+  deliberate position serving businesses agencies have abandoned — but it means
+  agency tier logic doesn't transfer. Our levels are separated by how much of
+  the owner's time each consumes, not by hours of labour sold.
+- **The number that decides the ceiling is Maintain's delivery time.** At about
+  an hour a month it scales past twenty clients; at three hours it caps the
+  business around eight with no growth without a price rise. So Maintain gets
+  systematised from client one and nothing bespoke happens inside it. Anything
+  genuinely bespoke is a reason to talk about Grow, not to do it for free.
+- **Worth knowing for year one: the Foundation is the income, the monthlies are
+  the tail.** One £350 Foundation is nearly five months of a Maintain client
+  delivered in one go. Converting audits into Foundations matters more early
+  than converting Maintain clients into Grow clients — a different activity from
+  upselling, and a better use of effort.
+- **The levels happen to sequence in the order the owner will get good at
+  them:** Maintain is a checklist, Grow is writing, Lead needs judgement about
+  why an assistant favours a competitor. Nobody buys Lead in month one. That's
+  lucky, and a reason not to disturb the structure.
+- **Verified rather than assumed:** build clean at 7 pages, all JSON-LD parses,
+  and both homepage code panels are still byte-identical to the JSON-LD in the
+  head — the property the whole homepage argument rests on. No placeholders and
+  no banned jargon in the built output.
+- **Found while doing it:** the `summary` field on every plan in `business.ts` is
+  defined and documented as "used in the record panels" but **nothing reads it**.
+  Left alone rather than churned — the values still fit the new framing — but it
+  is either dead code to delete or a panel that was meant to exist and doesn't.
+- **Merged to `main` at the owner's request**, knowingly overriding the standing
+  "finish on an unmerged branch for review" rule in `CLAUDE.md`, as with the
+  founder photograph. One explicit call, not a new default.
+- **Next session:** unchanged — the LinkedIn URL (steps in 1a), then Netlify:
+  apex vs www, read the preview end to end, then switch the domain off the old
+  site. Zoho Mail's DNS records are worth doing in that same sitting.
+
+### 2026-07-28 (third-party services researched)
 - **New file: `ops/third-party-services.md`.** Every outside service the roadmap
   implies we need, researched and decided: a pick, a cost and the reasoning for
   each. Ordered by when we need it rather than by topic, matching how the
