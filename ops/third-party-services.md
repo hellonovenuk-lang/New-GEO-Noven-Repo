@@ -1,0 +1,601 @@
+# Third-party services — what we need, and who to use
+
+**Internal document.** This is a working note for the owner, not client-facing
+copy. It names products and categories plainly so decisions can be made quickly.
+
+**What this is:** every outside service the roadmap implies we need, with a
+recommendation for each, the cost, and the reason. Ordered by *when we need it*,
+not by topic — same principle the roadmap now follows.
+
+**How to read it.** Each item has a **Pick**, a **Cost**, and a **Why**. If you
+only read the Picks, you have the shortlist. The reasoning is there so a decision
+doesn't get re-litigated in three months.
+
+**A caution on the prices.** All figures were researched on **28 July 2026** and
+are what providers publicly advertised that day. Software pricing moves, free
+tiers get withdrawn, and introductory rates expire. Confirm the price on the
+provider's own site before committing. Dollar prices are the providers' own;
+where a rough pound figure is given it assumes about $1.30 to £1 — check the rate
+when you actually budget.
+
+Already in place: **Netlify** (hosting), **Gmail** (contact address), **Zoho
+Books** (invoicing and revenue), **GitHub** (this repo). Those are treated as
+settled and the recommendations build on them rather than replacing them.
+
+---
+
+## The shortlist
+
+| What | Pick | Cost | When |
+|---|---|---|---|
+| Business bank account | Mettle (NatWest) | Free | Before first payment |
+| Address for service | Hoxton Mix or similar virtual office | ~£30–60/yr | Before visibly trading |
+| Email on the domain | Zoho Mail | Free, or ~$12/yr | Any time — cheap win |
+| Data protection registration | ICO, direct | £52/yr (£47 by Direct Debit) | Before holding client data |
+| Privacy notice | ICO's own free generator | Free | Before first client data |
+| Professional indemnity insurance | Compare via Simply Business / Markel | ~£8–25/mo | Before first delivery |
+| Site analytics | Cloudflare Web Analytics | Free | Any time |
+| Assistant answer checking | Do it ourselves via the APIs | Under £2 per audit | Now — it's the product |
+| Client tracking | Zoho Bigin free tier | Free (1 user) | At client 2 or 3 |
+| Password manager | Bitwarden | Free | Now |
+| Payment collection | Stay on Zoho Books invoicing | Free | Revisit at client 5 |
+
+**Total committed spend before the first client pays: about £0–5 a month**, and
+most of that is the service address, which is an annual bill. That fits the
+near-zero brief. Everything with a real monthly cost is deliberately deferred
+until there's revenue to judge it against.
+
+---
+
+## A. Things worth doing now (free, or nearly)
+
+### A1. Email on the domain — Zoho Mail
+
+**Pick:** Zoho Mail, on `novenstudio.co.uk`.
+
+**Cost:** The Forever Free plan covers up to 5 users on one custom domain with
+5 GB each. Mail Lite is about $1 per user per month on annual billing (roughly
+$12/yr) and adds IMAP/POP so it works in a normal mail client.
+
+**Why:** The roadmap already flags this ("an address on the Noven domain reads as
+more established"). It matters more for us than for most businesses — we sell
+consistent, credible business information, and a Gmail address on the contact
+page of a site arguing for exactly that is a visible contradiction. It is the
+cheapest credibility improvement available.
+
+Zoho specifically, over Google Workspace or Microsoft 365, for one reason: **you
+already have Zoho Books.** Same login, same account, same billing, no new vendor
+relationship. Google Workspace and Microsoft 365 both start around £5–7 per user
+per month — sixty to eighty pounds a year to solve a problem Zoho solves for
+twelve or nothing.
+
+**The catch worth knowing:** the free plan is web and mobile-app access only —
+no IMAP, so it won't work in Apple Mail or Outlook. If that matters, Mail Lite
+is a dollar a month. Not a reason to pick a different provider.
+
+**Cheaper still, and why not:** ImprovMX forwards mail from a custom domain to
+an existing inbox for free, but the free plan **receives only — it cannot send**.
+Sending from `hello@novenstudio.co.uk` needs their paid plan at around $9/month,
+which is more than Zoho Mail Lite. A forwarding-only setup where replies come
+from a Gmail address is worse than not doing it at all: the customer sees the
+inconsistency in the reply.
+
+**Do this alongside the Netlify DNS work in roadmap 1b** — both are DNS record
+changes on the same domain, so it's one sitting rather than two.
+
+### A2. Site analytics — Cloudflare Web Analytics
+
+**Pick:** Cloudflare Web Analytics.
+
+**Cost:** Free, with no page-view ceiling.
+
+**Why:** It's cookieless, so it needs no cookie banner — which matters because a
+banner is the one thing that would put a consent dialog in front of the crawlers
+and readers the whole site is built to serve. It is genuinely free rather than
+free-to-a-limit, and at our traffic the paid options solve nothing extra.
+
+**The alternatives, and when they'd win:** Plausible starts around $9/month for
+10,000 page views and has a better dashboard plus goal tracking. Fathom starts
+around $15/month. Umami's cloud free tier is generous (around 1 million events a
+month) and it's open source if self-hosting ever appeals. All three are better
+products than Cloudflare's. None is better *enough* to justify £100+ a year
+before there is any revenue. Revisit if we ever need to know which page an
+enquiry came from.
+
+**Note:** Netlify has its own analytics as a paid add-on. Don't buy it — same
+job, real monthly cost.
+
+**Also free, also worth doing, already in the roadmap at 1e:** Google Search
+Console and Bing Webmaster Tools. Both free, both need the sitemap submitted.
+Bing matters more than its market share suggests, because Copilot draws on it.
+
+### A3. Password manager — Bitwarden
+
+**Pick:** Bitwarden, free tier.
+
+**Cost:** Free for a single user, unlimited passwords and devices.
+
+**Why:** We are about to accumulate credentials for a bank, a domain registrar,
+Netlify, Zoho, an insurer, HMRC and the ICO — and shortly after that, access to
+client websites. Client website credentials are the ones that matter: we will be
+holding other businesses' access, and "it was in a note on my phone" is not a
+defensible answer if something goes wrong.
+
+Set this up **before** the account-opening run in section B and C, not after,
+so credentials land in it as they're created rather than being migrated later.
+
+---
+
+## B. Before we're visibly trading
+
+### B1. Address for service — a virtual office
+
+**Pick:** Hoxton Mix looks like the strongest value; 1st Formations and Rapid
+Formations are the obvious comparisons. Get quotes from two before committing.
+
+**Cost:** The market for a basic address sits at roughly **£25–60 a year**.
+Hoxton Mix advertises a service address from about £30/year. 1st Formations
+prices a fuller "business address" service — the kind meant for use on a website
+and stationery — at around £96/year.
+
+**Read the small print on which product you're buying.** These providers sell
+several tiers, and the cheapest is often a *director's service address* aimed at
+limited companies. What we need is an address we can publish on the website and
+have documents served at, as a sole trader. Confirm with the provider that the
+plan you're buying covers that use, and that mail is forwarded or scanned rather
+than merely held.
+
+**Why now rather than later.** The roadmap already makes this call in 1a and 1c
+and the reasoning holds: a sole trader using a business name that isn't their own
+surname must disclose their name and an address where documents can be served,
+including on the website. That is a trading disclosure requirement, not an
+optional nicety, and it bites once we are visibly trading — which is the moment
+the site goes live, not the moment someone pays.
+
+The roadmap's argument for not using the home address is the important part and
+worth restating: this site is deliberately built to be read and repeated by AI
+assistants, with crawler permissions, structured data and a sitemap. Everything
+that makes it good at that makes a home address in the footer harder to take
+back. The footer can be edited; indexes, caches and archives cannot.
+
+**At £30 a year this is the cheapest item on the list and the one with the
+longest tail if you get it wrong.** Do it before the domain switches over.
+
+### B2. Professional indemnity insurance
+
+**Pick:** Compare rather than pick blind. **Simply Business** and **Markel
+Direct** both quote online for freelance and consultancy work; **Hiscox** and
+**Superscript** are the other established names. Fifteen minutes with two quote
+forms will settle it.
+
+**Cost:** Advertised entry points cluster around **£6–8 a month** for basic
+cover. Realistic annual premiums for marketing and consultancy work are more
+often quoted in the **£100–500/year** range depending on cover level, turnover
+and the specific activity described. Expect the honest number to be nearer
+£10–25/month than the headline £6.
+
+**Why it belongs here and not in "nice to have":** we will be making changes to
+other businesses' live websites. The Foundation is explicitly "on the client's
+existing site". If a change we make breaks something that costs a client money,
+professional indemnity is the cover that responds. The site already says we don't
+guarantee outcomes, which helps, but a disclaimer on a web page is not insurance.
+
+**How to describe the business on the quote form** is the part that needs care —
+premiums vary enormously by stated profession, and the honest description is
+something like "marketing and web consultancy, making technical changes to client
+websites". Don't understate it to get a cheaper quote; an inaccurate description
+is the standard reason a claim gets declined.
+
+**[PLACEHOLDER: owner to confirm]** — whether any existing policy (home,
+contents, or a policy from previous self-employment) already provides cover, and
+whether the roadmap's £350 Foundation work is better described to an insurer as
+consultancy or as web development. The two attract different premiums.
+
+---
+
+## C. Before the first payment
+
+### C1. Business bank account — Mettle
+
+**Pick:** **Mettle**, NatWest's digital business account. **Starling** is the
+strongest alternative and the better choice if you'd rather bank with a fully
+licensed bank you might also want a card or lending from later.
+
+**Cost:** Both free — no monthly fee, no per-transfer charge at our volume.
+
+**Why Mettle:** free, aimed squarely at sole traders, no monthly fee, free
+transfers and direct debits, and it includes basic invoicing and payment chasing.
+Application is online and quick.
+
+**Why Starling if not Mettle:** it is a fully licensed bank with FSCS protection
+and the deepest Open Banking integrations, also at zero monthly fee with
+unlimited free transactions. If you expect to want anything else from a bank
+later — a card, a loan, a savings pot — Starling is the safer long-term home.
+
+**One to avoid for us specifically: Tide's free tier charges 20p per bank
+transfer and is e-money rather than FSCS-protected.** At £30 and £75 payments,
+20p a transfer is noise — but the lack of FSCS protection is a real difference
+for money that isn't ours to lose, and there's no reason to accept it when
+Mettle and Starling are free and protected.
+
+**Timing matters most here.** Digital providers can open an account in about a
+day; a high street bank can take weeks. The roadmap correctly identifies this as
+the long pole in 1c. It's also worth checking whether your existing personal
+account's terms permit business use in the meantime — most banks' terms don't,
+and a single £30 transfer for services rendered is business use.
+
+**Zoho Books connection:** once the account exists, connect the bank feed to Zoho
+Books so payments reconcile against invoices automatically. That's the whole
+reason to have both, and it's a five-minute setup that saves an hour a month
+later.
+
+### C2. Getting paid — stay where you are, for now
+
+**Pick:** **Zoho Books invoicing plus bank transfer**, exactly as you've decided.
+Nothing new to buy.
+
+**Cost:** Zoho Books is already paid for. Bank transfers are free.
+
+**Why this is the right call and not just the lazy one:** at £30, £350 and
+£75–250/month, card fees are a real slice. A card processor typically takes
+around 1.5–2.9% plus a fixed fee per transaction — on a £30 audit that fixed fee
+alone is a meaningful percentage. Bank transfer costs nothing and settles same
+day. The cancellation terms in roadmap 1a were deliberately written to read the
+same whichever way payment collection goes, so nothing on the site needs to
+change when this decision is eventually revisited.
+
+**The honest limitation, and the trigger to revisit.** Manual invoicing and
+chasing stops being viable somewhere around **client five** on monthly plans —
+the roadmap already says so. The work isn't the invoice, it's the chasing: five
+clients paying monthly is sixty payment events a year to notice, match and follow
+up on. That's when this decision is worth reopening, and the shape of the answer
+is:
+
+- **GoCardless (or Direct Debit via Zoho Books' own integrations)** for the
+  monthly plans. Direct Debit is dramatically cheaper than cards on recurring
+  payments and has materially better retention, because there's no card to
+  expire. The trade-off is setup time and the need for a bank account first,
+  which is why it can't be the day-one answer.
+- **Stripe payment links** for the one-off £30 audit and £350 Foundation, if
+  friction on the first sale ever looks like it's costing conversions. A payment
+  link in the first email is a lower-friction yes than "here are my bank
+  details". Worth testing only once outreach is producing enough conversations to
+  tell the difference.
+
+**Don't build for this yet.** It's a real decision with a real trigger, and the
+trigger hasn't happened.
+
+### C3. Registering with HMRC — nothing to buy
+
+The roadmap covers this in 1c and the position there is sound: registration for
+Self Assessment is generally due by 5 October following the end of the tax year
+in which trading began, and there is a £1,000 trading allowance below which
+registration may not be required at all. **Both worth confirming against current
+HMRC guidance rather than taking from a document.** No third-party service is
+needed — you register directly with HMRC, free.
+
+**An accountant is not recommended yet.** At this revenue there is nothing for
+one to do that Zoho Books and an evening won't cover. Revisit when turnover makes
+the VAT threshold a live question, which roadmap 1d already flags.
+
+---
+
+## D. Before we hold a client's information
+
+### D1. Data protection fee — register with the ICO
+
+**This is the one genuine gap in the current roadmap.** It isn't listed anywhere
+in Phase 1, and it should be.
+
+**Pick:** Register directly with the Information Commissioner's Office. There is
+no third party involved and no reason to use one.
+
+**Cost:** **£52 a year** at tier 1 (micro organisation — under 10 staff or under
+£632,000 turnover), reduced to **£47 if you pay by Direct Debit**.
+
+**Why it applies to us:** under the Data Protection (Charges and Information)
+Regulations 2018, organisations — sole traders included — that process personal
+information must pay the data protection fee unless exempt. Consultancy and
+advisory work for clients is generally within scope. We will be holding client
+contact details, business information, and correspondence.
+
+**Before paying, run the ICO's own self-assessment tool** — it's free, takes a
+few minutes, and gives a definitive answer for our specific circumstances rather
+than a general one. There are exemptions, and it's worth knowing whether one
+applies before spending £47. If the tool says no fee is due, the ICO asks to be
+told rather than simply not hearing from you.
+
+**Why not to leave it:** the ICO can issue a penalty of up to £4,000 on top of
+the fee for failing to register or renew. £47 against that is not a close call.
+It renews annually, so put a reminder in the calendar the day you pay.
+
+### D2. Privacy notice — the ICO's own generator
+
+**Pick:** The ICO's free privacy notice generator, at
+`ico.org.uk/create-your-own-privacy-notice`.
+
+**Cost:** Free.
+
+**Why this over a paid template or generator:** it is written by the regulator
+that enforces the rules, it is built specifically for small organisations and
+sole traders, and it was updated in 2026 to reflect the Data (Use and Access) Act
+2025. Paid privacy-policy generators charge for something demonstrably worse.
+
+It produces two notices — one for customers and suppliers, which is the one that
+goes on the website, and one for staff, which we don't need yet.
+
+**Where it goes:** a new page on the site, linked from the footer. Roadmap 1c
+already has this scheduled correctly — due before the first client sends us
+anything, not before launch, since the site itself collects nothing.
+
+### D3. Terms of service — nothing to buy
+
+The roadmap's framing here is right and no supplier is needed: most of what we
+promise is already written across the site — the cancellation terms, "we don't
+guarantee outcomes", "we don't build websites". This is a job of collecting what
+we've already committed to into one page, in the same plain voice, not a job of
+buying a template.
+
+**One caution if a template is ever used anyway:** generic terms templates are
+written for businesses that make guarantees and have minimum terms. Ours does
+neither, deliberately. A template would contradict the pricing page, the FAQ and
+the how-it-works page simultaneously, and the site's whole argument rests on
+those three agreeing with each other.
+
+---
+
+## E. Delivery — the tools for actually doing the work
+
+This is the section with the most money at stake and the clearest answer.
+
+### E1. The category exists, and it's expensive
+
+There is now a mature market of platforms that track how AI assistants answer
+questions about a given business, and repeatedly ask the assistants a set of
+questions and report how often a brand appears. As at July 2026 the main names
+and their advertised entry prices:
+
+| Platform | Entry price | What that buys |
+|---|---|---|
+| Otterly.ai | from ~$25–29/month | ~15 questions tracked, across ChatGPT, Google AI Overviews, Perplexity, Copilot |
+| Peec AI | from ~€89/month | ~25 questions on the annual starter plan; ~€199 for 100 |
+| Profound | from ~$82.50/month billed annually | 50 questions; ~$332.50/month for 100 |
+| Scrunch AI | from ~$250/month | ~125 questions, 4 platforms |
+| Ahrefs / Semrush add-ons | from ~$828/month including the required base plan | Bundled into a larger toolset |
+
+**The problem is the pricing model, not the price.** These are priced per brand
+tracked. That is the right shape for a business monitoring *itself* and exactly
+the wrong shape for us, because we would be tracking a different brand per
+client.
+
+**Run it against our own numbers.** The cheapest option is roughly £20–23 a month
+for one brand and about fifteen questions:
+
+- Against the **£30 one-off audit**: a non-starter. The tool costs most of the
+  fee in the first month, and the audit is a one-off — we'd be renting a
+  subscription to produce a single document.
+- Against the **£75/month Maintain plan**: that's roughly 30% of the revenue
+  gone to one tool, before any of our time. On a plan whose entire promise is
+  monitoring, a 30% cost of goods is survivable but it caps the business.
+- Against the **£250/month Lead plan**: comfortable, and arguably worth it.
+
+Agency plans exist and would amortise better across many clients, but they start
+well above the entry prices above and none of them makes sense before there are
+clients to amortise across.
+
+### E2. What to do instead — run the questions ourselves
+
+**Pick:** Ask the assistants directly through their own APIs, and record the
+answers. This is the recommendation, and not merely on cost.
+
+**What it costs.** The token cost of these questions is close to nothing — they
+are short questions with short answers. The meaningful cost is the web-search or
+grounding fee, because a question like "who's a good accountant in Birkenhead"
+only means anything if the model actually searches:
+
+- **Google (Gemini)** — grounding with Google Search gives **5,000 free
+  grounded prompts a month** on the Gemini 3.x family, then about $14 per 1,000.
+  Flash-tier models remain on the free tier.
+- **OpenAI** — the small models are cheap per token (GPT-5 Mini at roughly
+  $0.25 per million input tokens and $2 per million output); the web search tool
+  is charged separately. **[PLACEHOLDER: confirm OpenAI's current per-call web
+  search tool fee before relying on a number.]**
+- **Perplexity** — the Sonar model is about $1 per million tokens both ways,
+  plus a **per-request search fee on every call**. Confirm that fee's current
+  rate; it dominates the token cost at our volume.
+- **Anthropic (Claude)** — Haiku 4.5 is $1 per million input and $5 per million
+  output; Sonnet 5 is $3/$15 (with an introductory $2/$10 running to 31 August
+  2026). The web search tool is charged separately — **[PLACEHOLDER: confirm the
+  current per-search rate.]** The Batch API halves token costs for work that
+  isn't time-sensitive, which describes every audit we will ever run.
+
+**A worked estimate for one audit.** Four assistants, ten questions each, run
+three to five times per question for reasons explained below: **120 to 200
+grounded queries**. Google's free grounding allowance alone covers roughly 25 to
+40 complete audits a month at zero cost. Even paying full grounding rates
+everywhere, an audit's tool cost lands **comfortably under £2** against a £30
+fee. That is a sustainable cost of goods; £23/month per client is not.
+
+**The strategic reason, which matters more than the cost.** The audit *is* the
+product. If we outsource the asking to a platform, we own nothing: no method, no
+history, no ability to answer "why did you ask it that way", and no way to
+differentiate from anyone else who bought the same subscription. Building our own
+question set is the thing that compounds — after twenty audits we have a library
+of questions that work by trade and by area, which is an asset a subscription
+never becomes.
+
+### E3. The methodology point that must not be skipped
+
+**Assistant answers are not deterministic, and a single run is noise.**
+
+This is the most important technical finding in this whole document and it
+affects what we can honestly sell. Published testing found the same brand query
+run ten times against ChatGPT produced mention rates anywhere from **20% to 80%**
+for the same brand; broader testing found AI tools returned an identical brand
+recommendation list **less than 1% of the time**. Consumer assistants run at
+higher randomness than the APIs precisely to make conversation feel natural.
+
+Three consequences, all of which shape the product:
+
+1. **Every question must be asked several times and reported as a rate**, not as
+   a yes or no. "You appeared in 3 of 5 runs" is a true statement. "You don't
+   appear" — from one run — may simply be false, and a client can disprove it in
+   thirty seconds by asking ChatGPT themselves. That's a refund conversation and
+   a reputation problem in one.
+
+2. **API answers and consumer-app answers differ.** The API version tends to be
+   more constrained, and the consumer apps add personalisation and their own
+   search grounding. If we check via the API and the client checks in the app,
+   the answers will not match. **We should say so plainly in the report** — it
+   costs us nothing, it pre-empts the objection, and it is exactly the kind of
+   honesty the rest of the site trades on.
+
+3. **It's a competitive advantage if we're honest about it.** Any tool that runs
+   a query once and reports a score is reporting noise. Saying so — and showing
+   our run counts — is a genuine differentiator against competitors selling
+   confident single-run dashboards, and it costs us only the discipline of doing
+   it properly.
+
+**Record everything, dated.** Roadmap 1e already asks for our own before-and-after
+as our first proof, and 2d makes recorded before-and-after the priority of the
+first engagements. The recording format should be decided once, now, and reused:
+question, assistant, date, number of runs, number of mentions, and the raw answer
+text. A spreadsheet is fine. What matters is that it's consistent from audit one,
+because retro-fitting a format across twenty inconsistent records is miserable.
+
+### E4. Knowing whether the crawlers actually came — Cloudflare
+
+**Pick:** Put client sites behind **Cloudflare's free plan** where the client
+already uses Cloudflare or is willing to, and read the bot analytics.
+
+**Cost:** Free.
+
+**Why this is worth more than it looks:** the Foundation's first promise is
+crawler access. Cloudflare's dashboard shows which AI crawlers hit a site and
+how often — GPTBot, ClaudeBot, PerplexityBot, the search-specific bots and the
+live agent traffic, categorised. Every Cloudflare customer including the free
+plan can see and control AI crawler traffic by category.
+
+That turns "we opened up crawler access" from a claim into a dated, checkable
+before-and-after: no crawler visits before, crawler visits after. For a business
+with no case studies, **evidence that costs nothing is worth a great deal.**
+
+**Two cautions.** First, Cloudflare rolled out AI crawler verification with
+default-on enforcement across free and pro plans during 2026 — meaning a site
+may now be *blocking* crawlers it didn't intend to. That's a real thing to check
+during an audit, and possibly a finding in its own right. Second, moving a
+client's DNS to Cloudflare is a change to their infrastructure, not just their
+website. Don't do it casually, and don't do it without the client understanding
+what's changing.
+
+**Where the client won't or can't use Cloudflare**, their existing host's access
+logs answer the same question if they'll share them. Netlify, which we know, does
+not expose this on the free tier.
+
+### E5. Free tools that do real work
+
+None of these cost anything and all of them are part of delivery:
+
+- **Google Search Console** and **Bing Webmaster Tools** — for our own site and,
+  with permission, for clients'. Bing feeds Copilot, so it matters more here than
+  its market share implies.
+- **Google's Rich Results Test** and **Schema.org's validator** — for checking
+  the structured data the Foundation adds actually parses. We already do this for
+  our own site; same check, client's site.
+- **The assistants' own consumer apps** — free tiers of ChatGPT, Claude, Copilot
+  and Perplexity. Worth using alongside the API checks precisely because they
+  give different answers, which is itself part of the finding (see E3).
+
+### E6. Client tracking — Zoho Bigin, but not yet
+
+**Pick:** **Zoho Bigin** free tier when a spreadsheet stops working. Not before.
+
+**Cost:** Free for 1 user, 500 records, one pipeline. Paid tiers from about
+$7–9 per user per month.
+
+**Why Bigin and not Zoho CRM:** Zoho CRM's free tier allows 3 users but is built
+for sales teams and carries a lot of machinery we'd never touch. Bigin is built
+for one to twenty people and does pipeline and contact management without the
+overhead. It's also about a third cheaper if we ever pay. And again — same Zoho
+account as Books, so client records and invoices live in one place.
+
+**Why not yet.** The roadmap says it plainly in 3d: "a spreadsheet is fine until
+it isn't". At one to three clients a spreadsheet is genuinely better — faster to
+change, no schema to fight, and it lets the real data model emerge from real work
+rather than being guessed at in advance. That's the same principle the whole
+roadmap runs on.
+
+**The trigger to switch** is when you can't answer "who's due a visibility check
+this week" by looking. That's usually around five to eight clients.
+
+**What to record from client one, whatever the tool** — this is roadmap 3d's
+list and it's right: business, contact, what they want to be found for, area
+served, stage, plan, what we've done, and dated visibility checks. Getting the
+fields right in a spreadsheet now makes the eventual import trivial.
+
+---
+
+## F. Deliberately not recommending
+
+Worth writing down so they don't get re-proposed:
+
+- **A paid AI-visibility monitoring platform** — see E1. Revisit when there are
+  around ten monthly-plan clients and an agency plan can be spread across them.
+- **Google Workspace / Microsoft 365** — Zoho Mail does the job for a tenth of
+  the cost and we're already in Zoho.
+- **Paid analytics (Plausible, Fathom, Netlify Analytics)** — better products,
+  but nothing they tell us changes a decision at current traffic.
+- **A card payment processor** — see C2. Fees are material at our price points
+  and invoicing works until roughly client five.
+- **An accountant or bookkeeper** — nothing for one to do yet.
+- **Scheduling tools (Cal.com, Calendly)** — the site is deliberately email-only
+  and says so. Adding a booking link would contradict the contact page.
+- **A contact form service (Netlify Forms, Formspree)** — same reason. The site
+  currently collects nothing, which is what lets the privacy notice wait until
+  after launch. Adding a form changes that.
+- **E-signature (Zoho Sign, Dropbox Sign)** — at £30 to £350 an emailed
+  confirmation is proportionate. Revisit if a client ever asks for a signed
+  agreement.
+- **Anything with an annual contract.** Everything above is monthly or annual-
+  but-cheap, deliberately, because we don't yet know what the work needs.
+
+---
+
+## What to actually do, in order
+
+1. **Bitwarden** — free, ten minutes, and everything below creates a credential.
+2. **Zoho Mail on the domain** — free or $12/yr, and do it in the same sitting
+   as the Netlify DNS work in roadmap 1b.
+3. **Virtual office address** — ~£30–60/yr, and it should land *before* the
+   domain switches over, not after.
+4. **Cloudflare Web Analytics** — free, one script tag.
+5. **Mettle or Starling** — free, but start it early; it's the long pole.
+6. **ICO self-assessment, then the fee if due** — £47–52/yr. Currently missing
+   from the roadmap entirely.
+7. **Insurance quotes from two providers** — before the first Foundation, not
+   before launch.
+8. **ICO privacy notice generator** — free, before the first client sends
+   anything.
+9. **Build the audit question set and the recording format** — no cost, and it's
+   the actual product.
+
+Items 1–4 total roughly **£40–75 for the year** and can all be done in an
+afternoon. Items 5–9 are gated on real events rather than dates.
+
+---
+
+## Open questions for the owner
+
+Written down rather than guessed at, in the roadmap's own style:
+
+- **Insurance:** does any existing policy already provide cover, and should the
+  Foundation be described to an insurer as consultancy or as web development?
+  The two attract materially different premiums (see B2).
+- **Cloudflare on client sites:** are we willing to ask clients to move their
+  DNS? It's the cheapest source of hard evidence we have, but it's a change to
+  their infrastructure, not just their website (see E4).
+- **Audit depth:** how many questions, and how many runs per question, is one
+  audit? That number sets both the tool cost and how long an audit takes, and
+  roadmap 3a already says £30 has to be sustainable — if it takes a day, the
+  process is wrong, not the price. The estimate in E2 assumes ten questions at
+  three to five runs; that's an assumption, not a decision.

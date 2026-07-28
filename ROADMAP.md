@@ -173,6 +173,13 @@ when a stranger can read the site, understand the offer, email us, and pay us
 fortnight away if outreach lands. Two items below cannot be started on the day
 someone says yes, so they need starting first.
 
+**Which provider to use for each of these is researched and decided in
+`ops/third-party-services.md`** — bank, service address, domain email,
+insurance, ICO registration, analytics, client tracking and the delivery
+tooling, each with a pick, a cost and the reasoning. Prices there were checked
+on 2026-07-28 and should be confirmed on the provider's own site before
+committing.
+
 #### Has a lead time — start these before they're needed
 
 - [ ] **Business bank account.** Anything from a day with a digital provider to
@@ -199,9 +206,20 @@ someone says yes, so they need starting first.
 
 #### Before we hold a client's information
 
+- [ ] **Register with the ICO and pay the data protection fee.** Sole traders
+      that process personal information must pay it unless exempt, and
+      consultancy work for clients is generally in scope. Tier 1 (micro
+      organisation) is £52/year, or £47 by Direct Debit. Run the ICO's own free
+      self-assessment tool first — there are exemptions and it gives a
+      definitive answer for our circumstances. Failing to register or renew
+      carries a penalty of up to £4,000 on top of the fee, so £47 is not a close
+      call. Renews annually; diarise it the day it's paid.
 - [ ] Privacy notice page — we'll be handling client business data and email.
       Due before the first client sends us anything, not before launch, since
-      the site collects nothing on its own.
+      the site collects nothing on its own. Use the ICO's own free privacy
+      notice generator (`ico.org.uk/create-your-own-privacy-notice`) — written
+      by the regulator, built for sole traders, and updated in 2026 for the Data
+      (Use and Access) Act 2025. Paid generators charge for something worse.
 - [ ] Terms of service, or a short plain-English version of what we promise.
       Most of it is already written across the site — the cancellation terms,
       "we don't guarantee outcomes", "we don't build websites". This is mostly
@@ -384,6 +402,16 @@ recommendation including "you don't need us".
 - [ ] Write the list of questions we ask the assistants, and how we vary them
       by trade and area
 - [ ] Decide which assistants we check, and record how we record answers
+- [ ] **Ask every question several times and report a rate, not a yes or no.**
+      Assistant answers are not deterministic: published testing found the same
+      brand query run ten times produced mention rates anywhere from 20% to 80%.
+      A single run is noise, and "you don't appear" from one run can be
+      disproved by the client in thirty seconds. Say the run count in the
+      report. Also worth saying plainly: answers via the APIs differ from the
+      consumer apps, so what we see and what the client sees won't match
+      exactly. Being honest about both is a real differentiator against tools
+      selling confident single-run scores. Full reasoning and the cost model are
+      in `ops/third-party-services.md` (section E).
 - [ ] Build the checklist of things we look at on their website
 - [ ] Build the audit report template — short, plain English, no jargon
 - [ ] Do the first one end to end and time it. £30 has to be sustainable, so
@@ -454,7 +482,62 @@ Written down rather than guessed at. Answer them as they become relevant.
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
 
-### 2026-07-28 (latest — the founder photograph)
+### 2026-07-28 (latest — third-party services researched)
+- **New file: `ops/third-party-services.md`.** Every outside service the roadmap
+  implies we need, researched and decided: a pick, a cost and the reasoning for
+  each. Ordered by when we need it rather than by topic, matching how the
+  roadmap is now sequenced. Prices were checked on 2026-07-28 and the file says
+  so — they move, and it tells you to confirm before committing.
+- **Total committed spend before the first client pays is about £40–75 for the
+  year**, nearly all of it the service address. Everything with a real monthly
+  cost is deferred until there's revenue to judge it against.
+- **The picks, briefly:** Mettle or Starling for the bank (both free; avoid
+  Tide's free tier — 20p per transfer and no FSCS protection). Hoxton Mix or
+  similar for the service address at ~£30–60/yr. Zoho Mail for
+  `hello@novenstudio.co.uk` — free, or $12/yr for IMAP — chosen because we
+  already have Zoho Books, which makes it a tenth the cost of Google Workspace.
+  Cloudflare Web Analytics, free and cookieless so no consent banner. Bitwarden.
+  Zoho Bigin later, when a spreadsheet stops working.
+- **Gap found: we were not registered with the ICO, and it wasn't in the
+  roadmap at all.** Sole traders processing personal information owe the data
+  protection fee unless exempt — £52/yr, or £47 by Direct Debit — and failing to
+  register carries a penalty of up to £4,000. Now in 1c, with a note to run the
+  ICO's free self-assessment first in case an exemption applies.
+- **The privacy notice has a free answer:** the ICO publishes its own generator,
+  built for sole traders and updated in 2026 for the Data (Use and Access) Act
+  2025. Written by the regulator that enforces the rules, so it beats any paid
+  template.
+- **The big delivery decision: don't buy an AI-visibility monitoring platform.**
+  They exist and they're mature, but they're priced per brand tracked, which is
+  the wrong shape for an agency. The cheapest is about £20–23/month for one
+  brand and ~15 questions — roughly 30% of a £75 Maintain plan, and a
+  non-starter against a £30 one-off audit. Running the questions ourselves
+  through the assistants' APIs lands **under £2 per audit**; Google's free
+  grounding allowance alone covers 25–40 audits a month at zero cost. The
+  strategic argument matters more than the cost: the audit *is* the product, and
+  a question set we build compounds into an asset a subscription never becomes.
+- **Methodology finding that changes what we can honestly sell.** Assistant
+  answers are not deterministic — the same query run ten times has been found to
+  produce mention rates from 20% to 80%. So every question must be asked several
+  times and reported as a rate. A single-run "you don't appear" can be disproved
+  by the client in half a minute, which is a refund conversation. Written into
+  3a, because it shapes the product rather than just the tooling.
+- **Cheap evidence found:** Cloudflare's free plan shows which AI crawlers hit a
+  site, by category. That turns "we opened up crawler access" into a dated,
+  checkable before-and-after — worth a lot to a business with no case studies.
+  Caveat: Cloudflare's 2026 crawler verification is default-on, so some sites
+  may now be blocking crawlers unintentionally. That's an audit finding in
+  itself.
+- **Three questions left for the owner**, written into the new file rather than
+  guessed: whether any existing insurance policy already covers this and how to
+  describe the Foundation to an insurer; whether we're willing to ask clients to
+  move DNS to Cloudflare; and how many questions × how many runs makes one
+  audit, since that sets both the tool cost and whether £30 is sustainable.
+- **Next session:** unchanged — the LinkedIn URL (steps in 1a), then Netlify:
+  apex vs www, read the preview end to end, then switch the domain off the old
+  site. Zoho Mail's DNS records are worth doing in that same sitting.
+
+### 2026-07-28 (the founder photograph)
 - **The founder's photograph is in.** The owner's file lives in the separate
   `hellonovenuk-lang/Noven` asset repo at
   `public/brand/website/founder-portrait.webp`; it is copied here byte-for-byte
