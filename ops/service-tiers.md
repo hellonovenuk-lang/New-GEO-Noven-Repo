@@ -102,6 +102,86 @@ upgrade engine (section 5).
 
 **Time estimate: 7–8 hours a month.**
 
+### What an answer page actually is
+
+Decided 2026-07-28, because "answer page" was doing a lot of undefined work.
+
+**It is not a blog post.** A blog post is dated, sits in a feed, and gets buried
+by the next one. Its value decays and the client's site slowly accumulates a
+graveyard.
+
+**It is not an FAQ entry.** An FAQ entry is one short answer among twenty on a
+single page, which leaves that page strongly *about* nothing. An assistant asked
+a specific question has to pull a fragment out of a list.
+
+**It is one question, one permanent page, one URL.** The heading is the question
+or close to it. The body answers it properly, using facts only that business has
+— its prices, its areas, its timescales, what is actually included. Undated, and
+linked from the part of the site it belongs to rather than from a feed.
+
+This is not a new product. It is the Foundation's fourth bullet — *"writing or
+restructuring key pages so they directly answer the questions your customers
+ask"* (`how-it-works.astro`) — continued one page a month. **Every Foundation we
+deliver is practice for Grow.**
+
+Our own site is the working example: no blog, and every page heading is a
+customer question. *How does Noven get you found? What does Noven cost? Why is
+the audit only £30?*
+
+**The guard rail.** Two pages a month at Lead is twenty-four pages a year, which
+can sprawl into thin filler that actively hurts. The test: if we cannot write
+around 400 words of genuinely specific content *that only this business could
+write*, it is not an answer page — it is an FAQ line. Put it there and move to
+the next gap.
+
+**Where the time actually goes:** not the writing. Verifying the facts with the
+client before publishing, because the no-invented-facts rule in `CLAUDE.md`
+binds hardest here. That is what makes a page two to three hours rather than
+one.
+
+### Who publishes it — we do
+
+Decided 2026-07-28. **We publish directly. The client approves the words; we
+publish them.** The site already promises this shape of arrangement — the FAQ
+says *"You will not need to write anything yourself unless you want to."*
+
+The argument that settles it: **structured data does not survive copy-paste.**
+The JSON-LD, the heading hierarchy and the internal links are stripped the
+moment a client pastes our text into a visual editor. What lands on their site
+is prose with the product removed. We would have to verify it afterwards
+regardless, so the client-publishes path costs *more* of our time, not less, and
+delivers a worse page. It is also the exact mechanism by which facts drift,
+which is the one failure this business cannot have. Add to that the delivery
+risk: a £125/month deliverable sitting unpublished in someone's inbox for three
+weeks is a level that visibly fails.
+
+The honest arguments the other way, recorded because they shape how we ask:
+
+- **Foundation access and ongoing access are different asks.** Foundation access
+  can be a one-off afternoon. Publish rights held for a year is materially
+  bigger, and some who say yes to the first will say no to the second.
+- **Credential hygiene at twenty clients.** Live admin logins to twenty small
+  business sites is a real security surface, and several will hold customer
+  enquiry data — which pulls on the ICO obligations in roadmap 1c.
+- **Blame attaches to whoever touched it last.** If their site breaks the week
+  after we publish, for unrelated reasons, we own it in their mind. Professional
+  indemnity cover handles the money, not the relationship.
+- **Some sites will not allow it** — franchise templates, trade-body site
+  packages, agency-managed sites that redeploy from a master and would silently
+  wipe the page.
+- **Regulated clients cannot let us** — clinics, financial advisers, solicitors
+  often have change-control duties over anything published in their name.
+
+So the decision comes with two things built around it:
+
+1. **A named fallback, written into onboarding.** Where we cannot get publish
+   rights, we supply the page as a complete file with the structured data
+   intact, plus a one-page paste instruction, and we verify it live afterwards.
+   That verification is billable time inside the plan, not a favour.
+2. **Access asked for in two stages.** The Foundation asks for access *to do the
+   setup*. Taking a monthly plan is where we ask to keep it. Separating them
+   means a "no" to the second does not threaten the first.
+
 **The question counts roughly double at each step.** That is a number a business
 owner understands instantly, it maps directly to our real costs in both API
 calls and time, and it is honest — unlike "faster pace", it can be checked.
@@ -285,10 +365,12 @@ them.** That is lucky, and it is a reason not to disturb the structure.
 - **Whether Lead's fortnightly checking is worth the doubling of effort**, or
   whether the quarterly competitive review alone carries the tier. Fortnightly
   doubles our query volume and our time for a benefit the client may not feel.
-- **[PLACEHOLDER: owner to decide]** whether the answer pages at Grow and Lead
-  are written by us and published by the client, or published by us directly.
-  That changes the access we need and the time each page takes, and it is the
-  same open question roadmap 3b raises about client website access.
+- **Closed 2026-07-28 — who publishes the answer pages.** We publish directly,
+  with a defined fallback where we cannot get access. Full reasoning in section
+  3, along with what an answer page is. Left as a pointer here because this file
+  and roadmap 3b/3c both carried it as open. What remains is build work, not a
+  decision: write the fallback into onboarding, and split the access request
+  into two stages.
 - **Found while applying the copy:** every plan in `business.ts` carries a
   `summary` field, documented as "used in the record panels", and **nothing
   reads it.** Left alone rather than churned — the existing values still fit the
