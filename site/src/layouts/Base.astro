@@ -32,6 +32,10 @@ const audit = plan('audit');
 // rather than minified so that "view source and compare" is a real invitation
 // — the bytes in the head match the bytes on the page.
 const orgSchema = organizationSchema(Astro.site);
+
+// The link-preview card — rendered from the brand assets by assets/og/, one
+// image for the whole site. Platforms need the URL absolute.
+const ogImage = new URL('/og.png', Astro.site);
 ---
 
 <html lang="en-GB">
@@ -50,7 +54,14 @@ const orgSchema = organizationSchema(Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical.href} />
     <meta property="og:locale" content="en_GB" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={ogImage.href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Noven — when your customers ask an AI who to use, the answer should include you."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
