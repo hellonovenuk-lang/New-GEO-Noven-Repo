@@ -27,8 +27,9 @@ two working days to reply. The domain `novenstudio.co.uk` is confirmed and set.
 
 The founder bio and the cancellation terms are now written, and the founder's
 photograph is committed and live on the About page. One supporting value is
-still wired but unset — the LinkedIn URL — and the address for service is
-deliberately deferred until we're closer to revenue.
+still wired but unset — the LinkedIn URL, which needs a desktop session to
+fetch correctly; the steps are in 1a. The address for service is deliberately
+deferred until we're closer to revenue.
 
 **Biggest remaining blocker:** the site isn't deployed, so nobody can read it.
 The domain currently serves the old website, so switching it over is the next
@@ -70,6 +71,34 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
         founder in the structured data as `sameAs`. Nearly ten years at one
         employer is the most checkable thing we have, and right now a cautious
         reader has no way to check it.
+
+        **Getting the right URL (owner, on desktop).** LinkedIn → **Me** →
+        **View Profile**, then read the address bar once it has finished
+        redirecting. It should look like
+        `https://www.linkedin.com/in/kieran-smith-8b41a2b0` — the `/in/` is
+        the part that matters. Anything after a `?` is tracking and can be
+        deleted. Then paste it into a private window: if the profile loads
+        without a login prompt, it is both the correct URL and publicly
+        visible, which is the whole point of publishing it.
+
+        **Two forms that cannot work, both already tried:**
+        `linkedin.com/me` and `linkedin.com/nhome` are *viewer-relative* —
+        they resolve to whoever is logged in, so for a stranger or a crawler
+        they resolve to a login wall, not to Kieran. The URL has to name the
+        person.
+
+        **Hard rule before this value is ever set:** if the URL contains a
+        `loginToken`, `authToken`, `session`, or any similar credential
+        parameter, it must not go in. `founderLinkedIn` is published twice on
+        a public page — once as a visible link, once inside the JSON-LD — in
+        a public repo, on a site built to be easy for crawlers to ingest.
+        That is the worst available place to put a credential. A URL safe to
+        publish contains no token and needs no login for a stranger to open.
+
+        While in the LinkedIn settings, also add `novenstudio.co.uk` to the
+        profile's website field. Confirmation that only points one way is
+        much weaker than two pages agreeing about the same person, and this
+        is the argument the rest of the site makes.
   - [x] **Founder photograph** — the owner's photograph is committed at
         `site/public/founder-portrait.webp` (880x1100) and set as
         `founderPhoto` in `src/data/business.ts`. It shows under "Who's behind
@@ -444,7 +473,21 @@ what's next. Newest at the top.
 - **Worth remembering:** the brand and image assets live in a *second* repo
   (`hellonovenuk-lang/Noven`), not this one. Asset paths the owner gives are
   likely relative to that repo's root, not this site's.
-- **Still outstanding:** the LinkedIn URL — now the last unset founder fact.
+- **Merged to `main` at the owner's request**, which knowingly overrides the
+  standing "finish on an unmerged branch for review" rule in `CLAUDE.md`. The
+  standing rule is unchanged for future work — this was one explicit call, not
+  a new default. Netlify publishes `main`, so the photograph is now live on
+  the demo URL while the domain still serves the old site.
+- **The LinkedIn URL was attempted and deferred to a desktop session.** Two
+  URLs were supplied and neither could be used: one was `/nhome` carrying a
+  `loginToken`, the other was `/me`. Full detail and the exact steps are
+  written into 1a so the next session doesn't re-derive them.
+- **Owner action outstanding, unrelated to the repo:** the first URL contained
+  a live LinkedIn sign-in token, so it should be treated as exposed —
+  LinkedIn → Settings → Sign in & security → sign out of other sessions, and
+  change the password. Nothing was ever written to a file or committed.
+- **Next session:** the LinkedIn URL (steps in 1a), then Netlify — apex vs www,
+  read the preview end to end, then switch the domain off the old site.
 
 ### 2026-07-28 (the link card, and the record's wide-screen home)
 - The site now ships a link-preview image, closing the gap found during the
