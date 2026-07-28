@@ -17,14 +17,22 @@ interface Props {
   data: unknown;
   /** Optional note under the block — how to check it, what it means. */
   note?: string;
+  /**
+   * Optional plain sentence above the panel. A caption on a code panel gets
+   * skimmed past; a line of body text before it does not. Use this where the
+   * block has to explain itself with no other context around it.
+   */
+  intro?: string;
   /** Accessible name for the scrollable region. */
   label: string;
   class?: string;
 }
 
-const { caption, data, note, label, class: className = '' } = Astro.props;
+const { caption, data, note, intro, label, class: className = '' } = Astro.props;
 const lines = toLines(data);
 ---
+
+{intro && <p class="code-intro" set:html={intro} />}
 
 <figure class:list={['code', className]}>
   <figcaption class="code-head">

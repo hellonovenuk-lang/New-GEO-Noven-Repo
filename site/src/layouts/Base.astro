@@ -172,6 +172,29 @@ const orgSchema = organizationSchema(Astro.site);
       // this script blocked, the page still reads and navigates correctly.
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+      /* The hero film. Plays once when it comes into view and then holds its
+         last frame — a loop beside body copy pulls the eye off the words, and
+         the cut back to an empty search bar reads as a fault. preload is off
+         until we decide to play, so narrow layouts (which never show it) don't
+         pay for the download. */
+      const film = document.querySelector<HTMLVideoElement>('.hero-film video');
+      if (film && 'IntersectionObserver' in window && !reduced.matches) {
+        const filmIo = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              filmIo.disconnect();
+              film.play().catch(() => {
+                /* Autoplay refused: the poster stands in, which is a fair
+                   still of the finished state. */
+              });
+            });
+          },
+          { threshold: 0.35 },
+        );
+        filmIo.observe(film);
+      }
+
       /* Reveal on scroll. */
       const revealables = document.querySelectorAll<HTMLElement>('[data-reveal]');
       if ('IntersectionObserver' in window && !reduced.matches) {

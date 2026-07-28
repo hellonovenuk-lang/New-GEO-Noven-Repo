@@ -418,3 +418,30 @@ what's next. Newest at the top.
 - **Worth deciding soon:** a Gmail address works to launch, but an address on
   the Noven domain reads as more established to the businesses we're
   approaching — and we sell consistent, credible business information.
+
+### 2026-07-28
+- Built a short animation for the hero showing a customer asking an assistant
+  for a solicitor, the assistant reading four businesses, the three it can't
+  make sense of falling back, and the complete one being named. 7.5s, 161KB,
+  silent. Source and render script in `assets/video/`.
+- It is rendered from the site's own CSS by headless Chromium, not generated.
+  Two Higgsfield generations were tried first and are kept in `assets/video/`
+  for reference: they drifted off-palette, softened toward the end, and the
+  second misspelled the query. What they did contribute is the design — the
+  terracotta pulse and the filled-block-versus-empty-box contrast are theirs.
+- The render asserts the typed question matches the expected string exactly
+  and fails rather than emitting a video with a typo in it.
+- Hero now shows the animation at 60rem and up, and the structured-data panel
+  below that, where the animation's captions would fall under 8px. Only one is
+  ever shown, and narrow layouts don't download the video at all.
+- The panel gained a plain sentence above it explaining what it is. A caption
+  sitting on a code panel gets skimmed; a line of body text before it doesn't.
+- The film plays once when scrolled into view and holds its last frame. A loop
+  beside body copy pulls the eye off the words.
+- **Worth deciding:** on wide screens the structured-data panel is now absent
+  from the page entirely. Its natural home looks like "Where's the proof?",
+  which already claims "structured information about the business" without
+  showing any — and `global.css` has styling for a panel on the navy ground
+  that nothing currently uses. Not done; needs a decision.
+- **Also outstanding:** a mobile-specific cut of the animation, if we want the
+  argument to land on phones rather than only on desktop.

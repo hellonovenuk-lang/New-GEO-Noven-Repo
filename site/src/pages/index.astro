@@ -49,13 +49,32 @@ const orgSchema = organizationSchema(Astro.site);
         </div>
       </div>
 
+      {/* Wide screens get the animation; narrow ones get the record itself,
+          which stays legible at any width. Only one is ever shown. */}
       <div data-reveal>
-        <Code
-          caption="What an AI assistant reads on this page"
-          label="Noven's structured data, as JSON-LD"
-          data={orgSchema}
-          note="This is the real thing — the same block sits in this page's source, and it's the part a visitor never sees. Most business websites have nothing here at all."
-        />
+        <figure class="hero-film">
+          {/* H.264 first — it's the smaller file here as well as the widely
+              supported one. The VP9 twin covers builds shipped without the
+              patented codecs, which would otherwise show only the poster. */}
+          <video poster="/video/poster.png" preload="none" muted playsinline aria-describedby="film-note">
+            <source src="/video/noven-answer.mp4" type="video/mp4" />
+            <source src="/video/noven-answer.webm" type="video/webm" />
+          </video>
+          <figcaption id="film-note">
+            What happens when someone asks: the assistant reads each business's website, passes over
+            the ones it can't make sense of, and names the ones it can.
+          </figcaption>
+        </figure>
+
+        <div class="hero-record">
+          <Code
+            caption="What an AI assistant reads on this page"
+            label="Noven's structured data, as JSON-LD"
+            data={orgSchema}
+            intro="You're reading this page. An AI assistant reads the block below instead — the same facts about the business, written so a machine can't mistake them. It's the part no visitor ever sees, and on most business websites there's nothing there at all."
+            note="This is the real thing, not an example: the same block sits in this page's source. View source and you'll find it."
+          />
+        </div>
       </div>
     </div>
   </section>
