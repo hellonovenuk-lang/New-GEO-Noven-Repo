@@ -334,7 +334,31 @@ Written down rather than guessed at. Answer them as they become relevant.
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
 
-### 2026-07-27 (latest — premium redesign)
+### 2026-07-28 (latest — the link card, and the record's wide-screen home)
+- The site now ships a link-preview image, closing the gap found during the
+  redesign: `site/public/og.png`, 1200×630, declared on every page. Sharing a
+  link to LinkedIn or WhatsApp now shows the brand instead of bare text.
+- It's rendered from `assets/og/og.html` by headless Chromium — the same
+  approach as the homepage animation, and the same materials: brand navy, warm
+  white, the committed wordmark referenced as-is, and the homepage headline in
+  Newsreader. **The headline is deliberately duplicated there** — if it changes
+  on the homepage, change `og.html` and re-render (command in
+  `assets/og/README.md`).
+- The structured-data panel decision is made and done: on wide screens it lives
+  in "Where's the proof?", directly under the paragraph that claims
+  "structured information about the business" — the claim above, the evidence
+  below — using the navy-ground code styling `global.css` already had waiting.
+  Below 60rem it stays hidden, because the hero shows the record there. The
+  page holds exactly one visible copy of the record at every width; the two
+  breakpoints are paired, and both files say so in comments.
+- Verified in the built output, not just the source: at 1440px the hero shows
+  the film and the proof section shows the record; at 700px the hero shows the
+  record and the proof section shows none.
+- **Still outstanding, unchanged:** founder bio, cancellation notice period,
+  address for service, the mobile cut of the animation, and the email banner's
+  wording.
+
+### 2026-07-27 (premium redesign)
 - Reshaped the whole site to feel like a top-end firm rather than a document.
   The design idea: this business sells the gap between what a person reads and
   what a machine reads, so the page speaks in two voices — Newsreader (serif)
