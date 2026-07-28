@@ -99,7 +99,14 @@ const description =
         {
           business.founderPhoto && (
             <figure class="founder-photo">
-              <img src={business.founderPhoto} alt={business.founder} width="600" height="750" />
+              <img
+                src={business.founderPhoto}
+                alt={business.founder}
+                width="880"
+                height="1100"
+                loading="lazy"
+                decoding="async"
+              />
             </figure>
           )
         }

@@ -39,11 +39,12 @@ export const business = {
   founderLinkedIn: null as string | null,
 
   /**
-   * Path to the founder's photograph in site/public, e.g. '/kieran.jpg'.
-   * Null until the file is committed; the About page renders no portrait and
-   * no broken image until then.
+   * Path to the founder's photograph in site/public. Setting it does two
+   * things: the About page renders the portrait, and the file joins the
+   * founder's Person in the structured data as `image`. The file is 880x1100,
+   * so anything rendering it should keep the 4:5 ratio.
    */
-  founderPhoto: null as string | null,
+  founderPhoto: '/founder-portrait.webp' as string | null,
 } as const;
 
 /** The assistants named across the site, in one place. */
