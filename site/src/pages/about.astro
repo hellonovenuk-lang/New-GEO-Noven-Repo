@@ -1,0 +1,166 @@
+---
+import Base from '../layouts/Base.astro';
+import Statement from '../components/Statement.astro';
+import { business } from '../data/business';
+
+const title = 'About — Noven';
+const description =
+  'Noven is a small UK business that helps service firms get found when their customers ask AI assistants who to use. Plain pricing, no guarantees we can’t keep, no invented results.';
+---
+
+<Base title={title} description={description}>
+  <section class="hero hero--rules">
+    <div class="wrap">
+      <h1>What is Noven?</h1>
+      <p class="lede" data-reveal>
+        A small business with one job: making sure that when your customers ask an AI assistant to
+        recommend someone who does what you do, your name is in the answer.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split split--sticky">
+      <div data-reveal>
+        <h2>Why does Noven exist?</h2>
+      </div>
+      <div data-reveal>
+        <p>
+          Because a real shift is happening quietly. A meaningful share of people now ask ChatGPT,
+          Google, Copilot or Perplexity for recommendations they would previously have researched
+          themselves — and the businesses being recommended mostly have no idea why, while the
+          businesses being left out have no idea it's happening.
+        </p>
+        <p>
+          Most of what determines who gets recommended is unglamorous and fixable: whether the AI
+          systems can read your website, whether the facts about your business agree with each other
+          across the web, and whether anything you've published actually answers the questions
+          customers ask. Almost no small firm has had this looked at. Noven exists to do exactly
+          that, at prices a small firm can justify.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="wrap">
+      <div class="split" style="margin-bottom: 3rem;">
+        <div data-reveal>
+          <h2>How do we work?</h2>
+        </div>
+      </div>
+      <div>
+        <div class="stages">
+          <div class="stage" data-reveal>
+            <div class="stage-head">
+              <h3>Plainly</h3>
+            </div>
+            <div class="stage-body">
+              <p>
+                We write reports in ordinary English, we price in round numbers, and we tell you
+                when you don't need us. Our audit exists partly so we can say "you're fine" and mean
+                it.
+              </p>
+            </div>
+          </div>
+          <div class="stage" data-reveal>
+            <div class="stage-head">
+              <h3>Honestly about uncertainty</h3>
+            </div>
+            <div class="stage-body">
+              <p>
+                Nobody controls what an AI assistant says. We work on the inputs these systems
+                demonstrably rely on and we measure the results, but we don't guarantee outcomes,
+                and we don't show numbers that can't be checked.
+              </p>
+            </div>
+          </div>
+          <div class="stage" data-reveal>
+            <div class="stage-head">
+              <h3>In the open</h3>
+            </div>
+            <div class="stage-body">
+              <p>
+                This website is built with the same methods we sell. Everything on it is readable by
+                the AI crawlers, the facts are stated in machine-readable form, and the FAQ answers
+                real questions. If the approach works, you'll be able to see it working on us.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--invert">
+    <div class="wrap split">
+      <div data-reveal>
+        <h2>Who's behind it?</h2>
+        {
+          business.founderPhoto && (
+            <figure class="founder-photo">
+              <img
+                src={business.founderPhoto}
+                alt={business.founder}
+                width="880"
+                height="1100"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+          )
+        }
+      </div>
+      <div>
+        <div data-reveal>
+          <p>
+            Noven is run by {business.founder}, from {business.basedIn}. One person does the work —
+            when you email Noven, you're emailing him, and the report you get back is one he wrote.
+          </p>
+          <p>
+            Kieran spent nearly ten years in operations at {business.founderFormerEmployer}, making
+            sure containers were sent and arrived as planned. That work is mostly about keeping
+            information accurate and consistent across systems that don't naturally agree, which is
+            a large part of what this work is too. He came across this problem by chance while
+            building a few websites, and found it interesting enough to build a business around.
+            {
+              business.founderLinkedIn && (
+                <>
+                  {' '}The full work history is on <a href={business.founderLinkedIn}>LinkedIn</a>.
+                </>
+              )
+            }
+          </p>
+          {
+            !business.founderLinkedIn && (
+              <p class="flag">
+                [PLACEHOLDER: LinkedIn profile URL — set `founderLinkedIn` in
+                src/data/business.ts. It links here and joins the structured data as `sameAs`.]
+              </p>
+            )
+          }
+          {
+            !business.founderPhoto && (
+              <p class="flag">
+                [PLACEHOLDER: founder photograph — add the file to site/public and set
+                `founderPhoto` in src/data/business.ts.]
+              </p>
+            )
+          }
+          <p>
+            Noven works with clients across the {business.areaServedLabel}, and the work is done
+            remotely — there's nothing about it that needs us in the same room.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <Statement cite="One person, one service, and a written record of everything promised.">
+        Small enough that you always know <em>who did the work.</em>
+      </Statement>
+    </div>
+  </section>
+</Base>

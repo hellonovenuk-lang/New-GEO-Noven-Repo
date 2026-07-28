@@ -1,0 +1,185 @@
+---
+import Base from '../layouts/Base.astro';
+import Code from '../components/Code.astro';
+import { business, plan, money, monthlies, offerSchema } from '../data/business';
+
+const title = 'Pricing — Noven';
+const description =
+  'Noven pricing in plain numbers: a £30 audit, a £350 one-off Foundation setup, and ongoing monthly plans at £75 (Maintain), £125 (Grow) and £250 (Lead). No lock-ins.';
+
+const audit = plan('audit');
+const foundation = plan('foundation');
+const maintain = plan('maintain');
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: business.serviceName,
+  serviceType: business.serviceType,
+  provider: { '@id': new URL('/#organization', Astro.site).href },
+  areaServed: business.areaServed,
+  description:
+    'One service in three stages: a £30 audit of how AI assistants currently answer questions about your business, a £350 one-off Foundation setup that makes your business readable and credible to those systems, and ongoing monthly plans that keep you visible.',
+  offers: offerSchema(),
+};
+
+// Just the offers, lifted out of the object above — the whole Service block
+// would bury the prices in surrounding boilerplate.
+const offersOnly = { '@type': 'Service', name: business.serviceName, offers: offerSchema() };
+---
+
+<Base title={title} description={description} schema={[serviceSchema]}>
+  <section class="hero hero--rules">
+    <div class="wrap">
+      <h1>What does Noven cost?</h1>
+      <p class="lede" data-reveal>
+        One service, three stages, plain numbers. You start with a {money(audit.price)} audit, and
+        every stage after that is only worth buying if the one before says so.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="price-block" data-reveal>
+        <div class="price-grid">
+          <div class="price-head">
+            <h2>Audit</h2>
+            <span class="price">{money(audit.price)} <small>one-off</small></span>
+          </div>
+          <div>
+            <p>
+              A written report on where your business currently stands with the major AI assistants
+              — ChatGPT, Google's AI results, Copilot and Perplexity. We ask them the questions your
+              customers ask, record what comes back, and diagnose why. You'll have the report within
+              one working day of us confirming scope and payment.
+            </p>
+            <p>You get:</p>
+            <ul class="ticks">
+              <li>What each assistant currently says when asked about businesses like yours.</li>
+              <li>What they know and believe about your business, and whether it's accurate.</li>
+              <li>The specific things blocking you, in plain English.</li>
+              <li>Our honest recommendation — including "you're fine, don't spend more money."</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="price-block" data-reveal>
+        <div class="price-grid">
+          <div class="price-head">
+            <h2>Foundation</h2>
+            <span class="price">{money(foundation.price)} <small>one-off</small></span>
+          </div>
+          <div>
+            <p>
+              The setup that gets you visible, scoped by your audit and done on the website you
+              already have. It covers crawler access for the AI systems, structured machine-readable
+              facts about your business, consistency of those facts across the web, and pages that
+              directly answer the questions your customers ask.
+            </p>
+            <p>
+              We'll come back to you within two working days of you booking it with a plan and a
+              date. How long the work itself takes depends mostly on you — how quickly we get access
+              to your website and the information we need. We'll tell you what we're waiting on, and
+              we won't leave you guessing.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="price-block" data-reveal>
+        <div class="price-grid">
+          <div class="price-head">
+            <h2>Ongoing</h2>
+            <span class="price">from {money(maintain.price)} <small>per month</small></span>
+          </div>
+          <div>
+            <p>
+              The assistants change constantly, so staying visible is maintenance, not magic. All
+              three levels are the same service at different intensities — hold your position, close
+              the gaps, or lead your field — and you can move between them at any time. Each one
+              includes everything above it.
+            </p>
+          </div>
+        </div>
+
+        <ul class="levels">
+          <li class="level">
+            <span class="level-name">Maintain</span>
+            <p>
+              Holds the position the Foundation built. Every month we ask the assistants ten
+              questions your customers actually ask — five times each, because their answers vary —
+              and send you a short written record: where you appeared, what changed since last
+              month, and which questions you're still missing from. Your business facts stay
+              current, and we fix them when they drift.
+            </p>
+            <span class="level-price">{money(monthlies[0].price)} /month</span>
+          </li>
+          <li class="level">
+            <span class="level-name">Grow</span>
+            <p>
+              Everything in Maintain, across twenty-five questions instead of ten. Each month we
+              take one of the questions you're missing from and write the page that answers it
+              properly, on your own site. That's how you go from showing up sometimes to showing up
+              for the things people actually ask.
+            </p>
+            <span class="level-price">{money(monthlies[1].price)} /month</span>
+          </li>
+          <li class="level">
+            <span class="level-name">Lead</span>
+            <p>
+              For businesses that want to be the first name mentioned, not just a name mentioned.
+              Fifty questions, checked every two weeks, and two new answer pages a month. Every
+              quarter you also get a written review of the competitors the assistants are naming
+              ahead of you, and our honest read on why.
+            </p>
+            <span class="level-price">{money(monthlies[2].price)} /month</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="price-block" data-reveal>
+        <div class="price-grid">
+          <div class="price-head">
+            <h2>The same list, in machine form</h2>
+          </div>
+          <div>
+            <p>
+              These are the prices an AI assistant reads from this page, written in the format
+              those systems are built to consume. It comes from the same numbers as the list above,
+              so the two can't disagree — which is exactly the job Noven does for clients.
+            </p>
+            <Code
+              caption="The prices, as an AI assistant reads them"
+              label="Noven's prices as JSON-LD offers"
+              data={offersOnly}
+              note="Abridged from this page's structured data — the offers, without the surrounding business details. The prices above are what you pay. Noven isn't VAT registered, so there's no VAT to add."
+            />
+            <p style="margin-top: 1.5rem;">
+              Monthly plans roll month to month with no minimum term — tell us before your next
+              payment date and there won't be one. The month you've paid for runs to the end; we
+              don't refund part-months.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--invert">
+    <div class="wrap split">
+      <div data-reveal>
+        <h2>Why is the audit only {money(audit.price)}?</h2>
+      </div>
+      <div data-reveal>
+        <p>
+          Because finding out where you stand should be an easy decision, not a leap of faith. The
+          audit is real work and stands on its own — you could take the report to someone else, or
+          act on it yourself. We price it low because we'd rather earn the follow-on work on the
+          strength of what the report shows.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

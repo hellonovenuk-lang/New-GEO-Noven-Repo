@@ -1,0 +1,63 @@
+<!doctype html>
+<!-- The link-preview card, composed from the site's own values: brand navy
+     #170969, warm white #fffefa, the committed wordmark untouched, and the
+     homepage headline in the same Newsreader the site sets it in. Rendered to
+     site/public/og.png by the command in README.md — this file is the source,
+     the PNG is the build product. -->
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      @font-face {
+        font-family: 'Newsreader';
+        font-style: normal;
+        font-weight: 500;
+        src: url('fonts/Newsreader-500.woff2') format('woff2');
+      }
+
+      * {
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+      }
+
+      body {
+        background: #170969;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 84px 96px 88px;
+      }
+
+      /* The shipped web asset, as-is. Height derived from its own viewBox
+         ratio (1193.92 : 236.39), so the mark is scaled, never reshaped. */
+      .wordmark {
+        width: 216px;
+        height: 42.76px;
+        display: block;
+      }
+
+      /* The homepage h1, set the way the site sets it. */
+      h1 {
+        font-family: 'Newsreader', serif;
+        font-weight: 500;
+        font-size: 76px;
+        line-height: 1.05;
+        letter-spacing: -0.024em;
+        color: #fffefa;
+        max-width: 960px;
+        text-wrap: balance;
+      }
+    </style>
+  </head>
+  <body>
+    <img class="wordmark" src="../../site/public/logo-dark.svg" alt="" />
+    <h1>When your customers ask an AI who to use, the answer should include you.</h1>
+  </body>
+</html>

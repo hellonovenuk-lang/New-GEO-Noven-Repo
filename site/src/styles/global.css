@@ -1,0 +1,1383 @@
+/* Noven — global stylesheet.
+ *
+ * The idea: this business sells the difference between what a person reads and
+ * what a machine reads. So the page speaks in two voices. Newsreader, a serif
+ * built for reading on screens, carries everything meant for a human. IBM Plex
+ * Mono carries everything meant for a machine — and because Plex Sans shares
+ * its skeleton with the mono, the body text sits between the two without a
+ * seam. Brand colours are fixed: navy #170969, warm white #fffefa.
+ *
+ * Contents: 1 tokens · 2 reset · 3 typography · 4 layout · 5 header/footer
+ * 6 buttons and links · 7 hero · 8 the record · 9 page furniture · 10 motion
+ */
+
+/* ---------------------------------------------------------------- 1 tokens */
+
+:root {
+  /* Ink and paper. The navy is the brand's; everything else is derived from
+     it so the whole page shares one temperature. */
+  --ink: #16161d;
+  --ink-soft: #565b66;
+  /* Kept dark enough to clear 4.5:1 on paper — this carries small labels. */
+  --ink-faint: #6a6f7c;
+  --paper: #fffefa;
+  --paper-2: #f7f5ef;
+  --paper-3: #efece3;
+  --rule: #e2dfd6;
+  --rule-soft: #ece9e1;
+
+  --navy: #170969;
+  --navy-deep: #0c0438;
+  --navy-mid: #1d0e7d;
+  --brass: #8a6a28;
+
+  /* On the inverted ground. */
+  --inv-text: #fffefa;
+  --inv-soft: #b3aed3;
+  --inv-faint: #8b85b4;
+  --inv-rule: #2a1c72;
+  --inv-brass: #d6b478;
+
+  /* Type. */
+  --display: 'Newsreader', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
+    sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Space. Spacious end of the scale — this is a considered purchase, and the
+     page should feel unhurried. */
+  --s1: 0.5rem;
+  --s2: 0.75rem;
+  --s3: 1rem;
+  --s4: 1.5rem;
+  --s5: 2rem;
+  --s6: 3rem;
+  --s7: 4rem;
+  --s8: 6rem;
+
+  --measure: 40rem;
+  --site: 72rem;
+  --gutter: 1.5rem;
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --gutter: 2.5rem;
+  }
+}
+
+@media (min-width: 68rem) {
+  :root {
+    --gutter: 3.5rem;
+  }
+}
+
+/* ----------------------------------------------------------------- 2 reset */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+/* ------------------------------------------------------------ 3 typography */
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-optical-sizing: auto;
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+  margin: 0 0 var(--s3);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(2.4rem, 1.5rem + 4.2vw, 4.5rem);
+  line-height: 1.03;
+  letter-spacing: -0.024em;
+  max-width: 18ch;
+}
+
+h2 {
+  font-size: clamp(1.7rem, 1.25rem + 1.9vw, 2.6rem);
+  letter-spacing: -0.018em;
+  max-width: 22ch;
+}
+
+h3 {
+  font-size: clamp(1.2rem, 1.08rem + 0.5vw, 1.45rem);
+  letter-spacing: -0.01em;
+  margin-bottom: var(--s2);
+}
+
+/* Body copy stays in the sans — the serif is for voice, not for volume. */
+p,
+ul,
+ol,
+dl {
+  max-width: var(--measure);
+  margin: 0 0 1.15rem;
+}
+
+p:last-child,
+ul:last-child,
+ol:last-child {
+  margin-bottom: 0;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+.lede {
+  font-size: clamp(1.15rem, 1.05rem + 0.45vw, 1.4rem);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 34rem;
+}
+
+strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+em {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.06em;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--navy) 16%, transparent);
+}
+
+/* ---------------------------------------------------------------- 4 layout */
+
+.wrap {
+  max-width: var(--site);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+.wrap--narrow {
+  max-width: 58rem;
+}
+
+.section {
+  padding-block: clamp(3.5rem, 2rem + 7vw, 7rem);
+}
+
+.section + .section {
+  border-top: 1px solid var(--rule);
+}
+
+.section--tint {
+  background: var(--paper-2);
+  border-top-color: var(--rule) !important;
+}
+
+/* The uneven split: heading holds the left third, argument runs down the
+   right. Deliberately not a halves-and-halves grid. */
+.split {
+  display: grid;
+  gap: var(--s4);
+}
+
+@media (min-width: 54rem) {
+  .split {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    gap: clamp(2.5rem, 6vw, 5.5rem);
+  }
+}
+
+.split > :first-child > :last-child {
+  margin-bottom: 0;
+}
+
+/* A heading that stays put while its argument scrolls past. */
+@media (min-width: 54rem) {
+  .split--sticky > :first-child {
+    position: sticky;
+    top: 7.5rem;
+    align-self: start;
+  }
+}
+
+.stack > * + * {
+  margin-top: var(--s4);
+}
+
+/* --------------------------------------------------------- 5 header/footer */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--paper) 82%, transparent);
+  backdrop-filter: saturate(1.4) blur(10px);
+  -webkit-backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease);
+}
+
+/* Once it is over content, the header goes fully opaque — a translucent bar
+   with page text ghosting through it reads as cheap, not as depth. */
+.site-header.is-stuck {
+  border-bottom-color: var(--rule);
+  background: var(--paper);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+  padding-block: 1.1rem;
+}
+
+/* Reading progress, drawn on the header's own bottom edge. */
+.progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--navy);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+}
+
+.site-header.is-stuck .progress {
+  opacity: 1;
+}
+
+.wordmark {
+  display: inline-block;
+  text-decoration: none;
+  line-height: 0;
+  flex: none;
+}
+
+.wordmark img {
+  display: block;
+  width: auto;
+  height: 1.4rem;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.25rem, 2.4vw, 2rem);
+  font-size: 0.95rem;
+}
+
+.site-nav a {
+  text-decoration: none;
+  color: var(--ink-soft);
+  position: relative;
+  padding-block: 0.35rem;
+  transition: color 0.2s var(--ease);
+}
+
+.site-nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--navy);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.28s var(--ease);
+}
+
+.site-nav a:hover {
+  color: var(--navy);
+}
+
+.site-nav a:hover::after,
+.site-nav a[aria-current='page']::after {
+  transform: scaleX(1);
+}
+
+.site-nav a[aria-current='page'] {
+  color: var(--ink);
+}
+
+/* The audit link is the one action in the header, and it is not a button —
+   a button up here would make it the fourth time the page asks. */
+.site-nav .nav-cta {
+  color: var(--navy);
+  font-weight: 500;
+}
+
+.nav-toggle {
+  display: none;
+  align-items: center;
+  gap: 0.6rem;
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 0.5rem 0.85rem;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.nav-toggle-bars {
+  display: block;
+  position: relative;
+  width: 16px;
+  height: 1px;
+  background: currentColor;
+}
+
+.nav-toggle-bars::before,
+.nav-toggle-bars::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 16px;
+  height: 1px;
+  background: currentColor;
+  transition: transform 0.25s var(--ease);
+}
+
+.nav-toggle-bars::before {
+  top: -5px;
+}
+
+.nav-toggle-bars::after {
+  top: 5px;
+}
+
+[aria-expanded='true'] .nav-toggle-bars {
+  background: transparent;
+}
+
+[aria-expanded='true'] .nav-toggle-bars::before {
+  transform: translateY(5px) rotate(45deg);
+}
+
+[aria-expanded='true'] .nav-toggle-bars::after {
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+/* Small screens: the nav collapses, but only once JS is there to open it
+   again. Without JS the links stay where they are. */
+@media (max-width: 47.99rem) {
+  .js .nav-toggle {
+    display: inline-flex;
+  }
+
+  .js .site-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    padding: var(--s2) var(--gutter) var(--s4);
+    font-size: 1.05rem;
+  }
+
+  .js .site-nav.is-open {
+    display: flex;
+  }
+
+  .js .site-nav a {
+    padding-block: 0.85rem;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .js .site-nav a::after {
+    display: none;
+  }
+
+  .site-nav {
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+  }
+}
+
+.site-footer {
+  background: var(--navy-deep);
+  color: var(--inv-soft);
+  padding-block: var(--s8) var(--s6);
+  font-size: 0.95rem;
+}
+
+.site-footer h2 {
+  color: var(--inv-text);
+  font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.1rem);
+  max-width: 16ch;
+}
+
+.site-footer a {
+  color: var(--inv-text);
+  text-decoration-color: color-mix(in srgb, var(--inv-text) 40%, transparent);
+}
+
+.site-footer a:hover {
+  color: var(--inv-brass);
+  text-decoration-color: var(--inv-brass);
+}
+
+.site-footer .wordmark img {
+  height: 1.25rem;
+}
+
+.footer-top {
+  display: grid;
+  gap: var(--s6);
+  padding-bottom: var(--s6);
+  border-bottom: 1px solid var(--inv-rule);
+}
+
+@media (min-width: 54rem) {
+  .footer-top {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: clamp(3rem, 8vw, 7rem);
+    align-items: start;
+  }
+}
+
+.footer-bottom {
+  display: grid;
+  gap: var(--s5);
+  padding-top: var(--s5);
+}
+
+@media (min-width: 54rem) {
+  .footer-bottom {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: clamp(3rem, 8vw, 7rem);
+  }
+}
+
+.footer-nav {
+  display: grid;
+  gap: 0.55rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-nav a {
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+.footer-nav a:hover {
+  border-bottom-color: var(--inv-brass);
+}
+
+.footer-small {
+  font-size: 0.85rem;
+  color: var(--inv-faint);
+  max-width: 44rem;
+  line-height: 1.6;
+}
+
+/* ------------------------------------------------------ 6 buttons and links */
+
+a {
+  color: var(--navy);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: color-mix(in srgb, currentColor 32%, transparent);
+  transition: text-decoration-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+p a,
+li a {
+  color: var(--ink);
+  text-decoration-color: color-mix(in srgb, var(--navy) 38%, transparent);
+}
+
+p a:hover,
+li a:hover {
+  color: var(--navy);
+  text-decoration-color: var(--navy);
+}
+
+:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+.section--invert :focus-visible,
+.site-footer :focus-visible {
+  outline-color: var(--inv-brass);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.2;
+  padding: 0.95rem 1.6rem;
+  min-height: 48px;
+  border: 1px solid var(--navy);
+  border-radius: 2px;
+  background: var(--navy);
+  color: var(--paper);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease), transform 0.15s var(--ease),
+    box-shadow 0.25s var(--ease);
+}
+
+.btn:hover {
+  background: var(--navy-mid);
+  color: var(--paper);
+  box-shadow: 0 6px 20px -12px rgba(23, 9, 105, 0.9);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* The arrow leans forward on hover — the only flourish on the control. */
+.btn svg {
+  flex: none;
+  transition: transform 0.28s var(--ease);
+}
+
+.btn:hover svg {
+  transform: translateX(3px);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--navy);
+  border-color: color-mix(in srgb, var(--navy) 28%, transparent);
+}
+
+.btn--ghost:hover {
+  background: transparent;
+  color: var(--navy);
+  border-color: var(--navy);
+  box-shadow: none;
+}
+
+.section--invert .btn,
+.site-footer .btn {
+  background: var(--paper);
+  border-color: var(--paper);
+  color: var(--navy-deep);
+}
+
+.section--invert .btn:hover,
+.site-footer .btn:hover {
+  background: var(--inv-brass);
+  border-color: var(--inv-brass);
+  color: var(--navy-deep);
+  box-shadow: none;
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s3) var(--s5);
+  margin-top: var(--s5);
+}
+
+.cta-note {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  max-width: 30rem;
+  margin-top: var(--s3);
+}
+
+.section--invert .cta-note,
+.site-footer .cta-note {
+  color: var(--inv-soft);
+}
+
+/* ------------------------------------------------------------------ 7 hero */
+
+.hero {
+  padding-block: clamp(3rem, 1.5rem + 7vw, 7rem) clamp(2rem, 1rem + 3vw, 3.5rem);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hairline rules bleeding off the right edge behind the hero: the page's own
+   grid, made faintly visible. Structure as ornament, nothing added. Used on
+   interior pages, where the hero has no record panel to hold that side. */
+.hero--rules::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  right: 0;
+  width: 38vw;
+  max-width: 30rem;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to right,
+    var(--rule-soft) 0 1px,
+    transparent 1px 25%
+  );
+  opacity: 0.75;
+  mask-image: linear-gradient(to left, #000, transparent);
+  -webkit-mask-image: linear-gradient(to left, #000, transparent);
+}
+
+.hero > .wrap {
+  position: relative;
+  z-index: 1;
+}
+
+.hero .lede {
+  margin-top: var(--s4);
+}
+
+/* Homepage hero: statement on the left, the record alongside it. */
+.hero-grid {
+  display: grid;
+  gap: var(--s6);
+  align-items: start;
+}
+
+@media (min-width: 60rem) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+  }
+}
+
+/* The film is drawn at 540px square. Below the hero's two-column breakpoint
+   the column is narrower than that, and its captions fall under 8px — so the
+   narrow layout shows the record instead, which reads at any width. Exactly
+   one of the pair is ever displayed. */
+.hero-film {
+  display: none;
+  margin: 0;
+  max-width: 34rem;
+}
+
+.hero-film video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--paper);
+}
+
+.hero-film figcaption {
+  margin-top: 0.85rem;
+  max-width: 30rem;
+  color: var(--ink-faint);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+@media (min-width: 60rem) {
+  .hero-film {
+    display: block;
+  }
+
+  .hero-record {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------- 8 the record */
+
+/* The signature. This is the page's own structured data, rendered as the code
+   it actually is — same object, same formatting as the block in the <head>.
+   It is not an illustration of the product; it is the product, on display. */
+/* Says what the panel is before the reader reaches it. A caption sitting on a
+   code panel gets skimmed past; a line of body text ahead of it does not. */
+.code-intro {
+  max-width: 34rem;
+  margin: 0 0 1rem;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.code {
+  /* figure carries a 40px UA margin — reset it or the panel loses 80px. */
+  margin: 0;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--paper-2);
+  font-family: var(--mono);
+  max-width: 34rem;
+  overflow: hidden;
+}
+
+.code-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-faint);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.code-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--brass);
+  flex: none;
+}
+
+.code-scroll {
+  max-height: min(26rem, 62vh);
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: var(--paper);
+}
+
+.code-scroll:focus-visible {
+  outline-offset: -2px;
+}
+
+.code-pre {
+  margin: 0;
+  padding: 0.9rem 0;
+  font-size: 0.76rem;
+  line-height: 1.75;
+  counter-reset: codeline;
+}
+
+/* Line numbers come from a counter, so selecting the block copies the code
+   and not the numbering. */
+.code-line {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 0.75rem;
+  padding-right: 1rem;
+}
+
+/* Long string values wrap inside the code column rather than forcing the
+   whole block sideways. */
+.code-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* Line numbers stay the lightest thing in the block, but still clear AA —
+   they are text, and code blocks conventionally under-serve them. */
+.code-line::before {
+  counter-increment: codeline;
+  content: counter(codeline);
+  text-align: right;
+  color: var(--ink-faint);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.code-line:hover {
+  background: color-mix(in srgb, var(--brass) 7%, transparent);
+}
+
+/* Syntax colours. Keys brass, values ink, structure faint — the same three
+   voices the rest of the page uses. */
+.tk-key {
+  color: var(--brass);
+}
+
+.tk-meta {
+  color: var(--navy);
+  font-weight: 500;
+}
+
+.tk-str {
+  color: var(--ink);
+}
+
+.tk-num,
+.tk-bool,
+.tk-null {
+  color: var(--navy);
+}
+
+.tk-punct,
+.tk-indent {
+  color: var(--ink-soft);
+}
+
+.code-foot {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--rule);
+  color: var(--ink-faint);
+  font-size: 0.72rem;
+  line-height: 1.6;
+}
+
+.code-foot a {
+  color: inherit;
+}
+
+/* The record's home on wide screens, inside "Where's the proof?". Paired with
+   the hero: below 60rem the hero shows the record and this stays hidden; at
+   60rem and up the hero shows the film and the record appears here. Keep the
+   two breakpoints in step or the page shows the record twice, or not at all. */
+.proof-record {
+  display: none;
+}
+
+@media (min-width: 60rem) {
+  .proof-record {
+    display: block;
+    margin-top: var(--s5);
+  }
+}
+
+/* On the navy ground. */
+.section--invert .code {
+  background: color-mix(in srgb, #000 18%, transparent);
+  border-color: var(--inv-rule);
+}
+
+.section--invert .code-scroll {
+  background: color-mix(in srgb, #000 12%, transparent);
+}
+
+.section--invert .code-head,
+.section--invert .code-foot {
+  border-color: var(--inv-rule);
+  color: var(--inv-faint);
+}
+
+.section--invert .code-line::before {
+  color: var(--inv-faint);
+}
+
+.section--invert .code-line:hover {
+  background: color-mix(in srgb, var(--inv-brass) 10%, transparent);
+}
+
+.section--invert .tk-key {
+  color: var(--inv-brass);
+}
+
+.section--invert .tk-str {
+  color: var(--inv-text);
+}
+
+.section--invert .tk-meta,
+.section--invert .tk-num,
+.section--invert .tk-bool,
+.section--invert .tk-null {
+  color: #9fd0ff;
+}
+
+.section--invert .tk-punct,
+.section--invert .tk-indent {
+  color: var(--inv-faint);
+}
+
+@media (max-width: 30rem) {
+  .code-pre {
+    font-size: 0.72rem;
+  }
+
+  .code-line {
+    grid-template-columns: 1.75rem minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+}
+
+/* ------------------------------------------------- 9 page furniture */
+
+/* Inverted section. One gear change per page, no more. It takes the brand
+   navy; the footer sits a shade deeper, so the two read as separate blocks
+   even when they meet. */
+.section--invert {
+  background: var(--navy);
+  color: var(--inv-soft);
+  border-top: none !important;
+}
+
+.section--invert h2,
+.section--invert h3 {
+  color: var(--inv-text);
+}
+
+.section--invert strong {
+  color: var(--inv-text);
+}
+
+.section--invert a {
+  color: var(--inv-text);
+  text-decoration-color: color-mix(in srgb, var(--inv-text) 40%, transparent);
+}
+
+.section--invert a:hover {
+  color: var(--inv-brass);
+  text-decoration-color: var(--inv-brass);
+}
+
+.section--invert .lede {
+  color: var(--inv-soft);
+}
+
+/* A statement line: the serif, large, used to turn the page between
+   arguments. Never more than one per page. */
+.statement {
+  font-family: var(--display);
+  font-size: clamp(1.7rem, 1.1rem + 2.7vw, 3.2rem);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  color: var(--ink);
+  max-width: 20ch;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.statement em {
+  font-size: 1em;
+  color: var(--navy);
+}
+
+.section--invert .statement {
+  color: var(--inv-text);
+}
+
+.section--invert .statement em {
+  color: var(--inv-brass);
+}
+
+/* Statement and its footnote sit side by side — the claim large on the left,
+   the qualification small on the right, which is the shape of the argument. */
+.statement-band {
+  display: grid;
+  gap: var(--s4);
+}
+
+@media (min-width: 54rem) {
+  .statement-band {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    gap: clamp(2.5rem, 6vw, 5.5rem);
+    align-items: end;
+  }
+}
+
+.statement-cite {
+  font-family: var(--sans);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+  max-width: 30rem;
+  padding-top: var(--s2);
+  border-top: 1px solid var(--rule);
+}
+
+.section--invert .statement-cite {
+  border-top-color: var(--inv-rule);
+}
+
+.section--invert .statement-cite {
+  color: var(--inv-soft);
+}
+
+/* Stages. Numbered only here, because these genuinely happen in order and
+   you cannot buy the third without the first. */
+.stages {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: none;
+  counter-reset: stage;
+}
+
+.stage {
+  display: grid;
+  gap: var(--s3);
+  padding-block: var(--s6);
+  border-top: 1px solid var(--rule);
+  margin: 0;
+}
+
+.stage:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+@media (min-width: 54rem) {
+  .stage {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    gap: clamp(2.5rem, 6vw, 5.5rem);
+  }
+}
+
+.stage-mark {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s3);
+}
+
+.stage-num {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--brass);
+  flex: none;
+}
+
+.stage-head h3 {
+  margin-bottom: 0.35rem;
+}
+
+.stage-price {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.stage-body > :last-child {
+  margin-bottom: 0;
+}
+
+/* Price lines. */
+.price-block {
+  padding-block: var(--s6);
+  border-top: 1px solid var(--rule);
+}
+
+.price-block:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.price-grid {
+  display: grid;
+  gap: var(--s4);
+}
+
+@media (min-width: 54rem) {
+  .price-grid {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    gap: clamp(2.5rem, 6vw, 5.5rem);
+  }
+}
+
+.price-head h2,
+.price-head h3 {
+  margin-bottom: 0.4rem;
+  max-width: none;
+}
+
+.price {
+  font-family: var(--mono);
+  font-size: 1.05rem;
+  color: var(--navy);
+  display: block;
+}
+
+.price small {
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+}
+
+/* The three monthly levels: a stepped list, not three matching cards. Each
+   one includes the one above it, and the layout says so. */
+.levels {
+  list-style: none;
+  padding: 0;
+  margin: var(--s5) 0 0;
+  max-width: none;
+  border-top: 1px solid var(--rule);
+}
+
+.level {
+  display: grid;
+  gap: 0.35rem var(--s4);
+  padding-block: var(--s4);
+  border-bottom: 1px solid var(--rule);
+  margin: 0;
+}
+
+@media (min-width: 40rem) {
+  .level {
+    grid-template-columns: 9rem minmax(0, 1fr) 7rem;
+    align-items: baseline;
+  }
+
+  .level .level-price {
+    text-align: right;
+  }
+}
+
+.level-name {
+  font-family: var(--display);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.level p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  max-width: 34rem;
+}
+
+.level-price {
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+/* Question and answer. */
+.qa {
+  border-top: 1px solid var(--rule);
+  padding-block: var(--s5);
+  display: grid;
+  gap: var(--s3);
+}
+
+.qa:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+@media (min-width: 54rem) {
+  .qa {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+    gap: clamp(2.5rem, 6vw, 5.5rem);
+  }
+}
+
+.qa h2,
+.qa h3 {
+  font-size: clamp(1.15rem, 1.05rem + 0.5vw, 1.4rem);
+  margin: 0;
+  max-width: 24ch;
+}
+
+.qa-answer > :last-child {
+  margin-bottom: 0;
+}
+
+/* Plain rows of facts. */
+.rows {
+  list-style: none;
+  padding: 0;
+  margin: var(--s4) 0;
+  max-width: var(--measure);
+  border-top: 1px solid var(--rule);
+}
+
+.rows li {
+  padding-block: 0.85rem;
+  border-bottom: 1px solid var(--rule);
+  margin: 0;
+  display: grid;
+  gap: 0.15rem 1rem;
+}
+
+@media (min-width: 34rem) {
+  .rows li {
+    grid-template-columns: 8rem minmax(0, 1fr);
+    align-items: baseline;
+  }
+}
+
+.rows strong {
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+/* Checklist — a rule-marked list, no icon font, no emoji. */
+.ticks {
+  list-style: none;
+  padding: 0;
+  max-width: var(--measure);
+}
+
+.ticks li {
+  position: relative;
+  padding-left: 1.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.ticks li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 0.75rem;
+  height: 1px;
+  background: var(--brass);
+}
+
+.section--invert .ticks li::before {
+  background: var(--inv-brass);
+}
+
+/* The founder's photograph, sat under the heading it belongs to rather than
+   floated beside the prose — the left column of that split is otherwise empty
+   navy, and a face is the right thing to put in it. Modest on purpose: this is
+   a one-person business being plain about it, not a profile page. */
+.founder-photo {
+  margin: var(--s5) 0 0;
+  max-width: 15rem;
+}
+
+.founder-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+  border: 1px solid var(--inv-rule);
+}
+
+/* Unresolved facts. Deliberately loud — these are for the owner, not the
+   customer, and they must never be mistaken for finished copy. */
+.flag {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  background: #fdf7e6;
+  border-left: 2px solid #c9a227;
+  color: #6b5817;
+  padding: 0.85rem 1.1rem;
+  max-width: var(--measure);
+  margin-bottom: 1.15rem;
+}
+
+.section--invert .flag {
+  background: color-mix(in srgb, #c9a227 12%, transparent);
+  color: var(--inv-brass);
+  border-left-color: var(--inv-brass);
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 100;
+  background: var(--navy);
+  color: var(--paper);
+  padding: 0.75rem 1.25rem;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+/* ---------------------------------------------------------------- 10 motion */
+
+/* Everything below is gated on .js, which only exists once the script runs.
+   With JS off — or for a crawler that never runs it — nothing is hidden. */
+
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* Hero headline: each word rises out of its own clipped box. */
+.js .hero h1 .word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.js .hero h1 .word > span {
+  display: inline-block;
+  transform: translateY(105%);
+  transition: transform 0.85s var(--ease);
+  transition-delay: var(--word-delay, 0ms);
+}
+
+.js .hero h1.is-in .word > span {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal],
+  .js [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .js .hero h1 .word > span {
+    transform: none;
+    transition: none;
+  }
+
+  .btn,
+  .btn svg,
+  .site-nav a::after,
+  .progress {
+    transition: none !important;
+  }
+}

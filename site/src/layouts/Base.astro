@@ -1,0 +1,300 @@
+---
+import '../styles/global.css';
+import { business, plan, money } from '../data/business';
+import { organizationSchema } from '../data/schema';
+import { toSource } from '../lib/json-code';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Optional extra JSON-LD objects, serialised into their own script tags. */
+  schema?: object[];
+}
+
+const { title, description, schema = [] } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const navItems = [
+  { href: '/how-it-works/', label: 'How it works' },
+  { href: '/pricing/', label: 'Pricing' },
+  { href: '/faq/', label: 'FAQ' },
+  { href: '/about/', label: 'About' },
+];
+
+const currentPath = Astro.url.pathname;
+const isCurrent = (href: string) =>
+  currentPath === href || currentPath === href.replace(/\/$/, '');
+
+const audit = plan('audit');
+
+// The same object the homepage renders as a visible code block. Pretty-printed
+// rather than minified so that "view source and compare" is a real invitation
+// — the bytes in the head match the bytes on the page.
+const orgSchema = organizationSchema(Astro.site);
+
+// The link-preview card — rendered from the brand assets by assets/og/, one
+// image for the whole site. Platforms need the URL absolute.
+const ogImage = new URL('/og.png', Astro.site);
+---
+
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical.href} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#170969" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={business.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:image" content={ogImage.href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Noven — when your customers ask an AI who to use, the answer should include you."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap"
+    />
+
+    <script type="application/ld+json" set:html={toSource(orgSchema)} />
+    {schema.map((obj) => <script type="application/ld+json" set:html={toSource(obj)} />)}
+
+    {/* Set before first paint, so reveal-state styles never flash. */}
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <div class="wrap">
+        <a class="wordmark" href="/">
+          <img src="/logo.svg" alt="Noven — home" width="1066" height="236" />
+        </a>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          data-nav-toggle
+        >
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+          Menu
+        </button>
+
+        <nav class="site-nav" id="site-nav" aria-label="Main">
+          {
+            navItems.map((item) => (
+              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            ))
+          }
+          <a
+            class="nav-cta"
+            href="/contact/"
+            aria-current={isCurrent('/contact/') ? 'page' : undefined}
+          >
+            Book the {money(audit.price)} audit
+          </a>
+        </nav>
+      </div>
+      <div class="progress" data-progress aria-hidden="true"></div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        {/* The site asks once, here, at the end of every page. */}
+        <div class="footer-top">
+          <div data-reveal>
+            <h2>Find out where your business stands.</h2>
+            <p class="cta-note" style="margin-top: 0;">
+              The {money(audit.price)} audit is a written report on where you show up today and what's
+              in the way. If you're already in good shape, it says so.
+            </p>
+            <div class="cta-row">
+              <a class="btn" href="/contact/">
+                Book the {money(audit.price)} audit
+                <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+                  <path
+                    d="M9 1l4 4-4 4M13 5H1"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="square"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div data-reveal>
+            <ul class="footer-nav">
+              {navItems.map((item) => (
+                <li>
+                  <a href={item.href}>{item.label}</a>
+                </li>
+              ))}
+              <li><a href="/contact/">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <div>
+            <a class="wordmark" href="/">
+              <img src="/logo-dark.svg" alt="Noven — home" width="1194" height="236" />
+            </a>
+          </div>
+          <p class="footer-small">
+            &copy; {new Date().getFullYear()} {business.name}. {business.legalNote} Based in {
+              business.basedIn
+            }, working with clients across the {business.areaServedLabel}. Not VAT registered, so
+            the prices shown are the prices you pay.
+          </p>
+        </div>
+        <p class="flag" style="margin-top: 2rem;">
+          [PLACEHOLDER: address for service of documents — see ROADMAP.md. This is a legal
+          disclosure requirement for trading under a business name.]
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Progressive enhancement only. Every behaviour here is additive: with
+      // this script blocked, the page still reads and navigates correctly.
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      /* The hero film. Plays once when it comes into view and then holds its
+         last frame — a loop beside body copy pulls the eye off the words, and
+         the cut back to an empty search bar reads as a fault. preload is off
+         until we decide to play, so narrow layouts (which never show it) don't
+         pay for the download. */
+      const film = document.querySelector<HTMLVideoElement>('.hero-film video');
+      if (film && 'IntersectionObserver' in window && !reduced.matches) {
+        const filmIo = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              filmIo.disconnect();
+              film.play().catch(() => {
+                /* Autoplay refused: the poster stands in, which is a fair
+                   still of the finished state. */
+              });
+            });
+          },
+          { threshold: 0.35 },
+        );
+        filmIo.observe(film);
+      }
+
+      /* Reveal on scroll. */
+      const revealables = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if ('IntersectionObserver' in window && !reduced.matches) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              const el = entry.target as HTMLElement;
+              // Siblings revealed together cascade rather than land at once.
+              const siblings = el.parentElement
+                ? Array.from(el.parentElement.querySelectorAll('[data-reveal]'))
+                : [];
+              const index = Math.min(siblings.indexOf(el), 5);
+              el.style.setProperty('--reveal-delay', `${Math.max(index, 0) * 70}ms`);
+              el.classList.add('is-in');
+              io.unobserve(el);
+            });
+          },
+          { rootMargin: '0px 0px -12% 0px', threshold: 0.05 },
+        );
+        revealables.forEach((el) => io.observe(el));
+      } else {
+        revealables.forEach((el) => el.classList.add('is-in'));
+      }
+
+      /* Hero headline: words rise out of their own clipped boxes. Only run on
+         a plain-text heading, so marked-up headings are left alone. */
+      const heading = document.querySelector<HTMLElement>('.hero h1');
+      if (heading && heading.children.length === 0) {
+        const words = (heading.textContent || '').trim().split(/\s+/);
+        heading.textContent = '';
+        words.forEach((word, i) => {
+          const outer = document.createElement('span');
+          outer.className = 'word';
+          const inner = document.createElement('span');
+          inner.textContent = word;
+          inner.style.setProperty('--word-delay', `${i * 45}ms`);
+          outer.appendChild(inner);
+          heading.appendChild(outer);
+          if (i < words.length - 1) heading.appendChild(document.createTextNode(' '));
+        });
+        requestAnimationFrame(() => heading.classList.add('is-in'));
+      }
+
+      /* Header state and reading progress. */
+      const header = document.querySelector<HTMLElement>('[data-header]');
+      const progress = document.querySelector<HTMLElement>('[data-progress]');
+      let ticking = false;
+
+      const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const y = window.scrollY;
+          header?.classList.toggle('is-stuck', y > 8);
+          if (progress) {
+            const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+            const ratio = scrollable > 0 ? Math.min(y / scrollable, 1) : 0;
+            progress.style.transform = `scaleX(${ratio})`;
+          }
+          ticking = false;
+        });
+      };
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      /* Small-screen navigation. */
+      const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+      const nav = document.getElementById('site-nav');
+
+      const closeNav = () => {
+        toggle?.setAttribute('aria-expanded', 'false');
+        nav?.classList.remove('is-open');
+      };
+
+      toggle?.addEventListener('click', () => {
+        const open = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!open));
+        nav?.classList.toggle('is-open', !open);
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeNav();
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) closeNav();
+      });
+    </script>
+  </body>
+</html>

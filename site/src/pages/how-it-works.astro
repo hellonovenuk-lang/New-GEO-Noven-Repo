@@ -1,0 +1,177 @@
+---
+import Base from '../layouts/Base.astro';
+import Statement from '../components/Statement.astro';
+import { business, plan, money } from '../data/business';
+
+const title = 'How it works — Noven';
+const description =
+  'How Noven gets your business found by AI assistants: a £30 audit of where you stand, a one-off Foundation setup, and an ongoing monthly plan to keep you visible.';
+
+const audit = plan('audit');
+const foundation = plan('foundation');
+const maintain = plan('maintain');
+
+const howToSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: business.serviceName,
+  serviceType: business.serviceType,
+  provider: { '@id': new URL('/#organization', Astro.site).href },
+  areaServed: business.areaServed,
+  description:
+    'Noven audits how AI assistants such as ChatGPT, Google, Copilot and Perplexity currently answer questions about a business, fixes what is blocking the business from being found, and maintains that visibility month to month.',
+};
+---
+
+<Base title={title} description={description} schema={[howToSchema]}>
+  <section class="hero hero--rules">
+    <div class="wrap">
+      <h1>How does Noven get you found?</h1>
+      <p class="lede" data-reveal>
+        Three stages, in order: find out where you stand, fix what's in the way, then keep you
+        visible as the AI systems change. Each stage only makes sense if the previous one says it's
+        worth doing.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <ol class="stages">
+        <li class="stage" data-reveal>
+          <div class="stage-head">
+            <div class="stage-mark">
+              <span class="stage-num" aria-hidden="true">01</span>
+              <div>
+                <h3>The audit</h3>
+                <span class="stage-price">{money(audit.price)} · one-off</span>
+              </div>
+            </div>
+          </div>
+          <div class="stage-body">
+            <p>
+              We start by asking the major AI assistants the questions your customers would ask —
+              in your service area, in your specialism — and recording exactly what they say. We
+              check whether they know your business exists, what they believe about you, whether
+              it's accurate, and who they recommend instead of you.
+            </p>
+            <p>
+              Then we look at why. We check what the AI crawlers can and can't read on your
+              website, whether the basic facts about your business are consistent across the places
+              these systems draw from, and whether anything on your site answers the questions
+              being asked.
+            </p>
+            <p>
+              You get a short written report in plain English: where you show up today, what's
+              blocking you, and what we'd do about it. If you're already in good shape, the report
+              says so and we don't try to sell you the next stage.
+            </p>
+          </div>
+        </li>
+
+        <li class="stage" data-reveal>
+          <div class="stage-head">
+            <div class="stage-mark">
+              <span class="stage-num" aria-hidden="true">02</span>
+              <div>
+                <h3>The Foundation</h3>
+                <span class="stage-price">{money(foundation.price)} · one-off</span>
+              </div>
+            </div>
+          </div>
+          <div class="stage-body">
+            <p>
+              This is the setup work that makes your business readable and credible to AI systems.
+              Working on your existing website — we don't rebuild websites — the Foundation
+              typically covers:
+            </p>
+            <ul class="ticks">
+              <li>
+                Making sure AI crawlers are allowed in and can read your pages as plain text, not
+                just as a rendered app.
+              </li>
+              <li>
+                Adding structured data: machine-readable statements of who you are, what you do,
+                where you operate and what you charge, in the format these systems are built to
+                consume.
+              </li>
+              <li>
+                Getting the basic facts about your business — name, services, location, contact
+                details — consistent everywhere they appear online.
+              </li>
+              <li>
+                Writing or restructuring key pages so they directly answer the questions your
+                customers ask, in language an assistant can quote.
+              </li>
+            </ul>
+            <p>
+              The exact scope comes from your audit, so you're never paying for work you don't need.
+            </p>
+          </div>
+        </li>
+
+        <li class="stage" data-reveal>
+          <div class="stage-head">
+            <div class="stage-mark">
+              <span class="stage-num" aria-hidden="true">03</span>
+              <div>
+                <h3>Ongoing</h3>
+                <span class="stage-price">from {money(maintain.price)} · per month</span>
+              </div>
+            </div>
+          </div>
+          <div class="stage-body">
+            <p>
+              AI assistants re-crawl, re-rank and change their sources continually, so visibility is
+              something you maintain, not something you buy once. The monthly plans do three
+              different jobs: <strong>Maintain</strong> holds the position the Foundation built and
+              tells you each month where you appeared and what you're still missing;
+              <strong>Grow</strong> closes those gaps, writing the page that answers one of them
+              every month; <strong>Lead</strong> is for businesses that want to be named ahead of
+              their competitors rather than alongside them. Details are on the
+              <a href="/pricing/">pricing page</a>.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--invert">
+    <div class="wrap split">
+      <div data-reveal>
+        <h2>What don't we do?</h2>
+      </div>
+      <div>
+        <div data-reveal>
+          <p>
+            <strong>We don't guarantee recommendations.</strong> Nobody controls what an AI
+            assistant says, and anyone promising you a guaranteed spot in its answers is guessing or
+            lying. What we do is make sure everything these systems demonstrably rely on is in place
+            for your business — and show you, in plain before-and-after terms, how you're showing
+            up.
+          </p>
+          <p>
+            <strong>We don't build websites.</strong> The work happens on the site you already have.
+            If your site has problems beyond our scope, the audit will say so honestly.
+          </p>
+          <p>
+            <strong>We don't do lock-ins.</strong> The audit and Foundation are one-off payments.
+            Monthly plans roll month to month, with no minimum term — tell us before your next
+            payment date and there won't be one.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <Statement
+        cite={`The audit costs ${money(audit.price)} and tells you exactly where you appear today — including the awkward finding that you might not need us.`}
+      >
+        Every stage has to earn <em>the next one.</em>
+      </Statement>
+    </div>
+  </section>
+</Base>

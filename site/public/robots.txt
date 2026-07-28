@@ -1,0 +1,44 @@
+# Noven — robots.txt
+# We want to be read by both search engines and AI assistants,
+# so AI crawlers are explicitly allowed by name below.
+
+# OpenAI (ChatGPT training and search)
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic (Claude)
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Google (search and AI features)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Microsoft (Bing and Copilot)
+User-agent: Bingbot
+Allow: /
+
+# Everyone else
+User-agent: *
+Allow: /
+
+Sitemap: https://novenstudio.co.uk/sitemap-index.xml

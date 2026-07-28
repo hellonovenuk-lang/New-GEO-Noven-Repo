@@ -1,0 +1,152 @@
+---
+import Base from '../layouts/Base.astro';
+import { money, plan } from '../data/business';
+
+const title = 'Frequently asked questions — Noven';
+const description =
+  'Plain answers about getting your business found by AI assistants: how recommendations work, what the £30 audit covers, timescales, guarantees, and which assistants Noven covers.';
+
+const audit = plan('audit');
+
+// Single source of truth: this array renders the visible FAQ and the
+// FAQPage structured data, so the two can never drift apart.
+const faqs: { q: string; a: string[] }[] = [
+  {
+    q: 'How do AI assistants decide which businesses to recommend?',
+    a: [
+      'AI assistants build their answers from what they can find and read: your website, directories, reviews, professional registers and other public sources. When someone asks for a recommendation, the assistant favours businesses whose information is easy to read, consistent across sources, and clearly matched to the question — the right service, the right place, the right specialism.',
+      'No one outside these companies knows the exact mechanics, and anyone who claims to is overselling. But the inputs are observable: businesses with clear, consistent, machine-readable information get found and described accurately; businesses without it get ignored or described wrongly. Noven works on those inputs.',
+    ],
+  },
+  {
+    q: 'What exactly do I get for the £30 audit?',
+    a: [
+      'A short written report, in plain English, covering three things: what the major AI assistants currently say when asked the questions your customers ask; what they know and believe about your business specifically, and whether it is accurate; and what is blocking you, with our recommendation on what to do about it.',
+      'If the audit shows you are already in good shape, the report says so, and we will not push you towards the next stage. £30 is the whole cost, with no obligation.',
+      'We reply to enquiries within two working days, and you will have the report within one working day of us confirming scope and payment.',
+    ],
+  },
+  {
+    q: 'Can you guarantee that AI assistants will recommend my business?',
+    a: [
+      'No — and nobody honestly can. These systems are controlled by OpenAI, Google, Microsoft and Perplexity, not by us, and their answers vary and change. Treat anyone who guarantees you a spot in AI recommendations the way you would treat someone guaranteeing you a court win.',
+      'What we can do is make sure everything these systems demonstrably rely on is in place for your business, and then show you plainly how you are showing up over time. The work is real and checkable; the outcome is strongly influenced, not guaranteed.',
+    ],
+  },
+  {
+    q: 'How long does it take to see results?',
+    a: [
+      'Some changes take effect within weeks — assistants that browse the live web, like Perplexity and the search modes of ChatGPT and Copilot, pick up improved pages as soon as they recrawl them. Other changes take months, because some systems update their underlying knowledge slowly.',
+      'The honest answer is that timescales vary by business and by assistant, and we will not pretend otherwise. This is why we monitor and report how you are actually showing up, rather than asking you to take progress on faith.',
+    ],
+  },
+  {
+    q: 'Is this the same as getting to the top of Google?',
+    a: [
+      'It overlaps, but it is not the same job. Ranking in a list of blue links is about competing for position on a results page. Being recommended by an AI assistant is about being found, understood and trusted by a system that gives one short, conversational answer.',
+      'Much of the groundwork helps both — clear pages and consistent facts never hurt your Google presence. But the specific work of being quotable and machine-readable for AI assistants is different, and most businesses have never had it done.',
+    ],
+  },
+  {
+    q: 'Do I need a new website for this to work?',
+    a: [
+      'Almost certainly not. We work on the website you already have — the fixes are about what your site says and how machines read it, not how it looks. Noven does not build websites.',
+      'If your site has a problem so fundamental that our work would be wasted on it, the audit will tell you that honestly before you spend anything more.',
+    ],
+  },
+  {
+    q: 'Which AI assistants does this cover?',
+    a: [
+      'The ones your customers actually use: ChatGPT, Google’s AI-generated results and Gemini, Microsoft Copilot, and Perplexity. The same groundwork also serves newer assistants as they appear, because they draw on the same kinds of sources.',
+    ],
+  },
+  {
+    q: 'What do you need from me?',
+    a: [
+      'For the audit: your business name, website address, the services you most want to be found for, and the area you serve. That is enough for us to start.',
+      'For the Foundation and ongoing work: access to update your website (or a contact for whoever manages it), and a little of your time to verify facts about the business. You will not need to write anything yourself unless you want to.',
+    ],
+  },
+  {
+    q: 'Am I locked into a contract?',
+    a: [
+      'No. The audit and the Foundation are one-off payments. The monthly plans roll month to month with no minimum term — tell us before your next payment date and that is the end of it. Moving up or down a level works the same way.',
+    ],
+  },
+  {
+    q: 'Who will I actually be dealing with?',
+    a: [
+      'Kieran Smith, who runs Noven as a sole trader from the Wirral. Noven is one person, not an agency with an account manager in front of it — the person who answers your email is the person who does the work and writes your report.',
+      'Everything runs by email rather than phone, so there is a written record of what was asked and what was promised. Noven is not VAT registered, so the prices you see are the prices you pay.',
+    ],
+  },
+  {
+    q: 'Why should I trust a company with no case studies?',
+    a: [
+      'You should be sceptical — that is the right instinct, and we would rather meet it head-on than dodge it. Noven is new, and we do not yet have client results to show. We refuse to invent any.',
+      'Two things stand in the meantime. First, this website is itself built the way we build for clients, and you can test it: ask an AI assistant what Noven does and what it costs, and compare the answer with these pages. Second, the audit is £30 precisely so that trying us is a small decision, and the report gives you something concrete to judge us on before any larger spend.',
+    ],
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.a.join(' '),
+    },
+  })),
+};
+
+/** Paragraphs are authored plain, but owner placeholders must stand out. */
+const isFlag = (text: string) => text.trim().startsWith('[PLACEHOLDER');
+---
+
+<Base title={title} description={description} schema={[faqSchema]}>
+  <section class="hero hero--rules">
+    <div class="wrap">
+      <h1>Frequently asked questions</h1>
+      <p class="lede" data-reveal>
+        Plain answers, including the ones that don't flatter us. If your question isn't here,
+        <a href="/contact/">ask us directly</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      {
+        faqs.map((item) => (
+          <div class="qa" data-reveal>
+            <h2>{item.q}</h2>
+            <div class="qa-answer">
+              {item.a.map((para) =>
+                isFlag(para) ? <p class="flag">{para}</p> : <p>{para}</p>,
+              )}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section section--invert">
+    <div class="wrap split">
+      <div data-reveal>
+        <h2>Don't take our word for any of this.</h2>
+      </div>
+      <div data-reveal>
+        <p>
+          Every answer above is also published as structured data on this page, which is what an
+          assistant reads when someone asks it about Noven. Ask ChatGPT or Perplexity what the
+          {money(audit.price)} audit includes, and compare its answer with this page. That is the
+          whole method, run on ourselves.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

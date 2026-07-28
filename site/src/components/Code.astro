@@ -1,0 +1,55 @@
+---
+/* The signature block: this page's structured data, shown as the code it
+ * actually is.
+ *
+ * Pass the same object that goes into the page's JSON-LD — never a hand-typed
+ * copy. The head serialises with JSON.stringify(obj, null, 2) and so does
+ * this, so a reader who views source sees character-for-character what they
+ * were shown.
+ */
+
+import { toLines } from '../lib/json-code';
+
+interface Props {
+  /** Sentence-case caption. Says what this is, in the reader's words. */
+  caption: string;
+  /** The exact object rendered into this page's JSON-LD. */
+  data: unknown;
+  /** Optional note under the block — how to check it, what it means. */
+  note?: string;
+  /**
+   * Optional plain sentence above the panel. A caption on a code panel gets
+   * skimmed past; a line of body text before it does not. Use this where the
+   * block has to explain itself with no other context around it.
+   */
+  intro?: string;
+  /** Accessible name for the scrollable region. */
+  label: string;
+  class?: string;
+}
+
+const { caption, data, note, intro, label, class: className = '' } = Astro.props;
+const lines = toLines(data);
+---
+
+{intro && <p class="code-intro" set:html={intro} />}
+
+<figure class:list={['code', className]}>
+  <figcaption class="code-head">
+    <span class="code-dot" aria-hidden="true"></span>
+    {caption}
+  </figcaption>
+
+  {/* Scrollable regions need to be reachable by keyboard, hence tabindex. */}
+  <div class="code-scroll" tabindex="0" role="region" aria-label={label}>
+    {/* The line number is a CSS counter on .code-line; the tokens all live in
+        one .code-text child so the grid has exactly two cells per row. */}
+    <pre class="code-pre"><code>{lines.map((line) => (
+      <span class="code-line"><span class="code-text">{line.map((token) => (
+        <span class={`tk-${token.kind}`}>{token.text}</span>
+      ))}</span></span>
+    ))}</code></pre>
+  </div>
+
+  {note && <div class="code-foot" set:html={note} />}
+</figure>

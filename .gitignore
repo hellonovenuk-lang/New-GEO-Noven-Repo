@@ -1,0 +1,5 @@
+# Python bytecode from the skill scripts in .claude/skills/
+__pycache__/
+*.pyc
+
+.DS_Store

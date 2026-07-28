@@ -1,0 +1,85 @@
+---
+import Base from '../layouts/Base.astro';
+import { business, plan, money } from '../data/business';
+
+const title = 'Contact — Noven';
+const description =
+  'Book Noven’s £30 audit or ask a question. Email us your business name, website and the services you want to be found for, and we’ll reply within two working days.';
+
+const audit = plan('audit');
+---
+
+<Base title={title} description={description}>
+  <section class="hero hero--rules">
+    <div class="wrap">
+      <h1>Book the audit, or just ask</h1>
+      <p class="lede" data-reveal>
+        The simplest way to reach us is email. No forms, no call-booking software, no follow-up
+        sequence — you'll get a reply from a person.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split split--sticky">
+      <div data-reveal>
+        <h2>How do I book the {money(audit.price)} audit?</h2>
+      </div>
+      <div data-reveal>
+        <p>Email us with four things:</p>
+        <ul class="ticks">
+          <li>Your business name</li>
+          <li>Your website address</li>
+          <li>The services you most want to be found for</li>
+          <li>The area you serve</li>
+        </ul>
+        <p>
+          We'll reply within two working days to confirm scope and payment, and you'll have your
+          written report within one working day of that.
+        </p>
+
+        <ul class="rows">
+          <li>
+            <strong>Email</strong>
+            <a href={`mailto:${business.email}`}>{business.email}</a>
+          </li>
+          <li>
+            <strong>Based in</strong>
+            <span>{business.basedIn} — working with clients across the {business.areaServedLabel}</span>
+          </li>
+          <li>
+            <strong>Reply time</strong>
+            <span>Within two working days</span>
+          </li>
+        </ul>
+
+        <p>
+          We don't publish a phone number. Everything here starts by email, so there's a written
+          record of what was asked and what we said — and you're not chasing anyone to pick up. If a
+          call would be easier once we're working together, we'll arrange one.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="wrap split">
+      <div data-reveal>
+        <h2>Not ready to book?</h2>
+      </div>
+      <div data-reveal>
+        <p>
+          That's fine — this is a considered purchase and we'd rather you read first. The
+          <a href="/how-it-works/">how it works</a> page explains each stage, the
+          <a href="/pricing/">pricing page</a> has every number, and the
+          <a href="/faq/">FAQ</a> answers the sceptical questions, including "why should I trust a
+          company with no case studies?"
+        </p>
+        <p>
+          If you'd rather just ask something directly, email is fine for that too. Short questions
+          get short answers.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
