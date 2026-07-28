@@ -1273,6 +1273,23 @@ li a:hover {
   background: var(--inv-brass);
 }
 
+/* The founder's photograph, sat under the heading it belongs to rather than
+   floated beside the prose — the left column of that split is otherwise empty
+   navy, and a face is the right thing to put in it. Modest on purpose: this is
+   a one-person business being plain about it, not a profile page. */
+.founder-photo {
+  margin: var(--s5) 0 0;
+  max-width: 15rem;
+}
+
+.founder-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+  border: 1px solid var(--inv-rule);
+}
+
 /* Unresolved facts. Deliberately loud — these are for the owner, not the
    customer, and they must never be mistaken for finished copy. */
 .flag {

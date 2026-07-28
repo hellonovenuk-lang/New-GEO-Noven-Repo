@@ -24,6 +24,11 @@ export function organizationSchema(site: URL | undefined) {
     founder: {
       '@type': 'Person',
       name: business.founder,
+      // Only stated once true. An empty sameAs or a photo that doesn't exist
+      // would be exactly the kind of unreliable business information we're
+      // paid to remove from other people's sites.
+      ...(business.founderPhoto ? { image: at(business.founderPhoto) } : {}),
+      ...(business.founderLinkedIn ? { sameAs: [business.founderLinkedIn] } : {}),
     },
     areaServed: business.areaServed,
     contactPoint: {

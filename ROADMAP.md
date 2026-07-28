@@ -53,9 +53,22 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
 - [x] Audit turnaround — one working day from confirming scope and payment
 - [x] Foundation delivery — we reply within two working days with a plan and a
       date; the work itself depends on client access and information
-- [ ] **Founder bio** — still a placeholder on the About page. Two or three
-      sentences on background and what led to Noven. This is the one a
-      cautious buyer reads hardest, so it's worth doing properly.
+- [x] **Founder bio** — written and live on the About page: nearly ten years in
+      operations at a global shipping company, and finding this problem by
+      chance while building websites. Two supporting pieces are still open:
+  - [ ] **LinkedIn URL** — set `founderLinkedIn` in `src/data/business.ts`.
+        One value, two uses: it links from the About page and joins the
+        founder in the structured data as `sameAs`. Nearly ten years at one
+        employer is the most checkable thing we have, and right now a cautious
+        reader has no way to check it.
+  - [ ] **Founder photograph** — add the file to `site/public/` and set
+        `founderPhoto` in `src/data/business.ts`. The About page has a place
+        waiting for it under "Who's behind it?", and the schema picks it up as
+        the Person's `image`. Owner has supplied one; it needs committing.
+  - [ ] **Decide whether to name the employer.** The bio currently says "a
+        global shipping company" rather than naming it. Naming it is stronger
+        and the LinkedIn link reveals it anyway — but that's the owner's call,
+        not a copy decision.
 - [ ] **Cancellation notice period** for monthly plans (appears in three
       places: pricing, FAQ, how it works)
 - [ ] **Address for service of documents.** Trading under a business name as a
@@ -354,9 +367,21 @@ what's next. Newest at the top.
 - Verified in the built output, not just the source: at 1440px the hero shows
   the film and the proof section shows the record; at 700px the hero shows the
   record and the proof section shows none.
-- **Still outstanding, unchanged:** founder bio, cancellation notice period,
-  address for service, the mobile cut of the animation, and the email banner's
-  wording.
+- **The founder bio is written**, from the owner's own facts: nearly ten years
+  in operations at a global shipping company, and coming across this problem by
+  chance while building a few websites. The bridge between the two is real
+  rather than decorative — shipping operations is largely about keeping
+  information consistent across systems that don't agree, which is a fair
+  description of this work too. It deliberately doesn't claim a marketing
+  background, because there isn't one, and the page around it already trades on
+  saying so.
+- Two supporting facts are wired but unset: `founderLinkedIn` and
+  `founderPhoto` in `src/data/business.ts`. Both are null, and everything that
+  consumes them is conditional — no empty `sameAs`, no broken image, and a
+  loud flag on the page until each is supplied. Setting either one value
+  updates both the page and the structured data.
+- **Still outstanding, unchanged:** cancellation notice period, address for
+  service, the mobile cut of the animation, and the email banner's wording.
 
 ### 2026-07-27 (premium redesign)
 - Reshaped the whole site to feel like a top-end firm rather than a document.

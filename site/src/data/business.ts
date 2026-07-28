@@ -20,6 +20,22 @@ export const business = {
     'Noven helps service businesses get found and recommended when their customers ask AI assistants — ChatGPT, Google, Copilot and Perplexity — who to use.',
   serviceName: 'AI assistant visibility for service businesses',
   serviceType: 'Business visibility in AI assistant recommendations',
+
+  /**
+   * The founder's LinkedIn profile. Set this and two things happen at once:
+   * the About page links to it, and it joins the Person in the structured
+   * data as `sameAs` — a machine-readable claim that this business and that
+   * profile are the same person. That is exactly what we sell, so it's worth
+   * having on ourselves. Null until the URL is supplied.
+   */
+  founderLinkedIn: null as string | null,
+
+  /**
+   * Path to the founder's photograph in site/public, e.g. '/kieran.jpg'.
+   * Null until the file is committed; the About page renders no portrait and
+   * no broken image until then.
+   */
+  founderPhoto: null as string | null,
 } as const;
 
 /** The assistants named across the site, in one place. */
