@@ -65,10 +65,10 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
         `founderPhoto` in `src/data/business.ts`. The About page has a place
         waiting for it under "Who's behind it?", and the schema picks it up as
         the Person's `image`. Owner has supplied one; it needs committing.
-  - [ ] **Decide whether to name the employer.** The bio currently says "a
-        global shipping company" rather than naming it. Naming it is stronger
-        and the LinkedIn link reveals it anyway — but that's the owner's call,
-        not a copy decision.
+- [x] **Former employer named** — Maersk, confirmed by the owner. It reads in
+      the bio and appears as the founder's `alumniOf` in the structured data,
+      both from `founderFormerEmployer` in `src/data/business.ts`. Plain text
+      only: never the Maersk logo, never anything implying they endorse Noven.
 - [ ] **Cancellation notice period** for monthly plans (appears in three
       places: pricing, FAQ, how it works)
 - [ ] **Address for service of documents.** Trading under a business name as a
@@ -375,6 +375,12 @@ what's next. Newest at the top.
   description of this work too. It deliberately doesn't claim a marketing
   background, because there isn't one, and the page around it already trades on
   saying so.
+- **Maersk is named.** Vagueness about the one checkable fact we have would
+  have contradicted the argument the rest of the site makes. It also appears as
+  the founder's `alumniOf` in the structured data — nested under `founder`, so
+  it says one person used to work there and nothing more. Verified after the
+  change that both homepage code blocks are still byte-identical to the JSON-LD
+  in the head, which is the property the whole design rests on.
 - Two supporting facts are wired but unset: `founderLinkedIn` and
   `founderPhoto` in `src/data/business.ts`. Both are null, and everything that
   consumes them is conditional — no empty `sameAs`, no broken image, and a
