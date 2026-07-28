@@ -25,12 +25,20 @@ The site now carries real business facts throughout: contact email, the Wirral,
 Kieran Smith trading as a sole trader, no VAT, one working day for the audit,
 two working days to reply. The domain `novenstudio.co.uk` is confirmed and set.
 
-Three things are still missing: the founder bio, a cancellation notice period,
-and an address for service of documents.
+The founder bio and the cancellation terms are now written. Two supporting
+values are wired but unset — the founder's photograph and LinkedIn URL — and
+the address for service is deliberately deferred until we're closer to revenue.
 
 **Biggest remaining blocker:** the site isn't deployed, so nobody can read it.
 The domain currently serves the old website, so switching it over is the next
 real step — and the thing that makes Noven exist publicly.
+
+**How the remaining work is sequenced.** Nothing on the site takes a payment,
+so the site can go public before the money and legal plumbing exists. Section
+1c holds everything that must be true before the first person *pays* us, which
+is a later moment than launch — including the bank account and the service
+address, both of which have lead times and shouldn't wait for the day a client
+says yes.
 
 ---
 
@@ -86,12 +94,20 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
         same whether collection ends up manual or automatic.
       - If clients ever do start taking a month and leaving, add a minimum term
         *then*. Not before we have met the problem.
-- [ ] **Address for service of documents.** Trading under a business name as a
-      sole trader carries a legal disclosure requirement to show your name and
-      an address where documents can be served, including on the website. A
-      home address is uncomfortable; the usual answers are a virtual office
-      address or a PO box style service. Worth 20 minutes of checking before
-      launch — it's the only outstanding item with a legal edge to it.
+- [ ] **Address for service of documents — deferred pre-revenue, by decision.**
+      Trading under a business name as a sole trader carries a legal disclosure
+      requirement to show your name and an address where documents can be
+      served, including on the website. The requirement is an address where
+      post reaches us — **not** necessarily a home address, so a virtual office
+      or service-address provider satisfies it.
+      **Do not use the home address here.** This site is built so AI crawlers
+      can read the business facts and repeat them confidently — explicit
+      crawler permissions, structured data on every page, a sitemap. That is
+      the product, and it works against us on this one field: a home address in
+      that footer gets crawled, cached, repeated by assistants and swept up by
+      anything that scrapes structured markup. It is also a one-way door —
+      the footer can be edited, the indexes and archives cannot.
+      Scheduled in 1c. The footer placeholder stays visible until it's set.
 
 ### 1b. Domain and hosting
 
@@ -110,23 +126,68 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
       site starts hitting a 404
 - [ ] Consider a `hello@novenstudio.co.uk` address to replace the Gmail one
 
-### 1c. Taking money
+### 1c. Between launch and the first payment
 
-The site says payment is arranged "by reply". Decide the actual mechanism:
+**The decision, made deliberately:** the site goes public before the money and
+legal plumbing is finished. Nothing on the site takes a payment — every page
+asks people to email — so publishing commits us to nothing we cannot honour.
+Everything in this section has to be true before the first person actually
+*pays* us, which is a different and later moment.
 
-- [ ] Business bank account in place
+This is the one place the phase definitions don't line up: "Phase 1 is done
+when a stranger can read the site, understand the offer, email us, and pay us
+£30." The site can go live before that is true. This section is the rest of it.
+
+**The trigger is an event, not a date.** "Before the first payment" could be a
+fortnight away if outreach lands. Two items below cannot be started on the day
+someone says yes, so they need starting first.
+
+#### Has a lead time — start these before they're needed
+
+- [ ] **Business bank account.** Anything from a day with a digital provider to
+      several weeks with a high street bank, so it's the long pole. Worth
+      checking whether the existing personal account's terms permit business
+      use in the meantime — most banks' terms don't, and a £30 transfer is
+      still business use.
+- [ ] **Address for service of documents.** Deliberately deferred pre-revenue
+      (see 1a). A virtual office or service-address provider satisfies the
+      disclosure requirement without publishing a home address, and runs about
+      £20–60/year. **This one should land before we are visibly trading**, not
+      merely before the first payment — and see the note in 1a about why this
+      site in particular is the wrong place for a home address.
+
+#### Before money changes hands
+
 - [ ] How the £30 audit gets paid — bank transfer, a payment link, or an invoice
 - [ ] How the £350 Foundation gets paid
 - [ ] How monthly plans get collected (this matters most — manual collection
-      stops being viable somewhere around client five)
+      stops being viable somewhere around client five). Note the cancellation
+      terms in 1a were written to read the same whichever way this goes, so
+      this decision doesn't reopen the copy.
 - [ ] A simple invoice or receipt we can send
 
-### 1d. Legal basics
+#### Before we hold a client's information
+
+- [ ] Privacy notice page — we'll be handling client business data and email.
+      Due before the first client sends us anything, not before launch, since
+      the site collects nothing on its own.
+- [ ] Terms of service, or a short plain-English version of what we promise.
+      Most of it is already written across the site — the cancellation terms,
+      "we don't guarantee outcomes", "we don't build websites". This is mostly
+      a job of collecting what we've already committed to in one place.
+
+#### Has its own legal clock
+
+- [ ] **Register as self-employed with HMRC.** The general rule is registration
+      for Self Assessment by 5 October following the end of the tax year in
+      which trading began — so trading started in 2026/27 means October 2027.
+      There is also a £1,000 trading allowance below which registration may not
+      be required at all, which may cover the first few months. Both worth
+      confirming against current HMRC guidance rather than taking from here.
+
+### 1d. Standing decisions, and things to keep true
 
 - [x] Sole trader vs limited company — sole trader to begin with
-- [ ] Privacy notice page — we'll be handling client business data and email
-- [ ] Terms of service, or a short plain-English version of what we promise
-- [ ] Register as self-employed with HMRC if not already done
 - [ ] Keep an eye on the VAT threshold as revenue grows — not a launch concern,
       but the pricing page states we aren't registered, so it has to stay true
 
@@ -410,8 +471,22 @@ what's next. Newest at the top.
   reads. Fixed by the same edit. Worth remembering that **anything written into
   `faqs` in `faq.astro` is published to assistants**, not just to readers — the
   coupling is the point of the design, and it cuts both ways.
-- **Still outstanding:** address for service, founder photo and LinkedIn URL,
-  the mobile cut of the animation, and the email banner's wording.
+- **The roadmap is now sequenced around launch rather than around topic.** New
+  section 1c, "Between launch and the first payment", replaces the old "Taking
+  money" and "Legal basics" lists. The insight worth keeping: the site takes no
+  payments and collects nothing, so publishing it commits us to nothing we
+  cannot honour — but the bank account and the service address both have lead
+  times, so "do it when someone says yes" is too late for those two.
+- **Address for service deferred pre-revenue, by the owner's decision.** The
+  reasoning is written into 1a so it isn't relitigated: the requirement is an
+  address where post reaches us, not a home address, and this site is
+  specifically the wrong place to publish a home one — everything that makes it
+  good at being read by assistants makes that field harder to take back.
+- **Still outstanding:** founder photo and LinkedIn URL (both wired, waiting on
+  values), the mobile cut of the animation, and the email banner's wording.
+- **Next session:** Netlify. Point it at the repo, decide apex vs www so the
+  canonicals and sitemap match, read the preview end to end, then switch the
+  domain from the old site.
 
 ### 2026-07-27 (premium redesign)
 - Reshaped the whole site to feel like a top-end firm rather than a document.
