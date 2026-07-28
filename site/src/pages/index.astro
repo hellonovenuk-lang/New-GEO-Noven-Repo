@@ -207,6 +207,18 @@ const orgSchema = organizationSchema(Astro.site);
             it yourself: ask ChatGPT or Perplexity what Noven does and how much it costs, and see
             what comes back.
           </p>
+          {/* On wide screens the hero shows the film instead of the record, so
+              the record lives here — the claim above it, the evidence below.
+              Hidden below 60rem, where the hero shows the record itself; the
+              page holds exactly one visible copy at every width. */}
+          <div class="proof-record" data-reveal>
+            <Code
+              caption="That structured information, as an assistant reads it"
+              label="Noven's structured data, as JSON-LD"
+              data={orgSchema}
+              note="Real, not an illustration: this exact block sits in this page's source. View source and compare."
+            />
+          </div>
           <p class="flag">
             [PLACEHOLDER: client case studies will be published here, with permission, as the first
             engagements complete.]
