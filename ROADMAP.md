@@ -425,10 +425,10 @@ what's next. Newest at the top.
   make sense of falling back, and the complete one being named. 7.5s, 161KB,
   silent. Source and render script in `assets/video/`.
 - It is rendered from the site's own CSS by headless Chromium, not generated.
-  Two Higgsfield generations were tried first and are kept in `assets/video/`
-  for reference: they drifted off-palette, softened toward the end, and the
-  second misspelled the query. What they did contribute is the design — the
-  terracotta pulse and the filled-block-versus-empty-box contrast are theirs.
+  Two Higgsfield generations were tried first and not kept: they drifted
+  off-palette, softened toward the end, and the second misspelled the query.
+  What they did contribute is the design — the terracotta pulse and the
+  filled-block-versus-empty-box contrast are theirs.
 - The render asserts the typed question matches the expected string exactly
   and fails rather than emitting a video with a typo in it.
 - Hero now shows the animation at 60rem and up, and the structured-data panel

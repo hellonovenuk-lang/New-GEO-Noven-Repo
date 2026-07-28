@@ -44,7 +44,9 @@ stay marked after they recede. It fires once — a repeating flash would be
 both an accessibility problem and the fastest way to make the page look
 templated.
 
-`higgsfield-try-01.mp4` and `-02.mp4` are generated attempts kept for
-comparison. The terracotta pulse and the filled-block-versus-empty-box
-contrast came from those; the generations themselves drift in colour, soften
-toward the end, and the second one misspelled the query.
+Two of the design decisions here came from generated attempts that were tried
+first and not kept: the single terracotta pulse on the incomplete businesses,
+and drawing the complete one as a filled block against the others' empty
+dashed box. Both read faster than what they replaced. The generations
+themselves were unusable — they drifted off-palette, lost focus toward the end,
+and one misspelled the query — which is why the assertion above exists.
