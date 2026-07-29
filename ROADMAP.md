@@ -28,13 +28,14 @@ two working days to reply. The domain `novenstudio.co.uk` is confirmed and set.
 The founder bio and the cancellation terms are now written, the founder's
 photograph is committed and live on the About page, and the founder's LinkedIn
 URL is now set — so the About page links to it and the structured data claims
-the profile and the business are the same person. **The personal profile is
-done**; what's left of 1a is the Noven company page, and everything that was
-holding it up is cleared: the site is live so the website field can be filled,
-and the two images LinkedIn needs are exported and committed in
-`assets/linkedin/`. The steps and the copy are in `ops/linkedin.md` §5 — it
-needs someone signed in, not another session. The address for service is
-deliberately deferred until we're closer to revenue.
+the profile and the business are the same person. **The Noven company page is
+now live too** — `https://www.linkedin.com/company/novenstudio/` — and
+`businessLinkedIn` in `src/data/business.ts` points at it, so the site's
+structured data claims both LinkedIn pages as itself. What's left of 1a is one
+step only the owner can do: go back into the profile's Noven role and re-attach
+it to the now-existing page, since it was originally added before the page was
+there to link to. The address for service is deliberately deferred until we're
+closer to revenue.
 
 **The site is live, on HTTPS, at `novenstudio.co.uk`.** Netlify is pointed at
 `main` and deployed — the old website is no longer what that domain serves.
@@ -113,24 +114,19 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
   - [x] **The personal profile** — done by the owner. Headline, About section,
         the missing Maersk role, the Port Brief removal and the website field,
         all as written in `ops/linkedin.md` §§1–4.
-  - [ ] **A Noven company page** — the one thing left in 1a. A business page is
-        a second source an assistant can find and quote when someone asks who
-        Noven is: name, what we do, the Wirral, the website. Same wording as
-        the site's throughout — different wording in two places is the exact
-        fault the audit is paid to find. Everything it was waiting on is
-        cleared, so it's a single sitting with `ops/linkedin.md` §5 open:
-        - The website field is safe now the site is live. It wasn't before.
-        - The logo and cover are exported and committed at
-          `assets/linkedin/logo-400.png` and `cover-1128x191.png` — LinkedIn
-          takes no SVG and every brand asset is one, which was the blocker.
-        - Afterwards, two small things close it: re-attach the company on the
-          profile's Noven role so it links to the page rather than being loose
-          text (the profile was written before the page existed, so it can't be
-          linked yet), and set `businessLinkedIn` in `src/data/business.ts`,
-          which is already wired to join the Organization's `sameAs`.
-      - Worth doing before outreach, not after: a business page with nothing on
-        it is still better than an empty search result when someone checks us
-        out after an email.
+  - [x] **A Noven company page** — live at
+        `https://www.linkedin.com/company/novenstudio/`. `novenstudio` was the
+        only one of the preferred slugs still free. Logo and cover uploaded
+        from `assets/linkedin/`, About copy in, `businessLinkedIn` set in
+        `src/data/business.ts` and confirmed in the built JSON-LD's `sameAs`.
+  - [ ] **Re-link the profile's Noven role to the real page** — the one thing
+        left in 1a. The profile was written before the page existed, so typing
+        "Noven" into the Company field then created loose text rather than an
+        attached page; LinkedIn only offers the real page in the dropdown when
+        it already exists. Now it does — go back into the role, retype
+        "Noven", and pick the page from the dropdown. Confirms as linked when
+        the role shows the Noven logo and clicking the company name opens the
+        page. This is the last step before 1a is fully closed.
 - [x] **Former employer named** — Maersk, confirmed by the owner. It reads in
       the bio and appears as the founder's `alumniOf` in the structured data,
       both from `founderFormerEmployer` in `src/data/business.ts`. Plain text
@@ -549,6 +545,32 @@ Written down rather than guessed at. Answer them as they become relevant.
 
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
+
+### 2026-07-29 (the Noven company page is live)
+- **`https://www.linkedin.com/company/novenstudio/` exists.** `novenstudio` was
+  the only one of the preferred slugs (`noven`, `noven-uk`, `novenstudio`,
+  `noven-studio`) still available. The owner created the page, uploaded the two
+  images from `assets/linkedin/`, and pasted in the About copy from
+  `ops/linkedin.md` §5.4.
+- **`businessLinkedIn` is set** in `src/data/business.ts`, stripped of the
+  `?viewAsMember=true` LinkedIn appends when previewing your own page — that's
+  a view-mode flag, not the canonical address, and the same rule that already
+  applied to `founderLinkedIn` (no tracking or session parameters on a value
+  that goes into a public repo and public markup) applies here.
+- **Confirmed in the built output, not just the source.** `npm run build` runs
+  clean, seven pages, and the LinkedIn URL appears in every page's `sameAs` in
+  `dist/`. Build artifacts weren't committed.
+- **One step of 1a is still owner-only: re-linking the profile role.** The
+  owner added Noven as a role on the personal profile before the company page
+  existed, so LinkedIn had nothing to attach it to and kept it as plain text.
+  Now the page exists, going back into that role and retyping "Noven" should
+  offer the real page in the dropdown. `ops/linkedin.md` §0 has the two ways to
+  confirm it actually linked (the role shows the Noven logo; clicking the
+  company name opens the page) rather than just re-saved text.
+- **Next session:** once the profile role is confirmed linked, 1a is fully
+  closed and the next thing on the roadmap is 1e's launch checks — read every
+  page fresh, check on a phone, submit the sitemap to Search Console and Bing,
+  and ask the assistants what they say about Noven.
 
 ### 2026-07-29 (the company page is unblocked — images made, holds lifted)
 - **The profile side of 1a is done**, per the owner. What's left of that item is

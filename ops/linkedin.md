@@ -9,23 +9,18 @@ Noven business page"*.
 
 ## Where this has got to
 
-**The profile is done, per the owner. What's left is the company page —
-section 5.** Two things changed since the rest of this document was written,
-and both of them unblock that section:
+**The company page is live: `https://www.linkedin.com/company/novenstudio/`.**
+`novenstudio` was the only one of the preferred slugs still available. Both
+images are uploaded, the About copy is in, and `businessLinkedIn` in
+`site/src/data/business.ts` is set to that URL — it's already live in the
+Organization's structured data on the built site.
 
-- **The site is live at `novenstudio.co.uk`.** Every website field below was
-  marked `[HOLD until the site is live]` because the domain still served the
-  old site. It doesn't any more, so the holds are gone and the address goes in
-  everywhere it's asked for.
-- **The two images LinkedIn needs now exist as PNGs**, exported from the
-  committed brand assets: `assets/linkedin/logo-400.png` and
-  `assets/linkedin/cover-1128x191.png`. That was the other thing section 5 was
-  waiting on. See 5.5.
-
-So section 5 can be done start to finish in one sitting, and then one line
-changes in the repo (5.6). Sections 1–4 are kept as the record of what the
-profile work was and why it was worded that way — worth a skim before you
-close the tab, in case any of it is still open.
+**One thing is left, and it's on the profile, not the page: the Noven role
+almost certainly isn't linked to it.** The profile was written before the page
+existed, so typing "Noven" into the Company field then created loose text
+rather than an attached page — see the note in section 0. Now the page exists,
+go back into that role, retype "Noven", and pick it from the dropdown. That's
+the whole remainder of roadmap 1a.
 
 **Why it matters more than it looks.** Noven's whole argument is that a
 business is recommended when its facts agree with each other everywhere they
@@ -47,12 +42,12 @@ a gap to fill.
 
 | # | Step | Why this order | State |
 |---|---|---|---|
-| 1 | Create the Noven company page (section 5) | The page must exist before the profile can link to it | **Left to do** |
-| 2 | Add Noven as your current role on the profile (section 3) | Typing "Noven" in the company field finds the real page, attaches its logo, and makes the two pages point at each other | Done — but see below |
+| 1 | Create the Noven company page (section 5) | The page must exist before the profile can link to it | Done — `linkedin.com/company/novenstudio` |
+| 2 | Add Noven as your current role on the profile (section 3) | Typing "Noven" in the company field finds the real page, attaches its logo, and makes the two pages point at each other | **Left to do** — retype and link now the page exists, see below |
 | 3 | Replace the About section (section 2) | — | Done |
 | 4 | Fill the missing Maersk description and fix the older ones (sections 3–4) | — | Done |
-| 5 | Add `https://novenstudio.co.uk` to both | Safe now — see below | Profile done; page pending |
-| 6 | Set `businessLinkedIn` in `site/src/data/business.ts` (section 5.6) | Needs the finished page URL | Blocked on step 1 |
+| 5 | Add `https://novenstudio.co.uk` to both | Safe now — see below | Done |
+| 6 | Set `businessLinkedIn` in `site/src/data/business.ts` (section 5.6) | Needs the finished page URL | Done |
 
 ### Steps 1 and 2 happened the wrong way round — one thing to go back and fix
 
@@ -594,37 +589,35 @@ the source and it's a two-line change.
 The old note here said to leave the cover blank if it couldn't be made without
 redrawing. It could be, so that `[PLACEHOLDER]` is closed.
 
-### 5.6 After the page exists — two things, then it's closed
+### 5.6 After the page exists — done
 
-**First, back to the profile.** Re-attach the company on your Noven role so it
-points at the real page rather than being loose text — the full reason, and how
-to tell which you've got, is in section 0. Sixty seconds, and it's the step
-that makes the two pages a pair.
+`novenstudio` was the only one of the preferred slugs (`noven`, `noven-uk`,
+`novenstudio`, `noven-studio`) still available, so the page is
+**`https://www.linkedin.com/company/novenstudio/`**.
 
-**Second, the repo.** Set the page URL in `site/src/data/business.ts`:
+The owner supplied the URL as
+`https://www.linkedin.com/company/novenstudio/?viewAsMember=true`.
+**`?viewAsMember=true` is stripped, not kept** — it's the flag LinkedIn adds
+when you preview your own page as a visitor would see it, not part of the
+canonical public address. It would have been the wrong URL the moment anyone
+else opened it, so the same rule that applied to `founderLinkedIn` applies
+here: no `?utm_…` or view-mode parameters, nothing resembling a login or
+session token, just the page.
 
-```ts
-businessLinkedIn: 'https://www.linkedin.com/company/<your-slug>/' as string | null,
-```
+`businessLinkedIn` in `site/src/data/business.ts` is now set to that URL, which
+joins the Organization's structured data as `sameAs`. The site builds clean —
+seven pages — and the built JSON-LD carries the URL on every page, confirmed
+against `dist/index.html` after the change.
 
-It's already wired to join the Organization's structured data as `sameAs`, so
-setting the value is the only step — nothing else needs touching. It is still
-`null`, and it can't be set from here: the URL doesn't exist until you've
-created the page. **Paste the slug you ended up with into the next session and
-this gets set in one line.**
+**Still to do, and it isn't a repo step:** re-attach the company on your Noven
+role so it points at the real page rather than being loose text — the full
+reason, and how to tell which you've got, is in section 0. That's the one part
+of this closing that only you can do.
 
-**Same two rules that applied to `founderLinkedIn`:**
-
-1. **Strip any `?utm_…` tracking parameters.** LinkedIn's share links carry
-   them. They describe how a link was shared, not the business, and they'd be
-   published verbatim in the JSON-LD.
-2. **Never a URL containing `loginToken`, `authToken`, `session` or similar.**
-   This value goes on a public page, into a public repo, and into markup built
-   for crawlers to ingest — the worst available place to put a credential.
-
-Then do the two-minute check: **open the page URL in a private window.** If it
+**Worth the two-minute check regardless:** open
+`https://www.linkedin.com/company/novenstudio/` in a private window. If it
 loads without a login prompt, it's publicly visible, which is the entire point
-of publishing it. If it prompts, the page isn't public yet.
+of publishing it.
 
 ### 5.7 First posts, so it isn't a ghost town
 
