@@ -57,8 +57,10 @@ says yes.
 These are all marked `[PLACEHOLDER]` in the site. Nothing else in Phase 1
 matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
 
-- [x] **Contact email address** — `hello.noven.uk@gmail.com`, live on the
-      contact page and in the site's machine-readable business facts
+- [x] **Contact email address** — `hello@novenstudio.co.uk`, live on the
+      contact page and in the site's machine-readable business facts. The old
+      `hello.noven.uk@gmail.com` stays open and forwards, since it is in
+      caches and indexes and will be for months.
 - [x] Phone number — we don't offer one. Email only, and the contact page and
       FAQ now say why rather than leaving it looking like an omission.
 - [x] Reply time — within two working days
@@ -180,11 +182,12 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
       applicable — the owner confirms `novenstudio.co.uk` has only ever hosted
       his own projects, not a prior unrelated business with its own external
       links to preserve. Nothing to redirect.
-- [ ] **Set up `hello@novenstudio.co.uk` to replace the Gmail one.** Decided
-      and part-built: Zoho Mail on the Mail Lite plan, domain added and
-      ownership verified. The remaining steps — mailbox, MX, SPF, DKIM, DMARC,
-      proving it works, then the one-line change in `site/src/data/business.ts`
-      — are written out in `ops/zoho-mail-setup.md`.
+- [x] **`hello@novenstudio.co.uk` is live and replaces the Gmail address.**
+      Zoho Mail on Mail Lite, DNS at Namecheap: MX to `mx.zoho.eu`, plus SPF,
+      DKIM (`zmail` selector) and a `p=none` DMARC. Tested both directions —
+      Gmail to `hello@` arrives in Zoho, and the reply reaches Gmail's inbox
+      rather than spam. The whole setup, including what to check when a send
+      fails, is in `ops/zoho-mail-setup.md`.
 
 ### 1c. Between launch and the first payment
 
@@ -542,6 +545,31 @@ Written down rather than guessed at. Answer them as they become relevant.
 
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
+
+### 2026-07-29 (the domain address works, and the site uses it)
+- **`hello@novenstudio.co.uk` sends and receives.** Gmail to `hello@` lands in
+  Zoho; the reply lands in Gmail's inbox rather than spam, which for a domain
+  Gmail has never seen before is the practical sign SPF and DKIM line up.
+- **`site/src/data/business.ts` now carries it**, so the contact page and the
+  JSON-LD on every page changed with one value. `ops/linkedin.md` updated in
+  the two places it quoted the Gmail address as copy to paste.
+- **The first send out of Zoho failed and the instinct was to blame the DNS.**
+  It wasn't: sending doesn't touch MX, which only governs mail coming in. It
+  was Zoho's hold on outbound from a mailbox created minutes earlier, and
+  replying to a received message went straight out. That reasoning is now in
+  `ops/zoho-mail-setup.md` so the next person doesn't start editing records
+  that were already right.
+- **The Gmail address stays open and forwarding.** It is on the live site's
+  cached copies, in Search Console and in whatever assistants have already
+  read — closing it would strand real mail.
+- **Price correction: £14.40, not £12** — the £12 figure was ex-VAT.
+  `ops/third-party-services.md` now says what actually left the account.
+- **Loose end for the owner:** the Gmail address was removed from the Zoho
+  *account* and `hello@` put in its place, so account recovery for the mailbox
+  now goes to the mailbox. Add the iCloud address as an alternate.
+- **Next session:** 1e's launch checks — read every page fresh, check on a
+  phone, submit the sitemap to Search Console and Bing, and ask the assistants
+  what they say about Noven.
 
 ### 2026-07-29 (domain verified — the rest of the mail setup is written down)
 - **Zoho has confirmed ownership of `novenstudio.co.uk`**, so the step the last

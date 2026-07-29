@@ -10,7 +10,7 @@ export const business = {
   name: 'Noven',
   legalNote: 'Noven is a trading name of Kieran Smith, a sole trader.',
   founder: 'Kieran Smith',
-  email: 'hello.noven.uk@gmail.com',
+  email: 'hello@novenstudio.co.uk',
   basedIn: 'the Wirral, UK',
   basedInShort: 'Wirral, UK',
   areaServed: 'GB',
