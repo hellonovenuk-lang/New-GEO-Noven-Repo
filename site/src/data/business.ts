@@ -35,8 +35,24 @@ export const business = {
    * data as `sameAs` — a machine-readable claim that this business and that
    * profile are the same person. That is exactly what we sell, so it's worth
    * having on ourselves. Null until the URL is supplied.
+   *
+   * Supplied by the owner. Stored stripped: the shared link carried `utm_*`
+   * tracking parameters, which say how the link was shared and belong to
+   * nobody reading the page. Nothing beyond the `/in/` handle goes in here,
+   * and nothing resembling a login or session token ever does — this value is
+   * published twice on a public page and again in a public repo.
    */
-  founderLinkedIn: null as string | null,
+  founderLinkedIn: 'https://www.linkedin.com/in/kieran-smith-50b953143' as string | null,
+
+  /**
+   * Noven's own LinkedIn page, once it exists. Separate from the founder's
+   * profile: this one joins the *Organization* in the structured data as
+   * `sameAs`, which is the business claiming a second page as its own. Null
+   * until the page is created — an empty or wrong `sameAs` is precisely the
+   * unreliable business information we're paid to remove from other people's
+   * sites. Roadmap 1a covers creating it.
+   */
+  businessLinkedIn: null as string | null,
 
   /**
    * Path to the founder's photograph in site/public. Setting it does two

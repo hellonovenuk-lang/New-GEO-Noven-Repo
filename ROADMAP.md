@@ -25,10 +25,12 @@ The site now carries real business facts throughout: contact email, the Wirral,
 Kieran Smith trading as a sole trader, no VAT, one working day for the audit,
 two working days to reply. The domain `novenstudio.co.uk` is confirmed and set.
 
-The founder bio and the cancellation terms are now written, and the founder's
-photograph is committed and live on the About page. One supporting value is
-still wired but unset — the LinkedIn URL, which needs a desktop session to
-fetch correctly; the steps are in 1a. The address for service is deliberately
+The founder bio and the cancellation terms are now written, the founder's
+photograph is committed and live on the About page, and the founder's LinkedIn
+URL is now set — so the About page links to it and the structured data claims
+the profile and the business are the same person. What's left on that thread is
+owner work inside LinkedIn itself: point the profile back at the site and
+create a Noven business page (1a). The address for service is deliberately
 deferred until we're closer to revenue.
 
 **Biggest remaining blocker:** the site isn't deployed, so nobody can read it.
@@ -66,44 +68,56 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
 - [x] **Founder bio** — written and live on the About page: nearly ten years in
       operations at a global shipping company, and finding this problem by
       chance while building websites. One supporting piece is still open:
-  - [ ] **LinkedIn URL** — set `founderLinkedIn` in `src/data/business.ts`.
-        One value, two uses: it links from the About page and joins the
-        founder in the structured data as `sameAs`. Nearly ten years at one
-        employer is the most checkable thing we have, and right now a cautious
-        reader has no way to check it.
+  - [x] **LinkedIn URL** — supplied by the owner and set as `founderLinkedIn`
+        in `src/data/business.ts`:
+        `https://www.linkedin.com/in/kieran-smith-50b953143`. One value, two
+        uses: it links from the About page and joins the founder in the
+        structured data as `sameAs`. Nearly ten years at one employer is the
+        most checkable thing we have, and now a cautious reader can check it.
 
-        **Getting the right URL (owner, on desktop).** LinkedIn → **Me** →
-        **View Profile**, then read the address bar once it has finished
-        redirecting. It should look like
-        `https://www.linkedin.com/in/kieran-smith-8b41a2b0` — the `/in/` is
-        the part that matters. Anything after a `?` is tracking and can be
-        deleted. Then paste it into a private window: if the profile loads
-        without a login prompt, it is both the correct URL and publicly
-        visible, which is the whole point of publishing it.
+        The shared link arrived with `?utm_source=share_via&utm_content=…`
+        tracking parameters on the end. Those are stripped — they describe how
+        the link was shared, not the person, and they'd be published verbatim
+        in the JSON-LD.
 
-        **Two forms that cannot work, both already tried:**
-        `linkedin.com/me` and `linkedin.com/nhome` are *viewer-relative* —
-        they resolve to whoever is logged in, so for a stranger or a crawler
-        they resolve to a login wall, not to Kieran. The URL has to name the
-        person.
+        **The rule this was checked against, kept for next time:** the URL must
+        name the person (`/in/…`). `linkedin.com/me` and `linkedin.com/nhome`
+        are viewer-relative — both were tried earlier and both resolve to a
+        login wall for a stranger or a crawler. And if a URL ever contains a
+        `loginToken`, `authToken`, `session` or similar, it must not go in:
+        this value is published twice on a public page and again in a public
+        repo built for crawlers to ingest, which is the worst available place
+        to put a credential.
 
-        **Hard rule before this value is ever set:** if the URL contains a
-        `loginToken`, `authToken`, `session`, or any similar credential
-        parameter, it must not go in. `founderLinkedIn` is published twice on
-        a public page — once as a visible link, once inside the JSON-LD — in
-        a public repo, on a site built to be easy for crawlers to ingest.
-        That is the worst available place to put a credential. A URL safe to
-        publish contains no token and needs no login for a stranger to open.
-
-        While in the LinkedIn settings, also add `novenstudio.co.uk` to the
-        profile's website field. Confirmation that only points one way is
-        much weaker than two pages agreeing about the same person, and this
-        is the argument the rest of the site makes.
+        **One check still worth doing (owner, two minutes):** open the URL in a
+        private window. If the profile loads without a login prompt, it's
+        publicly visible, which is the whole point of publishing it. If it
+        prompts, the profile's public visibility needs turning on — the link
+        is live on the About page either way.
   - [x] **Founder photograph** — the owner's photograph is committed at
         `site/public/founder-portrait.webp` (880x1100) and set as
         `founderPhoto` in `src/data/business.ts`. It shows under "Who's behind
         it?" on the About page and joins the founder in the structured data as
         the Person's `image`.
+- [ ] **Amend the LinkedIn profile, and create the Noven business page**
+      (owner, on desktop — nobody else can sign in). Two jobs, one sitting:
+      - **The personal profile.** Add `novenstudio.co.uk` to the website field
+        and say in the headline or About section that he runs Noven.
+        Confirmation that only points one way is much weaker than two pages
+        agreeing about the same person, and that agreement is the argument the
+        whole site makes. It is also the cheapest version of the thing we sell,
+        done on ourselves.
+      - **A Noven page.** A business page is a second source an assistant can
+        find and quote when someone asks who Noven is — name, what we do, the
+        Wirral, the website. Keep the wording the same as the site's: same
+        business name, same description, same location, same URL. Different
+        wording in two places is the exact fault the audit is paid to find.
+        When it exists, set `businessLinkedIn` in `src/data/business.ts` — it
+        is already wired to join the Organization's structured data as
+        `sameAs`, so setting the value is the only step.
+      - Worth doing before outreach, not after: a business page with nothing on
+        it is still better than an empty search result when someone checks us
+        out after an email. It does not need to wait for launch.
 - [x] **Former employer named** — Maersk, confirmed by the owner. It reads in
       the bio and appears as the founder's `alumniOf` in the structured data,
       both from `founderFormerEmployer` in `src/data/business.ts`. Plain text
@@ -514,7 +528,43 @@ Written down rather than guessed at. Answer them as they become relevant.
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
 
-### 2026-07-28 (latest — what an answer page is, and who publishes it)
+### 2026-07-29 (latest — the LinkedIn URL is in)
+- **`founderLinkedIn` is set**: `https://www.linkedin.com/in/kieran-smith-50b953143`,
+  supplied by the owner. The About page now links to it in the bio, and the
+  founder's Person in the structured data carries it as `sameAs`. The
+  `[PLACEHOLDER]` that was showing on the About page is gone. That closes the
+  last open piece of the founder bio, and means the ten-years-at-Maersk claim
+  is now checkable by a reader who wants to check it.
+- **The tracking parameters were stripped.** The shared link carried
+  `?utm_source=share_via&utm_content=profile&utm_medium=member_ios`. Those
+  describe how the link was shared, not the person, and this value gets
+  published verbatim inside the JSON-LD. Checked for the thing that actually
+  matters first: no `loginToken` or session parameter, and the URL names the
+  person via `/in/` rather than being one of the viewer-relative forms
+  (`/me`, `/nhome`) that were tried and rejected in earlier sessions.
+- **One verification is left with the owner and can't be done from here:**
+  open the URL in a private window and confirm the profile loads without a
+  login prompt. LinkedIn blocks automated fetches, so a check from this session
+  would tell us nothing either way. Noted in 1a.
+- **New roadmap step in 1a: amend the profile, and create a Noven business
+  page.** These were half-buried in a note about "while you're in the
+  settings"; they're now their own item, because the second half is a real
+  piece of work rather than a settings tweak. The profile should point back at
+  `novenstudio.co.uk`, and a business page gives an assistant a second source
+  about Noven that agrees with the site word for word.
+- **`businessLinkedIn` is wired but null**, the same way `founderLinkedIn` and
+  `founderPhoto` were before they existed. It joins the *Organization* as
+  `sameAs` — the business claiming a page as its own, which is a different
+  statement from the founder claiming a profile. When the page exists, setting
+  that one value is the whole job.
+- **Merged to `main` at the owner's request**, overriding the standing "finish
+  on an unmerged branch" rule in `CLAUDE.md` for the third time. Explicit call
+  each time, not a new default.
+- **Next session:** Netlify — apex vs www, read the preview end to end, then
+  switch the domain off the old site. Zoho Mail's DNS records are worth doing
+  in that same sitting.
+
+### 2026-07-28 (what an answer page is, and who publishes it)
 - **"Answer page" was doing undefined work in the Grow and Lead descriptions.**
   Now defined: not a blog post (dated, buried by the next one, decays), not an
   FAQ entry (one line among twenty on a page that's strongly about nothing).
