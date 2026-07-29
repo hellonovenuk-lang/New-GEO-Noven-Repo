@@ -176,9 +176,10 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
 - [x] **Confirm HTTPS works after the switch.** Checked via Netlify's own
       API rather than assumed: the project's primary URL is
       `https://novenstudio.co.uk` and the current deploy is `ready`.
-- [ ] Decide whether to keep any URLs from the old site alive, and redirect
-      them in `netlify.toml` if so — otherwise anything linking to the old
-      site starts hitting a 404
+- [x] **Decide whether to keep any URLs from the old site alive.** Not
+      applicable — the owner confirms `novenstudio.co.uk` has only ever hosted
+      his own projects, not a prior unrelated business with its own external
+      links to preserve. Nothing to redirect.
 - [ ] Consider a `hello@novenstudio.co.uk` address to replace the Gmail one
 
 ### 1c. Between launch and the first payment
@@ -550,14 +551,22 @@ what's next. Newest at the top.
   Netlify MCP connection was the way to check rather than curling the site.)
 - **Found while checking:** the Netlify team also has three older/unused
   projects — `noven-2-0-preview`, `noven-preview`, `novenwirral` — all on
-  `.netlify.app` addresses, not the custom domain. Not touched, just noted;
-  worth a look if the team ever wants to tidy up stale projects.
-- **Next session:** the rest of 1b — decide whether to keep any old-site URLs
-  alive (add redirects in `netlify.toml` if so, otherwise anything linking to
-  the old site now 404s), and consider a `hello@novenstudio.co.uk` address.
-  Then 1e's launch checks: read every page fresh, check on a phone, submit the
-  sitemap to Search Console/Bing, and ask the assistants what they say about
-  Noven — our own first before-and-after.
+  `.netlify.app` addresses, not the custom domain.
+- **No old URLs to redirect.** `novenstudio.co.uk` has only ever served the
+  owner's own projects (confirmed by the owner), not a prior unrelated
+  business with its own external links, so there's nothing for `netlify.toml`
+  to redirect.
+- **The three old Netlify projects can't be deleted from a session** — the
+  connected Netlify MCP tools only support updating visitor access, forms,
+  project name, and env vars, plus creating new projects; there's no
+  delete-project operation. Deleting `noven-2-0-preview`, `noven-preview` and
+  `novenwirral` is owner work in the Netlify dashboard (Site settings →
+  General → Danger zone), keeping `kaleidoscopic-cuchufli-ff7b1a` (the one
+  serving the live domain).
+- **Next session:** consider a `hello@novenstudio.co.uk` address, then 1e's
+  launch checks: read every page fresh, check on a phone, submit the sitemap
+  to Search Console/Bing, and ask the assistants what they say about Noven —
+  our own first before-and-after.
 
 ### 2026-07-29 (apex vs www decided)
 - **Apex vs www is closed.** `novenstudio.co.uk` is the primary domain, already
