@@ -28,11 +28,13 @@ two working days to reply. The domain `novenstudio.co.uk` is confirmed and set.
 The founder bio and the cancellation terms are now written, the founder's
 photograph is committed and live on the About page, and the founder's LinkedIn
 URL is now set — so the About page links to it and the structured data claims
-the profile and the business are the same person. What's left on that thread is
-owner work inside LinkedIn itself: point the profile back at the site and
-create a Noven business page (1a). The copy for both is written and waiting in
-`ops/linkedin.md` — it needs someone signed in, not another session. The
-address for service is deliberately deferred until we're closer to revenue.
+the profile and the business are the same person. **The personal profile is
+done**; what's left of 1a is the Noven company page, and everything that was
+holding it up is cleared: the site is live so the website field can be filled,
+and the two images LinkedIn needs are exported and committed in
+`assets/linkedin/`. The steps and the copy are in `ops/linkedin.md` §5 — it
+needs someone signed in, not another session. The address for service is
+deliberately deferred until we're closer to revenue.
 
 **The site is live, on HTTPS, at `novenstudio.co.uk`.** Netlify is pointed at
 `main` and deployed — the old website is no longer what that domain serves.
@@ -106,27 +108,29 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
         it?" on the About page and joins the founder in the structured data as
         the Person's `image`.
 - [ ] **Amend the LinkedIn profile, and create the Noven business page**
-      (owner, on desktop — nobody else can sign in). Two jobs, one sitting.
-      **All the copy is written and ready to paste in `ops/linkedin.md`** —
-      that document is the working version of this item, including the seven
-      questions still open and the order the steps have to happen in. Summary:
-      - **The personal profile.** Add `novenstudio.co.uk` to the website field
-        and say in the headline or About section that he runs Noven.
-        Confirmation that only points one way is much weaker than two pages
-        agreeing about the same person, and that agreement is the argument the
-        whole site makes. It is also the cheapest version of the thing we sell,
-        done on ourselves.
-      - **A Noven page.** A business page is a second source an assistant can
-        find and quote when someone asks who Noven is — name, what we do, the
-        Wirral, the website. Keep the wording the same as the site's: same
-        business name, same description, same location, same URL. Different
-        wording in two places is the exact fault the audit is paid to find.
-        When it exists, set `businessLinkedIn` in `src/data/business.ts` — it
-        is already wired to join the Organization's structured data as
-        `sameAs`, so setting the value is the only step.
+      (owner, on desktop — nobody else can sign in). `ops/linkedin.md` is the
+      working version of this item; it has no open questions left.
+  - [x] **The personal profile** — done by the owner. Headline, About section,
+        the missing Maersk role, the Port Brief removal and the website field,
+        all as written in `ops/linkedin.md` §§1–4.
+  - [ ] **A Noven company page** — the one thing left in 1a. A business page is
+        a second source an assistant can find and quote when someone asks who
+        Noven is: name, what we do, the Wirral, the website. Same wording as
+        the site's throughout — different wording in two places is the exact
+        fault the audit is paid to find. Everything it was waiting on is
+        cleared, so it's a single sitting with `ops/linkedin.md` §5 open:
+        - The website field is safe now the site is live. It wasn't before.
+        - The logo and cover are exported and committed at
+          `assets/linkedin/logo-400.png` and `cover-1128x191.png` — LinkedIn
+          takes no SVG and every brand asset is one, which was the blocker.
+        - Afterwards, two small things close it: re-attach the company on the
+          profile's Noven role so it links to the page rather than being loose
+          text (the profile was written before the page existed, so it can't be
+          linked yet), and set `businessLinkedIn` in `src/data/business.ts`,
+          which is already wired to join the Organization's `sameAs`.
       - Worth doing before outreach, not after: a business page with nothing on
         it is still better than an empty search result when someone checks us
-        out after an email. It does not need to wait for launch.
+        out after an email.
 - [x] **Former employer named** — Maersk, confirmed by the owner. It reads in
       the bio and appears as the founder's `alumniOf` in the structured data,
       both from `founderFormerEmployer` in `src/data/business.ts`. Plain text
@@ -545,6 +549,54 @@ Written down rather than guessed at. Answer them as they become relevant.
 
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
+
+### 2026-07-29 (the company page is unblocked — images made, holds lifted)
+- **The profile side of 1a is done**, per the owner. What's left of that item is
+  the Noven company page, so `ops/linkedin.md` now opens by saying so and §5 is
+  written as the job in front of you rather than one of two.
+- **The `[HOLD until the site is live]` markers are gone from `ops/linkedin.md`.**
+  They were written when `novenstudio.co.uk` still served the old website and
+  putting that address on LinkedIn would have pointed every reader and every
+  crawler at the wrong business. The site is live, so the address goes in
+  wherever LinkedIn asks. The reasoning is kept in the document rather than
+  deleted — it's the argument we sell, applied to ourselves.
+- **New: `assets/linkedin/`** — the two images LinkedIn needs, as PNGs, because
+  LinkedIn takes no SVG and every brand asset is one. That was the last real
+  blocker on the page. `logo-400.png` is `Social Avatar.svg` placed as-is and
+  cropped to the bounds of its own disc, so it fills a circular mask and reads
+  as a disc in a square one. `cover-1128x191.png` is brand navy, warm white and
+  one sentence in the site's Newsreader — same materials, same method and same
+  house pattern as the og card in `assets/og/`. Nothing was redrawn.
+- **The cover doesn't carry the homepage headline, and the reason is worth
+  keeping.** A mock-up of the page header showed LinkedIn prints the tagline
+  directly beneath the cover — and the tagline and the headline both end
+  "…ask an AI who to use". Stacked, they said the same phrase twice an inch
+  apart. The cover carries the About page's line instead, which answers the one
+  thing the name and tagline don't: what kind of outfit is behind it.
+- **Found while writing it up: the profile's Noven role is probably linked to
+  nothing.** LinkedIn attaches a real company page to an experience entry only
+  if the page exists when you type the name; otherwise it silently keeps the
+  text and links nowhere, and it looks identical on your own screen. The
+  profile was written before the page — so once the page is up, the Company
+  field on that role has to be retyped and picked from the dropdown. The link
+  between the two pages is the entire point of having both.
+- **`render.mjs` refuses to write a clipped image.** The first attempt at both
+  PNGs used `--window-size`, which quietly laid the page out taller than the
+  frame and cropped the cover mid-sentence. The script now reads the laid-out
+  size and throws instead — a half-sentence cover is exactly the kind of thing
+  that ships unnoticed.
+- **Couldn't verify the live site from this session:** `novenstudio.co.uk`
+  isn't on this environment's outbound allow-list, so both `curl` and the fetch
+  tool got a 403 from the egress proxy. Lifting the holds rests on the owner's
+  confirmation and the last session's record of the deploy, and
+  `ops/linkedin.md` says so where it matters rather than implying it was
+  checked.
+- **Still `null`: `businessLinkedIn`.** It can't be set until the page exists
+  and has a URL. Paste the slug into the next session and it's a one-line
+  change.
+- **Next session:** either the company page slug once it exists, or 1e's launch
+  checks — read every page fresh, check on a phone, submit the sitemap to
+  Search Console and Bing, and ask the assistants what they say about Noven.
 
 ### 2026-07-29 (the domain address works, and the site uses it)
 - **`hello@novenstudio.co.uk` sends and receives.** Gmail to `hello@` lands in
