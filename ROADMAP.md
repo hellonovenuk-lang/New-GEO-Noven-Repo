@@ -367,13 +367,19 @@ voice instead, or the first impression contradicts every page it links to.
       "Couldn't fetch" Search Console showed at first was just Google's own
       timing, not a real fault. Old `sitemap.xml` entry removed, correct one
       resubmitted, now shows **Success, 6 pages, read same day.**
-  - **Still open, separately:** the leftover indexed pages from the old site
-    (`/terms`, `/work`, `/approach`, `/privacy`, `/start`) are still in
-    Google's index and will 404 if crawled — removing the old sitemap doesn't
-    deindex them. Use Search Console's **Removals** tool for a fast temporary
-    hide, and **URL Inspection → Request Indexing** on each for the permanent
-    fix, plus the homepage (helps the favicon catch up too, since Google
-    fetches that on its own slower schedule).
+  - **The five leftover pages from the old site are now being cleared.**
+    Submitted all five (`/terms`, `/work`, `/approach`, `/privacy`, `/start`)
+    to Search Console's **Removals** tool — fast, temporary hide, all showed
+    "Processing request". Then ran **URL Inspection → Request Indexing** on
+    the same five: each came back **"Indexing request rejected — indexing
+    issues were detected during live testing"**, which is the correct
+    outcome here rather than a fault — Google live-fetched each URL, found it
+    now 404s, and confirmed there's nothing there to index. That's Google
+    registering the pages are gone. Ran the same check on the homepage
+    (`/`), which queued normally as a real page should — confirming the
+    rejections above were specific to the dead URLs, not a wider problem.
+    Nothing further to do here; it plays out over the next few days as
+    Google's index catches up.
   - Bing Webmaster Tools — not yet done.
 - [ ] Ask ChatGPT, Claude, Copilot and Perplexity what Noven does — record the
       answers, dated. This is our own before-and-after, and our first proof.
