@@ -1,0 +1,72 @@
+<!doctype html>
+<!-- The company page cover, 1128x191. Composed from the same materials as the
+     link-preview card in ../og/: brand navy #170969, warm white #fffefa, the
+     committed wordmark placed as-is, and one of the site's own sentences in
+     the Newsreader the site sets its display type in. The font is the copy
+     already vendored for the og card, so this render doesn't touch the
+     network. Rendered to cover-1128x191.png by render.mjs. -->
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      @font-face {
+        font-family: 'Newsreader';
+        font-style: normal;
+        font-weight: 500;
+        src: url('../og/fonts/Newsreader-500.woff2') format('woff2');
+      }
+
+      * {
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 1128px;
+        height: 191px;
+        overflow: hidden;
+      }
+
+      /* The left is kept clear because the logo badge overlaps the bottom-left
+         of the cover on a company page. The sentence leads and the wordmark
+         signs off at the right edge — the one part of the strip the badge can
+         never cover, whatever LinkedIn does to the crop on a phone. */
+      body {
+        background: #170969;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 44px;
+        padding: 0 56px 0 248px;
+      }
+
+      /* The site's own summary of the service, in the site's face and
+         tracking. Not the homepage headline: LinkedIn prints the page tagline
+         directly beneath the cover, and that tagline already ends "…ask an AI
+         who to use" — the headline ends the same way, so the two stacked the
+         same phrase twice an inch apart. */
+      p {
+        font-family: 'Newsreader', serif;
+        font-weight: 500;
+        font-size: 31px;
+        line-height: 1.14;
+        letter-spacing: -0.024em;
+        color: #fffefa;
+      }
+
+      /* The shipped web asset, as-is. Height derived from its own viewBox
+         ratio (1193.92 : 236.39), so the mark is scaled, never reshaped. */
+      .wordmark {
+        width: 168px;
+        height: 33.26px;
+        flex: none;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <p>We make your business easy for AI assistants to find, understand and recommend.</p>
+    <img class="wordmark" src="../../site/public/logo-dark.svg" alt="" />
+  </body>
+</html>

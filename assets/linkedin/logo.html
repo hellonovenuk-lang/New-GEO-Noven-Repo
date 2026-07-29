@@ -1,0 +1,51 @@
+<!doctype html>
+<!-- The company page logo, 400x400. Nothing here is drawn: the committed
+     Social Avatar is placed as-is and the frame is cropped to the bounds of
+     its circle, so the mark is scaled and positioned, never reshaped or
+     retyped. Rendered to logo-400.png by the command in README.md — this file
+     is the source, the PNG is the build product. -->
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      * {
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 400px;
+        height: 400px;
+        overflow: hidden;
+      }
+
+      /* Transparent, not white. The mark is a navy disc; leaving the corners
+         clear lets LinkedIn's own mask — square, rounded or circular — sit
+         wherever it likes without a pale square showing through it. */
+      body {
+        background: transparent;
+        position: relative;
+      }
+
+      /* Social Avatar.svg is a 1500-unit square canvas with the disc centred
+         at 750,750 and a radius of 450 — so the disc runs 300 → 1200, a
+         900-unit box. Scaling 1500 units to 666.667px makes those 900 units
+         exactly 400px, and shifting up and left by 300 units (133.333px)
+         brings the disc's own bounding box onto the frame. Edge to edge, so a
+         circular crop fills completely and a square one reads as the disc it
+         is. */
+      img {
+        position: absolute;
+        top: -133.333px;
+        left: -133.333px;
+        width: 666.667px;
+        height: 666.667px;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="../brand/Social Avatar.svg" alt="" />
+  </body>
+</html>

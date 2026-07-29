@@ -45,14 +45,16 @@ export const business = {
   founderLinkedIn: 'https://www.linkedin.com/in/kieran-smith-50b953143' as string | null,
 
   /**
-   * Noven's own LinkedIn page, once it exists. Separate from the founder's
-   * profile: this one joins the *Organization* in the structured data as
-   * `sameAs`, which is the business claiming a second page as its own. Null
-   * until the page is created — an empty or wrong `sameAs` is precisely the
-   * unreliable business information we're paid to remove from other people's
-   * sites. Roadmap 1a covers creating it.
+   * Noven's own LinkedIn page. Separate from the founder's profile: this one
+   * joins the *Organization* in the structured data as `sameAs`, which is the
+   * business claiming a second page as its own.
+   *
+   * `novenstudio` was the only slug of the preferred options still available.
+   * Stored without the `?viewAsMember=true` LinkedIn appends when you preview
+   * your own page — that's a view-mode flag, not the canonical public URL, and
+   * publishing it would be the wrong address the moment someone else opens it.
    */
-  businessLinkedIn: null as string | null,
+  businessLinkedIn: 'https://www.linkedin.com/company/novenstudio/' as string | null,
 
   /**
    * Path to the founder's photograph in site/public. Setting it does two
