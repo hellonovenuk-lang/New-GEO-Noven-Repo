@@ -30,7 +30,7 @@ settled and the recommendations build on them rather than replacing them.
 |---|---|---|---|
 | Business bank account | Mettle (NatWest) | Free | Before first payment |
 | Address for service | Hoxton Mix or similar virtual office | ~£30–60/yr | Before visibly trading |
-| Email on the domain | Zoho Mail (Mail Lite) | ~£12/yr | Any time — cheap win |
+| Email on the domain | Zoho Mail (Mail Lite) | £14.40/yr inc VAT | Any time — cheap win |
 | Data protection registration | ICO, direct | £52/yr (£47 by Direct Debit) | Before holding client data |
 | Privacy notice | ICO's own free generator | Free | Before first client data |
 | Professional indemnity insurance | Compare via Simply Business / Markel | ~£8–25/mo | Before first delivery |
@@ -59,7 +59,8 @@ data centres**, found when actually setting this up rather than assumed from
 the pricing page. An account created on `zoho.eu` (as ours was) goes straight
 to a paid plan or a 15-day trial, with no free option shown. **Mail Lite is
 the real number to use: about £1 per user per month on annual billing
-(~£12/yr, 10 GB), which also adds IMAP/POP so it works in a normal mail
+(£12/yr plus VAT — £14.40 actually charged, 10 GB), which also adds IMAP/POP
+so it works in a normal mail
 client** — a plan we'd already earmarked as the fallback, now the only
 option in practice. Under Zoho's setup wizard, this is "Mail Only → Mail
 Lite", not "Workplace" (that tier bundles shared team drive storage nobody
@@ -572,7 +573,7 @@ Worth writing down so they don't get re-proposed:
 ## What to actually do, in order
 
 1. **Bitwarden** — free, ten minutes, and everything below creates a credential.
-2. **Zoho Mail on the domain (Mail Lite, ~£12/yr)** — the free plan isn't
+2. **Zoho Mail on the domain (Mail Lite, £14.40/yr inc VAT)** — the free plan isn't
    offered to new sign-ups on the EU/US/AU data centres, found while actually
    setting this up. Do it in the same sitting as the Netlify DNS work in
    roadmap 1b.
