@@ -66,15 +66,15 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
 - [x] Audit turnaround — one working day from confirming scope and payment
 - [x] Foundation delivery — we reply within two working days with a plan and a
       date; the work itself depends on client access and information
-- [x] **Founder bio** — written and live on the About page: nearly ten years in
+- [x] **Founder bio** — written and live on the About page: eight years in
       operations at a global shipping company, and finding this problem by
       chance while building websites. One supporting piece is still open:
   - [x] **LinkedIn URL** — supplied by the owner and set as `founderLinkedIn`
         in `src/data/business.ts`:
         `https://www.linkedin.com/in/kieran-smith-50b953143`. One value, two
         uses: it links from the About page and joins the founder in the
-        structured data as `sameAs`. Nearly ten years at one employer is the
-        most checkable thing we have, and now a cautious reader can check it.
+        structured data as `sameAs`. Eight years inside one group is the most
+        checkable thing we have, and now a cautious reader can check it.
 
         The shared link arrived with `?utm_source=share_via&utm_content=…`
         tracking parameters on the end. Those are stripped — they describe how
@@ -532,7 +532,33 @@ Written down rather than guessed at. Answer them as they become relevant.
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
 
-### 2026-07-29 (latest — the LinkedIn copy is written)
+### 2026-07-29 (latest — the bio says eight years, because it is eight years)
+- **"Nearly ten years" is corrected to "eight years" everywhere it appeared.**
+  The owner confirms the real figure is eight years nine months, all inside the
+  Maersk group. Changed in `site/src/pages/about.astro`, `ops/service-tiers.md`
+  §7, item 1a above, and the LinkedIn copy. Site rebuilds clean, seven pages.
+- **"Eight" rather than "nearly nine", which is also true.** The dates on the
+  LinkedIn profile read as eight years five months to anyone counting, so
+  "nearly nine" invites a check it doesn't quite pass. Eight is true against
+  both the owner's figure and the profile's own dates. Round down when the
+  reader can count — this is the one claim on the site a stranger can verify in
+  four seconds, and the business is unsellable if it doesn't hold.
+- **Small unresolved arithmetic, no copy impact:** 8y9m and the profile's
+  visible Jan 2017 – Jun 2025 don't quite agree. Noted for the owner to glance
+  at while editing; nothing depends on it.
+- **The "managing administrative staff" bullet was rewritten, not just
+  numbered.** The owner doesn't line-manage them — around six admin staff sat
+  under his purview, he owned the process they worked to, and escalation went
+  to their own manager. "Managed a team of six" was the easy phrasing and would
+  have been false, on a profile whose argument is that he keeps information
+  accurate. It now describes process authority, which is what it was.
+- **Two of the seven open questions are closed.** Remaining: Noven's start
+  date, whether M&S and Tesco can be named, why the Maersk role ended, whether
+  Port Brief is finished, and the current headline text.
+- **Next session:** unchanged — Netlify. Apex vs www, read the preview end to
+  end, then switch the domain off the old site.
+
+### 2026-07-29 (the LinkedIn copy is written)
 - **`ops/linkedin.md` written.** Everything needed to do roadmap 1a's LinkedIn
   half in one sitting: replacement About copy for the personal profile, the
   missing Maersk job description, fixes to the three existing ones, and

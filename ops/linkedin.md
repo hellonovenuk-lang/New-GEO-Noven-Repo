@@ -70,29 +70,33 @@ Tuesday. If that project is finished, the profile is currently making a
 standing promise nobody is keeping, to anyone who reads it. It should come down
 whether or not the Noven copy is ready.
 
-### The "ten years" discrepancy — decide this before publishing anything
+### The "ten years" discrepancy — settled, and the site is now fixed
 
-The current About says **"I spent 10 years inside the shipping and logistics
-industry."** The site's About page says **"nearly ten years in operations at
-Maersk."**
+The old About said **"I spent 10 years inside the shipping and logistics
+industry."** The site's About page said **"nearly ten years in operations at
+Maersk."** Neither survived checking.
 
-The experience on the profile runs **Jan 2017 → Jun 2025 — eight years and
-five months**, all of it inside the Maersk group (Seago Line and Sealand are
-both Maersk companies, so "at Maersk" holds up; the duration doesn't).
+**The owner confirms the real figure is eight years and nine months.** The
+answer everywhere is **"eight years"**, and that is already applied:
 
-This is the most checkable claim either page makes, and anyone can check it in
-four seconds by scrolling down. Two options:
+| Where | Now reads |
+|---|---|
+| `site/src/pages/about.astro` | "Kieran spent eight years in operations at Maersk" |
+| `ops/service-tiers.md` §7 | "Eight years of operations at Maersk" |
+| This doc's About copy (section 2) | "For eight years I worked in shipping operations" |
+| Headline option B (section 3.1) | "Eight years in global shipping operations" |
 
-- **If there is earlier shipping work not on the profile** — add it to the
-  profile, and ten years becomes true and verifiable in the same place it's
-  claimed.
-- **If there isn't** — say **"eight years"** in both places. The copy in
-  section 2 says eight years for this reason. `site/src/pages/about.astro`
-  needs the same change; I haven't made it, because I don't know which case
-  we're in. This is question 1 in section 6.
+**Why "eight" and not "nearly nine", which is also true.** The dates visible on
+the profile run Jan 2017 → Jun 2025, which reads as eight years and five months
+to anyone doing the arithmetic. "Nearly nine" invites a check it doesn't quite
+pass; "eight years" is true against both the owner's figure and the profile's
+own dates. Round down when the reader can count.
 
-Eight years is not a weaker claim than ten. Eight years that survive checking
-is a much stronger claim than ten that don't.
+**Minor loose end, no copy impact:** those visible dates give 8y5m, not 8y9m.
+If the 8y9m figure is right, a start or end date on the profile is out by a few
+months — worth a glance while you're in there, but it changes nothing above.
+
+Eight years that survive checking is a stronger claim than ten that don't.
 
 ---
 
@@ -240,12 +244,22 @@ any assistant reading the page. Written from what you gave me:
 > • Ensuring every import requirement was met at the other end, so containers
 > cleared and ran into the customers' distribution centres without being held.
 >
-> • Managing the administrative staff supporting both accounts —
-> `[PLACEHOLDER: how many people? See question 2]` — setting how the work was
-> done day to day and taking the intricate cases myself.
+> • Owning the process an administrative team of around six worked to across
+> both accounts. Where something needed changing or raising, I set out what the
+> change was and made sure it was carried through, escalating missed steps to
+> their line manager.
 >
 > • Reporting directly to the customers on a regular basis, so they heard about
 > an exception from me before they found it themselves.
+
+**A note on the team bullet, because the wording is deliberate.** You told me
+you didn't line-manage them — around six admin staff sat under your purview,
+you owned the process they worked to, and escalation for missed steps went to
+their own manager. So the bullet says that, and doesn't say "managed a team of
+six." It would be an easy word to reach for and it would be untrue, on a
+profile whose whole argument is that you keep information accurate. Process
+authority over a team you don't line-manage is a real and senior thing to have
+had; it doesn't need upgrading to sound like one.
 
 **Two things to decide before you paste it.**
 
@@ -470,14 +484,19 @@ post needs a number you don't have, it isn't ready.
 
 ---
 
-## 6. Questions — I need these to finish the copy
+## 6. Questions
 
-1. **Is there shipping work before Jan 2017 that isn't on the profile?**
-   Decides "ten years" vs "eight years" — and this needs changing on the site's
-   About page too, not just LinkedIn.
-2. **How many administrative staff did you manage on the M&S/Tesco accounts?**
-   "Managing a team of four" is concrete; "managing administrative staff" is
-   air. A number goes straight into the description.
+**Answered 2026-07-29 — both are already applied above, nothing to do:**
+
+- ~~*How long in shipping?*~~ **Eight years nine months.** Copy says "eight
+  years" everywhere; the site and `service-tiers.md` are corrected. Reasoning
+  in section 1.
+- ~~*How many staff managed?*~~ **Around six, not line-managed** — process
+  authority, escalation to their own manager. The bullet in section 3.3 is
+  written to say exactly that.
+
+**Still open:**
+
 3. **When did Noven start?** Needed for the current-role start date, and it
    decides how the Jun 2025 → now period reads.
 4. **Any restriction on naming M&S and Tesco publicly?** Check the contract or

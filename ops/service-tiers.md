@@ -340,7 +340,7 @@ drifted, send the record. Deliverable competently from client one, and doing it
 twenty times is how the pattern recognition gets built.
 
 **Grow is writing.** Producing a clear page that answers a real customer question
-is a communication skill, not a technical one. Nearly ten years of operations at
+is a communication skill, not a technical one. Eight years of operations at
 Maersk is better preparation for "state this business's facts accurately and
 consistently" than most marketing backgrounds are.
 
