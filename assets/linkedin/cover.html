@@ -1,10 +1,10 @@
 <!doctype html>
-<!-- The company page cover, 1128x191. Composed from the same three materials
-     as the link-preview card in ../og/: brand navy #170969, warm white
-     #fffefa, and one of the site's own statement lines in the Newsreader the
-     site sets it in. The font is the copy already vendored for the og card,
-     so this render doesn't depend on the network either. Rendered to
-     cover-1128x191.png by render.mjs. -->
+<!-- The company page cover, 1128x191. Composed from the same materials as the
+     link-preview card in ../og/: brand navy #170969, warm white #fffefa, the
+     committed wordmark placed as-is, and one of the site's own sentences in
+     the Newsreader the site sets its display type in. The font is the copy
+     already vendored for the og card, so this render doesn't touch the
+     network. Rendered to cover-1128x191.png by render.mjs. -->
 <html lang="en-GB">
   <head>
     <meta charset="utf-8" />
@@ -28,36 +28,45 @@
         overflow: hidden;
       }
 
-      /* The logo badge overlaps the bottom-left of the cover on a company
-         page, and LinkedIn trims the strip differently on a phone than on a
-         desktop. So the type sits inside the middle, with the left kept clear
-         for the badge and room to spare on the right. */
+      /* The left is kept clear because the logo badge overlaps the bottom-left
+         of the cover on a company page. The sentence leads and the wordmark
+         signs off at the right edge — the one part of the strip the badge can
+         never cover, whatever LinkedIn does to the crop on a phone. */
       body {
         background: #170969;
         display: flex;
         align-items: center;
-        padding: 0 72px 0 264px;
+        justify-content: space-between;
+        gap: 44px;
+        padding: 0 56px 0 248px;
       }
 
-      /* The About page's statement line, in the site's own face and tracking,
-         sized to the strip. Not the homepage headline: LinkedIn sets the
-         page's tagline directly beneath the cover, and that tagline already
-         ends "…ask an AI who to use", so the headline would have stacked the
-         same phrase twice. This line says the thing the rest of the header
-         doesn't — what kind of outfit is behind it — and it is the site's own
-         sentence, not a new one written for LinkedIn. */
+      /* The site's own summary of the service, in the site's face and
+         tracking. Not the homepage headline: LinkedIn prints the page tagline
+         directly beneath the cover, and that tagline already ends "…ask an AI
+         who to use" — the headline ends the same way, so the two stacked the
+         same phrase twice an inch apart. */
       p {
         font-family: 'Newsreader', serif;
         font-weight: 500;
-        font-size: 40px;
-        line-height: 1.1;
+        font-size: 31px;
+        line-height: 1.14;
         letter-spacing: -0.024em;
         color: #fffefa;
-        text-wrap: balance;
+      }
+
+      /* The shipped web asset, as-is. Height derived from its own viewBox
+         ratio (1193.92 : 236.39), so the mark is scaled, never reshaped. */
+      .wordmark {
+        width: 168px;
+        height: 33.26px;
+        flex: none;
+        display: block;
       }
     </style>
   </head>
   <body>
-    <p>Small enough that you always know who did the work.</p>
+    <p>We make your business easy for AI assistants to find, understand and recommend.</p>
+    <img class="wordmark" src="../../site/public/logo-dark.svg" alt="" />
   </body>
 </html>

@@ -22,30 +22,41 @@ as they were supplied, never redrawn or retyped, so:
   meets all four edges. That way a circular mask fills completely and a square
   one reads as the disc it is. The corners are left transparent rather than
   filled white, so LinkedIn's own mask can sit wherever it likes.
-- **The cover** is brand navy `#170969`, warm white `#fffefa`, and one
-  sentence, set in the same Newsreader 500 the site sets its display type in.
-  The font is the copy already vendored at `../og/fonts/` for the og card, so
-  neither render touches the network.
+- **The cover** is brand navy `#170969`, warm white `#fffefa`, the committed
+  wordmark (`site/public/logo-dark.svg`, referenced as-is like the og card
+  does) and one sentence, set in the same Newsreader 500 the site sets its
+  display type in. The font is the copy already vendored at `../og/fonts/` for
+  the og card, so neither render touches the network.
 
-The sentence is **"Small enough that you always know who did the work."** — the
-statement line from the site's About page, quoted rather than written fresh.
-Two deliberate choices behind that:
+The sentence is **"We make your business easy for AI assistants to find,
+understand and recommend."** — the site's own summary of the service, from the
+homepage, verbatim bar the pronoun. It is the answer to what Noven sells, and
+because it *is* the site's sentence it can't drift from it.
 
-- **It isn't the homepage headline**, which is what the og card carries.
-  LinkedIn prints the page's tagline immediately under the cover, and that
-  tagline already ends *"…ask an AI who to use"*. The headline ends the same
-  way, so the two would have stacked the same phrase twice, one above the
-  other. Checked in a mock-up of the page header, not guessed at.
-- **It answers the question the rest of the header doesn't.** The name says who,
-  the tagline says what you get; the one thing a stranger still wants to know
-  is what kind of outfit is behind it. The site already answers that in these
-  words, so the page and the site agree without either being edited for the
-  other.
+**It isn't the homepage headline**, which is what the og card carries. LinkedIn
+prints the page's tagline immediately under the cover, and that tagline already
+ends *"…ask an AI who to use"*. The headline ends the same way, so the two
+would have stacked the same phrase twice, one above the other. Checked in a
+mock-up of the page header, not guessed at.
 
-The left 264px of the cover is kept clear. The logo badge overlaps the
-bottom-left of the cover on a company page, and LinkedIn trims the strip
-differently on a phone than on a desktop — so the type sits inside the middle
-with room on both sides.
+## Why the wordmark is here and not in the logo slot
+
+The full wordmark belongs on the cover, and the disc keeps the logo slot. That
+isn't a taste call — the three candidates were rendered at 48px, which is the
+size LinkedIn shows a company logo at in the feed:
+
+- **The disc** stays legible. "N." is two glyphs and it holds up small.
+- **The wordmark on navy** goes cramped — six letters across 48px.
+- **The wordmark on warm white** nearly disappears, because LinkedIn's feed
+  background is white too and the tile stops reading as a tile.
+
+The cover is 1128×191, which is the shape a horizontal wordmark was drawn for,
+so it goes there instead — right-aligned, signing off after the sentence.
+
+**Why right-aligned.** The logo badge overlaps the *bottom-left* of the cover
+on a company page, so the right edge is the one part of the strip that can
+never be covered, whatever LinkedIn does to the crop on a phone. The left 248px
+is kept clear for the badge for the same reason.
 
 ## Re-rendering
 
@@ -64,6 +75,6 @@ points at, and Playwright is installed globally rather than in the repo.
 
 ## If the wording on the site changes
 
-The cover quotes the About page. If that statement line is reworded, reword it
-here and re-render, or the two stop agreeing — which is the exact fault the
-audit is paid to find on other people's businesses.
+The cover quotes the homepage's summary of the service. If that sentence is
+reworded, reword it here and re-render, or the two stop agreeing — which is the
+exact fault the audit is paid to find on other people's businesses.

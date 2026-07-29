@@ -562,17 +562,27 @@ Per the standing rules, neither was redrawn. The logo is
 `assets/brand/Social Avatar.svg` placed as-is, scaled and cropped to the bounds
 of its own disc so the mark meets all four edges — a circular mask fills
 completely, a square one reads as the disc it is. The cover is brand navy, warm
-white, and one sentence lifted from the site's About page, set in the same
+white, the committed wordmark placed as-is, and one sentence set in the same
 Newsreader the site sets its display type in. `assets/linkedin/README.md`
 records how they were made and how to re-render them.
 
-**Why the cover doesn't say what the homepage says.** LinkedIn prints the
-tagline directly under the cover, and the tagline in 5.2 ends *"…ask an AI who
-to use"* — so does the homepage headline. Stacked, they'd say the same phrase
-twice, an inch apart. The cover carries **"Small enough that you always know
-who did the work."** instead, which is the site's own About page line and
-answers the one thing the name and the tagline don't: what kind of outfit is
-behind this. Checked against a mock-up of the page header rather than guessed.
+**The cover carries the site's own summary of the service:** *"We make your
+business easy for AI assistants to find, understand and recommend."* — the
+homepage sentence, verbatim bar the pronoun. It says what Noven sells, and
+because it is the site's sentence it can't drift from it.
+
+**Why not the homepage headline.** LinkedIn prints the tagline directly under
+the cover, and the tagline in 5.2 ends *"…ask an AI who to use"* — so does the
+headline. Stacked, they'd have said the same phrase twice, an inch apart.
+Checked against a mock-up of the page header rather than guessed.
+
+**Why the full wordmark is on the cover and not in the logo slot.** All three
+candidates were rendered at 48px, the size LinkedIn shows a company logo at in
+the feed: the disc stays legible, the wordmark on navy goes cramped, and the
+wordmark on warm white nearly vanishes against LinkedIn's white feed. So the
+disc keeps the logo slot and the wordmark sits on the cover, which is the shape
+it was drawn for — right-aligned, because the badge overlaps the bottom-left
+and the right edge is the one part that can never be covered.
 
 **The one thing to eyeball after uploading.** The composition leaves the left
 of the cover clear because the logo badge overlaps it, but LinkedIn crops

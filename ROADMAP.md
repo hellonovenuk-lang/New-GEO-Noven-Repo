@@ -567,12 +567,23 @@ what's next. Newest at the top.
   as a disc in a square one. `cover-1128x191.png` is brand navy, warm white and
   one sentence in the site's Newsreader — same materials, same method and same
   house pattern as the og card in `assets/og/`. Nothing was redrawn.
-- **The cover doesn't carry the homepage headline, and the reason is worth
-  keeping.** A mock-up of the page header showed LinkedIn prints the tagline
-  directly beneath the cover — and the tagline and the headline both end
-  "…ask an AI who to use". Stacked, they said the same phrase twice an inch
-  apart. The cover carries the About page's line instead, which answers the one
-  thing the name and tagline don't: what kind of outfit is behind it.
+- **The cover carries the site's own summary of the service** — "We make your
+  business easy for AI assistants to find, understand and recommend", the
+  homepage sentence verbatim bar the pronoun. Not the homepage headline: a
+  mock-up of the page header showed LinkedIn prints the tagline directly
+  beneath the cover, and the tagline and the headline both end "…ask an AI who
+  to use", so stacked they said the same phrase twice an inch apart. A first
+  attempt used the About page's "small enough that you always know who did the
+  work" — true, but it answers *who are you* when a banner should answer *what
+  do you offer*. The owner called that, and picked the summary sentence.
+- **The full wordmark goes on the cover, and the disc keeps the logo slot.**
+  Settled by rendering all three candidates at 48px, which is the size LinkedIn
+  shows a company logo at in the feed: the disc holds up, the wordmark on navy
+  goes cramped, and the wordmark on warm white nearly vanishes because
+  LinkedIn's feed background is white too. The cover is 1128×191, which is the
+  shape a horizontal wordmark was drawn for. It sits right-aligned — the badge
+  overlaps the bottom-left, so the right edge is the only part of the strip
+  that can never be covered.
 - **Found while writing it up: the profile's Noven role is probably linked to
   nothing.** LinkedIn attaches a real company page to an experience entry only
   if the page exists when you type the name; otherwise it silently keeps the
