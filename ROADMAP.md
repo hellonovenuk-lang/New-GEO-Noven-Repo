@@ -539,6 +539,17 @@ Written down rather than guessed at. Answer them as they become relevant.
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
 
+### 2026-07-29 (Zoho Mail setup paused on DNS propagation)
+- **Progress on `hello@novenstudio.co.uk`:** domain added in Zoho's Admin
+  Console, Mail Lite plan bought (see below for why not the free plan), and
+  the domain-verification TXT record has been added to `novenstudio.co.uk`'s
+  DNS. Stopped there deliberately — Zoho's own verification can take up to a
+  day to propagate, so there's nothing left to do until it clears.
+- **Next session:** once the TXT verifies — add the MX, SPF and DKIM records
+  Zoho then shows, create the `hello@novenstudio.co.uk` mailbox under Users,
+  then update `founderEmail`/contact email in `site/src/data/business.ts` and
+  tick this off in 1a.
+
 ### 2026-07-29 (Zoho Mail's free plan turned out not to be reachable)
 - **Correction found while actually setting up `hello@novenstudio.co.uk`:**
   Zoho no longer offers its Forever Free plan to new sign-ups on the EU, US
