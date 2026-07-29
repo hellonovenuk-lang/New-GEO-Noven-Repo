@@ -567,6 +567,18 @@ what's next. Newest at the top.
 - **Loose end for the owner:** the Gmail address was removed from the Zoho
   *account* and `hello@` put in its place, so account recovery for the mailbox
   now goes to the mailbox. Add the iCloud address as an alternate.
+- **Decided, so it doesn't get re-litigated:** Zoho is the inbox from now on,
+  and Gmail is not a second one. The Gmail *account* stays regardless — it
+  owns the Search Console property, the `hellonovenuk-lang` GitHub login and
+  Netlify's notifications, so it is an identity rather than an address. Its
+  mail forwards into Zoho. Mirroring Zoho back into Gmail so a tool can read
+  it is deliberately not being built at zero enquiries; the trigger for
+  revisiting is a handful a week, and the method then is Gmail fetching over
+  POP with Send-mail-as through Zoho's SMTP, so `hello@` stays the sending
+  identity.
+- **Merged to `main` at the owner's request**, overriding the standing "finish
+  on an unmerged branch" rule in `CLAUDE.md` for the fourth time. Explicit call
+  each time, not a new default.
 - **Next session:** 1e's launch checks — read every page fresh, check on a
   phone, submit the sitemap to Search Console and Bing, and ask the assistants
   what they say about Noven.
