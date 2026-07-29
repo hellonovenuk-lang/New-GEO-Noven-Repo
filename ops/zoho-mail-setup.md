@@ -153,6 +153,27 @@ DNS changes are usually live in minutes but can take a few hours.
 Don't skip step 3. A new domain with broken authentication gets quietly
 filtered, and the failure looks exactly like nobody replying.
 
+### If the first message out of Zoho doesn't arrive
+
+**Test inbound first, and don't read an outbound failure as a DNS problem.**
+Sending *from* Zoho doesn't touch the MX records at all — MX only governs mail
+coming in. So a `hello@` → Gmail message that never lands says nothing about
+the records above, and the useful test is the other direction.
+
+The usual cause on a mailbox created the same day is **Zoho's new-account
+sending restriction**: outbound external mail is held on new organisations
+until an automated review clears, sometimes until a mobile number is
+confirmed. Under an hour is typical, 24 the outside. In order:
+
+1. **Sent or Outbox?** Still in Outbox means Zoho took the message but hasn't
+   released it — that is the restriction, and waiting is the fix.
+2. **Read the `hello@` inbox** for a Zoho notice about review, restriction or
+   mobile verification. If it asks for a phone number, that is the unlock.
+3. **Email Configuration** — confirm the DKIM selector and MX check both show
+   verified. Zoho can withhold outbound while those are outstanding.
+4. **Check Gmail's spam and trash**, not just the inbox, before concluding
+   anything was lost.
+
 ## 4. Keep the Gmail address alive
 
 `hello.noven.uk@gmail.com` is on the live site right now and will be in
@@ -162,6 +183,13 @@ caches, crawler indexes and assistant answers for months. Don't close it.
   and leave it forwarding for at least a year.
 - Optional, and worth it: in Zoho, add the Gmail address under **Settings →
   Mail Accounts** so old threads can be answered from one inbox.
+
+**Separately, keep a recovery address that isn't the mailbox itself.** The
+Gmail address was removed from the Zoho *account* on 29 July and
+`hello@novenstudio.co.uk` added in its place. That leaves account recovery for
+the mailbox being sent to the mailbox — no use on the day you can't get into
+it. Add a personal address (the iCloud one) as an alternate under **Zoho
+Accounts → My Profile → Email Addresses**.
 
 ## 5. Then update the site
 
