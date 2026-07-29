@@ -34,9 +34,12 @@ create a Noven business page (1a). The copy for both is written and waiting in
 `ops/linkedin.md` — it needs someone signed in, not another session. The
 address for service is deliberately deferred until we're closer to revenue.
 
-**Biggest remaining blocker:** the site isn't deployed, so nobody can read it.
-The domain currently serves the old website, so switching it over is the next
-real step — and the thing that makes Noven exist publicly.
+**The site is live, on HTTPS, at `novenstudio.co.uk`.** Netlify is pointed at
+`main` and deployed — the old website is no longer what that domain serves.
+Noven now exists publicly. What's left before Phase 1 is fully closed: decide
+on redirects for any old URLs, and the 1e launch checks (read it end to end,
+check on a phone, submit the sitemap, ask the assistants what they say about
+Noven).
 
 **How the remaining work is sequenced.** Nothing on the site takes a payment,
 so the site can go public before the money and legal plumbing exists. Section
@@ -167,10 +170,12 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
       `www.novenstudio.co.uk` redirects to it. That matches what
       `site/astro.config.mjs` and `site/public/robots.txt` already assume, so
       no file changes were needed — just the decision recorded.
-- [ ] **Point Netlify at this repo — note the old site is currently live on
-      this domain.** Deploying replaces it. Worth loading the new site on a
-      Netlify preview URL first and reading it end to end before switching.
-- [ ] Confirm HTTPS works after the switch
+- [x] **Point Netlify at this repo.** Done — Netlify deploys `main` to
+      `novenstudio.co.uk` directly, and the site is live. The old website no
+      longer serves from the domain.
+- [x] **Confirm HTTPS works after the switch.** Checked via Netlify's own
+      API rather than assumed: the project's primary URL is
+      `https://novenstudio.co.uk` and the current deploy is `ready`.
 - [ ] Decide whether to keep any URLs from the old site alive, and redirect
       them in `netlify.toml` if so — otherwise anything linking to the old
       site starts hitting a 404
@@ -532,6 +537,27 @@ Written down rather than guessed at. Answer them as they become relevant.
 
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
+
+### 2026-07-29 (the site is live)
+- **Noven is public.** The owner pointed the Netlify deploy for
+  `novenstudio.co.uk` at `main` and it deployed correctly — the old website no
+  longer serves from the domain. This is the "biggest remaining blocker" line
+  that's been at the top of this file since it was written; it's gone now.
+- **HTTPS confirmed via Netlify's own API, not just eyeballed:** the project's
+  `primarySiteUrl` reads `https://novenstudio.co.uk` and the current deploy
+  state is `ready`. (This session's sandbox can't reach the public internet
+  directly — outbound requests to arbitrary hosts are proxy-blocked — so the
+  Netlify MCP connection was the way to check rather than curling the site.)
+- **Found while checking:** the Netlify team also has three older/unused
+  projects — `noven-2-0-preview`, `noven-preview`, `novenwirral` — all on
+  `.netlify.app` addresses, not the custom domain. Not touched, just noted;
+  worth a look if the team ever wants to tidy up stale projects.
+- **Next session:** the rest of 1b — decide whether to keep any old-site URLs
+  alive (add redirects in `netlify.toml` if so, otherwise anything linking to
+  the old site now 404s), and consider a `hello@novenstudio.co.uk` address.
+  Then 1e's launch checks: read every page fresh, check on a phone, submit the
+  sitemap to Search Console/Bing, and ask the assistants what they say about
+  Noven — our own first before-and-after.
 
 ### 2026-07-29 (apex vs www decided)
 - **Apex vs www is closed.** `novenstudio.co.uk` is the primary domain, already
