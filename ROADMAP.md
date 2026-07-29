@@ -30,8 +30,9 @@ photograph is committed and live on the About page, and the founder's LinkedIn
 URL is now set — so the About page links to it and the structured data claims
 the profile and the business are the same person. What's left on that thread is
 owner work inside LinkedIn itself: point the profile back at the site and
-create a Noven business page (1a). The address for service is deliberately
-deferred until we're closer to revenue.
+create a Noven business page (1a). The copy for both is written and waiting in
+`ops/linkedin.md` — it needs someone signed in, not another session. The
+address for service is deliberately deferred until we're closer to revenue.
 
 **Biggest remaining blocker:** the site isn't deployed, so nobody can read it.
 The domain currently serves the old website, so switching it over is the next
@@ -100,7 +101,10 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
         it?" on the About page and joins the founder in the structured data as
         the Person's `image`.
 - [ ] **Amend the LinkedIn profile, and create the Noven business page**
-      (owner, on desktop — nobody else can sign in). Two jobs, one sitting:
+      (owner, on desktop — nobody else can sign in). Two jobs, one sitting.
+      **All the copy is written and ready to paste in `ops/linkedin.md`** —
+      that document is the working version of this item, including the seven
+      questions still open and the order the steps have to happen in. Summary:
       - **The personal profile.** Add `novenstudio.co.uk` to the website field
         and say in the headline or About section that he runs Noven.
         Confirmation that only points one way is much weaker than two pages
@@ -528,7 +532,50 @@ Written down rather than guessed at. Answer them as they become relevant.
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
 
-### 2026-07-29 (latest — the LinkedIn URL is in)
+### 2026-07-29 (latest — the LinkedIn copy is written)
+- **`ops/linkedin.md` written.** Everything needed to do roadmap 1a's LinkedIn
+  half in one sitting: replacement About copy for the personal profile, the
+  missing Maersk job description, fixes to the three existing ones, and
+  field-by-field copy for the Noven company page. The owner still has to sign
+  in and paste it — nothing there can be done from a session.
+- **The current About section is entirely about Port Brief**, a project that
+  isn't live. It tells readers to subscribe at `portbrief.co.uk` and promises
+  them an email every Tuesday, so it is currently making a standing promise
+  nobody is keeping. That comes down whether or not the new copy is ready.
+- **The most senior role on the profile has no description at all** — Global
+  Customer Experience Consultant, Sep 2024 – Jun 2025, global operational lead
+  for M&S and Tesco. Written from the owner's account of it. Client names are
+  used, with an unnamed variant beside it pending a check of the Maersk
+  contract.
+- **A real consistency problem, and it's ours.** The site's About page says
+  "nearly ten years in operations at Maersk"; the profile's own dates run
+  Jan 2017 – Jun 2025, which is eight years five months. Anyone can check it
+  in four seconds, in the same place we claim it. Either earlier roles are
+  missing from the profile and should be added, or `about.astro` says eight.
+  Not changed here — the owner has to say which. It is question 1 in the doc.
+- **Sequencing catch: no website field gets filled in yet.** `novenstudio.co.uk`
+  still serves the old site, so publishing it on LinkedIn today points every
+  reader and every crawler at something that isn't Noven. Each website field in
+  the doc is marked `[HOLD until the site is live]`. Blank is recoverable;
+  wrong and cached is what the audit is paid to find on other people.
+- **Company page before profile edits**, not after — typing the company name
+  into an Experience entry only attaches the real page (and its logo, and the
+  return link) if the page already exists.
+- **The company page's location must be city-level only.** Same one-way-door
+  reasoning already applied to the site footer in 1a: a page built to be
+  crawled and quoted is the worst place to publish a home address.
+- **LinkedIn takes no SVG**, and every brand asset is one. The logo needs a
+  400×400 PNG export of `Social Avatar.svg`; the cover needs a 1128×191 strip,
+  which is a different aspect ratio from `Email Banner.svg` and so needs
+  re-composing rather than resizing. Export, never redraw.
+- **Seven questions are open for the owner**, gathered in section 6 of the doc
+  — headcount managed, Noven's start date, whether the client names can be
+  used, and the ten-years question above.
+- **Next session:** unchanged — Netlify. Apex vs www, read the preview end to
+  end, then switch the domain off the old site. That also unblocks every
+  `[HOLD]` in the LinkedIn doc.
+
+### 2026-07-29 (the LinkedIn URL is in)
 - **`founderLinkedIn` is set**: `https://www.linkedin.com/in/kieran-smith-50b953143`,
   supplied by the owner. The About page now links to it in the bio, and the
   founder's Person in the structured data carries it as `sameAs`. The
