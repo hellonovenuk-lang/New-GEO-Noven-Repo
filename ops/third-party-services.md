@@ -29,7 +29,7 @@ settled and the recommendations build on them rather than replacing them.
 | What | Pick | Cost | When |
 |---|---|---|---|
 | Business bank account | Mettle (NatWest) | Free | Before first payment |
-| Address for service | Hoxton Mix or similar virtual office | ~£30–60/yr | Before visibly trading |
+| Address for service | V LOT (ordered, pending) — fallback: 1st Formations/QCF | ~£10–48/yr (V LOT) or ~£115/yr inc VAT (fallback) | Before visibly trading |
 | Email on the domain | Zoho Mail (Mail Lite) | £14.40/yr inc VAT | Any time — cheap win |
 | Data protection registration | ICO, direct | £52/yr (£47 by Direct Debit) | Before holding client data |
 | Privacy notice | ICO's own free generator | Free | Before first client data |
@@ -139,20 +139,48 @@ so credentials land in it as they're created rather than being migrated later.
 
 ### B1. Address for service — a virtual office
 
-**Pick:** Hoxton Mix looks like the strongest value; 1st Formations and Rapid
-Formations are the obvious comparisons. Get quotes from two before committing.
+**Correction (29 July 2026):** the note previously here said Hoxton Mix runs
+"~£30/year". That was wrong — checked directly against their own pricing,
+Hoxton Mix's cheapest plan is **£180/year** (£15/mo, scanning only, no
+forwarding), and their bare registered-office-only tier is **£249.99/year**.
+There is no £30 Hoxton Mix product. Don't reuse that figure.
 
-**Cost:** The market for a basic address sits at roughly **£25–60 a year**.
-Hoxton Mix advertises a service address from about £30/year. 1st Formations
-prices a fuller "business address" service — the kind meant for use on a website
-and stationery — at around £96/year.
+**The market splits into two different products — confirm which one you're
+buying:**
 
-**Read the small print on which product you're buying.** These providers sell
-several tiers, and the cheapest is often a *director's service address* aimed at
-limited companies. What we need is an address we can publish on the website and
-have documents served at, as a sole trader. Confirm with the provider that the
-plan you're buying covers that use, and that mail is forwarded or scanned rather
-than merely held.
+1. **Director's / registered-office service address** — ~£22–39/yr (The
+   PostBox Company £22/yr, 1st Formations' "London Service Address" £26/yr,
+   Quality Company Formations' registered office £39/yr). Companies House use
+   only. Several of these providers state plainly that mail from banks,
+   suppliers or customers is **returned to sender**, not forwarded — and this
+   product is a limited-company concept, so it doesn't legally satisfy a sole
+   trader's trading-disclosure requirement at all.
+2. **Business / trading address service** — ~£72–115/yr. Explicitly licensed
+   for publishing on a website, invoices and stationery. This is the one we
+   need.
+
+**Within category 2, checked on price and on Trustpilot/reviews.co.uk
+reliability, because a dropped delivery here means a missed legal document:**
+
+| Provider | Cost/yr | Reviews | Note |
+|---|---|---|---|
+| V LOT (vlot.uk) | £9.99–£47.88 | **Poor** — Trustpilot reports of no service after payment, unresponsive support | Cheapest found |
+| Seed Formations | £72 | Mixed (~3.7/5) — includes a specific complaint of legal documents sent to the address not being forwarded | Explicitly sole-trader marketed |
+| Rapid Formations | £96 | Established, less review data pulled | Business Address Service |
+| **1st Formations** | £96 + VAT (~£115.20 inc VAT) | **4.8–4.9/5, ~23,000+ reviews** | Business Address Service |
+| **Quality Company Formations** | £96 + VAT (~£115.20 inc VAT) | **4.7–4.8/5, ~2,500 reviews** | Business Address Service |
+| Hoxton Mix | £180–300 | 4.6–4.7/5 | Reliable but not cheap once corrected |
+
+**Pick, if reliability is the priority:** 1st Formations or Quality Company
+Formations, ~£115/yr inc VAT — effectively tied, both well-reviewed at scale.
+
+**Decision actually made (29 July 2026):** went with **V LOT** despite the
+reviews, on cost — capital is tight, and £10–48/yr is a meaningful saving
+against £115/yr right now. Flagged the risk before ordering. Order placed;
+address not yet delivered. **Don't rely on this for anything time-sensitive
+until mail through it is confirmed working** — if it doesn't turn up within a
+few days, fall back to 1st Formations or Quality Company Formations. See
+`ROADMAP.md` 1a for the live status.
 
 **Why now rather than later.** The roadmap already makes this call in 1a and 1c
 and the reasoning holds: a sole trader using a business name that isn't their own
@@ -577,8 +605,11 @@ Worth writing down so they don't get re-proposed:
    offered to new sign-ups on the EU/US/AU data centres, found while actually
    setting this up. Do it in the same sitting as the Netlify DNS work in
    roadmap 1b.
-3. **Virtual office address** — ~£30–60/yr, and it should land *before* the
-   domain switches over, not after.
+3. **Virtual office address** — ordered via V LOT (~£10–48/yr), pending
+   delivery; confirm mail actually arrives before relying on it, and fall back
+   to 1st Formations or Quality Company Formations (~£115/yr inc VAT) if it
+   doesn't. Should land *before* the domain switches over, not after — see
+   B1.
 4. **Cloudflare Web Analytics** — free, one script tag.
 5. **Mettle or Starling** — free, but start it early; it's the long pole.
 6. **ICO self-assessment, then the fee if due** — £47–52/yr. Currently missing
@@ -590,10 +621,9 @@ Worth writing down so they don't get re-proposed:
 9. **Build the audit question set and the recording format** — no cost, and it's
    the actual product.
 
-Items 1–4 total roughly **£50–85 for the year** (revised up ~£12 now that
-Zoho Mail needs its paid Mail Lite tier rather than the free plan) and can
-all be done in an afternoon. Items 5–9 are gated on real events rather than
-dates.
+Items 1–4 total roughly **£30–65 for the year** at V LOT's pricing (or
+£95–130 if the fallback to 1st Formations/QCF is needed) and can all be done
+in an afternoon. Items 5–9 are gated on real events rather than dates.
 
 ---
 

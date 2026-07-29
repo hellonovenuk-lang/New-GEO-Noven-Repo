@@ -144,12 +144,24 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
         same whether collection ends up manual or automatic.
       - If clients ever do start taking a month and leaving, add a minimum term
         *then*. Not before we have met the problem.
-- [ ] **Address for service of documents — deferred pre-revenue, by decision.**
+- [ ] **Address for service of documents — ordered, pending delivery.**
       Trading under a business name as a sole trader carries a legal disclosure
       requirement to show your name and an address where documents can be
       served, including on the website. The requirement is an address where
       post reaches us — **not** necessarily a home address, so a virtual office
       or service-address provider satisfies it.
+      **Provider chosen: V LOT** (vlot.uk), on cost — plans run roughly
+      £10–48/yr against the ~£96–115/yr established providers (1st Formations,
+      Quality Company Formations) quote for the equivalent product. Order
+      placed; the address itself hasn't been provided yet.
+      **Known risk, accepted for now:** V LOT's Trustpilot reviews are
+      poor — reports of no address/service being provided after payment and
+      unresponsive support. This field is exactly the one place a dropped
+      delivery matters most (a missed legal document), so **don't tick this
+      off, and don't remove the footer placeholder, until mail through this
+      address has actually been confirmed working.** If it doesn't deliver
+      within a few days, fall back to 1st Formations or Quality Company
+      Formations (~£115/yr inc VAT) — see `ops/third-party-services.md` B1.
       **Do not use the home address here.** This site is built so AI crawlers
       can read the business facts and repeat them confidently — explicit
       crawler permissions, structured data on every page, a sitemap. That is
@@ -541,6 +553,34 @@ Written down rather than guessed at. Answer them as they become relevant.
 
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
+
+### 2026-07-29 (address for service — ordered with V LOT, pending)
+- **Researched UK virtual-address providers properly** rather than taking the
+  existing `ops/third-party-services.md` note at face value — found and fixed
+  a real error in it: Hoxton Mix is not "~£30/year", it's **£180–300/year**
+  (£249.99/yr for the bare registered-office tier). That number should not be
+  trusted again without checking the provider's own site.
+- Found the market splits into two different products that are easy to
+  confuse: a **director's/registered-office service address** (~£22–39/yr,
+  Companies House use only, often returns other mail to sender, and doesn't
+  even legally apply to a sole trader) versus a **business/trading address
+  service** (~£72–115/yr, explicitly licensed for a website and stationery),
+  which is the one this site actually needs.
+- Full comparison with reviews is in `ops/third-party-services.md` B1. The
+  honest floor for a reputable provider doing the right product is closer to
+  **£115/yr inc VAT** (1st Formations or Quality Company Formations, both
+  4.7–4.9 on Trustpilot), not the £30–60 previously assumed.
+- **Owner's decision: went with V LOT anyway**, on cost (~£10–48/yr) —
+  capital is tight right now and that's a real constraint, not a mistake.
+  Flagged clearly first: V LOT's Trustpilot reviews are poor, including
+  reports of no service after payment. **Order placed, address not yet
+  provided.** Agreed to give it a few days and see what actually arrives
+  before treating this as settled.
+- **Next session (or when the address lands):** if it works, set the real
+  address in the footer and close this item. If it doesn't turn up or mail
+  isn't confirmed working within a few days, fall back to 1st Formations or
+  Quality Company Formations and treat the V LOT cost as a small loss rather
+  than waiting longer on it.
 
 ### 2026-07-29 (roadmap 1a closed — the profile role is confirmed linked)
 - **The owner confirms the profile's Noven role now links to the real company
