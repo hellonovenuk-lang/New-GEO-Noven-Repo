@@ -9,18 +9,16 @@ Noven business page"*.
 
 ## Where this has got to
 
-**The company page is live: `https://www.linkedin.com/company/novenstudio/`.**
-`novenstudio` was the only one of the preferred slugs still available. Both
-images are uploaded, the About copy is in, and `businessLinkedIn` in
-`site/src/data/business.ts` is set to that URL — it's already live in the
-Organization's structured data on the built site.
+**Closed.** The company page is live at
+`https://www.linkedin.com/company/novenstudio/`, with both images uploaded and
+the About copy in. `businessLinkedIn` in `site/src/data/business.ts` is set to
+that URL and confirmed in the Organization's structured data on the built
+site. The profile's Noven role is confirmed re-linked to the real page — it was
+added before the page existed, so it started as loose text (see the note in
+section 0), and the owner has now retyped and picked it from the dropdown.
 
-**One thing is left, and it's on the profile, not the page: the Noven role
-almost certainly isn't linked to it.** The profile was written before the page
-existed, so typing "Noven" into the Company field then created loose text
-rather than an attached page — see the note in section 0. Now the page exists,
-go back into that role, retype "Noven", and pick it from the dropdown. That's
-the whole remainder of roadmap 1a.
+Roadmap item 1a is done. This document stays as the record of the copy and the
+reasoning, not as a list of open steps.
 
 **Why it matters more than it looks.** Noven's whole argument is that a
 business is recommended when its facts agree with each other everywhere they
@@ -43,7 +41,7 @@ a gap to fill.
 | # | Step | Why this order | State |
 |---|---|---|---|
 | 1 | Create the Noven company page (section 5) | The page must exist before the profile can link to it | Done — `linkedin.com/company/novenstudio` |
-| 2 | Add Noven as your current role on the profile (section 3) | Typing "Noven" in the company field finds the real page, attaches its logo, and makes the two pages point at each other | **Left to do** — retype and link now the page exists, see below |
+| 2 | Add Noven as your current role on the profile (section 3) | Typing "Noven" in the company field finds the real page, attaches its logo, and makes the two pages point at each other | Done — confirmed linked |
 | 3 | Replace the About section (section 2) | — | Done |
 | 4 | Fill the missing Maersk description and fix the older ones (sections 3–4) | — | Done |
 | 5 | Add `https://novenstudio.co.uk` to both | Safe now — see below | Done |

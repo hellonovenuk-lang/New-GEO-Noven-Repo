@@ -28,14 +28,13 @@ two working days to reply. The domain `novenstudio.co.uk` is confirmed and set.
 The founder bio and the cancellation terms are now written, the founder's
 photograph is committed and live on the About page, and the founder's LinkedIn
 URL is now set — so the About page links to it and the structured data claims
-the profile and the business are the same person. **The Noven company page is
-now live too** — `https://www.linkedin.com/company/novenstudio/` — and
-`businessLinkedIn` in `src/data/business.ts` points at it, so the site's
-structured data claims both LinkedIn pages as itself. What's left of 1a is one
-step only the owner can do: go back into the profile's Noven role and re-attach
-it to the now-existing page, since it was originally added before the page was
-there to link to. The address for service is deliberately deferred until we're
-closer to revenue.
+the profile and the business are the same person. **Roadmap 1a is now fully
+closed.** The Noven company page is live at
+`https://www.linkedin.com/company/novenstudio/`, `businessLinkedIn` in
+`src/data/business.ts` points at it and is confirmed in the built structured
+data, and the profile's Noven role is confirmed linked to the real page rather
+than the loose text it started as. The address for service is deliberately
+deferred until we're closer to revenue.
 
 **The site is live, on HTTPS, at `novenstudio.co.uk`.** Netlify is pointed at
 `main` and deployed — the old website is no longer what that domain serves.
@@ -108,9 +107,10 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
         `founderPhoto` in `src/data/business.ts`. It shows under "Who's behind
         it?" on the About page and joins the founder in the structured data as
         the Person's `image`.
-- [ ] **Amend the LinkedIn profile, and create the Noven business page**
+- [x] **Amend the LinkedIn profile, and create the Noven business page**
       (owner, on desktop — nobody else can sign in). `ops/linkedin.md` is the
-      working version of this item; it has no open questions left.
+      working version of this item; it has no open questions left, and 1a is
+      now fully closed.
   - [x] **The personal profile** — done by the owner. Headline, About section,
         the missing Maersk role, the Port Brief removal and the website field,
         all as written in `ops/linkedin.md` §§1–4.
@@ -119,14 +119,10 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
         only one of the preferred slugs still free. Logo and cover uploaded
         from `assets/linkedin/`, About copy in, `businessLinkedIn` set in
         `src/data/business.ts` and confirmed in the built JSON-LD's `sameAs`.
-  - [ ] **Re-link the profile's Noven role to the real page** — the one thing
-        left in 1a. The profile was written before the page existed, so typing
-        "Noven" into the Company field then created loose text rather than an
-        attached page; LinkedIn only offers the real page in the dropdown when
-        it already exists. Now it does — go back into the role, retype
-        "Noven", and pick the page from the dropdown. Confirms as linked when
-        the role shows the Noven logo and clicking the company name opens the
-        page. This is the last step before 1a is fully closed.
+  - [x] **The profile's Noven role, re-linked to the real page** — the profile
+        was written before the page existed, so it started as loose text that
+        LinkedIn had nothing to attach. Confirmed by the owner: retyped and
+        picked from the dropdown, now shows the Noven logo and opens the page.
 - [x] **Former employer named** — Maersk, confirmed by the owner. It reads in
       the bio and appears as the founder's `alumniOf` in the structured data,
       both from `founderFormerEmployer` in `src/data/business.ts`. Plain text
@@ -545,6 +541,22 @@ Written down rather than guessed at. Answer them as they become relevant.
 
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
+
+### 2026-07-29 (roadmap 1a closed — the profile role is confirmed linked)
+- **The owner confirms the profile's Noven role now links to the real company
+  page.** That was the last open step from the previous entry: the role was
+  added before the page existed, so LinkedIn had nothing to attach it to and
+  kept it as plain text. Retyping "Noven" and picking it from the dropdown
+  fixed it — the role shows the Noven logo and the company name opens the
+  page.
+- **Roadmap 1a is done.** `ops/linkedin.md` is updated to say so rather than
+  read as a list of open steps, and this file's checkboxes for the item are
+  all ticked.
+- **Merged to `main` at the owner's request**, overriding the standing "finish
+  on an unmerged branch" rule in `CLAUDE.md`. Explicit call, not a new default.
+- **Next session:** 1e's launch checks — read every page fresh, check on a
+  phone, submit the sitemap to Search Console and Bing, and ask the assistants
+  what they say about Noven.
 
 ### 2026-07-29 (the Noven company page is live)
 - **`https://www.linkedin.com/company/novenstudio/` exists.** `novenstudio` was
