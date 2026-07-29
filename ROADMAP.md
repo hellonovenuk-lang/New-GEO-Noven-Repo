@@ -180,7 +180,11 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
       applicable — the owner confirms `novenstudio.co.uk` has only ever hosted
       his own projects, not a prior unrelated business with its own external
       links to preserve. Nothing to redirect.
-- [ ] Consider a `hello@novenstudio.co.uk` address to replace the Gmail one
+- [ ] **Set up `hello@novenstudio.co.uk` to replace the Gmail one.** Decided
+      and part-built: Zoho Mail on the Mail Lite plan, domain added and
+      ownership verified. The remaining steps — mailbox, MX, SPF, DKIM, DMARC,
+      proving it works, then the one-line change in `site/src/data/business.ts`
+      — are written out in `ops/zoho-mail-setup.md`.
 
 ### 1c. Between launch and the first payment
 
@@ -538,6 +542,24 @@ Written down rather than guessed at. Answer them as they become relevant.
 
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
+
+### 2026-07-29 (domain verified — the rest of the mail setup is written down)
+- **Zoho has confirmed ownership of `novenstudio.co.uk`**, so the step the last
+  session was waiting on is done.
+- **New file: `ops/zoho-mail-setup.md`** — the remaining steps in order, with
+  the exact records: create the `hello@` mailbox, add MX (`mx.zoho.eu`,
+  `mx2`, `mx3`), SPF, DKIM and a `p=none` DMARC, prove SPF/DKIM/DMARC pass on
+  a real message, forward the Gmail address rather than closing it, then set
+  `email` in `site/src/data/business.ts`.
+- **All hostnames are `.eu`, not `.com`** — the account is on the EU data
+  centre, the same fact that ruled out the free plan.
+- **Two things that fail quietly and so are called out in the file:** a
+  leftover MX record from a previous setup keeps taking the mail, and a second
+  `v=spf1` record makes SPF a permanent error rather than just a weaker check.
+- **The site still shows the Gmail address deliberately.** `business.ts` gets
+  changed once a test message actually arrives at `hello@`, not before.
+- **Next session:** make that one-line change in `site/src/data/business.ts`
+  when the owner confirms mail is flowing, and tick the item in 1b.
 
 ### 2026-07-29 (Zoho Mail setup paused on DNS propagation)
 - **Progress on `hello@novenstudio.co.uk`:** domain added in Zoho's Admin
