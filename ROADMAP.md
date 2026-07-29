@@ -353,9 +353,28 @@ voice instead, or the first impression contradicts every page it links to.
 - [x] Verified what the build actually publishes: 6 pages plus a 404, every
       canonical URL correct, all JSON-LD parses as valid, the sitemap lists the
       right 6 URLs, robots.txt ships. No technical faults found.
-- [ ] Read every page top to bottom with fresh eyes, out loud
-- [ ] Check the site on a phone
-- [ ] Submit the sitemap to Google Search Console and Bing Webmaster Tools
+- [x] Read every page, and checked on both desktop and mobile — owner confirms
+      both look good.
+- [x] **Sitemap submitted to Google Search Console and confirmed working.**
+      Not straightforward — the property still had a stale `sitemap.xml` and
+      indexed pages (`/terms`, `/work`, `/approach`, `/privacy`, `/start`) left
+      over from whatever occupied this domain before Noven. Checked the actual
+      Netlify deploy directly to rule out anything wrong on our side: the
+      production deploy is `ready`, built from the current `main`, no redirect
+      rules, and its file list is exactly the current 7 pages — nothing stale
+      being served. `sitemap-index.xml` itself was confirmed valid by opening
+      it directly (a proper `sitemapindex` pointing at `sitemap-0.xml`), so the
+      "Couldn't fetch" Search Console showed at first was just Google's own
+      timing, not a real fault. Old `sitemap.xml` entry removed, correct one
+      resubmitted, now shows **Success, 6 pages, read same day.**
+  - **Still open, separately:** the leftover indexed pages from the old site
+    (`/terms`, `/work`, `/approach`, `/privacy`, `/start`) are still in
+    Google's index and will 404 if crawled — removing the old sitemap doesn't
+    deindex them. Use Search Console's **Removals** tool for a fast temporary
+    hide, and **URL Inspection → Request Indexing** on each for the permanent
+    fix, plus the homepage (helps the favicon catch up too, since Google
+    fetches that on its own slower schedule).
+  - Bing Webmaster Tools — not yet done.
 - [ ] Ask ChatGPT, Claude, Copilot and Perplexity what Noven does — record the
       answers, dated. This is our own before-and-after, and our first proof.
 
@@ -553,6 +572,36 @@ Written down rather than guessed at. Answer them as they become relevant.
 
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
+
+### 2026-07-29 (Search Console sorted out — sitemap live, old site's shadow found)
+- **Owner confirms the site reads well and checks out on both desktop and
+  mobile.** Ticked off in 1e.
+- **Google Search Console was still carrying the previous occupant of this
+  domain.** The "Indexed pages" report listed `/terms`, `/work`, `/approach`,
+  `/privacy`, `/start` — none of which exist on this site — and the
+  Sitemaps report had a stale `sitemap.xml` (not the `sitemap-index.xml` this
+  Astro build actually produces) still reading "Success" from before the
+  switch.
+- **Ruled out anything wrong on our end before touching Search Console.**
+  Checked the live Netlify deploy directly: production, `ready`, built from
+  current `main`, "No redirect rules processed", file list is exactly the
+  current 7 pages. Then opened `sitemap-index.xml` directly in a browser and
+  confirmed it's a valid `sitemapindex` pointing at `sitemap-0.xml`. So the
+  "Couldn't fetch" Search Console showed right after first submitting it was
+  just Google not having attempted the crawl yet, not a real fault.
+- **Fixed:** removed the old `sitemap.xml` entry, resubmitted
+  `sitemap-index.xml` alone. Now shows **Success, 6 pages, read the same
+  day.**
+- **Not fixed yet, and separate from the sitemap:** the five leftover indexed
+  URLs above are still in Google's index and will 404 once recrawled.
+  Removing a sitemap doesn't deindex anything by itself — that needs Search
+  Console's **Removals** tool (fast, temporary) and **URL Inspection →
+  Request Indexing** on each stale URL plus the homepage (permanent, and
+  also nudges Google's separate favicon cache to refresh).
+- **Next session:** run the Removals + Request Indexing pass on the five old
+  URLs and the homepage, submit the sitemap to Bing Webmaster Tools too, then
+  the one 1e item still open — ask ChatGPT, Claude, Copilot and Perplexity
+  what Noven does, and record it dated as our own before-and-after.
 
 ### 2026-07-29 (address for service — ordered with V LOT, pending)
 - **Researched UK virtual-address providers properly** rather than taking the
