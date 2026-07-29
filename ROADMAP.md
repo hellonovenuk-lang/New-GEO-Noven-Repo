@@ -162,10 +162,11 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
 
 - [x] Domain confirmed and owned — `novenstudio.co.uk`
 - [x] Domain set in `site/astro.config.mjs` and `site/public/robots.txt`
-- [ ] **Decide apex vs www.** Both files currently use the bare
-      `novenstudio.co.uk`. Whichever one Netlify treats as primary, the two
-      files must match it, or the canonical links and sitemap point at the
-      redirecting version.
+- [x] **Decide apex vs www.** Confirmed by the owner: `novenstudio.co.uk`
+      (apex) is primary, already set up from previous projects, and
+      `www.novenstudio.co.uk` redirects to it. That matches what
+      `site/astro.config.mjs` and `site/public/robots.txt` already assume, so
+      no file changes were needed — just the decision recorded.
 - [ ] **Point Netlify at this repo — note the old site is currently live on
       this domain.** Deploying replaces it. Worth loading the new site on a
       Netlify preview URL first and reading it end to end before switching.
@@ -532,7 +533,16 @@ Written down rather than guessed at. Answer them as they become relevant.
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
 
-### 2026-07-29 (latest — the LinkedIn doc has no open questions left)
+### 2026-07-29 (apex vs www decided)
+- **Apex vs www is closed.** `novenstudio.co.uk` is the primary domain, already
+  configured from previous projects, and `www.novenstudio.co.uk` redirects to
+  it. No file changes needed — `site/astro.config.mjs` and
+  `site/public/robots.txt` already assumed the apex.
+- **Next session:** the rest of 1b — point Netlify at this repo (the old site
+  is currently live on the domain), read the preview end to end, confirm
+  HTTPS, decide on redirects for any old URLs, then switch the domain over.
+
+### 2026-07-29 (the LinkedIn doc has no open questions left)
 - **The remaining four owner questions are answered and applied.** M&S and
   Tesco can be named, so the unnamed variant is dropped. He resigned from
   Maersk, so nothing on the profile needs to account for the ending. Port Brief
