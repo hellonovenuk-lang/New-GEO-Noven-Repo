@@ -532,7 +532,41 @@ Written down rather than guessed at. Answer them as they become relevant.
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
 
-### 2026-07-29 (latest — the bio says eight years, because it is eight years)
+### 2026-07-29 (latest — the LinkedIn doc has no open questions left)
+- **The remaining four owner questions are answered and applied.** M&S and
+  Tesco can be named, so the unnamed variant is dropped. He resigned from
+  Maersk, so nothing on the profile needs to account for the ending. Port Brief
+  is finished. Headline chosen outright rather than offered as options.
+- **Headline settled:** *"Founder of Noven — I help UK service businesses get
+  found when their customers ask an AI who to use. Eight years in global
+  shipping operations before this."* 154 characters. The shipping sentence
+  stays while Noven is unknown — it's the reason a stranger reads the second
+  line, and it now survives checking.
+- **"Pre-launch" was treated as "no start date", and it isn't.** A business
+  starts when the work starts, not when the site goes live. The doc says to use
+  the month work on Noven began — July 2026 at the latest, since that's the
+  repo's first commit, earlier if the domain or the decision came first. Not
+  picked here; the owner knows which month and it isn't ours to assign.
+- **The consequence was written down rather than glossed:** leaving Maersk in
+  Jun 2025 and starting Noven in Jul 2026 shows a thirteen-month gap. Said
+  plainly that it matters far less for a prospect checking you out than for a
+  hiring manager, and that it doesn't get papered over with stretched dates.
+- **Port Brief removal is a seven-place sweep, not one paragraph.** Replacing
+  the About text leaves the Featured link, any Experience entry, the contact
+  website field, a LinkedIn newsletter with its own subscriber list, and any
+  pinned post. A half-removed project is worse than a present one — it leaves a
+  live-looking promise nobody is behind. Also flagged: decide what
+  `portbrief.co.uk` itself does now, since a live site for a finished project
+  is a second source contradicting us.
+- **Nothing about Port Brief exists in this repo or on the site** — checked.
+- **Section 6 is now a closed record**, kept for the reasoning rather than as a
+  to-do. One preference is left open: whether to reformat the three older job
+  descriptions to match the new one.
+- **Next session:** unchanged — Netlify. Apex vs www, read the preview end to
+  end, then switch the domain off the old site. That unblocks every `[HOLD]`
+  in the LinkedIn doc.
+
+### 2026-07-29 (the bio says eight years, because it is eight years)
 - **"Nearly ten years" is corrected to "eight years" everywhere it appeared.**
   The owner confirms the real figure is eight years nine months, all inside the
   Maersk group. Changed in `site/src/pages/about.astro`, `ops/service-tiers.md`
