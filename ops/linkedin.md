@@ -54,8 +54,8 @@ From the three screenshots, as of 2026-07-29:
 
 | Section | Current state | Action |
 |---|---|---|
-| About | Written entirely about **Port Brief** (`portbrief.co.uk`), a project that is no longer live | Replace — section 2 |
-| Headline | [PLACEHOLDER: not visible in the screenshots — send it over] | Replace — section 3.1 |
+| About | Written entirely about **Port Brief** (`portbrief.co.uk`), a project the owner confirms is finished | Replace — section 2, then sweep 3.4 |
+| Headline | Not visible in the screenshots — whatever it says, it predates Noven | Replace with the line in section 3.1 |
 | Maersk, Global Customer Experience Consultant (Sep 2024 – Jun 2025) | **No description at all** | Write it — section 3.3 |
 | Maersk, Senior Customer Experience Consultant (Sep 2023 – Aug 2024) | Has a description, reads fine | Light tidy — section 4.1 |
 | Sealand, Senior Customer Service Agent (Oct 2018 – Feb 2024) | Description shows broken `?` characters where bullets should be | Fix — section 4.2 |
@@ -70,29 +70,33 @@ Tuesday. If that project is finished, the profile is currently making a
 standing promise nobody is keeping, to anyone who reads it. It should come down
 whether or not the Noven copy is ready.
 
-### The "ten years" discrepancy — decide this before publishing anything
+### The "ten years" discrepancy — settled, and the site is now fixed
 
-The current About says **"I spent 10 years inside the shipping and logistics
-industry."** The site's About page says **"nearly ten years in operations at
-Maersk."**
+The old About said **"I spent 10 years inside the shipping and logistics
+industry."** The site's About page said **"nearly ten years in operations at
+Maersk."** Neither survived checking.
 
-The experience on the profile runs **Jan 2017 → Jun 2025 — eight years and
-five months**, all of it inside the Maersk group (Seago Line and Sealand are
-both Maersk companies, so "at Maersk" holds up; the duration doesn't).
+**The owner confirms the real figure is eight years and nine months.** The
+answer everywhere is **"eight years"**, and that is already applied:
 
-This is the most checkable claim either page makes, and anyone can check it in
-four seconds by scrolling down. Two options:
+| Where | Now reads |
+|---|---|
+| `site/src/pages/about.astro` | "Kieran spent eight years in operations at Maersk" |
+| `ops/service-tiers.md` §7 | "Eight years of operations at Maersk" |
+| This doc's About copy (section 2) | "For eight years I worked in shipping operations" |
+| Headline option B (section 3.1) | "Eight years in global shipping operations" |
 
-- **If there is earlier shipping work not on the profile** — add it to the
-  profile, and ten years becomes true and verifiable in the same place it's
-  claimed.
-- **If there isn't** — say **"eight years"** in both places. The copy in
-  section 2 says eight years for this reason. `site/src/pages/about.astro`
-  needs the same change; I haven't made it, because I don't know which case
-  we're in. This is question 1 in section 6.
+**Why "eight" and not "nearly nine", which is also true.** The dates visible on
+the profile run Jan 2017 → Jun 2025, which reads as eight years and five months
+to anyone doing the arithmetic. "Nearly nine" invites a check it doesn't quite
+pass; "eight years" is true against both the owner's figure and the profile's
+own dates. Round down when the reader can count.
 
-Eight years is not a weaker claim than ten. Eight years that survive checking
-is a much stronger claim than ten that don't.
+**Minor loose end, no copy impact:** those visible dates give 8y5m, not 8y9m.
+If the 8y9m figure is right, a start or end date on the profile is out by a few
+months — worth a glance while you're in there, but it changes nothing above.
+
+Eight years that survive checking is a stronger claim than ten that don't.
 
 ---
 
@@ -160,29 +164,40 @@ kept. Only the subject changes.
 - **The refusal to guarantee is a selling point, not a disclaimer.** It's the
   same position the site takes, and it's the sentence that separates us from
   everyone in this category promising rankings.
-- **It doesn't mention Port Brief.** If you'd rather keep a line about it, put
-  it in its own Experience entry with an end date, so it reads as finished work
-  rather than a live promise. Your call — question 6.
+- **It doesn't mention Port Brief.** Confirmed finished by the owner, and no
+  reference to it stays anywhere. See the sweep in section 3.4 — it is almost
+  certainly in more than one place on the profile.
 
 ---
 
 ## 3. Profile changes, in order
 
-### 3.1 Headline (220 characters)
+### 3.1 Headline (220 characters) — use this one
+
+The headline is the line directly under your name. It follows you everywhere on
+LinkedIn — every comment, every search result, every connection request — so it
+does more work than the About section most people never scroll to.
+
+**Use this:**
+
+> Founder of Noven — I help UK service businesses get found when their
+> customers ask an AI who to use. Eight years in global shipping operations
+> before this.
+
+154 characters, inside the 220 limit.
+
+**Why this one.** The shipping line is doing real work, not decoration. You are
+a one-person business nobody has heard of, selling something most prospects
+haven't bought before — the eight years is the reason a stranger reads the next
+sentence instead of closing the tab. It also survives the check, now that the
+number is right.
+
+If you want it shorter, cut the second sentence, not the first. But the version
+with it is stronger while Noven is unknown, which is the whole of the next year.
 
 The site rules ban buzzwords and stacked keyword tags, and LinkedIn headlines
-are where those go to breed. Plain sentence, primary option:
-
-> I help UK service businesses get found when their customers ask an AI who to
-> use. Founder of Noven.
-
-If you'd rather keep the shipping credibility visible in the headline itself,
-since it's what makes people take the rest seriously:
-
-> Founder of Noven — helping UK service businesses get found when customers ask
-> an AI who to use. Eight years in global shipping operations before this.
-
-Use the second only if section 1's "eight years" question resolves that way.
+are where those breed — no `Founder | Consultant | Speaker |` chains, no
+"passionate about". One sentence saying what you do for whom.
 
 ### 3.2 Add Noven as your current position
 
@@ -195,10 +210,33 @@ real page and its logo rather than creating a loose text entry.
 | Title | Founder |
 | Employment type | Self-employed |
 | Company | Noven *(pick the page from the dropdown — don't free-type it)* |
-| Start date | `[PLACEHOLDER: when did Noven start? See question 3]` |
+| Start date | The month you started working on Noven — see below |
 | Currently in this role | Yes |
 | Location | Wirral, England, United Kingdom |
 | Location type | Remote |
+
+**"Pre-launch" isn't the same as "no start date."** You said there isn't a real
+start date yet because Noven hasn't launched. But a business starts when you
+start doing the work, not when the website goes live — every founder's start
+date predates their launch, and nobody reads it as a launch announcement. So
+use **the month you began working on Noven**: deciding to do it, buying
+`novenstudio.co.uk`, starting to build. The repo's first commit is 25 July
+2026, so July 2026 is the latest it could honestly be; if the domain or the
+decision came earlier, use that month instead. You know which — I don't, and
+it isn't mine to pick.
+
+**One consequence worth seeing before you set it.** You left Maersk in June
+2025. If Noven starts July 2026, the profile shows a thirteen-month gap. Three
+things to say about that:
+
+- **It matters much less than you'd think here.** A gap is a hiring signal. You
+  aren't job hunting — you're being looked up by a prospect who wants to know
+  if you're real and if you know anything. Nothing about a gap answers no to
+  either.
+- **Don't paper over it.** No stretched dates, no invented consultancy. The one
+  asset this business has is that everything on it survives checking.
+- **If Noven genuinely started earlier than July 2026, use that date** and most
+  of the gap closes honestly on its own.
 
 Description:
 
@@ -240,28 +278,31 @@ any assistant reading the page. Written from what you gave me:
 > • Ensuring every import requirement was met at the other end, so containers
 > cleared and ran into the customers' distribution centres without being held.
 >
-> • Managing the administrative staff supporting both accounts —
-> `[PLACEHOLDER: how many people? See question 2]` — setting how the work was
-> done day to day and taking the intricate cases myself.
+> • Owning the process an administrative team of around six worked to across
+> both accounts. Where something needed changing or raising, I set out what the
+> change was and made sure it was carried through, escalating missed steps to
+> their line manager.
 >
 > • Reporting directly to the customers on a regular basis, so they heard about
 > an exception from me before they found it themselves.
 
-**Two things to decide before you paste it.**
+**A note on the team bullet, because the wording is deliberate.** You told me
+you didn't line-manage them — around six admin staff sat under your purview,
+you owned the process they worked to, and escalation for missed steps went to
+their own manager. So the bullet says that, and doesn't say "managed a team of
+six." It would be an easy word to reach for and it would be untrue, on a
+profile whose whole argument is that you keep information accurate. Process
+authority over a team you don't line-manage is a real and senior thing to have
+had; it doesn't need upgrading to sound like one.
 
-**First, the client names.** You named M&S and Tesco to me, so I've used them —
-they're the single most persuasive detail in your entire work history, and
-"two major retailers" is a fraction as strong. But check whether your Maersk
-contract or NDA restricts naming accounts. If it does, or if you'd rather not,
-swap the first line for:
+**The client names are confirmed** — the owner has cleared naming M&S and
+Tesco, so the copy above stands as written. Keep them. They are the single most
+persuasive detail in your entire work history: "two major retailers" is a
+fraction as strong, and specific, checkable names are exactly the kind of fact
+this business claims to care about.
 
-> Global operational lead for two of the UK's largest grocery and general
-> merchandise retailers, owning their worldwide cargo end to end.
-
-and change "both accounts" to "the accounts" in the fourth bullet. That's
-question 4.
-
-**Second, the format.** Your older entries open with "Key responsibilities
+**One thing left to decide: the format.** Your older entries open with "Key
+responsibilities
 include;" and then bullet. This one doesn't — it opens with what the job *was*,
 then evidences it. That's the stronger read, and it's what I'd keep. If you'd
 rather all four entries matched, the fix is to bring the older ones up to this
@@ -271,6 +312,41 @@ format rather than take this one down to theirs.
 2023 entry is written in the present tense ("Acting as…", "Managing…") for a
 role that also ended — worth changing when you're in there. Same for both older
 entries, which say "my role **is** to act as".
+
+---
+
+### 3.4 Remove Port Brief — everywhere, not just the About section
+
+Confirmed finished. Replacing the About section deletes the most visible
+mention, but LinkedIn scatters things, and a half-removed project is worse than
+a fully present one: it leaves a live-looking promise with nobody behind it.
+
+**Check all seven of these before you close the tab:**
+
+1. **About** — handled by section 2's replacement copy.
+2. **Headline** — replaced in 3.1. Check the old one didn't name it.
+3. **Featured** — the most likely leftover. A pinned link or newsletter card
+   sits there quietly and survives every other edit. Unpin it.
+4. **Experience** — if Port Brief has its own entry, delete it. Since it's
+   finished with nothing to show, an end-dated entry isn't worth the questions
+   it invites.
+5. **Contact info → Website** — if it points at `portbrief.co.uk`, clear it.
+   This is the one that actively misroutes people.
+6. **The LinkedIn newsletter, if you created one.** These don't disappear with
+   the About text; they keep their own page and their own subscriber list, and
+   subscribers keep expecting Tuesdays. If one exists, delete it properly
+   rather than abandoning it.
+7. **Recent posts and any pinned post** — a pin promoting a dead subscription
+   is the same problem as the About paragraph.
+
+**And outside LinkedIn:** if `portbrief.co.uk` still resolves, decide what it
+does now. A live site for a finished project is a second thing contradicting
+you, which is precisely the fault the audit is paid to find on other people's
+businesses. Either redirect it to Noven once the site is deployed, or take it
+down. Either is fine; leaving it running unattended isn't.
+
+There is nothing about Port Brief anywhere in this repo or on the Noven site —
+already checked.
 
 ---
 
@@ -470,26 +546,24 @@ post needs a number you don't have, it isn't ready.
 
 ---
 
-## 6. Questions — I need these to finish the copy
+## 6. Questions — all answered, 2026-07-29
 
-1. **Is there shipping work before Jan 2017 that isn't on the profile?**
-   Decides "ten years" vs "eight years" — and this needs changing on the site's
-   About page too, not just LinkedIn.
-2. **How many administrative staff did you manage on the M&S/Tesco accounts?**
-   "Managing a team of four" is concrete; "managing administrative staff" is
-   air. A number goes straight into the description.
-3. **When did Noven start?** Needed for the current-role start date, and it
-   decides how the Jun 2025 → now period reads.
-4. **Any restriction on naming M&S and Tesco publicly?** Check the contract or
-   your exit paperwork. The unnamed variant is written and ready either way.
-5. **Why did the Maersk role end in Jun 2025 — redundancy, resignation,
-   restructure?** Not for the profile, but it changes whether the gap wants a
-   sentence anywhere or is better left alone.
-6. **Is Port Brief finished, or paused?** If it's finished, the About copy
-   above is right as it stands. If you want it visible, it becomes its own
-   Experience entry with an end date rather than living in About.
-7. **Your current headline** — it wasn't in the screenshots. Send it and I'll
-   tell you whether the replacement is actually an improvement.
+Every one is applied above. Nothing here is waiting on you; the list is kept
+so the reasoning behind the copy is on the record.
+
+| Question | Answer | Where it landed |
+|---|---|---|
+| How long in shipping? | Eight years nine months | "Eight years" everywhere; site and `service-tiers.md` corrected — §1 |
+| How many staff managed? | Around six, **not** line-managed | Bullet rewritten as process authority — §3.3 |
+| When did Noven start? | Pre-launch, no launch date | Use the month work began, not launch — §3.2 |
+| Can M&S and Tesco be named? | Yes | Names kept; unnamed variant dropped — §3.3 |
+| Why did Maersk end? | Resigned | Nothing needed on the profile; the gap is addressed in §3.2 |
+| Is Port Brief finished? | Yes — no reference anywhere | Seven-place removal sweep — §3.4 |
+| Current headline? | — | Replacement written and chosen outright — §3.1 |
+
+**One decision left, and it's a preference not a fact:** whether to reformat
+the three older job descriptions to match the new one's style, or leave them.
+Section 3.3 explains the trade-off. Nothing blocks you either way.
 
 **One date question that isn't mine to answer.** The profile shows Sealand
 running **Oct 2018 – Feb 2024** while the Maersk role starts **Sep 2023** — a
