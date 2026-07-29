@@ -30,7 +30,7 @@ settled and the recommendations build on them rather than replacing them.
 |---|---|---|---|
 | Business bank account | Mettle (NatWest) | Free | Before first payment |
 | Address for service | Hoxton Mix or similar virtual office | ~£30–60/yr | Before visibly trading |
-| Email on the domain | Zoho Mail | Free, or ~$12/yr | Any time — cheap win |
+| Email on the domain | Zoho Mail (Mail Lite) | ~£12/yr | Any time — cheap win |
 | Data protection registration | ICO, direct | £52/yr (£47 by Direct Debit) | Before holding client data |
 | Privacy notice | ICO's own free generator | Free | Before first client data |
 | Professional indemnity insurance | Compare via Simply Business / Markel | ~£8–25/mo | Before first delivery |
@@ -54,8 +54,16 @@ until there's revenue to judge it against.
 **Pick:** Zoho Mail, on `novenstudio.co.uk`.
 
 **Cost:** The Forever Free plan covers up to 5 users on one custom domain with
-5 GB each. Mail Lite is about $1 per user per month on annual billing (roughly
-$12/yr) and adds IMAP/POP so it works in a normal mail client.
+5 GB each — **but Zoho no longer offers it to new sign-ups on the EU, US or AU
+data centres**, found when actually setting this up rather than assumed from
+the pricing page. An account created on `zoho.eu` (as ours was) goes straight
+to a paid plan or a 15-day trial, with no free option shown. **Mail Lite is
+the real number to use: about £1 per user per month on annual billing
+(~£12/yr, 10 GB), which also adds IMAP/POP so it works in a normal mail
+client** — a plan we'd already earmarked as the fallback, now the only
+option in practice. Under Zoho's setup wizard, this is "Mail Only → Mail
+Lite", not "Workplace" (that tier bundles shared team drive storage nobody
+here needs).
 
 **Why:** The roadmap already flags this ("an address on the Noven domain reads as
 more established"). It matters more for us than for most businesses — we sell
@@ -564,8 +572,10 @@ Worth writing down so they don't get re-proposed:
 ## What to actually do, in order
 
 1. **Bitwarden** — free, ten minutes, and everything below creates a credential.
-2. **Zoho Mail on the domain** — free or $12/yr, and do it in the same sitting
-   as the Netlify DNS work in roadmap 1b.
+2. **Zoho Mail on the domain (Mail Lite, ~£12/yr)** — the free plan isn't
+   offered to new sign-ups on the EU/US/AU data centres, found while actually
+   setting this up. Do it in the same sitting as the Netlify DNS work in
+   roadmap 1b.
 3. **Virtual office address** — ~£30–60/yr, and it should land *before* the
    domain switches over, not after.
 4. **Cloudflare Web Analytics** — free, one script tag.
@@ -579,8 +589,10 @@ Worth writing down so they don't get re-proposed:
 9. **Build the audit question set and the recording format** — no cost, and it's
    the actual product.
 
-Items 1–4 total roughly **£40–75 for the year** and can all be done in an
-afternoon. Items 5–9 are gated on real events rather than dates.
+Items 1–4 total roughly **£50–85 for the year** (revised up ~£12 now that
+Zoho Mail needs its paid Mail Lite tier rather than the free plan) and can
+all be done in an afternoon. Items 5–9 are gated on real events rather than
+dates.
 
 ---
 

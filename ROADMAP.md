@@ -34,9 +34,12 @@ create a Noven business page (1a). The copy for both is written and waiting in
 `ops/linkedin.md` — it needs someone signed in, not another session. The
 address for service is deliberately deferred until we're closer to revenue.
 
-**Biggest remaining blocker:** the site isn't deployed, so nobody can read it.
-The domain currently serves the old website, so switching it over is the next
-real step — and the thing that makes Noven exist publicly.
+**The site is live, on HTTPS, at `novenstudio.co.uk`.** Netlify is pointed at
+`main` and deployed — the old website is no longer what that domain serves.
+Noven now exists publicly. What's left before Phase 1 is fully closed: decide
+on redirects for any old URLs, and the 1e launch checks (read it end to end,
+check on a phone, submit the sitemap, ask the assistants what they say about
+Noven).
 
 **How the remaining work is sequenced.** Nothing on the site takes a payment,
 so the site can go public before the money and legal plumbing exists. Section
@@ -162,17 +165,21 @@ matters until these exist. Search the repo for `[PLACEHOLDER` to find them all.
 
 - [x] Domain confirmed and owned — `novenstudio.co.uk`
 - [x] Domain set in `site/astro.config.mjs` and `site/public/robots.txt`
-- [ ] **Decide apex vs www.** Both files currently use the bare
-      `novenstudio.co.uk`. Whichever one Netlify treats as primary, the two
-      files must match it, or the canonical links and sitemap point at the
-      redirecting version.
-- [ ] **Point Netlify at this repo — note the old site is currently live on
-      this domain.** Deploying replaces it. Worth loading the new site on a
-      Netlify preview URL first and reading it end to end before switching.
-- [ ] Confirm HTTPS works after the switch
-- [ ] Decide whether to keep any URLs from the old site alive, and redirect
-      them in `netlify.toml` if so — otherwise anything linking to the old
-      site starts hitting a 404
+- [x] **Decide apex vs www.** Confirmed by the owner: `novenstudio.co.uk`
+      (apex) is primary, already set up from previous projects, and
+      `www.novenstudio.co.uk` redirects to it. That matches what
+      `site/astro.config.mjs` and `site/public/robots.txt` already assume, so
+      no file changes were needed — just the decision recorded.
+- [x] **Point Netlify at this repo.** Done — Netlify deploys `main` to
+      `novenstudio.co.uk` directly, and the site is live. The old website no
+      longer serves from the domain.
+- [x] **Confirm HTTPS works after the switch.** Checked via Netlify's own
+      API rather than assumed: the project's primary URL is
+      `https://novenstudio.co.uk` and the current deploy is `ready`.
+- [x] **Decide whether to keep any URLs from the old site alive.** Not
+      applicable — the owner confirms `novenstudio.co.uk` has only ever hosted
+      his own projects, not a prior unrelated business with its own external
+      links to preserve. Nothing to redirect.
 - [ ] Consider a `hello@novenstudio.co.uk` address to replace the Gmail one
 
 ### 1c. Between launch and the first payment
@@ -532,7 +539,75 @@ Written down rather than guessed at. Answer them as they become relevant.
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
 
-### 2026-07-29 (latest — the LinkedIn doc has no open questions left)
+### 2026-07-29 (Zoho Mail setup paused on DNS propagation)
+- **Progress on `hello@novenstudio.co.uk`:** domain added in Zoho's Admin
+  Console, Mail Lite plan bought (see below for why not the free plan), and
+  the domain-verification TXT record has been added to `novenstudio.co.uk`'s
+  DNS. Stopped there deliberately — Zoho's own verification can take up to a
+  day to propagate, so there's nothing left to do until it clears.
+- **Next session:** once the TXT verifies — add the MX, SPF and DKIM records
+  Zoho then shows, create the `hello@novenstudio.co.uk` mailbox under Users,
+  then update `founderEmail`/contact email in `site/src/data/business.ts` and
+  tick this off in 1a.
+
+### 2026-07-29 (Zoho Mail's free plan turned out not to be reachable)
+- **Correction found while actually setting up `hello@novenstudio.co.uk`:**
+  Zoho no longer offers its Forever Free plan to new sign-ups on the EU, US
+  or AU data centres. The owner's account landed on `zoho.eu` and the setup
+  wizard only offered paid plans — no free option shown at all.
+- **No real decision changed.** `ops/third-party-services.md` had already
+  named Mail Lite (~£12/yr) as the fallback if free wasn't usable, so that's
+  simply now the number to use rather than a new cost appearing from nowhere.
+  It also brings IMAP/POP, which the free plan lacks — actually the better
+  outcome for using it in a normal mail app. Pick "Mail Only → Mail Lite" in
+  Zoho's plan screen, not "Workplace" (that tier bundles shared team drive
+  storage nobody here needs).
+- Updated `ops/third-party-services.md`'s cost figures and the pre-revenue
+  total (£40–75 → £50–85/yr) to match.
+- **Next session:** finish the Zoho Mail DNS setup (domain verification, MX,
+  SPF, DKIM), create the `hello@novenstudio.co.uk` mailbox, then update
+  `founderEmail`/contact email in `site/src/data/business.ts` and this
+  roadmap once it's live.
+
+### 2026-07-29 (the site is live)
+- **Noven is public.** The owner pointed the Netlify deploy for
+  `novenstudio.co.uk` at `main` and it deployed correctly — the old website no
+  longer serves from the domain. This is the "biggest remaining blocker" line
+  that's been at the top of this file since it was written; it's gone now.
+- **HTTPS confirmed via Netlify's own API, not just eyeballed:** the project's
+  `primarySiteUrl` reads `https://novenstudio.co.uk` and the current deploy
+  state is `ready`. (This session's sandbox can't reach the public internet
+  directly — outbound requests to arbitrary hosts are proxy-blocked — so the
+  Netlify MCP connection was the way to check rather than curling the site.)
+- **Found while checking:** the Netlify team also has three older/unused
+  projects — `noven-2-0-preview`, `noven-preview`, `novenwirral` — all on
+  `.netlify.app` addresses, not the custom domain.
+- **No old URLs to redirect.** `novenstudio.co.uk` has only ever served the
+  owner's own projects (confirmed by the owner), not a prior unrelated
+  business with its own external links, so there's nothing for `netlify.toml`
+  to redirect.
+- **The three old Netlify projects can't be deleted from a session** — the
+  connected Netlify MCP tools only support updating visitor access, forms,
+  project name, and env vars, plus creating new projects; there's no
+  delete-project operation. Deleting `noven-2-0-preview`, `noven-preview` and
+  `novenwirral` is owner work in the Netlify dashboard (Site settings →
+  General → Danger zone), keeping `kaleidoscopic-cuchufli-ff7b1a` (the one
+  serving the live domain).
+- **Next session:** consider a `hello@novenstudio.co.uk` address, then 1e's
+  launch checks: read every page fresh, check on a phone, submit the sitemap
+  to Search Console/Bing, and ask the assistants what they say about Noven —
+  our own first before-and-after.
+
+### 2026-07-29 (apex vs www decided)
+- **Apex vs www is closed.** `novenstudio.co.uk` is the primary domain, already
+  configured from previous projects, and `www.novenstudio.co.uk` redirects to
+  it. No file changes needed — `site/astro.config.mjs` and
+  `site/public/robots.txt` already assumed the apex.
+- **Next session:** the rest of 1b — point Netlify at this repo (the old site
+  is currently live on the domain), read the preview end to end, confirm
+  HTTPS, decide on redirects for any old URLs, then switch the domain over.
+
+### 2026-07-29 (the LinkedIn doc has no open questions left)
 - **The remaining four owner questions are answered and applied.** M&S and
   Tesco can be named, so the unnamed variant is dropped. He resigned from
   Maersk, so nothing on the profile needs to account for the ending. Port Brief
