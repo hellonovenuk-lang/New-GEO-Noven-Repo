@@ -52,21 +52,34 @@ records (SPF, DKIM, DMARC) do go in Host Records.
   `zmail._domainkey.novenstudio.co.uk.novenstudio.co.uk`, which resolves to
   nothing and looks like a Zoho problem.
 - **Don't add quotation marks** around TXT values. Namecheap adds them.
-- **Leave TTL on Automatic**, and leave the existing A/ALIAS/CNAME records
-  alone — those are what point the domain at Netlify. The only records being
-  removed here are MX.
+- **Leave TTL on Automatic**, and leave the four existing Host Records alone:
+  the `@` A record to `75.2.60.5` and the `www` CNAME are Netlify serving the
+  site, and the two verification TXTs are Google's and Zoho's. Nothing here
+  gets deleted; the records being replaced are all under Mail Settings.
 
 Values below are as typed into Namecheap.
 
 ### MX — in the MAIL SETTINGS section
 
-Set the **MAIL SETTINGS** dropdown to **Custom MX**. That both reveals the MX
-rows and switches off Namecheap's own mail handling — if it currently reads
-"Email Forwarding" or "Private Email", any records you add will be ignored
-while mail keeps going to Namecheap. Then **delete every MX row already
-there**, including any `mx1.privateemail.com` / `mx2.privateemail.com` left
-over from a Private Email trial. Mail follows the lowest priority number that
-answers, so one stale row silently takes everything.
+**The dropdown starts on "Email Forwarding"**, and in that mode Namecheap is
+running mail for the domain itself: it shows a single padlocked TXT row,
+`v=spf1 include:spf.efwd.registrar-servers.com ~all`, which can't be edited or
+added to. That is the expected state, not a permissions problem — there are no
+MX rows in that mode, which is why nothing can be added.
+
+Set the dropdown to **Custom MX**. The locked row disappears and editable MX
+rows take its place. Two consequences worth knowing:
+
+- **Any Namecheap email forwarding stops.** Check the **Domain** tab →
+  *Redirect Email* first and note anything set up there; Zoho takes over the
+  job, but a forward you forgot about would just stop arriving.
+- **Losing that locked SPF is the point.** It is a competing `v=spf1` record,
+  and two of those is a hard failure rather than a weaker check.
+
+Then **delete every MX row already there**, including any
+`mx1.privateemail.com` / `mx2.privateemail.com` left over from a Private Email
+trial. Mail follows the lowest priority number that answers, so one stale row
+silently takes everything.
 
 Add three rows:
 
