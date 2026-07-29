@@ -557,6 +557,9 @@ what's next. Newest at the top.
   `sameAs` — the business claiming a page as its own, which is a different
   statement from the founder claiming a profile. When the page exists, setting
   that one value is the whole job.
+- **Merged to `main` at the owner's request**, overriding the standing "finish
+  on an unmerged branch" rule in `CLAUDE.md` for the third time. Explicit call
+  each time, not a new default.
 - **Next session:** Netlify — apex vs www, read the preview end to end, then
   switch the domain off the old site. Zoho Mail's DNS records are worth doing
   in that same sitting.
