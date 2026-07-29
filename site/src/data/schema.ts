@@ -21,6 +21,8 @@ export function organizationSchema(site: URL | undefined) {
     logo: at('/logo.svg'),
     email: business.email,
     description: business.description,
+    // Same rule as the founder's: only stated once the page exists.
+    ...(business.businessLinkedIn ? { sameAs: [business.businessLinkedIn] } : {}),
     founder: {
       '@type': 'Person',
       name: business.founder,
