@@ -539,6 +539,25 @@ Written down rather than guessed at. Answer them as they become relevant.
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
 
+### 2026-07-29 (Zoho Mail's free plan turned out not to be reachable)
+- **Correction found while actually setting up `hello@novenstudio.co.uk`:**
+  Zoho no longer offers its Forever Free plan to new sign-ups on the EU, US
+  or AU data centres. The owner's account landed on `zoho.eu` and the setup
+  wizard only offered paid plans — no free option shown at all.
+- **No real decision changed.** `ops/third-party-services.md` had already
+  named Mail Lite (~£12/yr) as the fallback if free wasn't usable, so that's
+  simply now the number to use rather than a new cost appearing from nowhere.
+  It also brings IMAP/POP, which the free plan lacks — actually the better
+  outcome for using it in a normal mail app. Pick "Mail Only → Mail Lite" in
+  Zoho's plan screen, not "Workplace" (that tier bundles shared team drive
+  storage nobody here needs).
+- Updated `ops/third-party-services.md`'s cost figures and the pre-revenue
+  total (£40–75 → £50–85/yr) to match.
+- **Next session:** finish the Zoho Mail DNS setup (domain verification, MX,
+  SPF, DKIM), create the `hello@novenstudio.co.uk` mailbox, then update
+  `founderEmail`/contact email in `site/src/data/business.ts` and this
+  roadmap once it's live.
+
 ### 2026-07-29 (the site is live)
 - **Noven is public.** The owner pointed the Netlify deploy for
   `novenstudio.co.uk` at `main` and it deployed correctly — the old website no
