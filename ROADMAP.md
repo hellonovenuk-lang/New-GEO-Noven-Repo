@@ -556,6 +556,11 @@ what's next. Newest at the top.
 - **Two things that fail quietly and so are called out in the file:** a
   leftover MX record from a previous setup keeps taking the mail, and a second
   `v=spf1` record makes SPF a permanent error rather than just a weaker check.
+- **DNS is at Namecheap**, and the steps are now written against its actual
+  screens: MX rows live in a separate MAIL SETTINGS section that only appears
+  once the dropdown is set to Custom MX, hosts are relative (`@`, not the full
+  address), and a 2048-bit DKIM key exceeds Namecheap's 255-character limit —
+  regenerate at 1024-bit rather than splitting it across rows.
 - **The site still shows the Gmail address deliberately.** `business.ts` gets
   changed once a test message actually arrives at `hello@`, not before.
 - **Next session:** make that one-line change in `site/src/data/business.ts`
