@@ -361,7 +361,16 @@ them.** That is lucky, and it is a reason not to disturb the structure.
 - **Run count.** Five runs per question is what the variance research implies is
   the minimum honest number (see `ops/third-party-services.md`, section E3). It
   may need to be higher for confidence, or lower for time. Validate on the first
-  audit.
+  audit. **The experiment is now specified** in `ops/audit-method.md` section 8:
+  during the Noven self-audit, take three questions to ten runs instead of five
+  and see whether the reported band moves. If it holds, five is validated and
+  this item closes. If it moves, five is too few — and that changes the cost and
+  the time budget of every monthly plan, not just the audit.
+- **Reporting five runs as a band, not a percentage** (decided 2026-07-30,
+  `ops/audit-method.md` section 4). It applies to the monthly record as much as
+  to the audit, and it is what stops a client reading noise as a decline in
+  month three. The published copy in section 4 above says "five times each" and
+  is unaffected.
 - **Whether Lead's fortnightly checking is worth the doubling of effort**, or
   whether the quarterly competitive review alone carries the tier. Fortnightly
   doubles our query volume and our time for a benefit the client may not feel.

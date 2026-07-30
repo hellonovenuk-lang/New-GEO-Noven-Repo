@@ -21,8 +21,8 @@ get pointed at our clients.
 | Path | What it is |
 |---|---|
 | `site/` | The Noven marketing website (Astro, fully static) |
-| `ops/` | Internal operating docs: org chart, shared data model, escalation rules |
-| `ROADMAP.md` | What's done and what's left — updated at the end of every session |
+| `ops/` | Internal operating docs: how the audit is delivered, what each service level is, which suppliers we use, and the session log |
+| `ROADMAP.md` | What's true now and what's left — read at the start of every session |
 | `CLAUDE.md` | Standing rules for all future work in this repo |
 
 To work on the website:
