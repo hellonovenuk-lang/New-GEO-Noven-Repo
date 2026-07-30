@@ -38,7 +38,7 @@ settled and the recommendations build on them rather than replacing them.
 | Assistant answer checking | Do it ourselves via the APIs | Under £2 per audit | Now — it's the product |
 | Client tracking | Zoho Bigin free tier | Free (1 user) | At client 2 or 3 |
 | Password manager | Bitwarden | Free | Now |
-| Payment collection — £30 audit | Revolut Pro payment link, on the site | ~50p–£1.04 per sale | Blocked on terms + privacy + address |
+| Payment collection — £30 audit | Own order page → Revolut Pro payment link | ~50p–£1.04 per sale | Blocked on terms + privacy + address |
 | Payment collection — £350 and monthly | Invoice + bank transfer | Free | Revisit monthly at client 5 |
 
 **Total committed spend before the first client pays: about £0–5 a month**, and
@@ -343,15 +343,28 @@ running two payment providers for 40p a sale.** Revisit if volume ever makes
 the difference real — same "don't build for this yet" logic as the monthly
 plans below.
 
-**The payment link does the details capture too, which is the part that makes
-this work.** Revolut's payment links support custom fields that appear as a
-page *before* the payment page. So one link collects what we need to scope the
-audit — website, what they sell, the questions their customers ask — and takes
-the £30, in one step, with no form to build and no backend. The site stays
-static. **Verify this in the app before designing around it:** the custom-field
-documentation is written against Revolut Business, and Pro is the retail-app
-product. If Pro's links turn out not to carry custom fields, the fallback is a
-form on the site that hands off to a plain payment link.
+**The details get collected on our own page, not on Revolut's.** Revolut's
+payment links do support custom fields that show as a page before the payment
+page, and the first version of this plan used them — no page to build, no
+backend. **Changed on 30 July 2026**, because those fields surface against a
+*successful payment*: anyone who fills them in and then abandons at the card
+screen is invisible to us. Our own form submits before the handoff, so an
+abandoned checkout still leaves a lead. We also get validation we control (a
+required, checked website field), and we keep our own brand in front of the
+customer until the last step instead of dropping them onto a bare third-party
+form immediately before asking for £30.
+
+So the flow is: **our order page collects and validates → hands off to a
+Revolut Pro payment link for the money only.** The site stays static — the
+form can go to Netlify Forms, whose free tier covers 100 submissions a month,
+far more than we need. Revolut's own custom fields drop to belt-and-braces;
+worth carrying the email address across so payments can be matched to
+submissions, which is a manual, by-eye job at our volume and should stay one.
+
+**Still verify Pro's link behaviour in the app before building against it** —
+the payment-link documentation is written against Revolut Business, and Pro is
+the retail-app product. This matters less now that the fields aren't load
+bearing, but the link itself still has to exist.
 
 **A cost note worth confirming:** payment processing fees may carry VAT, and as
 a non-VAT-registered business we cannot reclaim it — so the real cost may be

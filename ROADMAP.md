@@ -248,16 +248,54 @@ committing.
 
 #### Before money changes hands
 
-- [x] **How the £30 audit gets paid — on the website, upfront, via a Revolut
-      Pro payment link.** Owner's decision, and the right one: at £30 an
-      email-invoice-wait-pay loop costs more in admin than the card fee saves.
-      The link carries custom fields that appear *before* the payment page, so
-      the customer gives us what we need to scope the audit and pays in one
-      step. Card fee is roughly 50p on a personal card, up to about £1.04 on a
-      commercial one — worth paying to remove a round trip and take the money
-      upfront. Full reasoning in `ops/third-party-services.md` C2.
+- [x] **How the £30 audit gets paid — on the website, upfront.** Owner's
+      decision, and the right one: at £30 an email-invoice-wait-pay loop costs
+      more in admin than the card fee saves. Card fee is roughly 50p on a
+      personal card, up to about £1.04 on a commercial one — worth paying to
+      remove a round trip and take the money upfront. Full reasoning in
+      `ops/third-party-services.md` C2.
+      **The mechanism: our own order page, which hands off to a Revolut Pro
+      payment link for the money only.** An earlier version of this plan used
+      Revolut's own custom fields to collect the details, which needs no page
+      built. Rejected, for four reasons — the first being the one that decided
+      it:
+      - **An abandoned checkout on Revolut's page leaves us nothing.** Field
+        values surface against a *successful* payment, so someone who fills
+        them in and bails at the card screen is invisible to us. Our own form
+        submits first, so a bail still leaves a lead we can follow up. At this
+        stage that is worth more than the saved step.
+      - **Validation.** We can require the website field and validate it. We
+        have no reason to think Revolut's fields do either.
+      - **Credibility at the worst possible moment.** Handing a stranger to a
+        bare third-party form immediately before asking for £30 spends trust
+        exactly where it is most expensive. `CLAUDE.md` puts credibility above
+        flair; this is that rule applied to a checkout.
+      - **Room for the copy that has to be there** — what happens next, when
+        the report lands, and the refund position. Revolut gives us field
+        labels and nothing else.
+      **The four fields are already written**, on `site/src/pages/contact.astro`:
+      business name, website address, services they most want to be found for,
+      and the area they serve. The order page collects those, not a new list.
+      **Two copy consequences, both to handle when the page is built:**
+      - `contact.astro` currently sells "**No forms**, no call-booking
+        software, no follow-up sequence" as a virtue, and it is one — it says
+        we are not a marketing funnel. Adding an order form is in tension with
+        that line and the fix is not to quietly delete it. An order form is not
+        lead capture: email stays the way to *ask us something*, and the form
+        exists only to buy the thing. Worth writing that distinction out
+        properly rather than hoping nobody notices.
+      - **The promise gets better, and should be updated to say so.** Contact
+        currently offers a reply "within two working days to confirm scope and
+        payment", then the report "within one working day of that" — up to
+        three days. With scope and payment arriving together, it becomes the
+        report within one working day of ordering. That is a materially
+        stronger promise and it is now an honest one.
+      **Matching payment to submission is manual, and that's fine.** The form
+      lands in one place and the payment in another, so they get matched by
+      email, by eye. At a handful a month that is a minute's work. Don't build
+      an integration for it.
       **This one is blocked — see "What taking payment on the site changes"
-      below.** The button cannot go live before the terms, the privacy notice
+      below.** The page cannot go live before the terms, the privacy notice
       and the address for service do.
 - [x] **How the £350 Foundation gets paid — invoice, with the contract sent at
       the same time, once both sides agree to start.** Also right, and for the
@@ -300,13 +338,38 @@ hard prerequisites. **None of these is optional once the button is live:**
   dependency:** the pay button is blocked behind the V LOT address landing, or
   the fallback provider if it doesn't — see 1a.
 
-**The refund position needs writing, not assuming.** We take £30 before seeing
-whether the job is doable — someone may pay with no website, or a business we
-can't meaningfully audit. Vetting before taking money would mean a review step,
-which defeats the point of paying on the site. So accept the occasional refund
-instead: state plainly that if we can't do it, the money comes back in full.
-It's £30, it will be rare, and saying it up front is also what makes paying a
-stranger upfront feel safe.
+**The refund position needs writing, not assuming — and a required website
+field narrows it without removing it.** The order page should require the
+website address and validate it, which kills the "paid with no website at all"
+case outright. That is worth doing. But it validates *shape, not existence*: a
+typo, a dead domain, a parked domain or a Facebook page all pass a URL check.
+Actually confirming a site resolves would need a serverless function, and even
+a 200 response wouldn't prove the business is auditable — so it isn't worth
+building.
+
+What survives the validation, and is what the refund line is actually for:
+
+- A valid-looking URL that is dead, parked, or a typo
+- A social profile where we needed a website
+- A business outside the area we serve
+- A duplicate or accidental payment — paid twice, or on the wrong card
+- Someone who changes their mind between paying and us starting
+- A business we look at and genuinely can't do useful work for
+
+**Two reasons the line earns its place regardless of how good the validation
+gets:**
+
+- **Chargebacks are worse than refunds.** With no stated position, an unhappy
+  customer goes to their card issuer instead of to us. That costs a fee and
+  counts against the merchant account. A refund we control is the cheaper end
+  of the same event.
+- **It sells.** The FAQ already answers "why should I trust a company with no
+  case studies?" A plain refund line does that same job at the exact moment it
+  matters most — a stranger deciding whether to send £30 to a business with no
+  trading history. It's a conversion line, not just legal cover.
+
+So: require the website, and still say plainly that if we can't do it, the
+money comes back in full.
 
 **Cancellation rights are probably not an issue, but say so in the terms.** The
 Consumer Contracts Regulations 2013 give a 14-day cancellation right on
@@ -653,6 +716,47 @@ Written down rather than guessed at. Answer them as they become relevant.
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
 
+### 2026-07-30 (the audit gets its own order page — Revolut's fields aren't enough)
+- **Owner pushed back on two things from the entry below, and was right on
+  both.** Recorded here rather than quietly amended, because the first version
+  was published in the same session.
+- **"Why not require a valid website URL so we never take money from someone
+  without one?"** Yes — do that, and the order page should. It kills the
+  no-website case outright. But it validates *shape, not existence*: typos,
+  dead domains, parked domains and Facebook pages all pass a URL check.
+  Verifying a site resolves would need a serverless function, and even a 200
+  wouldn't prove the business is auditable, so it isn't worth building.
+  **The refund line survives, narrowed** — for dead or typo'd URLs, duplicate
+  and accidental payments, people who change their mind before we start, and
+  businesses we look at and can't help. Plus two reasons independent of
+  validation: an unhappy customer with no stated position goes to their card
+  issuer instead of us, and a chargeback costs more than a refund we control;
+  and the line does real selling work, the same job the FAQ's "why trust a
+  company with no case studies?" already does.
+- **"Don't we need a contact-style page anyway?"** Yes, and it's the better
+  mechanism — this replaces the Revolut-custom-fields plan from the entry
+  below. **The deciding reason: Revolut's field values surface against a
+  successful payment**, so anyone who fills them in and bails at the card
+  screen is invisible to us. Our own form submits first, so an abandoned
+  checkout still leaves a lead worth following up. On top of that we control
+  validation, we control the copy at the moment of payment, and we don't hand
+  a stranger to a bare third-party form right before asking for £30 — which
+  `CLAUDE.md`'s credibility-over-flair rule argues against on its own.
+- **Found while checking: the four fields are already written.** `contact.astro`
+  asks for business name, website, services to be found for, and area served.
+  The order page collects those rather than inventing a new list.
+- **Two copy consequences, both flagged in 1c rather than fixed now.**
+  `contact.astro` currently sells "no forms, no call-booking software, no
+  follow-up sequence" as a virtue — which it is, so the fix is to draw the
+  distinction properly (email to *ask*, the form only to *buy*) rather than
+  delete the line. And the promise actually improves: scope and payment now
+  arrive together, so "two working days to confirm, then one for the report"
+  collapses to the report within one working day of ordering.
+- **Next:** unchanged — the page is still blocked behind the terms, the privacy
+  notice and the address for service. Building it is a real design job under
+  the `frontend-design` and `ui-ux-pro-max` rules, not a form bolted onto a
+  page.
+
 ### 2026-07-30 (how each product gets paid for — decided, and it splits by price)
 - **Owner's proposal, and it's the right one:** the £30 audit gets paid on the
   website upfront, the £350 Foundation goes out as an invoice with the contract
@@ -666,12 +770,14 @@ what's next. Newest at the top.
   of chasing it after. `ops/third-party-services.md` C2 rewritten around this;
   it previously said invoice everything, which was right about the Foundation
   and wrong about the audit.
-- **Revolut Pro's payment link does the details capture too**, which is what
+- ~~**Revolut Pro's payment link does the details capture too**, which is what
   makes the one-step version work — its links carry custom fields that show as
   a page *before* the payment page. One link scopes the audit and takes the
-  £30, no form to build, no backend, site stays static. **Not yet verified in
-  the app:** that documentation is written against Revolut Business, and Pro is
-  the retail-app product. Check before designing around it.
+  £30, no form to build, no backend, site stays static.~~ **Superseded later
+  the same day — see the entry above.** Those field values only surface against
+  a successful payment, so an abandoned checkout would leave us nothing. The
+  details get collected on our own order page instead, and the payment link
+  takes the money only.
 - **Fees, checked today:** 1.0% + £0.20 on domestic personal cards, 2.8% +
   £0.20 on commercial and international ones. Since we sell to businesses, the
   commercial rate is the likely one more often than it first appears — about
