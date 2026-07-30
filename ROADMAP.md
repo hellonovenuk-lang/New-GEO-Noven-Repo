@@ -205,6 +205,13 @@ asks people to email — so publishing commits us to nothing we cannot honour.
 Everything in this section has to be true before the first person actually
 *pays* us, which is a different and later moment.
 
+**That changes once the audit's pay button ships.** Still true as written today,
+and it is why launching was safe — but the £30 audit is now decided as paid on
+the site, which ends the "nothing takes a payment" position on purpose. What
+that pulls forward is set out in "What taking payment on the site changes"
+below. Read the two together; this paragraph is the record of why launch was
+safe, not a description of where we're heading.
+
 This is the one place the phase definitions don't line up: "Phase 1 is done
 when a stranger can read the site, understand the offer, email us, and pay us
 £30." The site can go live before that is true. This section is the rest of it.
@@ -241,13 +248,75 @@ committing.
 
 #### Before money changes hands
 
-- [ ] How the £30 audit gets paid — bank transfer, a payment link, or an invoice
-- [ ] How the £350 Foundation gets paid
+- [x] **How the £30 audit gets paid — on the website, upfront, via a Revolut
+      Pro payment link.** Owner's decision, and the right one: at £30 an
+      email-invoice-wait-pay loop costs more in admin than the card fee saves.
+      The link carries custom fields that appear *before* the payment page, so
+      the customer gives us what we need to scope the audit and pays in one
+      step. Card fee is roughly 50p on a personal card, up to about £1.04 on a
+      commercial one — worth paying to remove a round trip and take the money
+      upfront. Full reasoning in `ops/third-party-services.md` C2.
+      **This one is blocked — see "What taking payment on the site changes"
+      below.** The button cannot go live before the terms, the privacy notice
+      and the address for service do.
+- [x] **How the £350 Foundation gets paid — invoice, with the contract sent at
+      the same time, once both sides agree to start.** Also right, and for the
+      opposite reason: at £350 the card fee is real money (roughly £5–10),
+      there is already a conversation happening so friction isn't the problem,
+      and bank transfer into the Revolut Pro account is free.
+      **Decide what starts the clock.** The pricing page promises we come back
+      "within two working days of you booking it". With a contract and an
+      invoice going out together, "booking" is ambiguous. It should mean
+      *payment received*, not signature — otherwise a two-day clock can be
+      started by someone who has signed and not paid. Small copy fix on
+      `site/src/pages/pricing.astro` when the terms are written.
 - [ ] How monthly plans get collected (this matters most — manual collection
       stops being viable somewhere around client five). Note the cancellation
       terms in 1a were written to read the same whichever way this goes, so
-      this decision doesn't reopen the copy.
-- [ ] A simple invoice or receipt we can send
+      this decision doesn't reopen the copy. Unchanged by the two decisions
+      above — the client-five trigger still stands.
+- [ ] A simple invoice or receipt we can send. Partly answered: Revolut Pro
+      issues both, and Zoho Books is already paid for. Confirm which one we
+      actually send before the first payment rather than deciding it live.
+
+#### What taking payment on the site changes
+
+**This is a deliberate break from the launch logic above.** That logic was:
+nothing on the site takes a payment, every page asks people to email, so
+publishing commits us to nothing we cannot honour. A pay button ends that.
+It is the right call for a £30 product, but it moves four deferred items into
+hard prerequisites. **None of these is optional once the button is live:**
+
+- **Terms of service, including the refund position.** Currently listed below
+  with no deadline. Taking money upfront, before any work is done, makes this
+  a prerequisite rather than a tidy-up. It also needs to say plainly what
+  happens when we can't do the job — see the refund note below.
+- **Privacy notice.** Currently scheduled for "before the first client sends
+  us anything". A checkout form collects personal information at the moment of
+  purchase, so it moves forward to the same deadline as the button.
+- **ICO registration.** Same reasoning, same move forward.
+- **Address for service.** Currently "before we are visibly trading". Taking
+  payment on the site *is* visibly trading, unambiguously. **This is the real
+  dependency:** the pay button is blocked behind the V LOT address landing, or
+  the fallback provider if it doesn't — see 1a.
+
+**The refund position needs writing, not assuming.** We take £30 before seeing
+whether the job is doable — someone may pay with no website, or a business we
+can't meaningfully audit. Vetting before taking money would mean a review step,
+which defeats the point of paying on the site. So accept the occasional refund
+instead: state plainly that if we can't do it, the money comes back in full.
+It's £30, it will be rare, and saying it up front is also what makes paying a
+stranger upfront feel safe.
+
+**Cancellation rights are probably not an issue, but say so in the terms.** The
+Consumer Contracts Regulations 2013 give a 14-day cancellation right on
+distance sales, but generally only to consumers — people acting wholly or
+mainly outside their trade — and not to business-to-business contracts, which
+is what we sell. Worth a line in the terms rather than a refund regime, and
+worth confirming with the terms rather than taken from here.
+
+**One design constraint.** `CLAUDE.md` bans repeated calls-to-action. The pay
+button goes in one deliberate place, not on every page.
 
 #### Before we hold a client's information
 
@@ -583,6 +652,55 @@ Written down rather than guessed at. Answer them as they become relevant.
 
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
+
+### 2026-07-30 (how each product gets paid for — decided, and it splits by price)
+- **Owner's proposal, and it's the right one:** the £30 audit gets paid on the
+  website upfront, the £350 Foundation goes out as an invoice with the contract
+  alongside once both sides agree to start. Checked it rather than just
+  agreeing, and the reasoning holds in both directions.
+- **The audit is the exception to "invoice everything", and £30 is exactly why.**
+  The standing argument against cards is that fees are a real slice — true at
+  £350, inverted at £30. An invoice loop for a £30 sale is several touches and
+  a delay of days on a product that promises a report in one working day.
+  About 50p buys all of that away and takes the money before the work instead
+  of chasing it after. `ops/third-party-services.md` C2 rewritten around this;
+  it previously said invoice everything, which was right about the Foundation
+  and wrong about the audit.
+- **Revolut Pro's payment link does the details capture too**, which is what
+  makes the one-step version work — its links carry custom fields that show as
+  a page *before* the payment page. One link scopes the audit and takes the
+  £30, no form to build, no backend, site stays static. **Not yet verified in
+  the app:** that documentation is written against Revolut Business, and Pro is
+  the retail-app product. Check before designing around it.
+- **Fees, checked today:** 1.0% + £0.20 on domestic personal cards, 2.8% +
+  £0.20 on commercial and international ones. Since we sell to businesses, the
+  commercial rate is the likely one more often than it first appears — about
+  £1.04 on £30. Stripe would be 1.5% + £0.20, better on commercial cards and
+  worse on personal, but the gap on £30 is under 40p and isn't worth running a
+  second provider and a second reconciliation for.
+- **The thing worth flagging loudest: a pay button ends the launch logic, on
+  purpose.** Phase 1c rested on "nothing on the site takes a payment, so
+  publishing commits us to nothing we cannot honour". Taking £30 on the site
+  moves four deferred items into hard prerequisites — terms of service with a
+  refund position, the privacy notice, ICO registration, and the address for
+  service. **The address is the real blocker**, since taking payment is
+  unambiguously "visibly trading", and that's still waiting on V LOT. So the
+  button is behind the address, not ahead of it. Written up in 1c under "What
+  taking payment on the site changes".
+- **Two loose ends the decision creates**, both now recorded: we take £30 before
+  knowing the job is doable, so the terms need a plain refund line rather than
+  a vetting step (it's £30 — accept the rare refund, and saying so up front is
+  what makes paying a stranger feel safe); and "booking" on the pricing page
+  needs to mean payment received, not signature, now that a contract and an
+  invoice go out together.
+- **Checked and probably fine:** the Consumer Contracts Regulations' 14-day
+  cancellation right applies to consumers, not business-to-business contracts,
+  which is what we sell. A line in the terms, not a refund regime — and worth
+  confirming when the terms get written rather than trusted from here.
+- **Next:** the monthly plans are untouched and still deferred to client five.
+  The audit button can't be built until the terms, privacy notice and address
+  exist, so those are the unblocking work — and the address is the one with an
+  external dependency, so it stays the long pole.
 
 ### 2026-07-30 (business bank account decided — Revolut Pro, not the researched pick)
 - **Owner set up Revolut Pro** rather than Mettle or Starling, the pair

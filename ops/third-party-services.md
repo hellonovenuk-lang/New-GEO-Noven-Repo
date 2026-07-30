@@ -38,12 +38,15 @@ settled and the recommendations build on them rather than replacing them.
 | Assistant answer checking | Do it ourselves via the APIs | Under £2 per audit | Now — it's the product |
 | Client tracking | Zoho Bigin free tier | Free (1 user) | At client 2 or 3 |
 | Password manager | Bitwarden | Free | Now |
-| Payment collection | Stay on Zoho Books invoicing | Free | Revisit at client 5 |
+| Payment collection — £30 audit | Revolut Pro payment link, on the site | ~50p–£1.04 per sale | Blocked on terms + privacy + address |
+| Payment collection — £350 and monthly | Invoice + bank transfer | Free | Revisit monthly at client 5 |
 
 **Total committed spend before the first client pays: about £0–5 a month**, and
 most of that is the service address, which is an annual bill. That fits the
 near-zero brief. Everything with a real monthly cost is deliberately deferred
-until there's revenue to judge it against.
+until there's revenue to judge it against. The audit's card fee doesn't change
+that figure — it's charged per successful sale, so it only ever comes out of
+money that has already arrived.
 
 ---
 
@@ -297,20 +300,77 @@ and a single £30 transfer for services rendered is business use. (Revolut Pro
 sidesteps this question entirely, since it's a separate account from the
 personal one, not a personal account being used for business.)
 
-### C2. Getting paid — stay where you are, for now
+### C2. Getting paid — split by price, decided 30 July 2026
 
-**Pick:** **Zoho Books invoicing plus bank transfer**, exactly as you've decided.
-Nothing new to buy.
+**This section previously said "invoice everything by bank transfer, revisit at
+client five".** That was right about the Foundation and the monthly plans and
+wrong about the audit. Corrected below; the original reasoning is kept at the
+end because it still holds everywhere except the £30.
 
-**Cost:** Zoho Books is already paid for. Bank transfers are free.
+**Pick, per product:**
 
-**Why this is the right call and not just the lazy one:** at £30, £350 and
-£75–250/month, card fees are a real slice. A card processor typically takes
-around 1.5–2.9% plus a fixed fee per transaction — on a £30 audit that fixed fee
-alone is a meaningful percentage. Bank transfer costs nothing and settles same
-day. The cancellation terms in roadmap 1a were deliberately written to read the
-same whichever way payment collection goes, so nothing on the site needs to
-change when this decision is eventually revisited.
+| What | How it gets paid | Fee on that amount |
+|---|---|---|
+| £30 audit | Revolut Pro payment link, on the website, upfront | ~50p personal card, ~£1.04 commercial |
+| £350 Foundation | Invoice, contract sent alongside, on agreement | £0 (bank transfer) |
+| £75–250/month | Unchanged — manual invoice, revisit at client five | £0 (bank transfer) |
+
+**Why the audit is the exception.** The general argument against cards is that
+fees are a real slice — and at £350 and up, they are. At £30 the arithmetic
+inverts, because the cost being saved is smaller than the cost being added.
+An invoice loop for a £30 sale means: they email, we scope it, we raise the
+invoice, we wait, we check whether it's been paid, we chase if not, then we
+start. That is several touches and a delay of days on a product whose whole
+promise is a report within one working day. Roughly 50p buys all of that away
+and takes the money before the work rather than after it. The chase risk goes
+to zero, which at £30 is worth more than the fee.
+
+**Fees, checked 30 July 2026 — confirm before relying on them.** Revolut Pro
+charges nothing to create or send payment links and invoices, and takes a cut
+only on successful payments: **1.0% + £0.20** on domestic personal Visa or
+Mastercard and on Revolut Pay, 1.5% + £0.20 on domestic personal Amex, and
+**2.8% + £0.20 on international and commercial cards**. On £30 that is 50p at
+best and about £1.04 at worst. Note the worst case is the likely one more often
+than it looks — we sell to businesses, and a business paying on a company card
+is a commercial card.
+
+**Why Revolut Pro's link and not Stripe.** Stripe is 1.5% + £0.20 on domestic
+UK cards, which beats Revolut's commercial-card rate and loses to its personal
+rate. On £30 the gap either way is under 40p. Against that, Revolut Pro is
+already set up (C1), the money lands in the account we already bank in, and
+there is no second provider to onboard or reconcile against. **Not worth
+running two payment providers for 40p a sale.** Revisit if volume ever makes
+the difference real — same "don't build for this yet" logic as the monthly
+plans below.
+
+**The payment link does the details capture too, which is the part that makes
+this work.** Revolut's payment links support custom fields that appear as a
+page *before* the payment page. So one link collects what we need to scope the
+audit — website, what they sell, the questions their customers ask — and takes
+the £30, in one step, with no form to build and no backend. The site stays
+static. **Verify this in the app before designing around it:** the custom-field
+documentation is written against Revolut Business, and Pro is the retail-app
+product. If Pro's links turn out not to carry custom fields, the fallback is a
+form on the site that hands off to a plain payment link.
+
+**A cost note worth confirming:** payment processing fees may carry VAT, and as
+a non-VAT-registered business we cannot reclaim it — so the real cost may be
+20% above the headline. Immaterial at these amounts, but don't be surprised by
+it on the statement.
+
+**Why the Foundation stays on invoice.** At £350 a card fee is roughly £5–10,
+which is real money, and none of the friction argument applies — by the time
+someone buys a Foundation there is already a conversation running, so an
+invoice costs nothing in momentum. Contract and invoice go out together on
+agreement. **Decide what starts the delivery clock:** the pricing page promises
+a response "within two working days of you booking it", and with both documents
+going out at once, "booking" needs to mean payment received rather than
+signature.
+
+**Still true, and unchanged:** the cancellation terms in roadmap 1a were
+deliberately written to read the same whichever way payment collection goes, so
+none of this reopens the site copy. The monthly plans are untouched by this
+decision — manual invoicing, revisited at client five, for the reasons below.
 
 **The honest limitation, and the trigger to revisit.** Manual invoicing and
 chasing stops being viable somewhere around **client five** on monthly plans —
@@ -322,16 +382,16 @@ is:
 - **GoCardless (or Direct Debit via Zoho Books' own integrations)** for the
   monthly plans. Direct Debit is dramatically cheaper than cards on recurring
   payments and has materially better retention, because there's no card to
-  expire. The trade-off is setup time and the need for a bank account first,
-  which is why it can't be the day-one answer.
-- **Stripe payment links** for the one-off £30 audit and £350 Foundation, if
-  friction on the first sale ever looks like it's costing conversions. A payment
-  link in the first email is a lower-friction yes than "here are my bank
-  details". Worth testing only once outreach is producing enough conversations to
-  tell the difference.
+  expire. The trade-off is setup time — it used to also need a bank account we
+  didn't have, but C1 has now settled that, so setup time is the only thing
+  left standing between us and this when the trigger comes.
+- ~~Payment links for the one-off £30 audit and £350 Foundation~~ — **decided,
+  30 July 2026**, and no longer waiting on a conversion signal. The audit takes
+  a Revolut Pro payment link on the website; the Foundation stays on invoice.
+  See the top of this section.
 
-**Don't build for this yet.** It's a real decision with a real trigger, and the
-trigger hasn't happened.
+**Don't build for the monthly plans yet.** It's a real decision with a real
+trigger, and the trigger hasn't happened.
 
 ### C3. Registering with HMRC — nothing to buy
 
