@@ -28,7 +28,7 @@ settled and the recommendations build on them rather than replacing them.
 
 | What | Pick | Cost | When |
 |---|---|---|---|
-| Business bank account | Mettle (NatWest) | Free | Before first payment |
+| Business bank account | Revolut Pro (set up) | Free | Before first payment |
 | Address for service | V LOT (ordered, pending) — fallback: 1st Formations/QCF | ~£10–48/yr (V LOT) or ~£115/yr inc VAT (fallback) | Before visibly trading |
 | Email on the domain | Zoho Mail (Mail Lite) | £14.40/yr inc VAT | Any time — cheap win |
 | Data protection registration | ICO, direct | £52/yr (£47 by Direct Debit) | Before holding client data |
@@ -38,12 +38,15 @@ settled and the recommendations build on them rather than replacing them.
 | Assistant answer checking | Do it ourselves via the APIs | Under £2 per audit | Now — it's the product |
 | Client tracking | Zoho Bigin free tier | Free (1 user) | At client 2 or 3 |
 | Password manager | Bitwarden | Free | Now |
-| Payment collection | Stay on Zoho Books invoicing | Free | Revisit at client 5 |
+| Payment collection — £30 audit | Own order page → Revolut Pro payment link | ~50p–£1.04 per sale | Blocked on terms + privacy + address |
+| Payment collection — £350 and monthly | Invoice + bank transfer | Free | Revisit monthly at client 5 |
 
 **Total committed spend before the first client pays: about £0–5 a month**, and
 most of that is the service address, which is an annual bill. That fits the
 near-zero brief. Everything with a real monthly cost is deliberately deferred
-until there's revenue to judge it against.
+until there's revenue to judge it against. The audit's card fee doesn't change
+that figure — it's charged per successful sale, so it only ever comes out of
+money that has already arrived.
 
 ---
 
@@ -232,13 +235,48 @@ consultancy or as web development. The two attract different premiums.
 
 ## C. Before the first payment
 
-### C1. Business bank account — Mettle
+### C1. Business bank account — Revolut Pro (decided and set up)
 
-**Pick:** **Mettle**, NatWest's digital business account. **Starling** is the
-strongest alternative and the better choice if you'd rather bank with a fully
-licensed bank you might also want a card or lending from later.
+**Original research (28 July 2026) pointed at Mettle or Starling** — both
+free digital business accounts, aimed squarely at sole traders, with free
+transfers and FSCS protection. That reasoning is kept below for the record.
 
-**Cost:** Both free — no monthly fee, no per-transfer charge at our volume.
+**Decision actually made (30 July 2026): Revolut Pro.** Not the account
+researched, and worth writing down why it still holds up rather than reading
+as a shortcut:
+
+- **It's the product Revolut itself builds for this exact situation.**
+  Revolut Pro sits inside an existing Revolut personal account rather than
+  being a separate application — it's free to open and hold, gets its own
+  sort code, account number and transaction history, and is explicitly
+  aimed at freelancers, sole traders and other solo professionals. Registered
+  companies aren't eligible for it, which confirms it's the sole-trader
+  product, not a business account in a trench coat. It covers invoices,
+  payment links, QR codes and Tap to Pay, so bank transfer, the C2 pick
+  below, is a native option rather than a workaround.
+- **FSCS protection now applies.** Revolut became a bank in the UK in March
+  2026, so balances are FSCS-protected up to £120,000 — the same protection
+  Starling was chosen for over Tide. **One caveat carried forward:** for a
+  sole trader, personal and Pro balances are treated as one legal entity for
+  this purpose, so the £120,000 cap is shared across both, not doubled. At
+  £30–£350 per transaction and no meaningful balance sitting in either
+  account, this isn't a practical risk — just don't assume it's two full
+  limits if that ever changes.
+- **Already banking here saved real time.** Skipping a new application with
+  a bank we don't already have a relationship with was a legitimate reason
+  to prefer this over opening at Mettle or Starling from scratch, on top of
+  Revolut Pro fitting the job on its own merits.
+
+**Not yet confirmed — check before relying on it:** the Zoho Books bank-feed
+integration Revolut publishes documentation for is written against **Revolut
+Business**, not Revolut Pro specifically. Pro has its own account number, so
+Open Banking aggregators should still be able to find it when connecting
+Zoho Books, but this hasn't actually been tried yet. Confirm the bank feed
+connects before assuming reconciliation will be automatic — if it doesn't,
+transactions can still be entered manually at our volume.
+
+**Superseded reasoning, kept for context — why Mettle or Starling were the
+original pick:**
 
 **Why Mettle:** free, aimed squarely at sole traders, no monthly fee, free
 transfers and direct debits, and it includes basic invoicing and payment chasing.
@@ -252,34 +290,100 @@ later — a card, a loan, a savings pot — Starling is the safer long-term home
 **One to avoid for us specifically: Tide's free tier charges 20p per bank
 transfer and is e-money rather than FSCS-protected.** At £30 and £75 payments,
 20p a transfer is noise — but the lack of FSCS protection is a real difference
-for money that isn't ours to lose, and there's no reason to accept it when
-Mettle and Starling are free and protected.
+for money that isn't ours to lose.
 
 **Timing matters most here.** Digital providers can open an account in about a
 day; a high street bank can take weeks. The roadmap correctly identifies this as
 the long pole in 1c. It's also worth checking whether your existing personal
 account's terms permit business use in the meantime — most banks' terms don't,
-and a single £30 transfer for services rendered is business use.
+and a single £30 transfer for services rendered is business use. (Revolut Pro
+sidesteps this question entirely, since it's a separate account from the
+personal one, not a personal account being used for business.)
 
-**Zoho Books connection:** once the account exists, connect the bank feed to Zoho
-Books so payments reconcile against invoices automatically. That's the whole
-reason to have both, and it's a five-minute setup that saves an hour a month
-later.
+### C2. Getting paid — split by price, decided 30 July 2026
 
-### C2. Getting paid — stay where you are, for now
+**This section previously said "invoice everything by bank transfer, revisit at
+client five".** That was right about the Foundation and the monthly plans and
+wrong about the audit. Corrected below; the original reasoning is kept at the
+end because it still holds everywhere except the £30.
 
-**Pick:** **Zoho Books invoicing plus bank transfer**, exactly as you've decided.
-Nothing new to buy.
+**Pick, per product:**
 
-**Cost:** Zoho Books is already paid for. Bank transfers are free.
+| What | How it gets paid | Fee on that amount |
+|---|---|---|
+| £30 audit | Revolut Pro payment link, on the website, upfront | ~50p personal card, ~£1.04 commercial |
+| £350 Foundation | Invoice, contract sent alongside, on agreement | £0 (bank transfer) |
+| £75–250/month | Unchanged — manual invoice, revisit at client five | £0 (bank transfer) |
 
-**Why this is the right call and not just the lazy one:** at £30, £350 and
-£75–250/month, card fees are a real slice. A card processor typically takes
-around 1.5–2.9% plus a fixed fee per transaction — on a £30 audit that fixed fee
-alone is a meaningful percentage. Bank transfer costs nothing and settles same
-day. The cancellation terms in roadmap 1a were deliberately written to read the
-same whichever way payment collection goes, so nothing on the site needs to
-change when this decision is eventually revisited.
+**Why the audit is the exception.** The general argument against cards is that
+fees are a real slice — and at £350 and up, they are. At £30 the arithmetic
+inverts, because the cost being saved is smaller than the cost being added.
+An invoice loop for a £30 sale means: they email, we scope it, we raise the
+invoice, we wait, we check whether it's been paid, we chase if not, then we
+start. That is several touches and a delay of days on a product whose whole
+promise is a report within one working day. Roughly 50p buys all of that away
+and takes the money before the work rather than after it. The chase risk goes
+to zero, which at £30 is worth more than the fee.
+
+**Fees, checked 30 July 2026 — confirm before relying on them.** Revolut Pro
+charges nothing to create or send payment links and invoices, and takes a cut
+only on successful payments: **1.0% + £0.20** on domestic personal Visa or
+Mastercard and on Revolut Pay, 1.5% + £0.20 on domestic personal Amex, and
+**2.8% + £0.20 on international and commercial cards**. On £30 that is 50p at
+best and about £1.04 at worst. Note the worst case is the likely one more often
+than it looks — we sell to businesses, and a business paying on a company card
+is a commercial card.
+
+**Why Revolut Pro's link and not Stripe.** Stripe is 1.5% + £0.20 on domestic
+UK cards, which beats Revolut's commercial-card rate and loses to its personal
+rate. On £30 the gap either way is under 40p. Against that, Revolut Pro is
+already set up (C1), the money lands in the account we already bank in, and
+there is no second provider to onboard or reconcile against. **Not worth
+running two payment providers for 40p a sale.** Revisit if volume ever makes
+the difference real — same "don't build for this yet" logic as the monthly
+plans below.
+
+**The details get collected on our own page, not on Revolut's.** Revolut's
+payment links do support custom fields that show as a page before the payment
+page, and the first version of this plan used them — no page to build, no
+backend. **Changed on 30 July 2026**, because those fields surface against a
+*successful payment*: anyone who fills them in and then abandons at the card
+screen is invisible to us. Our own form submits before the handoff, so an
+abandoned checkout still leaves a lead. We also get validation we control (a
+required, checked website field), and we keep our own brand in front of the
+customer until the last step instead of dropping them onto a bare third-party
+form immediately before asking for £30.
+
+So the flow is: **our order page collects and validates → hands off to a
+Revolut Pro payment link for the money only.** The site stays static — the
+form can go to Netlify Forms, whose free tier covers 100 submissions a month,
+far more than we need. Revolut's own custom fields drop to belt-and-braces;
+worth carrying the email address across so payments can be matched to
+submissions, which is a manual, by-eye job at our volume and should stay one.
+
+**Still verify Pro's link behaviour in the app before building against it** —
+the payment-link documentation is written against Revolut Business, and Pro is
+the retail-app product. This matters less now that the fields aren't load
+bearing, but the link itself still has to exist.
+
+**A cost note worth confirming:** payment processing fees may carry VAT, and as
+a non-VAT-registered business we cannot reclaim it — so the real cost may be
+20% above the headline. Immaterial at these amounts, but don't be surprised by
+it on the statement.
+
+**Why the Foundation stays on invoice.** At £350 a card fee is roughly £5–10,
+which is real money, and none of the friction argument applies — by the time
+someone buys a Foundation there is already a conversation running, so an
+invoice costs nothing in momentum. Contract and invoice go out together on
+agreement. **Decide what starts the delivery clock:** the pricing page promises
+a response "within two working days of you booking it", and with both documents
+going out at once, "booking" needs to mean payment received rather than
+signature.
+
+**Still true, and unchanged:** the cancellation terms in roadmap 1a were
+deliberately written to read the same whichever way payment collection goes, so
+none of this reopens the site copy. The monthly plans are untouched by this
+decision — manual invoicing, revisited at client five, for the reasons below.
 
 **The honest limitation, and the trigger to revisit.** Manual invoicing and
 chasing stops being viable somewhere around **client five** on monthly plans —
@@ -291,16 +395,16 @@ is:
 - **GoCardless (or Direct Debit via Zoho Books' own integrations)** for the
   monthly plans. Direct Debit is dramatically cheaper than cards on recurring
   payments and has materially better retention, because there's no card to
-  expire. The trade-off is setup time and the need for a bank account first,
-  which is why it can't be the day-one answer.
-- **Stripe payment links** for the one-off £30 audit and £350 Foundation, if
-  friction on the first sale ever looks like it's costing conversions. A payment
-  link in the first email is a lower-friction yes than "here are my bank
-  details". Worth testing only once outreach is producing enough conversations to
-  tell the difference.
+  expire. The trade-off is setup time — it used to also need a bank account we
+  didn't have, but C1 has now settled that, so setup time is the only thing
+  left standing between us and this when the trigger comes.
+- ~~Payment links for the one-off £30 audit and £350 Foundation~~ — **decided,
+  30 July 2026**, and no longer waiting on a conversion signal. The audit takes
+  a Revolut Pro payment link on the website; the Foundation stays on invoice.
+  See the top of this section.
 
-**Don't build for this yet.** It's a real decision with a real trigger, and the
-trigger hasn't happened.
+**Don't build for the monthly plans yet.** It's a real decision with a real
+trigger, and the trigger hasn't happened.
 
 ### C3. Registering with HMRC — nothing to buy
 
@@ -611,7 +715,7 @@ Worth writing down so they don't get re-proposed:
    doesn't. Should land *before* the domain switches over, not after — see
    B1.
 4. **Cloudflare Web Analytics** — free, one script tag.
-5. **Mettle or Starling** — free, but start it early; it's the long pole.
+5. ~~Business bank account~~ — **done**, Revolut Pro, see C1.
 6. **ICO self-assessment, then the fee if due** — £47–52/yr. Currently missing
    from the roadmap entirely.
 7. **Insurance quotes from two providers** — before the first Foundation, not
