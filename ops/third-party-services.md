@@ -544,19 +544,25 @@ only means anything if the model actually searches:
 
 - **Google (Gemini)** — grounding with Google Search gives **5,000 free
   grounded prompts a month** on the Gemini 3.x family, then about $14 per 1,000.
-  Flash-tier models remain on the free tier.
+  Flash-tier models remain on the free tier. **One request can trigger several
+  billable search queries**, so budget 1.5–2× the query count, not 1×.
 - **OpenAI** — the small models are cheap per token (GPT-5 Mini at roughly
   $0.25 per million input tokens and $2 per million output); the web search tool
-  is charged separately. **[PLACEHOLDER: confirm OpenAI's current per-call web
-  search tool fee before relying on a number.]**
+  is charged separately, at **$10 per 1,000 calls — one penny a query**
+  (confirmed 2026-07-30). Note that on OpenAI, unlike Google, **the retrieved
+  search content is billed as input tokens on top of the per-call fee.**
 - **Perplexity** — the Sonar model is about $1 per million tokens both ways,
-  plus a **per-request search fee on every call**. Confirm that fee's current
-  rate; it dominates the token cost at our volume.
+  plus a **per-request search fee on every call** of roughly **$5–14 per 1,000
+  depending on mode** (secondary sources, 2026-07-30; the official pricing page
+  was unreachable, so **confirm against Perplexity's own documentation before
+  relying on it**). It dominates the token cost at our volume.
 - **Anthropic (Claude)** — Haiku 4.5 is $1 per million input and $5 per million
   output; Sonnet 5 is $3/$15 (with an introductory $2/$10 running to 31 August
-  2026). The web search tool is charged separately — **[PLACEHOLDER: confirm the
-  current per-search rate.]** The Batch API halves token costs for work that
-  isn't time-sensitive, which describes every audit we will ever run.
+  2026). The web search tool is charged separately, at **$10 per 1,000 searches**
+  (confirmed 2026-07-30), with the results then billed as input tokens. The Batch
+  API halves token costs for work that isn't time-sensitive, which describes
+  every audit we will ever run. **Not currently used** — the site promises four
+  assistants and Claude is not one of them; see `ops/audit-method.md` section 2.
 
 **A worked estimate for one audit.** Four assistants, ten questions each, run
 three to five times per question for reasons explained below: **120 to 200
@@ -565,6 +571,16 @@ grounded queries**. Google's free grounding allowance alone covers roughly 25 to
 everywhere, an audit's tool cost lands **comfortably under £2** against a £30
 fee. That is a sustainable cost of goods; £23/month per client is not.
 
+**Costed properly against the method as designed** — 150 API queries across
+three providers, the rest by hand — an audit is **about £1.20 at full rate and
+nearer £0.60 while Google's free allowance covers it**, or roughly 4% of the fee.
+The full breakdown is in `ops/audit-method.md` section 6. The conclusion for this
+document is unchanged and now has real numbers behind it: **cost is not the
+constraint on the audit. Time is.**
+
+**Set a spend cap on every provider account before the first real run**, low
+enough that a loop bug costs pounds rather than hundreds.
+
 **The strategic reason, which matters more than the cost.** The audit *is* the
 product. If we outsource the asking to a platform, we own nothing: no method, no
 history, no ability to answer "why did you ask it that way", and no way to
@@ -572,6 +588,20 @@ differentiate from anyone else who bought the same subscription. Building our ow
 question set is the thing that compounds — after twenty audits we have a library
 of questions that work by trade and by area, which is an asset a subscription
 never becomes.
+
+**The limit found while designing the method, 2026-07-30: two of the four
+assistants we promise cannot be checked this way at all.** Microsoft retired the
+Bing Search APIs on 11 August 2025 and offers no Copilot API; the replacement it
+points developers at, Grounding with Bing Search inside Azure AI Foundry, is an
+Azure project rather than an endpoint and would measure a model we assembled, not
+Copilot. Google's AI Overviews have the same gap — the Gemini API is a fair proxy
+for Gemini and is not the AI Overview block a customer sees. Both are therefore
+checked **by hand at a reduced run count, labelled as such in the report**, and
+Copilot's real diagnostic becomes whether the client is in Bing's index at all —
+which is a better finding anyway, because indexation is fixable and model
+behaviour isn't. Full reasoning in `ops/audit-method.md` section 2. This does not
+change the pick above; it narrows what the pick covers, and it is the sort of
+thing a bought platform would have hidden behind a dashboard.
 
 ### E3. The methodology point that must not be skipped
 

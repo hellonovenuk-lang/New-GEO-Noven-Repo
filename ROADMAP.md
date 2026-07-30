@@ -665,10 +665,35 @@ businesses like theirs; what they know and believe about this business and
 whether it's accurate; what's blocking them, in plain English; and an honest
 recommendation including "you don't need us".
 
-- [ ] Write the list of questions we ask the assistants, and how we vary them
-      by trade and area
-- [ ] Decide which assistants we check, and record how we record answers
-- [ ] **Ask every question several times and report a rate, not a yes or no.**
+**The method is decided as of 2026-07-30 and written up in four files:**
+`ops/audit-method.md` (the decisions and the reasoning), `ops/audit-questions.md`
+(the question set), `ops/audit-site-checklist.md` (the working checklist) and
+`ops/audit-report-template.md` (what the client receives). Nothing in them has
+been run against a real business yet — that is the remaining work, and it does
+not need a client. See the last two items.
+
+- [x] **Write the list of questions we ask the assistants, and how we vary them
+      by trade and area.** Ten questions doing five jobs — three discovery, two
+      qualified, two named-business, one comparison, two buying-intent — built
+      from six slots filled with the client's own words. Varying by trade means
+      changing the slots, not the frame, so two audits stay comparable. **The
+      audit's ten become the client's tracked ten if they take a monthly plan**,
+      so month one is comparable with the audit they already paid for, and the
+      set is frozen for twelve months once agreed. Full frame, two worked
+      examples, and the questions that look useful and aren't, in
+      `ops/audit-questions.md`.
+- [x] **Decide which assistants we check, and record how we record answers.**
+      All four we promise, but by two mechanisms, because **Copilot has no API
+      and Google's AI Overviews have none either** — Microsoft retired the Bing
+      Search APIs in August 2025. ChatGPT, Gemini and Perplexity are checked by
+      API at ten questions × five runs; Copilot and AI Overviews by hand at three
+      questions × three runs, labelled as such in the report. Copilot's real
+      diagnostic is whether the client is in Bing's index at all. Recording is
+      one CSV row per run, with the verbatim answer text, the exact model
+      version and every competitor named. **Client audit data does not live in
+      this repo** — it is a public repository and the records will contain
+      personal data. Full detail in `ops/audit-method.md` sections 2, 4 and 5.
+- [x] **Ask every question several times and report a rate, not a yes or no.**
       Assistant answers are not deterministic: published testing found the same
       brand query run ten times produced mention rates anywhere from 20% to 80%.
       A single run is noise, and "you don't appear" from one run can be
@@ -677,12 +702,50 @@ recommendation including "you don't need us".
       consumer apps, so what we see and what the client sees won't match
       exactly. Being honest about both is a real differentiator against tools
       selling confident single-run scores. Full reasoning and the cost model are
-      in `ops/third-party-services.md` (section E).
-- [ ] Build the checklist of things we look at on their website
-- [ ] Build the audit report template — short, plain English, no jargon
-- [ ] Do the first one end to end and time it. £30 has to be sustainable, so
-      if it takes a day, the process is wrong, not the price.
+      in `ops/third-party-services.md` (section E). **Operationalised
+      2026-07-30:** five runs per question on the API checks, three on the hand
+      checks, reported as a **band with the raw count beside it and never as a
+      percentage** — five runs cannot tell 3 of 5 from 2 of 5, so printing "60%"
+      invites a client to read noise as a decline. Four outcomes recorded per
+      run, not two, because "named wrongly" is worse than absent and is the
+      finding owners react to hardest.
+- [x] **Build the checklist of things we look at on their website.**
+      `ops/audit-site-checklist.md`, organised as the Foundation's four promises
+      in order, so **the audit checklist and the Foundation checklist are the
+      same list — one diagnoses, the other fixes** and the client can see the
+      report and the quote line up. Twenty minutes on-site, fifteen off it, hard
+      stop. Ends in one of three verdicts, including "the Foundation would be
+      wasted until something else is fixed", which is roadmap 3b's honesty
+      requirement decided in the audit rather than discovered mid-Foundation.
+- [x] **Build the audit report template — short, plain English, no jargon.**
+      `ops/audit-report-template.md`. 800–1,200 words, nine writing rules, three
+      findings not ten, verbatim quotes, and **no score, index or grade** —
+      every competitor prints one and ours would be an invented statistic.
+      Includes the two standing honesty notes as fixed text: answers vary, and
+      the apps differ from what we check.
+- [ ] **Do the first one end to end and time it — on Noven itself, not waiting
+      for a client.** £30 has to be sustainable, so if it takes a day, the
+      process is wrong, not the price. Doing our own does four jobs at once: it
+      times the process, it closes roadmap 1e's outstanding "ask the assistants
+      what they say about Noven", it creates the dated baseline roadmap 2d wants
+      as our first proof while "they've never heard of us" is still true, and
+      **the report becomes the sample audit we show prospects** — a real answer
+      to the FAQ's own question about having no case studies. Run one experiment
+      while doing it: three questions at ten runs instead of five, to settle
+      whether five is enough (`ops/service-tiers.md` section 8).
+- [ ] **Build the runner.** 150 API queries cannot be typed by hand — at thirty
+      seconds each that is 75 minutes before a word of the report is written, and
+      it breaks the 90-minute budget on its own. Small script: reads the
+      questions, calls the three APIs, writes the CSV. Hard query cap, resume,
+      verbatim answers, client data written outside this repo. **Deliberately
+      after the first audit, not before** — a runner written first is a guess at
+      a format, written second it is a transcription of something that worked.
 - [ ] Rewrite the process based on what the first one taught us
+- [ ] **Add a fifth field to the order page before it is built** — "what do
+      people usually ask when they first get in touch?", optional, two lines.
+      It is the only input we cannot derive ourselves, and it is the difference
+      between questions in the client's customers' words and questions in ours.
+      Cheap now, expensive once the page exists.
 
 ### 3b. The Foundation (£350)
 
@@ -717,7 +780,10 @@ has to sell anything.
 - [ ] **Validate the numbers by doing it.** 10/25/50 questions at 5 runs each,
       and the one-hour Maintain budget, are estimates — nothing has been timed.
       Roadmap 3a already says to do the first one end to end and time it; these
-      are the numbers that check confirms or changes. **The Maintain figure is
+      are the numbers that check confirms or changes. **3a now names the exercise
+      that produces them: the Noven self-audit**, which needs no client and
+      includes a deliberate ten-run test of three questions to settle whether
+      five runs is enough. **The Maintain figure is
       the one that matters most:** at an hour a month it scales past twenty
       clients, at three hours it caps the business around eight.
 - [x] **Decided who publishes the Grow and Lead answer pages: we do.** The
@@ -746,7 +812,15 @@ minimal — a spreadsheet is fine until it isn't.
 
 - [ ] Record per client: business, contact, what they want to be found for,
       area served, stage, plan, what we've done, dated visibility checks
-- [ ] Set up wherever the audits and reports live
+- [ ] Set up wherever the audits and reports live. **Shape decided 2026-07-30**
+      in `ops/audit-method.md` section 5: one folder per client per audit, with
+      `runs.csv`, `questions.csv`, the filled checklist and the report. What is
+      left is choosing the storage — and the one hard constraint is that **it is
+      not this repo**, which is public, and the records will contain personal
+      data now that we are registered with the ICO.
+- [ ] **Decide a retention period and write it into the privacy notice rather
+      than deciding it twice.** Recommendation: life of the relationship plus
+      twelve months, then delete.
 
 ### 3e. The internal docs we've stubbed out
 
@@ -779,6 +853,68 @@ Written down rather than guessed at. Answer them as they become relevant.
 
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
+
+### 2026-07-30 (the audit has a method — and two of the four assistants can't be checked by API)
+- **Roadmap 3a's decision half is done.** Four new files in `ops/`:
+  `audit-method.md` (the decisions and why), `audit-questions.md` (the question
+  set), `audit-site-checklist.md` (the working checklist) and
+  `audit-report-template.md` (what the client gets). Nothing has been run against
+  a real business, and every time figure in them is an estimate until one is.
+- **The finding that shaped everything: Microsoft Copilot has no API.** The Bing
+  Search APIs were retired on 11 August 2025, and the replacement Microsoft
+  points at — Grounding with Bing Search inside Azure AI Foundry — is an Azure
+  project rather than an endpoint, and would measure a model we assembled rather
+  than Copilot. Google's AI Overviews have the same gap. **So the four assistants
+  we promise split into two groups:** ChatGPT, Gemini and Perplexity by API at
+  ten questions × five runs; Copilot and AI Overviews by hand at three questions
+  × three runs, labelled plainly in the report. Dropping Copilot would have been
+  the tidier engineering answer and the worse commercial one — it is the
+  assistant most likely to be open on a client's staff's screens.
+- **Copilot's better diagnostic isn't a mention rate at all.** It answers from
+  Bing's index, so if the client isn't in Bing's index it structurally cannot
+  recommend them — a harder finding than any rate, and a fixable one.
+- **Bands, not percentages.** Five runs distinguishes "never" from "sometimes"
+  from "usually" and nothing finer. Printing "60%" this month and "40%" next
+  invites a client to read chance as a decline. Four outcomes are recorded per
+  run rather than two, because **"named wrongly" is worse than absent** and is
+  the finding an owner reacts to immediately — an assistant confidently giving
+  customers the wrong opening hours lands in a way a mention rate never does.
+- **The audit checklist and the Foundation checklist are the same list**, ordered
+  as the Foundation's four promises. One diagnoses, the other fixes. Nothing has
+  to be translated into a scope afterwards and the client can see the report and
+  the quote line up — which is most of why they believe the second one. It also
+  means roadmap 3b's checklist is now largely written.
+- **The audit's ten questions become the client's tracked ten.** Their first
+  monthly record is then directly comparable with the audit they already paid
+  for, and intake is never repeated.
+- **Cost is settled and it isn't the constraint.** With the two `[PLACEHOLDER]`
+  fees now confirmed — OpenAI and Anthropic both $10 per 1,000 searches — a full
+  audit costs about **£1.20 in API fees at full rate, nearer £0.60 while Google's
+  free allowance covers it**. About 4% of the fee. **Time is the constraint:** the
+  budget is 90 minutes, and at £30 that is roughly £20 an hour, so the audit is
+  honestly recorded as the qualifier for the £350 Foundation rather than as
+  profitable work in itself. If it ever exceeds two hours the process is wrong,
+  not the price.
+- **150 API queries cannot be typed by hand** — 75 minutes of typing before a
+  word of the report is written. So a small runner is the one thing that has to
+  be built, and it is deliberately scheduled *after* the first audit, so it
+  transcribes a format that worked rather than guessing one.
+- **The first audit should be Noven's own, and it shouldn't wait for a client.**
+  It times the process, closes 1e's outstanding "ask the assistants about Noven",
+  captures the dated baseline 2d wants while "they've never heard of us" is still
+  true, and produces a sample report we can show prospects — including the part
+  where we come out badly, which is the only version worth showing.
+- **Two things flagged rather than done.** Client audit records must not live in
+  this repo: it is public, and a sole trader's name and address is personal data,
+  which is exactly what the ICO registration two entries below attaches to — so
+  storage and a retention period are now open items under 3d. And the order page,
+  which doesn't exist yet, should collect a fifth field: *"what do people usually
+  ask when they first get in touch?"* It is the only input we can't derive
+  ourselves, and it is cheap now and expensive after the page is built.
+- **Next:** run the Noven self-audit and time it. That single exercise closes the
+  rest of 3a, validates the five-run count for `ops/service-tiers.md` section 8,
+  and produces the first real input to 3c's Maintain hour — the number that
+  decides whether this business tops out at eight clients or twenty.
 
 ### 2026-07-30 (ICO registration done — and a public register we hadn't accounted for)
 - **Registered with the ICO and set up the Direct Debit.** Tier 1 at £47/year
