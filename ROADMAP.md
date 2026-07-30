@@ -222,11 +222,16 @@ committing.
 
 #### Has a lead time — start these before they're needed
 
-- [ ] **Business bank account.** Anything from a day with a digital provider to
-      several weeks with a high street bank, so it's the long pole. Worth
-      checking whether the existing personal account's terms permit business
-      use in the meantime — most banks' terms don't, and a £30 transfer is
-      still business use.
+- [x] **Business bank account — Revolut Pro, set up.** Owner's decision:
+      Revolut Pro rather than the Mettle/Starling pick researched earlier.
+      Reasoning and caveats are in `ops/third-party-services.md` C1 — in
+      short, it's the account Revolut itself builds for exactly this
+      situation (sole trader, freelancer), it's free, it now carries FSCS
+      protection since Revolut became a UK bank in March 2026, and going
+      with the bank the owner already uses saved real setup time over
+      opening somewhere new. One caveat carried forward, not a blocker at
+      our balances: FSCS protection for a sole trader is shared across the
+      Pro and personal balance under one £120,000 cap, not doubled.
 - [ ] **Address for service of documents.** Deliberately deferred pre-revenue
       (see 1a). A virtual office or service-address provider satisfies the
       disclosure requirement without publishing a home address, and runs about
@@ -578,6 +583,40 @@ Written down rather than guessed at. Answer them as they become relevant.
 
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
+
+### 2026-07-30 (business bank account decided — Revolut Pro, not the researched pick)
+- **Owner set up Revolut Pro** rather than Mettle or Starling, the pair
+  `ops/third-party-services.md` had researched and recommended. Checked
+  whether it still holds up rather than taking it on faith, since the
+  standing rule is not to invent or wave through business facts.
+- **It does.** Revolut Pro is Revolut's own product for exactly this
+  situation — sole traders and freelancers, not registered companies, who
+  want a separate business balance without a separate application. Free to
+  hold, its own account number, and covers invoices, payment links and bank
+  transfer natively. Revolut became a UK bank in March 2026, so it now
+  carries FSCS protection up to £120,000, same as Starling — with one
+  caveat: for a sole trader that cap is shared between the personal and Pro
+  balance, not doubled. Not a real risk at our transaction sizes, just noted
+  for the record.
+- **Also a legitimate reason on its own, not just convenience:** already
+  banking with Revolut meant skipping a fresh application elsewhere, and
+  Revolut Pro fits the actual need closely enough that switching researched
+  providers for it isn't a compromise.
+- **Closes the "Business bank account" item in roadmap 1c** — was the long
+  pole of that section, now done. `ops/third-party-services.md` C1 rewritten
+  to record the decision and reasoning, with the Mettle/Starling research
+  kept underneath for context rather than deleted.
+- **Left open, not yet checked:** whether Zoho Books' bank-feed integration
+  actually connects to a Pro sub-account — Revolut's own integration docs
+  are written against Revolut Business, not Pro. Worth confirming next time
+  reconciliation is set up; manual entry is the fallback at our volume if it
+  doesn't.
+- **Next:** the other lead-time item in 1c, the address for service, is
+  already in progress via V LOT (see the 29 July entry). Nothing else in 1c
+  has a hard dependency on the bank account being open, so the next natural
+  step is picking how the £30 audit and £350 Foundation actually get paid
+  (1c, "Before money changes hands") now that an account exists to receive
+  the transfer.
 
 ### 2026-07-29 (Search Console sorted out — sitemap live, old site's shadow found)
 - **Owner confirms the site reads well and checks out on both desktop and

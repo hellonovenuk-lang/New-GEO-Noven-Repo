@@ -28,7 +28,7 @@ settled and the recommendations build on them rather than replacing them.
 
 | What | Pick | Cost | When |
 |---|---|---|---|
-| Business bank account | Mettle (NatWest) | Free | Before first payment |
+| Business bank account | Revolut Pro (set up) | Free | Before first payment |
 | Address for service | V LOT (ordered, pending) — fallback: 1st Formations/QCF | ~£10–48/yr (V LOT) or ~£115/yr inc VAT (fallback) | Before visibly trading |
 | Email on the domain | Zoho Mail (Mail Lite) | £14.40/yr inc VAT | Any time — cheap win |
 | Data protection registration | ICO, direct | £52/yr (£47 by Direct Debit) | Before holding client data |
@@ -232,13 +232,48 @@ consultancy or as web development. The two attract different premiums.
 
 ## C. Before the first payment
 
-### C1. Business bank account — Mettle
+### C1. Business bank account — Revolut Pro (decided and set up)
 
-**Pick:** **Mettle**, NatWest's digital business account. **Starling** is the
-strongest alternative and the better choice if you'd rather bank with a fully
-licensed bank you might also want a card or lending from later.
+**Original research (28 July 2026) pointed at Mettle or Starling** — both
+free digital business accounts, aimed squarely at sole traders, with free
+transfers and FSCS protection. That reasoning is kept below for the record.
 
-**Cost:** Both free — no monthly fee, no per-transfer charge at our volume.
+**Decision actually made (30 July 2026): Revolut Pro.** Not the account
+researched, and worth writing down why it still holds up rather than reading
+as a shortcut:
+
+- **It's the product Revolut itself builds for this exact situation.**
+  Revolut Pro sits inside an existing Revolut personal account rather than
+  being a separate application — it's free to open and hold, gets its own
+  sort code, account number and transaction history, and is explicitly
+  aimed at freelancers, sole traders and other solo professionals. Registered
+  companies aren't eligible for it, which confirms it's the sole-trader
+  product, not a business account in a trench coat. It covers invoices,
+  payment links, QR codes and Tap to Pay, so bank transfer, the C2 pick
+  below, is a native option rather than a workaround.
+- **FSCS protection now applies.** Revolut became a bank in the UK in March
+  2026, so balances are FSCS-protected up to £120,000 — the same protection
+  Starling was chosen for over Tide. **One caveat carried forward:** for a
+  sole trader, personal and Pro balances are treated as one legal entity for
+  this purpose, so the £120,000 cap is shared across both, not doubled. At
+  £30–£350 per transaction and no meaningful balance sitting in either
+  account, this isn't a practical risk — just don't assume it's two full
+  limits if that ever changes.
+- **Already banking here saved real time.** Skipping a new application with
+  a bank we don't already have a relationship with was a legitimate reason
+  to prefer this over opening at Mettle or Starling from scratch, on top of
+  Revolut Pro fitting the job on its own merits.
+
+**Not yet confirmed — check before relying on it:** the Zoho Books bank-feed
+integration Revolut publishes documentation for is written against **Revolut
+Business**, not Revolut Pro specifically. Pro has its own account number, so
+Open Banking aggregators should still be able to find it when connecting
+Zoho Books, but this hasn't actually been tried yet. Confirm the bank feed
+connects before assuming reconciliation will be automatic — if it doesn't,
+transactions can still be entered manually at our volume.
+
+**Superseded reasoning, kept for context — why Mettle or Starling were the
+original pick:**
 
 **Why Mettle:** free, aimed squarely at sole traders, no monthly fee, free
 transfers and direct debits, and it includes basic invoicing and payment chasing.
@@ -252,19 +287,15 @@ later — a card, a loan, a savings pot — Starling is the safer long-term home
 **One to avoid for us specifically: Tide's free tier charges 20p per bank
 transfer and is e-money rather than FSCS-protected.** At £30 and £75 payments,
 20p a transfer is noise — but the lack of FSCS protection is a real difference
-for money that isn't ours to lose, and there's no reason to accept it when
-Mettle and Starling are free and protected.
+for money that isn't ours to lose.
 
 **Timing matters most here.** Digital providers can open an account in about a
 day; a high street bank can take weeks. The roadmap correctly identifies this as
 the long pole in 1c. It's also worth checking whether your existing personal
 account's terms permit business use in the meantime — most banks' terms don't,
-and a single £30 transfer for services rendered is business use.
-
-**Zoho Books connection:** once the account exists, connect the bank feed to Zoho
-Books so payments reconcile against invoices automatically. That's the whole
-reason to have both, and it's a five-minute setup that saves an hour a month
-later.
+and a single £30 transfer for services rendered is business use. (Revolut Pro
+sidesteps this question entirely, since it's a separate account from the
+personal one, not a personal account being used for business.)
 
 ### C2. Getting paid — stay where you are, for now
 
@@ -611,7 +642,7 @@ Worth writing down so they don't get re-proposed:
    doesn't. Should land *before* the domain switches over, not after — see
    B1.
 4. **Cloudflare Web Analytics** — free, one script tag.
-5. **Mettle or Starling** — free, but start it early; it's the long pole.
+5. ~~Business bank account~~ — **done**, Revolut Pro, see C1.
 6. **ICO self-assessment, then the fee if due** — £47–52/yr. Currently missing
    from the roadmap entirely.
 7. **Insurance quotes from two providers** — before the first Foundation, not
