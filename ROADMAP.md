@@ -383,14 +383,78 @@ button goes in one deliberate place, not on every page.
 
 #### Before we hold a client's information
 
-- [ ] **Register with the ICO and pay the data protection fee.** Sole traders
-      that process personal information must pay it unless exempt, and
-      consultancy work for clients is generally in scope. Tier 1 (micro
-      organisation) is £52/year, or £47 by Direct Debit. Run the ICO's own free
-      self-assessment tool first — there are exemptions and it gives a
-      definitive answer for our circumstances. Failing to register or renew
-      carries a penalty of up to £4,000 on top of the fee, so £47 is not a close
-      call. Renews annually; diarise it the day it's paid.
+- [x] **Registered with the ICO and the data protection fee is set up.** Done
+      2026-07-30 by Direct Debit, so tier 1 at £47 rather than £52. Application
+      number `C1995412`; the ICO confirms the Direct Debit instruction within
+      three working days, and no later than 10 days before the first
+      collection. **It renews annually — put the reminder in the calendar now**,
+      because failing to renew carries a penalty of up to £4,000 on top of the
+      fee.
+      - The ICO's free self-assessment was run first rather than paying
+        blind. Two answers worth keeping, because both could be got wrong by
+        someone repeating this later:
+      - **"Are you using personal information?" — Yes.** Our buyers are mostly
+        sole traders, and the ICO's own wording is that information about sole
+        traders, partners and directors *is* personal information. A named
+        work address (`john@plumber.co.uk`) counts; a generic one
+        (`info@…`) doesn't. The outreach shortlist in 2b is personal
+        information the day it's written, not the day a client pays.
+      - **"Do you use information for legal or financial services?" — No.**
+        The hint list names "accountancy and auditing" and "consultancy",
+        which reads like us and isn't. That list means *financial* auditing
+        and *legal or financial* consultancy. **Our product is called an
+        audit but is not an audit in the ICO's sense of the word** — no
+        accounts examined, no financial data held, no regulated activity.
+        Answering Yes would file us under regulated services we have no
+        business being in.
+      - Exemptions were never likely to apply: they cover single purposes like
+        marketing your own business, and processing for both an exempt and a
+        non-exempt purpose means you pay anyway.
+- [ ] **URGENT — the home address is on the ICO registration and will publish.**
+      Confirmed by the owner, 30 July 2026. **The ICO publishes the registered
+      controller's name and address on the public register of fee payers, which
+      anyone can download in bulk**, and it publishes **within seven working
+      days of the payment being received**. Registration went in on Thursday
+      30 July, so the outside date is roughly **Monday 10 August** — likely
+      later, since a new Direct Debit takes days to collect and the clock runs
+      from payment, not from application. Treat 10 August as the deadline
+      anyway.
+      **This is the same one-way door 1a argues at length, on a front the
+      roadmap hadn't identified.** 1a filed the home-address risk entirely
+      under the website footer. The registration is a separate publication, and
+      it was walked into while the service address is still unresolved.
+      Once it's on a bulk-downloadable register it is copied, mirrored and
+      cached by third parties, and getting the ICO to amend its own entry does
+      nothing about the copies.
+      **Do these in this order — the first one doesn't need a new address and
+      is the time-critical part:**
+      - [ ] **Ring the ICO's data protection fees helpline first thing:
+            0303 123 1113.** Explain that a home address was given, that it's a
+            home-based sole trader, and ask them to **hold publication of the
+            address, or suppress it, pending a change**. Do this before hunting
+            for an address — it buys the time the rest of this needs, and the
+            ICO's own guidance tells home-based sole traders to use an
+            alternative address, so this is a request they will have heard many
+            times.
+      - [ ] **Get a service address that actually works.** V LOT looks like it
+            may have taken the money and delivered nothing (see 1a) — so this
+            is now blocking two things, not one. Fall back to 1st Formations or
+            Quality Company Formations, ~£115/yr inc VAT, per
+            `ops/third-party-services.md` B1. The extra ~£70/year against V LOT
+            buys a provider that answers the phone, which is the whole point of
+            the product.
+      - [ ] **Update the ICO record with the new address** once it exists, at
+            `ico.org.uk/for-organisations/data-protection-fee/change/`. Needs
+            the registration reference and security number, which arrive with
+            the confirmation — another reason to phone rather than wait.
+      - [ ] **Then check the public register** at
+            `ico.org.uk/about-the-ico/what-we-do/register-of-fee-payers/` to
+            confirm what actually published, rather than trusting that the
+            change landed.
+      **The standing lesson, because this will recur:** ask "does this get
+      published, and where?" *before* submitting any official form — HMRC,
+      insurance, anything with a register behind it. The service address is not
+      a footer field. It is a prerequisite for the next registration we fill in.
 - [ ] Privacy notice page — we'll be handling client business data and email.
       Due before the first client sends us anything, not before launch, since
       the site collects nothing on its own. Use the ICO's own free privacy
@@ -715,6 +779,65 @@ Written down rather than guessed at. Answer them as they become relevant.
 
 Add a short entry at the end of each session — what changed, what we learned,
 what's next. Newest at the top.
+
+### 2026-07-30 (ICO registration done — and a public register we hadn't accounted for)
+- **Registered with the ICO and set up the Direct Debit.** Tier 1 at £47/year
+  rather than £52, application number `C1995412`. Confirmation of the
+  instruction lands within three working days. **Renews annually — the calendar
+  reminder is the real deliverable**, since a missed renewal carries a penalty
+  of up to £4,000 against a £47 fee.
+- **The self-assessment was run first rather than paying blind**, and two of its
+  questions have answers worth keeping. "Are you using personal information?"
+  is **Yes** — our buyers are mostly sole traders, and the ICO's own wording
+  makes information about sole traders, partners and directors personal. The
+  outreach shortlist in 2b is personal information the day it's written, not the
+  day someone pays.
+- **"Do you use information for legal or financial services?" is No, and the
+  question is a trap for us specifically.** Its hint names "accountancy and
+  auditing" and "consultancy" — which reads like a description of Noven and
+  isn't. The list is anchored by the heading: *financial* auditing, *legal or
+  financial* consultancy, alongside credit referencing and mortgage broking.
+  **Our product is called an audit but is not an audit in the ICO's sense of
+  that word.** No accounts examined, no financial data held, no regulated
+  activity. Answering Yes would have filed a two-person-adjacent visibility
+  service under regulated services. Worth remembering: the product name is a
+  false friend on official forms, and this won't be the last one.
+- **Found while checking, and it's the reason this entry exists: the ICO
+  publishes the registered controller's name and address on a public register
+  of fee payers, downloadable in bulk.** The ICO's own guidance to sole traders
+  working from home is to give a PO box or alternative address instead. The
+  roadmap had the home-address risk filed entirely under the website footer —
+  1a argues it at length as a one-way door — and this is the same door on a
+  second front we hadn't identified, walked through while the service address is
+  still unresolved. **Owner confirmed the same evening: the home address is on
+  the registration.** It publishes within seven working days of payment, so the
+  outside date is around Monday 10 August. Written up as the first item in 1c
+  with an ordered set of steps — the time-critical one being a phone call to the
+  fees helpline to hold or suppress the address, which can happen before a
+  replacement address exists. Unpublishing afterwards is much the harder path,
+  and does nothing about third-party copies of a bulk-downloadable register.
+- **This also promotes the service address from "annoying and pending" to
+  blocking two separate things**, which changes how much the V LOT failure
+  costs. The ~£70/year saved by picking V LOT over an established provider is
+  now measured against a published home address and a phone call to a regulator.
+  Take the £115/yr fallback.
+- **The general lesson, since it will recur:** every registration we complete
+  from here — HMRC, insurance, anything else with a register behind it — needs
+  the question "does this get published, and where?" asked *before* the form is
+  submitted, not after. The service address isn't just a footer field; it's the
+  address we need in hand before the next official form gets filled in.
+- **Also confirmed today:** the privacy notice can be drafted free from the
+  ICO's own generator (`ico.org.uk/create-your-own-privacy-notice`), which has a
+  **professional services** sector variant that fits us better than the general
+  business one. It's still labelled beta, downloads as Word or ODT, and is
+  explicitly not legal advice. The ICO does **not** do terms of service — that's
+  contract law, not their remit, and D3's existing argument against buying a
+  template stands.
+- **Next:** the V LOT service address looks like it may have been a scam — owner
+  is picking that up tomorrow. Of the three things blocking the audit's pay
+  button, ICO registration is now done; the privacy notice and the terms are
+  both draftable without the address, and only the address itself is externally
+  blocked.
 
 ### 2026-07-30 (the audit gets its own order page — Revolut's fields aren't enough)
 - **Owner pushed back on two things from the entry below, and was right on
