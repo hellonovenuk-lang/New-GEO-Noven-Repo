@@ -31,7 +31,7 @@ settled and the recommendations build on them rather than replacing them.
 | Business bank account | Revolut Pro (set up) | Free | Before first payment |
 | Address for service | V LOT (ordered, pending) — fallback: 1st Formations/QCF | ~£10–48/yr (V LOT) or ~£115/yr inc VAT (fallback) | Before visibly trading |
 | Email on the domain | Zoho Mail (Mail Lite) | £14.40/yr inc VAT | Any time — cheap win |
-| Data protection registration | ICO, direct | £52/yr (£47 by Direct Debit) | Before holding client data |
+| Data protection registration | ICO, direct — **registered 30 Jul 2026** | £47/yr (Direct Debit) | Done |
 | Privacy notice | ICO's own free generator | Free | Before first client data |
 | Professional indemnity insurance | Compare via Simply Business / Markel | ~£8–25/mo | Before first delivery |
 | Site analytics | Cloudflare Web Analytics | Free | Any time |
@@ -425,8 +425,16 @@ the VAT threshold a live question, which roadmap 1d already flags.
 
 ### D1. Data protection fee — register with the ICO
 
-**This is the one genuine gap in the current roadmap.** It isn't listed anywhere
-in Phase 1, and it should be.
+**Done, 30 July 2026.** Registered directly with the ICO and paying by Direct
+Debit, so **£47/year** rather than £52. Application number `C1995412`. Renews
+annually — the diary reminder is the part that actually matters, since missing a
+renewal carries a penalty of up to £4,000.
+
+**One thing left open**, recorded in roadmap 1c: which address went on the
+registration. The ICO publishes the controller's name and address on a public,
+bulk-downloadable register, and its own advice to home-based sole traders is to
+supply an alternative address. Worth fixing at the source if a home address went
+on, rather than seeking removal later.
 
 **Pick:** Register directly with the Information Commissioner's Office. There is
 no third party involved and no reason to use one.
