@@ -374,8 +374,8 @@ waiting on to validate the Maintain hour.
 | 7 | Write the report | 20 min | `ops/audit-report-template.md`, 800–1,200 words |
 | 8 | Send | 5 min | For this run: export the PDF and keep it. It is the sample we show prospects |
 
-**If the total lands well over 95 minutes, the finding is that the process needs
-cutting, not that £30 is too cheap** (method section 1). Record where the time
+**If the total lands well over three hours, the finding is that the process needs
+cutting, not that £125 is too cheap** (method section 1). Record where the time
 actually went; that is the useful output.
 
 ---

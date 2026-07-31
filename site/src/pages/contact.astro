@@ -4,7 +4,7 @@ import { business, plan, money } from '../data/business';
 
 const title = 'Contact — Noven';
 const description =
-  'Book Noven’s £30 audit or ask a question. Email us your business name, website and the services you want to be found for, and we’ll reply within two working days.';
+  'Order Noven’s £125 audit or ask a question. Email us your business name, website and the services you want to be found for, and we’ll reply within two working days.';
 
 const audit = plan('audit');
 ---
@@ -12,7 +12,7 @@ const audit = plan('audit');
 <Base title={title} description={description}>
   <section class="hero hero--rules">
     <div class="wrap">
-      <h1>Book the audit, or just ask</h1>
+      <h1>Order the audit, or just ask</h1>
       <p class="lede" data-reveal>
         The simplest way to reach us is email. No forms, no call-booking software, no follow-up
         sequence — you'll get a reply from a person.
@@ -23,7 +23,7 @@ const audit = plan('audit');
   <section class="section">
     <div class="wrap split split--sticky">
       <div data-reveal>
-        <h2>How do I book the {money(audit.price)} audit?</h2>
+        <h2>How do I order the {money(audit.price)} audit?</h2>
       </div>
       <div data-reveal>
         <p>Email us with four things:</p>
@@ -34,8 +34,12 @@ const audit = plan('audit');
           <li>The area you serve</li>
         </ul>
         <p>
+          Two more are optional and make the report better: what people usually ask when they first
+          get in touch, and roughly what a new customer is worth to you.
+        </p>
+        <p>
           We'll reply within two working days to confirm scope and payment, and you'll have your
-          written report within one working day of that.
+          written report within two working days of that.
         </p>
 
         <ul class="rows">
@@ -45,7 +49,7 @@ const audit = plan('audit');
           </li>
           <li>
             <strong>Based in</strong>
-            <span>{business.basedIn} — working with clients across the {business.areaServedLabel}</span>
+            <span>{business.basedIn} — available to clients across the {business.areaServedLabel}</span>
           </li>
           <li>
             <strong>Reply time</strong>
@@ -65,7 +69,7 @@ const audit = plan('audit');
   <section class="section section--tint">
     <div class="wrap split">
       <div data-reveal>
-        <h2>Not ready to book?</h2>
+        <h2>Not ready to order?</h2>
       </div>
       <div data-reveal>
         <p>

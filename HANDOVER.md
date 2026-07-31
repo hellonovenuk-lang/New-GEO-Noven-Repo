@@ -26,15 +26,24 @@ recommendable to those assistants.
 
 | Product | Price | What the customer gets |
 |---|---|---|
-| **Audit** | £30 one-off | A written report on how the assistants answer questions about their business today, what they believe, what's blocking them, and an honest recommendation — including "you don't need us" |
-| **Foundation** | £350 one-off | Setup work on the customer's **existing** website: crawler access, structured machine-readable facts, consistent facts across the web, pages that answer customer questions. Noven does not build websites |
-| **Maintain** | £75/month | 10 questions tracked monthly, facts kept current, a one-page written record. Reports gaps, does not close them |
-| **Grow** | £125/month | Maintain across 25 questions, plus one new answer page a month |
-| **Lead** | £250/month | 50 questions, two answer pages a month, plus a quarterly review of competitors named ahead of them |
+| **Audit** | £125 one-off | A written report on how the assistants answer questions about their business today, what they believe, what's blocking them, and an honest recommendation — including "you don't need us" |
+| **Foundation** | £750 one-off | A fixed scope of setup work on the customer's **existing** website: crawler access, structured machine-readable facts, consistent facts across the web, and **two** permanent pages answering customer questions. Noven does not build websites. Included with twelve months of Grow |
+| **Maintain** | £95/month | 10 questions tracked monthly, facts kept current, a one-page written record. Reports gaps, does not close them |
+| **Grow** | £250/month | Maintain across 15 questions, plus one new answer page a month |
+| **Lead** | £495/month | 25 questions, two answer pages a month, plus a quarterly review of competitors named ahead of them |
 
-**The commercial logic:** the audit is a loss leader priced to be an easy yes.
-It is intended to sell Foundations. Foundations are year-one income. The monthly
-plans are what make the business worth owning. See `ops/service-tiers.md`.
+**The commercial logic:** the audit is the smallest thing sold and the qualifier
+for the Foundation. Foundations are year-one income. The monthly plans are what
+make the business worth owning.
+
+**Prices were raised on 2026-07-31, before the first sale.** The old ladder
+(£30 / £350 / £75 / £125 / £250) separated the monthly tiers by question volume,
+which is pure cost to Noven and little extra value to the client — so every step
+up earned *less* per hour than the one below it. The tiers now separate on
+permanent answer pages. Full reasoning in `ops/service-tiers.md` section 9. The
+timing was deliberate: with no minimum term on any plan, a later price rise on
+existing clients is a churn event, so launch prices are the only ones that can be
+set for free.
 
 **Who runs it:** Kieran Smith, sole trader, trading as Noven, based in the
 Wirral, working remotely across the UK. One person, no employees.
@@ -68,10 +77,15 @@ tick boxes currently blur it. The following are **documents describing
 intentions**, not things that have happened:
 
 - The audit method — five documents in `ops/`, unusually thorough, never run.
-- The monthly plans — priced, published, and sold on the live site, with **no
-  runbook for delivering a single month.**
-- The Foundation — £350, published, with essentially no delivery method written.
+- The monthly plans — priced and published, never delivered to anyone. They now
+  at least have a format: `ops/monthly-record-template.md`.
+- The Foundation — £750, published, scope now fixed, but with no delivery method
+  written and **no estimate of how long it takes.** It is the only product in the
+  business with no time budget at all.
 - The payment route — decided, not built, no payment ever taken.
+
+`ROADMAP.md` marks these `[D]` — decided on paper — rather than `[x]`. That
+distinction is the most important thing in the file.
 
 ---
 
@@ -87,8 +101,7 @@ Ordered by what it stops.
 | **A decision on where client data lives** | The privacy notice, and delivering the first audit lawfully. Constraint: **it cannot be this repo**, which is public |
 | **API accounts, keys and spend caps** | Running any audit at all |
 | **A working payment route** | Revenue |
-| **A monthly record template** | Every monthly plan, every month, forever — the most-repeated deliverable in the business |
-| **A Foundation method** | The £350 product |
+| **A Foundation method and time budget** | The £750 product, and knowing whether it makes money |
 | **Professional indemnity insurance** | Nothing yet — but it should precede the first Foundation, since that means changing a client's live website |
 
 ---
@@ -134,8 +147,9 @@ plan rests on — how long a month of Maintain actually takes. Start at
 
 **5. Make one payment possible end to end.** Create and test a Revolut Pro
 payment link with a real small payment; decide invoice or receipt; choose where
-client records live. Two hours. **A pasted payment link in an email takes the
-first £30 — the order page is a scaling tool, not a gate.**
+client records live (`ops/client-record.md`). Two hours. **A pasted payment link
+in an email takes the first payment — the order page is a scaling tool, not a
+gate.**
 
 **6. Take the sample audit to three warm contacts.** Warm rather than cold, for
 the reason in section 7.
@@ -173,20 +187,13 @@ July covers nearly the whole year.
 
 ## 6. What the business depends on
 
-Nothing here is a credential. This is the map of what would need to be recovered.
+**The full register is `ops/accounts.md`** — every account, cost, renewal date,
+and what breaks if it lapses. No credentials in it; this repo is public.
 
-| Dependency | For | Cost | Renewal |
-|---|---|---|---|
-| `novenstudio.co.uk` | Everything — site, email, all published links | [PLACEHOLDER] | [PLACEHOLDER] |
-| Namecheap | DNS for site and mail | [PLACEHOLDER] | [PLACEHOLDER] |
-| Netlify | Hosting, build, TLS | Free tier | rolling |
-| GitHub `hellonovenuk-lang` | This repo, and the deploy trigger | Free tier | n/a |
-| Zoho Mail Lite | `hello@novenstudio.co.uk` | £14.40/yr | ~Jul 2027 |
-| Zoho Books | Invoicing | [PLACEHOLDER] | [PLACEHOLDER] |
-| Revolut Pro | Bank account and payment route | Free to hold | n/a |
-| ICO `C1995412` | Legal requirement to hold personal data | £47/yr DD | ~Jul 2027 |
-| Google Search Console | Indexation diagnostics | Free | n/a |
-| LinkedIn | Corroborating source, published in structured data | Free | n/a |
+The one row worth repeating here: **the domain's registrar, renewal date and
+auto-renew status are recorded nowhere.** It is the dependency whose failure is
+total — site, mail, structured data, every published link — and it is the only
+one nobody has looked up.
 
 **Two structural risks worth naming.**
 
@@ -219,14 +226,14 @@ Nobody else can settle these, and several are currently blocking work.
    and this repo's own ICO notes say the target buyers are mostly sole traders.
    Warm introductions sidestep this entirely. Confirm the position before
    building any cold list. *Not legal advice — check it.*
-5. **Whether £350 is a fixed price or a ceiling.** The pricing page says £350
-   flat; how-it-works says "you're never paying for work you don't need"; the
-   report template says quote for the one thing that matters. Those cannot all
-   be true.
-6. **Whether Lead's fortnightly checking survives.** It is the single most
-   expensive word on the pricing page, and `ops/service-tiers.md` already lists
-   it as an open question while the site sells it as a firm commitment. Nobody
-   has bought it; changing it now costs nothing.
+5. **Whether the new prices survive contact.** They were set from estimated
+   effort, not measured effort. If the self-audit shows Maintain takes three
+   hours rather than one, `ops/service-tiers.md` section 9 gets rewritten, not
+   defended.
+
+*Settled on 2026-07-31 and recorded here so they aren't reopened:* the Foundation
+is a fixed scope at a fixed price, not a ceiling to quote against; Lead's
+fortnightly checking is gone; there is no founding-rate discount.
 
 ---
 
@@ -304,11 +311,9 @@ The decisions are argued, recorded, and mostly right. The reasoning would surviv
 the owner being hit by a bus.
 
 The gap is between deciding and doing. Five documents specify an audit that has
-never been run once. Three monthly plans are published, priced, and machine-
-readable, with no runbook for delivering a single month of any of them. A £350
-product is on sale with no method and no time budget behind it. The site states
-in the present tense that Noven is working with clients across the UK, and there
-are no clients.
+never been run once. Three monthly plans are published and priced, and now have a
+record format, but none has been delivered to anyone. A £750 product is on sale
+with a fixed scope, no method and no time budget behind it.
 
 None of that is a crisis, because nobody has paid yet. All of it becomes a
 crisis on the day someone does.

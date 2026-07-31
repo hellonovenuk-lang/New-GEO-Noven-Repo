@@ -112,7 +112,7 @@ const ogImage = new URL('/og.png', Astro.site);
             href="/contact/"
             aria-current={isCurrent('/contact/') ? 'page' : undefined}
           >
-            Book the {money(audit.price)} audit
+            Order the {money(audit.price)} audit
           </a>
         </nav>
       </div>
@@ -135,7 +135,7 @@ const ogImage = new URL('/og.png', Astro.site);
             </p>
             <div class="cta-row">
               <a class="btn" href="/contact/">
-                Book the {money(audit.price)} audit
+                Order the {money(audit.price)} audit
                 <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
                   <path
                     d="M9 1l4 4-4 4M13 5H1"
@@ -167,7 +167,7 @@ const ogImage = new URL('/og.png', Astro.site);
           <p class="footer-small">
             &copy; {new Date().getFullYear()} {business.name}. {business.legalNote} Based in {
               business.basedIn
-            }, working with clients across the {business.areaServedLabel}. Not VAT registered, so
+            }, available to clients across the {business.areaServedLabel}. Not VAT registered, so
             the prices shown are the prices you pay.
           </p>
         </div>

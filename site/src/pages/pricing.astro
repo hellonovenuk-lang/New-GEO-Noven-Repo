@@ -5,7 +5,7 @@ import { business, plan, money, monthlies, offerSchema } from '../data/business'
 
 const title = 'Pricing — Noven';
 const description =
-  'Noven pricing in plain numbers: a £30 audit, a £350 one-off Foundation setup, and ongoing monthly plans at £75 (Maintain), £125 (Grow) and £250 (Lead). No lock-ins.';
+  'Noven pricing in plain numbers: a £125 audit, a £750 one-off Foundation setup, and ongoing monthly plans at £95 (Maintain), £250 (Grow) and £495 (Lead). No lock-ins.';
 
 const audit = plan('audit');
 const foundation = plan('foundation');
@@ -19,7 +19,7 @@ const serviceSchema = {
   provider: { '@id': new URL('/#organization', Astro.site).href },
   areaServed: business.areaServed,
   description:
-    'One service in three stages: a £30 audit of how AI assistants currently answer questions about your business, a £350 one-off Foundation setup that makes your business readable and credible to those systems, and ongoing monthly plans that keep you visible.',
+    'One service in three stages: a £125 audit of how AI assistants currently answer questions about your business, a £750 one-off Foundation setup that makes your business readable and credible to those systems, and ongoing monthly plans that keep you visible.',
   offers: offerSchema(),
 };
 
@@ -52,7 +52,7 @@ const offersOnly = { '@type': 'Service', name: business.serviceName, offers: off
               A written report on where your business currently stands with the major AI assistants
               — ChatGPT, Google's AI results, Copilot and Perplexity. We ask them the questions your
               customers ask, record what comes back, and diagnose why. You'll have the report within
-              one working day of us confirming scope and payment.
+              two working days of us confirming scope and payment.
             </p>
             <p>You get:</p>
             <ul class="ticks">
@@ -73,16 +73,21 @@ const offersOnly = { '@type': 'Service', name: business.serviceName, offers: off
           </div>
           <div>
             <p>
-              The setup that gets you visible, scoped by your audit and done on the website you
-              already have. It covers crawler access for the AI systems, structured machine-readable
-              facts about your business, consistency of those facts across the web, and pages that
-              directly answer the questions your customers ask.
+              The setup that gets you visible, done on the website you already have. It is a fixed
+              piece of work, not an open-ended one: crawler access for the AI systems, structured
+              machine-readable facts about your business, your facts made consistent everywhere they
+              appear online, and <strong>two permanent pages</strong> answering questions your
+              customers ask. Your audit decides which two.
             </p>
             <p>
-              We'll come back to you within two working days of you booking it with a plan and a
-              date. How long the work itself takes depends mostly on you — how quickly we get access
-              to your website and the information we need. We'll tell you what we're waiting on, and
-              we won't leave you guessing.
+              We'll come back to you within two working days of your payment clearing, with a plan
+              and a date. How long the work itself takes depends mostly on you — how quickly we get
+              access to your website and the information we need. We'll tell you what we're waiting
+              on, and we won't leave you guessing.
+            </p>
+            <p>
+              If you'd rather not pay for it separately, the Foundation is included with twelve
+              months of Grow.
             </p>
           </div>
         </div>
@@ -96,10 +101,11 @@ const offersOnly = { '@type': 'Service', name: business.serviceName, offers: off
           </div>
           <div>
             <p>
-              The assistants change constantly, so staying visible is maintenance, not magic. All
-              three levels are the same service at different intensities — hold your position, close
-              the gaps, or lead your field — and you can move between them at any time. Each one
-              includes everything above it.
+              The assistants change constantly, so staying visible is maintenance, not magic. The
+              three levels do three different jobs — hold your position, close the gaps, or get named
+              ahead of your competitors — and you can move between them at any time. What separates
+              them is how many permanent pages we write for you each month, because a page is the
+              part that keeps working after we've written it.
             </p>
           </div>
         </div>
@@ -119,10 +125,10 @@ const offersOnly = { '@type': 'Service', name: business.serviceName, offers: off
           <li class="level">
             <span class="level-name">Grow</span>
             <p>
-              Everything in Maintain, across twenty-five questions instead of ten. Each month we
-              take one of the questions you're missing from and write the page that answers it
-              properly, on your own site. That's how you go from showing up sometimes to showing up
-              for the things people actually ask.
+              Everything in Maintain, across fifteen questions instead of ten. Each month we take
+              one of the questions you're missing from and write the page that answers it properly,
+              on your own site — yours to keep, working whether or not you stay with us. That's how
+              you go from showing up sometimes to showing up for the things people actually ask.
             </p>
             <span class="level-price">{money(monthlies[1].price)} /month</span>
           </li>
@@ -130,9 +136,10 @@ const offersOnly = { '@type': 'Service', name: business.serviceName, offers: off
             <span class="level-name">Lead</span>
             <p>
               For businesses that want to be the first name mentioned, not just a name mentioned.
-              Fifty questions, checked every two weeks, and two new answer pages a month. Every
-              quarter you also get a written review of the competitors the assistants are naming
-              ahead of you, and our honest read on why.
+              Twenty-five questions a month, and two new answer pages — so you build a body of
+              pages answering what your customers actually ask, faster than anyone in your field.
+              Every quarter you also get a written review of the competitors the assistants are
+              naming ahead of you, and our honest read on why.
             </p>
             <span class="level-price">{money(monthlies[2].price)} /month</span>
           </li>
@@ -170,14 +177,19 @@ const offersOnly = { '@type': 'Service', name: business.serviceName, offers: off
   <section class="section section--invert">
     <div class="wrap split">
       <div data-reveal>
-        <h2>Why is the audit only {money(audit.price)}?</h2>
+        <h2>Why does the audit cost {money(audit.price)}?</h2>
       </div>
       <div data-reveal>
         <p>
-          Because finding out where you stand should be an easy decision, not a leap of faith. The
-          audit is real work and stands on its own — you could take the report to someone else, or
-          act on it yourself. We price it low because we'd rather earn the follow-on work on the
-          strength of what the report shows.
+          Because it's done by hand, for your business specifically. We put your customers' actual
+          questions to each assistant repeatedly — their answers vary run to run, so asking once
+          tells you nothing — and record what comes back, word for word, including every competitor
+          named ahead of you. Then someone reads all of it and works out why.
+        </p>
+        <p>
+          The report stands on its own. You could act on it yourself, or take it to someone else,
+          and it would still be worth having. We'd rather charge properly for real work than price
+          it as a sales call with a document attached.
         </p>
       </div>
     </div>

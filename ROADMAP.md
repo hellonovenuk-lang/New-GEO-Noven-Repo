@@ -13,6 +13,22 @@ real client work tell us what to build next. We don't design processes for
 situations we haven't met yet. Anything we don't know is written as
 `[PLACEHOLDER]` rather than guessed. The three phases overlap.
 
+**The three markers, and the difference between the first two matters more than
+anything else in this file:**
+
+- `[x]` — **done, and true in the world.** The bank account exists. The ICO has
+  our money. The sitemap is submitted.
+- `[D]` — **decided on paper, never yet performed.** A document describing an
+  intention. The audit method is `[D]`. Every monthly plan is `[D]`. A reader
+  scanning ticks and finding `[x]` against a decision concludes the business does
+  something it has never done once, which is how this file misled people before
+  the marker existed.
+- `[ ]` — open.
+
+`ops/audit-method.md` has always got this right in its own header —
+*"decided on paper, unvalidated in practice"*. The markers carry that
+distinction everywhere else.
+
 ---
 
 ## Where we are today
@@ -49,7 +65,7 @@ long version, written for someone with no context.
 ## Phase 1 — Build (get to a site that can take a real customer)
 
 **Done when:** a stranger can read the site, understand the offer, email us, and
-pay us £30.
+pay us £125.
 
 ### 1a. Facts only the owner can supply — closed
 
@@ -66,7 +82,7 @@ open questions.
 **Cancellation terms**, live on three pages: monthly plans roll month to month,
 no minimum term, **no notice period**; the month already paid for runs out, no
 part-month refunds. Chosen against the agency norm because a notice period costs
-more in friction than it recovers at £75–250, and the Foundation being a
+more in friction than it recovers at £95–495, and the Foundation being a
 separate one-off already covers the front-loaded work. Add a minimum term only
 if clients actually start taking a month and leaving.
 
@@ -124,9 +140,8 @@ provider's own site before committing.
 
 #### Before money changes hands
 
-- [x] **The £30 audit is paid on the website, upfront**, through our own order
-      page that hands off to a Revolut Pro payment link for the money only. At
-      £30 an invoice loop costs more in admin than the ~50p–£1.04 card fee saves.
+- [D] **The £125 audit is paid on the website, upfront**, through our own order
+      page that hands off to a Revolut Pro payment link for the money only.
       Revolut's own custom fields were rejected because **field values only
       surface against a successful payment**, so an abandoned checkout would
       leave us nothing; our form submits first. The four fields already exist on
@@ -135,16 +150,19 @@ provider's own site before committing.
       `ops/third-party-services.md` C2.
       **Two copy jobs when the page is built:** draw the distinction between
       email (to ask) and the form (to buy), rather than deleting `contact.astro`'s
-      "no forms" line, which is true and worth keeping; and update the promise —
-      with scope and payment arriving together it becomes the report within one
-      working day of ordering, down from up to three days.
-      **Blocked** behind the terms, the privacy notice and the address.
-- [x] **The £350 Foundation is invoiced**, with the contract sent alongside once
-      both sides agree to start. At £350 the card fee is real money, there's
+      "no forms" line, which is true and worth keeping; and carry the two
+      optional fields already added to `contact.astro` (what customers usually
+      ask; what a new customer is worth) onto the form.
+      **Not on the critical path** — see "First £30" below. A payment link in an
+      email takes the first payment, and this page is a scaling tool for roughly
+      sale five onward. Still blocked behind the terms, the privacy notice and
+      the address whenever it is built.
+- [D] **The £750 Foundation is invoiced**, with the contract sent alongside once
+      both sides agree to start. At £750 the card fee is real money, there's
       already a conversation, and bank transfer is free.
-      - [ ] Small copy fix on `pricing.astro`: "booking" must mean *payment
-            received*, not signature, or a two-day clock can be started by
-            someone who signed and didn't pay.
+      - [x] Copy fix on `pricing.astro`: "booking" now reads *payment clearing*,
+            so the two-day clock can't be started by someone who signed and
+            didn't pay. Applied 2026-07-31.
 - [ ] How monthly plans get collected. Manual stops being viable around client
       five. The cancellation terms were written to read the same either way, so
       this doesn't reopen any copy.
@@ -280,7 +298,8 @@ unused so far.
 
 We're new with no case studies and the site says so, so we can't win on proof
 yet. We win on being specific, being cheap to try, and being obviously not a
-scam. **The £30 audit is the outreach tool**, priced to be an easy yes.
+scam. **The audit is the outreach tool** — the smallest thing we sell, and the
+only one that hands over a finished piece of work before any larger commitment.
 
 **Working when:** we have a repeatable way of getting conversations, and we know
 roughly how many approaches produce one paid audit.
@@ -300,7 +319,7 @@ finding about their business rather than a pitch.
 - [ ] Build a shortlist of [PLACEHOLDER: number] businesses.
 - [ ] For each, ask the assistants their customers' question and record whether
       they're mentioned.
-- [ ] Write the email — short, one specific finding, the £30 offer, no chasing
+- [ ] Write the email — short, one specific finding, the audit offer, no chasing
       sequence.
 - [ ] Send in small batches so the email can change based on replies.
 - [ ] Keep a record of who was contacted, when, and what came back.
@@ -336,7 +355,7 @@ Not until there are paying clients and proof.
 without reinventing them each time, and a monthly client gets something real
 every month.
 
-### 3a. The audit (£30)
+### 3a. The audit (£125)
 
 Promised on the site: what each assistant says about businesses like theirs;
 what they know and believe about this business and whether it's accurate; what's
@@ -351,12 +370,12 @@ half** — the accounts, keys, spend caps, folder and CSV headers to have in pla
 before the Noven run, Noven's own ten questions, and the run-day order. Start
 there when the run happens. Headlines:
 
-- [x] **The questions.** Ten doing five jobs — three discovery, two qualified,
+- [D] **The questions.** Ten doing five jobs — three discovery, two qualified,
       two named-business, one comparison, two buying-intent — built from six
       slots filled with the client's own words. Varying by trade changes the
       slots, not the frame. **The audit's ten become the client's tracked ten**
       on a monthly plan, frozen for twelve months once agreed.
-- [x] **Which assistants, and how we record.** All four we promise, by two
+- [D] **Which assistants, and how we record.** All four we promise, by two
       mechanisms: **Copilot has no API and Google's AI Overviews have none
       either** (Microsoft retired the Bing Search APIs in August 2025). ChatGPT,
       Gemini and Perplexity by API at 10 questions × 5 runs; Copilot and AI
@@ -364,16 +383,16 @@ there when the run happens. Headlines:
       Bing indexation. Recording is one CSV row per run with verbatim answers,
       exact model version and every competitor named. **Client data does not live
       in this repo** — it's public and the records contain personal data.
-- [x] **Rates, not yes/no.** Five runs per question, reported as a **band with
+- [D] **Rates, not yes/no.** Five runs per question, reported as a **band with
       the raw count and never a percentage** — five runs can't tell 3 of 5 from
       2 of 5, so "60%" invites a client to read noise as a decline. Four outcomes
       per run, not two, because **"named wrongly" is worse than absent** and is
       what owners react to hardest.
-- [x] **The website checklist**, ordered as the Foundation's four promises, so
+- [D] **The website checklist**, ordered as the Foundation's four promises, so
       **diagnosis and fix are the same list**. 20 minutes on-site, 15 off, hard
       stop. Ends in one of three verdicts, including "the Foundation would be
       wasted until something else is fixed".
-- [x] **The report template.** 800–1,200 words, three findings not ten, verbatim
+- [D] **The report template.** 800–1,200 words, three findings not ten, verbatim
       quotes, and **no score, index or grade** — every competitor prints one and
       ours would be an invented statistic.
 - [ ] **Do the first one end to end and time it — on Noven itself.** Needs no
@@ -385,26 +404,39 @@ there when the run happens. Headlines:
       (`ops/service-tiers.md` section 8). If an audit takes a day, the process is
       wrong, not the price.
 - [ ] **Build the runner.** 150 API queries can't be typed by hand — 75 minutes
-      before a word of the report is written, which breaks the 90-minute budget
-      on its own. Reads the questions, calls the three APIs, writes the CSV; hard
-      query cap, resume, verbatim answers, client data outside this repo.
+      before a word of the report is written, which breaks the time budget on its
+      own. Reads the questions, calls the three APIs, writes the CSV; hard query
+      cap, resume, verbatim answers, client data outside this repo.
       **Deliberately after the first audit** — written first it's a guess at a
-      format, written second it's a transcription of something that worked.
+      format, written second it's a transcription of something that worked. **Not
+      on the critical path.**
 - [ ] Rewrite the process based on what the first one taught us.
-- [ ] **Add a fifth field to the order page before it's built** — "what do people
-      usually ask when they first get in touch?", optional, two lines. The only
-      input we can't derive ourselves, and the difference between questions in
-      the client's customers' words and questions in ours.
+- [x] **The two extra intake questions are live on `contact.astro`** (2026-07-31),
+      both optional: "what do people usually ask when they first get in touch?"
+      — the only input we can't derive ourselves, and the difference between
+      questions in the client's customers' words and ours — and "roughly what is
+      a new customer worth to you?", which lets the report say what being missing
+      costs rather than only that it happens. Carry both onto the order page when
+      it's built.
 
-### 3b. The Foundation (£350)
+### 3b. The Foundation (£750)
 
 Promised: crawler access, structured machine-readable facts, consistent facts
 across the web, and pages that answer customer questions — all on the client's
 existing site. We don't build websites.
 
+- [D] **The scope is now fixed, and published** (2026-07-31): crawler access,
+      structured data, facts made consistent across the web, and **two** permanent
+      answer pages. `how-it-works.astro` used to promise "key pages" — plural,
+      unbounded — with no time budget for the Foundation anywhere in this repo,
+      which is what made £350 an open-ended commitment. The audit picks which two
+      pages. Work found outside the four is quoted, not absorbed.
 - [ ] Write the Foundation checklist. **Largely written already** —
       `ops/audit-site-checklist.md` is the same list from the diagnosis side.
       What's owed is the *how* of doing the work, not the *what*.
+- [ ] **Put a time budget on it.** Still the only product in the business with
+      no estimate of how long it takes, which is what makes its margin unknown.
+      Time the first one.
 - [ ] How we get access safely, and what we do when we can't. **Ask in two
       stages:** the Foundation asks for access *to do the setup*; a monthly plan
       is where we ask to keep it. A "no" to the second mustn't threaten the
@@ -415,24 +447,36 @@ existing site. We don't build websites.
 - [ ] What we hand over at the end, and how we show what changed.
 - [ ] Do the first one, time it, then fix the process.
 
-### 3c. Monthly plans (£75 / £125 / £250)
+### 3c. Monthly plans (£95 / £250 / £495)
 
-**Decided and live — `ops/service-tiers.md` has the reasoning.** Three verbs, not
-three intensities: Maintain holds your position, Grow closes the gaps, Lead beats
-the competitors named ahead of you. Question counts double at each step
-(10/25/50), which is checkable in a way "faster pace" never was. **The upgrade
-engine is the monthly record itself** — it reports the gaps and doesn't close
-them, so nobody has to sell anything.
+**Published on the site — `ops/service-tiers.md` has the reasoning.** Three
+verbs, not three intensities: Maintain holds your position, Grow closes the gaps,
+Lead beats the competitors named ahead of you. **The upgrade engine is the
+monthly record itself** — it reports the gaps and doesn't close them, so nobody
+has to sell anything.
 
-- [x] What happens each month at each level — live on the pricing page, in
-      how-it-works and in the structured data.
-- [x] **We publish the answer pages**, client approves the words. Structured data
+**Repriced 2026-07-31** (`ops/service-tiers.md` section 9). The tiers now
+separate on **answer pages** — 0 / 1 / 2 a month — rather than on question
+volume, which rises gently at 10 / 15 / 25 instead of doubling. The old ladder
+paid less per hour at every step up, because question volume is pure cost to us
+and a page is a permanent asset to the client. Lead's fortnightly cadence is
+gone.
+
+- [D] What happens each month at each level — live on the pricing page, in
+      how-it-works and in the structured data. **Never yet delivered to anyone.**
+- [D] **We publish the answer pages**, client approves the words. Structured data
       doesn't survive copy-paste, so the client-publishes path costs more time
       and delivers a worse page.
-- [x] **What an answer page is** — one question, one permanent page, one URL,
+- [D] **What an answer page is** — one question, one permanent page, one URL,
       built from facts only that business has. Not a blog post, not an FAQ entry.
       Every Foundation is practice for Grow.
-- [ ] **Validate the numbers by doing it.** 10/25/50 at five runs each and the
+- [x] **The monthly record has a format** — `ops/monthly-record-template.md`
+      (2026-07-31). One page, four sections, bands not percentages, and a hard
+      rule that a provider's model change is flagged at the top so the client
+      doesn't read it as their own decline. This closes "decide how we check and
+      report visibility each month" and "write the monthly client update", which
+      were two descriptions of the same missing document.
+- [ ] **Validate the numbers by doing it.** 10/15/25 at five runs each and the
       one-hour Maintain budget are estimates. **The Noven self-audit in 3a is the
       exercise that produces them.** The Maintain figure matters most: at an hour
       a month it scales past twenty clients, at three it caps the business
@@ -441,35 +485,41 @@ them, so nobody has to sell anything.
       publish rights, hand over a complete file with the structured data intact
       plus a one-page paste instruction, then verify it live. That verification
       is billable time inside the plan, not a favour.
-- [ ] Decide how we check and report visibility each month.
-- [ ] Write the monthly client update — short and readable.
-- [ ] Define the quarterly review promised on Lead.
+- [ ] Define the quarterly review promised on Lead. Deliberately not written yet
+      — no Lead client exists, and guessing at what they want to know is how the
+      rest of this repo got ahead of itself.
 - [ ] Work out how many clients one person can hold at each level.
 
 ### 3d. Keeping track of clients
 
-`ops/spine.md` is meant to hold this and is empty. A spreadsheet is fine until it
-isn't — the trigger to move to something else (Zoho Bigin free tier) is when you
-can't answer "who's due a check this week" by looking, usually five to eight
-clients.
+`ops/client-record.md` holds this. A spreadsheet is fine until it isn't — the
+trigger to move to something else (Zoho Bigin free tier) is when you can't answer
+"who's due a check this week" by looking, usually five to eight clients.
 
-- [ ] Record per client: business, contact, what they want to be found for, area
-      served, stage, plan, what we've done, dated visibility checks.
-- [ ] Set up where audits and reports live. **Shape decided** in
-      `ops/audit-method.md` section 5 — one folder per client per audit. What's
-      left is choosing the storage, and the hard constraint is that **it is not
-      this repo**, which is public and would hold personal data.
+- [x] **The fields are decided and written down** — `ops/client-record.md`
+      (2026-07-31), for clients and, separately and more sparsely, for prospects.
+      Formerly `ops/spine.md`, a three-line stub whose name gave a stranger no
+      clue what it was for.
+- [ ] **Choose the storage.** Still the blocker, and it now blocks two things:
+      the client record and the audit folders. **Shape decided** in
+      `ops/audit-method.md` section 5 — one folder per client per audit. The hard
+      constraint is that **it is not this repo**, which is public and would hold
+      personal data. One named provider, encryption at rest, and a backup that
+      has been restored once.
 - [ ] **Decide a retention period and write it into the privacy notice** rather
       than deciding it twice. Recommendation: life of the relationship plus
       twelve months, then delete.
 
-### 3e. The internal docs still stubbed out
+### 3e. The internal docs
 
-Worth writing *after* the first client, when we know what's actually true.
-
-- [ ] `ops/org-chart.md` — the five company seats
-- [ ] `ops/spine.md` — the shared client and prospect data model
-- [ ] `ops/escalation-rules.md` — the three "never do this without me" rules
+- [x] **Resolved 2026-07-31.** `ops/org-chart.md` (five company seats) and
+      `ops/escalation-rules.md` (three "never do this without me" rules) are
+      **deleted**, not deferred. Both described a business with employees and
+      someone to escalate to; this one has neither, and `CLAUDE.md` already does
+      the escalation job. An empty file is not a deferral — it reads as
+      permanent debt on every future reader's list. Write either one if it ever
+      becomes real.
+- [x] `ops/spine.md` → `ops/client-record.md`, filled in — see 3d.
 
 ---
 

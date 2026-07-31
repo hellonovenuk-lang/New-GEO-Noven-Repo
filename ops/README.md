@@ -1,6 +1,6 @@
 # The operating documents — index
 
-Thirteen files, and no obvious order to read them in. This is the order.
+Twelve files, and no obvious order to read them in. This is the order.
 
 New to the business? Read `HANDOVER.md` at the repo root first. It is the only
 document written for someone with no context.
@@ -28,15 +28,29 @@ so opening the wrong one first is the usual way to get lost.
 | `audit-report-template.md` | The report the client actually receives, and the rules for writing it | Decided, unvalidated |
 | `audit-setup.md` | The practical gap between "the method is written" and "the first audit is running": accounts, keys, spend caps, folder layout, run-day order. **Start here on the day** | Decided, unvalidated |
 
-**What is missing from this set:** a method for the £350 Foundation, and a
-template for the monthly record. The monthly record is the most-repeated
-deliverable in the business — every plan, every month — and it has no format.
+**What is still missing from this set:** a delivery method for the £750
+Foundation. Its scope is now fixed and published, but the *how* of doing the work
+— and any estimate of how long it takes — does not exist. It is the only product
+in the business with no time budget at all.
+
+## Delivering the monthly plans
+
+| File | What it decides | Status |
+|---|---|---|
+| `monthly-record-template.md` | The one-page record every monthly client gets, and the rules for writing it. The most-repeated deliverable in the business — every plan, every month | Decided, unvalidated |
 
 ## Pricing and positioning
 
 | File | What it decides | Status |
 |---|---|---|
-| `service-tiers.md` | What each plan contains, how long each is allowed to take, and why a client would move up. The copy from section 4 is live on the site | Live — question counts and time budgets are still estimates |
+| `service-tiers.md` | What each plan contains, how long each is allowed to take, and why a client would move up. **Section 9 is the 2026-07-31 repricing** and the reasoning behind pricing on answer pages rather than question volume | Live — question counts and time budgets are still estimates |
+
+## Running the business
+
+| File | What it decides | Status |
+|---|---|---|
+| `accounts.md` | Every account, what it costs, when it renews, what breaks if it lapses, and the dates that need to be in a real calendar. **No credentials — this repo is public** | Live, with real gaps marked `[PLACEHOLDER]` |
+| `client-record.md` | What we keep about each client and prospect. Formerly `spine.md`, which named nothing a stranger could guess at | Fields decided, storage undecided |
 
 ## Suppliers and setup
 
@@ -52,13 +66,14 @@ deliverable in the business — every plan, every month — and it has no format
 |---|---|---|
 | `session-log.md` | 1,100 lines, newest first: why every decision went the way it did. **Do not read front to back.** Go to it when you need the argument behind something, and read the entry before re-opening a settled decision | Live |
 
-## Stubs
+## Deleted 2026-07-31
 
-These three are titles and TODOs. `ROADMAP.md` 3e correctly says they are worth
-writing only after the first client, when there is something true to write.
+`org-chart.md` ("the five company seats") and `escalation-rules.md` ("three
+never-do-this-without-me rules") were three-line TODO stubs for a business with
+one person, no employees and nobody to escalate to. `CLAUDE.md` already does the
+escalation job and is enforced. An empty file is not a deferral — it reads as
+debt on every future reader's list, permanently. If either becomes real, write it
+then.
 
-| File | Intended content |
-|---|---|
-| `spine.md` | The shared client and prospect data model. The field list already exists in `ROADMAP.md` 3d, and the hard constraint is that the data cannot live in this repo, which is public |
-| `org-chart.md` | "The five company seats" — for a business with one person and no employees |
-| `escalation-rules.md` | Three "never do this without me" rules — for a business with nobody to escalate to. `CLAUDE.md` already serves this purpose |
+`spine.md` was the third stub and is now `client-record.md` above, with the field
+list filled in from `ROADMAP.md` 3d.

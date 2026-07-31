@@ -11,6 +11,109 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-07-31c (the repricing, and clearing the decisions the review turned up)
+
+Everything below was recommended in 2026-07-31b, put to the owner, and confirmed
+before it was applied. The prices were confirmed individually.
+
+- **The finding that drove it: the ladder was inverted.** Price against
+  estimated effort and every step up earned less per hour than the one below —
+  audit ~£9–12, Foundation ~£17–35, Maintain ~£27–42, Grow ~£18–28, Lead
+  ~£11–19. **The premium tier paid about the same as the loss leader.** Success
+  at selling made the business worse. That is not a level problem, it is an axis
+  problem: the tiers separated on question volume, which is pure cost to us and
+  little the client can feel. A page is a permanent asset; a longer spreadsheet
+  is not.
+
+- **New prices.** Audit £30 → **£125**. Foundation £350 → **£750**, scope fixed.
+  Maintain £75 → **£95**, Grow £125 → **£250**, Lead £250 → **£495**. Questions
+  10/25/50 → **10/15/25**. Lead's fortnightly checking removed. Full reasoning
+  in `ops/service-tiers.md` section 9. **Foundation now included with twelve
+  months of Grow** — £750 free against £3,000 committed, which converts a one-off
+  into a subscription without discounting the standalone price.
+
+- **Why before the first client.** It is free now and expensive later. No client
+  to upset, no invoice to amend — and the monthly plans have no minimum term by
+  design, so a later rise on paying clients is a churn event with nothing holding
+  them. Launch prices are the only prices that can be set for free. **No founding
+  rate**: considered, declined by the owner, on the grounds that a discount game
+  sits badly on a brand built on plain dealing.
+
+- **Raising the Foundation without capping it would have made things worse.**
+  `how-it-works.astro` promised "writing or restructuring key **pages**" —
+  plural, unbounded — and no time budget for the Foundation exists anywhere in
+  this repo. The scope is now four fixed pieces of work, the fourth being **two**
+  answer pages, and the page says so. Work found outside the four is quoted, not
+  absorbed. It is still the only product with no estimate of how long it takes.
+
+- **The audit's economics argument had to be rewritten, not just renumbered.**
+  `audit-method.md` section 1 argued the audit was a loss leader that shouldn't
+  be judged as profitable work. True at £30. At £125 and an honest 2.5–3.5 hours
+  it earns ~£36–50/hour, so the argument is retired rather than repeated out of
+  habit — with a new consequence in its place: **at £30 a thin report was
+  survivable because the price apologised for it; at £125 it isn't.**
+
+- **Considered and deliberately not done: cutting the audit's run volume.** Five
+  runs on the three discovery questions and three on the rest would have halved
+  the classification time. It was the right answer at £30, when the time budget
+  was binding. At £125 it isn't — the volume is what the client is paying for,
+  and a second band scale for three-run questions would complicate the one part
+  of the report that is currently unambiguous. Revisit only if the timed
+  self-audit lands above three hours.
+
+- **The time budget now includes the work.** The audit table totalled 95 minutes
+  and budgeted the largest step at a dash — reading 168 answers and assigning
+  each an outcome, a competitor list and any untrue statement, folded into a
+  20-minute report step. It does not fold. It is 60–110 minutes on its own, and
+  leaving it out is exactly what made £30 look like £20/hour when it was nearer
+  £9–12. New total: **2h40 – 3h30**. The site's turnaround moved from one working
+  day to two, because one was never deliverable — `audit-questions.md` requires
+  the client to confirm the questions first, which means an email and a wait.
+
+- **`ops/monthly-record-template.md` written.** The audit runs once per client;
+  this runs every month, for every client, forever, and it had a price and no
+  format. One page, four sections, bands not percentages, and one hard rule: **a
+  provider's model change is flagged at the top**, or the first month an
+  assistant changes behaviour reads to the client as their own decline.
+
+- **`ops/accounts.md` written**, and it is the continuity answer. Every account,
+  cost, renewal, and what breaks if it lapses — no credentials, because this repo
+  is public. Real gaps are marked `[PLACEHOLDER]` rather than guessed, and the
+  worst is the domain: **registrar, expiry and auto-renew status are recorded
+  nowhere**, on the one dependency whose failure is total.
+
+- **`ROADMAP.md` now distinguishes decided from done.** New `[D]` marker: `[x]`
+  means true in the world, `[D]` means a document describing an intention. All of
+  3a's method items and 3c's tier items became `[D]`. They had been `[x]`, which
+  told a reader the business does things it has never done once.
+
+- **Two stubs deleted, one filled.** `org-chart.md` (five company seats) and
+  `escalation-rules.md` (three never-do-this-without-me rules) described a
+  business with employees and someone to escalate to; this one has neither, and
+  `CLAUDE.md` already does the escalation job. `spine.md` → **`client-record.md`**
+  with the field list filled in — "the spine" was used in three places and
+  defined in none.
+
+- **Site copy no longer duplicated in `service-tiers.md` section 4.** It used to
+  transcribe the live pricing copy in full, and the repricing proved the cost:
+  every quoted block was wrong within an hour. The site is canonical; the section
+  now says where the copy lives and what must stay true about it.
+
+- **Two truth gaps closed while the copy was open.** Three pages said in the
+  present tense that Noven *is* working with clients across the UK — there are no
+  clients; now "available to". And four calls to action said "Book the audit"
+  when nothing can be booked; now "Order". Both were flagged in 2026-07-31b and
+  left for the owner; the owner asked for them.
+
+- **Verified, not assumed:** build clean at 7 pages, all five prices correct in
+  the JSON-LD offers, and no stale price, cadence or "Book the" string anywhere
+  in `dist/`.
+
+**Still the constraint, and worth writing where it will be re-read:** these
+prices are set from *estimated* effort. Nothing in this business has been timed
+because nothing has been done. If the self-audit shows Maintain takes three hours
+rather than one, section 9 gets rewritten, not defended.
+
 ### 2026-07-31b (an outside read of the whole business, and the entry point it was missing)
 
 - **The question asked:** could an external person read this repo and understand
