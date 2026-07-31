@@ -27,7 +27,7 @@ recommendable to those assistants.
 | Product | Price | What the customer gets |
 |---|---|---|
 | **Audit** | £125 one-off | A written report on how the assistants answer questions about their business today, what they believe, what's blocking them, and an honest recommendation — including "you don't need us" |
-| **Foundation** | £750 one-off | A fixed scope of setup work on the customer's **existing** website: crawler access, structured machine-readable facts, consistent facts across the web, and **two** permanent pages answering customer questions. Noven does not build websites. Included with twelve months of Grow |
+| **Foundation** | £750 one-off | A fixed scope of setup work on the customer's **existing** website: crawler access, structured machine-readable facts, consistent facts across the web, and **two** permanent pages answering customer questions. Noven does not build websites |
 | **Maintain** | £95/month | 10 questions tracked monthly, facts kept current, a one-page written record. Reports gaps, does not close them |
 | **Grow** | £250/month | Maintain across 15 questions, plus one new answer page a month |
 | **Lead** | £495/month | 25 questions, two answer pages a month, plus a quarterly review of competitors named ahead of them |

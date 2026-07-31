@@ -28,9 +28,21 @@ before it was applied. The prices were confirmed individually.
 - **New prices.** Audit £30 → **£125**. Foundation £350 → **£750**, scope fixed.
   Maintain £75 → **£95**, Grow £125 → **£250**, Lead £250 → **£495**. Questions
   10/25/50 → **10/15/25**. Lead's fortnightly checking removed. Full reasoning
-  in `ops/service-tiers.md` section 9. **Foundation now included with twelve
-  months of Grow** — £750 free against £3,000 committed, which converts a one-off
-  into a subscription without discounting the standalone price.
+  in `ops/service-tiers.md` section 9.
+
+- **A bundle went in and came straight back out, same day.** "Foundation free
+  with twelve months of Grow" was applied to the pricing page and then removed
+  when the owner questioned it. **Nothing commits anyone to twelve months** — the
+  plans roll month to month with no minimum term, published in four places
+  including the FAQPage structured data and the pricing page's meta description
+  ("No lock-ins"). The offer as written let someone take the £750 Foundation, pay
+  one £250 month, and cancel: £1,000 of work for £250, entirely within our own
+  terms. The "£3,000 committed" figure was false. **The cancellation policy is
+  the older and better-argued decision and it wins.** Three non-contradictory
+  ways to get the same retention effect are recorded in section 9 as options,
+  undecided. The generalisable lesson is in there too: any offer phrased "for N
+  months" is incompatible with no-minimum-term, and the terms are not the thing
+  to bend.
 
 - **Why before the first client.** It is free now and expensive later. No client
   to upset, no invoice to amend — and the monthly plans have no minimum term by

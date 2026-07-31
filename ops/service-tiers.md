@@ -418,9 +418,46 @@ open-ended commitment. The scope is now four fixed pieces of work, of which the
 fourth is **two** answer pages, and the page says so. If the audit finds work
 outside those four, we say so rather than absorbing it.
 
-**Foundation included with twelve months of Grow.** £750 free against £3,000
-committed. It converts the one-off into a subscription without a discount that
-cheapens the standalone price.
+### The bundle that was proposed, applied, and backed out the same day
+
+**Proposed:** the Foundation included free with twelve months of Grow — £750
+given away against £3,000 committed, converting a one-off buyer into a
+subscriber without discounting the standalone price.
+
+**Why it was wrong, and it is worth recording rather than quietly deleting:
+nothing commits anyone to twelve months.** The monthly plans roll month to month
+with no minimum term, and that is published in four places — `faq.astro` ("Am I
+locked into a contract?" "No."), which feeds the FAQPage structured data;
+`pricing.astro` and `how-it-works.astro` in the cancellation paragraph; and the
+pricing page's own meta description, which ends "No lock-ins."
+
+So the offer as written let a client take the £750 Foundation, pay £250 for one
+month of Grow, and cancel before the next payment date — £1,000 of work for
+£250, entirely within our published terms. The "£3,000 committed" figure was
+simply false. **The cancellation policy is the older and better-argued decision
+(roadmap 1a) and it wins.**
+
+**Backed out of the site and this document on 2026-07-31**, the same day it went
+in. The lesson generalises: any offer phrased as "for N months" is incompatible
+with no-minimum-term, and the terms are not the thing to bend.
+
+**Three ways to get the retention effect without the contradiction, if it is
+wanted later — undecided, owner's call:**
+
+1. **Credit it back monthly.** Client pays £750 up front, then £62.50 off each of
+   the first twelve months of any plan. £750 returned if they stay a year, no
+   commitment required, and no exposure at all if they leave — we keep whatever
+   is unearned. This is the one that preserves the no-lock-in promise exactly.
+2. **A smaller sweetener.** Start a monthly plan within 30 days of the Foundation
+   and the first three months are half price. Clean, easy to say, much weaker
+   pull.
+3. **Drop the idea.** The Foundation stands on its own at £750 and the monthly
+   plans sell themselves through the record (section 5). Costs nothing, and the
+   no-lock-in promise stays completely unqualified.
+
+A minimum term on the bundled path only was considered and rejected: it is
+honest if disclosed, but it turns the FAQ's flat "No" into "No, except…", in a
+machine-readable answer, on the site whose product is machine-readable accuracy.
 
 ### Why now, before the first client
 
