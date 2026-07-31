@@ -441,23 +441,44 @@ simply false. **The cancellation policy is the older and better-argued decision
 in. The lesson generalises: any offer phrased as "for N months" is incompatible
 with no-minimum-term, and the terms are not the thing to bend.
 
-**Three ways to get the retention effect without the contradiction, if it is
-wanted later — undecided, owner's call:**
+### Standing decision: we do not bundle services — 2026-07-31
 
-1. **Credit it back monthly.** Client pays £750 up front, then £62.50 off each of
-   the first twelve months of any plan. £750 returned if they stay a year, no
-   commitment required, and no exposure at all if they leave — we keep whatever
-   is unearned. This is the one that preserves the no-lock-in promise exactly.
-2. **A smaller sweetener.** Start a monthly plan within 30 days of the Foundation
-   and the first three months are half price. Clean, easy to say, much weaker
-   pull.
-3. **Drop the idea.** The Foundation stands on its own at £750 and the monthly
-   plans sell themselves through the record (section 5). Costs nothing, and the
-   no-lock-in promise stays completely unqualified.
+**Settled by the owner. Not an open question, and not to be reopened by a future
+session looking for a way to lift conversion.**
 
-A minimum term on the bundled path only was considered and rejected: it is
-honest if disclosed, but it turns the FAQ's flat "No" into "No, except…", in a
-machine-readable answer, on the site whose product is machine-readable accuracy.
+Every product is bought and priced on its own. No combined offers, no "free with",
+no discount for taking two, no minimum-term-in-exchange-for-something. Alternatives
+were put forward — crediting the Foundation back monthly, a half-price first three
+months — and **all of them were declined.** The question was not which bundle to
+run. It was whether to bundle at all, and the answer is no.
+
+**Why it holds up, beyond being the owner's call:**
+
+- **It is the only version that needs no asterisk.** Every bundle discovered so
+  far ends in a qualification on the cancellation terms, and those terms are
+  published in four places including the structured data. A business whose
+  product is machine-readable accuracy should not have a pricing page that needs
+  a footnote.
+- **The prices are already the argument.** Section 9 repriced each product to
+  stand on its own effort. A discount for combining says the standalone price was
+  soft, which is exactly the impression the repricing was meant to remove.
+- **The upgrade engine is the monthly record, not an offer** (section 5). The
+  record reports gaps it does not close. That is what moves a client up a tier,
+  and it works without anyone selling anything — a bundle would be doing a job
+  that is already done.
+- **One person cannot service a promotion.** Anything with a window, a
+  qualifying period or a clawback needs tracking per client, and the client
+  record has no column for it because it should not need one.
+
+**What this rules out in practice**, so it does not get re-litigated in pieces:
+Foundation-with-a-plan offers, first-month-free, annual-payment discounts,
+introductory or founding rates (already declined separately), referral discounts,
+and any "N months for the price of M". A client who buys more pays more.
+
+The only combination that remains, and it is not a bundle: **the tiers are
+cumulative by design** — Grow contains Maintain, Lead contains Grow. That is one
+product at three sizes, priced accordingly, and it is what section 2 means by
+three verbs.
 
 ### Why now, before the first client
 

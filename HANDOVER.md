@@ -233,7 +233,11 @@ Nobody else can settle these, and several are currently blocking work.
 
 *Settled on 2026-07-31 and recorded here so they aren't reopened:* the Foundation
 is a fixed scope at a fixed price, not a ceiling to quote against; Lead's
-fortnightly checking is gone; there is no founding-rate discount.
+fortnightly checking is gone; and **services are never bundled** — every product
+is bought and priced on its own, with no combined offers, no "free with", no
+discount for taking two, and no introductory or founding rates. A client who buys
+more pays more. `ops/service-tiers.md` section 9 has the reasoning and the full
+list of what that rules out.
 
 ---
 

@@ -38,11 +38,33 @@ before it was applied. The prices were confirmed individually.
   ("No lock-ins"). The offer as written let someone take the £750 Foundation, pay
   one £250 month, and cancel: £1,000 of work for £250, entirely within our own
   terms. The "£3,000 committed" figure was false. **The cancellation policy is
-  the older and better-argued decision and it wins.** Three non-contradictory
-  ways to get the same retention effect are recorded in section 9 as options,
-  undecided. The generalisable lesson is in there too: any offer phrased "for N
-  months" is incompatible with no-minimum-term, and the terms are not the thing
-  to bend.
+  the older and better-argued decision and it wins.** The generalisable lesson:
+  any offer phrased "for N months" is incompatible with no-minimum-term, and the
+  terms are not the thing to bend.
+
+- **Then settled properly: we do not bundle services at all.** Alternatives were
+  offered — crediting the Foundation back monthly, a half-price first three
+  months — and the owner declined all of them. The question was not which bundle
+  to run but whether to bundle, and the answer is no. Recorded in
+  `ops/service-tiers.md` section 9 as a **standing decision**, with the full list
+  of what it rules out (Foundation-with-a-plan, first-month-free, annual-payment
+  discounts, founding rates, referral discounts, "N months for the price of M")
+  so it does not get re-litigated one offer at a time by a future session hunting
+  for conversion. Every product is bought and priced on its own; a client who
+  buys more pays more.
+
+  Three supporting reasons worth keeping, because they are stronger than "the
+  owner said so": every bundle found so far ends in an asterisk on the
+  cancellation terms, which are in the structured data, and a business selling
+  machine-readable accuracy should not need a footnote on its pricing page; the
+  repricing set each product against its own effort, so a combination discount
+  would say the standalone price was soft; and the upgrade engine is already the
+  monthly record, which does the job without anyone selling. Also practical —
+  one person cannot service a promotion with a window and a clawback, and the
+  client record has no column for it because it should not need one.
+
+  **Not a bundle, and stays:** the tiers are cumulative — Grow contains Maintain,
+  Lead contains Grow. That is one product at three sizes.
 
 - **Why before the first client.** It is free now and expensive later. No client
   to upset, no invoice to amend — and the monthly plans have no minimum term by
