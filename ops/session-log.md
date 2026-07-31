@@ -11,6 +11,32 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-07-31d (merged to main on the owner's instruction — the new prices are live)
+
+**`CLAUDE.md` says never commit to `main` and finish every piece of work on an
+unmerged branch. The owner overrode it explicitly, as they have six times
+before. Logged as an explicit call, not a new default** — the rule stands for the
+next session.
+
+**What going to `main` actually does:** Netlify deploys `main`, so this publishes
+the repricing to `novenstudio.co.uk` and, more importantly, into the JSON-LD that
+the assistants read. The site is deliberately built so those systems ingest the
+business facts and repeat them confidently, which is the whole product — and it
+means a published price is closer to a one-way door than a normal site's is.
+Caches and third-party copies persist after an edit. The prices were confirmed
+individually before the copy was applied, so this is intended, but it is the
+reason the next price change costs more than this one did.
+
+**Live as of this merge:** audit £125, Foundation £750 at a fixed four-part scope,
+Maintain £95, Grow £250, Lead £495 monthly. Questions 10/15/25. Turnaround two
+working days. "Order" not "Book". "Available to clients across the UK" rather
+than the present-tense claim that we already have some.
+
+**Still live and still wrong, unchanged by this merge:** the footer
+`[PLACEHOLDER: address for service of documents — see ROADMAP.md]` on all seven
+pages. It was already on `main` and is not made worse here, but it remains the
+one published defect, and it is a legal disclosure rather than a cosmetic gap.
+
 ### 2026-07-31c (the repricing, and clearing the decisions the review turned up)
 
 Everything below was recommended in 2026-07-31b, put to the owner, and confirmed
