@@ -25,16 +25,21 @@ npm run preview # preview the built site
 - `public/robots.txt` — explicitly allows AI crawlers (GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Google-Extended, Bingbot)
 - The sitemap is generated at build time by `@astrojs/sitemap` at `/sitemap-index.xml`
 
-## Before launch — placeholders to fill in
+## Placeholders still rendering on the live site
 
-Search the codebase for `[PLACEHOLDER` and replace every instance:
+Two, both deliberate, both visible to visitors and to the AI crawlers `robots.txt`
+invites in. Everything else on the original pre-launch list is done.
 
-- **Domain** — `site` in `astro.config.mjs` and the `Sitemap:` line in `public/robots.txt`
-- **Contact details** — email, phone and location on the Contact page
-- **Founder bio** — name, bio and location on the About page
-- **Company details** — registered name/number/address in the footer (`Base.astro`)
-- **Commercial terms** — VAT status, cancellation notice period, audit turnaround time, Foundation delivery time
-- **Case studies** — the marked slot on the Home page, once real client results exist
+- **Address for service of documents** — `src/layouts/Base.astro`, footer, therefore
+  on **every page**. Blocked on the service address landing; see `ROADMAP.md` 1c.
+  This one is a legal disclosure that is already owed, not a cosmetic gap, and the
+  placeholder text currently published names an internal file.
+- **Case studies** — `src/pages/index.astro`, home page. Blocked on the first client.
+
+Two other `[PLACEHOLDER` strings appear in `src/pages/about.astro`, in branches that
+can no longer be reached now that `founderLinkedIn` and `founderPhoto` are set, and
+one in `src/pages/faq.astro` is the detector function itself. Grepping for the string
+finds all five; only the two above reach a page.
 
 No facts, statistics, results or testimonials have been invented anywhere on the site;
 anything unknown is marked with a placeholder.

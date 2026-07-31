@@ -37,6 +37,13 @@ nothing has been run against a real business yet.
 **Next piece of real work:** the Noven self-audit (3a). It needs no client and
 closes items in 1e, 2d, 3a and 3c at once.
 
+**The critical path, in dependency order:** ICO helpline call (deadline Mon 10
+Aug) → service address ordered → footer address and ICO record fixed → terms and
+privacy notice written → one payment possible end to end. **Running in parallel
+and blocked by none of it: the Noven self-audit.** The order page is not on this
+path — a payment link in an email takes the first £30. `HANDOVER.md` has the
+long version, written for someone with no context.
+
 ---
 
 ## Phase 1 — Build (get to a site that can take a real customer)
@@ -197,8 +204,8 @@ place, not on every page.
             This doesn't need a new address and buys time for the rest. The
             ICO's own guidance tells home-based sole traders to use an
             alternative address, so it's a request they'll have heard often.
-      - [ ] **Get a service address that actually works** — see 1a. This now
-            blocks two things, not one.
+      - [ ] **Get a service address that actually works** — see 1c above. This
+            now blocks two things, not one.
       - [ ] **Update the ICO record** at
             `ico.org.uk/for-organisations/data-protection-fee/change/`. Needs the
             registration reference and security number from the confirmation —

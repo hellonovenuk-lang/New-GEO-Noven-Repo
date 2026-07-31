@@ -18,9 +18,10 @@ provider's own site before committing. Dollar prices are the providers' own;
 where a rough pound figure is given it assumes about $1.30 to £1 — check the rate
 when you actually budget.
 
-Already in place: **Netlify** (hosting), **Gmail** (contact address), **Zoho
-Books** (invoicing and revenue), **GitHub** (this repo). Those are treated as
-settled and the recommendations build on them rather than replacing them.
+Already in place: **Netlify** (hosting), **Zoho Mail** (`hello@novenstudio.co.uk`
+— this replaced Gmail on 29 July, see A1), **Zoho Books** (invoicing and revenue),
+**GitHub** (this repo). Those are treated as settled and the recommendations build
+on them rather than replacing them.
 
 ---
 
@@ -729,9 +730,11 @@ Worth writing down so they don't get re-proposed:
 - **An accountant or bookkeeper** — nothing for one to do yet.
 - **Scheduling tools (Cal.com, Calendly)** — the site is deliberately email-only
   and says so. Adding a booking link would contradict the contact page.
-- **A contact form service (Netlify Forms, Formspree)** — same reason. The site
-  currently collects nothing, which is what lets the privacy notice wait until
-  after launch. Adding a form changes that.
+- ~~**A contact form service (Netlify Forms, Formspree)**~~ — **superseded by C2
+  on 30 July.** The order page decision needs a form, and C2 picks Netlify Forms
+  for it. The reasoning here still holds for why the site had no form until then,
+  and it names the consequence correctly: a form means the privacy notice can no
+  longer wait.
 - **E-signature (Zoho Sign, Dropbox Sign)** — at £30 to £350 an emailed
   confirmation is proportionate. Revisit if a client ever asks for a signed
   agreement.
@@ -754,8 +757,8 @@ Worth writing down so they don't get re-proposed:
    B1.
 4. **Cloudflare Web Analytics** — free, one script tag.
 5. ~~Business bank account~~ — **done**, Revolut Pro, see C1.
-6. **ICO self-assessment, then the fee if due** — £47–52/yr. Currently missing
-   from the roadmap entirely.
+6. ~~ICO self-assessment, then the fee if due~~ — **done**, 30 July 2026,
+   £47/yr by Direct Debit, application `C1995412`. See D1.
 7. **Insurance quotes from two providers** — before the first Foundation, not
    before launch.
 8. **ICO privacy notice generator** — free, before the first client sends

@@ -11,6 +11,75 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-07-31b (an outside read of the whole business, and the entry point it was missing)
+
+- **The question asked:** could an external person read this repo and understand
+  what is sold, what has been done, and what is left to launch and run? The
+  answer was no, and the reason was not the quality of the thinking. Every fact
+  an outsider needs is here. There was no path to any of it — no entry point, no
+  index, no glossary, and no way to tell a decision from a delivery.
+
+- **`HANDOVER.md` written**, at the repo root, for a reader with no context: the
+  five products, what exists, what does not, the critical path, the dated
+  obligations, the dependency register, the ongoing operating cadence, the
+  decisions only the owner can make, and a glossary of the vocabulary this repo
+  uses without defining. It is the file to keep current; if it and `ROADMAP.md`
+  ever disagree, one of them is wrong and it matters which.
+
+- **`ops/README.md` written** — an index of the thirteen ops files with a status
+  against each. The reading order for the five audit documents (method →
+  questions → checklist → report template → setup) existed only as a "read X
+  first" line inside each file, so it was discoverable only by opening all five.
+
+- **The distinction the repo was missing: decided is not done.** `[x]` currently
+  means "we settled this" in some places and "this exists in the world" in
+  others. The ICO registration and the bank account are done. The pay button and
+  every ticked item in 3a and 3c are decisions about things that have never
+  happened. `audit-method.md` gets this exactly right in its own header —
+  *"decided on paper, unvalidated in practice"* — and the roadmap's ticks carry
+  no such qualifier. Not changed here, because retagging the roadmap is the
+  owner's call, but it is the single most misleading thing in the repo.
+
+- **Stale statements corrected, all verified against the code or against the
+  same file's own later sections before touching them:** `site/README.md`'s
+  pre-launch placeholder list (four of six bullets were dead, and the "grep for
+  `[PLACEHOLDER` and replace every instance" instruction returned five hits of
+  which three are unreachable or the detector function itself — that instruction
+  was deleted from the roadmap on 30 July as spent and never propagated here);
+  `third-party-services.md` naming Gmail as the contact address after Zoho
+  replaced it on 29 July; the same file's to-do list still calling the ICO fee
+  "currently missing from the roadmap entirely" 300 lines after recording it as
+  done; the same file listing Netlify Forms under "deliberately not
+  recommending" while C2 picks Netlify Forms; and `ROADMAP.md` pointing at
+  section 1a for the service address, which is in 1c — a section labelled
+  closed, so the reader concludes the item is settled.
+
+- **Two findings worth carrying, both verified in the built output:**
+
+  **The footer placeholder is a published disclosure breach, not a pending
+  task.** `[PLACEHOLDER: address for service of documents — see ROADMAP.md...]`
+  renders in the footer of all seven pages of the live site, naming an internal
+  file, on a site engineered so that AI assistants read the business facts and
+  repeat them confidently. The roadmap treats it as a footer field awaiting a
+  supplier. It is the breach itself, and it is being crawled.
+
+  **Three pages state in the present tense that Noven is working with clients
+  across the UK** — `Base.astro:170`, `contact.astro:48`, `about.astro:151` —
+  and there are no clients. Not changed here: it is the owner's copy and the
+  right wording is a commercial choice, not a correction. But it is the exact
+  class of claim this business exists to remove from other people's sites.
+
+- **The gap that matters, stated plainly.** Five documents specify an audit
+  that has never been run once. Three monthly plans are published, priced and
+  machine-readable with no runbook for delivering a single month of any of them.
+  The £350 Foundation is on sale with no method and no time budget anywhere in
+  the repo. None of that is a crisis while nobody has paid; all of it becomes
+  one on the day someone does. **The correct next move is not more planning —
+  it is to run one audit on Noven itself and find out what this costs in
+  hours.** The self-audit is the only item that is both unblocked and
+  asset-creating, and it produces the one number the business plan rests on: how
+  long a month of Maintain actually takes.
+
 ### 2026-07-31 (the audit has a setup guide, so the Noven run can start cold)
 - **`ops/audit-setup.md` written.** The method said what to do; nothing said what
   to have open, signed up for and capped before doing it. This is that: three API
