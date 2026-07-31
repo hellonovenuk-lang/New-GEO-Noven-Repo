@@ -11,6 +11,238 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-07-31d (merged to main on the owner's instruction — the new prices are live)
+
+**`CLAUDE.md` says never commit to `main` and finish every piece of work on an
+unmerged branch. The owner overrode it explicitly, as they have six times
+before. Logged as an explicit call, not a new default** — the rule stands for the
+next session.
+
+**What going to `main` actually does:** Netlify deploys `main`, so this publishes
+the repricing to `novenstudio.co.uk` and, more importantly, into the JSON-LD that
+the assistants read. The site is deliberately built so those systems ingest the
+business facts and repeat them confidently, which is the whole product — and it
+means a published price is closer to a one-way door than a normal site's is.
+Caches and third-party copies persist after an edit. The prices were confirmed
+individually before the copy was applied, so this is intended, but it is the
+reason the next price change costs more than this one did.
+
+**Live as of this merge:** audit £125, Foundation £750 at a fixed four-part scope,
+Maintain £95, Grow £250, Lead £495 monthly. Questions 10/15/25. Turnaround two
+working days. "Order" not "Book". "Available to clients across the UK" rather
+than the present-tense claim that we already have some.
+
+**Still live and still wrong, unchanged by this merge:** the footer
+`[PLACEHOLDER: address for service of documents — see ROADMAP.md]` on all seven
+pages. It was already on `main` and is not made worse here, but it remains the
+one published defect, and it is a legal disclosure rather than a cosmetic gap.
+
+### 2026-07-31c (the repricing, and clearing the decisions the review turned up)
+
+Everything below was recommended in 2026-07-31b, put to the owner, and confirmed
+before it was applied. The prices were confirmed individually.
+
+- **The finding that drove it: the ladder was inverted.** Price against
+  estimated effort and every step up earned less per hour than the one below —
+  audit ~£9–12, Foundation ~£17–35, Maintain ~£27–42, Grow ~£18–28, Lead
+  ~£11–19. **The premium tier paid about the same as the loss leader.** Success
+  at selling made the business worse. That is not a level problem, it is an axis
+  problem: the tiers separated on question volume, which is pure cost to us and
+  little the client can feel. A page is a permanent asset; a longer spreadsheet
+  is not.
+
+- **New prices.** Audit £30 → **£125**. Foundation £350 → **£750**, scope fixed.
+  Maintain £75 → **£95**, Grow £125 → **£250**, Lead £250 → **£495**. Questions
+  10/25/50 → **10/15/25**. Lead's fortnightly checking removed. Full reasoning
+  in `ops/service-tiers.md` section 9.
+
+- **A bundle went in and came straight back out, same day.** "Foundation free
+  with twelve months of Grow" was applied to the pricing page and then removed
+  when the owner questioned it. **Nothing commits anyone to twelve months** — the
+  plans roll month to month with no minimum term, published in four places
+  including the FAQPage structured data and the pricing page's meta description
+  ("No lock-ins"). The offer as written let someone take the £750 Foundation, pay
+  one £250 month, and cancel: £1,000 of work for £250, entirely within our own
+  terms. The "£3,000 committed" figure was false. **The cancellation policy is
+  the older and better-argued decision and it wins.** The generalisable lesson:
+  any offer phrased "for N months" is incompatible with no-minimum-term, and the
+  terms are not the thing to bend.
+
+- **Then settled properly: we do not bundle services at all.** Alternatives were
+  offered — crediting the Foundation back monthly, a half-price first three
+  months — and the owner declined all of them. The question was not which bundle
+  to run but whether to bundle, and the answer is no. Recorded in
+  `ops/service-tiers.md` section 9 as a **standing decision**, with the full list
+  of what it rules out (Foundation-with-a-plan, first-month-free, annual-payment
+  discounts, founding rates, referral discounts, "N months for the price of M")
+  so it does not get re-litigated one offer at a time by a future session hunting
+  for conversion. Every product is bought and priced on its own; a client who
+  buys more pays more.
+
+  Three supporting reasons worth keeping, because they are stronger than "the
+  owner said so": every bundle found so far ends in an asterisk on the
+  cancellation terms, which are in the structured data, and a business selling
+  machine-readable accuracy should not need a footnote on its pricing page; the
+  repricing set each product against its own effort, so a combination discount
+  would say the standalone price was soft; and the upgrade engine is already the
+  monthly record, which does the job without anyone selling. Also practical —
+  one person cannot service a promotion with a window and a clawback, and the
+  client record has no column for it because it should not need one.
+
+  **Not a bundle, and stays:** the tiers are cumulative — Grow contains Maintain,
+  Lead contains Grow. That is one product at three sizes.
+
+- **Why before the first client.** It is free now and expensive later. No client
+  to upset, no invoice to amend — and the monthly plans have no minimum term by
+  design, so a later rise on paying clients is a churn event with nothing holding
+  them. Launch prices are the only prices that can be set for free. **No founding
+  rate**: considered, declined by the owner, on the grounds that a discount game
+  sits badly on a brand built on plain dealing.
+
+- **Raising the Foundation without capping it would have made things worse.**
+  `how-it-works.astro` promised "writing or restructuring key **pages**" —
+  plural, unbounded — and no time budget for the Foundation exists anywhere in
+  this repo. The scope is now four fixed pieces of work, the fourth being **two**
+  answer pages, and the page says so. Work found outside the four is quoted, not
+  absorbed. It is still the only product with no estimate of how long it takes.
+
+- **The audit's economics argument had to be rewritten, not just renumbered.**
+  `audit-method.md` section 1 argued the audit was a loss leader that shouldn't
+  be judged as profitable work. True at £30. At £125 and an honest 2.5–3.5 hours
+  it earns ~£36–50/hour, so the argument is retired rather than repeated out of
+  habit — with a new consequence in its place: **at £30 a thin report was
+  survivable because the price apologised for it; at £125 it isn't.**
+
+- **Considered and deliberately not done: cutting the audit's run volume.** Five
+  runs on the three discovery questions and three on the rest would have halved
+  the classification time. It was the right answer at £30, when the time budget
+  was binding. At £125 it isn't — the volume is what the client is paying for,
+  and a second band scale for three-run questions would complicate the one part
+  of the report that is currently unambiguous. Revisit only if the timed
+  self-audit lands above three hours.
+
+- **The time budget now includes the work.** The audit table totalled 95 minutes
+  and budgeted the largest step at a dash — reading 168 answers and assigning
+  each an outcome, a competitor list and any untrue statement, folded into a
+  20-minute report step. It does not fold. It is 60–110 minutes on its own, and
+  leaving it out is exactly what made £30 look like £20/hour when it was nearer
+  £9–12. New total: **2h40 – 3h30**. The site's turnaround moved from one working
+  day to two, because one was never deliverable — `audit-questions.md` requires
+  the client to confirm the questions first, which means an email and a wait.
+
+- **`ops/monthly-record-template.md` written.** The audit runs once per client;
+  this runs every month, for every client, forever, and it had a price and no
+  format. One page, four sections, bands not percentages, and one hard rule: **a
+  provider's model change is flagged at the top**, or the first month an
+  assistant changes behaviour reads to the client as their own decline.
+
+- **`ops/accounts.md` written**, and it is the continuity answer. Every account,
+  cost, renewal, and what breaks if it lapses — no credentials, because this repo
+  is public. Real gaps are marked `[PLACEHOLDER]` rather than guessed, and the
+  worst is the domain: **registrar, expiry and auto-renew status are recorded
+  nowhere**, on the one dependency whose failure is total.
+
+- **`ROADMAP.md` now distinguishes decided from done.** New `[D]` marker: `[x]`
+  means true in the world, `[D]` means a document describing an intention. All of
+  3a's method items and 3c's tier items became `[D]`. They had been `[x]`, which
+  told a reader the business does things it has never done once.
+
+- **Two stubs deleted, one filled.** `org-chart.md` (five company seats) and
+  `escalation-rules.md` (three never-do-this-without-me rules) described a
+  business with employees and someone to escalate to; this one has neither, and
+  `CLAUDE.md` already does the escalation job. `spine.md` → **`client-record.md`**
+  with the field list filled in — "the spine" was used in three places and
+  defined in none.
+
+- **Site copy no longer duplicated in `service-tiers.md` section 4.** It used to
+  transcribe the live pricing copy in full, and the repricing proved the cost:
+  every quoted block was wrong within an hour. The site is canonical; the section
+  now says where the copy lives and what must stay true about it.
+
+- **Two truth gaps closed while the copy was open.** Three pages said in the
+  present tense that Noven *is* working with clients across the UK — there are no
+  clients; now "available to". And four calls to action said "Book the audit"
+  when nothing can be booked; now "Order". Both were flagged in 2026-07-31b and
+  left for the owner; the owner asked for them.
+
+- **Verified, not assumed:** build clean at 7 pages, all five prices correct in
+  the JSON-LD offers, and no stale price, cadence or "Book the" string anywhere
+  in `dist/`.
+
+**Still the constraint, and worth writing where it will be re-read:** these
+prices are set from *estimated* effort. Nothing in this business has been timed
+because nothing has been done. If the self-audit shows Maintain takes three hours
+rather than one, section 9 gets rewritten, not defended.
+
+### 2026-07-31b (an outside read of the whole business, and the entry point it was missing)
+
+- **The question asked:** could an external person read this repo and understand
+  what is sold, what has been done, and what is left to launch and run? The
+  answer was no, and the reason was not the quality of the thinking. Every fact
+  an outsider needs is here. There was no path to any of it — no entry point, no
+  index, no glossary, and no way to tell a decision from a delivery.
+
+- **`HANDOVER.md` written**, at the repo root, for a reader with no context: the
+  five products, what exists, what does not, the critical path, the dated
+  obligations, the dependency register, the ongoing operating cadence, the
+  decisions only the owner can make, and a glossary of the vocabulary this repo
+  uses without defining. It is the file to keep current; if it and `ROADMAP.md`
+  ever disagree, one of them is wrong and it matters which.
+
+- **`ops/README.md` written** — an index of the thirteen ops files with a status
+  against each. The reading order for the five audit documents (method →
+  questions → checklist → report template → setup) existed only as a "read X
+  first" line inside each file, so it was discoverable only by opening all five.
+
+- **The distinction the repo was missing: decided is not done.** `[x]` currently
+  means "we settled this" in some places and "this exists in the world" in
+  others. The ICO registration and the bank account are done. The pay button and
+  every ticked item in 3a and 3c are decisions about things that have never
+  happened. `audit-method.md` gets this exactly right in its own header —
+  *"decided on paper, unvalidated in practice"* — and the roadmap's ticks carry
+  no such qualifier. Not changed here, because retagging the roadmap is the
+  owner's call, but it is the single most misleading thing in the repo.
+
+- **Stale statements corrected, all verified against the code or against the
+  same file's own later sections before touching them:** `site/README.md`'s
+  pre-launch placeholder list (four of six bullets were dead, and the "grep for
+  `[PLACEHOLDER` and replace every instance" instruction returned five hits of
+  which three are unreachable or the detector function itself — that instruction
+  was deleted from the roadmap on 30 July as spent and never propagated here);
+  `third-party-services.md` naming Gmail as the contact address after Zoho
+  replaced it on 29 July; the same file's to-do list still calling the ICO fee
+  "currently missing from the roadmap entirely" 300 lines after recording it as
+  done; the same file listing Netlify Forms under "deliberately not
+  recommending" while C2 picks Netlify Forms; and `ROADMAP.md` pointing at
+  section 1a for the service address, which is in 1c — a section labelled
+  closed, so the reader concludes the item is settled.
+
+- **Two findings worth carrying, both verified in the built output:**
+
+  **The footer placeholder is a published disclosure breach, not a pending
+  task.** `[PLACEHOLDER: address for service of documents — see ROADMAP.md...]`
+  renders in the footer of all seven pages of the live site, naming an internal
+  file, on a site engineered so that AI assistants read the business facts and
+  repeat them confidently. The roadmap treats it as a footer field awaiting a
+  supplier. It is the breach itself, and it is being crawled.
+
+  **Three pages state in the present tense that Noven is working with clients
+  across the UK** — `Base.astro:170`, `contact.astro:48`, `about.astro:151` —
+  and there are no clients. Not changed here: it is the owner's copy and the
+  right wording is a commercial choice, not a correction. But it is the exact
+  class of claim this business exists to remove from other people's sites.
+
+- **The gap that matters, stated plainly.** Five documents specify an audit
+  that has never been run once. Three monthly plans are published, priced and
+  machine-readable with no runbook for delivering a single month of any of them.
+  The £350 Foundation is on sale with no method and no time budget anywhere in
+  the repo. None of that is a crisis while nobody has paid; all of it becomes
+  one on the day someone does. **The correct next move is not more planning —
+  it is to run one audit on Noven itself and find out what this costs in
+  hours.** The self-audit is the only item that is both unblocked and
+  asset-creating, and it produces the one number the business plan rests on: how
+  long a month of Maintain actually takes.
+
 ### 2026-07-31 (the audit has a setup guide, so the Noven run can start cold)
 - **`ops/audit-setup.md` written.** The method said what to do; nothing said what
   to have open, signed up for and capped before doing it. This is that: three API

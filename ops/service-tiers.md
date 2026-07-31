@@ -21,11 +21,13 @@ Researched 2026-07-28. Confirm before quoting any of it publicly.
 | UK local search agencies, entry package | ~£395 + VAT |
 | UK local search agencies, typical small-business client | £500–£1,500 |
 | Agencies doing AI-assistant visibility work | $1,500–$10,000, entry retainers $2,000–5,000 |
-| **Noven Maintain** | **£75** |
-| **Noven Lead** | **£250** |
+| **Noven Maintain** | **£95** |
+| **Noven Lead** | **£495** |
 
-**We are roughly a fifth of the UK market floor, and Lead is still cheaper than
-the cheapest agency's entry package.**
+**We are still well under the UK market floor at Maintain, and Lead now sits at
+roughly the cheapest agency's entry package rather than a third of it** —
+against a deliverable of two permanent pages a month, which an entry package
+does not include. Repriced 2026-07-31; see section 9.
 
 This is a position, not a mistake. It serves the businesses agencies have priced
 themselves out of — the sole-trader trades, the two-partner firms, the
@@ -35,12 +37,14 @@ assistant in the first place.
 
 **But it means agency tier logic does not transfer.** An agency separates its
 tiers by how many hours of expensive human work go in, because a client paying
-£1,500 can absorb a £1,000 step. Our client is weighing £125 against a phone
-bill. We cannot sell more hours at these prices — there aren't enough hours in a
-month to service twenty clients that way.
+£1,500 can absorb a £1,000 step. Our client is weighing a monthly fee against a
+phone bill. We cannot sell more hours at these prices — there aren't enough hours
+in a month to service twenty clients that way.
 
-So our levels are separated by **how much of the owner's time each one is allowed
-to consume**, by design.
+So our levels are separated by **how many permanent answer pages each one
+produces**, and only secondarily by how many questions we track. Section 9
+explains why that replaced separating them by question volume, which was the
+original design and was quietly charging us more per pound at every step up.
 
 ---
 
@@ -67,40 +71,51 @@ without asking us anything.
 both say to do the first one end to end and time it. Do that before treating any
 number below as real.
 
-### Maintain — £75/month
+### Maintain — £95/month
 
 - **10 questions** tracked, chosen with the client from what their customers
   actually ask
-- Asked **5 times each, monthly**, across the four assistants
+- Asked **5 times each, monthly** — by API on ChatGPT, Gemini and Perplexity,
+  and by hand on Copilot and Google's AI Overviews at the reduced sample
+  `ops/audit-method.md` section 2 sets. **Not "across the four assistants"**,
+  which is what this file used to say and which the method has never supported:
+  taken literally it meant 100 manual lookups per client per month.
 - Business facts kept current in the structured data as the business changes
 - Drift fixed when facts go stale or go wrong
-- A **one-page written record**: where you appeared, what changed since last
-  month, which questions you are still missing from
+- A **one-page written record** — the format is
+  `ops/monthly-record-template.md`
 
 **Time budget: about 1 hour a month after setup. This is the number that decides
 whether the business works** — see section 6.
 
 **What it deliberately does not include:** closing any of the gaps it reports.
 Maintain tells you where you're missing. It doesn't fix it. That is not a
-withheld feature, it's the honest boundary of what £75 buys, and it is also the
+withheld feature, it's the honest boundary of what £95 buys, and it is also the
 upgrade engine (section 5).
 
-### Grow — £125/month
+### Grow — £250/month
 
-- Everything in Maintain, across **25 questions** instead of 10
+- Everything in Maintain, across **15 questions** instead of 10
 - **One new answer page per month**, written properly and published on the
   client's own site, chosen from the gaps the record identified
 
 **Time estimate: 3–4 hours a month.**
 
-### Lead — £250/month
+### Lead — £495/month
 
-- Everything in Grow, across **50 questions**, checked **fortnightly**
+- Everything in Grow, across **25 questions**, checked **monthly**
 - **Two answer pages per month**
 - **A quarterly written review** naming the competitors the assistants put ahead
   of the client, and an honest read on why
 
-**Time estimate: 7–8 hours a month.**
+**Time estimate: 6–7 hours a month.**
+
+**Lead's fortnightly cadence was removed on 2026-07-31**, along with the drop
+from 50 questions to 25. Fortnightly checking of 50 questions is roughly 1,500
+runs a month — an estimated 13–23 hours for £250, which made the premium tier
+the worst-paid work in the business. Section 8 of this file had already flagged
+the cadence as an open question while the site sold it as a firm commitment.
+Nobody had bought Lead, so the change cost nothing.
 
 ### What an answer page actually is
 
@@ -152,7 +167,7 @@ is prose with the product removed. We would have to verify it afterwards
 regardless, so the client-publishes path costs *more* of our time, not less, and
 delivers a worse page. It is also the exact mechanism by which facts drift,
 which is the one failure this business cannot have. Add to that the delivery
-risk: a £125/month deliverable sitting unpublished in someone's inbox for three
+risk: a £250/month deliverable sitting unpublished in someone's inbox for three
 weeks is a level that visibly fails.
 
 The honest arguments the other way, recorded because they shape how we ask:
@@ -188,71 +203,20 @@ calls and time, and it is honest — unlike "faster pace", it can be checked.
 
 ---
 
-## 4. The copy, as published
+## 4. Where the published copy lives
 
-Applied to the site on 2026-07-28. Two versions of each, because the visible copy
-and the machine-readable description come from the same source and must agree —
-`business.ts` feeds both the pricing page and the structured data. **Change a
-level here and change it in both places**, or a client and an assistant end up
-being told different things, which is the one failure this business cannot have.
+**This section used to transcribe the live site copy in full. It no longer
+does** (changed 2026-07-31). Two copies of the same sentences in two files is
+the mechanism by which documentation goes stale, and the repricing proved it —
+every quoted block here was wrong within an hour of the site changing. The site
+is the canonical text. This section says where it is and what must stay true
+about it.
 
-### Pricing page — the intro to the "Ongoing" block
-
-Current wording, with one sentence sharpened to name the three verbs:
-
-> The assistants change constantly, so staying visible is maintenance, not magic.
-> All three levels are the same service at different intensities — hold your
-> position, close the gaps, or lead your field — and you can move between them at
-> any time. Each one includes everything above it.
-
-### Pricing page — the three levels
-
-**Maintain**
-
-> Holds the position the Foundation built. Every month we ask the assistants ten
-> questions your customers actually ask — five times each, because their answers
-> vary — and send you a short written record: where you appeared, what changed
-> since last month, and which questions you're still missing from. Your business
-> facts stay current, and we fix them when they drift.
-
-**Grow**
-
-> Everything in Maintain, across twenty-five questions instead of ten. Each month
-> we take one of the questions you're missing from and write the page that
-> answers it properly, on your own site. That's how you go from showing up
-> sometimes to showing up for the things people actually ask.
-
-**Lead**
-
-> For businesses that want to be the first name mentioned, not just a name
-> mentioned. Fifty questions, checked every two weeks, and two new answer pages a
-> month. Every quarter you also get a written review of the competitors the
-> assistants are naming ahead of you, and our honest read on why.
-
-### `business.ts` — the `schemaDescription` fields
-
-These are what an assistant reads. They have to stand alone without the
-surrounding page, and they carry the price.
-
-**Maintain**
-
-> Monthly plan to hold your position: ten questions your customers ask, put to
-> the AI assistants five times each every month, with a written record of where
-> you appeared and which questions you are still missing from. Business facts
-> kept current and corrected when they drift. £75 per month.
-
-**Grow**
-
-> Monthly plan to close the gaps: everything in Maintain across twenty-five
-> questions, plus one new page each month answering a question you are currently
-> missing from. £125 per month.
-
-**Lead**
-
-> Monthly plan for businesses that want to be the first name an assistant gives:
-> fifty questions checked fortnightly, two new answer pages each month, and a
-> quarterly written review of the competitors being named ahead of you and why.
-> £250 per month.
+**The one rule that matters:** the visible copy and the machine-readable
+description come from the same source and must agree. `business.ts` feeds both
+the pricing page and the structured data. **Change a level in one place and
+change it in all of them**, or a client and an assistant end up being told
+different things, which is the one failure this business cannot have.
 
 ### Where this copy lives
 
@@ -287,7 +251,7 @@ get irritated and ask us to fix it. The report told the truth either way.
 
 **Grow → Lead.** A different trigger, and a stronger one: **a named competitor.**
 "For your most valuable question, the assistants named three other firms and not
-you" is the sentence that moves someone from £125 to £250. It is not about
+you" is the sentence that moves someone from £250 to £495. It is not about
 volume, it is about a rival. This is why the competitive review belongs at Lead
 and nowhere else — it is the only thing at that price that isn't just more.
 
@@ -302,32 +266,32 @@ through retention, not conversion. Judge them on that.
 
 **Maintain will dominate early.** Plan for it rather than hoping otherwise.
 
-Twenty Maintain clients is £1,500 a month. Reaching £3,000 on Maintain alone
-means forty clients, and forty relationships is more than one person holds well —
-the commonly cited ceiling for a solo operator is four to eight clients at agency
-scope, and even at our much lighter scope forty is a stretch.
+Twenty Maintain clients is £1,900 a month. Reaching £3,000 on Maintain alone
+means thirty-two clients, and thirty-two relationships is more than one person
+holds well — the commonly cited ceiling for a solo operator is four to eight
+clients at agency scope, and even at our much lighter scope thirty-two is a
+stretch. **This is the arithmetic the repricing was mostly for:** the old £75
+needed forty clients for the same figure.
 
 Two things follow, and they change what to work on.
 
-**The Foundation is the income in year one, not the monthlies.** At £350, one
-Foundation is nearly five months of a Maintain client's revenue delivered in one
-go. Five Foundations is £1,750. Early on this is a project business with a
+**The Foundation is the income in year one, not the monthlies.** At £750, one
+Foundation is nearly eight months of a Maintain client's revenue delivered in one
+go. Five Foundations is £3,750. Early on this is a project business with a
 subscription tail. **So converting audits into Foundations matters more in year
 one than converting Maintain clients into Grow clients** — that's where the
 effort should go, and it is a different activity from upselling.
 
 **Maintain's delivery time is the single number that decides the ceiling.** At
 one hour a month it scales to twenty-plus clients. At three hours it caps the
-business at eight and there is no growth without a price rise.
+business at eight and there is no growth without a further price rise.
 
 So **systematise Maintain from client one.** Same questions, same format, same
-record, every time. Resist doing anything bespoke inside it. That is not
-corner-cutting — it is the only thing that makes £75 possible at all. Anything
-genuinely bespoke a client wants is a reason to talk about Grow, not a reason to
-quietly do it for free.
-
-**Not recommending a price change.** £75 is defensible as a deliberate position
-in a segment agencies have abandoned. It works only if delivery cost matches it.
+record, every time — the format is `ops/monthly-record-template.md` and it exists
+so that this can actually be done. Resist doing anything bespoke inside it. That
+is not corner-cutting — it is the only thing that makes £95 possible at all.
+Anything genuinely bespoke a client wants is a reason to talk about Grow, not a
+reason to quietly do it for free.
 
 ---
 
@@ -355,9 +319,10 @@ them.** That is lucky, and it is a reason not to disturb the structure.
 
 ## 8. Decisions still open
 
-- **Question counts.** 10 / 25 / 50 is a proposal. It doubles cleanly and it is
-  easy to say out loud. Not yet tested against how long the checking actually
-  takes.
+- **Closed 2026-07-31 — question counts.** Now **10 / 15 / 25**, replacing
+  10 / 25 / 50. Doubling was easy to say out loud and was the wrong axis: it
+  doubled our cost per step while adding little the client could feel. See
+  section 9.
 - **Run count.** Five runs per question is what the variance research implies is
   the minimum honest number (see `ops/third-party-services.md`, section E3). It
   may need to be higher for confidence, or lower for time. Validate on the first
@@ -369,11 +334,10 @@ them.** That is lucky, and it is a reason not to disturb the structure.
 - **Reporting five runs as a band, not a percentage** (decided 2026-07-30,
   `ops/audit-method.md` section 4). It applies to the monthly record as much as
   to the audit, and it is what stops a client reading noise as a decline in
-  month three. The published copy in section 4 above says "five times each" and
-  is unaffected.
-- **Whether Lead's fortnightly checking is worth the doubling of effort**, or
-  whether the quarterly competitive review alone carries the tier. Fortnightly
-  doubles our query volume and our time for a benefit the client may not feel.
+  month three. The published copy says "five times each" and is unaffected.
+- **Closed 2026-07-31 — Lead's fortnightly checking.** Removed. It doubled our
+  query volume and our time for a benefit the client could not feel, and it made
+  the premium tier the worst-paid work in the business. Lead is monthly.
 - **Closed 2026-07-28 — who publishes the answer pages.** We publish directly,
   with a defined fallback where we cannot get access. Full reasoning in section
   3, along with what an answer page is. Left as a pointer here because this file
@@ -385,3 +349,146 @@ them.** That is lucky, and it is a reason not to disturb the structure.
   reads it.** Left alone rather than churned — the existing values still fit the
   new framing — but it is either dead code to delete or a panel someone intended
   and never built. Worth five minutes next time that file is open.
+
+---
+
+## 9. The repricing — 2026-07-31
+
+**What changed.** Audit £30 → **£125**. Foundation £350 → **£750**, with the
+scope fixed. Maintain £75 → **£95**, Grow £125 → **£250**, Lead £250 → **£495**.
+Question counts 10 / 25 / 50 → **10 / 15 / 25**. Lead's fortnightly checking
+removed. Confirmed by the owner before the copy was applied.
+
+### The finding that forced it: the ladder was inverted
+
+Price against the estimated true effort — the estimates are from documented step
+counts, not measurement, and the self-audit replaces them:
+
+| Product | Old price | Est. hours | Est. £/hour |
+|---|---|---|---|
+| Audit | £30 | 2.5–3.5 | £9–12 |
+| Foundation | £350 | 10–20 | £17–35 |
+| Maintain | £75/mo | 1.8–2.8 | £27–42 |
+| Grow | £125/mo | 4.5–7 | £18–28 |
+| Lead | £250/mo | 13–23 | £11–19 |
+
+**Every step up earned less per hour than the one below it.** Lead — the premium
+tier — paid roughly the same as the loss leader. Success at selling made the
+business worse, which is not a pricing level problem. It is a pricing *axis*
+problem: the tiers were separated by question volume, and question volume is
+pure cost to us with no leverage. Selling more of it sold more of the owner's
+hours at a discount.
+
+### The fix: price on answer pages, not questions
+
+A page is a permanent asset that keeps working after it is written. Twenty-five
+extra questions is a longer spreadsheet. So the tiers now separate on pages
+(0 / 1 / 2 a month), question counts rise gently rather than doubling, and each
+step up pays more per hour than the last. Section 5's upgrade logic is
+unaffected and arguably strengthened — the trigger for Grow → Lead was never
+volume, it was a named competitor.
+
+### Why the audit went to £125 rather than staying a loss leader
+
+Three reasons, in order of weight:
+
+1. **Price is a quality signal where the buyer cannot judge the product in
+   advance.** £30 for a bespoke report reads as automated. The barrier at £125
+   is trust, not money, and trust is answered by the sample audit and a plain
+   refund line — not by a low number.
+2. **It selects the wrong buyer.** The audit's job is to convert to a Foundation.
+   A £30 buyer is not the same person as a £750 buyer.
+3. **It consumed the scarcest resource in the business.** At an estimated 2.5–3.5
+   hours, thirty-three audits a month — the volume needed to reach £1,000 —
+   is ~53 hours of near-minimum-wage work.
+
+The pricing page section that asked *"Why is the audit only £30?"* is now
+*"Why does the audit cost £125?"* and answers it with the method: repeated runs,
+verbatim quotes, competitors named, read by a person.
+
+**No founding rate.** Considered and declined by the owner. Launching flat at
+the new prices avoids running a discount game on a brand built on plain dealing.
+
+### Why the Foundation had to be capped as well as raised
+
+`how-it-works.astro` promised "writing or restructuring key **pages**" — plural,
+unbounded — and no time budget for the Foundation existed anywhere in this repo.
+Raising the price without fixing the scope would have raised the ceiling on an
+open-ended commitment. The scope is now four fixed pieces of work, of which the
+fourth is **two** answer pages, and the page says so. If the audit finds work
+outside those four, we say so rather than absorbing it.
+
+### The bundle that was proposed, applied, and backed out the same day
+
+**Proposed:** the Foundation included free with twelve months of Grow — £750
+given away against £3,000 committed, converting a one-off buyer into a
+subscriber without discounting the standalone price.
+
+**Why it was wrong, and it is worth recording rather than quietly deleting:
+nothing commits anyone to twelve months.** The monthly plans roll month to month
+with no minimum term, and that is published in four places — `faq.astro` ("Am I
+locked into a contract?" "No."), which feeds the FAQPage structured data;
+`pricing.astro` and `how-it-works.astro` in the cancellation paragraph; and the
+pricing page's own meta description, which ends "No lock-ins."
+
+So the offer as written let a client take the £750 Foundation, pay £250 for one
+month of Grow, and cancel before the next payment date — £1,000 of work for
+£250, entirely within our published terms. The "£3,000 committed" figure was
+simply false. **The cancellation policy is the older and better-argued decision
+(roadmap 1a) and it wins.**
+
+**Backed out of the site and this document on 2026-07-31**, the same day it went
+in. The lesson generalises: any offer phrased as "for N months" is incompatible
+with no-minimum-term, and the terms are not the thing to bend.
+
+### Standing decision: we do not bundle services — 2026-07-31
+
+**Settled by the owner. Not an open question, and not to be reopened by a future
+session looking for a way to lift conversion.**
+
+Every product is bought and priced on its own. No combined offers, no "free with",
+no discount for taking two, no minimum-term-in-exchange-for-something. Alternatives
+were put forward — crediting the Foundation back monthly, a half-price first three
+months — and **all of them were declined.** The question was not which bundle to
+run. It was whether to bundle at all, and the answer is no.
+
+**Why it holds up, beyond being the owner's call:**
+
+- **It is the only version that needs no asterisk.** Every bundle discovered so
+  far ends in a qualification on the cancellation terms, and those terms are
+  published in four places including the structured data. A business whose
+  product is machine-readable accuracy should not have a pricing page that needs
+  a footnote.
+- **The prices are already the argument.** Section 9 repriced each product to
+  stand on its own effort. A discount for combining says the standalone price was
+  soft, which is exactly the impression the repricing was meant to remove.
+- **The upgrade engine is the monthly record, not an offer** (section 5). The
+  record reports gaps it does not close. That is what moves a client up a tier,
+  and it works without anyone selling anything — a bundle would be doing a job
+  that is already done.
+- **One person cannot service a promotion.** Anything with a window, a
+  qualifying period or a clawback needs tracking per client, and the client
+  record has no column for it because it should not need one.
+
+**What this rules out in practice**, so it does not get re-litigated in pieces:
+Foundation-with-a-plan offers, first-month-free, annual-payment discounts,
+introductory or founding rates (already declined separately), referral discounts,
+and any "N months for the price of M". A client who buys more pays more.
+
+The only combination that remains, and it is not a bundle: **the tiers are
+cumulative by design** — Grow contains Maintain, Lead contains Grow. That is one
+product at three sizes, priced accordingly, and it is what section 2 means by
+three verbs.
+
+### Why now, before the first client
+
+Because it is free now and expensive later. Nobody has bought anything, so there
+is no client to upset and no invoice to amend. The monthly plans have no minimum
+term by design (roadmap 1a), which means a later price rise on existing clients
+is a churn event with nothing holding them. Launch prices are the only prices
+that can be set without cost.
+
+**Still true and still the constraint:** these prices work only if delivery cost
+matches them, and delivery cost is currently an estimate. The self-audit
+(`ops/audit-setup.md`) produces the real numbers. If Maintain turns out to take
+three hours rather than one, this section gets rewritten, not defended.

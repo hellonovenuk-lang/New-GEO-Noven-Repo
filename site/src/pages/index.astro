@@ -7,7 +7,7 @@ import { organizationSchema } from '../data/schema';
 
 const title = 'Noven — Get found when customers ask AI who to use';
 const description =
-  'Noven helps accountants, solicitors, clinics, consultancies and agencies get found and recommended when customers ask ChatGPT, Google, Copilot or Perplexity who to use. Start with a £30 audit.';
+  'Noven helps accountants, solicitors, clinics, consultancies and agencies get found and recommended when customers ask ChatGPT, Google, Copilot or Perplexity who to use. Start with a £125 audit.';
 
 const audit = plan('audit');
 const foundation = plan('foundation');
@@ -31,7 +31,7 @@ const orgSchema = organizationSchema(Astro.site);
         <div data-reveal>
           <div class="cta-row">
             <a class="btn" href="/contact/">
-              Book the {money(audit.price)} audit
+              Order the {money(audit.price)} audit
               <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
                 <path
                   d="M9 1l4 4-4 4M13 5H1"

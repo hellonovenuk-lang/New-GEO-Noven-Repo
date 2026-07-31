@@ -1,6 +1,6 @@
 # How we do the audit
 
-**Internal document.** Decides how the £30 audit is actually delivered: which
+**Internal document.** Decides how the £125 audit is actually delivered: which
 assistants we check, how many times, how we record it, what it costs us, and how
 long it is allowed to take. Written 2026-07-30.
 
@@ -25,28 +25,46 @@ Companion documents:
 
 The audit is sold as an honest diagnosis, and it has to be one. But it is worth
 being straight internally about the second thing it is: **the qualifier for the
-£350 Foundation.**
+£750 Foundation.**
 
 `ops/service-tiers.md` section 6 already establishes that the Foundation is the
 income in year one, and that converting audits into Foundations matters more
-than upgrading monthly clients. That has a consequence for this document. At
-£30, an audit that takes 90 minutes earns about £20 an hour, which is not a wage.
-**The audit does not stand alone as profitable work and should not be judged as
-if it does.** It is judged on two things: whether the report is good enough that
-the client believes the next £350, and whether it can be delivered inside its
-time budget without cutting corners.
+than upgrading monthly clients.
 
-Two consequences that follow directly:
+**Revised 2026-07-31, when the audit went from £30 to £125.** This section used
+to argue that the audit was a loss leader that should not be judged as profitable
+work — correctly, at £30, where 90 minutes earned about £20 an hour and the real
+figure was nearer £9–12 once the classification step was counted (see section 8).
+At £125 that argument no longer holds and should not be repeated out of habit.
+**At an honest 2.5–3.5 hours the audit now earns roughly £36–50 an hour, which is
+real work at a real rate.** It still qualifies Foundations, and that is still its
+most valuable function — but it now pays for itself, and it is allowed to.
+
+Three consequences that follow directly:
 
 - **Never soften a finding to protect a Foundation sale.** The site promises "you
   don't need us" as an outcome, on four separate pages. An audit that never
   produces that outcome is a sales document, and the whole position collapses.
   The honest version converts better anyway, because it is the only reason
-  anyone pays a stranger £350 next.
-- **If an audit takes more than two hours, the process is wrong, not the price.**
-  Roadmap 3a says this and it is right. The response is to cut scope from the
-  method, not to raise £30 — £30 is doing a specific job, which is making trying
-  us a small decision.
+  anyone pays a stranger £750 next.
+- **The £125 has to be visible in the work.** At £30 a thin report was survivable
+  because the price apologised for it. At £125 it is not. The things that justify
+  the price are the ones a client can see: repeated runs rather than one, verbatim
+  quotes rather than summaries, every competitor named. The pricing page now says
+  exactly this, so it has to stay true.
+- **If an audit takes more than three hours, the process is wrong, not the
+  price.** Roadmap 3a set this test at two hours against the old budget, which
+  omitted the classification step entirely. Three is the honest replacement.
+  The response is still to cut scope from the method rather than raise the price
+  again.
+
+**Considered and not done: cutting the run volume.** Five runs on the three
+discovery questions and three on the rest would take 150 API runs down to 78 and
+roughly halve the classification time. It was the right answer at £30, where the
+time budget was the binding constraint. At £125 it isn't — the volume is what the
+client is paying for, and a second band scale for three-run questions would
+complicate the one part of the report that is currently unambiguous. Revisit only
+if the timed self-audit comes in above three hours.
 
 ---
 
@@ -303,7 +321,7 @@ change a price.
 | Anthropic | $10 per 1,000 searches | Standard token rates | Not used — see section 2 |
 
 **An audit's tool cost is about £1.20 at full rate, and closer to £0.60 while
-Google's free allowance covers it.** Against £30 that is a cost of goods of
+Google's free allowance covers it.** Against £125 that is a cost of goods of
 around 4%. This confirms the E2 conclusion with real numbers, and it settles the
 build-versus-buy question permanently at our volume: the cheapest monitoring
 subscription is £20–23 a month *per brand tracked*, which is most of the fee for
@@ -323,21 +341,40 @@ section.
 
 ## 7. The time budget, and the one thing that has to be built
 
-Target: **90 minutes of the owner's time per audit.** Not because 90 minutes is
-comfortable at £30 — it isn't, see section 1 — but because it is the number at
-which the promise on the site ("the report within one working day") is keepable
-alongside everything else in a day.
+Target: **under three hours of the owner's time per audit**, and the promise on
+the site is now the report within **two** working days of confirming scope and
+payment.
+
+**Corrected 2026-07-31.** The table below used to total 95 minutes and omitted
+the largest step in the process. Reading 168 answers and assigning each an
+outcome, a competitor list and any untrue statement is the judgement the client
+is actually paying for — section 5 says so explicitly — and it was budgeted at a
+dash, "folded into the report step". It does not fold into a 20-minute report
+step. At 20–40 seconds per run it is an hour to nearly two on its own, and
+leaving it out is what made the old £30 price look like £20 an hour when it was
+nearer £9–12.
+
+The turnaround also moved from one working day to two. One was never deliverable:
+`ops/audit-questions.md` requires showing the client the ten questions before
+running them, which means an outbound email and a wait for a small-business owner
+to reply, on top of the work below, inside a single day.
 
 | Step | Budget |
 |---|---|
 | Read the order, build the ten questions from the client's own words | 15 min |
+| Send the questions to the client, get them confirmed | 5 min (then waiting) |
 | Start the API runs | 5 min (then unattended) |
 | Copilot and AI Overviews by hand | 15 min |
+| **Read the answers and classify all 168 runs** | **60–110 min** |
 | Website checklist, on-site | 20 min |
 | Off-site facts and consistency checks | 15 min |
 | Write the report | 20 min |
 | Send it | 5 min |
-| **Total** | **95 min** |
+| **Total** | **2 h 40 min – 3 h 30 min** |
+
+**Time the classification step separately on the Noven run**, because it is the
+only figure here with no prior estimate behind it at all, and it is the one that
+decides whether the £125 holds.
 
 ### The thing that decides whether this works
 
@@ -387,7 +424,7 @@ it waits for a paying client. **It does not have to, and it should not.**
    Noven", and that is exactly the baseline worth having, taken now while it is
    still true.
 4. **The report becomes the sample we show prospects.** "Here is what you get for
-   £30 — this is ours, including the bit where the assistants had never heard of
+   £125 — this is ours, including the bit where the assistants had never heard of
    us" is a genuinely strong answer to the FAQ's own question about having no
    case studies. It is honest, it is free, and it proves the deliverable exists.
 

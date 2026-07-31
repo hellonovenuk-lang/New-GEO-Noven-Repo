@@ -13,7 +13,7 @@ Written 2026-07-30 as part of roadmap 3a. Companion to `ops/audit-method.md`.
 **Length: 800 to 1,200 words.** The site promises "a short written report in
 plain English" on three separate pages. A twenty-page document with a cover
 sheet would break that promise while appearing to over-deliver, and it would
-take three hours to write against a £30 fee. Short is the product, not a
+take three hours to write against a £125 fee. Short is the product, not a
 shortcut.
 
 **The nine rules.**
@@ -38,8 +38,8 @@ shortcut.
    Four pages of the site promise this outcome. It has to be real often enough
    that it is not a slogan.
 9. **No second sales pitch.** One recommendation, once, at the end. `CLAUDE.md`
-   bans repeated calls to action, and a £30 report that reads as a £350 pitch
-   destroys the thing the £30 bought.
+   bans repeated calls to action, and a £125 report that reads as a £750 pitch
+   destroys the thing the £125 bought.
 
 **Anything unknown is written as `[PLACEHOLDER]` and raised with the owner
 before the report is sent.** Standard rule, and it applies hardest here — this
@@ -150,13 +150,13 @@ rather say it than sell you something you don't need.
 
 **If the Foundation would help:** {The specific things, tied to the three
 findings above, and what changes if they're done.} That's our Foundation work,
-which is £350 one-off, on the website you already have. {If the honest answer is
+which is £750 one-off, on the website you already have. {If the honest answer is
 "one of these three matters and the other two don't", say that and quote for the
 one.}
 
 **If something else has to happen first:** {What, why, and what to do about it.}
 We're not the right spend until that's sorted, and we'd rather tell you now than
-take £350 for work that wouldn't hold.
+take £750 for work that wouldn't hold.
 
 ## What this doesn't tell you
 

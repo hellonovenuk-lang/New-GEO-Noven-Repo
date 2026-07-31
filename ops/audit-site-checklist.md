@@ -10,7 +10,7 @@ Written 2026-07-30 as part of roadmap 3a. Companion to `ops/audit-method.md`.
 **Budget: 20 minutes on the site, 15 minutes off it.** If a section is running
 long, record what you found so far, move on, and say in the report that it
 needs a closer look. An audit that overruns to be thorough is an audit that
-loses money and delays the report we promised inside one working day.
+loses money and delays the report we promised inside two working days.
 
 ---
 
@@ -209,7 +209,7 @@ and the findings are fixable.
 managed by an agency, a franchise template, a trade-body package, or a web person
 who holds the keys. The work is the same; the access is the obstacle. Say so in
 the report, name what access is needed, and let them decide before they spend
-£350. `ops/service-tiers.md` section 3 already decided that access is asked for
+£750. `ops/service-tiers.md` section 3 already decided that access is asked for
 in two stages — this is the first stage, and this is where it gets flagged.
 
 **C. The Foundation would be wasted until something else is fixed.** No website;
@@ -217,7 +217,7 @@ a Facebook page standing in for one; a site that cannot accept structured data o
 new pages at all; a site so broken that fixing what it says is beside the point.
 **Say so plainly, recommend what to do instead, and do not sell the Foundation.**
 The site promises this outcome in four places. It is also the case the refund
-line in the terms exists for — if we took £30 and this is the answer, the report
+line in the terms exists for — if we took £125 and this is the answer, the report
 still gets written and delivered, because it is the report they paid for and it
 is the one that saves them money.
 

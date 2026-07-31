@@ -80,12 +80,21 @@ type Plan = {
   schemaDescription: string;
 };
 
+/* Prices, repriced 2026-07-31. The reasoning is in `ops/service-tiers.md`
+ * section 9; the short version is that the old ladder charged less per hour at
+ * every step up, because it priced on question volume — which is pure cost to
+ * us and no extra value to the client. The tiers now price on answer pages,
+ * which are permanent assets, and question counts stop doubling.
+ *
+ * These are launch prices, set before the first sale on purpose: raising a
+ * price on a client who is already paying it is a churn event, and the monthly
+ * plans have no minimum term by design. */
 export const oneOffs: Plan[] = [
   {
     id: 'audit',
     name: 'Audit',
     cadence: 'one-off',
-    price: 30,
+    price: 125,
     summary: 'A written report on where you show up today.',
     schemaDescription:
       'One-off written report on how AI assistants currently answer questions about your business, what they believe about you, and what is blocking you from being recommended.',
@@ -94,10 +103,10 @@ export const oneOffs: Plan[] = [
     id: 'foundation',
     name: 'Foundation',
     cadence: 'one-off',
-    price: 350,
+    price: 750,
     summary: 'The setup that makes your business readable to these systems.',
     schemaDescription:
-      'One-off setup on your existing website: crawler access, structured data, consistent business facts, and pages that answer the questions your customers ask AI assistants.',
+      'One-off setup on your existing website: crawler access, structured data for your business, your facts made consistent across the web, and two permanent pages answering questions your customers ask AI assistants.',
   },
 ];
 
@@ -106,28 +115,28 @@ export const monthlies: Plan[] = [
     id: 'maintain',
     name: 'Maintain',
     cadence: 'per month',
-    price: 75,
+    price: 95,
     summary: 'Stay found.',
     schemaDescription:
-      'Monthly plan to hold your position: ten questions your customers ask, put to the AI assistants five times each every month, with a written record of where you appeared and which questions you are still missing from. Business facts kept current and corrected when they drift. £75 per month.',
+      'Monthly plan to hold your position: ten questions your customers ask, put to the AI assistants five times each every month, with a written record of where you appeared and which questions you are still missing from. Business facts kept current and corrected when they drift. £95 per month.',
   },
   {
     id: 'grow',
     name: 'Grow',
     cadence: 'per month',
-    price: 125,
+    price: 250,
     summary: 'Get found more.',
     schemaDescription:
-      'Monthly plan to close the gaps: everything in Maintain across twenty-five questions, plus one new page each month answering a question you are currently missing from. £125 per month.',
+      'Monthly plan to close the gaps: everything in Maintain across fifteen questions, plus one new permanent page each month answering a question you are currently missing from. £250 per month.',
   },
   {
     id: 'lead',
     name: 'Lead',
     cadence: 'per month',
-    price: 250,
+    price: 495,
     summary: 'Front of mind.',
     schemaDescription:
-      'Monthly plan for businesses that want to be the first name an assistant gives: fifty questions checked fortnightly, two new answer pages each month, and a quarterly written review of the competitors being named ahead of you and why. £250 per month.',
+      'Monthly plan for businesses that want to be the first name an assistant gives: twenty-five questions checked every month, two new permanent answer pages each month, and a quarterly written review of the competitors being named ahead of you and why. £495 per month.',
   },
 ];
 
