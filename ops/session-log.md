@@ -11,6 +11,47 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-07-31 (the audit has a setup guide, so the Noven run can start cold)
+- **`ops/audit-setup.md` written.** The method said what to do; nothing said what
+  to have open, signed up for and capped before doing it. This is that: three API
+  accounts, keys in `~/.noven/env` at `chmod 600` and never in this repo, a spend
+  cap on each provider before the first call, the free accounts for the hand
+  half, the audit folder outside the repo with the two CSV headers ready, a
+  smoke test, and the run-day order with the clock.
+- **Noven's own ten questions are drafted in it**, from the frame in
+  `audit-questions.md`. **Three slots are flagged rather than filled:**
+  `{trade}` has no settled customer word — a business owner describes this rather
+  than naming it, so the discovery questions are written as descriptions and the
+  owner confirms the wording; `{trigger}` is `[PLACEHOLDER]` until there are real
+  enquiries to take it from; and `{town}`/`{region}` run UK-wide rather than
+  local, which is a deliberate deviation that has to be stated in the report —
+  **local discovery is where most client findings come from and this run does not
+  test it.**
+- **The experiment is specified: q01, q06 and q09 at ten runs on all three API
+  assistants.** 150 + 45 = **195 API queries**, script cap 250, plus 18 by hand.
+  Spread across three categories and all three providers so the answer isn't
+  provider-specific.
+- **The 150 queries get issued by a throwaway script, not the runner.** Method
+  section 7 deferred the runner on purpose; a crude script whose rough edges get
+  written down is the specification for the real one. Hard cap, append-and-flush
+  so resume is free, `outcome`/`competitors`/`errors` left blank because those
+  are judgement.
+- **Bing Webmaster Tools moved to a prerequisite** rather than a loose 1e item.
+  Copilot's real diagnostic is Bing indexation, so it has to be set up before the
+  run, not during it.
+- **Two things could not be verified from this session** and are marked as such
+  in the file: the provider documentation was blocked by the network policy, same
+  as when the method was written. So every URL is a starting point rather than a
+  deep link, and Perplexity's per-request fee — already the one figure method
+  section 6 marks unconfirmed — is on the pre-flight checklist to confirm and
+  correct.
+- **Flagged to the owner:** whether client audits can run on providers' free
+  tiers at all, given free tiers often permit the provider to use submitted
+  content and a client audit carries their business name and, for a sole trader,
+  personal data. Doesn't block the Noven run — we can consent to ourselves — and
+  it wants a line in the privacy notice (1c) once known.
+- **Next:** unchanged — do the Noven self-audit.
+
 ### 2026-07-30 (the roadmap got too big to read, so the log moved out of it)
 - **`ROADMAP.md` went from 19,500 words to 4,100.** It was being read in full at
   the start of every session, and more than half of it was history rather than

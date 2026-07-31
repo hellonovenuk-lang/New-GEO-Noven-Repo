@@ -339,7 +339,10 @@ don't need us".
 **The method is decided (2026-07-30) across four docs:** `ops/audit-method.md`
 (decisions and reasoning), `ops/audit-questions.md` (the question set),
 `ops/audit-site-checklist.md` (the working checklist), `ops/audit-report-template.md`
-(what the client gets). Headlines:
+(what the client gets). **`ops/audit-setup.md` (2026-07-31) is the practical
+half** — the accounts, keys, spend caps, folder and CSV headers to have in place
+before the Noven run, Noven's own ten questions, and the run-day order. Start
+there when the run happens. Headlines:
 
 - [x] **The questions.** Ten doing five jobs — three discovery, two qualified,
       two named-business, one comparison, two buying-intent — built from six

@@ -16,6 +16,8 @@ Companion documents:
 - `ops/audit-questions.md` — the ten questions and how they change by trade
 - `ops/audit-site-checklist.md` — what we look at on their website and off it
 - `ops/audit-report-template.md` — what the client receives
+- `ops/audit-setup.md` — the practical setup: accounts, keys, spend caps, where
+  the data lives, and the order to do it in on the day
 
 ---
 
