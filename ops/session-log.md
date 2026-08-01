@@ -13,6 +13,24 @@ decision never has to be re-argued from scratch.
 
 ### 2026-08-01 (audit readiness, and getting our own facts straight first)
 
+**Merged to `main` on the owner's instruction.** `CLAUDE.md` says never commit
+to `main` and finish every piece of work on an unmerged branch; this is the
+seventh explicit override, and it is logged as a call rather than a new default
+— the rule stands for the next session.
+
+**What going to `main` publishes, this time: nothing visible.** Netlify deploys
+`main`, but the only site file touched is a comment in `site/src/data/business.ts`.
+The built pages and the JSON-LD are byte-identical to what is already live —
+confirmed by building before the merge (7 pages, offers reading
+125 / 750 / 95 / 250 / 495). Everything else in this change is `ops/` and the
+root documents, which are not published anywhere. So unlike the 31 July merge,
+this one opens no one-way door.
+
+**What is still live and still wrong, unchanged by this merge:** the footer
+`[PLACEHOLDER: address for service of documents]` on all seven pages, and both
+LinkedIn About sections. The LinkedIn pages are wrong *on purpose* until the
+self-audit has run — `ops/own-facts-check.md` section 5.
+
 **The owner's question was whether we are ready to run the audit, prompted by
 noticing that assistants still describe Noven's services at the old prices.**
 The answer on readiness is no — none of `audit-setup.md`'s pre-flight exists yet,
