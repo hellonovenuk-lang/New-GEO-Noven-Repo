@@ -298,11 +298,12 @@ keeps the Wirral for one question. **Record this in the report as a difference
 between our own audit and a normal one**, because local discovery is where most
 client findings come from, and this run does not test it.
 
-**Flag 3 — `{trigger}`.** The event that sends someone looking. `[PLACEHOLDER]`
-until the owner fills it: the honest source is what the first few enquiries
-actually said, and there have not been enough of those yet. Suggested until
-then, from the site's own description of the problem: *"I've noticed customers
-are finding people through ChatGPT and we never come up"*.
+**Flag 3 — `{trigger}` — closed 2026-08-01.** The event that sends someone
+looking. The owner confirmed the suggested wording, taken from the site's own
+description of the problem: *"I've noticed customers are finding people through
+ChatGPT and we never come up"*. It stands in for the honest source, which is
+what the first few enquiries actually say — **revisit once there have been
+enough of those to replace a guess with a quote.**
 
 ### The ten
 
@@ -316,7 +317,7 @@ are finding people through ChatGPT and we never come up"*.
 | q06 | Named | What do you know about Noven? |
 | q07 | Named | Is Noven on the Wirral any good, and what do they do? |
 | q08 | Comparison | Who are the main alternatives to Noven in the UK? |
-| q09 | Buying intent | `{trigger}` — who do I call in the UK? |
+| q09 | Buying intent | I've noticed customers are finding people through ChatGPT and we never come up - who do I call in the UK? |
 | q10 | Buying intent | I'm looking for someone in the UK to get my business showing up in AI assistant answers. What are my options and roughly what should it cost? |
 
 Write these into `questions.csv` with `frozen_from` set to the run date. They
@@ -355,7 +356,52 @@ allowance holds; 195 is proportionally more. Under £2 either way — check the
 dashboards after the run and record what it actually was, because that number
 replaces an estimate.
 
----
+### 9a. The industry-term question — confirmed 2026-08-01
+
+**Why it is in the run.** The owner challenged `CLAUDE.md`'s absolute ban on
+industry jargon on 2026-08-01: a buyer who has researched this already arrives
+holding one of those acronyms, and a site that contains the word nowhere cannot
+be the answer when they ask for it. The rule was changed the same day — jargon
+stays out of the copy that persuades, and one FAQ entry now names GEO and AEO in
+order to translate them.
+
+**That makes this question more useful, not less.** It was proposed as a way to
+settle an argument; the argument is settled, so it is now the **before**
+measurement for the one piece of copy on this site written specifically to be
+found by a term. Re-run it at six months alongside q06 and q07.
+
+**The sequence actually taken, and how to read the result.** The owner chose to
+publish the FAQ entry *before* the run — merged and deployed 2026-08-01 — rather
+than after. So x01 is a baseline taken with the answer **published but almost
+certainly not yet crawled**, which is a weaker claim than "before it existed"
+and has to be reported as such. It is close enough to be worth having: the site's
+own FAQ says some changes take weeks to be picked up, so an entry published
+hours earlier will not be in any assistant's index. **Two things make it hold
+up:** run within a few days of the deploy, not weeks — and **write the deploy
+date and the run date into `timings.md`**, because the gap between them is the
+only thing that makes the six-month comparison interpretable.
+
+**One extra question, recorded outside the tracked ten.**
+
+| # | Category | Question |
+|---|---|---|
+| x01 | Discovery, industry term | Who are the best UK agencies for GEO — getting a business recommended by AI assistants? |
+
+Five runs on the three API assistants: **15 queries, roughly 10p.** Record it in
+`runs.csv` exactly like the others but with `question_id=x01`, and **leave it out
+of the bands and out of the frozen set** — it is a side experiment, not part of
+Noven's tracked ten, and mixing it in would corrupt a twelve-month baseline.
+
+**What each result would mean:**
+
+- **Different, richer competitor list than q01–q03 gives.** The term is doing
+  real discovery work, which is the case for the FAQ entry — and the case for
+  writing a full answer page on it later, which would be the first one Noven
+  has written for itself.
+- **Much the same answers as the plain-language questions.** The exception costs
+  nothing and earns little; leave it at the one FAQ entry and don't expand it.
+- **Nobody named at all, either way.** Says more about how new the category is
+  than about our wording. Keep the entry, retire the question.
 
 ## 10. Run day, in order
 
@@ -398,8 +444,9 @@ Everything above, as a list to tick on the morning of the run.
 - [ ] Logged-out browser profile ready, UK locale
 - [ ] `clients/noven/audit-2026-08-XX/` created outside the repo, backed up
 - [ ] `runs.csv` and `questions.csv` created with the exact headers
-- [ ] The ten questions confirmed, flags 1 and 3 resolved, written to
-      `questions.csv`
+- [x] The ten questions confirmed, flag 3 resolved 2026-08-01, written to
+      `questions.csv`. **Flag 1 is open by decision, not by omission** — the
+      wording stays mixed on purpose, and section 9a says why
 - [ ] Script written, hard cap 250, appends and flushes
 - [ ] Smoke test passed on all five checks, smoke rows deleted
 - [ ] `git status` clean of anything containing a key
