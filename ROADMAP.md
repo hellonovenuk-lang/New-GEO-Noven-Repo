@@ -57,7 +57,7 @@ closes items in 1e, 2d, 3a and 3c at once.
 Aug) → service address ordered → footer address and ICO record fixed → terms and
 privacy notice written → one payment possible end to end. **Running in parallel
 and blocked by none of it: the Noven self-audit.** The order page is not on this
-path — a payment link in an email takes the first £30. `HANDOVER.md` has the
+path — a payment link in an email takes the first payment. `HANDOVER.md` has the
 long version, written for someone with no context.
 
 ---
@@ -72,12 +72,16 @@ pay us £125.
 All live on the site and in the structured data: `hello@novenstudio.co.uk` (the
 old Gmail forwards, and will for months); no phone, email only, and the site
 says why; reply within two working days; the Wirral, serving the UK remotely;
-Kieran Smith, sole trader, no company number, not VAT registered; audit in one
-working day, Foundation plan within two. Founder bio, photograph, LinkedIn
-profile and Maersk as `alumniOf` are all in. The LinkedIn work is finished —
-profile amended, company page live at `linkedin.com/company/novenstudio/`,
-`businessLinkedIn` confirmed in the built JSON-LD — and `ops/linkedin.md` has no
-open questions.
+Kieran Smith, sole trader, no company number, not VAT registered; the audit
+report within two working days of scope and payment being confirmed (moved from
+one working day on 2026-07-31 — `ops/audit-method.md` section 7 says why), and a
+Foundation plan within two working days of payment clearing. Founder bio,
+photograph, LinkedIn profile and Maersk as `alumniOf` are all in. The LinkedIn
+setup is done — profile amended, company page live at
+`linkedin.com/company/novenstudio/`, `businessLinkedIn` confirmed in the built
+JSON-LD. **But the copy on both LinkedIn About sections predates the 31 July
+repricing and still publishes the old prices**, so `ops/linkedin.md` was
+reopened on 2026-08-01 for a repaste — see `ops/own-facts-check.md`.
 
 **Cancellation terms**, live on three pages: monthly plans roll month to month,
 no minimum term, **no notice period**; the month already paid for runs out, no
@@ -153,9 +157,9 @@ provider's own site before committing.
       "no forms" line, which is true and worth keeping; and carry the two
       optional fields already added to `contact.astro` (what customers usually
       ask; what a new customer is worth) onto the form.
-      **Not on the critical path** — see "First £30" below. A payment link in an
-      email takes the first payment, and this page is a scaling tool for roughly
-      sale five onward. Still blocked behind the terms, the privacy notice and
+      **Not on the critical path** — see "Where we are today" above. A payment
+      link in an email takes the first payment, and this page is a scaling tool
+      for roughly sale five onward. Still blocked behind the terms, the privacy notice and
       the address whenever it is built.
 - [D] **The £750 Foundation is invoiced**, with the contract sent alongside once
       both sides agree to start. At £750 the card fee is real money, there's
@@ -382,7 +386,9 @@ there when the run happens. Headlines:
       Overviews by hand at 3 × 3, labelled as such. Copilot's real diagnostic is
       Bing indexation. Recording is one CSV row per run with verbatim answers,
       exact model version and every competitor named. **Client data does not live
-      in this repo** — it's public and the records contain personal data.
+      in this repo** — the records contain personal data, and the repo is written
+      as though it were public even though it is private
+      (`ops/own-facts-check.md` section 4).
 - [D] **Rates, not yes/no.** Five runs per question, reported as a **band with
       the raw count and never a percentage** — five runs can't tell 3 of 5 from
       2 of 5, so "60%" invites a client to read noise as a decline. Four outcomes
@@ -403,6 +409,15 @@ there when the run happens. Headlines:
       runs instead of five, to settle whether five is enough
       (`ops/service-tiers.md` section 8). If an audit takes a day, the process is
       wrong, not the price.
+      **Not started, and nothing here is blocking it — the whole of
+      `ops/audit-setup.md` section 11 is owner-only work** (three API accounts,
+      three spend caps, keys in `~/.noven/env`, the data folder, and confirming
+      flags 1 and 3). About 60–90 minutes, most of it waiting on account
+      verification.
+      **Read `ops/own-facts-check.md` first** (2026-08-01): both LinkedIn About
+      sections still publish the pre-repricing prices, and the decision is to
+      leave them wrong until the run is finished, so that the baseline records an
+      assistant quoting a price we no longer charge.
 - [ ] **Build the runner.** 150 API queries can't be typed by hand — 75 minutes
       before a word of the report is written, which breaks the time budget on its
       own. Reads the questions, calls the three APIs, writes the CSV; hard query

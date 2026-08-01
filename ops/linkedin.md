@@ -9,7 +9,17 @@ Noven business page"*.
 
 ## Where this has got to
 
-**Closed.** The company page is live at
+> **Reopened 2026-08-01 — the published copy is out of date.** The copy in
+> sections 2 and 5.4 was written and pasted into LinkedIn before the 2026-07-31
+> repricing, so both About sections almost certainly still say **£30 / £350 /
+> from £75 a month**. The prices below have been corrected; **the copy still has
+> to be pasted back into LinkedIn by the owner**, because only they can sign in.
+> Until that is done, LinkedIn is publishing prices that contradict the site —
+> on two pages that are crawled, cached and repeated by the assistants. This is
+> the exact defect we charge £125 to find on other people's businesses.
+> Tracked in `ops/own-facts-check.md`.
+
+**Otherwise closed.** The company page is live at
 `https://www.linkedin.com/company/novenstudio/`, with both images uploaded and
 the About copy in. `businessLinkedIn` in `site/src/data/business.ts` is set to
 that URL and confirmed in the Organization's structured data on the built
@@ -179,8 +189,8 @@ kept. Only the subject changes.
 > Noven does that work, for businesses that were never going to spend £400 a
 > month with an agency.
 >
-> £30 buys a written report on what the assistants say about you today and
-> what's in the way. £350 sets it right. From £75 a month keeps it that way,
+> £125 buys a written report on what the assistants say about you today and
+> what's in the way. £750 sets it right. From £95 a month keeps it that way,
 > with a written record of where you appeared and where you didn't. No minimum
 > term and no notice period — tell me before the next payment date and there
 > isn't one.
@@ -517,13 +527,13 @@ contradict anything else it reads.
 >
 > Noven does that work, at prices a small firm can justify.
 >
-> • Audit — £30, one-off. A written report on what the assistants say about you
+> • Audit — £125, one-off. A written report on what the assistants say about you
 > today, and what's in the way.
 >
-> • Foundation — £350, one-off. The setup that makes your business readable to
+> • Foundation — £750, one-off. The setup that makes your business readable to
 > these systems.
 >
-> • From £75 a month. Your customers' questions put to the assistants on a
+> • From £95 a month. Your customers' questions put to the assistants on a
 > schedule, with a written record of where you appeared and where you didn't.
 > Business facts kept current and corrected when they drift. No minimum term and
 > no notice period.
@@ -676,7 +686,7 @@ exactly.
 | Area served | United Kingdom | Site, company page About, your role description |
 | Email | hello@novenstudio.co.uk | Site contact page, company page About |
 | Legal status | Trading name of Kieran Smith, a sole trader | Site footer, company page About |
-| Prices | £30 / £350 / £75 / £125 / £250 | Site pricing page, both About sections |
+| Prices | £125 / £750 / £95 / £250 / £495 | Site pricing page, both About sections |
 | Cancellation | No minimum term, no notice period | Site (three places), both About sections |
 | Website | `https://novenstudio.co.uk` | Company page, your contact info |
 | Founder → business | Profile links to the page; page links to the site; site's `sameAs` links back to both | All three |

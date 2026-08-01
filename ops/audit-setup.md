@@ -162,8 +162,9 @@ past.
 
 ## 6. Step five — somewhere to put the data
 
-**Not in this repo** (method section 5 — it is public, and audit records contain
-personal data; Noven is registered with the ICO precisely for this).
+**Not in this repo** (method section 5 — it is treated as public, and audit
+records contain personal data; Noven is registered with the ICO precisely for
+this).
 
 Create, in the owner's own backed-up storage:
 
@@ -365,6 +366,7 @@ waiting on to validate the Maintain hour.
 
 | # | Step | Budget | On the day |
 |---|---|---|---|
+| 0 | Read `ops/own-facts-check.md` | 5 min | Not to *fix* anything — section 5 of that document says why the two known-wrong LinkedIn pages get corrected after the run, not before. Read it so you recognise an old price when an assistant quotes one back |
 | 1 | Questions | 15 min | Already done in section 9 — but time yourself confirming the flags, because for a client this step is intake and it is the one most likely to overrun |
 | 2 | Start the API runs | 5 min | `source ~/.noven/env`, smoke test, then launch. Runs unattended from here |
 | 3 | Copilot + AI Overviews by hand | 15 min | Logged-out window, q01–q03 × 3 each, into `runs.csv` with `surface=app` |
@@ -401,6 +403,14 @@ Everything above, as a list to tick on the morning of the run.
 - [ ] Script written, hard cap 250, appends and flushes
 - [ ] Smoke test passed on all five checks, smoke rows deleted
 - [ ] `git status` clean of anything containing a key
+- [ ] `ops/own-facts-check.md` read, and the two known-wrong LinkedIn pages left
+      alone until after the run
+
+**And on the day after the run**, from the same document:
+
+- [ ] LinkedIn company page About repasted from `ops/linkedin.md` section 5.4
+- [ ] LinkedIn founder profile About repasted from `ops/linkedin.md` section 2
+- [ ] Anything the run turned up that we publish and had not noticed
 
 ---
 

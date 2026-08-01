@@ -1,6 +1,7 @@
 # The operating documents — index
 
-Twelve files, and no obvious order to read them in. This is the order.
+Fourteen files besides this index, and no obvious order to read them in. This is
+the order.
 
 New to the business? Read `HANDOVER.md` at the repo root first. It is the only
 document written for someone with no context.
@@ -22,7 +23,7 @@ so opening the wrong one first is the usual way to get lost.
 
 | File | What it decides | Status |
 |---|---|---|
-| `audit-method.md` | How the £30 audit is delivered: which assistants, how many runs, how answers are recorded, what it costs, how long it may take. **Read this before the other four.** | Decided, unvalidated |
+| `audit-method.md` | How the £125 audit is delivered: which assistants, how many runs, how answers are recorded, what it costs, how long it may take. **Read this before the other four.** | Decided, unvalidated |
 | `audit-questions.md` | The ten-question frame, how it changes by trade and area, and the rules that keep two audits comparable | Decided, unvalidated |
 | `audit-site-checklist.md` | The working checklist filled in during an audit. Copied per client. Never sent to the client | Decided, unvalidated |
 | `audit-report-template.md` | The report the client actually receives, and the rules for writing it | Decided, unvalidated |
@@ -49,16 +50,17 @@ in the business with no time budget at all.
 
 | File | What it decides | Status |
 |---|---|---|
-| `accounts.md` | Every account, what it costs, when it renews, what breaks if it lapses, and the dates that need to be in a real calendar. **No credentials — this repo is public** | Live, with real gaps marked `[PLACEHOLDER]` |
+| `own-facts-check.md` | Every place Noven's own facts are published, what each must say, and what it currently says. The audit's third promise, run on ourselves. **Read before the self-audit** | Live — two surfaces known wrong |
+| `accounts.md` | Every account, what it costs, when it renews, what breaks if it lapses, and the dates that need to be in a real calendar. **No credentials — this repo is private today but is written as if public** (`own-facts-check.md` section 4) | Live, with real gaps marked `[PLACEHOLDER]` |
 | `client-record.md` | What we keep about each client and prospect. Formerly `spine.md`, which named nothing a stranger could guess at | Fields decided, storage undecided |
 
 ## Suppliers and setup
 
 | File | What it decides | Status |
 |---|---|---|
-| `third-party-services.md` | Every outside service the business needs, with a pick, a cost and a reason for each. Read only the **Picks** for the shortlist | Live, partly stale — several sections predate decisions made later in the same file |
+| `third-party-services.md` | Every outside service the business needs, with a pick, a cost and a reason for each. Read only the **Picks** for the shortlist | Live — prices restated against the repricing on 2026-08-01; some sections still predate decisions made later in the same file, and say so |
 | `zoho-mail-setup.md` | How `hello@novenstudio.co.uk` was set up, and how to diagnose it if it breaks | Closed — still written as a to-do list |
-| `linkedin.md` | The profile rewrite and the company page | Closed |
+| `linkedin.md` | The profile rewrite and the company page | **Reopened 2026-08-01** — the copy pasted into LinkedIn predates the repricing, so both About sections publish old prices |
 
 ## The record
 

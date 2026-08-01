@@ -145,6 +145,13 @@ dated before-and-after baseline, and produces the one number the whole business
 plan rests on — how long a month of Maintain actually takes. Start at
 `ops/audit-setup.md`.
 
+**4b. The day after the run, repaste both LinkedIn About sections.** Ten
+minutes. Both were written before the 31 July repricing and still publish
+£30 / £350 / from £75 — the only surfaces we control that contradict the site.
+The corrected copy is in `ops/linkedin.md`; the reason it waits until *after*
+the run is in `ops/own-facts-check.md` section 5. That document is the register
+of everywhere our own facts appear, and it is worth ten minutes on its own.
+
 **5. Make one payment possible end to end.** Create and test a Revolut Pro
 payment link with a real small payment; decide invoice or receipt; choose where
 client records live (`ops/client-record.md`). Two hours. **A pasted payment link
@@ -158,7 +165,7 @@ the reason in section 7.
 
 The order page and pay button, the audit runner script, Bing Webmaster Tools,
 HMRC registration (not due until October 2027), the email banner rewrite, and the
-three stub documents in `ops/`. None of these stops the first £30.
+three stub documents in `ops/`. None of these stops the first payment.
 
 ---
 
@@ -188,7 +195,9 @@ July covers nearly the whole year.
 ## 6. What the business depends on
 
 **The full register is `ops/accounts.md`** — every account, cost, renewal date,
-and what breaks if it lapses. No credentials in it; this repo is public.
+and what breaks if it lapses. No credentials in it — the repo is private today,
+and is deliberately written as though it were public. `ops/own-facts-check.md`
+section 4 has the correction and why the rule does not relax.
 
 The one row worth repeating here: **the domain's registrar, renewal date and
 auto-renew status are recorded nowhere.** It is the dependency whose failure is
@@ -283,7 +292,7 @@ insurance renewed; delete client records past their retention period.
 
 Terms used throughout as though the reader already knows them:
 
-- **The Foundation** — the £350 one-off setup on the client's *existing* site.
+- **The Foundation** — the £750 one-off setup on the client's *existing* site.
   Not a website build.
 - **The four promises** — the Foundation's four deliverables: crawler access,
   structured machine-readable facts, consistent facts across the web, and pages
