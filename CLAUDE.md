@@ -53,5 +53,21 @@ explicitly overrides them.
 
 ## Git
 
-- Always work on a branch. Never commit to `main`.
-- Finish every piece of work on an unmerged branch for review.
+- **Always work on a branch. Never commit directly to `main`.** Every session
+  branches, and the work is shown before it lands.
+- **Merging is the normal end of a piece of work, not an exception.** Branch,
+  show the work, get the owner's agreement, merge. A merge the owner has agreed
+  to is business as usual — do not log it as an override.
+- **Agreement is per piece of work.** Saying yes to one merge is not standing
+  permission for the next one.
+- **Say what a merge will publish, before doing it.** Netlify deploys `main`, so
+  merging is publishing — including into the JSON-LD the assistants read, where
+  caches and third-party copies persist long after an edit. "Nothing visible" is
+  often the honest answer and is worth saying out loud; a changed price or a
+  changed fact is not, and deserves a sentence first.
+
+*Amended 2026-08-01. The rule previously read "never commit to `main`" and
+"finish every piece of work on an unmerged branch for review", which made every
+routine merge an override — eight were logged in a single day. The
+branch-first half was right and is kept; the never-merge half described a
+workflow the owner was not running.*

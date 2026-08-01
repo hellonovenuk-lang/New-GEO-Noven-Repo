@@ -56,6 +56,16 @@ confirmed by building before the merge (7 pages, offers reading
 root documents, which are not published anywhere. So unlike the 31 July merge,
 this one opens no one-way door.
 
+**And then the rule itself was amended, which is why the override count stops
+here.** The owner's clarification: the intent was always *branch, review, agree,
+merge* — not *never merge*. Eight logged overrides in one day was the rule
+failing to describe the workflow rather than the workflow misbehaving. The
+branch-first half was doing real work and is kept, along with a new requirement
+that carries the reason the old rule existed: **say what a merge will publish
+before doing it**, because Netlify deploys `main` and a published fact is closer
+to a one-way door than a normal site's. Future merges the owner has agreed to
+are business as usual and are not logged as overrides.
+
 **A second merge to `main` the same day, also on the owner's instruction — and
 this one does publish.** The narrowed jargon rule and the GEO/AEO FAQ entry went
 live on 2026-08-01, on the owner's explicit call to have the FAQ updated before
