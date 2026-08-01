@@ -367,10 +367,19 @@ order to translate them.
 
 **That makes this question more useful, not less.** It was proposed as a way to
 settle an argument; the argument is settled, so it is now the **before**
-measurement for a change we are about to publish. Run it on the same day as the
-rest, before the FAQ entry has had time to be crawled, and it becomes a dated
-baseline for the one piece of copy on this site written specifically to be found
-by a term. Re-run it at six months alongside q06 and q07.
+measurement for the one piece of copy on this site written specifically to be
+found by a term. Re-run it at six months alongside q06 and q07.
+
+**The sequence actually taken, and how to read the result.** The owner chose to
+publish the FAQ entry *before* the run — merged and deployed 2026-08-01 — rather
+than after. So x01 is a baseline taken with the answer **published but almost
+certainly not yet crawled**, which is a weaker claim than "before it existed"
+and has to be reported as such. It is close enough to be worth having: the site's
+own FAQ says some changes take weeks to be picked up, so an entry published
+hours earlier will not be in any assistant's index. **Two things make it hold
+up:** run within a few days of the deploy, not weeks — and **write the deploy
+date and the run date into `timings.md`**, because the gap between them is the
+only thing that makes the six-month comparison interpretable.
 
 **One extra question, recorded outside the tracked ten.**
 

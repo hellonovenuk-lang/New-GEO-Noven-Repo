@@ -56,7 +56,19 @@ confirmed by building before the merge (7 pages, offers reading
 root documents, which are not published anywhere. So unlike the 31 July merge,
 this one opens no one-way door.
 
-**What is still live and still wrong, unchanged by this merge:** the footer
+**A second merge to `main` the same day, also on the owner's instruction — and
+this one does publish.** The narrowed jargon rule and the GEO/AEO FAQ entry went
+live on 2026-08-01, on the owner's explicit call to have the FAQ updated before
+the audit rather than after. It is the eighth override, and it changes what x01
+measures: the recommendation was to run first and publish second, so that the
+industry-term baseline was taken before the answer existed. Published first, the
+baseline is *published but not yet crawled* — weaker, still usable, and now
+written into `audit-setup.md` §9a with the two conditions that keep it honest
+(run within days of the deploy, record both dates in `timings.md`). Recorded
+here because a baseline whose conditions are forgotten becomes a claim we cannot
+defend in six months, which is the one thing the method exists to prevent.
+
+**What is still live and still wrong, unchanged by either merge:** the footer
 `[PLACEHOLDER: address for service of documents]` on all seven pages, and both
 LinkedIn About sections. The LinkedIn pages are wrong *on purpose* until the
 self-audit has run — `ops/own-facts-check.md` section 5.
