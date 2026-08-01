@@ -275,7 +275,8 @@ and re-running is not a substitute because the answer will have changed.
 
 ### Where it lives — and why not here
 
-**Client audit data does not go in this repository.** This repo is public, and
+**Client audit data does not go in this repository.** The repo is private today
+and is written as though it were public (`ops/own-facts-check.md` section 4), and
 the recorded answers will contain business contact details and, for sole traders
 and partnerships, personal data — a sole trader's name and business address is
 personal data under UK GDPR. Noven registered with the ICO on 2026-07-30; this

@@ -11,6 +11,83 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-01 (audit readiness, and getting our own facts straight first)
+
+**Merged to `main` on the owner's instruction.** `CLAUDE.md` says never commit
+to `main` and finish every piece of work on an unmerged branch; this is the
+seventh explicit override, and it is logged as a call rather than a new default
+— the rule stands for the next session.
+
+**What going to `main` publishes, this time: nothing visible.** Netlify deploys
+`main`, but the only site file touched is a comment in `site/src/data/business.ts`.
+The built pages and the JSON-LD are byte-identical to what is already live —
+confirmed by building before the merge (7 pages, offers reading
+125 / 750 / 95 / 250 / 495). Everything else in this change is `ops/` and the
+root documents, which are not published anywhere. So unlike the 31 July merge,
+this one opens no one-way door.
+
+**What is still live and still wrong, unchanged by this merge:** the footer
+`[PLACEHOLDER: address for service of documents]` on all seven pages, and both
+LinkedIn About sections. The LinkedIn pages are wrong *on purpose* until the
+self-audit has run — `ops/own-facts-check.md` section 5.
+
+**The owner's question was whether we are ready to run the audit, prompted by
+noticing that assistants still describe Noven's services at the old prices.**
+The answer on readiness is no — none of `audit-setup.md`'s pre-flight exists yet,
+and every item on it is an owner action (accounts, keys, caps). The stale-price
+observation turned out to be the more useful half of the question.
+
+- **Where the old prices are actually still published: LinkedIn, both pages.**
+  The company page About and the founder profile About were pasted from
+  `ops/linkedin.md` before the 31 July repricing, so they say £30 / £350 / from
+  £75. They are named in our own structured data as `sameAs`, which means we
+  have formally told the assistants that those pages describe this business.
+  The copy in `ops/linkedin.md` is corrected; the paste is the owner's, and
+  `ops/linkedin.md` is reopened until it is done.
+
+- **Deliberately not fixed before the self-audit.** An assistant quoting a price
+  we abandoned is a `named_wrong` outcome on our own baseline — the single most
+  persuasive finding an audit can produce, per `audit-method.md` section 4, and
+  it is free evidence about how long stale facts persist. Fixing LinkedIn the
+  morning before the run destroys the measurement to gain six hours. So: run,
+  then fix the same day, then re-run q06 and q07 alone at six months. Recorded
+  in `ops/own-facts-check.md` section 5 and as step 0 on run day.
+
+- **`ops/own-facts-check.md` written.** The register of every surface where our
+  own facts appear, what each must say, and what it currently says. It is the
+  audit's third promise applied to us, and its absence is why the repricing
+  updated the site and nothing else.
+
+- **The repo was carrying old prices in seven files.** `ops/README.md`,
+  `HANDOVER.md`, `ROADMAP.md`, `ops/service-tiers.md`,
+  `ops/third-party-services.md`, `ops/linkedin.md` and a comment in
+  `business.ts` still stated £30 / £350 / £75 as current. Corrected. Dated
+  historical statements — the session log, `service-tiers.md` section 9, the
+  "at £30 this argument held" passages in `audit-method.md` — were left alone,
+  because they are correct as history and rewriting them would destroy the
+  record of why the prices moved.
+
+- **`third-party-services.md` C2 needed rewriting, not renumbering.** Its
+  argument for taking the audit on a card was built on £30 versus £350. At £125
+  the conclusion holds and gets stronger — the fee is ~1.2–3.0% of the sale
+  against ~1.7–3.5% at £30, because the fixed 20p shrinks against a larger sale
+  — but the numbers it argues from all moved, and the Foundation's card fee went
+  from £5–10 to £8–21, which reinforces keeping it on invoice. Also closed the
+  file's "audit depth" open question, decided in `audit-method.md` a day later
+  and never struck through.
+
+- **Correction: this repo is private, not public.** Verified against the GitHub
+  API. Five places asserted it was public, and several rules were justified by
+  it. The rules are unchanged and the wording is now *written as though it were
+  public* — visibility is one click and does not retroactively unpublish a
+  committed key, and the reason client data stays out is UK GDPR rather than a
+  repo setting. **The useful consequence: the repo was never part of the
+  stale-information problem**, because nothing reads it. LinkedIn is the cause.
+
+- **Two smaller drifts fixed on the way past.** `ROADMAP.md` 1a still promised
+  the audit "in one working day" against the site's two, and the ops file count
+  was wrong in both READMEs and in different directions.
+
 ### 2026-07-31d (merged to main on the owner's instruction — the new prices are live)
 
 **`CLAUDE.md` says never commit to `main` and finish every piece of work on an

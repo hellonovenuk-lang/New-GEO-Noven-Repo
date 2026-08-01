@@ -40,7 +40,7 @@ export const business = {
    * tracking parameters, which say how the link was shared and belong to
    * nobody reading the page. Nothing beyond the `/in/` handle goes in here,
    * and nothing resembling a login or session token ever does — this value is
-   * published twice on a public page and again in a public repo.
+   * published twice on a public page, and again in a repo we write as public.
    */
   founderLinkedIn: 'https://www.linkedin.com/in/kieran-smith-50b953143' as string | null,
 
@@ -149,7 +149,7 @@ export function plan(id: string): Plan {
   return found;
 }
 
-/** "£30", "£1,250" — prices on this site are always whole pounds. */
+/** "£125", "£1,250" — prices on this site are always whole pounds. */
 export function money(amount: number): string {
   return `£${amount.toLocaleString('en-GB')}`;
 }

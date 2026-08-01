@@ -39,8 +39,8 @@ on them rather than replacing them.
 | Assistant answer checking | Do it ourselves via the APIs | Under £2 per audit | Now — it's the product |
 | Client tracking | Zoho Bigin free tier | Free (1 user) | At client 2 or 3 |
 | Password manager | Bitwarden | Free | Now |
-| Payment collection — £30 audit | Own order page → Revolut Pro payment link | ~50p–£1.04 per sale | Blocked on terms + privacy + address |
-| Payment collection — £350 and monthly | Invoice + bank transfer | Free | Revisit monthly at client 5 |
+| Payment collection — £125 audit | Own order page → Revolut Pro payment link | ~£1.45–£3.70 per sale | Blocked on terms + privacy + address |
+| Payment collection — £750 Foundation and monthly | Invoice + bank transfer | Free | Revisit monthly at client 5 |
 
 **Total committed spend before the first client pays: about £0–5 a month**, and
 most of that is the service address, which is an annual bill. That fits the
@@ -229,7 +229,7 @@ is the standard reason a claim gets declined.
 
 **[PLACEHOLDER: owner to confirm]** — whether any existing policy (home,
 contents, or a policy from previous self-employment) already provides cover, and
-whether the roadmap's £350 Foundation work is better described to an insurer as
+whether the roadmap's £750 Foundation work is better described to an insurer as
 consultancy or as web development. The two attract different premiums.
 
 ---
@@ -260,7 +260,7 @@ as a shortcut:
   Starling was chosen for over Tide. **One caveat carried forward:** for a
   sole trader, personal and Pro balances are treated as one legal entity for
   this purpose, so the £120,000 cap is shared across both, not doubled. At
-  £30–£350 per transaction and no meaningful balance sitting in either
+  £125–£750 per transaction and no meaningful balance sitting in either
   account, this isn't a practical risk — just don't assume it's two full
   limits if that ever changes.
 - **Already banking here saved real time.** Skipping a new application with
@@ -289,7 +289,7 @@ unlimited free transactions. If you expect to want anything else from a bank
 later — a card, a loan, a savings pot — Starling is the safer long-term home.
 
 **One to avoid for us specifically: Tide's free tier charges 20p per bank
-transfer and is e-money rather than FSCS-protected.** At £30 and £75 payments,
+transfer and is e-money rather than FSCS-protected.** At £125 and £95 payments,
 20p a transfer is noise — but the lack of FSCS protection is a real difference
 for money that isn't ours to lose.
 
@@ -297,7 +297,7 @@ for money that isn't ours to lose.
 day; a high street bank can take weeks. The roadmap correctly identifies this as
 the long pole in 1c. It's also worth checking whether your existing personal
 account's terms permit business use in the meantime — most banks' terms don't,
-and a single £30 transfer for services rendered is business use. (Revolut Pro
+and a single £125 transfer for services rendered is business use. (Revolut Pro
 sidesteps this question entirely, since it's a separate account from the
 personal one, not a personal account being used for business.)
 
@@ -306,41 +306,53 @@ personal one, not a personal account being used for business.)
 **This section previously said "invoice everything by bank transfer, revisit at
 client five".** That was right about the Foundation and the monthly plans and
 wrong about the audit. Corrected below; the original reasoning is kept at the
-end because it still holds everywhere except the £30.
+end because it still holds everywhere except the audit.
+
+**Prices restated 2026-08-01** after the 2026-07-31 repricing. The decision below
+was taken when the audit was £30 and the Foundation £350; it was re-checked
+against £125 and £750 and does not change, but the numbers it argues from do.
 
 **Pick, per product:**
 
 | What | How it gets paid | Fee on that amount |
 |---|---|---|
-| £30 audit | Revolut Pro payment link, on the website, upfront | ~50p personal card, ~£1.04 commercial |
-| £350 Foundation | Invoice, contract sent alongside, on agreement | £0 (bank transfer) |
-| £75–250/month | Unchanged — manual invoice, revisit at client five | £0 (bank transfer) |
+| £125 audit | Revolut Pro payment link, on the website, upfront | ~£1.45 personal card, ~£3.70 commercial |
+| £750 Foundation | Invoice, contract sent alongside, on agreement | £0 (bank transfer) |
+| £95–495/month | Unchanged — manual invoice, revisit at client five | £0 (bank transfer) |
 
 **Why the audit is the exception.** The general argument against cards is that
-fees are a real slice — and at £350 and up, they are. At £30 the arithmetic
-inverts, because the cost being saved is smaller than the cost being added.
-An invoice loop for a £30 sale means: they email, we scope it, we raise the
+fees are a real slice — and at £750 they are. On the audit the arithmetic
+inverts, because the fee an invoice saves is smaller than the friction it adds.
+An invoice loop for an audit means: they email, we scope it, we raise the
 invoice, we wait, we check whether it's been paid, we chase if not, then we
-start. That is several touches and a delay of days on a product whose whole
-promise is a report within one working day. Roughly 50p buys all of that away
-and takes the money before the work rather than after it. The chase risk goes
-to zero, which at £30 is worth more than the fee.
+start. That is several touches and a delay of days on a product that promises
+the report within two working days of scope and payment being confirmed — days
+the client experiences as our turnaround, not as their own bank's. Roughly
+£1.45–£3.70 buys all of that away and takes the money before the work rather
+than after it. The chase risk goes to zero, which is worth more than the fee.
+
+**The repricing does not weaken this, and it is worth saying why.** At £30 the
+fee was ~1.7–3.5% of the sale; at £125 it is ~1.2–3.0%, because the rate is a
+percentage and the fixed 20p shrinks against a larger sale. The fee argument for
+the audit therefore got *better*, not worse. The only thing that changed
+materially is the Foundation, where £5–10 of card fee became £8–21 — which
+reinforces keeping it on invoice.
 
 **Fees, checked 30 July 2026 — confirm before relying on them.** Revolut Pro
 charges nothing to create or send payment links and invoices, and takes a cut
 only on successful payments: **1.0% + £0.20** on domestic personal Visa or
 Mastercard and on Revolut Pay, 1.5% + £0.20 on domestic personal Amex, and
-**2.8% + £0.20 on international and commercial cards**. On £30 that is 50p at
-best and about £1.04 at worst. Note the worst case is the likely one more often
+**2.8% + £0.20 on international and commercial cards**. On £125 that is £1.45 at
+best and £3.70 at worst. Note the worst case is the likely one more often
 than it looks — we sell to businesses, and a business paying on a company card
 is a commercial card.
 
 **Why Revolut Pro's link and not Stripe.** Stripe is 1.5% + £0.20 on domestic
 UK cards, which beats Revolut's commercial-card rate and loses to its personal
-rate. On £30 the gap either way is under 40p. Against that, Revolut Pro is
+rate. On £125 the gap either way is under £1.65. Against that, Revolut Pro is
 already set up (C1), the money lands in the account we already bank in, and
 there is no second provider to onboard or reconcile against. **Not worth
-running two payment providers for 40p a sale.** Revisit if volume ever makes
+running two payment providers for £1.65 a sale.** Revisit if volume ever makes
 the difference real — same "don't build for this yet" logic as the monthly
 plans below.
 
@@ -353,7 +365,7 @@ screen is invisible to us. Our own form submits before the handoff, so an
 abandoned checkout still leaves a lead. We also get validation we control (a
 required, checked website field), and we keep our own brand in front of the
 customer until the last step instead of dropping them onto a bare third-party
-form immediately before asking for £30.
+form immediately before asking for £125.
 
 So the flow is: **our order page collects and validates → hands off to a
 Revolut Pro payment link for the money only.** The site stays static — the
@@ -372,14 +384,13 @@ a non-VAT-registered business we cannot reclaim it — so the real cost may be
 20% above the headline. Immaterial at these amounts, but don't be surprised by
 it on the statement.
 
-**Why the Foundation stays on invoice.** At £350 a card fee is roughly £5–10,
+**Why the Foundation stays on invoice.** At £750 a card fee is roughly £8–21,
 which is real money, and none of the friction argument applies — by the time
 someone buys a Foundation there is already a conversation running, so an
 invoice costs nothing in momentum. Contract and invoice go out together on
-agreement. **Decide what starts the delivery clock:** the pricing page promises
-a response "within two working days of you booking it", and with both documents
-going out at once, "booking" needs to mean payment received rather than
-signature.
+agreement. **What starts the delivery clock is now settled:** the pricing page
+was changed on 2026-07-31 to read *within two working days of your payment
+clearing*, so the clock cannot be started by someone who signed and didn't pay.
 
 **Still true, and unchanged:** the cancellation terms in roadmap 1a were
 deliberately written to read the same whichever way payment collection goes, so
@@ -399,7 +410,7 @@ is:
   expire. The trade-off is setup time — it used to also need a bank account we
   didn't have, but C1 has now settled that, so setup time is the only thing
   left standing between us and this when the trigger comes.
-- ~~Payment links for the one-off £30 audit and £350 Foundation~~ — **decided,
+- ~~Payment links for the one-off audit and Foundation~~ — **decided,
   30 July 2026**, and no longer waiting on a conversion signal. The audit takes
   a Revolut Pro payment link on the website; the Foundation stays on invoice.
   See the top of this section.
@@ -521,13 +532,20 @@ client.
 **Run it against our own numbers.** The cheapest option is roughly £20–23 a month
 for one brand and about fifteen questions:
 
-- Against the **£30 one-off audit**: a non-starter. The tool costs most of the
-  fee in the first month, and the audit is a one-off — we'd be renting a
-  subscription to produce a single document.
-- Against the **£75/month Maintain plan**: that's roughly 30% of the revenue
+- Against the **£125 one-off audit**: a non-starter. The audit is a one-off, so
+  we'd be renting a monthly subscription to produce a single document — and the
+  subscription tracks one brand, so the second client needs a second one.
+- Against the **£95/month Maintain plan**: that's roughly 20–25% of the revenue
   gone to one tool, before any of our time. On a plan whose entire promise is
-  monitoring, a 30% cost of goods is survivable but it caps the business.
-- Against the **£250/month Lead plan**: comfortable, and arguably worth it.
+  monitoring, that is survivable but it caps the business.
+- Against the **£495/month Lead plan**: comfortable, and arguably worth it.
+
+**The 2026-07-31 repricing softened these numbers but changed nothing.** The
+binding objection was never the level, it was the shape: these tools price *per
+brand tracked*, so the cost scales with our client count exactly as fast as the
+revenue does, and never amortises. Running the questions ourselves costs about
+£1.20 an audit at full rate (E2), and that number does not move when we add a
+client.
 
 Agency plans exist and would amortise better across many clients, but they start
 well above the entry prices above and none of them makes sense before there are
@@ -569,7 +587,7 @@ only means anything if the model actually searches:
 three to five times per question for reasons explained below: **120 to 200
 grounded queries**. Google's free grounding allowance alone covers roughly 25 to
 40 complete audits a month at zero cost. Even paying full grounding rates
-everywhere, an audit's tool cost lands **comfortably under £2** against a £30
+everywhere, an audit's tool cost lands **comfortably under £2** against a £125
 fee. That is a sustainable cost of goods; £23/month per client is not.
 
 **Costed properly against the method as designed** — 150 API queries across
@@ -735,7 +753,7 @@ Worth writing down so they don't get re-proposed:
   for it. The reasoning here still holds for why the site had no form until then,
   and it names the consequence correctly: a form means the privacy notice can no
   longer wait.
-- **E-signature (Zoho Sign, Dropbox Sign)** — at £30 to £350 an emailed
+- **E-signature (Zoho Sign, Dropbox Sign)** — at £125 to £750 an emailed
   confirmation is proportionate. Revisit if a client ever asks for a signed
   agreement.
 - **Anything with an annual contract.** Everything above is monthly or annual-
@@ -782,8 +800,9 @@ Written down rather than guessed at, in the roadmap's own style:
 - **Cloudflare on client sites:** are we willing to ask clients to move their
   DNS? It's the cheapest source of hard evidence we have, but it's a change to
   their infrastructure, not just their website (see E4).
-- **Audit depth:** how many questions, and how many runs per question, is one
-  audit? That number sets both the tool cost and how long an audit takes, and
-  roadmap 3a already says £30 has to be sustainable — if it takes a day, the
-  process is wrong, not the price. The estimate in E2 assumes ten questions at
-  three to five runs; that's an assumption, not a decision.
+- ~~**Audit depth:** how many questions, and how many runs per question, is one
+  audit?~~ — **decided 2026-07-30 in `ops/audit-method.md`.** Ten questions; five
+  runs each on the three API assistants, three runs each on the two hand-checked
+  ones. The E2 estimate assumed three to five runs and holds. What is still open
+  is whether five runs is *enough*, and the self-audit's one experiment
+  (`audit-setup.md` section 9) is designed to answer it.

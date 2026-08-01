@@ -25,7 +25,7 @@ has paid yet.
 |---|---|
 | `HANDOVER.md` | **New here? Start with this.** The whole business on one page: what's sold, what exists, what doesn't, what has to happen next, and what has to happen every week |
 | `site/` | The Noven marketing website (Astro, fully static) |
-| `ops/` | Internal operating docs — thirteen files, indexed in `ops/README.md` |
+| `ops/` | Internal operating docs — fourteen files, indexed in `ops/README.md` |
 | `ROADMAP.md` | What's true now and what's left — read at the start of every session |
 | `CLAUDE.md` | Standing rules for all future work in this repo |
 

@@ -140,8 +140,8 @@ ask"* (`how-it-works.astro`) — continued one page a month. **Every Foundation 
 deliver is practice for Grow.**
 
 Our own site is the working example: no blog, and every page heading is a
-customer question. *How does Noven get you found? What does Noven cost? Why is
-the audit only £30?*
+customer question. *How does Noven get you found? What does Noven cost? Why does
+the audit cost £125?*
 
 **The guard rail.** Two pages a month at Lead is twenty-four pages a year, which
 can sprawl into thin filler that actively hurts. The test: if we cannot write
