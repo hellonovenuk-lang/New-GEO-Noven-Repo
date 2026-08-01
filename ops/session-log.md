@@ -13,6 +13,36 @@ decision never has to be re-argued from scratch.
 
 ### 2026-08-01 (audit readiness, and getting our own facts straight first)
 
+**The jargon ban was challenged, tested, and narrowed — owner's decision.**
+`CLAUDE.md` said *never use "GEO", "SEO", or search-industry jargon anywhere on
+the site*. The owner's challenge: a buyer who has already researched this
+arrives holding one of those acronyms, so a site containing the word nowhere
+cannot be the answer when they ask for it. **That is right, and it is the exact
+failure the audit is sold to find on other people's businesses** — we tell
+clients to publish pages answering the questions their customers actually ask,
+then declined to do it for one particular question.
+
+The rule now splits by job rather than banning outright. **Persuasion copy stays
+plain** — headlines, navigation, body text — and Noven never describes itself
+with an acronym; that half of the rule was doing real work and survives. **One
+deliberate exception:** a single FAQ entry or answer page may name the terms in
+order to translate them. Live at *"Is this what people call GEO or AEO?"* on the
+FAQ page, which also says out loud why the acronyms appear nowhere else — a
+plumber losing work to a competitor does not think of it as an optimisation
+problem. That candour is what keeps the entry from reading like everyone else's
+version of the same page.
+
+Two things worth keeping from the argument. **The terms are unsettled** — GEO,
+AEO, "AI SEO", no winner — which is an argument against building an identity on
+one, but not against translating them. And **the absolute ban had already cost
+us something concrete**: flag 1 in `audit-setup.md` §9 exists because banning
+the industry's words left no noun at all for the trade, which made writing our
+own audit questions harder than it should have been.
+
+The industry-term question (§9a) stays in the run, with its job changed: it was
+proposed to settle the argument, and now that the argument is settled it is the
+**before** measurement for the FAQ entry we are about to publish.
+
 **Merged to `main` on the owner's instruction.** `CLAUDE.md` says never commit
 to `main` and finish every piece of work on an unmerged branch; this is the
 seventh explicit override, and it is logged as a call rather than a new default

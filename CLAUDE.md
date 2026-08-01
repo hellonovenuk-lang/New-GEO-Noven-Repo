@@ -7,7 +7,19 @@ explicitly overrides them.
 
 - Client-facing language is plain and outcome-led. Say what the customer gets,
   in words a busy business owner would use.
-- Never use "GEO", "SEO", or search-industry jargon anywhere on the site.
+- No search-industry jargon in the copy that persuades — headlines, navigation,
+  body text, meta descriptions. **Noven never describes itself with an
+  acronym.**
+- **One deliberate exception, decided by the owner 2026-08-01.** A single FAQ
+  entry or answer page may name the industry's terms — "GEO", "AEO", "SEO" and
+  whatever replaces them — *in order to translate them into plain words*, and
+  that page's own meta description may say so too. Naming a term to explain it
+  is not jargon; leading with it is. The live
+  example is the "Is this what people call GEO or AEO?" entry on the FAQ page.
+  The reasoning: a buyer who has already researched this arrives holding one of
+  those acronyms, and a site that contains the word nowhere cannot be the answer
+  when they ask for it — which is the exact failure the audit is sold to find on
+  other people's businesses. See `ops/session-log.md`, 2026-08-01.
 
 ## Design
 

@@ -356,17 +356,23 @@ allowance holds; 195 is proportionally more. Under £2 either way — check the
 dashboards after the run and record what it actually was, because that number
 replaces an estimate.
 
-### 9a. The industry-term question — proposed, awaiting the owner
+### 9a. The industry-term question — confirmed 2026-08-01
 
-**The open argument.** `CLAUDE.md` bans industry jargon everywhere on the site.
-The owner's challenge on 2026-08-01 is fair: a buyer who has researched this
-already may well know the industry's term, and a site that never contains it
-cannot be matched to anyone searching or asking with it. The counter-argument is
-that our buyer is a busy owner rather than a marketer, the terms are unsettled,
-and plain language is most of the positioning. **Both are assertions. Neither
-side has evidence, and evidence costs about ten pence.**
+**Why it is in the run.** The owner challenged `CLAUDE.md`'s absolute ban on
+industry jargon on 2026-08-01: a buyer who has researched this already arrives
+holding one of those acronyms, and a site that contains the word nowhere cannot
+be the answer when they ask for it. The rule was changed the same day — jargon
+stays out of the copy that persuades, and one FAQ entry now names GEO and AEO in
+order to translate them.
 
-**Proposed: one extra question, recorded outside the tracked ten.**
+**That makes this question more useful, not less.** It was proposed as a way to
+settle an argument; the argument is settled, so it is now the **before**
+measurement for a change we are about to publish. Run it on the same day as the
+rest, before the FAQ entry has had time to be crawled, and it becomes a dated
+baseline for the one piece of copy on this site written specifically to be found
+by a term. Re-run it at six months alongside q06 and q07.
+
+**One extra question, recorded outside the tracked ten.**
 
 | # | Category | Question |
 |---|---|---|
@@ -380,16 +386,13 @@ Noven's tracked ten, and mixing it in would corrupt a twelve-month baseline.
 **What each result would mean:**
 
 - **Different, richer competitor list than q01–q03 gives.** The term is doing
-  real discovery work, and the absolute ban is costing us reach. The answer is
-  then a narrow exception — one page that translates the terms — not jargon in
-  the copy.
-- **Much the same answers as the plain-language questions.** The ban costs
-  nothing and the rule stands as written, settled with data rather than taste.
+  real discovery work, which is the case for the FAQ entry — and the case for
+  writing a full answer page on it later, which would be the first one Noven
+  has written for itself.
+- **Much the same answers as the plain-language questions.** The exception costs
+  nothing and earns little; leave it at the one FAQ entry and don't expand it.
 - **Nobody named at all, either way.** Says more about how new the category is
-  than about our wording, and the question gets retired.
-
-**This is a change to `CLAUDE.md` if it goes ahead in any form, so it is the
-owner's call and it is recorded here rather than assumed.**
+  than about our wording. Keep the entry, retire the question.
 
 ## 10. Run day, in order
 
