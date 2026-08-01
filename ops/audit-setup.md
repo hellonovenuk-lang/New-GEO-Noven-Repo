@@ -298,11 +298,12 @@ keeps the Wirral for one question. **Record this in the report as a difference
 between our own audit and a normal one**, because local discovery is where most
 client findings come from, and this run does not test it.
 
-**Flag 3 — `{trigger}`.** The event that sends someone looking. `[PLACEHOLDER]`
-until the owner fills it: the honest source is what the first few enquiries
-actually said, and there have not been enough of those yet. Suggested until
-then, from the site's own description of the problem: *"I've noticed customers
-are finding people through ChatGPT and we never come up"*.
+**Flag 3 — `{trigger}` — closed 2026-08-01.** The event that sends someone
+looking. The owner confirmed the suggested wording, taken from the site's own
+description of the problem: *"I've noticed customers are finding people through
+ChatGPT and we never come up"*. It stands in for the honest source, which is
+what the first few enquiries actually say — **revisit once there have been
+enough of those to replace a guess with a quote.**
 
 ### The ten
 
@@ -316,7 +317,7 @@ are finding people through ChatGPT and we never come up"*.
 | q06 | Named | What do you know about Noven? |
 | q07 | Named | Is Noven on the Wirral any good, and what do they do? |
 | q08 | Comparison | Who are the main alternatives to Noven in the UK? |
-| q09 | Buying intent | `{trigger}` — who do I call in the UK? |
+| q09 | Buying intent | I've noticed customers are finding people through ChatGPT and we never come up - who do I call in the UK? |
 | q10 | Buying intent | I'm looking for someone in the UK to get my business showing up in AI assistant answers. What are my options and roughly what should it cost? |
 
 Write these into `questions.csv` with `frozen_from` set to the run date. They
@@ -355,7 +356,40 @@ allowance holds; 195 is proportionally more. Under £2 either way — check the
 dashboards after the run and record what it actually was, because that number
 replaces an estimate.
 
----
+### 9a. The industry-term question — proposed, awaiting the owner
+
+**The open argument.** `CLAUDE.md` bans industry jargon everywhere on the site.
+The owner's challenge on 2026-08-01 is fair: a buyer who has researched this
+already may well know the industry's term, and a site that never contains it
+cannot be matched to anyone searching or asking with it. The counter-argument is
+that our buyer is a busy owner rather than a marketer, the terms are unsettled,
+and plain language is most of the positioning. **Both are assertions. Neither
+side has evidence, and evidence costs about ten pence.**
+
+**Proposed: one extra question, recorded outside the tracked ten.**
+
+| # | Category | Question |
+|---|---|---|
+| x01 | Discovery, industry term | Who are the best UK agencies for GEO — getting a business recommended by AI assistants? |
+
+Five runs on the three API assistants: **15 queries, roughly 10p.** Record it in
+`runs.csv` exactly like the others but with `question_id=x01`, and **leave it out
+of the bands and out of the frozen set** — it is a side experiment, not part of
+Noven's tracked ten, and mixing it in would corrupt a twelve-month baseline.
+
+**What each result would mean:**
+
+- **Different, richer competitor list than q01–q03 gives.** The term is doing
+  real discovery work, and the absolute ban is costing us reach. The answer is
+  then a narrow exception — one page that translates the terms — not jargon in
+  the copy.
+- **Much the same answers as the plain-language questions.** The ban costs
+  nothing and the rule stands as written, settled with data rather than taste.
+- **Nobody named at all, either way.** Says more about how new the category is
+  than about our wording, and the question gets retired.
+
+**This is a change to `CLAUDE.md` if it goes ahead in any form, so it is the
+owner's call and it is recorded here rather than assumed.**
 
 ## 10. Run day, in order
 
@@ -398,8 +432,9 @@ Everything above, as a list to tick on the morning of the run.
 - [ ] Logged-out browser profile ready, UK locale
 - [ ] `clients/noven/audit-2026-08-XX/` created outside the repo, backed up
 - [ ] `runs.csv` and `questions.csv` created with the exact headers
-- [ ] The ten questions confirmed, flags 1 and 3 resolved, written to
-      `questions.csv`
+- [x] The ten questions confirmed, flag 3 resolved 2026-08-01, written to
+      `questions.csv`. **Flag 1 is open by decision, not by omission** — the
+      wording stays mixed on purpose, and section 9a says why
 - [ ] Script written, hard cap 250, appends and flushes
 - [ ] Smoke test passed on all five checks, smoke rows deleted
 - [ ] `git status` clean of anything containing a key
