@@ -308,6 +308,48 @@ reading Gemini's answers to q01/q04/q06 at the outcome-judging step, weigh
 a non-UK-shaped answer against this known gap before recording it as a
 finding about the business rather than a limitation of the tool.
 
+### 8b. Gemini grounds only sometimes — and that is the measurement
+
+A second smoke run returned a Gemini row with **`sources_cited` completely
+empty** and a wholly generic answer, on the same question that had produced
+real citations minutes earlier. Checked by hand in AI Studio the same day:
+q01, Gemini 3.6 Flash, "Grounding with Google Search" toggled on, **four
+runs — three produced no sources and no Search Suggestions, one produced
+nine sources with inline citation markers.** Small sample, but it reproduces
+the script's behaviour exactly, so the cause is not our request.
+
+**Why.** Google calls this *dynamic retrieval*: the model decides per prompt
+whether a search is worth doing. On Gemini 1.5 that decision was tunable —
+`google_search_retrieval` took a `dynamicRetrievalConfig` threshold where 0
+meant always ground. **That control does not exist on current models.** On
+2.0 and later the API rejects `google_search_retrieval` in favour of
+`google_search`, and then rejects `dynamic_retrieval_config` as unrecognised
+on that tool. There is no supported way to force grounding at this tier.
+
+**Do not treat an ungrounded Gemini row as a failed run.** This is the
+important difference from the other two providers, and it cuts against the
+natural reading of check 1 in section 8. For OpenAI and Perplexity, an
+answer with no citations means the tool was not switched on and the row is
+measuring the model's memory — a setup fault, and the row is worthless. For
+Gemini the tool *is* switched on and the model declined to use it, which is
+precisely what happens to a member of the public asking Gemini the same
+question. **The ungrounded answers are what a customer would be told**, so
+they are representative data and stay in. Dropping them would keep only
+Gemini's best runs and quietly flatter its numbers.
+
+Two consequences for the run:
+
+- **`sources_cited` empty is the grounding flag.** No extra column is
+  needed — an empty value on a Gemini row records that the model did not
+  search, and the proportion of empty rows across the five runs is itself a
+  finding worth a line in the report.
+- **The locale gap is confirmed, not theoretical.** The one hand-run that
+  *did* ground returned nine sources — mersel.ai, quoleady.com, gtm8020.com,
+  20northmarketing.com, gen-optima.com, posirank.com, youtube.com,
+  aisearchrankings.com, athenahq.ai — with **no UK domain among them**. So
+  section 8a's limitation holds even when grounding works: Gemini both
+  searches less often *and* searches a US-shaped web when it does.
+
 ---
 
 ## 9. Step eight — Noven's own ten questions
