@@ -44,6 +44,34 @@ explicitly overrides them.
 - Use the committed brand assets as-is. Never redraw, retype or recreate the
   logo.
 
+## Documents
+
+*Added 2026-08-03, when the owner got Microsoft Office.*
+
+- **Documents are made in Office formats.** Anything written to be read as a
+  document — client reports, quotes, proposals, letters, invoices, any working
+  paper the owner opens outside the repo — is `.docx`, `.xlsx` or `.pptx`, not
+  markdown or a text file. The owner has Office and should be able to edit,
+  comment on and finish a document without converting it first.
+- **The client gets a PDF, exported from the Office file.** The `.docx` is the
+  editable master and stays in the client's audit folder; the PDF is what
+  leaves the building. Export from Word rather than from any converter — Word
+  uses the fonts actually installed and produces the better-looking file.
+- **This does not apply to the repo's own working files.** Source code,
+  `robots.txt`, and the operating documents in `ops/` stay as they are.
+  They are version-controlled, diffable in a pull request, and read by the
+  assistant far more often than by a person; turning them into binaries would
+  destroy the whole record of why decisions were made. The test is who opens
+  it: a person, in Office → Office format. Git, a build, or a crawler →
+  leave it alone.
+- **Match the brand rather than inventing a look.** Type and colour come from
+  `site/src/styles/global.css`: navy `#170969`, ink `#16161d`, brass `#8a6a28`,
+  warm white `#fffefa`. The site's own font stack falls back to Palatino
+  Linotype, Segoe UI and Consolas, all of which ship with Windows and Office,
+  so a document set in those three matches the site and needs nothing
+  installed. The design rules above apply to documents too — a client report
+  that looks generated is worse than a plain one.
+
 ## Technical
 
 - Keep the site as crawlable static HTML:
