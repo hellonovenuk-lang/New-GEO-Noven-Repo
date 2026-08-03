@@ -10,13 +10,26 @@ Written 2026-07-30 as part of roadmap 3a. Companion to `ops/audit-method.md`.
 
 ## How to write it
 
-**Length: 800 to 1,200 words.** The site promises "a short written report in
-plain English" on three separate pages. A twenty-page document with a cover
-sheet would break that promise while appearing to over-deliver, and it would
-take three hours to write against a £125 fee. Short is the product, not a
-shortcut.
+**Length: 1,200 to 1,800 words.** The site promises "a short written report in
+plain English" on three separate pages, and 1,800 words is about five pages —
+still short against the twenty-page decks with a cover sheet this competes with.
+But the cap is real: past about 1,800 it stops being read, and it stops being
+writable in the time a £125 fee pays for.
 
-**The nine rules.**
+**Length has to be earned by findings, never by padding.** If the honest report
+is 1,200 words, it is 1,200 words. Writing to the top of the range to look
+thorough is the same failure as a twenty-page deck, just cheaper.
+
+*Amended 2026-08-03, from 800–1,200. Two reasons. The owner read the first full
+report and found the longer form "a real consultancy report with enough detail to
+show we actually did the work, not just a checklist with vague scoring out of
+100". And rule 10 adds a mandatory section that runs 300–400 words on its own —
+a range that doesn't accommodate its own required sections is just a rule that
+gets broken every time. The first band tried was 1,000–1,600 and was wrong for
+exactly that reason: it left less room for the other seven sections than the
+pre-rule-10 report already used.*
+
+**The ten rules.**
 
 1. **No jargon, at all.** Not softened jargon, not jargon-with-a-definition.
    `CLAUDE.md` bans the industry's vocabulary outright. Write "the code that
@@ -40,6 +53,23 @@ shortcut.
 9. **No second sales pitch.** One recommendation, once, at the end. `CLAUDE.md`
    bans repeated calls to action, and a £125 report that reads as a £750 pitch
    destroys the thing the £125 bought.
+10. **Say what they are doing right, not only what is wrong. Every report, in
+    its own section, whatever the verdict.** Three reasons, and the third is the
+    commercial one. *Credibility:* a client cannot tell "your site is in good
+    order" from "we didn't look at your site" if the report only lists problems,
+    and those are very different pieces of work. *Accuracy:* on a site that
+    passes, the good news is a finding — it is what makes the one real gap read
+    as a small fix rather than the tip of something. *And it is where the
+    Foundation quote comes from.* `ops/audit-method.md`'s companion checklist
+    already says the audit list and the Foundation list are the same list, one
+    diagnosing and one fixing, and that the client seeing them line up "is most
+    of why they believe the second one". Going group by group through what is
+    already right is what makes the £750 quote legible instead of asserted.
+
+*Rule 10 added 2026-08-03, after the first full report was written without it.
+The gap was invisible on that report because the site being audited passed
+nearly everything — the atypical case. On a normal client, whose site has real
+problems, this section is most of the Foundation scope.*
 
 **Anything unknown is written as `[PLACEHOLDER]` and raised with the owner
 before the report is sent.** Standard rule, and it applies hardest here — this
@@ -126,6 +156,41 @@ whether they deserve it — we don't know, and guessing would be inventing.*
 {One sentence on anything the named businesses visibly have that {business}
 doesn't — published prices, a page about the specific service, more reviews.
 Only what we can see. Nothing inferred.}
+
+## What we found on your website
+
+*Rule 10. This section is not optional and it is not padding — it goes in every
+report, whatever the verdict.*
+
+*Work the four checklist groups in order, one short block each, and for every
+group say **both** what is right and what is missing. Not the good news here and
+the bad news later — the whole picture of the site, group by group:*
+
+1. *Can the assistants get to the site at all?*
+2. *Can they read it once they're in?*
+3. *Are the business facts written where a machine can find them?*
+4. *Does any page answer the questions customers actually ask?*
+
+*Name what passes. "Nothing here is blocking them" is a sentence worth writing
+when it's true, and a client cannot infer it from silence. Then name what fails
+in the same block, in plain words, and point forward: "that's finding 2 below".*
+
+**Never write a group as a flat pass when one assistant fails it.** "The
+assistants can reach you" is false if Copilot can't, and a client who later
+discovers that reads the whole report differently. Say which, and how many.
+
+*This is not diagnosing twice. **This section describes the state of the site;
+the findings rank what to do about it and what it costs.** The findings also
+draw on things that aren't the website at all — a name, a missing listing, a bad
+review — so the two sections are not the same list and shouldn't read as one.*
+
+*Close with a one-line summary of the four: how many are in good order, how many
+have a single gap, how many are genuinely absent.*
+
+*On a typical client this section is longer than the findings, because most
+sites have four or five things right and two badly wrong. That is the correct
+shape. It is also, group by group, the Foundation scope — so a client who reads
+this section and then reads the quote should recognise the same list.*
 
 ## What's holding you back
 
