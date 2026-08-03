@@ -1,0 +1,3 @@
+# One candidate business name per line.
+# Lines starting with # are ignored, so rejected names can stay here.
+# Three names is about right: 36 queries, a few minutes, a couple of pounds.
