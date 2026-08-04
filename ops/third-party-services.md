@@ -18,7 +18,7 @@ provider's own site before committing. Dollar prices are the providers' own;
 where a rough pound figure is given it assumes about $1.30 to £1 — check the rate
 when you actually budget.
 
-Already in place: **Netlify** (hosting), **Zoho Mail** (`hello@novenstudio.co.uk`
+Already in place: **Netlify** (hosting), **Zoho Mail** (`hello@wardith.co.uk`
 — this replaced Gmail on 29 July, see A1), **Zoho Books** (invoicing and revenue),
 **GitHub** (this repo). Those are treated as settled and the recommendations build
 on them rather than replacing them.

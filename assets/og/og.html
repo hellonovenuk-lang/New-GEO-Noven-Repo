@@ -36,10 +36,13 @@
       }
 
       /* The shipped web asset, as-is. Height derived from its own viewBox
-         ratio (1193.92 : 236.39), so the mark is scaled, never reshaped. */
+         ratio (1297.59 : 237.61), so the mark is scaled, never reshaped.
+         Re-derive this if the wordmark is ever re-exported — the Noven ratio
+         was 1193.92 : 236.39 and leaving it in place would squash the new
+         artwork rather than fail, which is the kind of fault that ships. */
       .wordmark {
         width: 216px;
-        height: 42.76px;
+        height: 39.55px;
         display: block;
       }
 

@@ -50,7 +50,7 @@ in the business with no time budget at all.
 
 | File | What it decides | Status |
 |---|---|---|
-| `own-facts-check.md` | Every place Noven's own facts are published, what each must say, and what it currently says. The audit's third promise, run on ourselves. **Read before the self-audit** | Live — two surfaces known wrong |
+| `own-facts-check.md` | Every place Wardith's own facts are published, what each must say, and what it currently says. The audit's third promise, run on ourselves. **Read before the self-audit** | Live — two surfaces known wrong |
 | `accounts.md` | Every account, what it costs, when it renews, what breaks if it lapses, and the dates that need to be in a real calendar. **No credentials — this repo is private today but is written as if public** (`own-facts-check.md` section 4) | Live, with real gaps marked `[PLACEHOLDER]` |
 | `client-record.md` | What we keep about each client and prospect. Formerly `spine.md`, which named nothing a stranger could guess at | Fields decided, storage undecided |
 
@@ -59,7 +59,7 @@ in the business with no time budget at all.
 | File | What it decides | Status |
 |---|---|---|
 | `third-party-services.md` | Every outside service the business needs, with a pick, a cost and a reason for each. Read only the **Picks** for the shortlist | Live — prices restated against the repricing on 2026-08-01; some sections still predate decisions made later in the same file, and say so |
-| `zoho-mail-setup.md` | How `hello@novenstudio.co.uk` was set up, and how to diagnose it if it breaks | Closed — still written as a to-do list |
+| `zoho-mail-setup.md` | How `hello@wardith.co.uk` was set up, and how to diagnose it if it breaks | Closed — still written as a to-do list |
 | `linkedin.md` | The profile rewrite and the company page | **Reopened 2026-08-01** — the copy pasted into LinkedIn predates the repricing, so both About sections publish old prices |
 
 ## The record

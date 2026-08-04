@@ -1,0 +1,29 @@
+# One candidate business name per line.
+# Lines starting with # are ignored, so rejected names can stay here.
+# Three names is about right: 36 queries, a few minutes, a couple of pounds.
+
+# Locito - rejected 2026-08-04. Collision on every run (12/12): OpenAI and
+# half of Perplexity default to Localito (Localito Marketplace Ltd, active UK
+# company, Manchester); Gemini and the other half of Perplexity default to
+# Lockito (Android GPS-spoofing app), explicitly flagged as a common
+# misspelling of it. Two different real products, both one keystroke away.
+# Locito
+
+# Tovan - rejected 2026-08-04. Collision on 11/12 runs (1 Gemini row never
+# returned - persistent HTTP 503, disclosed as a gap in names-runs.csv rather
+# than hidden). OpenAI and Perplexity both default to Tovan.ai (an AI PCB/
+# hardware-design tool); Tovan Properties Limited (Companies House, inc.
+# 2015, Congleton) and Tovan Sp. z o.o. (Polish freight company) also surface.
+# Tovan
+
+# WARDITH - CHOSEN 2026-08-04, owner's decision. Deliberately never run through
+# this tool, and that is not an oversight. The tool exists to find an occupant.
+# A web search found no company, product or brand of this name anywhere - the
+# only hits are two private individuals and some hobby art - so there is no
+# occupant for the twelve queries to surface, and the expected answer from all
+# three assistants is "I don't have information on that", which the README
+# already calls the pass. Locito and Tovan were worth the money because both
+# looked plausible AND had a real occupant one keystroke away. This does not.
+# Spending on it would be paying to confirm what a free search already showed.
+# Full reasoning in ops/session-log.md, 2026-08-04.
+# WARDITH

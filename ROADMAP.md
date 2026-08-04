@@ -1,4 +1,13 @@
-# Noven roadmap
+# Wardith roadmap
+
+> **Renamed 2026-08-04: this business was called Noven.** The name collided
+> with at least four other businesses, which the self-audit found the hard way.
+> The live address is `wardith.co.uk`; `wardith.com` and `wardith.uk` are owned
+> and redirect to it. Where a document below still says Noven it is recording
+> something dated — the 2 August self-audit and its frozen question set are the
+> main ones, and they must keep the old name or the baseline is destroyed.
+> `ops/rename-to-wardith.md` is the full changeover; `ops/plan-to-1-september.md`
+> is the timetable.
 
 **What this file is:** what's true now and what's left. Read it at the start of
 every session and update it at the end.
@@ -33,32 +42,109 @@ distinction everywhere else.
 
 ## Where we are today
 
-**The site is live** at `novenstudio.co.uk`, on HTTPS, deployed from `main` by
+**The site is live** at `wardith.co.uk`, on HTTPS, deployed from `main` by
 Netlify: seven static pages, readable by AI crawlers, with machine-readable
 business facts and a sitemap submitted and confirmed in Search Console. Email is
-`hello@novenstudio.co.uk` on Zoho. The brand assets are in and the palette
+`hello@wardith.co.uk` on Zoho. The brand assets are in and the palette
 matches them. **Phase 1a and 1b are closed.**
 
-**The audit's method is written** (roadmap 3a) across four `ops/` docs, but
-nothing has been run against a real business yet.
+**The Noven self-audit has run** — 2–3 August 2026, archived at
+`ops/audits/noven-2026-08-02/`. This is the biggest change since this file was
+last written, and it reorders what's next more than any single item below it.
 
-**Two things are blocking, both about an address:**
+**The result: verdict C, and not for the reason the method expected.**
+`checklist.md` and the report template both describe C as a broken-*site*
+problem — no website, a Facebook page standing in, a site that can't take
+structured data. Noven's site is the opposite of all three and still verdicts
+C, because the blocker is **identity, not the site**:
+
+1. **"Noven" belongs to somebody else, at least four times over** — a Miami
+   pharmaceutical company, a North West builder, and (most damaging) an AI
+   product trading as `noven.studio`, a name that is ours with the dot moved,
+   working in the same field. Asked "what do you know about Noven" thirty times
+   across three assistants, **every answer described the pharma company.**
+   Asked the harder question naming the Wirral, ChatGPT still named the builder
+   four times out of five. Not one of 210 automated answers cited
+   `novenstudio.co.uk`.
+2. **Copilot has no record of the site at all** — `site:novenstudio.co.uk`
+   returns nothing on Bing, which is what Copilot retrieves from. Free to fix,
+   ~15 minutes, days to weeks to take effect.
+3. **Nothing tells a machine where the business works.** The pages say "the
+   Wirral"; the structured data says only `GB`. Cost all 15 checks that asked
+   for someone on the Wirral.
+
+**The report's own recommendation: fix the name before anything else.** No
+amount of website work — including the Foundation — stops an assistant
+believing Noven is a pharmaceutical company, and every future improvement under
+the current name accrues to a name at least three other businesses already
+answer to. Findings 2 and 3 are ordinary, fast Foundation-shaped fixes. Finding
+1 isn't, and it now sits ahead of everything else in this file — see 1c-2.
+
+**Finding 1 is answered as of 2026-08-04: the name is WARDITH.** Built from the
+owner's own name — the back half of *Edward*, the back half of *Smith*. It is
+the third candidate. `ops/name-check/` ran on the first two and killed both:
+Locito collided 12 times out of 12 with Localito Marketplace Ltd and the Lockito
+app; Tovan collided 11 times out of 12 with Tovan.ai and two registered
+companies. WARDITH has no occupant to collide with — no company, product or
+brand of that name exists — so the tool was deliberately not run on it, which is
+argued out in `ops/session-log.md`, 2026-08-04, rather than left looking like a
+skipped step.
+
+**Deciding the name is not doing the rename, and almost none of the rename is
+done.** The domain is not bought, Companies House and the trade mark register
+are not checked, and everything from the canonicals to both LinkedIn pages still
+says Noven. That work, and the order to do it in, is 1c-2. A domain, a logo and
+a company record are far cheaper to get right before they exist than after —
+which is the whole reason the name went first.
+
+**Two method faults the audit surfaced, neither fixed yet:**
+
+- **The cost estimate in `ops/audit-setup.md` §6 is wrong.** It budgets ~£1.20
+  per 150 queries. OpenAI alone billed **$12.63** for ~75 queries; Gemini's and
+  Perplexity's totals were never recorded. This bears directly on whether
+  Maintain's £95/month is priced correctly.
+- **The raw answer data was never archived.** `runs-clean.csv` — the 210 rows
+  every figure in the report traces to — existed only on the owner's machine
+  during the run and isn't in the audit folder. Nothing in the report has
+  actually been checked against source data.
+- **Off-site checklist group 3 was skipped** — Google Business Profile, Bing
+  Places, Companies House, directories, review counts. Disclosed in the report
+  rather than hidden; usually where the most fixable findings live. A paying
+  client's audit shouldn't repeat the omission.
+
+**Also done this session:** report template Rule 10 — every report must now say
+what a business is getting right, not only what's wrong — applied retroactively
+to the archived Noven report; and a new `CLAUDE.md` rule that documents meant
+for a person (client reports, quotes, invoices) are Office files with the PDF
+exported from Word, which is why the archive holds both `report.md` and a
+`.docx`.
+
+**Unchanged since 1 August, and still gating a live pay button — two things
+blocking, both about an address:**
 
 1. **The ICO published, or is about to publish, the owner's home address** on a
-   bulk-downloadable public register. Time-critical — see 1c.
+   bulk-downloadable public register. Time-critical — deadline **Monday 10
+   August 2026** — see 1c.
 2. **The service address hasn't landed.** V LOT took payment and may have
    delivered nothing. It blocks the ICO fix, the site footer, and the audit's
    pay button.
 
-**Next piece of real work:** the Noven self-audit (3a). It needs no client and
-closes items in 1e, 2d, 3a and 3c at once.
+Nothing in the last three days' work touched the ICO call, the service address,
+the terms of service, the privacy notice or the payment link — see 1c below.
 
-**The critical path, in dependency order:** ICO helpline call (deadline Mon 10
-Aug) → service address ordered → footer address and ICO record fixed → terms and
-privacy notice written → one payment possible end to end. **Running in parallel
-and blocked by none of it: the Noven self-audit.** The order page is not on this
-path — a payment link in an email takes the first payment. `HANDOVER.md` has the
-long version, written for someone with no context.
+**`ops/session-log.md` has a gap of its own:** no entry exists for the audit
+run, the archiving, or the name-check tool, breaking the file's own rule ("add
+an entry at the end of each session") at the point the record matters most.
+
+**The critical path now:** the name decision (`ops/name-check/`, no cost,
+blocks identity, see 1c-2) → ICO helpline call (deadline Mon 10 Aug) → service
+address ordered → terms and privacy notice written → one payment possible end
+to end. **Free and not blocking anything, so do them whenever:** register with
+Bing Webmaster Tools (closes finding 2) and add the location field to the
+structured data (closes finding 3). The order page is still not on this path —
+a payment link in an email takes the first payment. `HANDOVER.md` has the
+longer version, written for someone with no context — **not yet updated to
+match this section.**
 
 ---
 
@@ -69,7 +155,7 @@ pay us £125.
 
 ### 1a. Facts only the owner can supply — closed
 
-All live on the site and in the structured data: `hello@novenstudio.co.uk` (the
+All live on the site and in the structured data: `hello@wardith.co.uk` (the
 old Gmail forwards, and will for months); no phone, email only, and the site
 says why; reply within two working days; the Wirral, serving the UK remotely;
 Kieran Smith, sole trader, no company number, not VAT registered; the audit
@@ -77,9 +163,10 @@ report within two working days of scope and payment being confirmed (moved from
 one working day on 2026-07-31 — `ops/audit-method.md` section 7 says why), and a
 Foundation plan within two working days of payment clearing. Founder bio,
 photograph, LinkedIn profile and Maersk as `alumniOf` are all in. The LinkedIn
-setup is done — profile amended, company page live at
-`linkedin.com/company/novenstudio/`, `businessLinkedIn` confirmed in the built
-JSON-LD. **But the copy on both LinkedIn About sections predates the 31 July
+setup is done — profile amended, company page live. **`businessLinkedIn` is
+deliberately `null` from 2026-08-04**: renaming the page changes its slug, and
+a stale `sameAs` is a false machine-readable claim rather than a broken link.
+Set it once the renamed page has been opened — `ops/rename-to-wardith.md` D0.5. **But the copy on both LinkedIn About sections predates the 31 July
 repricing and still publishes the old prices**, so `ops/linkedin.md` was
 reopened on 2026-08-01 for a repaste — see `ops/own-facts-check.md`.
 
@@ -106,10 +193,10 @@ if clients actually start taking a month and leaving.
 
 ### 1b. Domain and hosting — closed
 
-`novenstudio.co.uk` owned and set in `astro.config.mjs` and `robots.txt`. Apex is
+`wardith.co.uk` owned and set in `astro.config.mjs` and `robots.txt`. Apex is
 primary, `www` redirects to it. Netlify deploys `main`; HTTPS confirmed via
 Netlify's API. Nothing to redirect — the domain only ever hosted the owner's own
-projects. `hello@novenstudio.co.uk` is live on Zoho Mail (Mail Lite, DNS at
+projects. `hello@wardith.co.uk` is live on Zoho Mail (Mail Lite, DNS at
 Namecheap, MX to `mx.zoho.eu`, SPF, DKIM, `p=none` DMARC), tested both
 directions; setup and failure checks in `ops/zoho-mail-setup.md`.
 
@@ -255,6 +342,119 @@ place, not on every page.
       no registration is required at all early on. Confirm both against current
       HMRC guidance rather than taking them from here.
 
+### 1c-2. The name decision — settled 2026-08-04. The rename is not
+
+The self-audit's finding 1 (see "Where we are today") made this a
+prerequisite for further investment in the current identity, not a
+someday-decision. The report's own words: **"the honest order is the name
+first, then the rest."**
+
+- [x] **Decide whether Noven keeps its name.** It does not. **The name is
+      WARDITH** — the owner's call, 2026-08-04, after Locito and Tovan were
+      shortlisted and both rejected by `ops/name-check/`. Reasoning in
+      `ops/session-log.md`, 2026-08-04.
+- [x] **Run candidates through `ops/name-check/` before anything else touches
+      them.** Done for Locito and Tovan, both rejected. **Deliberately not run
+      for WARDITH**, and the reason is written into `names.txt` beside the
+      name: the tool finds occupants, a free search found no occupant, so the
+      queries would only confirm what was already known. That exception is
+      recorded rather than quietly taken.
+
+- [x] **Buy the domain.** `wardith.co.uk`, `wardith.com` and `wardith.uk`, all
+      three at GoDaddy on 2026-08-04, **one year only**. Extending them to a
+      long term is in the owner's calendar for 6 Oct 2026, with a backstop on
+      4 Jun 2027 — the first dated obligation in this business to exist outside
+      a markdown table. Recorded in `ops/accounts.md`.
+
+- [x] **Decide which of the three domains the business *is*.** `wardith.co.uk`,
+      owner's call 2026-08-04. `.com` and `.uk` are owned and redirecting and
+      are never published as a contact detail.
+- [x] **Publish the site as Wardith.** Merged to `main` on 2026-08-04, so the
+      live site, every canonical, the sitemap and the JSON-LD identity are all
+      Wardith on `wardith.co.uk`. DNS, TLS and the page-for-page redirects are
+      verified working on all three new domains.
+
+---
+
+### 1c-3. What is left of the rename — **start a new session here**
+
+**The site is live as Wardith. These are the open items, in order.** The full
+checklist with step-by-step instructions is `ops/rename-to-wardith.md`; the
+timetable and the money constraints are `ops/plan-to-1-september.md`.
+
+**Do these two first. Both are on the critical path and both are free.**
+
+- [ ] **1. Make `wardith.co.uk` the primary domain in Netlify.** Site
+      configuration → Domain management → set primary. **Thirty seconds, and
+      until it is done the site publishes a contradiction:** every canonical
+      says `wardith.co.uk`, but `wardith.co.uk` currently 301s *to*
+      `novenstudio.co.uk`, because the old domain is still primary. Flipping it
+      reverses every redirect at once and completes the switch. Verify the
+      direction actually flipped with a real request to a real inner page —
+      `ops/rename-to-wardith.md` D1 and D3.
+- [ ] **2. Zoho: `hello@wardith.co.uk`, then flip the address on the site.**
+      Full steps in `ops/rename-to-wardith.md` D0.4. The site currently
+      publishes `hello@novenstudio.co.uk` **on purpose** — a working address on
+      the old domain beats a bouncing one on the new domain, and it is the only
+      inbound channel on a business with no phone and no form. Add the alias
+      (free — never a second user), add the mail records at GoDaddy (everything
+      ends `.eu`, exactly one `v=spf1`, edit the existing `_dmarc` row rather
+      than adding a second), send both directions, and confirm `SPF: PASS`,
+      `DKIM: PASS`, `DMARC: PASS` on a real message. **Then change one line in
+      `site/src/data/business.ts` and redeploy.**
+
+**Then these.**
+
+- [ ] **3. LinkedIn: rename the page, and decide about the slug.**
+      `business.ts` `businessLinkedIn` is deliberately `null`, so the site
+      currently publishes no `sameAs` for the company page. That costs nothing
+      — `schema.ts` omits the key entirely. Set it only once the renamed page
+      has been opened and the URL copied from the address bar. Repaste both
+      About sections from `ops/linkedin.md` §2 and §5.4 while in there: they
+      still publish the pre-31-July prices. New cover and logo PNGs are already
+      built in `assets/linkedin/`.
+- [ ] **4. Delete or password `noven-2-0-preview` on Netlify.** A second
+      project, deployed and publicly reachable with no password, carrying the
+      old name. It is not in `ops/own-facts-check.md`. After the rename it is a
+      stale public copy of the business under a dead name — the exact fault the
+      audit is sold to find.
+- [ ] **5. Re-export `Email Signature.svg` on one domain.** It reads
+      `hello@wardith.com` above `wardith.co.uk`. Do not use it until fixed.
+- [ ] **6. Bing Webmaster Tools and Google Search Console, on the new domain.**
+      Free, and promoted from housekeeping to the highest-leverage jobs in the
+      plan: **indexation is what could get Wardith named by launch, not
+      training.** The self-audit found Copilot had no record of the site
+      *because Bing never indexed it*. Do them the week the site goes live, not
+      the week of the pre-launch audit. Change of Address in Search Console
+      once the redirects are flipped.
+- [ ] **7. The rest of Phase F** — Zoho Books, Revolut Pro, the ICO record, and
+      this repo's own name. `ops/rename-to-wardith.md`.
+- [ ] **8. Re-run `ops/own-facts-check.md` end to end** and record the date.
+
+**Still open from before the rename, and unchanged by it:**
+
+- [ ] **Check Companies House and the trade mark register.** Still not done —
+      `find-and-update.company-information.service.gov.uk` refused the
+      automated request, and no trade mark search has been run. Neither is
+      covered by the name-check tool, which its own README says plainly.
+- [ ] **Settle the ICO trading name on the 10 August call**, which is already
+      happening for the address. `HANDOVER.md` section 4. One call, two
+      problems, and the address is the urgent half — do not let the rename
+      delay it.
+- [ ] **Find out when `novenstudio.co.uk` expires.** It was already a
+      `[PLACEHOLDER]` in `ops/accounts.md`; the rename makes it load-bearing,
+      because that domain now has to outlive the change by years to carry the
+      redirects. If it lapses the redirects die and the name is free for
+      someone else — including the `noven.studio` product in the same field.
+- [ ] **The brand assets are a drawing job, not a text edit.** Checked
+      2026-08-04: all six SVGs in `assets/brand/` are outlined vector paths
+      with zero `<text>` elements, so the wordmark cannot be retyped and the
+      monogram cannot be relettered. `ops/rename-to-wardith.md` Phase B.
+- [ ] **Expect the old name to outlive the change.** `ops/own-facts-check.md`
+      exists because facts persist after they are corrected, and the self-audit
+      measured exactly that. Plan for a period where both names are in the
+      world, and decide what `novenstudio.co.uk` does — redirect, not drop.
+
 ### 1d. Standing decisions
 
 - [x] Sole trader to begin with, not a limited company.
@@ -290,11 +490,15 @@ unused so far.
       `/work`, `/approach`, `/privacy`, `/start`) were submitted for removal and
       live-tested as 404s, which is Google registering they're gone. Nothing
       further to do.
-- [ ] Bing Webmaster Tools — not yet done. Matters more than its market share
-      implies, because Bing's index is what Copilot answers from.
-- [ ] Ask the assistants what they say about Noven, recorded and dated — our own
-      before-and-after and our first proof. **This is now part of the Noven
-      self-audit in 3a**; do it there rather than twice.
+- [ ] **Bing Webmaster Tools — still not done, and now a named finding, not a
+      guess.** The self-audit confirmed Copilot holds no record of the site at
+      all (`site:novenstudio.co.uk` returns nothing on Bing). Free, ~15
+      minutes, days to weeks to take effect.
+- [x] **Ask the assistants what they say about Noven — done, via the self-audit
+      (3a), 2–3 August 2026.** Not the result hoped for: not named once across
+      210 automated answers, and every "what do you know about Noven" answer
+      described a Miami pharmaceutical company. Full findings in "Where we are
+      today" above.
 
 ---
 
@@ -366,66 +570,59 @@ what they know and believe about this business and whether it's accurate; what's
 blocking them, in plain English; and an honest recommendation including "you
 don't need us".
 
-**The method is decided (2026-07-30) across four docs:** `ops/audit-method.md`
-(decisions and reasoning), `ops/audit-questions.md` (the question set),
-`ops/audit-site-checklist.md` (the working checklist), `ops/audit-report-template.md`
-(what the client gets). **`ops/audit-setup.md` (2026-07-31) is the practical
-half** — the accounts, keys, spend caps, folder and CSV headers to have in place
-before the Noven run, Noven's own ten questions, and the run-day order. Start
-there when the run happens. Headlines:
+**The method was decided on paper 2026-07-30, across four docs:**
+`ops/audit-method.md` (decisions and reasoning), `ops/audit-questions.md` (the
+question set), `ops/audit-site-checklist.md` (the working checklist),
+`ops/audit-report-template.md` (what the client gets). **It has now been run
+once, on Noven itself, 2–3 August 2026** — archived at
+`ops/audits/noven-2026-08-02/` (report, working checklist, the exact script
+used, and the report as a Word document). Full result in "Where we are today"
+above; what the run confirmed or changed about the method is below.
 
-- [D] **The questions.** Ten doing five jobs — three discovery, two qualified,
-      two named-business, one comparison, two buying-intent — built from six
-      slots filled with the client's own words. Varying by trade changes the
-      slots, not the frame. **The audit's ten become the client's tracked ten**
-      on a monthly plan, frozen for twelve months once agreed.
-- [D] **Which assistants, and how we record.** All four we promise, by two
-      mechanisms: **Copilot has no API and Google's AI Overviews have none
-      either** (Microsoft retired the Bing Search APIs in August 2025). ChatGPT,
-      Gemini and Perplexity by API at 10 questions × 5 runs; Copilot and AI
-      Overviews by hand at 3 × 3, labelled as such. Copilot's real diagnostic is
-      Bing indexation. Recording is one CSV row per run with verbatim answers,
-      exact model version and every competitor named. **Client data does not live
-      in this repo** — the records contain personal data, and the repo is written
-      as though it were public even though it is private
-      (`ops/own-facts-check.md` section 4).
-- [D] **Rates, not yes/no.** Five runs per question, reported as a **band with
-      the raw count and never a percentage** — five runs can't tell 3 of 5 from
-      2 of 5, so "60%" invites a client to read noise as a decline. Four outcomes
-      per run, not two, because **"named wrongly" is worse than absent** and is
-      what owners react to hardest.
-- [D] **The website checklist**, ordered as the Foundation's four promises, so
-      **diagnosis and fix are the same list**. 20 minutes on-site, 15 off, hard
-      stop. Ends in one of three verdicts, including "the Foundation would be
-      wasted until something else is fixed".
-- [D] **The report template.** 800–1,200 words, three findings not ten, verbatim
-      quotes, and **no score, index or grade** — every competitor prints one and
-      ours would be an invented statistic.
-- [ ] **Do the first one end to end and time it — on Noven itself.** Needs no
-      client, and does four jobs at once: times the process, closes 1e's
-      outstanding assistant check, creates the dated baseline 2d wants while
-      "they've never heard of us" is still true, and **produces the sample audit
-      we show prospects**. Run one experiment inside it: three questions at ten
-      runs instead of five, to settle whether five is enough
-      (`ops/service-tiers.md` section 8). If an audit takes a day, the process is
-      wrong, not the price.
-      **Not started, and nothing here is blocking it — the whole of
-      `ops/audit-setup.md` section 11 is owner-only work** (three API accounts,
-      three spend caps, keys in `~/.noven/env`, the data folder, and confirming
-      flags 1 and 3). About 60–90 minutes, most of it waiting on account
-      verification.
-      **Read `ops/own-facts-check.md` first** (2026-08-01): both LinkedIn About
-      sections still publish the pre-repricing prices, and the decision is to
-      leave them wrong until the run is finished, so that the baseline records an
-      assistant quoting a price we no longer charge.
-- [ ] **Build the runner.** 150 API queries can't be typed by hand — 75 minutes
-      before a word of the report is written, which breaks the time budget on its
-      own. Reads the questions, calls the three APIs, writes the CSV; hard query
-      cap, resume, verbatim answers, client data outside this repo.
-      **Deliberately after the first audit** — written first it's a guess at a
-      format, written second it's a transcription of something that worked. **Not
-      on the critical path.**
-- [ ] Rewrite the process based on what the first one taught us.
+- [x] **The questions, the assistants, the rates and the checklist all held up
+      in practice.** Ten questions (frozen in `questions.csv`), 210 API runs
+      across ChatGPT/Gemini/Perplexity plus 18 hand runs across Copilot/Google,
+      reported as bands with the raw count, never a percentage. No structural
+      change needed to any of these. **The audit's ten become the client's
+      tracked ten** on a monthly plan, frozen for twelve months once agreed.
+- [x] **The report template mostly held, with one gap fixed live: Rule 10.**
+      The first draft listed only faults; a report that does that can't tell a
+      client "your site is fine" from "we didn't look." Every report now
+      covers all four checklist groups and states what's already right, not
+      only what's wrong. Length raised 1,000–1,600 → **1,200–1,800** words.
+      Applied retroactively to the archived Noven report.
+- [x] **Verdict C fires correctly but is documented too narrowly — not yet
+      fixed.** `checklist.md` and `ops/audit-report-template.md` both describe
+      C as a broken-*site* problem. Noven's site passes nearly everything and
+      still verdicts C, because the blocker is identity. **Needs an edit to
+      the C definition, not a new verdict.**
+- [ ] **Fix the cost estimate.** `ops/audit-setup.md` §6 says ~£1.20 per 150
+      queries. OpenAI alone cost $12.63 for ~75 queries on the real run;
+      Gemini's and Perplexity's totals were never captured. Get those two
+      figures, correct §6, then re-check whether Maintain's £95/month
+      (`ops/service-tiers.md` section 9) still holds at the real cost.
+- [ ] **Archive the run data on every future audit, before the report is
+      written.** `runs-clean.csv` — the 210 rows every number in the Noven
+      report traces to — was never saved into the audit folder; it lived only
+      on the owner's machine during the run. Nothing in the archived report has
+      actually been checked against source data. Make this step 1 of the
+      report stage, not an afterthought.
+- [ ] **Run the off-site half of checklist group 3 next time** — Google
+      Business Profile, Bing Places, Companies House, directories, review
+      counts. Skipped on the Noven run and disclosed in the report as a gap;
+      the report itself says this is usually where the most fixable findings
+      turn up. A paying client's audit shouldn't skip it.
+- [ ] **Total time still isn't known.** The on-site checklist alone took ~25
+      minutes (group 3 not started); nothing records how long the API run,
+      classification and report-writing took end to end. This is the one
+      number `ops/service-tiers.md` section 9's pricing rests on, and the
+      self-audit was supposed to produce it. It still hasn't — see 3c.
+- [ ] **Build the runner.** Still deliberately deferred — written now it would
+      be a transcription of `audit_query.py`, the exact script archived with
+      the Noven run, rather than a guess at a format. **Not on the critical
+      path.**
+- [ ] Rewrite the process based on what the first one taught us, once the
+      items above are closed.
 - [x] **The two extra intake questions are live on `contact.astro`** (2026-07-31),
       both optional: "what do people usually ask when they first get in touch?"
       — the only input we can't derive ourselves, and the difference between
@@ -491,11 +688,14 @@ gone.
       doesn't read it as their own decline. This closes "decide how we check and
       report visibility each month" and "write the monthly client update", which
       were two descriptions of the same missing document.
-- [ ] **Validate the numbers by doing it.** 10/15/25 at five runs each and the
-      one-hour Maintain budget are estimates. **The Noven self-audit in 3a is the
-      exercise that produces them.** The Maintain figure matters most: at an hour
-      a month it scales past twenty clients, at three it caps the business
-      around eight.
+- [ ] **Validate the numbers by doing it — partially done, and the key number
+      is still missing.** The Noven self-audit (3a) ran the method once but
+      didn't record total time end to end, and its one hard cost figure
+      (OpenAI: $12.63 for ~75 queries) is roughly ten times the ~£1.20/150
+      estimate this pricing was set from. The Maintain figure still isn't
+      known: at an hour a month it scales past twenty clients, at three it
+      caps the business around eight. Time the next run properly, or extract
+      timing from the first real client audit.
 - [ ] **Write the publishing fallback into onboarding** — where we can't get
       publish rights, hand over a complete file with the structured data intact
       plus a one-page paste instruction, then verify it live. That verification
@@ -540,6 +740,11 @@ trigger to move to something else (Zoho Bigin free tier) is when you can't answe
 
 ## Open questions for the owner
 
+- **Does Noven keep its name?** The self-audit found "Noven" resolves to at
+  least three other businesses an assistant already knows, one of them
+  (`noven.studio`) in the same field. `ops/name-check/` is built and waiting to
+  test candidates. This now blocks further investment in the current identity
+  — see 1c-2.
 - Which trade and which area do we go after first? Being in the Wirral gives us
   a credible local answer, and a local first client is far easier to get than a
   cold national one.

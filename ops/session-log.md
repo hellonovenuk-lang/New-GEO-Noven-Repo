@@ -11,7 +11,327 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-04 (published — the site is Wardith)
+
+**Merged to `main` at the owner's instruction.** What that published: a new
+business name on every page, a new `url` on every canonical and in the
+sitemap, a changed `Organization` identity in the JSON-LD the assistants read,
+new artwork throughout, and the removal of the company-page `sameAs`. The
+prices did not move — 125 / 750 / 95 / 250 / 495, verified in the built output
+before the merge, because a rename must not shift a price by accident.
+
+**One thing was deliberately left on the old domain: the email address.** The
+site publishes `hello@novenstudio.co.uk`, not `hello@wardith.co.uk`, because
+the Zoho work is not done and the new address does not exist. That value goes
+into the structured data and the contact page on every page, and it is the only
+inbound channel on a business with no phone and no contact form — **so
+publishing it early would have made every enquiry bounce, silently.** A working
+address on the old domain is a smaller fault than a broken one on the new
+domain. One line to flip once a test message has arrived; it is item 2 in the
+new roadmap section and the reasoning is written into `business.ts` beside the
+value so nobody "tidies" it.
+
+**The merge leaves one contradiction live overnight, and it is a thirty-second
+fix.** Every canonical now says `wardith.co.uk`, but `novenstudio.co.uk` is
+still Netlify's primary domain, so `wardith.co.uk` currently redirects *to* the
+old address — a canonical pointing at a URL that redirects back. Setting
+`wardith.co.uk` as primary reverses every redirect at once and completes the
+switch. It is item 1 in the new roadmap section, ahead of everything else.
+Flagged to the owner before the merge rather than discovered after.
+
+**`ops/rename-to-wardith.md` Phases A–D0 are done bar the two owner jobs.** The
+whole of the DNS and TLS work was verified the same day: three GoDaddy zones
+read row by row against the written spec, one wrong digit caught on
+`wardith.uk`, certificates reissued, and the alias redirect proven page-for-page
+in the direction that costs nothing to get wrong.
+
+**Roadmap 1c-3 is new and is where the next session starts.** Netlify primary,
+then Zoho, then LinkedIn, then the four smaller surfaces. Written as
+instructions rather than as a summary, because the next session begins cold.
+
+### 2026-08-04 (the site copy, and an assumption the owner was right to reject)
+
+**Cut from the homepage, at the owner's instruction:** a paragraph saying that
+an assistant asked about Wardith today would not know who we are. It sat
+directly under "Where's the proof?", which is the highest-stakes position on
+the page, and the owner's objection was that a prospect reads it as *this does
+not work.* That is correct and it is the owner's call to make.
+
+**But the better objection was the one about evidence.** The paragraph asserted
+an outcome nobody has measured. The self-audit's verdict was that the
+**identity** was the blocker rather than the site — "Noven" belonged to at
+least four other businesses, so the answers went to them. A name with no
+occupant removes that specific failure, and the fixes went in with it. Whether
+the assistants can name Wardith by launch is genuinely open, and writing a
+paragraph that assumed the pessimistic answer was exactly the thing this
+business tells clients not to do: state as fact something you have not checked.
+
+**So the copy now follows the evidence, and the evidence arrives before
+launch.** The owner is running a second audit on Wardith between the 26 August
+unfreeze and the 1 September launch. If it comes back named, the strongest
+line on the site writes itself and is checkable — *ask ChatGPT about Wardith
+and see*. If it does not, the site says nothing about it and stands on the
+proof it already has. Recorded in `ops/plan-to-1-september.md` Phase 2 as a
+funded item, and as the first half of the G2 measurement: how fast a new name
+is learned, timed from the day the site went live under it.
+
+**The other two rewrites stand, and they were bug fixes rather than
+judgements.** Three passages had invited the reader to ask an assistant what
+Noven does and compare the answer. The self-audit proved that test returned
+nothing — 210 answers, not one citing the site — so the invitation was failing
+before the rename. Both now point at the check the site passes every time:
+view the source and see that the visible answers and the machine-readable ones
+are built from one file. **That is a stronger claim than the old one**, because
+`json-code.ts` enforces it byte for byte.
+
+**One thing written down that had not been said plainly before: indexation is
+the lever, not training.** An assistant names a business either from what the
+model memorised — which moves on the timescale of model releases — or from a
+live lookup at answer time, which moves on the timescale of a crawler. Only
+the second can plausibly happen in four weeks. That makes Bing Webmaster Tools
+and Search Console the highest-leverage free jobs in the whole plan rather
+than housekeeping: the self-audit found Copilot had no record of the site *because
+Bing never indexed it*. Do them the week the site goes live, not the week of
+the audit.
+
+### 2026-08-04 (later still — the domain settled, and two hard constraints set)
+
+**`wardith.co.uk` is the business.** Owner's decision, closing A1. `.com` and
+`.uk` are owned and redirecting and are never published as a contact detail.
+The decision was forced sooner than planned by the brand set itself: the
+supplied `Email Signature.svg` reads `hello@wardith.com` above `wardith.co.uk`,
+which made the choice by accident and made it two different ways in one asset.
+That file must be re-exported before it is used anywhere. Nothing else in the
+set carries a domain.
+
+**Two constraints set by the owner, and they are the frame for everything now:
+no further spending until 26 August, and fully operational with outreach active
+by 1 September.** Written up as `ops/plan-to-1-september.md`. The finding is
+that these do not conflict — **the entire rename is free.** DNS, Netlify,
+a Zoho alias, LinkedIn, the redirects and the repo work all cost nothing, so
+the twenty-two-day freeze is spare capacity rather than a blocker. What the
+freeze does is compress the paid items into six days, and that list is short:
+API balances, and the address for service if V LOT has still not delivered.
+
+Three things the constraint surfaced that were not visible before:
+
+- **A freeze on decisions is not a freeze on payments.** Canva Pro, GoDaddy
+  add-ons and API auto-top-up can all charge without anybody deciding
+  anything, and none of their billing dates is recorded.
+- **`novenstudio.co.uk`'s unknown expiry stopped being an admin gap.** If it
+  lapses inside the freeze, the site goes dark and all mail dies with no
+  budget to fix it. It is now the first job on the list.
+- **The audit's tool cost is roughly ten times the estimate the prices were
+  set against.** `ops/audits/noven-2026-08-02/README.md` had already recorded
+  OpenAI alone at **$12.63 for ~75 queries** against §6's ~£1.20 per 150, but
+  it was filed as an accuracy problem. Under a spending freeze it is a
+  delivery problem: every audit spends real money on the day it is delivered,
+  so a client who buys on 27 August cannot be served on an empty balance. It
+  also puts a question against the £95 Maintain price. **Not to be answered
+  while launching** — but before the first monthly client renews.
+
+**`ops/accounts.md` gained a row it should always have had: Canva.** It is the
+editable master for every brand asset — the committed SVGs are outlined paths,
+so nothing can be re-set as type anywhere else — and it was absent from the
+dependency register entirely. If the Pro plan lapses the site is fine and the
+brand becomes uneditable, which is a slow failure nobody would notice for
+months. The API accounts row was stale in the other direction and was
+corrected: all three were opened and used for the 2 August self-audit.
+
+**Phase D0 written: the four owner jobs, step by step.** Netlify, GoDaddy DNS,
+Zoho and LinkedIn — the only parts of the rename that live behind a login. Two
+things fell out of writing them:
+
+- **The 301 redirects need no rules.** Netlify 301s every non-primary domain
+  to the primary, preserving the path, so promoting `wardith.co.uk` at merge
+  time reverses the lot in one action — as long as the old domain stays
+  attached. D3 shrank from a page of rules to one checkbox and one
+  verification.
+- **Attaching the new domains now, days before the merge, is free insurance.**
+  TLS gets days to issue instead of minutes, and until the flip the new
+  domains simply redirect to the old one, which is a live proof the DNS is
+  right rather than a hope.
+
+**`og.png` was never a Canva job, and saying so was wrong.** It is a build
+product of `assets/og/og.html`, which *references* the committed wordmark — so
+re-rendering picked up the Wardith artwork on its own. The same was true of
+both LinkedIn PNGs. Three corrections came out of actually reading those
+files:
+
+- **`assets/linkedin/logo.html` was broken**, and had been since the Noven
+  originals were deleted: it placed `Social Avatar.svg`, which the Wardith set
+  does not include. It now sets the navy disc in CSS and places the supplied
+  `Icon Mark.svg` on it — the same move `og.html` already makes when it puts
+  the committed wordmark on a navy field. The artwork is still used as
+  supplied; only the ground behind it is ours.
+- **Two files hard-coded the Noven wordmark's aspect ratio** (`1193.92 :
+  236.39`) to derive a height. Left alone they would have squashed the new
+  artwork silently rather than failing. Both now carry the Wardith ratio and a
+  note to re-derive it on any re-export.
+- **The 48px legibility test was re-run rather than inherited.** The old
+  README recorded that "N." holds up small; a W is a wider, busier letterform
+  and the old test does not transfer. "W." reads on white and on a dark feed.
+
+### 2026-08-04 (later — domains bought, and the rename scoped)
+
+**Three domains held:** `wardith.co.uk`, `wardith.com` and `wardith.uk`, GoDaddy,
+**one year only**. The GoDaddy checkout pushed Microsoft 365 email at £0.99/mo
+and it was declined — `ops/third-party-services.md` A1 had already rejected
+Microsoft 365 and Google Workspace, the £0.99 is a first-term teaser against a
+£6.49 renewal (£77.88/yr versus Zoho Mail Lite's £14.40), and a mailbox should
+not be created before it is decided which of the three domains the business
+actually is. Nothing is lost by declining: mail can be added to a domain at any
+time, and the domain was the only time-sensitive part of that page.
+
+**The renewal reminders are in a real calendar, which is a first for this
+business.** `ops/accounts.md` says in as many words that its own dates table
+*"is not a reminder — put these in an actual calendar"*, and records that three
+documents had said so and nothing had ever been set. Two events now exist: 6 Oct
+2026 to extend to a long term and decide whether to consolidate the registrar
+(the 60-day transfer lock lifts ~3 Oct), and 4 Jun 2027 as a backstop two months
+before expiry. **The August expiry falls a week after the late-July renewals
+week**, so the clustering that covers Zoho and the ICO does not cover this one —
+which is exactly why it needed its own date rather than a line in the table.
+
+**`ops/rename-to-wardith.md` written — the full checklist, seven phases.** Built
+from an inventory of the repo rather than from memory, and two things it turned
+up changed the plan:
+
+- **The brand assets cannot be retyped.** The owner's intention was to reuse the
+  Noven pack with different words, which is the right instinct and saves real
+  money — but all six SVGs in `assets/brand/` are **outlined vector paths, zero
+  `<text>` elements, no `font-family` anywhere**. Typing WARDITH into them
+  produces default-font letters beside designer-drawn ones, which is the same
+  fault as the Inter-retyped wordmark caught on 27 July arriving through a
+  different door. The route through is the editable original in the second repo
+  (`hellonovenuk-lang/Noven`) or identifying the typeface from the outlines.
+  Also: seven letters where there were five, so the lockup gets ~40% wider and
+  the hard-coded dimensions at `Base.astro:88` and `:164` must change or the
+  logo renders squashed. And the favicon and social avatar are monograms — an N
+  becoming a W is a redraw, not a rename.
+- **The hero animation does not need re-rendering.** `assets/video/frame.html`
+  uses generic captions and abstract blocks; no business name appears in it.
+  Only the filename carries the old name. Two lines in `index.astro` and a file
+  rename. Worth checking rather than assuming, because a re-render was the
+  single most expensive thing the rename could have required.
+
+**The argument the checklist is built around: switch once, not gradually.**
+`CLAUDE.md` already warns that merging publishes into the JSON-LD the assistants
+read and that caches persist. A rename moves the `name`, the `url` and both
+`sameAs` links at once. Done as one event it is something the assistants can
+learn; dribbled out over three weeks it publishes a business whose own facts
+disagree with each other, which is the exact failure we sell finding.
+
+**And the reassuring half, which is true and worth saying.** The self-audit found
+that **not one of 210 automated answers cited `novenstudio.co.uk`**, and that
+Bing had never indexed the site at all. The usual argument against moving domain
+is the accumulated indexation and links it forfeits. **There is none to
+forfeit.** This is the cheapest moment this change will ever be, and it gets more
+expensive every week.
+
+**One thing the rename partly breaks, recorded now so it is not discovered in
+February.** The self-audit's frozen q06 and q07 ask what the assistants know
+about *Noven*. Under a new name the honest answer is "nothing" for months, which
+is not a comparison but a different question. The way to keep the baseline
+valuable is to run both at the six-month re-check — the frozen Noven questions
+measure how long a dead name persists, the same questions about Wardith measure
+how fast a new one is learned. One extra batch of queries, and it is the best
+evidence this business could own: its own claim, tested on the only business we
+are allowed to experiment on.
+
+### 2026-08-04 (the name is WARDITH)
+
+**The owner's decision, and it closes finding 1 of the self-audit.** Noven does
+not keep its name. The replacement is **WARDITH**, built from the owner's own
+name — the back half of *Edward* and the back half of *Smith*. Locito and Tovan
+were shortlisted first and both rejected the same day by `ops/name-check/`;
+this is the third candidate and the one that survived.
+
+**What was actually checked, so nobody has to guess later.** A web search for
+`"Wardith"` returns no company, no product and no brand anywhere. The only hits
+are two private individuals and some hobby art. That is a different category of
+result from the three names before it: Noven had four businesses, Locito had
+Localito Marketplace Ltd and the Lockito app, Tovan had Tovan.ai and two
+registered companies. **Nobody is occupying the commercial slot.** On the same
+day, `wardith.com`, `.co.uk`, `.uk` and `.studio` all had no delegated
+nameservers — a strong signal all four are free, and not proof.
+
+**What was not checked, and it is not a small list.** Companies House (their
+search refused the automated request), and the trade mark register (not
+attempted). Both are owner jobs. The name-check tool's README already says it
+is none of those three things; that limit is now load-bearing rather than
+theoretical, so it is repeated in `ROADMAP.md` 1c-2 where the open work sits.
+
+**The tool was deliberately not run on WARDITH, on the owner's instruction, and
+the reasoning is sound enough to record rather than log as a shortcut.** The
+tool's job is to find an occupant. A free search found no occupant, so all
+twelve queries would return the "I don't have information on that" that the
+README already defines as the pass. Locito and Tovan earned the money because
+each looked plausible *and* had a real product one keystroke away. Paying to
+confirm an absence a search has already shown is not the same purchase. Written
+into `names.txt` beside the name so the exception travels with it.
+
+**One argument was raised against the name and settled by the owner — recorded
+so it is not reopened.** The objection: *Wardith* is hard to transmit by voice,
+a listener has to choose between Wardith, Wardyth, Wardeth and Wardif, and a
+mistyped name fragments a business's own information — which is the exact
+failure this business is sold to find in other people's. **The owner's answer,
+which is right:** by the time anyone is saying the name aloud they have already
+found us, so the spoken form is not the discovery path; and read-to-said runs
+only one way, so there is no real ambiguity in the direction that matters. The
+objection was about a risk in the abstract; the business is discovered by
+typing and clicking. It does not survive contact with how the work actually
+arrives.
+
+**The one residual thing worth knowing.** While searching, an assistant's own
+summariser quietly offered *Wardley* instead — the nearest neighbours being
+Wardley, Wardite (a mineral) and Wardian. Not a collision, and not a reason to
+reject anything, but it is the shape of drift to watch for on the first audit
+run after the rename, alongside how long "Noven" persists.
+
+**Domain first, and it is time-sensitive.** Nothing else in the rename is safe
+to start before the domain is held. Everything the change touches is scoped in
+`ROADMAP.md` 1c-2 — it is not a find-and-replace, because the domain lives in
+the canonicals, the sitemap, `robots.txt`, the JSON-LD, Netlify, Zoho and both
+LinkedIn pages, and the brand assets carry a wordmark that cannot be retyped.
+
+**A gap in this file, noted rather than fixed.** The sessions of 2 – 4 August —
+the self-audit run, the name-check tool, the Locito and Tovan rejections, the
+Office-documents rule — are not written up here. The audit has its own folder
+and `names.txt` carries the rejections, so nothing is lost, but the log skips
+from 1 August to this entry. Worth backfilling before the record gets colder.
+
 ### 2026-08-01 (audit readiness, and getting our own facts straight first)
+
+**The jargon ban was challenged, tested, and narrowed — owner's decision.**
+`CLAUDE.md` said *never use "GEO", "SEO", or search-industry jargon anywhere on
+the site*. The owner's challenge: a buyer who has already researched this
+arrives holding one of those acronyms, so a site containing the word nowhere
+cannot be the answer when they ask for it. **That is right, and it is the exact
+failure the audit is sold to find on other people's businesses** — we tell
+clients to publish pages answering the questions their customers actually ask,
+then declined to do it for one particular question.
+
+The rule now splits by job rather than banning outright. **Persuasion copy stays
+plain** — headlines, navigation, body text — and Noven never describes itself
+with an acronym; that half of the rule was doing real work and survives. **One
+deliberate exception:** a single FAQ entry or answer page may name the terms in
+order to translate them. Live at *"Is this what people call GEO or AEO?"* on the
+FAQ page, which also says out loud why the acronyms appear nowhere else — a
+plumber losing work to a competitor does not think of it as an optimisation
+problem. That candour is what keeps the entry from reading like everyone else's
+version of the same page.
+
+Two things worth keeping from the argument. **The terms are unsettled** — GEO,
+AEO, "AI SEO", no winner — which is an argument against building an identity on
+one, but not against translating them. And **the absolute ban had already cost
+us something concrete**: flag 1 in `audit-setup.md` §9 exists because banning
+the industry's words left no noun at all for the trade, which made writing our
+own audit questions harder than it should have been.
+
+The industry-term question (§9a) stays in the run, with its job changed: it was
+proposed to settle the argument, and now that the argument is settled it is the
+**before** measurement for the FAQ entry we are about to publish.
 
 **Merged to `main` on the owner's instruction.** `CLAUDE.md` says never commit
 to `main` and finish every piece of work on an unmerged branch; this is the
@@ -26,7 +346,29 @@ confirmed by building before the merge (7 pages, offers reading
 root documents, which are not published anywhere. So unlike the 31 July merge,
 this one opens no one-way door.
 
-**What is still live and still wrong, unchanged by this merge:** the footer
+**And then the rule itself was amended, which is why the override count stops
+here.** The owner's clarification: the intent was always *branch, review, agree,
+merge* — not *never merge*. Eight logged overrides in one day was the rule
+failing to describe the workflow rather than the workflow misbehaving. The
+branch-first half was doing real work and is kept, along with a new requirement
+that carries the reason the old rule existed: **say what a merge will publish
+before doing it**, because Netlify deploys `main` and a published fact is closer
+to a one-way door than a normal site's. Future merges the owner has agreed to
+are business as usual and are not logged as overrides.
+
+**A second merge to `main` the same day, also on the owner's instruction — and
+this one does publish.** The narrowed jargon rule and the GEO/AEO FAQ entry went
+live on 2026-08-01, on the owner's explicit call to have the FAQ updated before
+the audit rather than after. It is the eighth override, and it changes what x01
+measures: the recommendation was to run first and publish second, so that the
+industry-term baseline was taken before the answer existed. Published first, the
+baseline is *published but not yet crawled* — weaker, still usable, and now
+written into `audit-setup.md` §9a with the two conditions that keep it honest
+(run within days of the deploy, record both dates in `timings.md`). Recorded
+here because a baseline whose conditions are forgotten becomes a claim we cannot
+defend in six months, which is the one thing the method exists to prevent.
+
+**What is still live and still wrong, unchanged by either merge:** the footer
 `[PLACEHOLDER: address for service of documents]` on all seven pages, and both
 LinkedIn About sections. The LinkedIn pages are wrong *on purpose* until the
 self-audit has run — `ops/own-facts-check.md` section 5.

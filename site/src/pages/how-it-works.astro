@@ -3,9 +3,9 @@ import Base from '../layouts/Base.astro';
 import Statement from '../components/Statement.astro';
 import { business, plan, money } from '../data/business';
 
-const title = 'How it works — Noven';
+const title = 'How it works — Wardith';
 const description =
-  'How Noven gets your business found by AI assistants: a £125 audit of where you stand, a one-off Foundation setup, and an ongoing monthly plan to keep you visible.';
+  'How Wardith gets your business found by AI assistants: a £125 audit of where you stand, a one-off Foundation setup, and an ongoing monthly plan to keep you visible.';
 
 const audit = plan('audit');
 const foundation = plan('foundation');
@@ -19,14 +19,14 @@ const howToSchema = {
   provider: { '@id': new URL('/#organization', Astro.site).href },
   areaServed: business.areaServed,
   description:
-    'Noven audits how AI assistants such as ChatGPT, Google, Copilot and Perplexity currently answer questions about a business, fixes what is blocking the business from being found, and maintains that visibility month to month.',
+    'Wardith audits how AI assistants such as ChatGPT, Google, Copilot and Perplexity currently answer questions about a business, fixes what is blocking the business from being found, and maintains that visibility month to month.',
 };
 ---
 
 <Base title={title} description={description} schema={[howToSchema]}>
   <section class="hero hero--rules">
     <div class="wrap">
-      <h1>How does Noven get you found?</h1>
+      <h1>How does Wardith get you found?</h1>
       <p class="lede" data-reveal>
         Three stages, in order: find out where you stand, fix what's in the way, then keep you
         visible as the AI systems change. Each stage only makes sense if the previous one says it's

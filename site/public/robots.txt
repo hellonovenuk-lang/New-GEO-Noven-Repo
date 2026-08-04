@@ -1,4 +1,4 @@
-# Noven — robots.txt
+# Wardith — robots.txt
 # We want to be read by both search engines and AI assistants,
 # so AI crawlers are explicitly allowed by name below.
 
@@ -41,4 +41,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://novenstudio.co.uk/sitemap-index.xml
+Sitemap: https://wardith.co.uk/sitemap-index.xml

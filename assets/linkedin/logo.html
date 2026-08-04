@@ -1,9 +1,17 @@
 <!doctype html>
 <!-- The company page logo, 400x400. Nothing here is drawn: the committed
-     Social Avatar is placed as-is and the frame is cropped to the bounds of
-     its circle, so the mark is scaled and positioned, never reshaped or
-     retyped. Rendered to logo-400.png by the command in README.md — this file
-     is the source, the PNG is the build product. -->
+     Icon Mark is placed as-is on a navy disc, exactly the way ../og/og.html
+     places the committed wordmark on a navy field. Rendered to logo-400.png
+     by render.mjs — this file is the source, the PNG is the build product.
+
+     This used to place ../brand/Social Avatar.svg, which was a navy disc with
+     the mark already inside it, so the frame just cropped to the disc. The
+     Wardith set has no avatar: Icon Mark.svg is a bare white "W." on
+     transparent. So the disc is set here in CSS instead — brand navy #170969,
+     the same value the og card and the cover use — and the supplied mark sits
+     on it untouched. Same two colours, same artwork, one less exported file.
+     If a filled-tile avatar is ever exported from Canva, go back to placing
+     it and delete the disc. -->
 <html lang="en-GB">
   <head>
     <meta charset="utf-8" />
@@ -20,32 +28,46 @@
         overflow: hidden;
       }
 
-      /* Transparent, not white. The mark is a navy disc; leaving the corners
-         clear lets LinkedIn's own mask — square, rounded or circular — sit
-         wherever it likes without a pale square showing through it. */
+      /* Transparent outside the disc, not white. That lets LinkedIn's own
+         mask — square, rounded or circular — sit wherever it likes without a
+         pale square showing through the corners. */
       body {
         background: transparent;
         position: relative;
       }
 
-      /* Social Avatar.svg is a 1500-unit square canvas with the disc centred
-         at 750,750 and a radius of 450 — so the disc runs 300 → 1200, a
-         900-unit box. Scaling 1500 units to 666.667px makes those 900 units
-         exactly 400px, and shifting up and left by 300 units (133.333px)
-         brings the disc's own bounding box onto the frame. Edge to edge, so a
-         circular crop fills completely and a square one reads as the disc it
-         is. */
+      .disc {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: #170969;
+      }
+
+      /* Icon Mark.svg is a 750-unit square page with the artwork sitting at
+         109.26,288.01 and measuring 508.98 x 292.48 of those units — measured
+         with the browser's own getBBox(), the same number the renderer uses,
+         not eyeballed.
+
+         The mark is set to 210px wide, a little over half the tile, which is
+         the proportion an icon this shape wants: big enough to read at the
+         48px LinkedIn shows it at in the feed, with enough navy left around it
+         that the disc still reads as a disc. That fixes the scale at
+         210/508.98 = 0.41259, so the whole 750-unit page renders 309.44px and
+         the artwork lands 45.08px right and 118.83px down inside it. The
+         offsets below are what pulls the artwork's own box — not the page's —
+         into the centre of the frame. */
       img {
         position: absolute;
-        top: -133.333px;
-        left: -133.333px;
-        width: 666.667px;
-        height: 666.667px;
+        left: 49.92px;
+        top: 20.83px;
+        width: 309.44px;
+        height: 309.44px;
         display: block;
       }
     </style>
   </head>
   <body>
-    <img src="../brand/Social Avatar.svg" alt="" />
+    <div class="disc"></div>
+    <img src="../brand/Icon Mark.svg" alt="" />
   </body>
 </html>

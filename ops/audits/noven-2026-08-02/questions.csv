@@ -1,0 +1,12 @@
+audit_id,question_id,category,question_text,frozen_from
+noven-2026-08-02,q01,Discovery,"Who can help my business show up when people ask ChatGPT for a recommendation?",2026-08-02
+noven-2026-08-02,q02,Discovery,"Can you recommend someone in the UK who gets small businesses mentioned by AI assistants?",2026-08-02
+noven-2026-08-02,q03,Discovery,"I need someone on the Wirral who can get my business recommended by AI assistants — who should I look at?",2026-08-02
+noven-2026-08-02,q04,Qualified,"Who's good at getting small service businesses recommended by AI assistants?",2026-08-02
+noven-2026-08-02,q05,Qualified,"Which UK businesses do this for sole traders and small firms rather than big brands?",2026-08-02
+noven-2026-08-02,q06,Named,"What do you know about Noven?",2026-08-02
+noven-2026-08-02,q07,Named,"Is Noven on the Wirral any good, and what do they do?",2026-08-02
+noven-2026-08-02,q08,Comparison,"Who are the main alternatives to Noven in the UK?",2026-08-02
+noven-2026-08-02,q09,Buying intent,"I've noticed customers are finding people through ChatGPT and we never come up - who do I call in the UK?",2026-08-02
+noven-2026-08-02,q10,Buying intent,"I'm looking for someone in the UK to get my business showing up in AI assistant answers. What are my options and roughly what should it cost?",2026-08-02
+noven-2026-08-02,x01,"Discovery, industry term","Who are the best UK agencies for GEO — getting a business recommended by AI assistants?",

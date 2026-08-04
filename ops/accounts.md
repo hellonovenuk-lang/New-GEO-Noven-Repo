@@ -18,14 +18,16 @@ the domain row is the one that matters most.
 
 | Dependency | What it's for | Cost | Renews | What breaks if it lapses |
 |---|---|---|---|---|
-| **`novenstudio.co.uk`** | Everything: the site, all canonicals, the sitemap, MX for mail, the `url` in the structured data, both LinkedIn links | [PLACEHOLDER] | **[PLACEHOLDER — registrar not recorded, expiry not recorded, auto-renew status not recorded]** | Total outage. Site dark, all mail dead, structured data broken, Search Console property invalid. `.co.uk` recovery after expiry is time-boxed and can fail outright |
+| **`wardith.co.uk`, `wardith.com`, `wardith.uk`** | The business's name from 2026-08-04. **`wardith.co.uk` is the live address** — decided 2026-08-04. The other two are owned and redirecting, and are never published as a contact detail | `[PLACEHOLDER: total paid not recorded]` | **~4 Aug 2027. GoDaddy, bought 2026-08-04, ONE YEAR ONLY.** `[PLACEHOLDER: auto-renew status not confirmed]`. Extend to 5+ years — in the calendar for 6 Oct 2026, backstop 4 Jun 2027 | Total outage, once the site moves. `.co.uk` recovery after expiry is time-boxed and can fail outright |
+| **`novenstudio.co.uk`** | Everything, until the rename lands: the site, all canonicals, the sitemap, MX for mail, the `url` in the structured data, both LinkedIn links. **Afterwards it carries the redirects, which is not a smaller job** | [PLACEHOLDER] | **[PLACEHOLDER — registrar not recorded, expiry not recorded, auto-renew status not recorded]. This placeholder is now urgent:** the rename makes this domain the thing every old link and cached answer points at | Total outage today. After the rename: every redirect dies at once and the name becomes free for somebody else to buy — including the `noven.studio` product working in the same field. **Keep registered at least three years. Do not drop it** |
 | **Namecheap** | DNS: Netlify records, Zoho MX, SPF, DKIM, DMARC, two verification TXTs | [PLACEHOLDER] | [PLACEHOLDER] | Site and mail, together |
 | **Netlify** | Hosting, build, TLS. Deploys `main` | Free tier | rolling | Site offline. No documented alternative host, no rollback runbook |
 | **GitHub `hellonovenuk-lang`** | This repo — the source of truth and the deploy trigger | Free tier | n/a | Deploys stop; the only copy of every operating decision is at risk |
 | **GitHub `hellonovenuk-lang/Noven`** | Second repo, holds brand and image originals | Free tier | n/a | Asset originals. Recorded in one line of the session log and nowhere else until now |
-| **Zoho Mail Lite** | `hello@novenstudio.co.uk` — the only inbound channel on a site with no phone and no form | £14.40/yr inc VAT | ~29 Jul 2027 *(inferred from purchase date, not recorded)* | No enquiry reaches the business |
+| **Zoho Mail Lite** | `hello@wardith.co.uk` — the only inbound channel on a site with no phone and no form. **`hello@novenstudio.co.uk` stays on the same licence as an alias and must keep receiving for at least twelve months**: it is published in the ICO record, on both LinkedIn pages and in whatever has already been cached | £14.40/yr inc VAT | ~29 Jul 2027 *(inferred from purchase date, not recorded)* | No enquiry reaches the business |
 | **Zoho Books** | Invoicing and revenue records | [PLACEHOLDER] | [PLACEHOLDER] | Invoicing, and the Foundation/monthly billing route |
 | **Gmail `hello.noven.uk@gmail.com`** | **An identity, not a mailbox.** Owns the GitHub login, the Search Console property and Netlify's notifications. Forwards to Zoho | Free | Forwarding reviewed ~Jul 2027 | See "the concentrated account" below |
+| **Canva** | **The editable master for every brand asset.** Established 2026-08-04: the SVGs in `assets/brand/` are outlined paths, so the Canva project is the only place the wordmark can be changed as type rather than redrawn. SVG export is a **Pro** feature, so the plan is paid | `[PLACEHOLDER: plan and price not recorded]` | `[PLACEHOLDER: billing date not recorded]` | **The brand becomes uneditable.** The committed SVGs still render, and the site is fine — but no asset can ever be revised, resized or re-set again without redrawing the letterforms, which `CLAUDE.md` bans. It also silently downgrades SVG export to PNG, which the repo's tooling assumes. **This was missing from the register entirely until the rename made it load-bearing** |
 | **Revolut Pro** | Business bank account; the audit payment link; Foundation and monthly transfers | Free to hold. Card fees 1.0% + £0.20 personal, 2.8% + £0.20 commercial | n/a | No way to be paid. FSCS cover is capped at £120,000 **shared** with the personal balance, not doubled |
 | **ICO registration `C1995412`** | Legal requirement to process personal data | £47/yr, Direct Debit | ~30 Jul 2027 *(inferred from "renews annually")* | Penalty of up to **£4,000** against a £47 fee |
 | **Google Search Console** | Sitemap, indexation, removals | Free | n/a | The only indexation diagnostic |
@@ -37,7 +39,7 @@ the domain row is the one that matters most.
 |---|---|
 | **Address for service** | V LOT paid ~29 Jul 2026, nothing delivered. Order reference, amount and payment method **all unrecorded** — which is what a chargeback would need. Fallback decided (1st Formations / Quality Company Formations, ~£115/yr) and not yet ordered |
 | **Professional indemnity insurance** | Not bought. Should precede the first Foundation, which is where a live client site gets changed. Absent from `ROADMAP.md` entirely; researched in `ops/third-party-services.md` |
-| **API accounts** — OpenAI, Google AI Studio, Perplexity | Not opened. Needed before any audit can run. Spend cap on each **before** the first call; keys never in this repo. `ops/audit-setup.md` |
+| **API accounts** — OpenAI, Google AI Studio, Perplexity | **This row was stale and is corrected 2026-08-04.** All three were opened and used for the self-audit on 2 August — 210 runs. What is *not* known is the true cost: `ops/audits/noven-2026-08-02/README.md` records **OpenAI alone at $12.63 for ~75 queries** against `ops/audit-setup.md` §6's estimate of ~£1.20 per 150, and the Gemini and Perplexity totals were never recorded. Every audit delivered spends real money on the day. Get the three real totals before the 26 August unfreeze — see `ops/plan-to-1-september.md` |
 | **Bing Webmaster Tools** | Not done. Copilot's real diagnostic is Bing indexation, so the audit is weaker without it |
 | **Password vault** | Recommended as step one of nine and there is no evidence it exists. See below |
 | **Client data storage** | Undecided. `ops/client-record.md` |
@@ -68,12 +70,23 @@ inside a git repository. Three documents say "put the reminder in the calendar"
 and nothing records that any reminder was ever set. **This table is not a
 reminder. Put these in an actual calendar.**
 
+**Two of them now are.** The Wardith domain rows below were put in the owner's
+Google Calendar on 2026-08-04, with a popup a day ahead and an email a week
+ahead. That is the first dated obligation in this business to exist anywhere
+other than this table. **The rest are still only here.**
+
 | When | What | If missed |
 |---|---|---|
 | **~10 Aug 2026** | ICO publishes the registered address on a bulk-downloadable public register | The owner's home address published permanently. Copies survive any later amendment |
+| **24 Aug 2026** | V LOT decision point: delivered, or the ~£115/yr fallback gets bought on the 26th | The address-for-service `[PLACEHOLDER]` is still in the footer of all seven pages on launch day |
+| **26 Aug 2026** | Spending freeze lifts. API balances first, address for service second | Six days to 1 September and nothing bought |
+| **1 Sept 2026** | Operational, accepting clients, outreach active — the owner's deadline, set 2026-08-04 | — |
+| **6 Oct 2026** *(in the calendar)* | Extend the three Wardith domains to 5+ years; decide whether to consolidate the registrar, now the 60-day transfer lock has lifted | Left on a one-year term, renewing at GoDaddy's higher rate, across two registrars |
+| **4 Jun 2027** *(in the calendar)* | Backstop: Wardith domains expire in ~2 months | See below |
 | ~29 Jul 2027 | Zoho Mail Lite renewal | The only contact channel dies |
 | ~30 Jul 2027 | ICO annual renewal | Up to £4,000 |
-| [PLACEHOLDER] | Domain renewal | Total outage |
+| **~4 Aug 2027** | **Wardith domain expiry** — `wardith.co.uk`, `.com`, `.uk` | Total outage: site dark, all mail dead, structured data broken. Falls a week *after* the late-July renewals week, so it is not covered by it |
+| [PLACEHOLDER] | `novenstudio.co.uk` renewal — date unknown, and it now carries every redirect | Total outage before the rename; every old link and cached answer dead after it |
 | By 5 Oct 2027 | HMRC Self Assessment registration, if trading began in 2026/27 | Failure-to-notify penalties |
 | Event-driven | VAT threshold crossed | Every page says "not VAT registered, so the prices shown are the prices you pay" — published, crawled and cached |
 | Annually, once bought | Insurance renewal | Uninsured while touching client sites |
