@@ -18,7 +18,8 @@ the domain row is the one that matters most.
 
 | Dependency | What it's for | Cost | Renews | What breaks if it lapses |
 |---|---|---|---|---|
-| **`novenstudio.co.uk`** | Everything: the site, all canonicals, the sitemap, MX for mail, the `url` in the structured data, both LinkedIn links | [PLACEHOLDER] | **[PLACEHOLDER — registrar not recorded, expiry not recorded, auto-renew status not recorded]** | Total outage. Site dark, all mail dead, structured data broken, Search Console property invalid. `.co.uk` recovery after expiry is time-boxed and can fail outright |
+| **`wardith.co.uk`, `wardith.com`, `wardith.uk`** | The business's name from 2026-08-04. Which of the three is the live address is **not yet decided** — see `ops/rename-to-wardith.md` A1 | `[PLACEHOLDER: total paid not recorded]` | **~4 Aug 2027. GoDaddy, bought 2026-08-04, ONE YEAR ONLY.** `[PLACEHOLDER: auto-renew status not confirmed]`. Extend to 5+ years — in the calendar for 6 Oct 2026, backstop 4 Jun 2027 | Total outage, once the site moves. `.co.uk` recovery after expiry is time-boxed and can fail outright |
+| **`novenstudio.co.uk`** | Everything, until the rename lands: the site, all canonicals, the sitemap, MX for mail, the `url` in the structured data, both LinkedIn links. **Afterwards it carries the redirects, which is not a smaller job** | [PLACEHOLDER] | **[PLACEHOLDER — registrar not recorded, expiry not recorded, auto-renew status not recorded]. This placeholder is now urgent:** the rename makes this domain the thing every old link and cached answer points at | Total outage today. After the rename: every redirect dies at once and the name becomes free for somebody else to buy — including the `noven.studio` product working in the same field. **Keep registered at least three years. Do not drop it** |
 | **Namecheap** | DNS: Netlify records, Zoho MX, SPF, DKIM, DMARC, two verification TXTs | [PLACEHOLDER] | [PLACEHOLDER] | Site and mail, together |
 | **Netlify** | Hosting, build, TLS. Deploys `main` | Free tier | rolling | Site offline. No documented alternative host, no rollback runbook |
 | **GitHub `hellonovenuk-lang`** | This repo — the source of truth and the deploy trigger | Free tier | n/a | Deploys stop; the only copy of every operating decision is at risk |
@@ -68,12 +69,20 @@ inside a git repository. Three documents say "put the reminder in the calendar"
 and nothing records that any reminder was ever set. **This table is not a
 reminder. Put these in an actual calendar.**
 
+**Two of them now are.** The Wardith domain rows below were put in the owner's
+Google Calendar on 2026-08-04, with a popup a day ahead and an email a week
+ahead. That is the first dated obligation in this business to exist anywhere
+other than this table. **The rest are still only here.**
+
 | When | What | If missed |
 |---|---|---|
 | **~10 Aug 2026** | ICO publishes the registered address on a bulk-downloadable public register | The owner's home address published permanently. Copies survive any later amendment |
+| **6 Oct 2026** *(in the calendar)* | Extend the three Wardith domains to 5+ years; decide whether to consolidate the registrar, now the 60-day transfer lock has lifted | Left on a one-year term, renewing at GoDaddy's higher rate, across two registrars |
+| **4 Jun 2027** *(in the calendar)* | Backstop: Wardith domains expire in ~2 months | See below |
 | ~29 Jul 2027 | Zoho Mail Lite renewal | The only contact channel dies |
 | ~30 Jul 2027 | ICO annual renewal | Up to £4,000 |
-| [PLACEHOLDER] | Domain renewal | Total outage |
+| **~4 Aug 2027** | **Wardith domain expiry** — `wardith.co.uk`, `.com`, `.uk` | Total outage: site dark, all mail dead, structured data broken. Falls a week *after* the late-July renewals week, so it is not covered by it |
+| [PLACEHOLDER] | `novenstudio.co.uk` renewal — date unknown, and it now carries every redirect | Total outage before the rename; every old link and cached answer dead after it |
 | By 5 Oct 2027 | HMRC Self Assessment registration, if trading began in 2026/27 | Failure-to-notify penalties |
 | Event-driven | VAT threshold crossed | Every page says "not VAT registered, so the prices shown are the prices you pay" — published, crawled and cached |
 | Annually, once bought | Insurance renewal | Uninsured while touching client sites |

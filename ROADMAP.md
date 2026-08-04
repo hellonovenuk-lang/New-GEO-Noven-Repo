@@ -350,25 +350,38 @@ first, then the rest."**
       queries would only confirm what was already known. That exception is
       recorded rather than quietly taken.
 
-**What is now open — the rename itself, which has barely started:**
+- [x] **Buy the domain.** `wardith.co.uk`, `wardith.com` and `wardith.uk`, all
+      three at GoDaddy on 2026-08-04, **one year only**. Extending them to a
+      long term is in the owner's calendar for 6 Oct 2026, with a backstop on
+      4 Jun 2027 — the first dated obligation in this business to exist outside
+      a markdown table. Recorded in `ops/accounts.md`.
 
-- [ ] **Buy the domain. This is the first thing and it is time-sensitive.**
-      `wardith.com` and `wardith.co.uk` both returned no delegated nameservers
-      on 2026-08-04, which is a strong signal they are free but is not proof —
-      confirm at the registrar. Nothing else in this section is safe to start
-      until the domain is held. `[PLACEHOLDER: registrar, date bought, which
-      TLDs, renewal date]`
-- [ ] **Check Companies House and the trade mark register.** Neither was
-      checked — `find-and-update.company-information.service.gov.uk` refused
-      the automated request, and no trade mark search has been run. Both are
-      owner jobs and neither is covered by the name-check tool, which its own
-      README says plainly.
-- [ ] **Then, and only then, scope what the rename touches.** It is not a
-      find-and-replace: `site/src/data/business.ts` is the single source of
-      truth for business facts, but the domain also appears in the canonicals,
-      the sitemap, `robots.txt`, the JSON-LD, Netlify, Zoho mail, LinkedIn (both
-      pages, named in our own `sameAs`) and the brand assets, which carry the
-      old wordmark and cannot be retyped under the standing brand rule.
+**What is now open — the rename itself. The full checklist is
+`ops/rename-to-wardith.md`; the items below are the ones that gate everything
+else.**
+
+- [ ] **Decide which of the three domains the business *is*.** Nothing in the
+      rename can start without this: the canonical, the sitemap, the `url` in
+      the structured data, the email address and both LinkedIn links must all
+      be the same domain, or we publish the inconsistency we charge to find.
+      Recommendation and reasoning in `ops/rename-to-wardith.md` A1.
+- [ ] **Check Companies House and the trade mark register.** Still not done —
+      `find-and-update.company-information.service.gov.uk` refused the
+      automated request, and no trade mark search has been run. Neither is
+      covered by the name-check tool, which its own README says plainly.
+- [ ] **Settle the ICO trading name on the 10 August call**, which is already
+      happening for the address. `HANDOVER.md` section 4. One call, two
+      problems, and the address is the urgent half — do not let the rename
+      delay it.
+- [ ] **Find out when `novenstudio.co.uk` expires.** It was already a
+      `[PLACEHOLDER]` in `ops/accounts.md`; the rename makes it load-bearing,
+      because that domain now has to outlive the change by years to carry the
+      redirects. If it lapses the redirects die and the name is free for
+      someone else — including the `noven.studio` product in the same field.
+- [ ] **The brand assets are a drawing job, not a text edit.** Checked
+      2026-08-04: all six SVGs in `assets/brand/` are outlined vector paths
+      with zero `<text>` elements, so the wordmark cannot be retyped and the
+      monogram cannot be relettered. `ops/rename-to-wardith.md` Phase B.
 - [ ] **Expect the old name to outlive the change.** `ops/own-facts-check.md`
       exists because facts persist after they are corrected, and the self-audit
       measured exactly that. Plan for a period where both names are in the

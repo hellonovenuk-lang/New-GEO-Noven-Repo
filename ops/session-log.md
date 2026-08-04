@@ -11,6 +11,73 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-04 (later — domains bought, and the rename scoped)
+
+**Three domains held:** `wardith.co.uk`, `wardith.com` and `wardith.uk`, GoDaddy,
+**one year only**. The GoDaddy checkout pushed Microsoft 365 email at £0.99/mo
+and it was declined — `ops/third-party-services.md` A1 had already rejected
+Microsoft 365 and Google Workspace, the £0.99 is a first-term teaser against a
+£6.49 renewal (£77.88/yr versus Zoho Mail Lite's £14.40), and a mailbox should
+not be created before it is decided which of the three domains the business
+actually is. Nothing is lost by declining: mail can be added to a domain at any
+time, and the domain was the only time-sensitive part of that page.
+
+**The renewal reminders are in a real calendar, which is a first for this
+business.** `ops/accounts.md` says in as many words that its own dates table
+*"is not a reminder — put these in an actual calendar"*, and records that three
+documents had said so and nothing had ever been set. Two events now exist: 6 Oct
+2026 to extend to a long term and decide whether to consolidate the registrar
+(the 60-day transfer lock lifts ~3 Oct), and 4 Jun 2027 as a backstop two months
+before expiry. **The August expiry falls a week after the late-July renewals
+week**, so the clustering that covers Zoho and the ICO does not cover this one —
+which is exactly why it needed its own date rather than a line in the table.
+
+**`ops/rename-to-wardith.md` written — the full checklist, seven phases.** Built
+from an inventory of the repo rather than from memory, and two things it turned
+up changed the plan:
+
+- **The brand assets cannot be retyped.** The owner's intention was to reuse the
+  Noven pack with different words, which is the right instinct and saves real
+  money — but all six SVGs in `assets/brand/` are **outlined vector paths, zero
+  `<text>` elements, no `font-family` anywhere**. Typing WARDITH into them
+  produces default-font letters beside designer-drawn ones, which is the same
+  fault as the Inter-retyped wordmark caught on 27 July arriving through a
+  different door. The route through is the editable original in the second repo
+  (`hellonovenuk-lang/Noven`) or identifying the typeface from the outlines.
+  Also: seven letters where there were five, so the lockup gets ~40% wider and
+  the hard-coded dimensions at `Base.astro:88` and `:164` must change or the
+  logo renders squashed. And the favicon and social avatar are monograms — an N
+  becoming a W is a redraw, not a rename.
+- **The hero animation does not need re-rendering.** `assets/video/frame.html`
+  uses generic captions and abstract blocks; no business name appears in it.
+  Only the filename carries the old name. Two lines in `index.astro` and a file
+  rename. Worth checking rather than assuming, because a re-render was the
+  single most expensive thing the rename could have required.
+
+**The argument the checklist is built around: switch once, not gradually.**
+`CLAUDE.md` already warns that merging publishes into the JSON-LD the assistants
+read and that caches persist. A rename moves the `name`, the `url` and both
+`sameAs` links at once. Done as one event it is something the assistants can
+learn; dribbled out over three weeks it publishes a business whose own facts
+disagree with each other, which is the exact failure we sell finding.
+
+**And the reassuring half, which is true and worth saying.** The self-audit found
+that **not one of 210 automated answers cited `novenstudio.co.uk`**, and that
+Bing had never indexed the site at all. The usual argument against moving domain
+is the accumulated indexation and links it forfeits. **There is none to
+forfeit.** This is the cheapest moment this change will ever be, and it gets more
+expensive every week.
+
+**One thing the rename partly breaks, recorded now so it is not discovered in
+February.** The self-audit's frozen q06 and q07 ask what the assistants know
+about *Noven*. Under a new name the honest answer is "nothing" for months, which
+is not a comparison but a different question. The way to keep the baseline
+valuable is to run both at the six-month re-check — the frozen Noven questions
+measure how long a dead name persists, the same questions about Wardith measure
+how fast a new one is learned. One extra batch of queries, and it is the best
+evidence this business could own: its own claim, tested on the only business we
+are allowed to experiment on.
+
 ### 2026-08-04 (the name is WARDITH)
 
 **The owner's decision, and it closes finding 1 of the self-audit.** Noven does
