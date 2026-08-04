@@ -71,12 +71,22 @@ the current name accrues to a name at least three other businesses already
 answer to. Findings 2 and 3 are ordinary, fast Foundation-shaped fixes. Finding
 1 isn't, and it now sits ahead of everything else in this file — see 1c-2.
 
-**A tool exists to test candidate names before committing to one, and nobody
-has used it yet.** `ops/name-check/` runs the same collision check the
-self-audit found by accident, deliberately, against a shortlist — ~10 minutes
-and a couple of pounds. `names.txt` still holds only its template comments;
-`names-runs.csv` still only its header row. A domain, a logo and a company
-record are far cheaper to get right before they exist than after.
+**Finding 1 is answered as of 2026-08-04: the name is WARDITH.** Built from the
+owner's own name — the back half of *Edward*, the back half of *Smith*. It is
+the third candidate. `ops/name-check/` ran on the first two and killed both:
+Locito collided 12 times out of 12 with Localito Marketplace Ltd and the Lockito
+app; Tovan collided 11 times out of 12 with Tovan.ai and two registered
+companies. WARDITH has no occupant to collide with — no company, product or
+brand of that name exists — so the tool was deliberately not run on it, which is
+argued out in `ops/session-log.md`, 2026-08-04, rather than left looking like a
+skipped step.
+
+**Deciding the name is not doing the rename, and almost none of the rename is
+done.** The domain is not bought, Companies House and the trade mark register
+are not checked, and everything from the canonicals to both LinkedIn pages still
+says Noven. That work, and the order to do it in, is 1c-2. A domain, a logo and
+a company record are far cheaper to get right before they exist than after —
+which is the whole reason the name went first.
 
 **Two method faults the audit surfaced, neither fixed yet:**
 
@@ -322,22 +332,47 @@ place, not on every page.
       no registration is required at all early on. Confirm both against current
       HMRC guidance rather than taking them from here.
 
-### 1c-2. The name decision — new, opened by the self-audit, unresolved
+### 1c-2. The name decision — settled 2026-08-04. The rename is not
 
-The self-audit's finding 1 (see "Where we are today") makes this a
+The self-audit's finding 1 (see "Where we are today") made this a
 prerequisite for further investment in the current identity, not a
 someday-decision. The report's own words: **"the honest order is the name
 first, then the rest."**
 
-- [ ] **Decide whether Noven keeps its name.** Owner call — nobody else can
-      settle it.
-- [ ] **If a rename is on the table, shortlist candidates and run them through
-      `ops/name-check/` before anything else touches them** — before a domain,
-      a logo, LinkedIn or a company record. `cd ops/name-check`, add names to
-      `names.txt`, `python name_check.py`. ~10 minutes and a couple of pounds
-      per batch; a rebrand after the fact costs far more than either.
-- [ ] **If the name stays, record why**, so the finding reads as answered
-      rather than ignored. Currently unresolved either way.
+- [x] **Decide whether Noven keeps its name.** It does not. **The name is
+      WARDITH** — the owner's call, 2026-08-04, after Locito and Tovan were
+      shortlisted and both rejected by `ops/name-check/`. Reasoning in
+      `ops/session-log.md`, 2026-08-04.
+- [x] **Run candidates through `ops/name-check/` before anything else touches
+      them.** Done for Locito and Tovan, both rejected. **Deliberately not run
+      for WARDITH**, and the reason is written into `names.txt` beside the
+      name: the tool finds occupants, a free search found no occupant, so the
+      queries would only confirm what was already known. That exception is
+      recorded rather than quietly taken.
+
+**What is now open — the rename itself, which has barely started:**
+
+- [ ] **Buy the domain. This is the first thing and it is time-sensitive.**
+      `wardith.com` and `wardith.co.uk` both returned no delegated nameservers
+      on 2026-08-04, which is a strong signal they are free but is not proof —
+      confirm at the registrar. Nothing else in this section is safe to start
+      until the domain is held. `[PLACEHOLDER: registrar, date bought, which
+      TLDs, renewal date]`
+- [ ] **Check Companies House and the trade mark register.** Neither was
+      checked — `find-and-update.company-information.service.gov.uk` refused
+      the automated request, and no trade mark search has been run. Both are
+      owner jobs and neither is covered by the name-check tool, which its own
+      README says plainly.
+- [ ] **Then, and only then, scope what the rename touches.** It is not a
+      find-and-replace: `site/src/data/business.ts` is the single source of
+      truth for business facts, but the domain also appears in the canonicals,
+      the sitemap, `robots.txt`, the JSON-LD, Netlify, Zoho mail, LinkedIn (both
+      pages, named in our own `sameAs`) and the brand assets, which carry the
+      old wordmark and cannot be retyped under the standing brand rule.
+- [ ] **Expect the old name to outlive the change.** `ops/own-facts-check.md`
+      exists because facts persist after they are corrected, and the self-audit
+      measured exactly that. Plan for a period where both names are in the
+      world, and decide what `novenstudio.co.uk` does — redirect, not drop.
 
 ### 1d. Standing decisions
 

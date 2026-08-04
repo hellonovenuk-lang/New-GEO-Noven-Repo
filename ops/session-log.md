@@ -11,6 +11,68 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-04 (the name is WARDITH)
+
+**The owner's decision, and it closes finding 1 of the self-audit.** Noven does
+not keep its name. The replacement is **WARDITH**, built from the owner's own
+name — the back half of *Edward* and the back half of *Smith*. Locito and Tovan
+were shortlisted first and both rejected the same day by `ops/name-check/`;
+this is the third candidate and the one that survived.
+
+**What was actually checked, so nobody has to guess later.** A web search for
+`"Wardith"` returns no company, no product and no brand anywhere. The only hits
+are two private individuals and some hobby art. That is a different category of
+result from the three names before it: Noven had four businesses, Locito had
+Localito Marketplace Ltd and the Lockito app, Tovan had Tovan.ai and two
+registered companies. **Nobody is occupying the commercial slot.** On the same
+day, `wardith.com`, `.co.uk`, `.uk` and `.studio` all had no delegated
+nameservers — a strong signal all four are free, and not proof.
+
+**What was not checked, and it is not a small list.** Companies House (their
+search refused the automated request), and the trade mark register (not
+attempted). Both are owner jobs. The name-check tool's README already says it
+is none of those three things; that limit is now load-bearing rather than
+theoretical, so it is repeated in `ROADMAP.md` 1c-2 where the open work sits.
+
+**The tool was deliberately not run on WARDITH, on the owner's instruction, and
+the reasoning is sound enough to record rather than log as a shortcut.** The
+tool's job is to find an occupant. A free search found no occupant, so all
+twelve queries would return the "I don't have information on that" that the
+README already defines as the pass. Locito and Tovan earned the money because
+each looked plausible *and* had a real product one keystroke away. Paying to
+confirm an absence a search has already shown is not the same purchase. Written
+into `names.txt` beside the name so the exception travels with it.
+
+**One argument was raised against the name and settled by the owner — recorded
+so it is not reopened.** The objection: *Wardith* is hard to transmit by voice,
+a listener has to choose between Wardith, Wardyth, Wardeth and Wardif, and a
+mistyped name fragments a business's own information — which is the exact
+failure this business is sold to find in other people's. **The owner's answer,
+which is right:** by the time anyone is saying the name aloud they have already
+found us, so the spoken form is not the discovery path; and read-to-said runs
+only one way, so there is no real ambiguity in the direction that matters. The
+objection was about a risk in the abstract; the business is discovered by
+typing and clicking. It does not survive contact with how the work actually
+arrives.
+
+**The one residual thing worth knowing.** While searching, an assistant's own
+summariser quietly offered *Wardley* instead — the nearest neighbours being
+Wardley, Wardite (a mineral) and Wardian. Not a collision, and not a reason to
+reject anything, but it is the shape of drift to watch for on the first audit
+run after the rename, alongside how long "Noven" persists.
+
+**Domain first, and it is time-sensitive.** Nothing else in the rename is safe
+to start before the domain is held. Everything the change touches is scoped in
+`ROADMAP.md` 1c-2 — it is not a find-and-replace, because the domain lives in
+the canonicals, the sitemap, `robots.txt`, the JSON-LD, Netlify, Zoho and both
+LinkedIn pages, and the brand assets carry a wordmark that cannot be retyped.
+
+**A gap in this file, noted rather than fixed.** The sessions of 2 – 4 August —
+the self-audit run, the name-check tool, the Locito and Tovan rejections, the
+Office-documents rule — are not written up here. The audit has its own folder
+and `names.txt` carries the rejections, so nothing is lost, but the log skips
+from 1 August to this entry. Worth backfilling before the record gets colder.
+
 ### 2026-08-01 (audit readiness, and getting our own facts straight first)
 
 **The jargon ban was challenged, tested, and narrowed — owner's decision.**

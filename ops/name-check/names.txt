@@ -15,3 +15,15 @@
 # hardware-design tool); Tovan Properties Limited (Companies House, inc.
 # 2015, Congleton) and Tovan Sp. z o.o. (Polish freight company) also surface.
 # Tovan
+
+# WARDITH - CHOSEN 2026-08-04, owner's decision. Deliberately never run through
+# this tool, and that is not an oversight. The tool exists to find an occupant.
+# A web search found no company, product or brand of this name anywhere - the
+# only hits are two private individuals and some hobby art - so there is no
+# occupant for the twelve queries to surface, and the expected answer from all
+# three assistants is "I don't have information on that", which the README
+# already calls the pass. Locito and Tovan were worth the money because both
+# looked plausible AND had a real occupant one keystroke away. This does not.
+# Spending on it would be paying to confirm what a free search already showed.
+# Full reasoning in ops/session-log.md, 2026-08-04.
+# WARDITH
