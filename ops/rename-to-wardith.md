@@ -96,13 +96,25 @@ every week from here.
       `CLAUDE.md` bans — it is the same fault as the Inter-retyped wordmark
       caught on 27 July, arriving through a different door.
 
-- [ ] **B2. Get the editable original or identify the typeface.**
-      `ops/accounts.md` records a second repo, **`hellonovenuk-lang/Noven`**,
-      holding brand and image originals. Look there first — if the source file
-      exists, this is a twenty-minute job. If not, identify the typeface from
-      the outlines (WhatTheFont or similar on a clean render of `Logo
-      Primary.svg`) and set WARDITH in the real font, then outline it. Either
-      route keeps the letterforms honest. Guessing does not.
+- [ ] **B2. Resolved 2026-08-04: the editable original is the Canva project.**
+      The owner made the Noven assets in Canva and is renaming inside the same
+      project. **That is the answer B1 needed** — and it explains B1: Canva
+      outlines text on SVG export, so the flat paths were never the master, the
+      Canva design was. Retyping there sets real letterforms in the real
+      typeface, which is what the standing rule is protecting. Nothing needs to
+      be identified, reconstructed or guessed.
+
+      **Export settings that matter**, because the repo's tooling assumes them:
+      - **SVG, not PNG.** SVG export is a Canva Pro feature — if the account
+        has lapsed to free it will silently offer PNG instead.
+      - **Keep the page at 1500×1500**, the size the Noven set used. The
+        artwork floats inside a square and gets cropped later by viewBox; the
+        crop is computed, so the canvas size only has to stay consistent.
+      - **Transparent background on**, or every file arrives with a white
+        rectangle behind it.
+      - **Export all six**, even the ones that look unchanged. The pattern and
+        banner may carry the name in places that are easy to miss.
+      - `og.png` is separate: **PNG at exactly 1200×630** (B5).
 - [ ] **B3. The monogram is a redraw, not a rename.** `Favicon.svg` is two paths
       and `Social Avatar.svg` is five. If either contains an **N**, it has to
       become a **W** — a different letter, different width, different optical
@@ -118,10 +130,50 @@ every week from here.
       a narrow phone where the extra width has nowhere to go.
 - [ ] **B5. Rebuild `site/public/og.png` at 1200×630.** It is a raster and it
       carries the name. Nothing else will regenerate it.
-- [ ] **B6. Keep the originals untouched.** New masters go into `assets/brand/`
-      unmodified; trimmed web copies (viewBox only, no path data altered) go to
-      `site/public/`, exactly as the Noven set was handled. The old Noven files
-      stay in git history — do not delete the record.
+- [ ] **B6. Keep the originals untouched, and let the script do the trim.**
+      New masters go into `assets/brand/` unmodified. The web copies in
+      `site/public/` are the same files with the viewBox cropped to the
+      artwork, and **`assets/brand/trim.mjs` now does that** rather than
+      anyone measuring by hand:
+
+      ```
+      npm install playwright
+      node assets/brand/trim.mjs "assets/brand/Logo Primary.svg" site/public/logo.svg
+      node assets/brand/trim.mjs "assets/brand/Logo Dark.svg"    site/public/logo-dark.svg
+      node assets/brand/trim.mjs "assets/brand/Social Avatar.svg" site/public/favicon.svg --square
+      ```
+
+      It measures with the browser's own `getBBox()`, refuses to write if
+      anything other than the viewBox, width, height and metadata changed, and
+      **prints the exact numbers B4 needs for `Base.astro`**. Verified against
+      the committed Noven set before it was trusted.
+
+      **Note the third line.** `favicon.svg` is cropped from **Social
+      Avatar.svg**, not from `Favicon.svg` — the supplied favicon asset was
+      judged unusable at small sizes on 27 July and the circle avatar replaced
+      it. That swap is easy to undo by accident when a fresh set arrives.
+
+      The old Noven files stay in git history — do not delete the record.
+- [ ] **B6a. Decide whether the published logo keeps Canva's C2PA manifest.**
+      Found 2026-08-04: `site/public/logo.svg` carries an embedded Canva
+      content-credentials manifest of **16.9KB inside a 26.6KB file** — nearly
+      two-thirds of the weight of an asset on every page, and no browser reads
+      it. `logo-dark.svg` and `favicon.svg` have none, so it is per-export
+      rather than a blanket stamp.
+
+      It contains **no personal data** — checked; it is Canva's signing chain
+      and nothing about the account. It does carry a signed claim of
+      `softwareAgent: Canva AI` and IPTC source type
+      `compositeWithTrainedAlgorithmicMedia`. Nothing about that is dishonest —
+      accurate provenance is the entire point of C2PA — but it is
+      machine-readable metadata on a business that sells what machines read
+      about you, so it is the owner's call rather than a silent default.
+
+      **`trim.mjs` strips it from the web copies by default and the originals
+      in `assets/brand/` keep theirs untouched**, which preserves the
+      provenance record exactly where the standing rule says originals live,
+      without shipping a signing chain to every visitor. Pass
+      `--keep-metadata` to override.
 - [ ] **B7. The email banner's wording has been outstanding since 27 July.**
       "AI Visibility Services" still needs rewording and it is being redrawn
       anyway. Fix it in the same pass rather than reproducing a known fault.
