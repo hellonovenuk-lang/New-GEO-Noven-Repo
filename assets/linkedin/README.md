@@ -17,11 +17,19 @@ card in `../og/` and the homepage animation in `../video/`.
 **Nothing is drawn here.** The standing rule is that the brand assets are used
 as they were supplied, never redrawn or retyped, so:
 
-- **The logo** is `../brand/Social Avatar.svg` placed as-is. All `logo.html`
-  does is scale it and crop the frame to the bounds of the disc, so the mark
-  meets all four edges. That way a circular mask fills completely and a square
-  one reads as the disc it is. The corners are left transparent rather than
-  filled white, so LinkedIn's own mask can sit wherever it likes.
+- **The logo** is `../brand/Icon Mark.svg` — the supplied white "W." — placed
+  as-is on a navy disc set in CSS. The corners are left transparent rather
+  than filled white, so LinkedIn's own mask can sit wherever it likes.
+
+  **The disc used to come with the artwork and now doesn't.** The Noven set
+  included `Social Avatar.svg`, a navy disc with the mark already inside it,
+  so `logo.html` only had to crop the frame to the disc's bounds. The Wardith
+  set has no avatar file: the mark arrives bare on transparent. Setting the
+  disc here in CSS — brand navy `#170969`, the same value the cover and the og
+  card use — is the same move `og.html` already makes when it puts the
+  committed wordmark on a navy field. The supplied artwork is still placed
+  untouched; only the ground behind it is ours. If a filled-tile avatar is
+  ever exported from Canva, go back to placing it and delete the disc.
 - **The cover** is brand navy `#170969`, warm white `#fffefa`, the committed
   wordmark (`site/public/logo-dark.svg`, referenced as-is like the og card
   does) and one sentence, set in the same Newsreader 500 the site sets its
@@ -45,8 +53,11 @@ The full wordmark belongs on the cover, and the disc keeps the logo slot. That
 isn't a taste call — the three candidates were rendered at 48px, which is the
 size LinkedIn shows a company logo at in the feed:
 
-- **The disc** stays legible. "N." is two glyphs and it holds up small.
-- **The wordmark on navy** goes cramped — six letters across 48px.
+- **The disc** stays legible. "W." is two glyphs and it holds up small —
+  re-checked at 48px on white and on a dark feed after the rename, because a
+  W is a wider, busier letterform than an N and the old test doesn't transfer.
+- **The wordmark on navy** goes cramped — now eight glyphs across 48px, worse
+  than it was.
 - **The wordmark on warm white** nearly disappears, because LinkedIn's feed
   background is white too and the tile stops reading as a tile.
 

@@ -11,6 +11,84 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-04 (later still — the domain settled, and two hard constraints set)
+
+**`wardith.co.uk` is the business.** Owner's decision, closing A1. `.com` and
+`.uk` are owned and redirecting and are never published as a contact detail.
+The decision was forced sooner than planned by the brand set itself: the
+supplied `Email Signature.svg` reads `hello@wardith.com` above `wardith.co.uk`,
+which made the choice by accident and made it two different ways in one asset.
+That file must be re-exported before it is used anywhere. Nothing else in the
+set carries a domain.
+
+**Two constraints set by the owner, and they are the frame for everything now:
+no further spending until 26 August, and fully operational with outreach active
+by 1 September.** Written up as `ops/plan-to-1-september.md`. The finding is
+that these do not conflict — **the entire rename is free.** DNS, Netlify,
+a Zoho alias, LinkedIn, the redirects and the repo work all cost nothing, so
+the twenty-two-day freeze is spare capacity rather than a blocker. What the
+freeze does is compress the paid items into six days, and that list is short:
+API balances, and the address for service if V LOT has still not delivered.
+
+Three things the constraint surfaced that were not visible before:
+
+- **A freeze on decisions is not a freeze on payments.** Canva Pro, GoDaddy
+  add-ons and API auto-top-up can all charge without anybody deciding
+  anything, and none of their billing dates is recorded.
+- **`novenstudio.co.uk`'s unknown expiry stopped being an admin gap.** If it
+  lapses inside the freeze, the site goes dark and all mail dies with no
+  budget to fix it. It is now the first job on the list.
+- **The audit's tool cost is roughly ten times the estimate the prices were
+  set against.** `ops/audits/noven-2026-08-02/README.md` had already recorded
+  OpenAI alone at **$12.63 for ~75 queries** against §6's ~£1.20 per 150, but
+  it was filed as an accuracy problem. Under a spending freeze it is a
+  delivery problem: every audit spends real money on the day it is delivered,
+  so a client who buys on 27 August cannot be served on an empty balance. It
+  also puts a question against the £95 Maintain price. **Not to be answered
+  while launching** — but before the first monthly client renews.
+
+**`ops/accounts.md` gained a row it should always have had: Canva.** It is the
+editable master for every brand asset — the committed SVGs are outlined paths,
+so nothing can be re-set as type anywhere else — and it was absent from the
+dependency register entirely. If the Pro plan lapses the site is fine and the
+brand becomes uneditable, which is a slow failure nobody would notice for
+months. The API accounts row was stale in the other direction and was
+corrected: all three were opened and used for the 2 August self-audit.
+
+**Phase D0 written: the four owner jobs, step by step.** Netlify, GoDaddy DNS,
+Zoho and LinkedIn — the only parts of the rename that live behind a login. Two
+things fell out of writing them:
+
+- **The 301 redirects need no rules.** Netlify 301s every non-primary domain
+  to the primary, preserving the path, so promoting `wardith.co.uk` at merge
+  time reverses the lot in one action — as long as the old domain stays
+  attached. D3 shrank from a page of rules to one checkbox and one
+  verification.
+- **Attaching the new domains now, days before the merge, is free insurance.**
+  TLS gets days to issue instead of minutes, and until the flip the new
+  domains simply redirect to the old one, which is a live proof the DNS is
+  right rather than a hope.
+
+**`og.png` was never a Canva job, and saying so was wrong.** It is a build
+product of `assets/og/og.html`, which *references* the committed wordmark — so
+re-rendering picked up the Wardith artwork on its own. The same was true of
+both LinkedIn PNGs. Three corrections came out of actually reading those
+files:
+
+- **`assets/linkedin/logo.html` was broken**, and had been since the Noven
+  originals were deleted: it placed `Social Avatar.svg`, which the Wardith set
+  does not include. It now sets the navy disc in CSS and places the supplied
+  `Icon Mark.svg` on it — the same move `og.html` already makes when it puts
+  the committed wordmark on a navy field. The artwork is still used as
+  supplied; only the ground behind it is ours.
+- **Two files hard-coded the Noven wordmark's aspect ratio** (`1193.92 :
+  236.39`) to derive a height. Left alone they would have squashed the new
+  artwork silently rather than failing. Both now carry the Wardith ratio and a
+  note to re-derive it on any re-export.
+- **The 48px legibility test was re-run rather than inherited.** The old
+  README recorded that "N." holds up small; a W is a wider, busier letterform
+  and the old test does not transfer. "W." reads on white and on a dark feed.
+
 ### 2026-08-04 (later — domains bought, and the rename scoped)
 
 **Three domains held:** `wardith.co.uk`, `wardith.com` and `wardith.uk`, GoDaddy,

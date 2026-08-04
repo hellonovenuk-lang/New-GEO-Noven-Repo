@@ -11,6 +11,13 @@ has to change, and what breaks if it is done in a different order.
 at GoDaddy on 2026-08-04, **one year only**. Extending them is in the calendar
 for 6 Oct 2026 with a backstop on 4 Jun 2027, and in `ops/accounts.md`.
 
+**The business is `wardith.co.uk`** — decided by the owner 2026-08-04, see A1.
+
+**This work is under a spending freeze until 26 August**, and a deadline of
+1 September to be operational. See `ops/plan-to-1-september.md`. Nothing in
+this document costs anything: the domains are bought and every remaining step
+is free. If a screen asks for payment, something is wrong — stop and say so.
+
 ---
 
 ## The one thing to understand before starting
@@ -41,20 +48,25 @@ every week from here.
 
 ## Phase A — decisions and deadlines. Do these first, this week
 
-- [ ] **A1. Decide which domain the business actually *is*.** Everything below
-      depends on this one answer and nothing can start without it. The site
-      canonical, the sitemap, the `url` in the structured data, the email
-      address and both LinkedIn links must all be the same domain, or we
-      publish the inconsistency we charge to find.
-      **Recommendation: `wardith.co.uk`.** It follows what has already been
-      done, and it reads local to the Wirral service businesses being sold to.
-      Hold `.com` and `.uk` as defensive registrations pointed at it — owned,
-      redirecting, never used as an address.
+- [x] **A1. DECIDED 2026-08-04: the business is `wardith.co.uk`.** Owner's
+      call. Everything below now has its answer.
 
-      **This got more urgent on 2026-08-04.** The brand set that arrived that
-      day contains an email signature reading `hello@wardith.com` above
-      `wardith.co.uk` — the decision made by accident, and made two different
-      ways in a single asset. Settle it before that signature is used anywhere.
+      **What that means, concretely.** `wardith.co.uk` is the only address that
+      ever appears as *an address*: the site canonical, the sitemap, the `url`
+      in the structured data, `hello@wardith.co.uk`, both LinkedIn links, the
+      invoice footer, the email signature. `wardith.com` and `wardith.uk` are
+      **owned and redirecting, and are never typed anywhere as a contact
+      detail.** They exist so that nobody else has them and so a mistyped
+      address still lands.
+
+      Why it was the right call: it follows what has already been done, and it
+      reads local to the Wirral service businesses being sold to.
+
+      **Consequence: `Email Signature.svg` must be re-exported.** It reads
+      `hello@wardith.com` above `wardith.co.uk` — two different domains for one
+      business, in the asset that goes out on every message. It is the only
+      asset in the set carrying a domain. **Do not use it until it is
+      re-exported on `wardith.co.uk` for both lines.**
 - [ ] **A2. The ICO call is on 10 August and the trading name is the same
       call.** `HANDOVER.md` section 4 already has this as the one item with a
       deadline and no undo — the home address publishes to a bulk-downloadable
@@ -100,10 +112,25 @@ warm white and the footer on navy.
 
 **Still outstanding after the drop:**
 
-- [ ] **`og.png` was not in the set.** It is a 1200×630 raster and the committed
-      one still says Noven. Export it from Canva — nothing else regenerates it,
-      and without it every link shared to LinkedIn or WhatsApp previews the old
-      name. This is the last Noven-branded asset on the site.
+- [x] **`og.png` — done 2026-08-04, and it was never a Canva job.** Corrected
+      the same day it was raised: `assets/og/og.html` composes the card from
+      the site's own materials and *references* `site/public/logo-dark.svg`,
+      which is already the Wardith wordmark. Re-rendering it picked the new
+      artwork up automatically. The only edit needed was the `.wordmark`
+      height, which is derived from the wordmark's own viewBox ratio and was
+      still on Noven's `1193.92 : 236.39`. Left alone it would have squashed
+      the new mark rather than failed — so **re-derive that number any time the
+      wordmark is re-exported.**
+
+      Same for the two LinkedIn PNGs, which are build products of
+      `assets/linkedin/`. `cover.html` needed the same ratio fix.
+      **`logo.html` was broken outright** — it placed `Social Avatar.svg`,
+      which the new set does not include and which was deleted with the Noven
+      originals. It now sets the navy disc in CSS and places the supplied
+      `Icon Mark.svg` on it, exactly the way `og.html` already puts the
+      committed wordmark on a navy field. Re-checked legible at 48px on white
+      and on a dark feed, because a W is a busier letterform than an N and the
+      old test does not transfer.
 - [ ] **There is no Brand Pattern in the new set.** The Noven pack had one. It
       was never used on the site, so nothing breaks — but decide whether it is
       dropped deliberately or was missed in the export.
@@ -204,8 +231,10 @@ is the only asset affected.
       40% wider. **Those numbers must be updated to the new artwork's real
       viewBox or the logo renders squashed**, and the header will need a look on
       a narrow phone where the extra width has nowhere to go.
-- [ ] **B5. Rebuild `site/public/og.png` at 1200×630.** It is a raster and it
-      carries the name. Nothing else will regenerate it.
+- [x] **B5. Done 2026-08-04 — and the premise was wrong.** "Nothing else will
+      regenerate it" was written before anyone read `assets/og/README.md`.
+      `og.png` is a build product of `og.html`, which references the committed
+      wordmark; re-rendering was the whole job. See the corrected note above.
 - [ ] **B6. Keep the originals untouched, and let the script do the trim.**
       New masters go into `assets/brand/` unmodified. The web copies in
       `site/public/` are the same files with the viewBox cropped to the
@@ -309,6 +338,170 @@ single source of truth and most of the rest follows from it.
 
 ---
 
+## Phase D0 — the four owner jobs that have to be done before the merge
+
+Written 2026-08-04, once A1 was settled. **These are the only things in this
+document that an assistant cannot do**, because they all live behind a login.
+Everything else on the repo side is Phase C and is already in hand.
+
+**All four are free.** `ops/plan-to-1-september.md` puts the business under a
+spending freeze until 26 August, and none of this breaches it. **If any screen
+in any of these steps asks for payment, stop and say so** — it means something
+is different from what is written here, and the answer is to wait, not to pay.
+
+**One principle throughout, borrowed from `ops/zoho-mail-setup.md`: if a screen
+shows you a value that differs from one written here, trust the screen.** These
+panels change, and the console knows things this document cannot — which data
+centre an account is on, which IP a host is currently using.
+
+---
+
+### D0.1 — Netlify: attach `wardith.co.uk` while the site is still Noven
+
+Do this **first**. It is what makes the DNS in D0.2 verifiable, and doing it
+early means TLS has days to issue rather than minutes.
+
+1. Netlify → the site → **Site configuration** → **Domain management**.
+2. **Add a domain** → `wardith.co.uk`. Netlify will say it does not resolve
+   yet. That is expected; carry on.
+3. Repeat for `www.wardith.co.uk`, `wardith.com` and `wardith.uk`.
+4. **Leave `novenstudio.co.uk` as the primary domain for now.** Do not detach
+   it and do not promote Wardith yet.
+5. Write down the site's `*.netlify.app` hostname from the same page. D0.2
+   needs it.
+
+**What this does in the meantime, and why it is not a problem.** Netlify's
+documented behaviour is to 301 every non-primary domain to the primary,
+preserving the path. So until the merge, `wardith.co.uk/pricing/` will
+redirect to `novenstudio.co.uk/pricing/`. That is harmless — nobody has the
+new address yet — and it is a live proof that DNS and TLS are correct.
+
+**And it is the whole of D3.** Flipping the primary domain at merge time
+reverses every one of those redirects at once, page for page, without writing
+a single rule. Verify the direction actually flips on the day rather than
+assuming it.
+
+### D0.2 — GoDaddy DNS: point all three domains at Netlify
+
+For **each** of `wardith.co.uk`, `wardith.com` and `wardith.uk`.
+
+GoDaddy → **My Products** → the domain → **DNS** → **Manage Zones** /
+**Manage DNS**.
+
+1. **Delete the parked records first.** A new GoDaddy domain ships with an `A`
+   record on `@` pointing at GoDaddy's parking page and a `CNAME` on `www`
+   pointing at `@`. Both have to go, or the domain keeps serving the parking
+   page from a cached record long after the real ones are added.
+2. Add these two:
+
+   | Type | Name | Value | TTL |
+   |---|---|---|---|
+   | A | `@` | `75.2.60.5` | 1 hour |
+   | CNAME | `www` | the site's `*.netlify.app` hostname from D0.1 | 1 hour |
+
+   `75.2.60.5` is Netlify's load-balancer IP and is the value
+   `novenstudio.co.uk` already uses at Namecheap. **Read it off Netlify's own
+   screen rather than trusting this line** — it is the one number here that
+   Netlify can change without telling anybody.
+
+3. **GoDaddy's `Name` field is relative, the same trap Namecheap has.** Type
+   `@` for the domain itself and `www` for the subdomain. Typing
+   `www.wardith.co.uk` produces `www.wardith.co.uk.wardith.co.uk`, which
+   resolves to nothing and looks like a Netlify fault.
+4. **Leave the nameservers alone.** GoDaddy will offer to "connect your domain"
+   through a wizard that moves DNS elsewhere. Two records is the whole job.
+
+### D0.3 — Wait for TLS, and check it before anything else moves
+
+Netlify issues a Let's Encrypt certificate once the records resolve. Usually
+minutes, occasionally hours.
+
+**Do not merge until all four hostnames show a valid certificate in Netlify's
+Domain management panel**, and `https://wardith.co.uk` loads in a browser
+without a warning. Merging before that publishes a site whose every canonical
+points at an address the browser refuses to open.
+
+If it stalls, the cause is almost always the parked records from D0.2 step 1
+still being cached. Wait out the TTL and press **Renew certificate**.
+
+### D0.4 — Zoho: `hello@wardith.co.uk`, as an alias
+
+`ops/zoho-mail-setup.md` is a step-by-step for this exact job on the old
+domain. It still applies; only the DNS panel changes, from Namecheap to
+GoDaddy. **Note the account is on the EU data centre, which is why every
+hostname ends `.eu`.**
+
+**Add it as an alias on the existing user, not as a second user.** Aliases are
+free; users are £1/month each, and one Mail Lite licence is all this business
+needs. That is also what keeps this step inside the spending freeze.
+
+1. Zoho Mail Admin Console → **Domains** → **Add Domain** → `wardith.co.uk`.
+2. Verify ownership with the TXT record Zoho gives you, added at GoDaddy
+   exactly as in D0.2 (Name `@`, no quotation marks — GoDaddy adds them).
+3. **Users** → the existing `hello@` user → **Mail Aliases** → add
+   `hello` @ `wardith.co.uk`.
+4. Add the mail records at GoDaddy. MX has its own **Priority** column — do
+   not put the number in the value field:
+
+   | Type | Name | Value | Priority |
+   |---|---|---|---|
+   | MX | `@` | `mx.zoho.eu` | 10 |
+   | MX | `@` | `mx2.zoho.eu` | 20 |
+   | MX | `@` | `mx3.zoho.eu` | 50 |
+   | TXT | `@` | `v=spf1 include:zoho.eu ~all` | — |
+   | TXT | `zmail._domainkey` | the value Zoho generates | — |
+   | TXT | `_dmarc` | `v=DMARC1; p=none; rua=mailto:hello@wardith.co.uk` | — |
+
+   **One `v=spf1` record and no more.** Two is a hard failure, not a weaker
+   check — receiving servers stop checking entirely. If GoDaddy refuses the
+   DKIM value it is over the 255-character limit; regenerate the key at
+   1024-bit in Zoho rather than splitting it across rows.
+
+5. **Test before the merge, both directions.** Send *to*
+   `hello@wardith.co.uk` and confirm it arrives. Then reply *from* it to a
+   Gmail address, open **Show original**, and confirm `SPF: PASS`,
+   `DKIM: PASS`, `DMARC: PASS`. A new domain with broken authentication gets
+   quietly filtered, and the failure looks exactly like nobody replying —
+   which on a launch week is indistinguishable from the outreach not working.
+
+6. **`hello@novenstudio.co.uk` keeps receiving.** It is on both LinkedIn
+   pages, in the ICO record and in whatever has already been cached. It must
+   not bounce for at least twelve months (E3).
+
+7. **If Zoho asks for money at any point in this** — for a second domain, or
+   because Mail Lite will not host two — stop. Do not pay during the freeze.
+   Tell the owner; the fallback is to keep publishing the old address for a
+   few more weeks, which is ugly but free.
+
+### D0.5 — LinkedIn: the name, and the decision about the slug
+
+The company page name and its public URL are two separate fields, and only one
+of them is published in our own structured data.
+
+1. LinkedIn → the company page → **Admin view** → **Edit page** → **Page
+   info** → change the name to **Wardith**.
+2. In the same panel, look for the **public URL** field and try to change the
+   slug from `novenstudio` to `wardith`.
+3. **Then tell me which of these two happened**, because it changes C1:
+   - **The slug changed.** Send the new URL. `business.ts` line 57 gets it,
+     and the `sameAs` stays.
+   - **LinkedIn will not let you change it.** Also a real answer. We ship the
+     merge with both `sameAs` links removed and add them back later.
+
+**My recommendation is to ship without the `sameAs` links either way.** A
+missing `sameAs` is invisible; a wrong one is a published claim that this
+business and that URL are the same thing, made on a site whose whole pitch is
+that its own facts are correct. Decoupling a LinkedIn admin job from a deploy
+is worth more than the link is.
+
+4. While in there, the About text on **both** the company page and the founder
+   profile still publishes the pre-31-July prices — £30 / £350 / from £75.
+   Repaste from `ops/linkedin.md` §5.4 and §2 with the new name. **Two faults,
+   one paste.** The new cover and logo PNGs are in `assets/linkedin/`, already
+   rebuilt for Wardith.
+
+---
+
 ## Phase D — the switch. This is the publishing moment
 
 - [ ] **D1. Netlify: add the new domain, set it primary, keep the old one
@@ -316,10 +509,18 @@ single source of truth and most of the rest follows from it.
       serve the redirects.
 - [ ] **D2. DNS at the new registrar** — A/CNAME for Netlify, then wait for TLS
       to issue on all three new domains before switching anything.
-- [ ] **D3. 301 redirects, page for page.** `/pricing` → `/pricing`, not
-      everything to the homepage. Seven pages plus the 404. Redirect
-      `.com` and `.uk` to the primary domain too, so only one address ever
+- [ ] **D3. 301 redirects, page for page — and D0.1 already does this.**
+      `/pricing` → `/pricing`, not everything to the homepage. Seven pages plus
+      the 404, and `.com` and `.uk` folded in too, so only one address ever
       resolves content.
+
+      **No redirect rules need writing.** Netlify 301s every non-primary domain
+      to the primary, preserving the path, so promoting `wardith.co.uk` to
+      primary reverses all of it in one action — provided `novenstudio.co.uk`,
+      `wardith.com` and `wardith.uk` all stay *attached* to the site. **Verify
+      the direction actually flipped, on the day, with a real request to a real
+      inner page.** This is the step where an assumption costs every old link
+      the business has.
 - [ ] **D4. Say what the merge publishes, then merge.** Per `CLAUDE.md`: this
       one publishes a new business name, a new URL on every page, new JSON-LD
       identity and two new `sameAs` links. It is the largest one-way door this
