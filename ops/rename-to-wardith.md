@@ -521,6 +521,29 @@ so the next sweep knows it exists.
 
 ### D0.3 — Wait for TLS, and check it before anything else moves
 
+**PASSED 2026-08-04.** `https://wardith.co.uk` serves with a valid certificate
+and redirects page-for-page to the primary domain. DNS, the Netlify
+attachment, TLS and the alias redirect are all confirmed working — which means
+the merge-time flip has been proven in the direction that costs nothing.
+
+**Two things worth keeping from how this was diagnosed.**
+
+**The certificate had to be reissued, and that is a consequence of the order
+in D0.1.** Attaching the domains *before* DNS existed is right — it gives TLS
+days rather than minutes — but it means Netlify's certificate was issued when
+only `novenstudio.co.uk` resolved, and Netlify uses one certificate covering
+every attached hostname. It cannot add a name it could not validate at the
+time. So **expect to press Renew certificate once DNS is live**, and do not
+read the resulting warning as a DNS fault.
+
+**Test on a phone, on mobile data, before debugging anything.** Chrome caches
+certificate failures per host and keeps showing the interstitial well after
+the cause is fixed. On 2026-08-04 the desktop browser was still refusing the
+site after the renewal had already succeeded; the phone loaded it cleanly
+first try. Different resolver, different network, no cached error — it
+separates "the site is broken" from "this browser remembers it being broken"
+in about ten seconds, and it costs nothing.
+
 Netlify issues a Let's Encrypt certificate once the records resolve. Usually
 minutes, occasionally hours.
 
