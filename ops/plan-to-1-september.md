@@ -8,14 +8,16 @@ This one describes **when, and with what money.**
 
 ## The two constraints
 
-Both stated by the owner on 2026-08-04, and neither is negotiable by an
-assistant:
+Both stated by the owner on 2026-08-04 and refined the same day, and neither
+is negotiable by an assistant:
 
-1. **No further money can be spent on this business until 26 August 2026** (a
-   Wednesday). Twenty-two days from the day this was written.
-2. **The business must be fully operational, able to accept clients, with
-   outreach active, by 1 September 2026** (a Tuesday). Six days after the
-   money unfreezes.
+1. **No further money goes into this business before 26 August 2026 unless
+   revenue pays for it.** A Wednesday, twenty-two days out. Revenue is the
+   only exception, and it is a real one — see the section below.
+2. **From 26 August there is capacity for the modest spend needed to get
+   fully live.** Not a blank cheque; the list is short and costed below.
+3. **1 September 2026 is the hard launch** (a Tuesday): fully operational,
+   able to accept clients, outreach active.
 
 **These two constraints do not conflict, and that is the finding.** Almost
 everything left to do costs nothing. The rename — the largest remaining piece
@@ -25,6 +27,61 @@ repo work is free. It can all be finished inside the freeze.
 
 What the freeze does is compress the *paid* items into a six-day window. That
 window is the risk, and it is small enough to plan precisely.
+
+---
+
+## The revenue exception, and what it actually changes
+
+**"No spend without revenue" is not the same constraint as "no spend".** It
+means the business is allowed to pay for the things it sells, out of what it
+sold them for — which is how a service business is supposed to work, and it
+takes the biggest risk in this plan off the table.
+
+**The £125 audit funds its own delivery several times over.** The worst
+recorded tool cost is OpenAI at $12.63 for ~75 queries; even at three
+providers and a fuller question set, an audit's API cost is a fraction of its
+price. So a client who pays on 15 August pays for the API credit that delivers
+their own report. That is cost of sale, not a breach of the freeze.
+
+**The rule, so this doesn't get argued each time:**
+
+1. **Revenue first funds delivering what was sold.** API credit to run the
+   audit that was just bought. No approval needed — it is the cost of the
+   thing.
+2. **Then it sits.** Anything not required to deliver a sale already made —
+   the address for service, insurance, tooling, a domain extension — waits
+   for the 26th, even if there is money in the account. Otherwise "no spend
+   without revenue" quietly becomes "no spend without an excuse".
+3. **Not all of a payment is spendable.** Income received now is taxable
+   later, and `ops/accounts.md` already carries the HMRC registration
+   deadline. Set a share of every payment aside before treating the rest as
+   working capital. What share is the owner's call, and it is not a decision
+   an assistant should make.
+
+### The consequence: selling before 26 August is now the plan, not a bonus
+
+1 September is the **hard launch** — the date everything is finished and
+outreach runs properly. **It is not the earliest a client can be taken.**
+Under the revenue exception, one sale in the freeze window pays for its own
+delivery, proves the whole pipeline end to end on a real customer, and
+de-risks the six-day window at the end. That is worth more than a tidy launch.
+
+**Two things have to be true before an early sale can be accepted**, and both
+are free:
+
+- **The site is renamed and live.** The rename costs nothing and can be
+  finished well before the 26th — see `ops/rename-to-wardith.md`.
+- **The payment route works.** Revolut Pro is free to hold and the audit
+  payment link already exists. Test it with a real transaction before it is
+  sent to anybody.
+
+**And one thing is genuinely awkward.** The address for service is still
+`[PLACEHOLDER]` in the footer of all seven pages, and it is a legal
+disclosure requirement for trading under a name that is not the owner's own.
+Taking money before that is resolved is the owner's call to make knowingly,
+not something to discover afterwards. **Chasing V LOT is free and is the only
+route that closes it before the 26th** — which moves it from an admin chore to
+the thing standing between here and an early sale.
 
 ---
 
@@ -173,7 +230,14 @@ drift into "after the first one went fine".
 ## The honest read on 1 September
 
 **Achievable.** The rename is free and fits comfortably in twenty-two days,
-and the paid list is short.
+the paid list is short, and the revenue exception means a single early sale
+removes most of what is left of the risk.
+
+**The plan is no longer "wait, then launch".** It is: finish the free work,
+try to sell one audit inside the freeze window, and let 1 September be the
+date everything is finished properly rather than the date anything is first
+attempted. A launch is a much smaller event when the pipeline has already run
+once on a real customer.
 
 **Three things could break it, in order of likelihood:**
 
@@ -201,5 +265,9 @@ plan.
 | **Today, 4 Aug** | Look up `novenstudio.co.uk` expiry and registrar. Confirm GoDaddy auto-renew. Find the Canva billing date |
 | **Mon 10 Aug** | ICO call — address and trading name. Deadline, no undo |
 | **Mon 24 Aug** | V LOT decision point: delivered, or the fallback gets bought |
-| **Wed 26 Aug** | Money unfreezes. API balances first, address for service second |
-| **Tue 1 Sept** | Operational. Outreach active |
+| **Wed 26 Aug** | Spending capacity returns. API balances first, address for service second |
+| **Tue 1 Sept** | **Hard launch.** Operational, outreach active |
+
+**No date for the first sale, on purpose.** Under the revenue exception it can
+happen any time the site is live and the payment route is tested, and the
+earlier it does the less the six-day window at the end has to carry.

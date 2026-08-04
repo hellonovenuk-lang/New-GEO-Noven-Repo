@@ -1,6 +1,6 @@
-# Noven — marketing website
+# Wardith — marketing website
 
-Static marketing site for Noven, built with [Astro](https://astro.build). Noven helps
+Static marketing site for Wardith, built with [Astro](https://astro.build). Wardith helps
 service businesses get found when their customers ask AI assistants (ChatGPT, Google,
 Copilot, Perplexity) to recommend someone for what they do.
 

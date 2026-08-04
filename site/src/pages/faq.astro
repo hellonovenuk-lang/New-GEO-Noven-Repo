@@ -2,9 +2,9 @@
 import Base from '../layouts/Base.astro';
 import { money, plan } from '../data/business';
 
-const title = 'Frequently asked questions — Noven';
+const title = 'Frequently asked questions — Wardith';
 const description =
-  'Plain answers about getting your business found by AI assistants: how recommendations work, what the £125 audit covers, timescales, guarantees, which assistants Noven covers, and whether this is the thing the industry calls GEO or AEO.';
+  'Plain answers about getting your business found by AI assistants: how recommendations work, what the £125 audit covers, timescales, guarantees, which assistants Wardith covers, and whether this is the thing the industry calls GEO or AEO.';
 
 const audit = plan('audit');
 
@@ -15,7 +15,7 @@ const faqs: { q: string; a: string[] }[] = [
     q: 'How do AI assistants decide which businesses to recommend?',
     a: [
       'AI assistants build their answers from what they can find and read: your website, directories, reviews, professional registers and other public sources. When someone asks for a recommendation, the assistant favours businesses whose information is easy to read, consistent across sources, and clearly matched to the question — the right service, the right place, the right specialism.',
-      'No one outside these companies knows the exact mechanics, and anyone who claims to is overselling. But the inputs are observable: businesses with clear, consistent, machine-readable information get found and described accurately; businesses without it get ignored or described wrongly. Noven works on those inputs.',
+      'No one outside these companies knows the exact mechanics, and anyone who claims to is overselling. But the inputs are observable: businesses with clear, consistent, machine-readable information get found and described accurately; businesses without it get ignored or described wrongly. Wardith works on those inputs.',
     ],
   },
   {
@@ -59,7 +59,7 @@ const faqs: { q: string; a: string[] }[] = [
   {
     q: 'Do I need a new website for this to work?',
     a: [
-      'Almost certainly not. We work on the website you already have — the fixes are about what your site says and how machines read it, not how it looks. Noven does not build websites.',
+      'Almost certainly not. We work on the website you already have — the fixes are about what your site says and how machines read it, not how it looks. Wardith does not build websites.',
       'If your site has a problem so fundamental that our work would be wasted on it, the audit will tell you that honestly before you spend anything more.',
     ],
   },
@@ -85,15 +85,15 @@ const faqs: { q: string; a: string[] }[] = [
   {
     q: 'Who will I actually be dealing with?',
     a: [
-      'Kieran Smith, who runs Noven as a sole trader from the Wirral. Noven is one person, not an agency with an account manager in front of it — the person who answers your email is the person who does the work and writes your report.',
-      'Everything runs by email rather than phone, so there is a written record of what was asked and what was promised. Noven is not VAT registered, so the prices you see are the prices you pay.',
+      'Kieran Smith, who runs Wardith as a sole trader from the Wirral. Wardith is one person, not an agency with an account manager in front of it — the person who answers your email is the person who does the work and writes your report.',
+      'Everything runs by email rather than phone, so there is a written record of what was asked and what was promised. Wardith is not VAT registered, so the prices you see are the prices you pay.',
     ],
   },
   {
     q: 'Why should I trust a company with no case studies?',
     a: [
-      'You should be sceptical — that is the right instinct, and we would rather meet it head-on than dodge it. Noven is new, and we do not yet have client results to show. We refuse to invent any.',
-      'Two things stand in the meantime. First, this website is itself built the way we build for clients, and you can test it: ask an AI assistant what Noven does and what it costs, and compare the answer with these pages. Second, the audit exists so you can judge us on a piece of finished work before committing to anything larger — it is the smallest thing we sell, it stands on its own, and nothing obliges you to buy the next stage.',
+      'You should be sceptical — that is the right instinct, and we would rather meet it head-on than dodge it. Wardith is new, and we do not yet have client results to show. We refuse to invent any.',
+      'Two things stand in the meantime. First, this website is itself built the way we build for clients, and you can check it without taking anything on trust: every answer on this page is also published in the code an assistant reads, so view the source and see that the two say the same thing. Second, the audit exists so you can judge us on a piece of finished work before committing to anything larger — it is the smallest thing we sell, it stands on its own, and nothing obliges you to buy the next stage.',
     ],
   },
 ];
@@ -151,9 +151,9 @@ const isFlag = (text: string) => text.trim().startsWith('[PLACEHOLDER');
       <div data-reveal>
         <p>
           Every answer above is also published as structured data on this page, which is what an
-          assistant reads when someone asks it about Noven. Ask ChatGPT or Perplexity what the
-          {money(audit.price)} audit includes, and compare its answer with this page. That is the
-          whole method, run on ourselves.
+          assistant reads when someone asks it about us. View the source and read it: the
+          {money(audit.price)} audit is described there in the same words it is described in here,
+          because both are built from one file. That is the whole method, run on ourselves.
         </p>
       </div>
     </div>

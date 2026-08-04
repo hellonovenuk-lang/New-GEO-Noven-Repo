@@ -7,17 +7,17 @@
  */
 
 export const business = {
-  name: 'Noven',
-  legalNote: 'Noven is a trading name of Kieran Smith, a sole trader.',
+  name: 'Wardith',
+  legalNote: 'Wardith is a trading name of Kieran Smith, a sole trader.',
   founder: 'Kieran Smith',
-  email: 'hello@novenstudio.co.uk',
+  email: 'hello@wardith.co.uk',
   basedIn: 'the Wirral, UK',
   basedInShort: 'Wirral, UK',
   areaServed: 'GB',
   areaServedLabel: 'United Kingdom',
   vatRegistered: false,
   description:
-    'Noven helps service businesses get found and recommended when their customers ask AI assistants — ChatGPT, Google, Copilot and Perplexity — who to use.',
+    'Wardith helps service businesses get found and recommended when their customers ask AI assistants — ChatGPT, Google, Copilot and Perplexity — who to use.',
   serviceName: 'AI assistant visibility for service businesses',
   serviceType: 'Business visibility in AI assistant recommendations',
 
@@ -45,16 +45,26 @@ export const business = {
   founderLinkedIn: 'https://www.linkedin.com/in/kieran-smith-50b953143' as string | null,
 
   /**
-   * Noven's own LinkedIn page. Separate from the founder's profile: this one
+   * Wardith's own LinkedIn page. Separate from the founder's profile: this one
    * joins the *Organization* in the structured data as `sameAs`, which is the
    * business claiming a second page as its own.
    *
-   * `novenstudio` was the only slug of the preferred options still available.
-   * Stored without the `?viewAsMember=true` LinkedIn appends when you preview
-   * your own page — that's a view-mode flag, not the canonical public URL, and
-   * publishing it would be the wrong address the moment someone else opens it.
+   * **Null on purpose from 2026-08-04, and it should stay null until somebody
+   * has opened the new URL in a browser.** The page's old slug was
+   * `novenstudio`; renaming the page changes the slug, and the moment it
+   * changes the old URL is dead. A `sameAs` is a machine-readable claim that
+   * this business and that address are the same thing — so a stale one is not
+   * a broken link, it is a false statement, published on a site whose entire
+   * pitch is that its own facts are correct.
+   *
+   * A missing `sameAs` costs nothing: the builder in `schema.ts` omits the
+   * key entirely rather than emitting an empty array. Set this only once the
+   * renamed page has been loaded and the URL copied from the address bar —
+   * and store it without the `?viewAsMember=true` LinkedIn appends when you
+   * preview your own page, which is a view-mode flag rather than the
+   * canonical public URL. See `ops/rename-to-wardith.md` D0.5.
    */
-  businessLinkedIn: 'https://www.linkedin.com/company/novenstudio/' as string | null,
+  businessLinkedIn: null as string | null,
 
   /**
    * Path to the founder's photograph in site/public. Setting it does two

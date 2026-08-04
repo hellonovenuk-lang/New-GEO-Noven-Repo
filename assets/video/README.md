@@ -1,6 +1,6 @@
 # The homepage answer animation
 
-`site/public/video/noven-answer.mp4` (and the `.webm` twin) is rendered from
+`site/public/video/wardith-answer.mp4` (and the `.webm` twin) is rendered from
 `frame.html` by `capture.mjs` — it is not generated footage. Every frame is the
 site's own CSS, drawn by headless Chromium at 2x and encoded with ffmpeg, so the
 navy, the warm white and IBM Plex are the same values `global.css` uses rather
@@ -18,7 +18,7 @@ stops being a demonstration and becomes a picture of one.
     ./node_modules/ffmpeg-static/ffmpeg -y -framerate 30 -i frames/f_%04d.png \
       -vf "scale=1080:1080:flags=lanczos" -c:v libx264 -profile:v high \
       -pix_fmt yuv420p -crf 20 -movflags +faststart -an \
-      ../../site/public/video/noven-answer.mp4
+      ../../site/public/video/wardith-answer.mp4
 
 Chromium comes from `PLAYWRIGHT_BROWSERS_PATH`; the bundled Playwright ffmpeg
 is VP8-only, which is why the encode uses `ffmpeg-static` instead.

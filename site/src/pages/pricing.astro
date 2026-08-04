@@ -3,9 +3,9 @@ import Base from '../layouts/Base.astro';
 import Code from '../components/Code.astro';
 import { business, plan, money, monthlies, offerSchema } from '../data/business';
 
-const title = 'Pricing — Noven';
+const title = 'Pricing — Wardith';
 const description =
-  'Noven pricing in plain numbers: a £125 audit, a £750 one-off Foundation setup, and ongoing monthly plans at £95 (Maintain), £250 (Grow) and £495 (Lead). No lock-ins.';
+  'Wardith pricing in plain numbers: a £125 audit, a £750 one-off Foundation setup, and ongoing monthly plans at £95 (Maintain), £250 (Grow) and £495 (Lead). No lock-ins.';
 
 const audit = plan('audit');
 const foundation = plan('foundation');
@@ -31,7 +31,7 @@ const offersOnly = { '@type': 'Service', name: business.serviceName, offers: off
 <Base title={title} description={description} schema={[serviceSchema]}>
   <section class="hero hero--rules">
     <div class="wrap">
-      <h1>What does Noven cost?</h1>
+      <h1>What does Wardith cost?</h1>
       <p class="lede" data-reveal>
         One service, three stages, plain numbers. You start with a {money(audit.price)} audit, and
         every stage after that is only worth buying if the one before says so.
@@ -151,13 +151,13 @@ const offersOnly = { '@type': 'Service', name: business.serviceName, offers: off
             <p>
               These are the prices an AI assistant reads from this page, written in the format
               those systems are built to consume. It comes from the same numbers as the list above,
-              so the two can't disagree — which is exactly the job Noven does for clients.
+              so the two can't disagree — which is exactly the job Wardith does for clients.
             </p>
             <Code
               caption="The prices, as an AI assistant reads them"
-              label="Noven's prices as JSON-LD offers"
+              label="Wardith's prices as JSON-LD offers"
               data={offersOnly}
-              note="Abridged from this page's structured data — the offers, without the surrounding business details. The prices above are what you pay. Noven isn't VAT registered, so there's no VAT to add."
+              note="Abridged from this page's structured data — the offers, without the surrounding business details. The prices above are what you pay. Wardith isn't VAT registered, so there's no VAT to add."
             />
             <p style="margin-top: 1.5rem;">
               Monthly plans roll month to month with no minimum term — tell us before your next

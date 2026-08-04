@@ -5,9 +5,9 @@ import Statement from '../components/Statement.astro';
 import { plan, money } from '../data/business';
 import { organizationSchema } from '../data/schema';
 
-const title = 'Noven — Get found when customers ask AI who to use';
+const title = 'Wardith — Get found when customers ask AI who to use';
 const description =
-  'Noven helps accountants, solicitors, clinics, consultancies and agencies get found and recommended when customers ask ChatGPT, Google, Copilot or Perplexity who to use. Start with a £125 audit.';
+  'Wardith helps accountants, solicitors, clinics, consultancies and agencies get found and recommended when customers ask ChatGPT, Google, Copilot or Perplexity who to use. Start with a £125 audit.';
 
 const audit = plan('audit');
 const foundation = plan('foundation');
@@ -26,7 +26,7 @@ const orgSchema = organizationSchema(Astro.site);
         <p class="lede" data-reveal>
           People increasingly ask ChatGPT, Google, Copilot and Perplexity to recommend an
           accountant, a solicitor, a clinic or a consultancy — instead of scrolling through search
-          results. Noven does the work that gets your business into those answers.
+          results. Wardith does the work that gets your business into those answers.
         </p>
         <div data-reveal>
           <div class="cta-row">
@@ -57,8 +57,8 @@ const orgSchema = organizationSchema(Astro.site);
               supported one. The VP9 twin covers builds shipped without the
               patented codecs, which would otherwise show only the poster. */}
           <video poster="/video/poster.png" preload="none" muted playsinline aria-describedby="film-note">
-            <source src="/video/noven-answer.mp4" type="video/mp4" />
-            <source src="/video/noven-answer.webm" type="video/webm" />
+            <source src="/video/wardith-answer.mp4" type="video/mp4" />
+            <source src="/video/wardith-answer.webm" type="video/webm" />
           </video>
           <figcaption id="film-note">
             What happens when someone asks: the assistant reads each business's website, passes over
@@ -69,7 +69,7 @@ const orgSchema = organizationSchema(Astro.site);
         <div class="hero-record">
           <Code
             caption="What an AI assistant reads on this page"
-            label="Noven's structured data, as JSON-LD"
+            label="Wardith's structured data, as JSON-LD"
             data={orgSchema}
             intro="You're reading this page. An AI assistant reads the block below instead — the same facts about the business, written so a machine can't mistake them. It's the part no visitor ever sees, and on most business websites there's nothing there at all."
             note="This is the real thing, not an example: the same block sits in this page's source. View source and you'll find it."
@@ -98,7 +98,7 @@ const orgSchema = organizationSchema(Astro.site);
         </p>
         <p>
           The businesses that do appear are the ones whose information the AI systems can find,
-          read and trust. That is fixable, and it's what Noven does.
+          read and trust. That is fixable, and it's what Wardith does.
         </p>
       </div>
     </div>
@@ -108,11 +108,11 @@ const orgSchema = organizationSchema(Astro.site);
     <div class="wrap">
       <div class="split" style="margin-bottom: 3rem;">
         <div data-reveal>
-          <h2>What does Noven actually do?</h2>
+          <h2>What does Wardith actually do?</h2>
         </div>
         <div data-reveal>
           <p>
-            Noven makes your business easy for AI assistants to find, understand and recommend. In
+            Wardith makes your business easy for AI assistants to find, understand and recommend. In
             practice that means three kinds of work.
           </p>
         </div>
@@ -196,16 +196,22 @@ const orgSchema = organizationSchema(Astro.site);
       <div>
         <div data-reveal>
           <p>
-            Noven is a new business, and we don't yet have client case studies to show you. We won't
+            Wardith is a new business, and we don't yet have client case studies to show you. We won't
             invent any, and we'd encourage you to be suspicious of anyone in this field who shows
             you numbers that can't be checked.
           </p>
           <p>
             What we can show you is this website. It's built exactly the way we build for clients —
             plain, fast pages that assistants can read, structured information about the business,
-            and a <a href="/faq/">real FAQ</a> that answers the questions people actually ask. Try
-            it yourself: ask ChatGPT or Perplexity what Noven does and how much it costs, and see
-            what comes back.
+            and a <a href="/faq/">real FAQ</a> that answers the questions people actually ask. Check
+            it yourself: view this page's source and compare it with the record below. Those are the
+            same bytes, not a picture of them.
+          </p>
+          <p>
+            Ask an assistant about us today and it will not know who we are. That is not a get-out,
+            it is the point — a business becomes an answer only once these systems have had time to
+            read it, and we are at the start of that with our own name. It is the same lag your
+            business is sitting in, and the reason the work is worth starting before you need it.
           </p>
           {/* On wide screens the hero shows the film instead of the record, so
               the record lives here — the claim above it, the evidence below.
@@ -214,7 +220,7 @@ const orgSchema = organizationSchema(Astro.site);
           <div class="proof-record" data-reveal>
             <Code
               caption="That structured information, as an assistant reads it"
-              label="Noven's structured data, as JSON-LD"
+              label="Wardith's structured data, as JSON-LD"
               data={orgSchema}
               note="Real, not an illustration: this exact block sits in this page's source. View source and compare."
             />

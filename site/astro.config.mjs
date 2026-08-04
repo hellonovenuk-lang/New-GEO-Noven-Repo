@@ -5,6 +5,6 @@ import sitemap from '@astrojs/sitemap';
 // instead, change this to match and update the Sitemap line in
 // public/robots.txt — the two must always agree.
 export default defineConfig({
-  site: 'https://novenstudio.co.uk',
+  site: 'https://wardith.co.uk',
   integrations: [sitemap()],
 });
