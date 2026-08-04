@@ -50,6 +50,11 @@ every week from here.
       done, and it reads local to the Wirral service businesses being sold to.
       Hold `.com` and `.uk` as defensive registrations pointed at it — owned,
       redirecting, never used as an address.
+
+      **This got more urgent on 2026-08-04.** The brand set that arrived that
+      day contains an email signature reading `hello@wardith.com` above
+      `wardith.co.uk` — the decision made by accident, and made two different
+      ways in a single asset. Settle it before that signature is used anywhere.
 - [ ] **A2. The ICO call is on 10 August and the trading name is the same
       call.** `HANDOVER.md` section 4 already has this as the one item with a
       deadline and no undo — the home address publishes to a bulk-downloadable
@@ -74,7 +79,57 @@ every week from here.
 
 ---
 
-## Phase B — brand assets. **Read B1 before you start drawing**
+## Phase B — brand assets. **Mostly done: the set landed 2026-08-04**
+
+**The Wardith set is in.** Six SVGs from the renamed Canva project, installed as
+originals in `assets/brand/` and trimmed into `site/public/`. The wordmark is
+**"Wardith."** — title case with a full stop, navy `#170969` on light and warm
+white `#fffefa` on dark, both exactly on-brand. The monogram is **"W."**. Both
+logos measure 1298×238 after trimming; `Base.astro` lines 88 and 164 are updated
+from the old 1066/1194×236, and the wordmark renders correctly in the header on
+warm white and the footer on navy.
+
+| Canva file | Installed as | Web copy |
+|---|---|---|
+| `1.svg` (navy) | `assets/brand/Logo Primary.svg` | `site/public/logo.svg` |
+| `Logo - Dark Mode.svg` | `assets/brand/Logo Dark.svg` | `site/public/logo-dark.svg` |
+| `Favicon.svg` (navy W.) | `assets/brand/Favicon.svg` | `site/public/favicon.svg` |
+| `Icon Mark.svg` (white W.) | `assets/brand/Icon Mark.svg` | not used on the site |
+| `Email Signature.svg` | `assets/brand/Email Signature.svg` | not used on the site |
+| `LinkedIn Banner.svg` | `assets/brand/LinkedIn Banner.svg` | not used on the site |
+
+**Still outstanding after the drop:**
+
+- [ ] **`og.png` was not in the set.** It is a 1200×630 raster and the committed
+      one still says Noven. Export it from Canva — nothing else regenerates it,
+      and without it every link shared to LinkedIn or WhatsApp previews the old
+      name. This is the last Noven-branded asset on the site.
+- [ ] **There is no Brand Pattern in the new set.** The Noven pack had one. It
+      was never used on the site, so nothing breaks — but decide whether it is
+      dropped deliberately or was missed in the export.
+- [ ] **The favicon needs a proper answer for dark browser chrome — see B3.**
+
+---
+
+### The one thing in the new set that contradicts a decision not yet made
+
+**`Email Signature.svg` says `hello@wardith.com` on one line and `wardith.co.uk`
+on the next.** Two different domains, in one asset, for one business.
+
+That is the A1 decision being made by accident, and made inconsistently. It is
+also — precisely — the failure this business is sold to find in other people's
+businesses: contact details that disagree with each other across surfaces. An
+email signature is a high-frequency surface; it goes out on every message and
+gets pasted into other people's address books.
+
+**Settle A1 first, then re-export the signature on one domain.** The
+recommendation there is unchanged: `wardith.co.uk` for both, with `.com` and
+`.uk` owned and redirecting. Nothing else in the set carries a domain, so this
+is the only asset affected.
+
+---
+
+## Phase B (original notes) — **B1 is now historical, kept for the reasoning**
 
 - [ ] **B1. The asset pack cannot be retyped, and this changes your plan.**
       Checked 2026-08-04: **every one of the six SVGs in `assets/brand/` is
@@ -115,12 +170,33 @@ every week from here.
       - **Export all six**, even the ones that look unchanged. The pattern and
         banner may carry the name in places that are easy to miss.
       - `og.png` is separate: **PNG at exactly 1200×630** (B5).
-- [ ] **B3. The monogram is a redraw, not a rename.** `Favicon.svg` is two paths
-      and `Social Avatar.svg` is five. If either contains an **N**, it has to
-      become a **W** — a different letter, different width, different optical
-      weight in a circle. Budget for this as drawing work. The favicon is the
-      one asset already confirmed to work at 16px and 32px, light and dark
-      chrome, so whatever replaces it has to clear the same bar.
+- [x] **B3. The monogram was redrawn — and it half-clears the old bar.** It is
+      now a **"W."**, navy for light chrome (`Favicon.svg`) and warm white for
+      dark (`Icon Mark.svg`). Two findings from testing it at real sizes:
+
+      **It needed the square trim badly.** As exported, the mark occupies about
+      64% of the width and 39% of the height of its 375×375 page, so scaling
+      the raw file into a 16px tile rendered the letters at roughly 10×6px.
+      `trim.mjs --square --pad 7` crops to the artwork and it is legible at
+      16px. Do not skip that step for icon assets.
+
+      **It does not survive dark browser chrome unaided, and the Noven mark
+      did.** The old favicon was a *filled tile* — navy `#170969` and warm
+      white `#fffefa` in one asset — so it carried its own background and read
+      on any tab strip. The new one is navy on transparent, which on a dark
+      tab strip is very nearly invisible. Verified by rendering, not assumed.
+
+      **Shipped stopgap:** `site/public/favicon.svg` now carries a
+      `prefers-color-scheme: dark` rule flipping the mark to warm white,
+      applied by `trim.mjs --dark-fill`. Verified legible at 16px and 32px on
+      both light and dark chrome. It touches no path data and the original in
+      `assets/brand/` is untouched.
+
+      **The designed answer is still owed, and it is a small Canva job:** a
+      filled navy tile with the warm-white "W." on it, exactly as the Noven
+      circle worked. A tile beats a bare letterform at 16px because it owns
+      every pixel it is given, and it removes the need for the CSS rule
+      entirely. Owner's call.
 - [ ] **B4. Seven letters where there were five. The lockup gets wider.**
       `site/src/layouts/Base.astro` hard-codes the wordmark's dimensions in two
       places — line 88 (`width="1066" height="236"`) and line 164
@@ -174,9 +250,11 @@ every week from here.
       provenance record exactly where the standing rule says originals live,
       without shipping a signing chain to every visitor. Pass
       `--keep-metadata` to override.
-- [ ] **B7. The email banner's wording has been outstanding since 27 July.**
-      "AI Visibility Services" still needs rewording and it is being redrawn
-      anyway. Fix it in the same pass rather than reproducing a known fault.
+- [x] **B7. The email banner's "AI Visibility Services" wording is gone.**
+      Outstanding since 27 July, and the new set replaces that asset with
+      `Email Signature.svg`, which carries no service description at all — just
+      the wordmark and two contact lines. The old fault is closed. It has been
+      replaced by the domain conflict recorded above, which is a bigger one.
 
 **Not affected, checked:** the hero animation. `assets/video/frame.html` uses
 generic captions and abstract blocks — no business name appears in it. Only the
