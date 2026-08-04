@@ -395,8 +395,11 @@ early means TLS has days to issue rather than minutes.
 3. Repeat for `www.wardith.co.uk`, `wardith.com` and `wardith.uk`.
 4. **Leave `novenstudio.co.uk` as the primary domain for now.** Do not detach
    it and do not promote Wardith yet.
-5. Write down the site's `*.netlify.app` hostname from the same page. D0.2
-   needs it.
+5. The site's `*.netlify.app` hostname is **`kaleidoscopic-cuchufli-ff7b1a.netlify.app`**
+   — read from Netlify on 2026-08-04, site ID `d109871f-6f2c-4d05-9fa8-d7c9454fa1bf`.
+   That is the CNAME target D0.2 needs. **Use the bare hostname, not the
+   `main--` branch variant**, which points at one branch's deploys rather than
+   at whatever is live.
 
 **What this does in the meantime, and why it is not a problem.** Netlify's
 documented behaviour is to 301 every non-primary domain to the primary,
@@ -425,7 +428,7 @@ GoDaddy → **My Products** → the domain → **DNS** → **Manage Zones** /
    | Type | Name | Value | TTL |
    |---|---|---|---|
    | A | `@` | `75.2.60.5` | 1 hour |
-   | CNAME | `www` | the site's `*.netlify.app` hostname from D0.1 | 1 hour |
+   | CNAME | `www` | `kaleidoscopic-cuchufli-ff7b1a.netlify.app` | 1 hour |
 
    `75.2.60.5` is Netlify's load-balancer IP and is the value
    `novenstudio.co.uk` already uses at Namecheap. **Read it off Netlify's own
@@ -438,6 +441,29 @@ GoDaddy → **My Products** → the domain → **DNS** → **Manage Zones** /
    resolves to nothing and looks like a Netlify fault.
 4. **Leave the nameservers alone.** GoDaddy will offer to "connect your domain"
    through a wizard that moves DNS elsewhere. Two records is the whole job.
+
+### D0.1a — Deal with the second Netlify project
+
+**Found 2026-08-04 while checking D0.1: there are two Netlify projects on this
+team, not one.** The live site is `kaleidoscopic-cuchufli-ff7b1a`, primary
+domain `novenstudio.co.uk`, deploy `ready`. The other is **`noven-2-0-preview`**,
+also deployed and `ready`, publicly reachable at
+`noven-2-0-preview.netlify.app` with **no password and no SSO**.
+
+It is not in `ops/own-facts-check.md`, which is the register of every surface
+publishing this business's facts — so it is a live, indexable copy of the
+business on the open web that nothing in this repo was tracking.
+
+**After the rename it becomes a stale copy under the dead name**, which is
+precisely the "your facts disagree across surfaces" fault the audit is sold to
+find. Two acceptable answers, both a minute's work:
+
+- **Delete the project** if it was a one-off preview. Cleanest.
+- **Set a password on it** (Site configuration → Access control) if it is still
+  wanted, so it stops being a public surface.
+
+Do **not** just leave it. Add whichever was chosen to `ops/own-facts-check.md`
+so the next sweep knows it exists.
 
 ### D0.3 — Wait for TLS, and check it before anything else moves
 
