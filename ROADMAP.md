@@ -366,15 +366,73 @@ first, then the rest."**
       4 Jun 2027 — the first dated obligation in this business to exist outside
       a markdown table. Recorded in `ops/accounts.md`.
 
-**What is now open — the rename itself. The full checklist is
-`ops/rename-to-wardith.md`; the items below are the ones that gate everything
-else.**
+- [x] **Decide which of the three domains the business *is*.** `wardith.co.uk`,
+      owner's call 2026-08-04. `.com` and `.uk` are owned and redirecting and
+      are never published as a contact detail.
+- [x] **Publish the site as Wardith.** Merged to `main` on 2026-08-04, so the
+      live site, every canonical, the sitemap and the JSON-LD identity are all
+      Wardith on `wardith.co.uk`. DNS, TLS and the page-for-page redirects are
+      verified working on all three new domains.
 
-- [ ] **Decide which of the three domains the business *is*.** Nothing in the
-      rename can start without this: the canonical, the sitemap, the `url` in
-      the structured data, the email address and both LinkedIn links must all
-      be the same domain, or we publish the inconsistency we charge to find.
-      Recommendation and reasoning in `ops/rename-to-wardith.md` A1.
+---
+
+### 1c-3. What is left of the rename — **start a new session here**
+
+**The site is live as Wardith. These are the open items, in order.** The full
+checklist with step-by-step instructions is `ops/rename-to-wardith.md`; the
+timetable and the money constraints are `ops/plan-to-1-september.md`.
+
+**Do these two first. Both are on the critical path and both are free.**
+
+- [ ] **1. Make `wardith.co.uk` the primary domain in Netlify.** Site
+      configuration → Domain management → set primary. **Thirty seconds, and
+      until it is done the site publishes a contradiction:** every canonical
+      says `wardith.co.uk`, but `wardith.co.uk` currently 301s *to*
+      `novenstudio.co.uk`, because the old domain is still primary. Flipping it
+      reverses every redirect at once and completes the switch. Verify the
+      direction actually flipped with a real request to a real inner page —
+      `ops/rename-to-wardith.md` D1 and D3.
+- [ ] **2. Zoho: `hello@wardith.co.uk`, then flip the address on the site.**
+      Full steps in `ops/rename-to-wardith.md` D0.4. The site currently
+      publishes `hello@novenstudio.co.uk` **on purpose** — a working address on
+      the old domain beats a bouncing one on the new domain, and it is the only
+      inbound channel on a business with no phone and no form. Add the alias
+      (free — never a second user), add the mail records at GoDaddy (everything
+      ends `.eu`, exactly one `v=spf1`, edit the existing `_dmarc` row rather
+      than adding a second), send both directions, and confirm `SPF: PASS`,
+      `DKIM: PASS`, `DMARC: PASS` on a real message. **Then change one line in
+      `site/src/data/business.ts` and redeploy.**
+
+**Then these.**
+
+- [ ] **3. LinkedIn: rename the page, and decide about the slug.**
+      `business.ts` `businessLinkedIn` is deliberately `null`, so the site
+      currently publishes no `sameAs` for the company page. That costs nothing
+      — `schema.ts` omits the key entirely. Set it only once the renamed page
+      has been opened and the URL copied from the address bar. Repaste both
+      About sections from `ops/linkedin.md` §2 and §5.4 while in there: they
+      still publish the pre-31-July prices. New cover and logo PNGs are already
+      built in `assets/linkedin/`.
+- [ ] **4. Delete or password `noven-2-0-preview` on Netlify.** A second
+      project, deployed and publicly reachable with no password, carrying the
+      old name. It is not in `ops/own-facts-check.md`. After the rename it is a
+      stale public copy of the business under a dead name — the exact fault the
+      audit is sold to find.
+- [ ] **5. Re-export `Email Signature.svg` on one domain.** It reads
+      `hello@wardith.com` above `wardith.co.uk`. Do not use it until fixed.
+- [ ] **6. Bing Webmaster Tools and Google Search Console, on the new domain.**
+      Free, and promoted from housekeeping to the highest-leverage jobs in the
+      plan: **indexation is what could get Wardith named by launch, not
+      training.** The self-audit found Copilot had no record of the site
+      *because Bing never indexed it*. Do them the week the site goes live, not
+      the week of the pre-launch audit. Change of Address in Search Console
+      once the redirects are flipped.
+- [ ] **7. The rest of Phase F** — Zoho Books, Revolut Pro, the ICO record, and
+      this repo's own name. `ops/rename-to-wardith.md`.
+- [ ] **8. Re-run `ops/own-facts-check.md` end to end** and record the date.
+
+**Still open from before the rename, and unchanged by it:**
+
 - [ ] **Check Companies House and the trade mark register.** Still not done —
       `find-and-update.company-information.service.gov.uk` refused the
       automated request, and no trade mark search has been run. Neither is

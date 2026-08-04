@@ -10,7 +10,22 @@ export const business = {
   name: 'Wardith',
   legalNote: 'Wardith is a trading name of Kieran Smith, a sole trader.',
   founder: 'Kieran Smith',
-  email: 'hello@wardith.co.uk',
+  /**
+   * **Still the old domain on purpose, and this is the first thing to change.**
+   *
+   * The site published as Wardith on 2026-08-04, before the Zoho work was
+   * done. `hello@wardith.co.uk` does not exist yet, and this value goes into
+   * the structured data and the contact page on every page of the site — so
+   * setting it early would publish a bouncing address as the only inbound
+   * channel on a business with no phone and no contact form. An enquiry lost
+   * that way is lost silently; nobody tells you it bounced.
+   *
+   * A working address on the old domain is a smaller fault than a broken one
+   * on the new domain. Flip this to `hello@wardith.co.uk` the moment the Zoho
+   * alias exists and a test message has arrived — `ops/rename-to-wardith.md`
+   * D0.4, and roadmap 1c-3.
+   */
+  email: 'hello@novenstudio.co.uk',
   basedIn: 'the Wirral, UK',
   basedInShort: 'Wirral, UK',
   areaServed: 'GB',

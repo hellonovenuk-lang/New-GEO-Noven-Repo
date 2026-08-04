@@ -11,6 +11,44 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-04 (published — the site is Wardith)
+
+**Merged to `main` at the owner's instruction.** What that published: a new
+business name on every page, a new `url` on every canonical and in the
+sitemap, a changed `Organization` identity in the JSON-LD the assistants read,
+new artwork throughout, and the removal of the company-page `sameAs`. The
+prices did not move — 125 / 750 / 95 / 250 / 495, verified in the built output
+before the merge, because a rename must not shift a price by accident.
+
+**One thing was deliberately left on the old domain: the email address.** The
+site publishes `hello@novenstudio.co.uk`, not `hello@wardith.co.uk`, because
+the Zoho work is not done and the new address does not exist. That value goes
+into the structured data and the contact page on every page, and it is the only
+inbound channel on a business with no phone and no contact form — **so
+publishing it early would have made every enquiry bounce, silently.** A working
+address on the old domain is a smaller fault than a broken one on the new
+domain. One line to flip once a test message has arrived; it is item 2 in the
+new roadmap section and the reasoning is written into `business.ts` beside the
+value so nobody "tidies" it.
+
+**The merge leaves one contradiction live overnight, and it is a thirty-second
+fix.** Every canonical now says `wardith.co.uk`, but `novenstudio.co.uk` is
+still Netlify's primary domain, so `wardith.co.uk` currently redirects *to* the
+old address — a canonical pointing at a URL that redirects back. Setting
+`wardith.co.uk` as primary reverses every redirect at once and completes the
+switch. It is item 1 in the new roadmap section, ahead of everything else.
+Flagged to the owner before the merge rather than discovered after.
+
+**`ops/rename-to-wardith.md` Phases A–D0 are done bar the two owner jobs.** The
+whole of the DNS and TLS work was verified the same day: three GoDaddy zones
+read row by row against the written spec, one wrong digit caught on
+`wardith.uk`, certificates reissued, and the alias redirect proven page-for-page
+in the direction that costs nothing to get wrong.
+
+**Roadmap 1c-3 is new and is where the next session starts.** Netlify primary,
+then Zoho, then LinkedIn, then the four smaller surfaces. Written as
+instructions rather than as a summary, because the next session begins cold.
+
 ### 2026-08-04 (the site copy, and an assumption the owner was right to reject)
 
 **Cut from the homepage, at the owner's instruction:** a paragraph saying that
