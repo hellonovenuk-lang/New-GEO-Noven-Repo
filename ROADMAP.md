@@ -1,4 +1,13 @@
-# Noven roadmap
+# Wardith roadmap
+
+> **Renamed 2026-08-04: this business was called Noven.** The name collided
+> with at least four other businesses, which the self-audit found the hard way.
+> The live address is `wardith.co.uk`; `wardith.com` and `wardith.uk` are owned
+> and redirect to it. Where a document below still says Noven it is recording
+> something dated — the 2 August self-audit and its frozen question set are the
+> main ones, and they must keep the old name or the baseline is destroyed.
+> `ops/rename-to-wardith.md` is the full changeover; `ops/plan-to-1-september.md`
+> is the timetable.
 
 **What this file is:** what's true now and what's left. Read it at the start of
 every session and update it at the end.
@@ -33,10 +42,10 @@ distinction everywhere else.
 
 ## Where we are today
 
-**The site is live** at `novenstudio.co.uk`, on HTTPS, deployed from `main` by
+**The site is live** at `wardith.co.uk`, on HTTPS, deployed from `main` by
 Netlify: seven static pages, readable by AI crawlers, with machine-readable
 business facts and a sitemap submitted and confirmed in Search Console. Email is
-`hello@novenstudio.co.uk` on Zoho. The brand assets are in and the palette
+`hello@wardith.co.uk` on Zoho. The brand assets are in and the palette
 matches them. **Phase 1a and 1b are closed.**
 
 **The Noven self-audit has run** — 2–3 August 2026, archived at
@@ -146,7 +155,7 @@ pay us £125.
 
 ### 1a. Facts only the owner can supply — closed
 
-All live on the site and in the structured data: `hello@novenstudio.co.uk` (the
+All live on the site and in the structured data: `hello@wardith.co.uk` (the
 old Gmail forwards, and will for months); no phone, email only, and the site
 says why; reply within two working days; the Wirral, serving the UK remotely;
 Kieran Smith, sole trader, no company number, not VAT registered; the audit
@@ -154,9 +163,10 @@ report within two working days of scope and payment being confirmed (moved from
 one working day on 2026-07-31 — `ops/audit-method.md` section 7 says why), and a
 Foundation plan within two working days of payment clearing. Founder bio,
 photograph, LinkedIn profile and Maersk as `alumniOf` are all in. The LinkedIn
-setup is done — profile amended, company page live at
-`linkedin.com/company/novenstudio/`, `businessLinkedIn` confirmed in the built
-JSON-LD. **But the copy on both LinkedIn About sections predates the 31 July
+setup is done — profile amended, company page live. **`businessLinkedIn` is
+deliberately `null` from 2026-08-04**: renaming the page changes its slug, and
+a stale `sameAs` is a false machine-readable claim rather than a broken link.
+Set it once the renamed page has been opened — `ops/rename-to-wardith.md` D0.5. **But the copy on both LinkedIn About sections predates the 31 July
 repricing and still publishes the old prices**, so `ops/linkedin.md` was
 reopened on 2026-08-01 for a repaste — see `ops/own-facts-check.md`.
 
@@ -183,10 +193,10 @@ if clients actually start taking a month and leaving.
 
 ### 1b. Domain and hosting — closed
 
-`novenstudio.co.uk` owned and set in `astro.config.mjs` and `robots.txt`. Apex is
+`wardith.co.uk` owned and set in `astro.config.mjs` and `robots.txt`. Apex is
 primary, `www` redirects to it. Netlify deploys `main`; HTTPS confirmed via
 Netlify's API. Nothing to redirect — the domain only ever hosted the owner's own
-projects. `hello@novenstudio.co.uk` is live on Zoho Mail (Mail Lite, DNS at
+projects. `hello@wardith.co.uk` is live on Zoho Mail (Mail Lite, DNS at
 Namecheap, MX to `mx.zoho.eu`, SPF, DKIM, `p=none` DMARC), tested both
 directions; setup and failure checks in `ops/zoho-mail-setup.md`.
 

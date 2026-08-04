@@ -52,7 +52,7 @@ copy to maintain; it is here so a check can be run without reading TypeScript.
 | Bundling | Never. Every service is priced and bought on its own | 2026-07-31, standing decision |
 | Assistants covered | ChatGPT, Google, Copilot, Perplexity | unchanged |
 | Location | Wirral, UK — city level, never a street | unchanged |
-| Email | hello@novenstudio.co.uk | unchanged |
+| Email | hello@wardith.co.uk | unchanged |
 | Legal status | Trading name of Kieran Smith, a sole trader. Not VAT registered | unchanged |
 
 ---

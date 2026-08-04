@@ -54,7 +54,7 @@ a gap to fill.
 | 2 | Add Noven as your current role on the profile (section 3) | Typing "Noven" in the company field finds the real page, attaches its logo, and makes the two pages point at each other | Done — confirmed linked |
 | 3 | Replace the About section (section 2) | — | Done |
 | 4 | Fill the missing Maersk description and fix the older ones (sections 3–4) | — | Done |
-| 5 | Add `https://novenstudio.co.uk` to both | Safe now — see below | Done |
+| 5 | Add `https://wardith.co.uk` to both | Safe now — see below | Done |
 | 6 | Set `businessLinkedIn` in `site/src/data/business.ts` (section 5.6) | Needs the finished page URL | Done |
 
 ### Steps 1 and 2 happened the wrong way round — one thing to go back and fix
@@ -203,7 +203,7 @@ kept. Only the subject changes.
 >
 > Based on the Wirral, working with clients across the UK.
 >
-> More at novenstudio.co.uk — or ask me here, DMs are open.
+> More at wardith.co.uk — or ask me here, DMs are open.
 
 ### Notes on why it's written this way
 
@@ -440,7 +440,7 @@ accurate and consistent. Delete and re-add as "Freight Management".
 
 ### 4.4 Contact info
 
-- **Website:** `https://novenstudio.co.uk`, with the label "Company".
+- **Website:** `https://wardith.co.uk`, with the label "Company".
 - The site's structured data already claims your profile and Noven are the same
   person, via `founderLinkedIn`. Once the website field points back at the site,
   that claim is confirmed from both ends, which is a materially stronger signal
@@ -448,7 +448,7 @@ accurate and consistent. Delete and re-add as "Freight Management".
 
 ### 4.5 Featured section
 
-Pin `https://novenstudio.co.uk/how-it-works/` as a Featured link rather than the
+Pin `https://wardith.co.uk/how-it-works/` as a Featured link rather than the
 homepage. Someone who's just read your About already knows what Noven does; the
 useful next click is what actually happens and what it costs.
 
@@ -484,7 +484,7 @@ On desktop: the **For Business** grid, top right → **Create a Company Page** �
 |---|---|---|
 | Name | `Noven` | Exactly as on the site — not "Noven Studio", not "Noven UK" |
 | LinkedIn public URL | `linkedin.com/company/noven` | Almost certainly taken. Fallbacks in preference order: `noven-uk`, `novenstudio`, `noven-studio`. **Whichever you get is permanent-ish and goes into the repo — write it down** |
-| Website | `https://novenstudio.co.uk` | The apex, no `www`, no trailing slash — the form the site itself declares. Was on hold until the site was live; it is |
+| Website | `https://wardith.co.uk` | The apex, no `www`, no trailing slash — the form the site itself declares. Was on hold until the site was live; it is |
 | Industry | **Marketing Services** | The closest honest fit LinkedIn offers. "Advertising Services" oversells it; "Business Consulting and Services" undersells it |
 | Company size | 1 employee | True. Say it plainly — it's on the site too |
 | Company type | Self-employed | Matches "trading name of Kieran Smith, a sole trader" |
@@ -547,7 +547,7 @@ contradict anything else it reads.
 > you're emailing him, and the report you get back is one he wrote.
 >
 > Noven is a trading name of Kieran Smith, a sole trader.
-> hello@novenstudio.co.uk
+> hello@wardith.co.uk
 
 That's roughly 1,750 characters, leaving room.
 
@@ -684,11 +684,11 @@ exactly.
 | What it does | The `business.description` sentence, word for word | Site JSON-LD, company page About, your About |
 | Location | Wirral, UK — city level, never a street | Site, company page, your role location |
 | Area served | United Kingdom | Site, company page About, your role description |
-| Email | hello@novenstudio.co.uk | Site contact page, company page About |
+| Email | hello@wardith.co.uk | Site contact page, company page About |
 | Legal status | Trading name of Kieran Smith, a sole trader | Site footer, company page About |
 | Prices | £125 / £750 / £95 / £250 / £495 | Site pricing page, both About sections |
 | Cancellation | No minimum term, no notice period | Site (three places), both About sections |
-| Website | `https://novenstudio.co.uk` | Company page, your contact info |
+| Website | `https://wardith.co.uk` | Company page, your contact info |
 | Founder → business | Profile links to the page; page links to the site; site's `sameAs` links back to both | All three |
 
 If a row disagrees, fix it in `site/src/data/business.ts` first and propagate

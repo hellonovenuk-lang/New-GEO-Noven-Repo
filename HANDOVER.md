@@ -1,8 +1,17 @@
 <p align="center">
-  <img src="assets/logo.svg" alt="Noven logo" width="300">
+  <img src="assets/logo.svg" alt="Wardith logo" width="300">
 </p>
 
-# Noven — the whole business on one page
+# Wardith — the whole business on one page
+
+> **Renamed 2026-08-04: this business was called Noven.** The name collided
+> with at least four other businesses, which the self-audit found the hard way.
+> The live address is `wardith.co.uk`; `wardith.com` and `wardith.uk` are owned
+> and redirect to it. Where a document below still says Noven it is recording
+> something dated — the 2 August self-audit and its frozen question set are the
+> main ones, and they must keep the old name or the baseline is destroyed.
+> `ops/rename-to-wardith.md` is the full changeover; `ops/plan-to-1-september.md`
+> is the timetable.
 
 **What this file is for:** someone who has never seen this business should be
 able to read this and know what is sold, what exists, what does not, what must
@@ -16,18 +25,18 @@ If you read nothing else, read [What has to happen next](#what-has-to-happen-nex
 
 ---
 
-## 1. What Noven sells
+## 1. What Wardith sells
 
 Businesses used to be found through search. Increasingly their customers ask an
 AI assistant — ChatGPT, Google, Copilot, Perplexity — "who's a good plumber near
 me?" and act on the answer. If the assistant has never heard of a business, that
-business quietly loses the job. Noven makes a business visible, accurate and
+business quietly loses the job. Wardith makes a business visible, accurate and
 recommendable to those assistants.
 
 | Product | Price | What the customer gets |
 |---|---|---|
 | **Audit** | £125 one-off | A written report on how the assistants answer questions about their business today, what they believe, what's blocking them, and an honest recommendation — including "you don't need us" |
-| **Foundation** | £750 one-off | A fixed scope of setup work on the customer's **existing** website: crawler access, structured machine-readable facts, consistent facts across the web, and **two** permanent pages answering customer questions. Noven does not build websites |
+| **Foundation** | £750 one-off | A fixed scope of setup work on the customer's **existing** website: crawler access, structured machine-readable facts, consistent facts across the web, and **two** permanent pages answering customer questions. Wardith does not build websites |
 | **Maintain** | £95/month | 10 questions tracked monthly, facts kept current, a one-page written record. Reports gaps, does not close them |
 | **Grow** | £250/month | Maintain across 15 questions, plus one new answer page a month |
 | **Lead** | £495/month | 25 questions, two answer pages a month, plus a quarterly review of competitors named ahead of them |
@@ -38,14 +47,14 @@ make the business worth owning.
 
 **Prices were raised on 2026-07-31, before the first sale.** The old ladder
 (£30 / £350 / £75 / £125 / £250) separated the monthly tiers by question volume,
-which is pure cost to Noven and little extra value to the client — so every step
+which is pure cost to Wardith and little extra value to the client — so every step
 up earned *less* per hour than the one below it. The tiers now separate on
 permanent answer pages. Full reasoning in `ops/service-tiers.md` section 9. The
 timing was deliberate: with no minimum term on any plan, a later price rise on
 existing clients is a churn event, so launch prices are the only ones that can be
 set for free.
 
-**Who runs it:** Kieran Smith, sole trader, trading as Noven, based in the
+**Who runs it:** Kieran Smith, sole trader, trading as Wardith, based in the
 Wirral, working remotely across the UK. One person, no employees.
 
 ---
@@ -54,13 +63,13 @@ Wirral, working remotely across the UK. One person, no employees.
 
 **Live and working**
 
-- **The website** — `novenstudio.co.uk`, seven static pages on Astro, deployed
+- **The website** — `wardith.co.uk`, seven static pages on Astro, deployed
   from `main` by Netlify, HTTPS confirmed. It is deliberately built as a
   demonstration of the product: no client-side JavaScript, AI crawlers
   explicitly allowed in `robots.txt`, an XML sitemap, and JSON-LD structured
   data. Visible facts and machine-readable facts both read from one file
   (`site/src/data/business.ts`) so they cannot drift apart.
-- **Email** — `hello@novenstudio.co.uk` on Zoho Mail, tested both directions.
+- **Email** — `hello@wardith.co.uk` on Zoho Mail, tested both directions.
   The old Gmail address forwards to it.
 - **Search Console** — sitemap submitted and confirmed, six pages.
 - **Brand** — the supplied assets are in and used as-is.
@@ -137,7 +146,7 @@ Nothing external blocks these. Use the ICO's own free privacy notice generator.
 Decide the client-data retention period inside this step rather than twice
 (the standing recommendation is life of the relationship plus twelve months).
 
-**4. Run one audit end to end, on Noven itself, and time it.** This is the first
+**4. Run one audit end to end, on Wardith itself, and time it.** This is the first
 step that creates an asset instead of removing a risk. It needs no client and no
 address, and it does five jobs at once: proves the deliverable exists, produces
 the sample report that answers the "you have no case studies" objection, sets the
@@ -331,5 +340,5 @@ with a fixed scope, no method and no time budget behind it.
 None of that is a crisis, because nobody has paid yet. All of it becomes a
 crisis on the day someone does.
 
-**The correct next move is not more planning. It is to run one audit on Noven
+**The correct next move is not more planning. It is to run one audit on Wardith
 itself, and find out what any of this actually costs in hours.**

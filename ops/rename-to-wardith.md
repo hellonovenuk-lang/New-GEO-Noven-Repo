@@ -295,39 +295,67 @@ re-render needed.**
 
 ## Phase C — the repo, on a branch, as one change
 
+**DONE 2026-08-04.** C1–C10 are all complete on
+`claude/wardith-name-feedback-4zbg52` and verified against the built output
+rather than the source: every canonical and sitemap entry is `wardith.co.uk`,
+no occurrence of the old name or domain survives anywhere in `dist/`, the five
+prices are unchanged at 125 / 750 / 95 / 250 / 495, and the `json-code.ts`
+invariant holds — both visible blocks on the homepage match the head JSON-LD
+byte for byte, and the abridged offers block on the pricing page is a faithful
+subset of the head's Service schema.
+
+**Three things did not survive a mechanical rename, and are worth knowing:**
+
+- **`businessLinkedIn` is `null`, not the old slug.** See D0.5. `schema.ts`
+  omits the key rather than emitting an empty array, so this costs nothing.
+- **Three passages invited the reader to ask an assistant what Noven does and
+  compare the answer.** Under a name with no history that test returns nothing
+  — and the self-audit found it was already returning nothing under the old
+  name, so the invitation was failing before the rename made it worse. Two now
+  point at the check the site actually passes: view the source and see the
+  visible answers and the machine-readable ones are built from one file. The
+  third says out loud that an assistant asked about us today will not know who
+  we are, and why that is the same lag the customer is sitting in. **Honest and
+  evidenced, but a commercial judgement — one sentence to remove if the owner
+  disagrees.**
+- **`ops/audit-setup.md` §9 still says Noven and must keep saying it.** The
+  frozen question set is a twelve-month baseline. Rewriting it would not update
+  a measurement, it would replace one with a different one. Noted in the file
+  itself so nobody tidies it later.
+
 Do this whole phase before anything is published. `business.ts` first: it is the
 single source of truth and most of the rest follows from it.
 
-- [ ] **C1. `site/src/data/business.ts`** — seven lines. `name` (10),
+- [x] **C1. `site/src/data/business.ts`** — seven lines. `name` (10),
       `legalNote` (11 — "Wardith is a trading name of Kieran Smith, a sole
       trader"), `email` (13), `description` (20), the comment at 48–52, and
       `businessLinkedIn` (57). **The LinkedIn slug will change — do not update
       line 57 until the LinkedIn page has actually been renamed and the new URL
       confirmed**, or the structured data publishes a `sameAs` pointing nowhere.
-- [ ] **C2. `site/astro.config.mjs:8`** — `site:` drives every canonical and the
+- [x] **C2. `site/astro.config.mjs:8`** — `site:` drives every canonical and the
       whole sitemap. One line, largest blast radius in the repo.
-- [ ] **C3. `site/public/robots.txt`** — line 1 comment, line 44 sitemap URL.
-- [ ] **C4. `site/src/layouts/Base.astro`** — line 62 (meta description), lines
+- [x] **C3. `site/public/robots.txt`** — line 1 comment, line 44 sitemap URL.
+- [x] **C4. `site/src/layouts/Base.astro`** — line 62 (meta description), lines
       88 and 164 (logo `alt` text and the dimensions from B4).
-- [ ] **C5. The seven pages.** `index.astro` (12 references), `faq.astro` (9),
+- [x] **C5. The seven pages.** `index.astro` (12 references), `faq.astro` (9),
       `about.astro` (8), `pricing.astro` (6), `how-it-works.astro` (4),
       `contact.astro` (2), `404.astro` (2). Read each — these are body copy, not
       config, and some will need rewriting rather than substituting.
-- [ ] **C6. The small ones.** `site/package.json:2` (`"name": "noven-site"`),
+- [x] **C6. The small ones.** `site/package.json:2` (`"name": "noven-site"`),
       `site/package-lock.json` (2, follows automatically on install),
       `site/README.md` (2), `site/src/styles/global.css:1` (a comment).
-- [ ] **C7. Rename the video files and their two references** (see Phase B).
-- [ ] **C8. Verify the `json-code.ts` invariant still holds.** `CLAUDE.md` flags
+- [x] **C7. Rename the video files and their two references** (see Phase B).
+- [x] **C8. Verify the `json-code.ts` invariant still holds.** `CLAUDE.md` flags
       this specifically: the homepage's visible code block must stay
       byte-for-byte identical to the JSON-LD in `<head>`. It is the site's
       central proof and the rename touches everything it renders. **Check it
       explicitly rather than assuming.**
-- [ ] **C9. Build and read the output, not the source.** Seven pages plus
+- [x] **C9. Build and read the output, not the source.** Seven pages plus
       sitemap. Confirm: every canonical is the new domain, the sitemap lists the
       new domain, the JSON-LD `name` and `url` are new, and the five offers are
       **unchanged** at 125 / 750 / 95 / 250 / 495. A rename must not move a
       price by accident.
-- [ ] **C10. Update the ops documents.** `novenstudio.co.uk` appears in
+- [x] **C10. Update the ops documents.** `novenstudio.co.uk` appears in
       `HANDOVER.md`, `README.md`, `ROADMAP.md`, `ops/README.md`,
       `ops/accounts.md`, `ops/audit-setup.md`, `ops/linkedin.md`,
       `ops/own-facts-check.md`, `ops/third-party-services.md` and

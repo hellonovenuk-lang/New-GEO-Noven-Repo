@@ -140,7 +140,7 @@ protect the card; the script cap protects the afternoon.
 None of these cost anything, and two of them close open roadmap items on the way
 past.
 
-- **Bing Webmaster Tools** (`bing.com/webmasters`) — submit `novenstudio.co.uk`
+- **Bing Webmaster Tools** (`bing.com/webmasters`) — submit `wardith.co.uk`
   and the sitemap. This is roadmap 1e's outstanding item, and it matters here
   because **Bing's index is what Copilot answers from** (method section 2): the
   Copilot section of a report leans on indexation, not on mention rates. Do this
@@ -352,7 +352,18 @@ Two consequences for the run:
 
 ---
 
-## 9. Step eight — Noven's own ten questions
+## 9. Step eight — the frozen ten questions
+
+**This section deliberately still says "Noven", and must keep saying it.** The
+questions below were frozen as a twelve-month baseline and run on 2–3 August
+2026, before the rename. Rewriting them to "Wardith" would not update a
+baseline — it would silently replace one measurement with a different one and
+destroy the only before-and-after this business owns.
+
+**At the six-month re-check, run both sets** — these, and the same questions
+asked about Wardith. The first measures how long a dead name persists; the
+second measures how fast a new one is learned. See `ops/rename-to-wardith.md`
+G2, and fold the decision into `ops/audit-method.md` before the re-check.
 
 Built from the frame in `ops/audit-questions.md` section 3. Slots, from
 `site/src/data/business.ts` — no facts invented, and where a slot needed a
