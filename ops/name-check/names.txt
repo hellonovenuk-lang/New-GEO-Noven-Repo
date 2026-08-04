@@ -1,3 +1,17 @@
 # One candidate business name per line.
 # Lines starting with # are ignored, so rejected names can stay here.
 # Three names is about right: 36 queries, a few minutes, a couple of pounds.
+
+# Locito - rejected 2026-08-04. Collision on every run (12/12): OpenAI and
+# half of Perplexity default to Localito (Localito Marketplace Ltd, active UK
+# company, Manchester); Gemini and the other half of Perplexity default to
+# Lockito (Android GPS-spoofing app), explicitly flagged as a common
+# misspelling of it. Two different real products, both one keystroke away.
+# Locito
+
+# Tovan - rejected 2026-08-04. Collision on 11/12 runs (1 Gemini row never
+# returned - persistent HTTP 503, disclosed as a gap in names-runs.csv rather
+# than hidden). OpenAI and Perplexity both default to Tovan.ai (an AI PCB/
+# hardware-design tool); Tovan Properties Limited (Companies House, inc.
+# 2015, Congleton) and Tovan Sp. z o.o. (Polish freight company) also surface.
+# Tovan
