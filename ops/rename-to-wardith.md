@@ -414,6 +414,45 @@ assuming it.
 
 ### D0.2 — GoDaddy DNS: point all three domains at Netlify
 
+**DONE 2026-08-04, and the check earned its keep.** All three zones were
+screenshotted and read row by row against this spec. `wardith.uk` had its apex
+A record as **`70.2.60.5`** instead of `75.2.60.5` — one digit, and the failure
+mode is silence: the domain simply would not have served, TLS would never have
+issued for it, and because it is a defensive redirect nobody visits, nothing
+would have surfaced the fault until somebody typed the address. Corrected.
+
+**Keep that loop for anything typed into a registrar by hand.** The owner does
+the panel, the screenshots come back, the rows get read against the written
+spec. No credential moves and the error class that actually happens — a
+transposed digit, a doubled hostname, a stale parked record — gets caught the
+same day.
+
+Two other things the zones turned up:
+
+- **GoDaddy pre-provisions a `_dmarc` record**, and it arrives as
+  `p=quarantine` with `rua=` pointing at GoDaddy's own address. On a domain
+  with no SPF and no DKIM yet, that means the first message ever sent from it
+  fails DMARC and is quarantined — **and that failure looks exactly like
+  nobody replying**, in launch week. `wardith.co.uk` and `wardith.com` are now
+  `p=none` with reports coming to `hello@wardith.co.uk`. Raise back to
+  `p=quarantine` only after a real message shows SPF, DKIM and DMARC all
+  passing. **Edit that row, never add a second one** — two DMARC records is a
+  hard failure exactly like two SPF records.
+- **Leave `_domainconnect` alone.** It is a discovery record, routes nothing,
+  and grants nobody access — a Domain Connect change still has to be approved
+  while signed into GoDaddy. It is what makes an automatic Zoho setup
+  available in D0.4, which is the step with six hand-typed records and a
+  400-character DKIM key.
+
+**Still owed on `.com` and `.uk`, once nothing else is under pressure:** both
+will never send mail, so `v=DMARC1; p=reject;` with no `rua` is the right
+setting — free anti-spoofing on two domains carrying the brand. Dropping the
+`rua` also sidesteps the cross-domain reporting rule, which needs an
+authorisation record at the receiving domain before most reporters will send
+anything at all.
+
+#### The original spec, kept for reference
+
 For **each** of `wardith.co.uk`, `wardith.com` and `wardith.uk`.
 
 GoDaddy → **My Products** → the domain → **DNS** → **Manage Zones** /
