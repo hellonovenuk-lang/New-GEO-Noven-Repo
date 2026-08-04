@@ -208,7 +208,50 @@ as "Noven" was. It is the `[PLACEHOLDER]` in the footer of all seven pages.
 a visible legal gap on a site whose entire pitch is that its own facts are
 correct.** Buy it, or chase V LOT hard enough that it lands.
 
-**3. Nothing else.** Guard the six days. Anything not on this list waits.
+**3. The pre-launch audit — run it on Wardith, before 1 September.**
+
+Owner's call, 2026-08-04, and it is a good one. The self-audit's verdict was
+that the **identity** was the blocker rather than the site: "Noven" belonged to
+at least four other businesses, so the answers went to them. A name with no
+occupant removes that specific failure, and the fixes went in alongside it. So
+whether the assistants can name Wardith by launch is a genuinely open question
+— **and the only honest way to answer it is to ask them.**
+
+- **It costs API money**, which is why it sits here rather than in Phase 1.
+  Budget it with the balances in item 1.
+- **It is a new dated run, not the frozen baseline.** Archive it as its own
+  folder alongside `ops/audits/noven-2026-08-02/`. Do not overwrite that one
+  and do not renumber its questions.
+- **It doubles as the first half of the G2 measurement** in
+  `ops/rename-to-wardith.md` — how fast a new name is learned, timed from the
+  day the site went live under it. Nobody else has that number.
+- **It decides what the site is allowed to say about its own visibility.**
+  If Wardith comes back named, the strongest line on the homepage writes
+  itself and it is checkable: *ask ChatGPT about Wardith and see.* If it does
+  not, the site says nothing about it and stands on the proof it already has.
+  Either way the copy follows the evidence.
+
+**4. Nothing else.** Guard the six days. Anything not on this list waits.
+
+### The free lever that decides how the pre-launch audit goes
+
+**Indexation, not training.** An assistant can name a business two ways: from
+what the model memorised, which moves on the timescale of model releases, or
+from a live lookup at answer time, which moves on the timescale of a crawler.
+The second is the one that can plausibly happen in four weeks, and it depends
+on the site being in the indexes those assistants search.
+
+That makes two free jobs the highest-leverage things in Phase 1:
+
+- **Bing Webmaster Tools.** Still not done, already a finding, and Copilot
+  answers from Bing. The self-audit found Copilot had no record of the site at
+  all *because Bing never indexed it* — that is the single clearest cause of a
+  blank answer, and it is free to fix.
+- **Google Search Console** on the new domain, sitemap submitted, plus the
+  Change of Address tool once the redirects are live.
+
+Do both the week the site goes live, not the week of the audit. A crawler
+needs time, and the audit measures whatever has happened by then.
 
 ---
 

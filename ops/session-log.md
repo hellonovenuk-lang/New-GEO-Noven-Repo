@@ -11,6 +11,51 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-04 (the site copy, and an assumption the owner was right to reject)
+
+**Cut from the homepage, at the owner's instruction:** a paragraph saying that
+an assistant asked about Wardith today would not know who we are. It sat
+directly under "Where's the proof?", which is the highest-stakes position on
+the page, and the owner's objection was that a prospect reads it as *this does
+not work.* That is correct and it is the owner's call to make.
+
+**But the better objection was the one about evidence.** The paragraph asserted
+an outcome nobody has measured. The self-audit's verdict was that the
+**identity** was the blocker rather than the site — "Noven" belonged to at
+least four other businesses, so the answers went to them. A name with no
+occupant removes that specific failure, and the fixes went in with it. Whether
+the assistants can name Wardith by launch is genuinely open, and writing a
+paragraph that assumed the pessimistic answer was exactly the thing this
+business tells clients not to do: state as fact something you have not checked.
+
+**So the copy now follows the evidence, and the evidence arrives before
+launch.** The owner is running a second audit on Wardith between the 26 August
+unfreeze and the 1 September launch. If it comes back named, the strongest
+line on the site writes itself and is checkable — *ask ChatGPT about Wardith
+and see*. If it does not, the site says nothing about it and stands on the
+proof it already has. Recorded in `ops/plan-to-1-september.md` Phase 2 as a
+funded item, and as the first half of the G2 measurement: how fast a new name
+is learned, timed from the day the site went live under it.
+
+**The other two rewrites stand, and they were bug fixes rather than
+judgements.** Three passages had invited the reader to ask an assistant what
+Noven does and compare the answer. The self-audit proved that test returned
+nothing — 210 answers, not one citing the site — so the invitation was failing
+before the rename. Both now point at the check the site passes every time:
+view the source and see that the visible answers and the machine-readable ones
+are built from one file. **That is a stronger claim than the old one**, because
+`json-code.ts` enforces it byte for byte.
+
+**One thing written down that had not been said plainly before: indexation is
+the lever, not training.** An assistant names a business either from what the
+model memorised — which moves on the timescale of model releases — or from a
+live lookup at answer time, which moves on the timescale of a crawler. Only
+the second can plausibly happen in four weeks. That makes Bing Webmaster Tools
+and Search Console the highest-leverage free jobs in the whole plan rather
+than housekeeping: the self-audit found Copilot had no record of the site *because
+Bing never indexed it*. Do them the week the site goes live, not the week of
+the audit.
+
 ### 2026-08-04 (later still — the domain settled, and two hard constraints set)
 
 **`wardith.co.uk` is the business.** Owner's decision, closing A1. `.com` and

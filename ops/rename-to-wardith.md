@@ -309,15 +309,30 @@ subset of the head's Service schema.
 - **`businessLinkedIn` is `null`, not the old slug.** See D0.5. `schema.ts`
   omits the key rather than emitting an empty array, so this costs nothing.
 - **Three passages invited the reader to ask an assistant what Noven does and
-  compare the answer.** Under a name with no history that test returns nothing
-  — and the self-audit found it was already returning nothing under the old
-  name, so the invitation was failing before the rename made it worse. Two now
-  point at the check the site actually passes: view the source and see the
-  visible answers and the machine-readable ones are built from one file. The
-  third says out loud that an assistant asked about us today will not know who
-  we are, and why that is the same lag the customer is sitting in. **Honest and
-  evidenced, but a commercial judgement — one sentence to remove if the owner
-  disagrees.**
+  compare the answer.** That test returned nothing under the old name — the
+  self-audit proved it — so the invitation was already failing before the
+  rename. Two now point at the check the site passes every time: view the
+  source and see that the visible answers and the machine-readable ones are
+  built from one file. **That is a stronger claim than the old one**, because
+  `json-code.ts` enforces it byte for byte.
+
+  **The third was a paragraph saying an assistant asked about us today would
+  not know who we are. The owner cut it on 2026-08-04, and was right to.**
+  Two reasons, and the second is the one that matters:
+
+  1. Under "Where's the proof?", a skimming prospect reads it as *this does
+     not work*. It is the highest-stakes position on the page.
+  2. **It assumed an outcome that has not been measured.** The self-audit's
+     verdict was that the *identity* was the blocker, not the site — "Noven"
+     belonged to four other businesses, so the answers went to them. A name
+     with no occupant removes that specific failure. Whether the assistants
+     name Wardith by launch is an open question, and **the pre-launch audit
+     is how it gets answered** — not a paragraph written in advance.
+
+  **Re-decide what the site says about its own visibility after that audit,
+  not before.** If it comes back named, the invitation returns stronger than
+  it ever was, with evidence: *ask ChatGPT about Wardith and see.* That is a
+  live demonstration no competitor can fake.
 - **`ops/audit-setup.md` §9 still says Noven and must keep saying it.** The
   frozen question set is a twelve-month baseline. Rewriting it would not update
   a measurement, it would replace one with a different one. Noted in the file
