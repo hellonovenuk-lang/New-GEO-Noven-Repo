@@ -11,6 +11,73 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-05 (the technical audit, made runnable on somebody else's site)
+
+**The finding, from the owner's question: can we actually do the crawlability
+and technical half of the audit from just a client's URL?** Reading the filled
+self-audit checklist back, the honest answer was no — not as the method was
+written. The Noven run leaned on four things a client audit will never have:
+
+- **robots.txt read from the source repo** (`site/public/robots.txt`), not
+  fetched live. The session's own network policy blocked outbound fetches, so
+  source access silently substituted for the check.
+- **Password walls, redirect rules, header rules, CDN presence and edge
+  functions read off the Netlify dashboard** — our own hosting account.
+- **JSON-LD "validity" reasoned from knowing the code that generates it**
+  ("malformed JSON is structurally unlikely"), not from parsing live output.
+- **Google's "can be indexed" answer from Search Console URL Inspection**,
+  which needs verified ownership of the domain.
+
+None of that was wrong for a self-audit — it is *more* reliable than a blind
+fetch. The problem was that `audit-site-checklist.md` didn't mark any of it as
+self-audit-only, so it read as a list anyone could run on a client. Left
+alone, the first client audit discovers this at the worst possible moment.
+
+**Built `ops/site-check/site_check.py`** — stdlib-only, no API keys, no
+per-query cost, so unlike `audit_query.py` it is a reusable tool rather than a
+per-audit throwaway. It sits beside `ops/name-check/` as the second tool in
+that shape. It does groups 1 and 2 from the public URL alone: robots.txt
+fetched and parsed with Python's own `robotparser` against every crawler name
+the checklist lists, homepage fetch with a non-browser UA, redirect chain
+logged, login-wall and challenge-page and CDN signals, JS-shell word-count
+heuristic, sitemap fetch and XML parse, JSON-LD extraction with `@type`
+inventory and common-field presence. Hard request cap (default 8), and no
+default output path inside the repo — `--out` points at the client's own
+folder, per `audit-method.md` §5.
+
+**The dashboard checks are approximated from outside rather than dropped**,
+and that is arguably the better test: what an unauthenticated crawler actually
+meets, not what a config file claims. Recorded because the instinct would be
+to treat the external version as a downgrade.
+
+**What deliberately stays manual, and is now written down as such:** the
+`site:` index searches (scraping results pages is fragile and against those
+providers' terms), Search Console URL Inspection (client-granted access, an
+optional upgrade), all of group 3's off-site half, group 4 entirely, and
+"does the page state a price / name real towns" — a regex hunting for `£` out
+of context is the invented precision `CLAUDE.md` rules out.
+
+**Every group 1 and 2 item is now tagged** `[script]` / `[public]` /
+`[client access]` / `[read]`, so the distinction can't rot back out.
+
+**One wording bug fixed on the way.** `audit-method.md` §2 said the Copilot
+section "leans on the Bing Webmaster Tools check". It doesn't — the check
+actually performed was a public `site:` search. Wardith's Bing Webmaster Tools
+and Search Console accounts are registered against `wardith.co.uk` and can see
+nothing on a client's domain. As written it invited a future session to think
+a client audit needs webmaster access it will never have. Both files now say
+public search, with the upgrade path named separately.
+
+**Not verified live.** The script is unit-tested against local HTML strings
+(robots parsing with a named `Disallow` correctly overriding a catch-all
+`Allow`, JSON-LD parse and field inventory, JS-shell detection firing on an
+empty body and not on a real page) but this sandbox blocks outbound fetches —
+the same limit that caused the original problem. **It needs one real run from
+the owner's machine against `wardith.co.uk`**, where the self-audit already
+recorded the ground truth by hand, and then against one arbitrary
+small-business site, which is the real test of whether it survives messier
+robots.txt and malformed JSON-LD than our own site produces.
+
 ### 2026-08-04 (published — the site is Wardith)
 
 **Merged to `main` at the owner's instruction.** What that published: a new

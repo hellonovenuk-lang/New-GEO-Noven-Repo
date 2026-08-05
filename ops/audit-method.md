@@ -121,10 +121,12 @@ section 4, which make the difference visible without arithmetic.
 Copilot answers are grounded in Bing's index. **If the client's site is not in
 Bing's index, Copilot cannot cite it, and that is a harder, more useful finding
 than any mention rate.** So the Copilot section of the report leans on the Bing
-Webmaster Tools check in `ops/audit-site-checklist.md` and treats the three hand
-runs as illustration. This is a better answer than the one we would have got
-from an API, and it is actionable — indexation is fixable, model behaviour is
-not.
+index check in `ops/audit-site-checklist.md` — **a public `site:{domain}`
+search, not Wardith's own Bing Webmaster Tools account**, which is registered
+against `wardith.co.uk` and has no visibility into a client's site unless that
+client separately grants it — and treats the three hand runs as illustration.
+This is a better answer than the one we would have got from an API, and it is
+actionable — indexation is fixable, model behaviour is not.
 
 ### Not checking Claude
 
