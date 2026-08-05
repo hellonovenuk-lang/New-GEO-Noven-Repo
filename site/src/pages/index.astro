@@ -16,6 +16,22 @@ const maintain = plan('maintain');
 // Not a copy of the structured data — the structured data. The layout renders
 // this exact object into the page head.
 const orgSchema = organizationSchema(Astro.site);
+
+/* The lines in that record worth stopping on, in the words a client would use.
+ * Keyed by path, not by line number, so adding a fact to `business.ts` can
+ * never leave these pointing at the wrong lines. Keep this to a handful:
+ * marking everything is the same as marking nothing. */
+const recordNotes = {
+  name: 'Your name, spelled one way. An assistant that finds three versions of it across the web trusts none of them.',
+  description:
+    'One sentence on what you do and who for. This is roughly what gets repeated back when somebody asks about you.',
+  email:
+    'How a customer actually reaches you. A recommendation carrying the wrong contact details is a lost enquiry, not a win.',
+  areaServed:
+    'Where you work, written the standard way — GB is the country code for the United Kingdom. Nothing here has to be interpreted.',
+  'founder.name':
+    'A real person, named. A business that will not say who is behind it gives these systems nothing to check.',
+};
 ---
 
 <Base title={title} description={description}>
@@ -49,32 +65,20 @@ const orgSchema = organizationSchema(Astro.site);
         </div>
       </div>
 
-      {/* Wide screens get the animation; narrow ones get the record itself,
-          which stays legible at any width. Only one is ever shown. */}
+      {/* The record, written out as the page loads. The same block at every
+          width — it reads at any size, and it is the one thing on the page
+          that is the product rather than a description of it. */}
       <div data-reveal>
-        <figure class="hero-film">
-          {/* H.264 first — it's the smaller file here as well as the widely
-              supported one. The VP9 twin covers builds shipped without the
-              patented codecs, which would otherwise show only the poster. */}
-          <video poster="/video/poster.png" preload="none" muted playsinline aria-describedby="film-note">
-            <source src="/video/wardith-answer.mp4" type="video/mp4" />
-            <source src="/video/wardith-answer.webm" type="video/webm" />
-          </video>
-          <figcaption id="film-note">
-            What happens when someone asks: the assistant reads each business's website, passes over
-            the ones it can't make sense of, and names the ones it can.
-          </figcaption>
-        </figure>
-
-        <div class="hero-record">
-          <Code
-            caption="What an AI assistant reads on this page"
-            label="Wardith's structured data, as JSON-LD"
-            data={orgSchema}
-            intro="You're reading this page. An AI assistant reads the block below instead — the same facts about the business, written so a machine can't mistake them. It's the part no visitor ever sees, and on most business websites there's nothing there at all."
-            note="This is the real thing, not an example: the same block sits in this page's source. View source and you'll find it."
-          />
-        </div>
+        <Code
+          caption="What an AI assistant reads on this page"
+          label="Wardith's structured data, as JSON-LD"
+          data={orgSchema}
+          typing
+          notes={recordNotes}
+          notesHint="The marked lines are the facts an assistant repeats back about a business. Point at one — or tap it — to see what it does."
+          intro="You're reading this page. An AI assistant reads the block below instead — the same facts about the business, written so a machine can't mistake them. It's the part no visitor ever sees, and on most business websites there's nothing there at all."
+          note="This is the real thing, not an example: the same block sits in this page's source. View source and you'll find it."
+        />
       </div>
     </div>
   </section>
@@ -204,21 +208,9 @@ const orgSchema = organizationSchema(Astro.site);
             What we can show you is this website. It's built exactly the way we build for clients —
             plain, fast pages that assistants can read, structured information about the business,
             and a <a href="/faq/">real FAQ</a> that answers the questions people actually ask. Check
-            it yourself: view this page's source and compare it with the record below. Those are the
-            same bytes, not a picture of them.
+            it yourself: view this page's source and compare it with the record at the top of this
+            page. Those are the same bytes, not a picture of them.
           </p>
-          {/* On wide screens the hero shows the film instead of the record, so
-              the record lives here — the claim above it, the evidence below.
-              Hidden below 60rem, where the hero shows the record itself; the
-              page holds exactly one visible copy at every width. */}
-          <div class="proof-record" data-reveal>
-            <Code
-              caption="That structured information, as an assistant reads it"
-              label="Wardith's structured data, as JSON-LD"
-              data={orgSchema}
-              note="Real, not an illustration: this exact block sits in this page's source. View source and compare."
-            />
-          </div>
           <p class="flag">
             [PLACEHOLDER: client case studies will be published here, with permission, as the first
             engagements complete.]

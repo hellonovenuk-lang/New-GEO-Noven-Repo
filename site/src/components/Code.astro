@@ -6,6 +6,13 @@
  * copy. The head serialises with JSON.stringify(obj, null, 2) and so does
  * this, so a reader who views source sees character-for-character what they
  * were shown.
+ *
+ * Two optional behaviours, both additive and both off by default:
+ *   `typing` writes the block out a character at a time, the way it would be
+ *   written by hand, and
+ *   `notes` marks the handful of lines that decide whether a business gets
+ *   named and explains each one in plain words when the reader points at it.
+ * With JavaScript blocked, neither runs and the full block is simply there.
  */
 
 import { toLines } from '../lib/json-code';
@@ -25,31 +32,327 @@ interface Props {
   intro?: string;
   /** Accessible name for the scrollable region. */
   label: string;
+  /**
+   * Plain-English notes on the lines that matter, keyed by the path
+   * `toLines` gives each line — `name`, `areaServed`, `founder.name`. A line
+   * with a note is marked in the panel and says what it does when pointed at
+   * or tabbed to. Keyed by path rather than line number so that adding a fact
+   * to the business data can never quietly move the marks onto the wrong
+   * lines.
+   */
+  notes?: Record<string, string>;
+  /** What the explanation line says before the reader has chosen a line. */
+  notesHint?: string;
+  /** Write the block out line by line when it comes into view. */
+  typing?: boolean;
   class?: string;
 }
 
-const { caption, data, note, intro, label, class: className = '' } = Astro.props;
+const {
+  caption,
+  data,
+  note,
+  intro,
+  label,
+  notes = {},
+  notesHint = 'Point at a marked line to see what it tells an assistant.',
+  typing = false,
+  class: className = '',
+} = Astro.props;
+
 const lines = toLines(data);
+const hasNotes = Object.keys(notes).length > 0;
 ---
 
 {intro && <p class="code-intro" set:html={intro} />}
 
-<figure class:list={['code', className]}>
+<figure class:list={['code', className]} data-code data-typing={typing ? '' : undefined}>
   <figcaption class="code-head">
     <span class="code-dot" aria-hidden="true"></span>
-    {caption}
+    <span>{caption}</span>
+    {
+      typing && (
+        <button type="button" class="code-ctrl" data-code-ctrl hidden>
+          Skip
+        </button>
+      )
+    }
   </figcaption>
 
   {/* Scrollable regions need to be reachable by keyboard, hence tabindex. */}
-  <div class="code-scroll" tabindex="0" role="region" aria-label={label}>
+  <div class="code-scroll" tabindex="0" role="region" aria-label={label} data-code-scroll>
     {/* The line number is a CSS counter on .code-line; the tokens all live in
         one .code-text child so the grid has exactly two cells per row. */}
-    <pre class="code-pre"><code>{lines.map((line) => (
-      <span class="code-line"><span class="code-text">{line.map((token) => (
-        <span class={`tk-${token.kind}`}>{token.text}</span>
-      ))}</span></span>
-    ))}</code></pre>
+    <pre class="code-pre"><code>{lines.map((line) => {
+      const lineNote = notes[line.path];
+      return (
+        <span
+          class:list={['code-line', lineNote && 'is-marked']}
+          data-note={lineNote}
+          tabindex={lineNote ? 0 : undefined}
+        ><span class="code-text">{line.tokens.map((token) => (
+          <span class={`tk-${token.kind}`}>{token.text}</span>
+        ))}</span></span>
+      );
+    })}</code></pre>
   </div>
+
+  {
+    hasNotes && (
+      <p class="code-callout" data-code-callout aria-live="polite">
+        <span class="code-callout-mark" aria-hidden="true" />
+        <span data-code-callout-text>{notesHint}</span>
+      </p>
+    )
+  }
 
   {note && <div class="code-foot" set:html={note} />}
 </figure>
+
+{/* Hides the lines the moment the panel is parsed, so a block that is about
+    to be written out never flashes complete first. Inline and adjacent on
+    purpose: it only runs if scripting is actually on, and it undoes itself
+    after three seconds in case the module below never arrives. */}
+<script is:inline>
+  (function () {
+    var figure = document.currentScript.previousElementSibling;
+    if (!figure || !figure.hasAttribute('data-typing')) return;
+    var lines = figure.querySelectorAll('.code-line');
+    for (var i = 0; i < lines.length; i++) lines[i].classList.add('is-waiting');
+    figure.dataset.armed = String(
+      setTimeout(function () {
+        for (var i = 0; i < lines.length; i++) lines[i].classList.remove('is-waiting');
+      }, 3000),
+    );
+  })();
+</script>
+
+<script>
+  /* Progressive enhancement. Everything here is additive: with this script
+     blocked the panel is a complete, readable, selectable code block. */
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  /** Characters a second. Fast enough to read along with, slow enough to see. */
+  const RATE = 620;
+  /** A beat at the end of each line, so it reads as lines and not as a smear. */
+  const LINE_PAUSE = 34;
+
+  document.querySelectorAll<HTMLElement>('[data-code]').forEach(setup);
+
+  function setup(figure: HTMLElement) {
+    const lines = Array.from(figure.querySelectorAll<HTMLElement>('.code-line'));
+    const scroll = figure.querySelector<HTMLElement>('[data-code-scroll]');
+    const calloutText = figure.querySelector<HTMLElement>('[data-code-callout-text]');
+    const hint = calloutText?.textContent ?? '';
+
+    /* What the explanation line falls back to: the hint until a marked line
+       has been written out, then the last one the block itself surfaced. */
+    let resting = hint;
+
+    const say = (text: string) => {
+      if (calloutText && calloutText.textContent !== text) calloutText.textContent = text;
+    };
+
+    lines.forEach((line) => {
+      const note = line.dataset.note;
+      if (!note) return;
+      const show = () => say(note);
+      const restore = () => say(resting);
+      line.addEventListener('pointerenter', show);
+      line.addEventListener('focus', show);
+      line.addEventListener('pointerleave', restore);
+      line.addEventListener('blur', restore);
+    });
+
+    if (!('typing' in figure.dataset) || !scroll) return;
+
+    // The inline script above hid the lines; from here this script owns them.
+    const armed = Number(figure.dataset.armed);
+    if (armed) clearTimeout(armed);
+    delete figure.dataset.armed;
+
+    const ctrl = figure.querySelector<HTMLButtonElement>('[data-code-ctrl]');
+
+    // Snapshot every run of text before blanking any of it.
+    const content = lines.map((line) => {
+      const walker = document.createTreeWalker(line, NodeFilter.SHOW_TEXT);
+      const nodes: { node: Text; text: string }[] = [];
+      let node = walker.nextNode() as Text | null;
+      while (node) {
+        nodes.push({ node, text: node.data });
+        node = walker.nextNode() as Text | null;
+      }
+      return nodes;
+    });
+
+    const reveal = () => {
+      content.forEach((line) => line.forEach((chunk) => (chunk.node.data = chunk.text)));
+      lines.forEach((line) => line.classList.remove('is-waiting', 'is-typing'));
+    };
+
+    if (reduced.matches || !('IntersectionObserver' in window)) {
+      reveal();
+      return;
+    }
+
+    let raf = 0;
+    let settle = 0;
+    let lineIndex = 0;
+    let nodeIndex = 0;
+    let charIndex = 0;
+    let carry = 0;
+    let previous = 0;
+    let holdUntil = 0;
+    let running = false;
+    let followed = true;
+
+    const stopFollowing = () => {
+      followed = false;
+    };
+    scroll.addEventListener('wheel', stopFollowing, { passive: true });
+    scroll.addEventListener('touchmove', stopFollowing, { passive: true });
+
+    /* Keep the line being written in view, the way an editor does — until the
+       reader takes over the scrolling, after which it stays where they left
+       it. Measured against the panel's own box: offsetTop here is a distance
+       down the whole page, which sends the panel past its own caret as soon
+       as the block sits any distance below the top of the document. */
+    const follow = () => {
+      if (!followed) return;
+      const line = lines[Math.min(lineIndex, lines.length - 1)];
+      const past = line.getBoundingClientRect().bottom - scroll.getBoundingClientRect().bottom + 12;
+      if (past > 0) scroll.scrollTop += past;
+    };
+
+    const finish = () => {
+      cancelAnimationFrame(raf);
+      running = false;
+      reveal();
+      scroll.removeAttribute('aria-busy');
+      if (ctrl) ctrl.textContent = 'Replay';
+      /* Settle back at the first line — writing it out leaves the panel at the
+         end of the record, which is the least useful thing to be looking at,
+         and the facts that matter are at the top. Not if the reader has taken
+         the scrolling over: pulling a block out from under someone reading it
+         is worse than leaving it where they put it. */
+      window.clearTimeout(settle);
+      settle = window.setTimeout(() => {
+        if (followed) scroll.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 450);
+    };
+
+    const tick = (now: number) => {
+      if (!previous) previous = now;
+      const elapsed = Math.min(now - previous, 120);
+      previous = now;
+
+      if (now < holdUntil) {
+        raf = requestAnimationFrame(tick);
+        return;
+      }
+
+      carry += (elapsed / 1000) * RATE;
+      let budget = Math.floor(carry);
+      carry -= budget;
+
+      while (budget > 0) {
+        if (lineIndex >= lines.length) {
+          finish();
+          return;
+        }
+
+        const line = lines[lineIndex];
+        const chunks = content[lineIndex];
+
+        if (line.classList.contains('is-waiting')) {
+          line.classList.remove('is-waiting');
+          line.classList.add('is-typing');
+        }
+
+        if (nodeIndex >= chunks.length) {
+          line.classList.remove('is-typing');
+          const note = line.dataset.note;
+          if (note) {
+            line.classList.add('is-flash');
+            resting = note;
+            say(note);
+          }
+          lineIndex += 1;
+          nodeIndex = 0;
+          charIndex = 0;
+          holdUntil = now + LINE_PAUSE;
+          follow();
+          raf = requestAnimationFrame(tick);
+          return;
+        }
+
+        const chunk = chunks[nodeIndex];
+        if (charIndex >= chunk.text.length) {
+          nodeIndex += 1;
+          charIndex = 0;
+          continue;
+        }
+
+        const take = Math.min(budget, chunk.text.length - charIndex);
+        charIndex += take;
+        budget -= take;
+        chunk.node.data = chunk.text.slice(0, charIndex);
+      }
+
+      follow();
+      raf = requestAnimationFrame(tick);
+    };
+
+    const start = () => {
+      if (running) return;
+      window.clearTimeout(settle);
+      running = true;
+      followed = true;
+      lineIndex = 0;
+      nodeIndex = 0;
+      charIndex = 0;
+      carry = 0;
+      previous = 0;
+      holdUntil = 0;
+      resting = hint;
+      say(hint);
+      scroll.scrollTop = 0;
+      scroll.setAttribute('aria-busy', 'true');
+      content.forEach((line) => line.forEach((chunk) => (chunk.node.data = '')));
+      lines.forEach((line) => line.classList.remove('is-flash', 'is-typing'));
+      lines.forEach((line) => line.classList.add('is-waiting'));
+      if (ctrl) ctrl.textContent = 'Skip';
+      raf = requestAnimationFrame(tick);
+    };
+
+    if (ctrl) {
+      ctrl.hidden = false;
+      ctrl.addEventListener('click', () => {
+        if (running) finish();
+        else start();
+      });
+    }
+
+    // Tapping or clicking the block itself skips to the end. On a phone the
+    // first touch is usually an attempt to read it now, not later.
+    scroll.addEventListener('pointerdown', () => {
+      if (running) finish();
+    });
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          io.disconnect();
+          start();
+        });
+      },
+      /* Starts as the panel comes properly into view. Deliberately not a
+         percentage of the element: on a phone the panel can be taller than
+         the screen, and a threshold it can never reach would mean a block
+         that never writes itself out at all. */
+      { threshold: 0, rootMargin: '0px 0px -12% 0px' },
+    );
+    io.observe(figure);
+  }
+</script>
