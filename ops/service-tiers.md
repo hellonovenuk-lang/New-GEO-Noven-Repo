@@ -21,13 +21,13 @@ Researched 2026-07-28. Confirm before quoting any of it publicly.
 | UK local search agencies, entry package | ~£395 + VAT |
 | UK local search agencies, typical small-business client | £500–£1,500 |
 | Agencies doing AI-assistant visibility work | $1,500–$10,000, entry retainers $2,000–5,000 |
-| **Noven Maintain** | **£95** |
-| **Noven Lead** | **£495** |
+| **Wardith Maintain** | **£150** |
+| **Wardith Lead** | **£700** |
 
 **We are still well under the UK market floor at Maintain, and Lead now sits at
 roughly the cheapest agency's entry package rather than a third of it** —
 against a deliverable of two permanent pages a month, which an entry package
-does not include. Repriced 2026-07-31; see section 9.
+does not include. Repriced again 2026-08-05; see section 11.
 
 This is a position, not a mistake. It serves the businesses agencies have priced
 themselves out of — the sole-trader trades, the two-partner firms, the
@@ -71,7 +71,7 @@ without asking us anything.
 both say to do the first one end to end and time it. Do that before treating any
 number below as real.
 
-### Maintain — £95/month
+### Maintain — £150/month
 
 - **10 questions** tracked, chosen with the client from what their customers
   actually ask
@@ -90,10 +90,10 @@ whether the business works** — see section 6.
 
 **What it deliberately does not include:** closing any of the gaps it reports.
 Maintain tells you where you're missing. It doesn't fix it. That is not a
-withheld feature, it's the honest boundary of what £95 buys, and it is also the
+withheld feature, it's the honest boundary of what £150 buys, and it is also the
 upgrade engine (section 5).
 
-### Grow — £250/month
+### Grow — £400/month
 
 - Everything in Maintain, across **15 questions** instead of 10
 - **One new answer page per month**, written properly and published on the
@@ -101,7 +101,7 @@ upgrade engine (section 5).
 
 **Time estimate: 3–4 hours a month.**
 
-### Lead — £495/month
+### Lead — £700/month
 
 - Everything in Grow, across **25 questions**, checked **monthly**
 - **Two answer pages per month**
@@ -140,8 +140,8 @@ ask"* (`how-it-works.astro`) — continued one page a month. **Every Foundation 
 deliver is practice for Grow.**
 
 Our own site is the working example: no blog, and every page heading is a
-customer question. *How does Noven get you found? What does Noven cost? Why does
-the audit cost £125?*
+customer question. *How does Wardith get you found? What does Wardith cost? Why does
+the audit cost £250?*
 
 **The guard rail.** Two pages a month at Lead is twenty-four pages a year, which
 can sprawl into thin filler that actively hurts. The test: if we cannot write
@@ -251,7 +251,7 @@ get irritated and ask us to fix it. The report told the truth either way.
 
 **Grow → Lead.** A different trigger, and a stronger one: **a named competitor.**
 "For your most valuable question, the assistants named three other firms and not
-you" is the sentence that moves someone from £250 to £495. It is not about
+you" is the sentence that moves someone from £400 to £700. It is not about
 volume, it is about a rival. This is why the competitive review belongs at Lead
 and nowhere else — it is the only thing at that price that isn't just more.
 
@@ -266,18 +266,23 @@ through retention, not conversion. Judge them on that.
 
 **Maintain will dominate early.** Plan for it rather than hoping otherwise.
 
-Twenty Maintain clients is £1,900 a month. Reaching £3,000 on Maintain alone
-means thirty-two clients, and thirty-two relationships is more than one person
-holds well — the commonly cited ceiling for a solo operator is four to eight
-clients at agency scope, and even at our much lighter scope thirty-two is a
-stretch. **This is the arithmetic the repricing was mostly for:** the old £75
-needed forty clients for the same figure.
+**Twenty Maintain clients is £3,000 a month** — so £3,000 now arrives at
+twenty relationships rather than thirty-two, which is the single biggest
+practical effect of the 2026-08-05 repricing. The commonly cited ceiling for
+a solo operator is four to eight clients at agency scope; twenty at our much
+lighter scope is demanding but not absurd, where thirty-two was a stretch and
+the original £75 needed forty for the same figure.
+
+**Recalculated 2026-08-05.** This paragraph previously read "twenty Maintain
+clients is £1,900" against £95. Each repricing has bought back roughly a
+third of the client count needed for the same revenue, and the client count
+— not the revenue — is what one person actually runs out of.
 
 Two things follow, and they change what to work on.
 
-**The Foundation is the income in year one, not the monthlies.** At £750, one
-Foundation is nearly eight months of a Maintain client's revenue delivered in one
-go. Five Foundations is £3,750. Early on this is a project business with a
+**The Foundation is the income in year one, not the monthlies.** At £800, one
+Foundation is over five months of a Maintain client's revenue delivered in one
+go. Five Foundations is £4,000. Early on this is a project business with a
 subscription tail. **So converting audits into Foundations matters more in year
 one than converting Maintain clients into Grow clients** — that's where the
 effort should go, and it is a different activity from upselling.
@@ -289,7 +294,7 @@ business at eight and there is no growth without a further price rise.
 So **systematise Maintain from client one.** Same questions, same format, same
 record, every time — the format is `ops/monthly-record-template.md` and it exists
 so that this can actually be done. Resist doing anything bespoke inside it. That
-is not corner-cutting — it is the only thing that makes £95 possible at all.
+is not corner-cutting — it is the only thing that makes £150 possible at all.
 Anything genuinely bespoke a client wants is a reason to talk about Grow, not a
 reason to quietly do it for free.
 
@@ -571,3 +576,89 @@ demonstration of the thing every page of the site claims: that the audit tells
 you the truth even when the truth earns us nothing. Advertised, per the
 owner's instruction on 2026-08-05 — see the FAQ entry "What if my website
 cannot be updated?"
+
+---
+
+## 11. The repricing — 2026-08-05
+
+**What changed.** Audit £125 → **£250**. Foundation £750 → **£800**. Maintain
+£95 → **£150**, Grow £250 → **£400**, Lead £495 → **£700**. Scope unchanged
+everywhere — this is a price move, not a product move. Confirmed by the owner
+before the copy was applied.
+
+### What prompted it
+
+**The self-audit produced the evidence the 2026-07-31 prices were missing.**
+§9 set those numbers against *estimated* effort and said so plainly: *"these
+prices work only if delivery cost matches them, and delivery cost is currently
+an estimate."* The Noven audit then produced a real deliverable — 228 recorded
+answers across four assistants, repeated runs, competitor frequency, a
+diagnosis a person reads and writes up. Against that, £125 was low enough to
+misrepresent the product: **price is a quality signal where the buyer cannot
+judge the work in advance**, which is §9's own argument for leaving £30, and
+it applies again one step up.
+
+**Then Maintain became the problem, not the audit.** Raising the audit toward
+£250 left £95/month sitting beside it looking like a different company's
+price. The owner's read — that a buyer paying £250 for an audit and the best
+part of £800 for a Foundation would question a two-digit monthly fee — is the
+reason the whole ladder moved rather than just the top of it.
+
+### What did *not* justify it
+
+**API cost.** A cost-of-delivery argument was made and then withdrawn when the
+real figures arrived. The alarm came from `ops/audits/noven-2026-08-02/`'s
+finding that OpenAI alone cost $12.63 for ~75 queries against §6 of
+`audit-setup.md`'s ~£1.20 per 150 estimate — but the owner then supplied the
+two missing totals: **Gemini 86p for 70 queries, Perplexity $0.51 for ~70.**
+
+| Provider | Per query | Notes |
+|---|---|---|
+| OpenAI | ~£0.13 | 10–20× the others; drives essentially all of it |
+| Gemini | ~£0.012 | |
+| Perplexity | ~£0.006 | |
+
+At 150 queries a month, Maintain's real tool cost is **about £7.50** — 8% of
+the old £95, 5% of the new £150. **There was no cost crisis, and the earlier
+extrapolation from the OpenAI rate across all three providers was wrong.**
+Recorded because a future session reading only the first half of that
+exchange would reach the wrong conclusion.
+
+**So this repricing is justified on the value of the work and the coherence of
+the ladder, not on costs.** That distinction matters: if it were cost-driven,
+the right fix would have been cheaper queries, not higher prices.
+
+### Round numbers, on purpose
+
+250 / 800 / 150 / 400 / 700. **Decided by the owner 2026-08-05**, after
+noticing that a 245 / 795 / 150 / 385 / 675 ladder left Maintain as the only
+number not ending in 5.
+
+Both fixes were coherent; the owner took the round one. It is the better fit:
+**charm pricing is a mild sales tactic, and this business has already refused
+founding rates, bundles, referral discounts and "N months for the price of M"
+on the grounds that they sit badly on a brand built on plain dealing** (§9).
+Prices that end in 5 to look smaller are the same instinct in a smaller form.
+The set now reads as chosen rather than tuned.
+
+### What this does not change
+
+- **The standing decision against bundling** (§9) is untouched, and this is
+  not an opening to revisit it.
+- **No founding rate**, for the same reason as before.
+- **Scope at every level.** Question counts stay 10 / 15 / 25 and the answer
+  pages stay 0 / 1 / 2. A price rise that quietly adds deliverables is a
+  discount.
+- **The constraint from §9 still stands, and still is not closed:** these
+  prices work only if delivery cost matches them, and **Maintain's "about one
+  hour a month" remains unmeasured.** The higher price buys more room for that
+  estimate to be wrong, which is worth having — but it is not a substitute for
+  timing it.
+
+### Why now, again, before the first client
+
+Same reasoning as §9 and it has not weakened: nobody has bought anything, so
+there is no client to upset and no invoice to amend. **This is the last
+repricing that is free.** The next one lands on somebody who is already
+paying, on plans with no minimum term — which makes it a churn event with
+nothing holding them.

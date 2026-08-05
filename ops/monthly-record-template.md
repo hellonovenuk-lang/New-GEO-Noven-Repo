@@ -21,7 +21,7 @@ measurement over time.
 
 **Budget: 20 minutes, after the runs are done and classified.** If it is taking
 longer than that, the template is wrong or something bespoke has crept in. At
-£95 a month there is no room for either.
+£150 a month there is no room for either.
 
 **One page. Four sections, always in this order, even when a section is dull.** A
 client who gets a long record in a good month and a short one in a bad month

@@ -40,13 +40,13 @@ away first — see section 5.
 The source of truth is `site/src/data/business.ts`. Nothing below is a second
 copy to maintain; it is here so a check can be run without reading TypeScript.
 
-| Fact | Value as at 2026-08-01 | Changed on |
+| Fact | Value as at 2026-08-05 | Changed on |
 |---|---|---|
-| Audit | £125 one-off | 2026-07-31 (was £30) |
-| Foundation | £750 one-off, fixed four-part scope | 2026-07-31 (was £350, unbounded) |
-| Maintain | £95/month, 10 questions | 2026-07-31 (was £75) |
-| Grow | £250/month, 15 questions | 2026-07-31 (was £125, 25 questions) |
-| Lead | £495/month, 25 questions, monthly | 2026-07-31 (was £250, 50 questions, fortnightly) |
+| Audit | £250 one-off | 2026-08-05 (was £125; £30 before 2026-07-31) |
+| Foundation | £800 one-off, fixed four-part scope | 2026-08-05 (was £750; £350 and unbounded before 2026-07-31) |
+| Maintain | £150/month, 10 questions | 2026-08-05 (was £95; £75 before 2026-07-31) |
+| Grow | £400/month, 15 questions | 2026-08-05 (was £250; £125 and 25 questions before 2026-07-31) |
+| Lead | £700/month, 25 questions, monthly | 2026-08-05 (was £495; £250, 50 questions and fortnightly before 2026-07-31) |
 | Turnaround | Report within two working days of scope and payment confirmed | 2026-07-31 (was one working day) |
 | Cancellation | No minimum term, no notice period | unchanged |
 | Bundling | Never. Every service is priced and bought on its own | 2026-07-31, standing decision |
@@ -67,7 +67,7 @@ read off the live page, and both need the owner's eyes.
 
 | # | Surface | Controlled by | Carries prices? | State | Action |
 |---|---|---|---|---|---|
-| 1 | The seven site pages | Repo → Netlify | Yes | **Correct.** Built from this repo on 2026-08-01 and the rendered pages read £125 / £750 / £95 / £250 / £495. `main` was deployed on 2026-07-31 | Owner: eyeball the live pricing page once, to confirm the deploy matches the build |
+| 1 | The seven site pages | Repo → Netlify | Yes | **Was correct on 2026-08-01**, when the rendered pages read £125 / £750 / £95 / £250 / £495. **Superseded by the 2026-08-05 repricing — needs re-checking against 250 / 800 / 150 / 400 / 700 once deployed**. `main` was deployed on 2026-07-31 | Owner: eyeball the live pricing page once, to confirm the deploy matches the build |
 | 2 | Site JSON-LD (Organization, Service, FAQPage) | Same file, same build | Yes — `offerSchema()` | **Correct.** The built `Offer` prices were read out of `dist` and are the five above | Covered by 1 |
 | 3 | **LinkedIn company page — About** | Owner, in LinkedIn | Yes | **Wrong.** Pasted before the repricing, so it says £30 / £350 / from £75 | **Repaste from `ops/linkedin.md` section 5.4** |
 | 4 | **LinkedIn founder profile — About** | Owner, in LinkedIn | Yes | **Wrong**, same reason | **Repaste from `ops/linkedin.md` section 2** |

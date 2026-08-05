@@ -14,7 +14,7 @@ Written 2026-07-30 as part of roadmap 3a. Companion to `ops/audit-method.md`.
 plain English" on three separate pages, and 1,800 words is about five pages —
 still short against the twenty-page decks with a cover sheet this competes with.
 But the cap is real: past about 1,800 it stops being read, and it stops being
-writable in the time a £125 fee pays for.
+writable in the time a £250 fee pays for.
 
 **Length has to be earned by findings, never by padding.** If the honest report
 is 1,200 words, it is 1,200 words. Writing to the top of the range to look
@@ -51,8 +51,8 @@ pre-rule-10 report already used.*
    Four pages of the site promise this outcome. It has to be real often enough
    that it is not a slogan.
 9. **No second sales pitch.** One recommendation, once, at the end. `CLAUDE.md`
-   bans repeated calls to action, and a £125 report that reads as a £750 pitch
-   destroys the thing the £125 bought.
+   bans repeated calls to action, and a £250 report that reads as an £800 pitch
+   destroys the thing the £250 bought.
 10. **Say what they are doing right, not only what is wrong. Every report, in
     its own section, whatever the verdict.** Three reasons, and the third is the
     commercial one. *Credibility:* a client cannot tell "your site is in good
@@ -64,7 +64,7 @@ pre-rule-10 report already used.*
     already says the audit list and the Foundation list are the same list, one
     diagnosing and one fixing, and that the client seeing them line up "is most
     of why they believe the second one". Going group by group through what is
-    already right is what makes the £750 quote legible instead of asserted.
+    already right is what makes the £800 quote legible instead of asserted.
 
 *Rule 10 added 2026-08-03, after the first full report was written without it.
 The gap was invisible on that report because the site being audited passed
@@ -215,13 +215,13 @@ rather say it than sell you something you don't need.
 
 **If the Foundation would help:** {The specific things, tied to the three
 findings above, and what changes if they're done.} That's our Foundation work,
-which is £750 one-off, on the website you already have. {If the honest answer is
+which is £800 one-off, on the website you already have. {If the honest answer is
 "one of these three matters and the other two don't", say that and quote for the
 one.}
 
 **If something else has to happen first:** {What, why, and what to do about it.}
 We're not the right spend until that's sorted, and we'd rather tell you now than
-take £750 for work that wouldn't hold.
+take £800 for work that wouldn't hold.
 
 ## What this doesn't tell you
 

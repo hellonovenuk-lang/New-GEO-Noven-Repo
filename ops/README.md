@@ -23,13 +23,13 @@ so opening the wrong one first is the usual way to get lost.
 
 | File | What it decides | Status |
 |---|---|---|
-| `audit-method.md` | How the £125 audit is delivered: which assistants, how many runs, how answers are recorded, what it costs, how long it may take. **Read this before the other four.** | Decided, unvalidated |
+| `audit-method.md` | How the £250 audit is delivered: which assistants, how many runs, how answers are recorded, what it costs, how long it may take. **Read this before the other four.** | Decided, unvalidated |
 | `audit-questions.md` | The ten-question frame, how it changes by trade and area, and the rules that keep two audits comparable | Decided, unvalidated |
 | `audit-site-checklist.md` | The working checklist filled in during an audit. Copied per client. Never sent to the client | Decided, unvalidated |
 | `audit-report-template.md` | The report the client actually receives, and the rules for writing it | Decided, unvalidated |
 | `audit-setup.md` | The practical gap between "the method is written" and "the first audit is running": accounts, keys, spend caps, folder layout, run-day order. **Start here on the day** | Decided, unvalidated |
 
-**What is still missing from this set:** a delivery method for the £750
+**What is still missing from this set:** a delivery method for the £800
 Foundation. Its scope is now fixed and published, but the *how* of doing the work
 — and any estimate of how long it takes — does not exist. It is the only product
 in the business with no time budget at all.

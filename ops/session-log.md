@@ -11,6 +11,72 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-05 (the second repricing — 250 / 800 / 150 / 400 / 700)
+
+**Audit £125 → £250. Foundation £750 → £800. Maintain £95 → £150, Grow £250 →
+£400, Lead £495 → £700.** Scope unchanged everywhere. Confirmed by the owner
+before the copy was applied. Full reasoning in `ops/service-tiers.md` §11;
+§9 is left untouched as the record of the 2026-07-31 repricing.
+
+**What prompted it.** §9 set the old prices against *estimated* effort and
+said so: *"these prices work only if delivery cost matches them, and delivery
+cost is currently an estimate."* The self-audit then produced a real
+deliverable — 228 answers, four assistants, repeated runs, a written
+diagnosis — and against that £125 was low enough to misrepresent the product.
+**Then Maintain became the problem rather than the audit:** the owner's read
+was that a buyer paying £250 for an audit and the best part of £800 for a
+Foundation would question a two-digit monthly fee, which is why the whole
+ladder moved rather than just the top.
+
+**A cost argument was made and then withdrawn, and that matters.** The alarm
+came from the self-audit's OpenAI figure ($12.63 for ~75 queries against an
+estimate of ~£1.20 per 150) and was extrapolated across all three providers.
+The owner then supplied the missing totals — **Gemini 86p for 70 queries,
+Perplexity $0.51 for ~70** — and the extrapolation was wrong: OpenAI is
+10–20× the other two and was driving the whole figure. **Maintain's real tool
+cost is about £7.50 a month, 5% of the new price. There was no cost crisis.**
+Recorded in §11 explicitly, because a future session reading only the first
+half of that exchange would reach the opposite conclusion.
+
+**So this is priced on the value of the work, not on costs** — and if it had
+been cost-driven the right fix would have been cheaper queries, not higher
+prices.
+
+**Round numbers, decided by the owner.** A 245 / 795 / 150 / 385 / 675 ladder
+was on the table and left Maintain as the only number not ending in 5. Both
+fixes were coherent; the owner took the round one, and it is the better fit —
+**charm pricing is a mild sales tactic, and this business has already refused
+founding rates, bundles and referral discounts** on the grounds that they sit
+badly on a brand built on plain dealing.
+
+**Applied across 14 files, and the historical/current distinction was the
+whole job.** `business.ts` is the single source, so the pricing page, the
+five `Offer` objects and the JSON-LD moved together from one edit — but the
+`schemaDescription` strings restate prices in prose and had to move by hand,
+and eight meta descriptions and two FAQ mentions hardcode them. **Nothing in
+`session-log.md` or `service-tiers.md` §9 was touched:** "the audit went from
+£30 to £125" is a statement about a date and rewriting it would falsify the
+record. `audit-method.md` §1 was date-stamped rather than renumbered — its
+reasoning was correct at £125 and only strengthens at £250.
+
+**`third-party-services.md` needed arithmetic, not substitution.** Its card
+fees are computed from the amounts: 1.0% + 20p on £125 is £1.45, but on £250
+it is £2.70, and the commercial rate goes £3.70 → £7.20. Twenty-four figures
+recomputed rather than swapped, including the monitoring-platform comparison
+(£23/month is 13–15% of £150 Maintain, not the 20–25% it was of £95).
+
+**Verified:** build clean at 7 pages, only the five new prices appear anywhere
+in the output, the JSON-LD offers read 250/800/150/400/700, and **both
+homepage code panels are still byte-identical to the JSON-LD in the head** —
+the property the site's whole argument rests on.
+
+**Not merged.** Publishing this changes a price in the structured data
+assistants read, where caches and third-party copies persist long after an
+edit — the reason `CLAUDE.md` asks for a sentence before a merge like this.
+Google's index is *still* carrying the £30/£350 prices from two repricings
+ago (`own-facts-check.md` 3.2), which is the live demonstration of how slowly
+this settles.
+
 ### 2026-08-05 (the technical audit, made runnable on somebody else's site)
 
 **The finding, from the owner's question: can we actually do the crawlability

@@ -105,21 +105,28 @@ type Plan = {
   schemaDescription: string;
 };
 
-/* Prices, repriced 2026-07-31. The reasoning is in `ops/service-tiers.md`
- * section 9; the short version is that the old ladder charged less per hour at
- * every step up, because it priced on question volume — which is pure cost to
- * us and no extra value to the client. The tiers now price on answer pages,
- * which are permanent assets, and question counts stop doubling.
+/* Prices, repriced 2026-08-05. The reasoning is in `ops/service-tiers.md`
+ * section 11. The short version: the 2026-07-31 ladder (125/750/95/250/495)
+ * was set against estimated effort, and the self-audit that followed showed
+ * the audit was worth materially more than £125 — four assistants, repeated
+ * runs, a diagnosis a person actually reads. Raising the audit left £95
+ * Maintain looking out of place beside it, so the whole ladder moved together.
  *
- * These are launch prices, set before the first sale on purpose: raising a
- * price on a client who is already paying it is a churn event, and the monthly
+ * Round numbers on purpose, decided by the owner 2026-08-05. Charm pricing
+ * (ending 5 or 9) is a mild sales tactic, and this is a business that has
+ * already refused founding rates, bundles and discounts on the grounds that
+ * they sit badly on a brand built on plain dealing. The prices should read the
+ * same way.
+ *
+ * These are still launch prices, set before the first sale on purpose: raising
+ * a price on a client already paying it is a churn event, and the monthly
  * plans have no minimum term by design. */
 export const oneOffs: Plan[] = [
   {
     id: 'audit',
     name: 'Audit',
     cadence: 'one-off',
-    price: 125,
+    price: 250,
     summary: 'A written report on where you show up today.',
     schemaDescription:
       'One-off written report on how AI assistants currently answer questions about your business, what they believe about you, and what is blocking you from being recommended.',
@@ -128,7 +135,7 @@ export const oneOffs: Plan[] = [
     id: 'foundation',
     name: 'Foundation',
     cadence: 'one-off',
-    price: 750,
+    price: 800,
     summary: 'The setup that makes your business readable to these systems.',
     schemaDescription:
       'One-off setup on your existing website: crawler access, structured data for your business, your facts made consistent across the web, and two permanent pages answering questions your customers ask AI assistants.',
@@ -140,28 +147,28 @@ export const monthlies: Plan[] = [
     id: 'maintain',
     name: 'Maintain',
     cadence: 'per month',
-    price: 95,
+    price: 150,
     summary: 'Stay found.',
     schemaDescription:
-      'Monthly plan to hold your position: ten questions your customers ask, put to the AI assistants five times each every month, with a written record of where you appeared and which questions you are still missing from. Business facts kept current and corrected when they drift. £95 per month.',
+      'Monthly plan to hold your position: ten questions your customers ask, put to the AI assistants five times each every month, with a written record of where you appeared and which questions you are still missing from. Business facts kept current and corrected when they drift. £150 per month.',
   },
   {
     id: 'grow',
     name: 'Grow',
     cadence: 'per month',
-    price: 250,
+    price: 400,
     summary: 'Get found more.',
     schemaDescription:
-      'Monthly plan to close the gaps: everything in Maintain across fifteen questions, plus one new permanent page each month answering a question you are currently missing from. £250 per month.',
+      'Monthly plan to close the gaps: everything in Maintain across fifteen questions, plus one new permanent page each month answering a question you are currently missing from. £400 per month.',
   },
   {
     id: 'lead',
     name: 'Lead',
     cadence: 'per month',
-    price: 495,
+    price: 700,
     summary: 'Front of mind.',
     schemaDescription:
-      'Monthly plan for businesses that want to be the first name an assistant gives: twenty-five questions checked every month, two new permanent answer pages each month, and a quarterly written review of the competitors being named ahead of you and why. £495 per month.',
+      'Monthly plan for businesses that want to be the first name an assistant gives: twenty-five questions checked every month, two new permanent answer pages each month, and a quarterly written review of the competitors being named ahead of you and why. £700 per month.',
   },
 ];
 
@@ -174,7 +181,7 @@ export function plan(id: string): Plan {
   return found;
 }
 
-/** "£125", "£1,250" — prices on this site are always whole pounds. */
+/** "£250", "£1,250" — prices on this site are always whole pounds. */
 export function money(amount: number): string {
   return `£${amount.toLocaleString('en-GB')}`;
 }
