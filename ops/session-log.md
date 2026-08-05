@@ -54,18 +54,22 @@ with the facts that matter picked out.** Done, and the film is off the site.
   written-out block matching the JSON-LD in the head character for character
   when it finishes, hover, tap and keyboard focus on a marked line, skip,
   replay, reduced motion, and the page with scripting off entirely.
-- **Not merged, and deliberately so — the owner's instruction, 2026-08-05.**
-  The branch stays open and further website work lands on it first; everything
-  merges to `main` in one go at the end. The reason is Netlify: `main` is the
-  published branch, so every merge is a build, and a run of small merges spends
-  the build allowance on deploys nobody is waiting for. **Do not offer to merge
-  this branch on sight.** It is finished work parked on purpose, and the owner
-  says when it goes.
-- Worth knowing while it is parked: a zip dragged onto Netlify's drop zone runs
-  no build at all, so previewing that way costs nothing from the allowance. A
-  pull request, on the other hand, can trigger a deploy preview build on every
-  push — so if the branch is going to collect several more pieces of work,
-  leave it as a branch rather than opening a PR early.
+- **Merged to `main` at the owner's instruction.** The branch was parked for
+  about an hour first — the plan was to collect the other website changes in
+  progress and merge everything once, to spend fewer Netlify builds — and then
+  the owner reversed it: there are enough builds left before Friday's reset,
+  and a long-lived branch collecting unrelated work complicates more than it
+  saves. Merged as it stood.
+- **What the merge published:** the homepage hero, and nothing else. No
+  business fact, no price, no canonical, no `robots.txt` rule and no byte of
+  the JSON-LD the assistants read was touched — checked against `origin/main`
+  before merging, because a homepage change must not move a price or an email
+  address by accident. The 543KB of video stopped being served.
+- Worth keeping for next time: **a zip dragged onto Netlify's drop zone runs no
+  build at all**, so previewing a branch that way costs nothing from the
+  allowance. A pull request can trigger a deploy-preview build on every push,
+  so a branch that is going to collect several rounds of work is cheaper left
+  as a plain branch until it is ready.
 - **One bug worth remembering.** The first version followed the caret using
   `offsetTop`, which measures down the whole page rather than down the panel.
   On a desktop, where the panel sits near the top of the document, it was a few
