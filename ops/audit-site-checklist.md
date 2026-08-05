@@ -132,9 +132,16 @@ superficially reasonable:
   pages — the things the audit exists to find. There is no version of this
   where the clone is the fix.
 
-If access genuinely cannot be recovered, the honest answer is a new site,
-**referred out and quoted by somebody else** — see `ops/service-tiers.md` §10
-for why Wardith does not sell one.
+If access genuinely cannot be recovered, **say so plainly in the report and
+stop there.** Name what is wrong, what is missing, and what it would take —
+that list does not depend on us being the ones to act on it, and on this
+verdict it is the entire value of what they bought, so it has to be specific
+enough for a stranger to work from.
+
+**Do not recommend a developer, arrange one, or offer to manage the work.**
+We have no stake in who fixes it, and that is the point rather than a
+limitation — see `ops/service-tiers.md` §10. If they come back later with a
+site we can work on, the Foundation is there at its published price.
 
 ---
 

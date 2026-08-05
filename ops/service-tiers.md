@@ -495,91 +495,79 @@ three hours rather than one, this section gets rewritten, not defended.
 
 ---
 
-## 10. Building websites — recommended against, not yet decided
+## 10. We do not build websites, and we do not broker them
 
-**Status: a recommendation to the owner, raised 2026-08-05. Not settled, and
-not to be presented as settled.** Recorded here because the question will
-recur every time an audit hits a client whose site cannot be changed, and the
-reasoning should not have to be rebuilt from scratch each time.
+**Settled by the owner, 2026-08-05.** Not an open question.
 
-**The question.** A verdict B or C client is stuck: the developer has gone,
-or the platform will not accept the work. Should Wardith offer to build them
-a new site, for a separate fee, as an additional revenue line?
+**The question that raised it.** An audit reaches verdict B or C — the
+developer has gone, or the platform will not accept the work. Should Wardith
+sell them a new site, or arrange one?
 
-**The recommendation: no — refer it out, and keep the Foundation.** Four
-reasons, the first of which is decisive.
+**No to both.** We report what is wrong, in the report they already paid for,
+and they decide what to do next. We have no stake in who fixes it.
 
-### It puts a price on reaching verdict B or C
+### Why not sell one
 
-The audit's entire credibility rests on being willing to say "don't spend
-money" — promised on four pages of the site, and protected by §1 of
-`ops/audit-method.md`: *never soften a finding to protect a Foundation sale.*
+**It would put a price on reaching verdict B or C.** It attaches the largest
+fee in the business to the most pessimistic verdict the audit can reach — a
+judgement call made by the person who would be paid for it. Delivered
+honestly every single time, it is still unprovable from outside, which is
+fatal in a business whose product is trustworthy diagnosis. `audit-method.md`
+§1 already guards the mild version of this: *never soften a finding to protect
+a Foundation sale.* This would be the same tension with a much larger number
+on it.
 
-A rebuild offer inverts that. It attaches the **largest fee in the business**
-to the most pessimistic verdict the audit can reach, and that verdict is a
-judgement call made by the person who would be paid for it. Even delivered
-honestly every single time, it is unprovable from outside — which is the
-whole problem, because the product being sold is trustworthy diagnosis. It
-is structurally the thing the audit is sold to protect people from.
+Three supporting reasons, kept short because the first one decides it: it is a
+different skill and a different liability, on a business where the owner's
+time is the binding constraint (§6) and professional indemnity cover is still
+unbought; an unpublished service quoted after an audit cannot go in the
+JSON-LD, in a business whose pitch is that published prices are what let an
+assistant recommend you; and small-business web design is a commodity market
+we would be entering at a standing start.
 
-The Foundation has a mild version of this tension already. A rebuild is a
-much larger version of it, attached to a much larger number.
+### Why not broker one either
 
-### "Hidden" is the wrong shape for this business
+A referral pathway was drafted on 2026-08-05 — we specify what the new site
+must do, a developer builds it, we sell the Foundation on top — **and was
+scrapped the same day by the owner. The reasoning is worth keeping.**
 
-Every price Wardith charges is published, machine-readable, and generated
-from one source so the visible and machine versions cannot disagree. That
-consistency *is* the product demonstration.
+- **It is a solution to a client we do not have.** This scenario may not turn
+  up until the tenth, twentieth or thirtieth client. Building the process now
+  means guessing at its shape, which is the same mistake the runner was
+  deliberately deferred to avoid (`audit-method.md` §7: *written before audit
+  one it is a guess at a format; written after, it is a transcription of
+  something that worked*).
+- **It walks straight back into the conflict.** Having specified the site, we
+  would then sell a Foundation partly delivered by the build — and the client
+  would be right to ask what they were paying twice for. Every honest answer
+  to that question required a reduced scope, a reduced price and a
+  conversation held before the referral. That is a lot of machinery to make a
+  problem go away that we can simply not create.
+- **A referral is a stake.** Fee or no fee, recommending the builder makes us
+  a party to the build. With no professional indemnity cover and no
+  established developer relationship, that is liability for somebody else's
+  work.
 
-An unpublished service, quoted ad hoc after an audit, is the opposite of
-that. It cannot go in the JSON-LD, so it cannot be quoted by an assistant —
-in a business whose pitch is that published prices are what let an assistant
-recommend you. A service worth selling should be on the pricing page like
-everything else; if it would look wrong there, that is the finding.
+### What we do instead
 
-### It is a different business, and it eats the scarce resource
+**The audit still does its job.** What is wrong with the website, what is
+missing from it, and what it would take to fix — that does not depend on us
+being the ones to fix it. `ops/audit-site-checklist.md` groups 1, 2 and 4
+produce that list from the public URL alone, and the report names it whatever
+the verdict.
 
-Web design is a different delivery skill, a different time profile, and a
-different liability. §6 of this document already establishes that **the
-owner's time is the binding constraint on the whole business** and that in
-year one the priority is converting audits into Foundations. A rebuild is
-tens of hours against a Foundation's ten to twenty, spent on the client
-least likely to also buy a monthly plan.
+**The report is theirs to take anywhere.** `pricing.astro` already says so:
+*"You could act on it yourself, or take it to someone else, and it would still
+be worth having."* On a verdict B or C that stops being a nice line and
+becomes the entire value of what they bought — so it has to be true, and the
+report has to be specific enough for a stranger to act on.
 
-The liability step is real too. Adding structured data to a working site and
-being wrong is a marketing outcome. Rebuilding the site a business takes its
-enquiries through and being wrong is their livelihood — and professional
-indemnity cover is still listed as **not bought** in `ops/accounts.md`.
+**Then we stop.** No recommendation of who should do it, no offer to manage
+it, no follow-up. If they come back later with a site we can work on, the
+Foundation is there at its published price.
 
-### The referral is worth more than the rebuild anyway
-
-This is the part that makes "no" easy rather than principled.
-
-A client who cannot be helped is worth **£0**. A client referred to a
-developer, with Wardith specifying what the new site must do — static or
-server-rendered text, crawler access, schema-ready, the answer pages
-planned in — comes back as a **Foundation plus a monthly plan**, on a site
-built correctly the first time instead of retrofitted. That is better
-revenue than a one-off build fee, it recurs, and it costs a fraction of the
-hours.
-
-**So the rebuild is not the prize. The unblocked Foundation is.**
-
-### What this does not rule out
-
-- **Naming what the new site must do.** A one-page specification handed to
-  whoever builds it is Foundation-adjacent work, it protects the client, and
-  it is the reason the site comes back fixable.
-- **Recovering a site rather than rebuilding one.** Where the content is
-  retrievable and the obstacle is access, getting a client back into their
-  own hosting is closer to Foundation work than to web design.
-- **Revisiting this** if referrals repeatedly fail to produce a usable
-  developer, which would be evidence rather than an assumption.
-
-**What it does rule out:** an unpublished build service, quoted after an
-audit, by the person who wrote the verdict that justified it.
-
-**If the owner decides to do it anyway**, the one condition that removes most
-of the harm: **publish it on the pricing page like every other product**, so
-it is visible before the audit rather than revealed after it. Most of the
-objection above is about it being hidden, not about it existing.
+**This is a credibility asset, not a lost sale.** It is the clearest possible
+demonstration of the thing every page of the site claims: that the audit tells
+you the truth even when the truth earns us nothing. Advertised, per the
+owner's instruction on 2026-08-05 — see the FAQ entry "What if my website
+cannot be updated?"

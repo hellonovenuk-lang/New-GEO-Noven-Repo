@@ -123,27 +123,48 @@ hosting**, since hosting access is the master key and hands over database,
 theme and files together where developer access would not. Only then verdict B.
 
 **And the commercial question behind it: should we sell rebuilds as a separate
-revenue line?** Recommended against, written up as `service-tiers.md` §10 and
-**explicitly marked as a recommendation, not an owner decision** — unlike §9's
-bundling rule, this one has not been settled and must not be presented as if
-it had.
+revenue line? Settled by the owner: no — and no brokering them either.**
+`service-tiers.md` §10.
 
-The decisive argument: **it puts a price on reaching verdict B or C.** It
-attaches the largest fee in the business to the most pessimistic verdict the
-audit can reach, decided by the person who would be paid for it — unprovable
-from outside even when delivered honestly every time, in a business whose
-entire product is trustworthy diagnosis. Three supporting reasons: "hidden"
-is the wrong shape for a business whose pitch is published machine-readable
-prices (an unpublished service cannot go in the JSON-LD); it is a different
-skill, a different liability, and it eats the one constrained resource while
-PI insurance is still unbought; and **the referral is worth more than the
-rebuild anyway** — an unhelpable client is worth £0, a referred one comes back
-as a Foundation plus a monthly plan on a site built right the first time.
+**Not selling one** rests on one decisive argument: **it puts a price on
+reaching verdict B or C.** It attaches the largest fee in the business to the
+most pessimistic verdict the audit can reach, decided by the person who would
+be paid for it — unprovable from outside even when delivered honestly every
+time, in a business whose entire product is trustworthy diagnosis.
 
-Recorded with the escape hatch stated: if the owner wants it regardless, the
-condition that removes most of the harm is **publishing it on the pricing page
-like everything else**, so it is visible before the audit rather than revealed
-after it. Most of the objection is to it being hidden, not to it existing.
+**Not brokering one is the owner's correction to this session's first
+answer, and the better call.** A referral pathway was drafted — we specify
+what the new site must do, a developer builds it, we sell the Foundation on
+top — and scrapped the same day. Three reasons kept: it is **a solution to a
+client we do not have** (this may not turn up until the tenth or thirtieth
+client, and building the process now is guessing at its shape — the same
+mistake the runner was deliberately deferred to avoid); **it walks straight
+back into the conflict**, because having specified the site we would then sell
+a Foundation the build had partly delivered, and every honest fix for that
+needed a reduced scope, a reduced price and an awkward pre-referral
+conversation; and **a referral is a stake** — fee or no fee, recommending the
+builder makes us a party to the build, with no PI cover.
+
+The owner's framing, which is the right one: **if their website is
+inaccessible we simply tell them, and they decide what to do next.** The audit
+still names what is wrong and what is missing — that does not depend on us
+being the ones to fix it, and on a verdict B or C it *is* the entire value of
+what they bought, so the report has to be specific enough for a stranger to
+work from.
+
+**Published as a credibility asset, per the owner's instruction.** New FAQ
+entry, "What if my website cannot be updated?", carrying the line the pricing
+page already made but the FAQ never did — the report is theirs to hand to
+whoever does look after the site. Plus the independence claim, which is only
+true *because* of the two decisions above: **"we do not build websites, we do
+not recommend anyone who does, and we take nothing from anyone you choose. We
+have no stake in who fixes it."**
+
+**Build verified:** clean at 7 pages, FAQPage structured data parses, now 13
+questions, and the new answer is in the machine-readable copy an assistant
+reads as well as on the visible page — which is the coupling `faq.astro` is
+designed around and the reason anything added there is a publishing decision.
+**Not merged: this is on the branch, so nothing is live yet.**
 
 **Not verified live.** The script is unit-tested against local HTML strings
 (robots parsing with a named `Disallow` correctly overriding a catch-all
