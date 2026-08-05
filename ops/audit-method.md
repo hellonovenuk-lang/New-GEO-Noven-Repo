@@ -1,6 +1,6 @@
 # How we do the audit
 
-**Internal document.** Decides how the £125 audit is actually delivered: which
+**Internal document.** Decides how the £250 audit is actually delivered: which
 assistants we check, how many times, how we record it, what it costs us, and how
 long it is allowed to take. Written 2026-07-30.
 
@@ -25,11 +25,18 @@ Companion documents:
 
 The audit is sold as an honest diagnosis, and it has to be one. But it is worth
 being straight internally about the second thing it is: **the qualifier for the
-£750 Foundation.**
+£800 Foundation.**
 
 `ops/service-tiers.md` section 6 already establishes that the Foundation is the
 income in year one, and that converting audits into Foundations matters more
 than upgrading monthly clients.
+
+**Superseded on price, 2026-08-05: the audit is now £250 and the Foundation
+£800** (`ops/service-tiers.md` §11). The reasoning below was written at £125
+and is left as it stood rather than silently renumbered — it was correct at
+the time, and its conclusion only strengthens at the higher price. **Treat
+every £-per-hour figure in this section as a floor, not a current
+measurement.**
 
 **Revised 2026-07-31, when the audit went from £30 to £125.** This section used
 to argue that the audit was a loss leader that should not be judged as profitable
@@ -46,7 +53,7 @@ Three consequences that follow directly:
   don't need us" as an outcome, on four separate pages. An audit that never
   produces that outcome is a sales document, and the whole position collapses.
   The honest version converts better anyway, because it is the only reason
-  anyone pays a stranger £750 next.
+  anyone pays a stranger £800 next.
 - **The £125 has to be visible in the work.** At £30 a thin report was survivable
   because the price apologised for it. At £125 it is not. The things that justify
   the price are the ones a client can see: repeated runs rather than one, verbatim
@@ -121,10 +128,12 @@ section 4, which make the difference visible without arithmetic.
 Copilot answers are grounded in Bing's index. **If the client's site is not in
 Bing's index, Copilot cannot cite it, and that is a harder, more useful finding
 than any mention rate.** So the Copilot section of the report leans on the Bing
-Webmaster Tools check in `ops/audit-site-checklist.md` and treats the three hand
-runs as illustration. This is a better answer than the one we would have got
-from an API, and it is actionable — indexation is fixable, model behaviour is
-not.
+index check in `ops/audit-site-checklist.md` — **a public `site:{domain}`
+search, not Wardith's own Bing Webmaster Tools account**, which is registered
+against `wardith.co.uk` and has no visibility into a client's site unless that
+client separately grants it — and treats the three hand runs as illustration.
+This is a better answer than the one we would have got from an API, and it is
+actionable — indexation is fixable, model behaviour is not.
 
 ### Not checking Claude
 
@@ -322,7 +331,7 @@ change a price.
 | Anthropic | $10 per 1,000 searches | Standard token rates | Not used — see section 2 |
 
 **An audit's tool cost is about £1.20 at full rate, and closer to £0.60 while
-Google's free allowance covers it.** Against £125 that is a cost of goods of
+Google's free allowance covers it.** Against £250 that is a cost of goods of
 around 4%. This confirms the E2 conclusion with real numbers, and it settles the
 build-versus-buy question permanently at our volume: the cheapest monitoring
 subscription is £20–23 a month *per brand tracked*, which is most of the fee for
@@ -375,7 +384,7 @@ to reply, on top of the work below, inside a single day.
 
 **Time the classification step separately on the Noven run**, because it is the
 only figure here with no prior estimate behind it at all, and it is the one that
-decides whether the £125 holds.
+decides whether the £250 holds.
 
 ### The thing that decides whether this works
 
@@ -425,7 +434,7 @@ it waits for a paying client. **It does not have to, and it should not.**
    Noven", and that is exactly the baseline worth having, taken now while it is
    still true.
 4. **The report becomes the sample we show prospects.** "Here is what you get for
-   £125 — this is ours, including the bit where the assistants had never heard of
+   £250 — this is ours, including the bit where the assistants had never heard of
    us" is a genuinely strong answer to the FAQ's own question about having no
    case studies. It is honest, it is free, and it proves the deliverable exists.
 

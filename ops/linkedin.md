@@ -16,7 +16,7 @@ Noven business page"*.
 > to be pasted back into LinkedIn by the owner**, because only they can sign in.
 > Until that is done, LinkedIn is publishing prices that contradict the site —
 > on two pages that are crawled, cached and repeated by the assistants. This is
-> the exact defect we charge £125 to find on other people's businesses.
+> the exact defect we charge £250 to find on other people's businesses.
 > Tracked in `ops/own-facts-check.md`.
 
 **Otherwise closed.** The company page is live at
@@ -189,8 +189,8 @@ kept. Only the subject changes.
 > Noven does that work, for businesses that were never going to spend £400 a
 > month with an agency.
 >
-> £125 buys a written report on what the assistants say about you today and
-> what's in the way. £750 sets it right. From £95 a month keeps it that way,
+> £250 buys a written report on what the assistants say about you today and
+> what's in the way. £800 sets it right. From £150 a month keeps it that way,
 > with a written record of where you appeared and where you didn't. No minimum
 > term and no notice period — tell me before the next payment date and there
 > isn't one.
@@ -527,13 +527,13 @@ contradict anything else it reads.
 >
 > Noven does that work, at prices a small firm can justify.
 >
-> • Audit — £125, one-off. A written report on what the assistants say about you
+> • Audit — £250, one-off. A written report on what the assistants say about you
 > today, and what's in the way.
 >
-> • Foundation — £750, one-off. The setup that makes your business readable to
+> • Foundation — £800, one-off. The setup that makes your business readable to
 > these systems.
 >
-> • From £95 a month. Your customers' questions put to the assistants on a
+> • From £150 a month. Your customers' questions put to the assistants on a
 > schedule, with a written record of where you appeared and where you didn't.
 > Business facts kept current and corrected when they drift. No minimum term and
 > no notice period.
@@ -686,7 +686,7 @@ exactly.
 | Area served | United Kingdom | Site, company page About, your role description |
 | Email | hello@wardith.co.uk | Site contact page, company page About |
 | Legal status | Trading name of Kieran Smith, a sole trader | Site footer, company page About |
-| Prices | £125 / £750 / £95 / £250 / £495 | Site pricing page, both About sections |
+| Prices | £250 / £800 / £150 / £400 / £700 | Site pricing page, both About sections |
 | Cancellation | No minimum term, no notice period | Site (three places), both About sections |
 | Website | `https://wardith.co.uk` | Company page, your contact info |
 | Founder → business | Profile links to the page; page links to the site; site's `sameAs` links back to both | All three |

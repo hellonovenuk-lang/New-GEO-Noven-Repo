@@ -11,6 +11,236 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-05 (the second repricing — 250 / 800 / 150 / 400 / 700)
+
+**Audit £125 → £250. Foundation £750 → £800. Maintain £95 → £150, Grow £250 →
+£400, Lead £495 → £700.** Scope unchanged everywhere. Confirmed by the owner
+before the copy was applied. Full reasoning in `ops/service-tiers.md` §11;
+§9 is left untouched as the record of the 2026-07-31 repricing.
+
+**What prompted it.** §9 set the old prices against *estimated* effort and
+said so: *"these prices work only if delivery cost matches them, and delivery
+cost is currently an estimate."* The self-audit then produced a real
+deliverable — 228 answers, four assistants, repeated runs, a written
+diagnosis — and against that £125 was low enough to misrepresent the product.
+**Then Maintain became the problem rather than the audit:** the owner's read
+was that a buyer paying £250 for an audit and the best part of £800 for a
+Foundation would question a two-digit monthly fee, which is why the whole
+ladder moved rather than just the top.
+
+**A cost argument was made and then withdrawn, and that matters.** The alarm
+came from the self-audit's OpenAI figure ($12.63 for ~75 queries against an
+estimate of ~£1.20 per 150) and was extrapolated across all three providers.
+The owner then supplied the missing totals — **Gemini 86p for 70 queries,
+Perplexity $0.51 for ~70** — and the extrapolation was wrong: OpenAI is
+10–20× the other two and was driving the whole figure. **Maintain's real tool
+cost is about £7.50 a month, 5% of the new price. There was no cost crisis.**
+Recorded in §11 explicitly, because a future session reading only the first
+half of that exchange would reach the opposite conclusion.
+
+**So this is priced on the value of the work, not on costs** — and if it had
+been cost-driven the right fix would have been cheaper queries, not higher
+prices.
+
+**Round numbers, decided by the owner.** A 245 / 795 / 150 / 385 / 675 ladder
+was on the table and left Maintain as the only number not ending in 5. Both
+fixes were coherent; the owner took the round one, and it is the better fit —
+**charm pricing is a mild sales tactic, and this business has already refused
+founding rates, bundles and referral discounts** on the grounds that they sit
+badly on a brand built on plain dealing.
+
+**Applied across 14 files, and the historical/current distinction was the
+whole job.** `business.ts` is the single source, so the pricing page, the
+five `Offer` objects and the JSON-LD moved together from one edit — but the
+`schemaDescription` strings restate prices in prose and had to move by hand,
+and eight meta descriptions and two FAQ mentions hardcode them. **Nothing in
+`session-log.md` or `service-tiers.md` §9 was touched:** "the audit went from
+£30 to £125" is a statement about a date and rewriting it would falsify the
+record. `audit-method.md` §1 was date-stamped rather than renumbered — its
+reasoning was correct at £125 and only strengthens at £250.
+
+**`third-party-services.md` needed arithmetic, not substitution.** Its card
+fees are computed from the amounts: 1.0% + 20p on £125 is £1.45, but on £250
+it is £2.70, and the commercial rate goes £3.70 → £7.20. Twenty-four figures
+recomputed rather than swapped, including the monitoring-platform comparison
+(£23/month is 13–15% of £150 Maintain, not the 20–25% it was of £95).
+
+**Verified:** build clean at 7 pages, only the five new prices appear anywhere
+in the output, the JSON-LD offers read 250/800/150/400/700, and **both
+homepage code panels are still byte-identical to the JSON-LD in the head** —
+the property the site's whole argument rests on.
+
+**Not merged.** Publishing this changes a price in the structured data
+assistants read, where caches and third-party copies persist long after an
+edit — the reason `CLAUDE.md` asks for a sentence before a merge like this.
+Google's index is *still* carrying the £30/£350 prices from two repricings
+ago (`own-facts-check.md` 3.2), which is the live demonstration of how slowly
+this settles.
+
+### 2026-08-05 (the technical audit, made runnable on somebody else's site)
+
+**The finding, from the owner's question: can we actually do the crawlability
+and technical half of the audit from just a client's URL?** Reading the filled
+self-audit checklist back, the honest answer was no — not as the method was
+written. The Noven run leaned on four things a client audit will never have:
+
+- **robots.txt read from the source repo** (`site/public/robots.txt`), not
+  fetched live. The session's own network policy blocked outbound fetches, so
+  source access silently substituted for the check.
+- **Password walls, redirect rules, header rules, CDN presence and edge
+  functions read off the Netlify dashboard** — our own hosting account.
+- **JSON-LD "validity" reasoned from knowing the code that generates it**
+  ("malformed JSON is structurally unlikely"), not from parsing live output.
+- **Google's "can be indexed" answer from Search Console URL Inspection**,
+  which needs verified ownership of the domain.
+
+None of that was wrong for a self-audit — it is *more* reliable than a blind
+fetch. The problem was that `audit-site-checklist.md` didn't mark any of it as
+self-audit-only, so it read as a list anyone could run on a client. Left
+alone, the first client audit discovers this at the worst possible moment.
+
+**Built `ops/site-check/site_check.py`** — stdlib-only, no API keys, no
+per-query cost, so unlike `audit_query.py` it is a reusable tool rather than a
+per-audit throwaway. It sits beside `ops/name-check/` as the second tool in
+that shape. It does groups 1 and 2 from the public URL alone: robots.txt
+fetched and parsed with Python's own `robotparser` against every crawler name
+the checklist lists, homepage fetch with a non-browser UA, redirect chain
+logged, login-wall and challenge-page and CDN signals, JS-shell word-count
+heuristic, sitemap fetch and XML parse, JSON-LD extraction with `@type`
+inventory and common-field presence. Hard request cap (default 8), and no
+default output path inside the repo — `--out` points at the client's own
+folder, per `audit-method.md` §5.
+
+**The dashboard checks are approximated from outside rather than dropped**,
+and that is arguably the better test: what an unauthenticated crawler actually
+meets, not what a config file claims. Recorded because the instinct would be
+to treat the external version as a downgrade.
+
+**What deliberately stays manual, and is now written down as such:** the
+`site:` index searches (scraping results pages is fragile and against those
+providers' terms), Search Console URL Inspection (client-granted access, an
+optional upgrade), all of group 3's off-site half, group 4 entirely, and
+"does the page state a price / name real towns" — a regex hunting for `£` out
+of context is the invented precision `CLAUDE.md` rules out.
+
+**Every group 1 and 2 item is now tagged** `[script]` / `[public]` /
+`[client access]` / `[read]`, so the distinction can't rot back out.
+
+**One wording bug fixed on the way.** `audit-method.md` §2 said the Copilot
+section "leans on the Bing Webmaster Tools check". It doesn't — the check
+actually performed was a public `site:` search. Wardith's Bing Webmaster Tools
+and Search Console accounts are registered against `wardith.co.uk` and can see
+nothing on a client's domain. As written it invited a future session to think
+a client audit needs webmaster access it will never have. Both files now say
+public search, with the upgrade path named separately.
+
+**Then, from a second owner question: how do we find out what built their
+site?** The checklist had a "site platform, if identifiable" field and a
+strong note that it matters — "decides whether the Foundation is an afternoon
+or a negotiation with somebody else's web person" — but no method for
+identifying it and no mapping from platform to what we actually ask for. The
+script was fetching the exact HTML that gives it away and throwing it out.
+
+**Platform fingerprinting added** — WordPress, Wix, Squarespace, Shopify,
+GoDaddy Website Builder, Webflow, Duda, Weebly, Drupal, Joomla and the static
+site generators, from generator tags, asset CDNs and vendor headers. Hosting
+(Netlify, Vercel, GitHub Pages, Cloudflare Pages) is reported separately
+because it answers a different question: those mean a developer exists, so
+access is a deploy path, not a login. Tested across eight shapes including
+GoDaddy detected from `wsimg.com` alone with no generator tag, and a layered
+WordPress+Shopify page correctly declining to pick one.
+
+**The distinction that was worth writing down, and that the old single field
+hid: the platform sets the technical ceiling; the relationship sets what's
+actually available.** A WordPress site on an agency maintenance contract is
+the most capable platform on the list and still a verdict B. Capability is
+not access. The checklist now asks both, and carries a platform table mapping
+each to who holds the keys, what to request, and the likely A/B/C verdict.
+
+**GoDaddy Website Builder is flagged as the dangerous one** — limited
+custom-code and head access, so part of the Foundation may be undeliverable.
+Establish what its editor accepts *before* quoting, not after taking £795.
+
+**Plan-tier limits are deliberately not pinned to named plans** (Wix,
+Squarespace and Weebly all gate code injection behind paid tiers, and those
+tiers get renamed). A wrong specific in an ops file gets quoted at a client
+months later. The instruction is to check their actual plan on the day.
+
+**Access guidance lives in the checklist only, not in the script** — one copy,
+per `service-tiers.md` §4's warning that two copies in two files is the
+mechanism by which documentation goes stale. The script names the platform and
+points at the table.
+
+**Third question, on the back of the platform work: if the developer has gone,
+could we rebuild the site from a crawl?** Answered no, and the reasoning is now
+in the checklist under "When the developer has gone" rather than left in a
+conversation. Three separate grounds: a mirror captures output not source (no
+server-side code, no database, and close to nothing at all on a JS-rendered
+site — *the sites easiest to clone are the ones that needed it least*); under
+UK law copyright sits with the author by default, so **paying a freelance
+developer for a website does not transfer it without a written signed
+assignment**, which small-business web jobs routinely lack; and a faithful copy
+faithfully reproduces the exact problems the audit exists to find.
+
+**Added the recovery order that comes first**, because verdict B was being
+reached too early. Check **who owns the domain** — if it is in the developer's
+name that outranks everything else in the audit — then **who is billed for
+hosting**, since hosting access is the master key and hands over database,
+theme and files together where developer access would not. Only then verdict B.
+
+**And the commercial question behind it: should we sell rebuilds as a separate
+revenue line? Settled by the owner: no — and no brokering them either.**
+`service-tiers.md` §10.
+
+**Not selling one** rests on one decisive argument: **it puts a price on
+reaching verdict B or C.** It attaches the largest fee in the business to the
+most pessimistic verdict the audit can reach, decided by the person who would
+be paid for it — unprovable from outside even when delivered honestly every
+time, in a business whose entire product is trustworthy diagnosis.
+
+**Not brokering one is the owner's correction to this session's first
+answer, and the better call.** A referral pathway was drafted — we specify
+what the new site must do, a developer builds it, we sell the Foundation on
+top — and scrapped the same day. Three reasons kept: it is **a solution to a
+client we do not have** (this may not turn up until the tenth or thirtieth
+client, and building the process now is guessing at its shape — the same
+mistake the runner was deliberately deferred to avoid); **it walks straight
+back into the conflict**, because having specified the site we would then sell
+a Foundation the build had partly delivered, and every honest fix for that
+needed a reduced scope, a reduced price and an awkward pre-referral
+conversation; and **a referral is a stake** — fee or no fee, recommending the
+builder makes us a party to the build, with no PI cover.
+
+The owner's framing, which is the right one: **if their website is
+inaccessible we simply tell them, and they decide what to do next.** The audit
+still names what is wrong and what is missing — that does not depend on us
+being the ones to fix it, and on a verdict B or C it *is* the entire value of
+what they bought, so the report has to be specific enough for a stranger to
+work from.
+
+**Published as a credibility asset, per the owner's instruction.** New FAQ
+entry, "What if my website cannot be updated?", carrying the line the pricing
+page already made but the FAQ never did — the report is theirs to hand to
+whoever does look after the site. Plus the independence claim, which is only
+true *because* of the two decisions above: **"we do not build websites, we do
+not recommend anyone who does, and we take nothing from anyone you choose. We
+have no stake in who fixes it."**
+
+**Build verified:** clean at 7 pages, FAQPage structured data parses, now 13
+questions, and the new answer is in the machine-readable copy an assistant
+reads as well as on the visible page — which is the coupling `faq.astro` is
+designed around and the reason anything added there is a publishing decision.
+**Not merged: this is on the branch, so nothing is live yet.**
+
+**Not verified live.** The script is unit-tested against local HTML strings
+(robots parsing with a named `Disallow` correctly overriding a catch-all
+`Allow`, JSON-LD parse and field inventory, JS-shell detection firing on an
+empty body and not on a real page) but this sandbox blocks outbound fetches —
+the same limit that caused the original problem. **It needs one real run from
+the owner's machine against `wardith.co.uk`**, where the self-audit already
+recorded the ground truth by hand, and then against one arbitrary
+small-business site, which is the real test of whether it survives messier
+robots.txt and malformed JSON-LD than our own site produces.
 ### 2026-08-05 (the hero record, written out line by line)
 
 **The owner asked for the animation to go and the code to come back — this

@@ -5,7 +5,7 @@ import { business, plan, money, monthlies, offerSchema } from '../data/business'
 
 const title = 'Pricing — Wardith';
 const description =
-  'Wardith pricing in plain numbers: a £125 audit, a £750 one-off Foundation setup, and ongoing monthly plans at £95 (Maintain), £250 (Grow) and £495 (Lead). No lock-ins.';
+  'Wardith pricing in plain numbers: a £250 audit, an £800 one-off Foundation setup, and ongoing monthly plans at £150 (Maintain), £400 (Grow) and £700 (Lead). No lock-ins.';
 
 const audit = plan('audit');
 const foundation = plan('foundation');
@@ -19,7 +19,7 @@ const serviceSchema = {
   provider: { '@id': new URL('/#organization', Astro.site).href },
   areaServed: business.areaServed,
   description:
-    'One service in three stages: a £125 audit of how AI assistants currently answer questions about your business, a £750 one-off Foundation setup that makes your business readable and credible to those systems, and ongoing monthly plans that keep you visible.',
+    'One service in three stages: a £250 audit of how AI assistants currently answer questions about your business, an £800 one-off Foundation setup that makes your business readable and credible to those systems, and ongoing monthly plans that keep you visible.',
   offers: offerSchema(),
 };
 

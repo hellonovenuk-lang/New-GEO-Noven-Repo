@@ -37,7 +37,7 @@ means the business is allowed to pay for the things it sells, out of what it
 sold them for — which is how a service business is supposed to work, and it
 takes the biggest risk in this plan off the table.
 
-**The £125 audit funds its own delivery several times over.** The worst
+**The £250 audit funds its own delivery several times over.** The worst
 recorded tool cost is OpenAI at $12.63 for ~75 queries; even at three
 providers and a fuller question set, an audit's API cost is a fraction of its
 price. So a client who pays on 15 August pays for the API credit that delivers
@@ -193,7 +193,7 @@ served on an empty balance. Get the three real totals off the dashboards,
 work out the true per-audit cost, and fund accordingly — with the caps from
 `ops/audit-setup.md` §4 (£10 each was the plan; the real numbers may move it).
 
-It also puts a question against the £95 Maintain price, which was set against
+It also puts a question against the £150 Maintain price, which was set against
 the wrong estimate. **Not a decision for this window** — do not reprice while
 launching — but it needs answering before the first monthly client renews.
 
