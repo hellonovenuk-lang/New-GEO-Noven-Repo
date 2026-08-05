@@ -309,6 +309,96 @@ def check_structured_data(html):
     }
 
 
+# How a platform gives itself away. Each entry: (label, [html markers],
+# [header names]). Matching is case-insensitive substring — crude on purpose,
+# because these are strings vendors put in their own output and they don't
+# need parsing to be recognised.
+#
+# THESE GO STALE. Vendors rename CDNs and drop generator tags. A miss means
+# "unknown", never "bespoke" — the script says so in the output, and
+# audit-site-checklist.md's platform table is where the consequences live.
+# Do not duplicate that guidance here; one copy, per service-tiers.md section 4.
+PLATFORM_SIGNALS = [
+    ("WordPress", ["/wp-content/", "/wp-includes/", "wp-json", 'content="wordpress'], ["x-pingback"]),
+    ("Wix", ["wixstatic.com", "wix.com website builder", "_wixcssimports"], ["x-wix-request-id", "x-wix-published-version"]),
+    ("Squarespace", ["squarespace.com", "squarespace-cdn.com", "static1.squarespace.com"], []),
+    ("Shopify", ["cdn.shopify.com", "shopify.theme", "myshopify.com"], ["x-shopid", "x-shopify-stage"]),
+    ("GoDaddy Website Builder", ["img1.wsimg.com", "starfield technologies", "wsimg.com"], []),
+    ("Webflow", ["assets.website-files.com", "website-files.com", "data-wf-page", 'content="webflow'], []),
+    ("Duda", ["irp.cdn-website.com", "static.cdn-website.com", 'content="duda'], []),
+    ("Weebly", ["editmysite.com", 'content="weebly'], []),
+    ("Drupal", ["/sites/default/files/", 'content="drupal'], ["x-generator"]),
+    ("Joomla", ['content="joomla'], []),
+]
+
+# Where it's served from. Not the same question as what built it, and useful
+# for a different reason: these say a developer was involved, so the access
+# conversation is about a deploy path and a repository, not a CMS login.
+HOSTING_SIGNALS = [
+    ("Netlify", [], ["x-nf-request-id"]),
+    ("Vercel", [], ["x-vercel-id", "x-vercel-cache"]),
+    ("GitHub Pages", [], ["x-github-request-id"]),
+    ("Cloudflare Pages", [], ["cf-ray"]),
+]
+
+# Static site generators. Their presence is strong evidence of a bespoke,
+# developer-built site — which is an access question about people, not plans.
+SSG_MARKERS = ["astro", "hugo", "next.js", "gatsby", "jekyll", "eleventy", "nuxt"]
+
+
+def check_platform(html, headers):
+    haystack = html.lower()
+    header_keys = {k.lower(): v for k, v in headers.items()}
+
+    def matches(markers, header_names):
+        hits = [m for m in markers if m in haystack]
+        hits += [f"header:{h}" for h in header_names if h in header_keys]
+        return hits
+
+    platforms = []
+    for label, markers, header_names in PLATFORM_SIGNALS:
+        hits = matches(markers, header_names)
+        if hits:
+            platforms.append({"platform": label, "signals": hits})
+
+    hosting = []
+    for label, markers, header_names in HOSTING_SIGNALS:
+        hits = matches(markers, header_names)
+        if hits:
+            hosting.append({"host": label, "signals": hits})
+
+    generator = re.search(r'(?is)<meta[^>]+name=["\']generator["\'][^>]+content=["\'](.*?)["\']', html)
+    generator_text = generator.group(1).strip() if generator else None
+
+    ssg = []
+    if generator_text:
+        low = generator_text.lower()
+        ssg = [s for s in SSG_MARKERS if s in low]
+
+    return {
+        "generator_meta_tag": generator_text,
+        "platforms_detected": platforms,
+        "hosting_detected": hosting,
+        "static_site_generator_signals": ssg,
+        "verdict": (
+            platforms[0]["platform"] if len(platforms) == 1
+            else "multiple signals — read them" if len(platforms) > 1
+            else "developer-built (static site generator)" if ssg
+            else "unknown"
+        ),
+        "note": (
+            "Signals, not proof, and they go stale — vendors rename CDNs and "
+            "drop generator tags. 'unknown' means not detected, NOT 'bespoke': "
+            "a hand-built site and an unrecognised builder look identical from "
+            "here. Multiple platforms is normal and real (a Shopify store on a "
+            "WordPress site, a builder behind a CDN). What each platform means "
+            "for the Foundation access ask is in audit-site-checklist.md's "
+            "platform table — deliberately not repeated here, so the two can't "
+            "drift apart."
+        ),
+    }
+
+
 def check_page_meta(html):
     title = re.search(r"(?is)<title[^>]*>(.*?)</title>", html)
     h1s = re.findall(r"(?is)<h1[^>]*>(.*?)</h1>", html)
@@ -377,6 +467,9 @@ def run(url, cap, timeout):
         "note": "Homepage body unavailable — see homepage_access.fetch_error."
     }
     report["page_meta"] = check_page_meta(homepage["body"]) if homepage["body"] else {}
+    report["platform"] = check_platform(homepage["body"], homepage["headers"]) if homepage["body"] else {
+        "note": "Homepage body unavailable — see homepage_access.fetch_error."
+    }
 
     declared_sitemaps = report["robots"].get("sitemaps_declared", [])
     report["sitemap"] = check_sitemap(fetcher, origin, declared_sitemaps)
@@ -417,6 +510,14 @@ def summarise(report):
         lines.append(f"structured data: {sd['blocks_found']} JSON-LD block(s), {sd['blocks_parsed_ok']} parsed OK, types: {sd['types_found'] or 'none'}")
         if sd["common_fields_absent"]:
             lines.append(f"  fields absent from the graph: {sd['common_fields_absent']}")
+
+    pf = report.get("platform", {})
+    if pf.get("verdict"):
+        lines.append(f"platform: {pf['verdict']}"
+                     + (f" (generator tag: {pf['generator_meta_tag']})" if pf.get("generator_meta_tag") else ""))
+        if pf.get("hosting_detected"):
+            lines.append(f"  hosted on: {', '.join(h['host'] for h in pf['hosting_detected'])}")
+        lines.append("  -> access implications: see the platform table in audit-site-checklist.md")
 
     sm = report["sitemap"]
     if sm.get("valid_xml"):

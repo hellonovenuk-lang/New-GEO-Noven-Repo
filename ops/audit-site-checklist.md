@@ -49,12 +49,45 @@ still owes is the *how* of doing the work and the access question, not the
 - [ ] Town / area served: .....................................................
 - [ ] What they want to be found for: .........................................
 - [ ] Site platform, if identifiable (WordPress, Wix, Squarespace, Shopify,
-      GoDaddy, custom, unknown): .............................................
+      GoDaddy, custom, unknown): ............................................. `[script]`
+- [ ] Who actually controls it — the owner, an agency, a franchise/trade-body
+      template, or a web person who has since disappeared: ................... `[ask]`
 
 **The platform matters more than it looks** and is worth thirty seconds. It
 decides whether the Foundation is an afternoon or a negotiation with somebody
 else's web person — and on a few platforms it decides whether the Foundation is
 possible at all. See the verdicts at the end.
+
+`ops/site-check/site_check.py` now names the platform from the homepage's own
+markup — generator tag, asset CDN, vendor headers — so this field is filled
+before the call rather than guessed during it.
+
+### Platform, and what it means for the access ask
+
+**Two different questions, and this checklist used to run them together.**
+*The platform sets the technical ceiling — what is possible at all.* *The
+relationship sets what is actually available — who will hand over the keys.*
+A WordPress site on an agency maintenance contract is the most capable
+platform on this list and still a verdict B, because capability is not
+access. Ask both.
+
+| Detected | Who usually holds the keys | What to ask for | Usual verdict |
+|---|---|---|---|
+| **WordPress** (self-hosted) | Owner, or their web person | Admin login; Editor plus a structured-data plugin is often enough | **A** — best case. Full control of head, schema and new pages |
+| **Shopify** | Owner | A staff account with theme access | **A** — `theme.liquid` takes the schema, pages are native |
+| **Wix** | Owner | Add us under their Roles & Permissions | **A**, *if* their plan allows custom code — **verify on their plan, don't assume** |
+| **Squarespace** | Owner | Contributor invite | **A**, same plan caveat — code injection is a paid-tier feature |
+| **Weebly / Duda** | Owner, sometimes a reseller | Contributor access | **A** with the same plan caveat; Duda is often resold by an agency, so check who invoices them |
+| **Webflow** | Often a designer, not the owner | Publish rights on the project | **A or B** — capable platform, but the seat is frequently held by whoever built it |
+| **GoDaddy Website Builder** | Owner | Login, and check what the editor will actually accept | **B, sometimes C.** The restrictive one: limited custom-code and head access. **Establish what can be injected before quoting a Foundation** — this is the platform most likely to make part of the work undeliverable |
+| **Developer-built** (Astro/Hugo/Next/Gatsby on Netlify/Vercel/GitHub Pages) | A developer | A deploy path — repo access or a build hook. Not a CMS login; there isn't one | **A if the developer is still around, B if they've gone.** Technically the most capable, and the access question is entirely about a person |
+| **Franchise / trade-body template** | The franchisor or trade body | Ask whether local changes survive a master redeploy | **B or C** — `ops/service-tiers.md` §3 already names these: a master redeploy silently wipes our page |
+| **unknown** | — | Ask them who built it and who maintains it | Don't guess. "Unknown" from the script means *not detected*, not *bespoke* |
+
+**The plan-tier caveats are deliberately not pinned to a named plan here.**
+Vendors rename and re-gate their tiers, and a wrong specific in this file
+would be quoted at a client months later. Check what *their* plan allows, on
+the day, and record it in the row above.
 
 ---
 

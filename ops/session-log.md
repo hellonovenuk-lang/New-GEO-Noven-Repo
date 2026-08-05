@@ -68,6 +68,43 @@ nothing on a client's domain. As written it invited a future session to think
 a client audit needs webmaster access it will never have. Both files now say
 public search, with the upgrade path named separately.
 
+**Then, from a second owner question: how do we find out what built their
+site?** The checklist had a "site platform, if identifiable" field and a
+strong note that it matters — "decides whether the Foundation is an afternoon
+or a negotiation with somebody else's web person" — but no method for
+identifying it and no mapping from platform to what we actually ask for. The
+script was fetching the exact HTML that gives it away and throwing it out.
+
+**Platform fingerprinting added** — WordPress, Wix, Squarespace, Shopify,
+GoDaddy Website Builder, Webflow, Duda, Weebly, Drupal, Joomla and the static
+site generators, from generator tags, asset CDNs and vendor headers. Hosting
+(Netlify, Vercel, GitHub Pages, Cloudflare Pages) is reported separately
+because it answers a different question: those mean a developer exists, so
+access is a deploy path, not a login. Tested across eight shapes including
+GoDaddy detected from `wsimg.com` alone with no generator tag, and a layered
+WordPress+Shopify page correctly declining to pick one.
+
+**The distinction that was worth writing down, and that the old single field
+hid: the platform sets the technical ceiling; the relationship sets what's
+actually available.** A WordPress site on an agency maintenance contract is
+the most capable platform on the list and still a verdict B. Capability is
+not access. The checklist now asks both, and carries a platform table mapping
+each to who holds the keys, what to request, and the likely A/B/C verdict.
+
+**GoDaddy Website Builder is flagged as the dangerous one** — limited
+custom-code and head access, so part of the Foundation may be undeliverable.
+Establish what its editor accepts *before* quoting, not after taking £795.
+
+**Plan-tier limits are deliberately not pinned to named plans** (Wix,
+Squarespace and Weebly all gate code injection behind paid tiers, and those
+tiers get renamed). A wrong specific in an ops file gets quoted at a client
+months later. The instruction is to check their actual plan on the day.
+
+**Access guidance lives in the checklist only, not in the script** — one copy,
+per `service-tiers.md` §4's warning that two copies in two files is the
+mechanism by which documentation goes stale. The script names the platform and
+points at the table.
+
 **Not verified live.** The script is unit-tested against local HTML strings
 (robots parsing with a named `Disallow` correctly overriding a catch-all
 `Allow`, JSON-LD parse and field inventory, JS-shell detection firing on an

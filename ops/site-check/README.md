@@ -63,6 +63,25 @@ Straight from checklist groups 1 and 2:
   key exists somewhere in the graph, not that the value is right or matches
   the visible page — that comparison is still a human job.
 - **Title, H1, meta description** — extracted for a quick read.
+- **What built the site** — WordPress, Wix, Squarespace, Shopify, GoDaddy
+  Website Builder, Webflow, Duda, Weebly, Drupal, Joomla, or a static site
+  generator, identified from the generator tag, asset CDNs and vendor
+  response headers. Hosting (Netlify, Vercel, GitHub Pages, Cloudflare
+  Pages) is reported separately, because it answers a different question:
+  those say a developer was involved, so the access conversation is about a
+  deploy path rather than a login.
+
+  **This fills the checklist's "site platform" field before the call instead
+  of guessing during it, and it drives the access ask.** What each platform
+  means — who usually holds the keys, what to request, and the likely A/B/C
+  verdict — is the platform table in `ops/audit-site-checklist.md`. It is
+  deliberately not repeated in the script or here, so the two can't drift
+  apart.
+
+  Two honest limits. **"Unknown" means not detected, never "bespoke"** — a
+  hand-built site and an unrecognised builder look identical from outside.
+  And **fingerprints go stale**: vendors rename CDNs and drop generator
+  tags, so treat a miss as a prompt to ask, not as a finding.
 
 ## What this doesn't tell you
 
