@@ -54,6 +54,18 @@ with the facts that matter picked out.** Done, and the film is off the site.
   written-out block matching the JSON-LD in the head character for character
   when it finishes, hover, tap and keyboard focus on a marked line, skip,
   replay, reduced motion, and the page with scripting off entirely.
+- **Not merged, and deliberately so — the owner's instruction, 2026-08-05.**
+  The branch stays open and further website work lands on it first; everything
+  merges to `main` in one go at the end. The reason is Netlify: `main` is the
+  published branch, so every merge is a build, and a run of small merges spends
+  the build allowance on deploys nobody is waiting for. **Do not offer to merge
+  this branch on sight.** It is finished work parked on purpose, and the owner
+  says when it goes.
+- Worth knowing while it is parked: a zip dragged onto Netlify's drop zone runs
+  no build at all, so previewing that way costs nothing from the allowance. A
+  pull request, on the other hand, can trigger a deploy preview build on every
+  push — so if the branch is going to collect several more pieces of work,
+  leave it as a branch rather than opening a PR early.
 - **One bug worth remembering.** The first version followed the caret using
   `offsetTop`, which measures down the whole page rather than down the panel.
   On a desktop, where the panel sits near the top of the document, it was a few
