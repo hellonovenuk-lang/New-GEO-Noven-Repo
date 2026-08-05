@@ -105,6 +105,46 @@ per `service-tiers.md` §4's warning that two copies in two files is the
 mechanism by which documentation goes stale. The script names the platform and
 points at the table.
 
+**Third question, on the back of the platform work: if the developer has gone,
+could we rebuild the site from a crawl?** Answered no, and the reasoning is now
+in the checklist under "When the developer has gone" rather than left in a
+conversation. Three separate grounds: a mirror captures output not source (no
+server-side code, no database, and close to nothing at all on a JS-rendered
+site — *the sites easiest to clone are the ones that needed it least*); under
+UK law copyright sits with the author by default, so **paying a freelance
+developer for a website does not transfer it without a written signed
+assignment**, which small-business web jobs routinely lack; and a faithful copy
+faithfully reproduces the exact problems the audit exists to find.
+
+**Added the recovery order that comes first**, because verdict B was being
+reached too early. Check **who owns the domain** — if it is in the developer's
+name that outranks everything else in the audit — then **who is billed for
+hosting**, since hosting access is the master key and hands over database,
+theme and files together where developer access would not. Only then verdict B.
+
+**And the commercial question behind it: should we sell rebuilds as a separate
+revenue line?** Recommended against, written up as `service-tiers.md` §10 and
+**explicitly marked as a recommendation, not an owner decision** — unlike §9's
+bundling rule, this one has not been settled and must not be presented as if
+it had.
+
+The decisive argument: **it puts a price on reaching verdict B or C.** It
+attaches the largest fee in the business to the most pessimistic verdict the
+audit can reach, decided by the person who would be paid for it — unprovable
+from outside even when delivered honestly every time, in a business whose
+entire product is trustworthy diagnosis. Three supporting reasons: "hidden"
+is the wrong shape for a business whose pitch is published machine-readable
+prices (an unpublished service cannot go in the JSON-LD); it is a different
+skill, a different liability, and it eats the one constrained resource while
+PI insurance is still unbought; and **the referral is worth more than the
+rebuild anyway** — an unhelpable client is worth £0, a referred one comes back
+as a Foundation plus a monthly plan on a site built right the first time.
+
+Recorded with the escape hatch stated: if the owner wants it regardless, the
+condition that removes most of the harm is **publishing it on the pricing page
+like everything else**, so it is visible before the audit rather than revealed
+after it. Most of the objection is to it being hidden, not to it existing.
+
 **Not verified live.** The script is unit-tested against local HTML strings
 (robots parsing with a named `Disallow` correctly overriding a catch-all
 `Allow`, JSON-LD parse and field inventory, JS-shell detection firing on an

@@ -492,3 +492,94 @@ that can be set without cost.
 matches them, and delivery cost is currently an estimate. The self-audit
 (`ops/audit-setup.md`) produces the real numbers. If Maintain turns out to take
 three hours rather than one, this section gets rewritten, not defended.
+
+---
+
+## 10. Building websites — recommended against, not yet decided
+
+**Status: a recommendation to the owner, raised 2026-08-05. Not settled, and
+not to be presented as settled.** Recorded here because the question will
+recur every time an audit hits a client whose site cannot be changed, and the
+reasoning should not have to be rebuilt from scratch each time.
+
+**The question.** A verdict B or C client is stuck: the developer has gone,
+or the platform will not accept the work. Should Wardith offer to build them
+a new site, for a separate fee, as an additional revenue line?
+
+**The recommendation: no — refer it out, and keep the Foundation.** Four
+reasons, the first of which is decisive.
+
+### It puts a price on reaching verdict B or C
+
+The audit's entire credibility rests on being willing to say "don't spend
+money" — promised on four pages of the site, and protected by §1 of
+`ops/audit-method.md`: *never soften a finding to protect a Foundation sale.*
+
+A rebuild offer inverts that. It attaches the **largest fee in the business**
+to the most pessimistic verdict the audit can reach, and that verdict is a
+judgement call made by the person who would be paid for it. Even delivered
+honestly every single time, it is unprovable from outside — which is the
+whole problem, because the product being sold is trustworthy diagnosis. It
+is structurally the thing the audit is sold to protect people from.
+
+The Foundation has a mild version of this tension already. A rebuild is a
+much larger version of it, attached to a much larger number.
+
+### "Hidden" is the wrong shape for this business
+
+Every price Wardith charges is published, machine-readable, and generated
+from one source so the visible and machine versions cannot disagree. That
+consistency *is* the product demonstration.
+
+An unpublished service, quoted ad hoc after an audit, is the opposite of
+that. It cannot go in the JSON-LD, so it cannot be quoted by an assistant —
+in a business whose pitch is that published prices are what let an assistant
+recommend you. A service worth selling should be on the pricing page like
+everything else; if it would look wrong there, that is the finding.
+
+### It is a different business, and it eats the scarce resource
+
+Web design is a different delivery skill, a different time profile, and a
+different liability. §6 of this document already establishes that **the
+owner's time is the binding constraint on the whole business** and that in
+year one the priority is converting audits into Foundations. A rebuild is
+tens of hours against a Foundation's ten to twenty, spent on the client
+least likely to also buy a monthly plan.
+
+The liability step is real too. Adding structured data to a working site and
+being wrong is a marketing outcome. Rebuilding the site a business takes its
+enquiries through and being wrong is their livelihood — and professional
+indemnity cover is still listed as **not bought** in `ops/accounts.md`.
+
+### The referral is worth more than the rebuild anyway
+
+This is the part that makes "no" easy rather than principled.
+
+A client who cannot be helped is worth **£0**. A client referred to a
+developer, with Wardith specifying what the new site must do — static or
+server-rendered text, crawler access, schema-ready, the answer pages
+planned in — comes back as a **Foundation plus a monthly plan**, on a site
+built correctly the first time instead of retrofitted. That is better
+revenue than a one-off build fee, it recurs, and it costs a fraction of the
+hours.
+
+**So the rebuild is not the prize. The unblocked Foundation is.**
+
+### What this does not rule out
+
+- **Naming what the new site must do.** A one-page specification handed to
+  whoever builds it is Foundation-adjacent work, it protects the client, and
+  it is the reason the site comes back fixable.
+- **Recovering a site rather than rebuilding one.** Where the content is
+  retrievable and the obstacle is access, getting a client back into their
+  own hosting is closer to Foundation work than to web design.
+- **Revisiting this** if referrals repeatedly fail to produce a usable
+  developer, which would be evidence rather than an assumption.
+
+**What it does rule out:** an unpublished build service, quoted after an
+audit, by the person who wrote the verdict that justified it.
+
+**If the owner decides to do it anyway**, the one condition that removes most
+of the harm: **publish it on the pricing page like every other product**, so
+it is visible before the audit rather than revealed after it. Most of the
+objection above is about it being hidden, not about it existing.

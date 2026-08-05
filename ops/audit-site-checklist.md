@@ -80,7 +80,7 @@ access. Ask both.
 | **Weebly / Duda** | Owner, sometimes a reseller | Contributor access | **A** with the same plan caveat; Duda is often resold by an agency, so check who invoices them |
 | **Webflow** | Often a designer, not the owner | Publish rights on the project | **A or B** — capable platform, but the seat is frequently held by whoever built it |
 | **GoDaddy Website Builder** | Owner | Login, and check what the editor will actually accept | **B, sometimes C.** The restrictive one: limited custom-code and head access. **Establish what can be injected before quoting a Foundation** — this is the platform most likely to make part of the work undeliverable |
-| **Developer-built** (Astro/Hugo/Next/Gatsby on Netlify/Vercel/GitHub Pages) | A developer | A deploy path — repo access or a build hook. Not a CMS login; there isn't one | **A if the developer is still around, B if they've gone.** Technically the most capable, and the access question is entirely about a person |
+| **Developer-built** (Astro/Hugo/Next/Gatsby on Netlify/Vercel/GitHub Pages) | A developer | A deploy path — repo access or a build hook. Not a CMS login; there isn't one | **A if the developer is still around, B if they've gone** — and if they've gone, work the recovery order below before settling on B |
 | **Franchise / trade-body template** | The franchisor or trade body | Ask whether local changes survive a master redeploy | **B or C** — `ops/service-tiers.md` §3 already names these: a master redeploy silently wipes our page |
 | **unknown** | — | Ask them who built it and who maintains it | Don't guess. "Unknown" from the script means *not detected*, not *bespoke* |
 
@@ -88,6 +88,53 @@ access. Ask both.
 Vendors rename and re-gate their tiers, and a wrong specific in this file
 would be quoted at a client months later. Check what *their* plan allows, on
 the day, and record it in the row above.
+
+### When the developer has gone
+
+The common small-business case: the site was built years ago by somebody who
+no longer answers. **Do not settle on verdict B until these have been tried,
+in this order** — the first two are usually available and solve it outright.
+
+1. **Who owns the domain?** WHOIS and the registrar. **If it is registered in
+   the developer's name, that is a bigger emergency than the site** and it
+   comes first — everything else is worthless if the domain lapses to
+   somebody else. Say so plainly whatever else the audit finds.
+2. **Who is billed for the hosting?** **Hosting access is the master key** —
+   more useful than developer access, because on a WordPress or similar site
+   it hands over the database, the theme and the files together. Most hosts
+   have an account-recovery or ownership-dispute process a business can use
+   when it is the party actually paying. Start there, not with the developer.
+3. **Only then, verdict B**, with what specifically is blocked named in the
+   report so the client can decide.
+
+**Do not offer to reconstruct the site from a crawl.** It is a poor idea on
+three separate grounds and the reasoning is worth keeping, because it looks
+superficially reasonable:
+
+- **You get output, not source.** A mirror captures rendered HTML, CSS and
+  images. It cannot capture server-side code, the database or the CMS, so
+  what comes back is a static fossil nobody can maintain. On a
+  JavaScript-rendered site — the case the readability check flags — the
+  mirror comes back close to empty, because it takes the same view the
+  crawler gets. **The sites easiest to clone are the ones that needed it
+  least.**
+- **Copyright very likely is not the client's.** Under UK law the author owns
+  copyright by default, and for a freelance developer — not an employee —
+  **paying for a website does not transfer it without a written, signed
+  assignment**, which small-business web jobs routinely lack. An implied
+  licence to *use* the site is often found; it does not obviously extend to
+  copying, modifying and redeploying it, which is exactly what a rebuild
+  needs. Themes, plugins, stock photography and fonts carry their own
+  licences, frequently tied to the purchaser's account, and those do not
+  travel with a crawl either. The same applies to pulling it from an archive.
+- **It preserves the problems.** A faithful copy faithfully reproduces the
+  missing structured data, the unreadable location and the absent answer
+  pages — the things the audit exists to find. There is no version of this
+  where the clone is the fix.
+
+If access genuinely cannot be recovered, the honest answer is a new site,
+**referred out and quoted by somebody else** — see `ops/service-tiers.md` §10
+for why Wardith does not sell one.
 
 ---
 
