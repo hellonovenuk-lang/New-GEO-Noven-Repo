@@ -11,6 +11,58 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-05 (the hero record, written out line by line)
+
+**The owner asked for the animation to go and the code to come back — this
+time interactive, appearing a line at a time as though it were being typed,
+with the facts that matter picked out.** Done, and the film is off the site.
+
+- The homepage hero now carries the structured-data record at every width, and
+  the panel writes itself out at about 620 characters a second when it comes
+  into view, with a caret sitting after the last character written. It follows
+  its own caret down, and settles back at the first line when it finishes —
+  the end of the record is the least useful thing to leave a reader looking
+  at.
+- **Five lines are marked: `name`, `email`, `description`, `founder.name` and
+  `areaServed`.** Each carries a brass edge, a brass wash and a brass underline
+  on its value, and each explains itself in one plain sentence under the panel
+  when it lands, and again whenever the reader points at it, taps it or tabs to
+  it. Colour is not doing the emphasis on its own — the rule, the underline and
+  the sentence say the same thing three ways, which is what keeps it working
+  for a reader who can't separate brass from ink.
+- The marks are keyed by path (`founder.name`), not by line number, so adding a
+  fact to `business.ts` can never quietly move them onto the wrong lines. That
+  is why `toLines` now returns a path with each line.
+- Controls: **Skip** while it writes, **Replay** after, and tapping the block
+  itself skips. All three are added by script and hidden without it.
+- **Nothing here is load-bearing.** With JavaScript blocked the panel is simply
+  the complete block, as before. With reduced motion set, no typing, no caret,
+  no flash — the block is there and the marks and their explanations still
+  work. A small inline script hides the lines the instant the panel is parsed
+  so it never flashes complete first, and it undoes itself after three seconds
+  if the module never arrives.
+- The record used to appear in "Where's the proof?" on wide screens and in the
+  hero on narrow ones, so the page held exactly one copy. It now lives in the
+  hero at every width, and the proof paragraph points up to it rather than down
+  at a second copy.
+- **Removed:** `site/public/video/` (543KB of it), the `.hero-film` markup and
+  styles, and the film's play-on-scroll script. The render source stays in
+  `assets/video/` and still works — `assets/video/README.md` now says at the
+  top that the site doesn't use it. This closes the outstanding "mobile cut of
+  the animation" question from 2026-07-28: there is nothing left to cut.
+- **Checked in a real browser, not just built:** wide and phone widths, the
+  written-out block matching the JSON-LD in the head character for character
+  when it finishes, hover, tap and keyboard focus on a marked line, skip,
+  replay, reduced motion, and the page with scripting off entirely.
+- **One bug worth remembering.** The first version followed the caret using
+  `offsetTop`, which measures down the whole page rather than down the panel.
+  On a desktop, where the panel sits near the top of the document, it was a few
+  lines out and looked like nothing worse than a loose scroll. On a phone,
+  where the panel is most of a screen down, it scrolled the panel clean past
+  its own caret and the block appeared **empty** for the whole animation. It
+  now measures both boxes with `getBoundingClientRect`. Nothing above the fold
+  on a desktop is proof that a thing works on a phone.
+
 ### 2026-08-04 (published — the site is Wardith)
 
 **Merged to `main` at the owner's instruction.** What that published: a new

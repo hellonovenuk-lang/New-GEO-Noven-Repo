@@ -18,7 +18,19 @@ export type TokenKind =
   | 'punct';
 
 export type Token = { kind: TokenKind; text: string };
-export type Line = Token[];
+
+export type Line = {
+  tokens: Token[];
+  /**
+   * Dotted path of the value this line opens — `name`, `founder.name`,
+   * `knowsAbout[0]`. Empty on the lines that only close a brace or bracket, so
+   * a caller marking a key never marks its closing line as well. This is what
+   * lets a page single out particular facts without hand-counting line
+   * numbers, which would silently point at the wrong fact the next time the
+   * business data changes.
+   */
+  path: string;
+};
 
 const INDENT = '  ';
 
@@ -29,23 +41,34 @@ function keyTokens(key: string): Token[] {
   ];
 }
 
-function emit(value: unknown, depth: number, prefix: Token[], comma: boolean, out: Line[]): void {
+function emit(
+  value: unknown,
+  depth: number,
+  prefix: Token[],
+  comma: boolean,
+  out: Line[],
+  path: string,
+): void {
   const pad: Token = { kind: 'indent', text: INDENT.repeat(depth) };
   const tail: Token[] = comma ? [{ kind: 'punct', text: ',' }] : [];
+  const open = (tokens: Token[]) => out.push({ tokens, path });
+  const close = (tokens: Token[]) => out.push({ tokens, path: '' });
 
   if (value === null) {
-    out.push([pad, ...prefix, { kind: 'null', text: 'null' }, ...tail]);
+    open([pad, ...prefix, { kind: 'null', text: 'null' }, ...tail]);
     return;
   }
 
   if (Array.isArray(value)) {
     if (value.length === 0) {
-      out.push([pad, ...prefix, { kind: 'punct', text: '[]' }, ...tail]);
+      open([pad, ...prefix, { kind: 'punct', text: '[]' }, ...tail]);
       return;
     }
-    out.push([pad, ...prefix, { kind: 'punct', text: '[' }]);
-    value.forEach((item, i) => emit(item, depth + 1, [], i < value.length - 1, out));
-    out.push([pad, { kind: 'punct', text: ']' }, ...tail]);
+    open([pad, ...prefix, { kind: 'punct', text: '[' }]);
+    value.forEach((item, i) =>
+      emit(item, depth + 1, [], i < value.length - 1, out, `${path}[${i}]`),
+    );
+    close([pad, { kind: 'punct', text: ']' }, ...tail]);
     return;
   }
 
@@ -54,25 +77,25 @@ function emit(value: unknown, depth: number, prefix: Token[], comma: boolean, ou
       ([, v]) => v !== undefined,
     );
     if (entries.length === 0) {
-      out.push([pad, ...prefix, { kind: 'punct', text: '{}' }, ...tail]);
+      open([pad, ...prefix, { kind: 'punct', text: '{}' }, ...tail]);
       return;
     }
-    out.push([pad, ...prefix, { kind: 'punct', text: '{' }]);
+    open([pad, ...prefix, { kind: 'punct', text: '{' }]);
     entries.forEach(([k, v], i) =>
-      emit(v, depth + 1, keyTokens(k), i < entries.length - 1, out),
+      emit(v, depth + 1, keyTokens(k), i < entries.length - 1, out, path ? `${path}.${k}` : k),
     );
-    out.push([pad, { kind: 'punct', text: '}' }, ...tail]);
+    close([pad, { kind: 'punct', text: '}' }, ...tail]);
     return;
   }
 
   const kind: TokenKind =
     typeof value === 'number' ? 'num' : typeof value === 'boolean' ? 'bool' : 'str';
-  out.push([pad, ...prefix, { kind, text: JSON.stringify(value) }, ...tail]);
+  open([pad, ...prefix, { kind, text: JSON.stringify(value) }, ...tail]);
 }
 
 export function toLines(value: unknown): Line[] {
   const out: Line[] = [];
-  emit(value, 0, [], false, out);
+  emit(value, 0, [], false, out, '');
   return out;
 }
 

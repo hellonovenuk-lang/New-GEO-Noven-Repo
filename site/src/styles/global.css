@@ -703,43 +703,6 @@ li a:hover {
   }
 }
 
-/* The film is drawn at 540px square. Below the hero's two-column breakpoint
-   the column is narrower than that, and its captions fall under 8px — so the
-   narrow layout shows the record instead, which reads at any width. Exactly
-   one of the pair is ever displayed. */
-.hero-film {
-  display: none;
-  margin: 0;
-  max-width: 34rem;
-}
-
-.hero-film video {
-  display: block;
-  width: 100%;
-  height: auto;
-  border: 1px solid var(--rule);
-  border-radius: 3px;
-  background: var(--paper);
-}
-
-.hero-film figcaption {
-  margin-top: 0.85rem;
-  max-width: 30rem;
-  color: var(--ink-faint);
-  font-size: 0.78rem;
-  line-height: 1.6;
-}
-
-@media (min-width: 60rem) {
-  .hero-film {
-    display: block;
-  }
-
-  .hero-record {
-    display: none;
-  }
-}
-
 /* ------------------------------------------------------------- 8 the record */
 
 /* The signature. This is the page's own structured data, rendered as the code
@@ -764,6 +727,9 @@ li a:hover {
   font-family: var(--mono);
   max-width: 34rem;
   overflow: hidden;
+  /* One accent for the whole panel — the caret, the marked lines and the
+     explanation rule all take it, and the navy version sets it once. */
+  --code-mark: var(--brass);
 }
 
 .code-head {
@@ -777,11 +743,31 @@ li a:hover {
   line-height: 1.4;
 }
 
+/* Skip / replay. Rendered hidden and unhidden by script, so a reader without
+   JavaScript is never offered a control that does nothing. */
+.code-ctrl {
+  margin-left: auto;
+  flex: none;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: var(--paper);
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.code-ctrl:hover {
+  color: var(--ink);
+  border-color: var(--ink-faint);
+}
+
 .code-dot {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: var(--brass);
+  background: var(--code-mark);
   flex: none;
 }
 
@@ -790,6 +776,10 @@ li a:hover {
   overflow: auto;
   overscroll-behavior: contain;
   background: var(--paper);
+  /* The page scrolls smoothly; this box does not. While the block is being
+     written, each line nudges it down by an exact amount, and an animation
+     still in flight would make the next nudge overshoot. */
+  scroll-behavior: auto;
 }
 
 .code-scroll:focus-visible {
@@ -835,6 +825,102 @@ li a:hover {
   background: color-mix(in srgb, var(--brass) 7%, transparent);
 }
 
+/* --- Written out line by line ------------------------------------------- */
+
+/* A line that hasn't been written yet. Hidden rather than removed, so the
+   block holds its height and nothing on the page moves as it fills in. Only
+   ever set by script; with JavaScript off, no line is ever waiting. */
+.code-line.is-waiting {
+  visibility: hidden;
+}
+
+/* The caret sits after the last character written, because it is drawn on the
+   text itself rather than positioned. */
+.code-line.is-typing .code-text::after {
+  content: '';
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  margin-left: 1px;
+  vertical-align: -0.15em;
+  background: var(--code-mark);
+  animation: caret 1.05s steps(1, end) infinite;
+}
+
+@keyframes caret {
+  0%,
+  55% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* --- The lines that decide whether a business gets named ----------------- */
+
+/* Marked lines carry a brass edge and a wash, and their value is underlined
+   in the same brass. Colour is doing the emphasis, but not alone: the rule,
+   the underline and the explanation below the block all say the same thing,
+   so the emphasis survives a reader who can't separate the two colours. */
+.code-line.is-marked {
+  background: color-mix(in srgb, var(--code-mark) 6%, transparent);
+  box-shadow: inset 2px 0 0 var(--code-mark);
+  cursor: default;
+}
+
+.code-line.is-marked .tk-str,
+.code-line.is-marked .tk-num {
+  color: var(--ink);
+  font-weight: 500;
+  /* Underline rather than a background: this wraps across several lines and a
+     background box would break at every wrap. */
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--code-mark) 55%, transparent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.code-line.is-marked:hover,
+.code-line.is-marked:focus-visible {
+  background: color-mix(in srgb, var(--code-mark) 14%, transparent);
+}
+
+.code-line.is-marked:focus-visible {
+  outline: 2px solid var(--code-mark);
+  outline-offset: -2px;
+}
+
+.code-line.is-marked:hover .tk-str,
+.code-line.is-marked:focus-visible .tk-str,
+.code-line.is-marked:hover .tk-num,
+.code-line.is-marked:focus-visible .tk-num {
+  text-decoration-color: var(--code-mark);
+}
+
+/* A marked line lights as it lands, then settles. This is the one moment the
+   panel raises its voice. */
+.code-line.is-flash {
+  animation: code-flash 1.2s var(--ease) 1;
+}
+
+@keyframes code-flash {
+  from {
+    background: color-mix(in srgb, var(--code-mark) 26%, transparent);
+  }
+  to {
+    background: color-mix(in srgb, var(--code-mark) 6%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .code-line.is-typing .code-text::after,
+  .code-line.is-flash {
+    animation: none;
+  }
+}
+
 /* Syntax colours. Keys brass, values ink, structure faint — the same three
    voices the rest of the page uses. */
 .tk-key {
@@ -861,6 +947,33 @@ li a:hover {
   color: var(--ink-soft);
 }
 
+/* The explanation line. It says what the marked line above it does, in the
+   words a client would use — the translation from the record to the point of
+   it. Fixed height for two lines, so the panel doesn't jog as the text
+   changes under the reader's cursor. */
+.code-callout {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--rule);
+  background: var(--paper-2);
+  color: var(--ink-soft);
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  min-height: 3.6rem;
+}
+
+.code-callout-mark {
+  flex: none;
+  width: 12px;
+  height: 2px;
+  background: var(--code-mark);
+  transform: translateY(-0.3em);
+}
+
 .code-foot {
   padding: 0.75rem 1rem;
   border-top: 1px solid var(--rule);
@@ -873,25 +986,13 @@ li a:hover {
   color: inherit;
 }
 
-/* The record's home on wide screens, inside "Where's the proof?". Paired with
-   the hero: below 60rem the hero shows the record and this stays hidden; at
-   60rem and up the hero shows the film and the record appears here. Keep the
-   two breakpoints in step or the page shows the record twice, or not at all. */
-.proof-record {
-  display: none;
-}
-
-@media (min-width: 60rem) {
-  .proof-record {
-    display: block;
-    margin-top: var(--s5);
-  }
-}
-
-/* On the navy ground. */
+/* On the navy ground. Unused at present — the homepage record sits in the
+   hero, on paper. Kept because the panel is a component and the invert is
+   part of it. */
 .section--invert .code {
   background: color-mix(in srgb, #000 18%, transparent);
   border-color: var(--inv-rule);
+  --code-mark: var(--inv-brass);
 }
 
 .section--invert .code-scroll {
@@ -902,6 +1003,23 @@ li a:hover {
 .section--invert .code-foot {
   border-color: var(--inv-rule);
   color: var(--inv-faint);
+}
+
+.section--invert .code-callout {
+  border-color: var(--inv-rule);
+  background: color-mix(in srgb, #000 18%, transparent);
+  color: var(--inv-soft);
+}
+
+.section--invert .code-ctrl {
+  border-color: var(--inv-rule);
+  background: transparent;
+  color: var(--inv-soft);
+}
+
+.section--invert .code-line.is-marked .tk-str,
+.section--invert .code-line.is-marked .tk-num {
+  color: var(--inv-text);
 }
 
 .section--invert .code-line::before {

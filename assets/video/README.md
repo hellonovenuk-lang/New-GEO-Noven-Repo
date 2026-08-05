@@ -1,5 +1,11 @@
 # The homepage answer animation
 
+**Not on the site as of 2026-08-05.** The owner asked for the structured-data
+record back in the hero instead, written out line by line as the page loads,
+and a page can only carry one of the two. The rendered files were removed from
+`site/public/video/`; the source below still works, and re-rendering restores
+them exactly. Nothing links to them, so nothing broke when they went.
+
 `site/public/video/wardith-answer.mp4` (and the `.webm` twin) is rendered from
 `frame.html` by `capture.mjs` — it is not generated footage. Every frame is the
 site's own CSS, drawn by headless Chromium at 2x and encoded with ffmpeg, so the
