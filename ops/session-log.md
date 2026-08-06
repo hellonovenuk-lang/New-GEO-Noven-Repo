@@ -155,9 +155,24 @@ start to finish. Three things in it are worth knowing without opening it:
   gone unnoticed because `ops/audit-setup.md` §5 said "already set up and
   confirmed, nothing to do" — true of the old domain, false since 4 August, and
   the pre-run checklist for the next audit. Corrected, along with the same claim
-  in `ROADMAP.md`'s "where we are today" and `ops/accounts.md`. **That is the
-  third stale "closed" claim found today** and they all have one shape: a
-  sentence that was true before the rename and was never re-read after it.
+  in `ROADMAP.md`'s "where we are today" and `ops/accounts.md`.
+
+  **This is the third wrong claim found today, and they are not all the same
+  fault — the first draft of this entry said they were, and the owner caught
+  it.** There are two shapes, and they need different checks:
+
+  - **A sentence that was true when written and was made false by the rename,
+    then never re-read.** The mailbox and this one. The suspect set is
+    everything marked done *before 4 August*, because 4 August is when the
+    ground moved under it. Both of these were also mechanically swept by C10,
+    which is what disguised them: the sweep updated the words and could not
+    know the underlying fact had not moved with them.
+  - **A claim published without being checked at all.** The location block,
+    which was written today and was never true. No re-read of old documents
+    would have found it, because it was not old.
+
+  **Conflating the two would send the next sweep looking only backwards**, and
+  the second fault is the one that recurs — it is available every session.
 - **Sign in as `hello.noven.uk@gmail.com`.** Change of Address only offers the
   pairing to an owner of *both* properties, and that account owns the old one.
   It carries the dead name and stays — F10 settled that it is an identity, not a
