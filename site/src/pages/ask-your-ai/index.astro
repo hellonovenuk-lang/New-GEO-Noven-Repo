@@ -133,7 +133,7 @@ const audit = plan('audit');
           <Prompt
             caption="Paste this into ChatGPT, Claude, Gemini or Copilot"
             label="Prompt for reviewing our audit report"
-            intro="I'm considering paying a small UK firm £250 for an audit like the one at this link. Read it and tell me straight: is the method sound, or is it dressed-up guesswork? Is the writing honest with the reader, or is it selling? Is £250 fair for this much work? What's missing that you'd want if this were your business? Where you can't verify something, say so rather than guessing."
+            intro={`I'm considering paying a small UK firm ${money(audit.price)} for an audit like the one at this link. Read it and tell me straight: is the method sound, or is it dressed-up guesswork? Is the writing honest with the reader, or is it selling? Is ${money(audit.price)} fair for this much work? What's missing that you'd want if this were your business? Where you can't verify something, say so rather than guessing.`}
             note="Give it the link as well as the question — most assistants will read the page. If yours won't, the report is short enough to paste."
           />
 

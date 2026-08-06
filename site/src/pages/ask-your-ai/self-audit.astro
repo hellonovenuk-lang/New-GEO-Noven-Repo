@@ -17,10 +17,18 @@
  *      our marketing, and `/ask-your-ai/` promises the reader we don't name
  *      them. The counts are unchanged — the shape of that table is the
  *      finding, and the shape survives the names coming out.
- *   2. The prices quoted in the report are the prices as they were on
- *      3 August. They moved on 5 August. A note says so where they appear,
- *      because a prospect reading this page could otherwise take £125 for the
- *      current fee.
+ *   2. The four price figures the report quoted are removed, not updated. They
+ *      were correct on 3 August and superseded five days later, and the
+ *      paragraph they sat in is *about* an assistant serving a stale price for
+ *      this business — so restating them, even beside a correction, would put
+ *      four wrong numbers about our own fees onto a page these systems read.
+ *      The finding survives without them; the risk does not survive with them.
+ *
+ * **Do not add a price figure to this page** — not a historical one, and not a
+ * current one either. A correct price here is a second copy that can go stale
+ * on its own, and the argument for the redaction above is precisely that this
+ * page is not where a price should be read. Link `/pricing/`, which is built
+ * from `business.ts` and is the same source the Offer structured data uses.
  *
  * Why this exists as HTML rather than only as a PDF: the standing rule is that
  * this site stays crawlable static HTML, and this is the single richest page
@@ -96,16 +104,18 @@ const namedInstead = [36, 29, 14, 12, 9, 8, 8, 8, 7, 7];
     <div class="wrap wrap--narrow">
       <div class="doc-note" data-reveal>
         <p>
-          <strong>Two things we changed, and nothing else.</strong> The businesses the assistants
-          named instead of us have had their names removed — they are real firms who did not ask to
-          appear in our marketing, and the run counts carry the finding without them. And the prices
-          quoted below are the prices as they stood on 3 August 2026; they moved on 5 August. The
-          audit is now {money(audit.price)} and the Foundation {money(foundation.price)}, as published
-          on the pricing page.
+          <strong>Two things we took out, and nothing else.</strong> The businesses the assistants
+          named instead of us are not named here — they are real firms who did not ask to appear in
+          our marketing, and the run counts carry the finding without them. And the four prices the
+          report quoted are gone: they were correct on 3 August 2026 and superseded five days later,
+          and this page is not where anyone should be reading what we charge. The
+          <a href="/pricing/">pricing page</a> is the only place that should answer that, and it is
+          where the machine-readable version comes from too.
         </p>
         <p>
-          Everything else is as written, including the parts that have since been acted on. Where
-          the report is out of date, it is left out of date and marked, not corrected.
+          Both removals are marked where they happen. Everything else is as written, including the
+          parts that have since been acted on — where the report is out of date, it is left out of
+          date rather than quietly corrected.
         </p>
       </div>
 
@@ -243,20 +253,27 @@ const namedInstead = [36, 29, 14, 12, 9, 8, 8, 8, 7, 7];
           </p>
           <p>
             <strong>One wrong fact of a different kind, already corrected.</strong> Google's stored
-            description of your pages still carried your old prices — a £30 audit and a £350 setup,
-            against the £125 and £750 you charge. Anyone asking an assistant what this should cost
-            could have been quoted less than a quarter of your real fee. You asked Google to re-read
-            the pages on 3 August; that takes days to weeks to settle.
+            description of your pages still carried prices from an earlier version of the site —
+            less than a quarter of what you actually charge. Anyone asking an assistant what this
+            should cost was being given the wrong number. You asked Google to re-read the pages on
+            3 August; that takes days to weeks to settle.
           </p>
 
           <div class="doc-note">
             <p>
-              <strong>Note added on publication.</strong> The £125 and £750 above were correct when
-              this was written. Both moved on 5 August 2026 — the audit is now {money(audit.price)}
-              and the Foundation {money(foundation.price)}. This paragraph is a good illustration of
-              its own point: a stale price is one of the most common wrong facts these systems hold
-              about a business, and publishing this report creates another copy of one. It is left
-              as written, with the correction beside it, rather than quietly edited.
+              <strong>The figures in this paragraph have been removed rather than updated.</strong>
+              The report quoted four prices, all correct on 3 August 2026 and all superseded five
+              days later. Restating them here — even beside a correction — would put four wrong
+              numbers about our own fees onto a page these systems read, which is the finding above
+              happening to us a second time. A stale price is one of the most common wrong facts an
+              assistant holds about a business, and a page full of superseded figures is an
+              efficient way to create more of them.
+            </p>
+            <p>
+              This is the only edit of its kind in the document, and it is subtraction rather than
+              revision — nothing has been rewritten to say something it did not say. The
+              <a href="/pricing/">pricing page</a> is the one place any price for this business
+              should be read, and it is where the machine-readable version comes from too.
             </p>
           </div>
         </div>

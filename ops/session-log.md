@@ -40,12 +40,8 @@ resolved by declaring it rather than by editing quietly.**
   to appear in our marketing. The names are out and the counts stay, because the
   *distribution* is the finding — one business took roughly a fifth of every
   recommendation going — and it survives the names coming out.
-- **It quotes £125 and £750, which moved to £250 and £800 on 5 August.** A
-  prospect reading it could take £125 for the current fee. The figures are left
-  as written with a correction beside them. That paragraph is itself about a
-  stale price sitting in Google's stored description of our pages, so publishing
-  it creates one more copy of exactly the fault it describes — said out loud on
-  the page rather than tidied away.
+- **It quotes four prices, all superseded five days later.** Resolved twice —
+  see the correction below, which is the more important half of this entry.
 - **It is branded Noven.** Kept, and made the hook. The audit is why the rename
   happened, so the page leads with the failure and explains the name in the
   second section. A silently rebranded report would be less credible, not more.
@@ -53,6 +49,44 @@ resolved by declaring it rather than by editing quietly.**
 **Nothing in the report body was altered to flatter the present.** Where the
 document is out of date it is left out of date and marked. A record quietly
 corrected is not a record.
+
+**Corrected the same session, and the owner caught it: the prices had to come
+out, not be annotated.** The first build kept the report's four figures — £30,
+£350, £125, £750 — and set a note beside them saying what the prices are now.
+The reasoning was rhetorical: the paragraph those figures sit in is *about*
+Google serving a stale price for this business, so leaving them in and owning it
+read as the most honest paragraph on the page. **The owner asked whether that
+many recent price changes would confuse the assistants, and the systems answer
+beats the rhetorical one.** Six price figures for one business on one page, four
+of them wrong, is a retrieval hazard: a chunk containing *"a £30 audit and a
+£350 setup, against the £125 and £750 you charge"* reads as current pricing to
+anything that grabs it without the surrounding dates. **This business exists to
+find that exact fault on other people's sites.** Building it deliberately into
+our own, for a turn of phrase, was the wrong trade.
+
+**So the figures are subtracted rather than revised, and the finding survives
+intact** — *"prices from an earlier version of the site, less than a quarter of
+what you actually charge"* says everything the numbers said. The report body now
+carries **zero price figures**; the only £ on either page is the site-wide
+footer ask, built from `business.ts`. A rule is written into the top of
+`self-audit.astro`: **do not add a price to that page, not even a correct one**,
+because a correct price there is a second copy that can go stale on its own, and
+the whole argument for the removal is that the page is not where a price should
+be read. It links `/pricing/` instead.
+
+**A real defect found while checking this.** The review prompt on `/ask-your-ai/`
+had `£250` typed into it as a literal string, twice — the first hardcoded price
+on this site since `business.ts` was made the single source. It would have gone
+stale silently at the next repricing, inside a block written to be copied and
+pasted elsewhere. Now interpolated from `plan('audit')` like everything else.
+**Worth remembering that prompt text is copy like any other** and needs the same
+rule; it is easy to miss because it looks like data.
+
+**The .docx master got the identical treatment.** If the PDF and the web page
+disagreed about our own prices, that would be the precise inconsistency this
+business sells fixing. `build-publication-copy.py` is committed beside the audit
+so the publication copy can be rebuilt from the untouched original rather than
+reconstructed by hand; it fails loudly if the text it expects has moved.
 
 **The competitor section became the best part of the page, after the owner
 reframed it.** The first draft was a complaint about businesses publishing
