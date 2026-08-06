@@ -11,6 +11,237 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-06 (later — why the assistants still say Noven, and a fact we got wrong about ourselves)
+
+**The owner's question:** assistants asked to review `wardith.co.uk/` still come
+back describing Noven. What is left to do.
+
+**First finding: it is not the site.** Checked against the built output. All
+nine canonicals are `wardith.co.uk`, every `<title>` ends "— Wardith", the
+Organization JSON-LD is `name: Wardith` / `url: https://wardith.co.uk/`,
+`robots.txt` names the AI crawlers and points at the right sitemap, the sitemap
+lists eight `wardith.co.uk` URLs, and Netlify confirms `wardith.co.uk` is the
+primary domain with a ready deploy. The `json-code.ts` invariant still holds.
+**The rename landed. The site is not the reason.**
+
+**The reason is that the name is two days old and nothing outside this site says
+it.** `businessLinkedIn` is null, so the Organization publishes no `sameAs` at
+all — wardith.co.uk asserts its own identity on its own authority and nothing
+corroborates it. Meanwhile `novenstudio.co.uk` is still in the search indexes
+under the old title and description, and a 301 does not rewrite an index entry.
+An assistant asked about a URL it cannot retrieve falls back to the name it
+*can* corroborate, which is still Noven. That is the same diagnosis the self-
+audit reached about the old name, arriving from the other direction: **identity
+is corroboration across surfaces, and there is currently one surface.**
+
+**Second finding, and this one is a fault of ours.** `ROADMAP.md` claimed
+`hello@wardith.co.uk` was "live on Zoho Mail … tested both directions" and that
+Phase 1b was closed on it. It is not live. It has never been created. The same
+false claim was in `HANDOVER.md`, `ops/accounts.md` (which had the licence the
+wrong way round), `ops/third-party-services.md`, `ops/README.md`,
+`ops/own-facts-check.md` — and in the block of `ops/linkedin.md` copy written to
+be pasted into a public About section, which would have published a bouncing
+address as the only contact route on a business with no phone and no form.
+
+**How it happened is the useful part.** C10 of `ops/rename-to-wardith.md` swept
+the old domain to the new one across the operating documents. That was right for
+every sentence describing the *site* and wrong for every sentence describing the
+*mailbox*, because the mailbox did not move. One find-and-replace turned a true
+statement about an address that works into a false statement about an address
+that does not exist, in six files at once.
+
+**And the register that exists to catch exactly this missed it, because it was
+swept too.** `ops/own-facts-check.md` is the list of every surface publishing our
+facts; its Email row was rewritten by the same pass. Six documents agreeing with
+each other is not evidence when one edit changed all six. Two rules written into
+that file: after a bulk rename, the mailbox rows get read by hand, and the Email
+row is checked against `business.ts` and a real test message rather than against
+the other documents.
+
+**`business.ts` was right the whole time**, and its comment says why — a working
+address on the dead domain beats a bouncing one on the live domain. The code was
+never wrong; only the documents describing it were. Nothing about what the site
+publishes changed today.
+
+**Finding 3 was closed and then reopened the same hour, and the owner was right
+to stop it.** A `PostalAddress` of locality "Wirral", region "Merseyside" was
+added to the Organization on all nine pages, on the reasoning that the pages
+already said "the Wirral" in prose and `ops/own-facts-check.md` already carried
+"Wirral, UK — city level, never a street" as a standing fact, so nothing new was
+being published.
+
+**The owner's objection was that the address for service is not confirmed** —
+V LOT replied after eight days and did not inspire confidence, and the fallback
+providers are not on the Wirral. That is right on its own: committing the
+structured data to Merseyside before knowing where the address lands risks
+publishing a fact that has to be retracted.
+
+**Checking it turned up a worse version of the same objection.**
+`site/src/layouts/Base.astro` carries a visible
+`[PLACEHOLDER: address for service of documents]` in the footer of **every
+page**. So the change had each page telling a human reader it has no address
+while telling a machine, in the head of that same page, that it has one. **That
+is precisely the drift the homepage claims is impossible** — the site shows its
+own JSON-LD and says the visible facts and the machine-readable facts are built
+from one file and cannot disagree. Building the exception into the one fact
+still outstanding, on the page that makes the claim, would have been the
+cheapest possible way to lose the argument the whole site rests on.
+
+**And `PostalAddress` was the wrong instrument regardless.** "Kieran works from
+the Wirral" is true today. "Post reaches this business at Wirral, Merseyside" is
+not — there is no street line and no address for service. The type answers the
+exact question the footer says is unanswered.
+
+**Reverted in full.** `site/src` now differs from before the change only in
+comments; the built output is unchanged, and the homepage's visible block is
+still byte-for-byte its head JSON-LD. A note is left in `schema.ts` where the
+block would go, so the next person to spot finding 3 does not re-add it.
+
+**Finding 3 is now blocked on the address for service rather than free**, and
+`ROADMAP.md` has been corrected — it listed the fix as "free and not blocking
+anything". It closes *with* the address rather than before it: whatever lands is
+a real postal address, is not the founder's home, and is a legal disclosure that
+has to be published anyway, so it fills the footer placeholder and the
+structured data from a single fact. If it is not in Merseyside, nothing has to
+be taken back.
+
+**The general lesson, and it is the second time today.** Both faults this
+session came from writing down something we wanted to be true — a mailbox that
+did not exist, a location we had not confirmed — rather than something checked.
+The site's whole pitch is that it does not do that.
+
+**Last thing, and it is the one that actually moves the problem the owner
+asked about: the company page is renamed and `businessLinkedIn` is set.**
+`https://www.linkedin.com/company/wardith/`, supplied by the owner. The
+Organization now publishes one `sameAs` on all nine pages, and it renders in
+the homepage record panel as well as the head, so the visible and
+machine-readable versions still agree byte for byte.
+
+**Holding it at `null` through the rename was the right call and is worth
+keeping as a pattern.** Renaming a LinkedIn page changes its slug, so any value
+set before the rename would have been a published claim that this business and a
+dead URL are the same thing — not a broken link, a false statement, on a site
+whose entire pitch is that its own facts are correct. `schema.ts` omits the key
+rather than emitting an empty array, so waiting cost exactly nothing. **A
+missing `sameAs` is invisible; a wrong one is a lie.**
+
+**Why this matters more than anything else outstanding.** The diagnosis for why
+assistants still answer "Noven" was that the name had exactly one surface
+asserting it — wardith.co.uk, on its own authority, corroborated by nothing.
+This is the second surface, and it is the one a stranger checks. It does not
+work overnight and it does not replace getting the new domain indexed, but it is
+the first thing that makes the name checkable rather than merely claimed.
+
+**One thing is not verified and is recorded as row 13 of
+`ops/own-facts-check.md`: nobody has confirmed the page loads without a login.**
+This session's network policy blocks LinkedIn as well as `wardith.co.uk`, so it
+could not be checked from here. A `sameAs` pointing at a page a crawler is shown
+a login wall for corroborates nothing — it is the same fault as the
+`linkedin.com/me` rule already written in ROADMAP 1a, arriving through a
+different door. Two minutes in a private window settles it.
+
+**Both LinkedIn checks came back clean the same evening.** The page loads in a
+private window, so the `sameAs` points at something a crawler can actually read
+— row 13 resolved. And the owner rewrote both About sections: no Noven, and the
+prices match the site. **Rows 3 and 4 of the register are closed**, which were
+described in that file as "the whole of the actionable problem" and had been
+open since 1 August. F2 and F3 of the rename are done with them.
+
+**Next: `ops/search-console-and-bing.md`, written this session.** Both consoles
+start to finish. Three things in it are worth knowing without opening it:
+
+- **A Search Console property is bound to the host it was verified for, so the
+  rename did not carry it.** `wardith.co.uk` has no property at all. This had
+  gone unnoticed because `ops/audit-setup.md` §5 said "already set up and
+  confirmed, nothing to do" — true of the old domain, false since 4 August, and
+  the pre-run checklist for the next audit. Corrected, along with the same claim
+  in `ROADMAP.md`'s "where we are today" and `ops/accounts.md`.
+
+  **This is the third wrong claim found today, and they are not all the same
+  fault — the first draft of this entry said they were, and the owner caught
+  it.** There are two shapes, and they need different checks:
+
+  - **A sentence that was true when written and was made false by the rename,
+    then never re-read.** The mailbox and this one. The suspect set is
+    everything marked done *before 4 August*, because 4 August is when the
+    ground moved under it. Both of these were also mechanically swept by C10,
+    which is what disguised them: the sweep updated the words and could not
+    know the underlying fact had not moved with them.
+  - **A claim published without being checked at all.** The location block,
+    which was written today and was never true. No re-read of old documents
+    would have found it, because it was not old.
+
+  **Conflating the two would send the next sweep looking only backwards**, and
+  the second fault is the one that recurs — it is available every session.
+- **Sign in as `hello.noven.uk@gmail.com`.** Change of Address only offers the
+  pairing to an owner of *both* properties, and that account owns the old one.
+  It carries the dead name and stays — F10 settled that it is an identity, not a
+  brand surface.
+- **Bing is now the more urgent of the two**, which inverts how it has been
+  filed since July. There is nothing to migrate — Bing never indexed the old
+  domain, so this is a clean first submission rather than a move — and its URL
+  Submission tool takes all eight pages at once where Google's request-indexing
+  is rationed. For a domain this new that is the fastest route into any index,
+  and it feeds the one Copilot reads.
+
+**Last change of the session, and the owner's call: all three visible
+`[PLACEHOLDER]` blocks are off the site.** Made on the eve of submitting the
+domain to Search Console and Bing, which is the argument for the timing — the
+placeholders had been live since launch and survivable while nothing indexed the
+domain. Submission is the moment that stops being true: they go from text on a
+page nobody visits to two search indexes and whatever the assistants cache.
+
+**The footer one was the serious one.** On all nine pages it published the
+literal token `[PLACEHOLDER`, the name of an internal repo file (`ROADMAP.md`),
+and a written statement that a legal disclosure requirement had not been met.
+The owner's reasoning: it is compliance-relevant, not customer-relevant, and
+handing a crawler a red flag to repeat to a prospect is a strange thing for
+*this* business to do. Agreed, and the direction is safe — the removal publishes
+less, not more.
+
+**What it costs, said plainly: the reminder is now weaker than what it
+replaced.** `ROADMAP.md` used to instruct the opposite — "don't remove the
+footer placeholder until post through the address is confirmed working" — and
+that instruction is now overridden and marked as overridden. A loud flag on nine
+pages is impossible to forget; a source comment in `Base.astro` and a paragraph
+in the roadmap are not. **The commitment that replaces the tick: the address is
+published before the first customer is onboarded**, not before launch. Nothing
+on the site takes a payment yet, which is what makes this defensible rather than
+merely convenient. `ops/accounts.md`'s 24 August row has had its consequence
+rewritten to match — the risk is no longer "the gap is visible on launch day",
+it is "the gap is invisible".
+
+**The other two were replaced with copy rather than deleted**, which is what the
+owner asked for and is the better answer in both cases:
+
+- **Homepage, "Where's the proof?"** — the case-studies placeholder is gone and
+  the section now ends by pointing at `/ask-your-ai/`: we ran the audit on
+  ourselves before selling one, failed it, published it in full, and changed the
+  name because of what it found. That is proof of method for a business with no
+  clients, and it was already sitting on the site unlinked from the one section
+  whose entire subject is the absence of proof.
+- **`/ask-your-ai/`, "What happened next"** — that block was never customer copy
+  at all. It was an instruction to the next session, addressed to nobody who
+  reads the site, and it was about to be crawled as if it were prose. Moved into
+  a source comment; the paragraphs it sat above already stood on their own. Added
+  in its place, at the owner's request, the standing commitment: **the audit is
+  re-run on ourselves at intervals and every one is published on that page,
+  dated, whatever it says.** That generalises what was already promised about the
+  second run, and it is the strongest thing on the site — no competitor with real
+  clients is publishing their own bad results.
+
+**Verified after the change: zero `[PLACEHOLDER]` anywhere in the built output,
+and no internal reference of any kind** — no `ROADMAP`, no `ops/`, no `.astro`,
+no `business.ts`. The homepage's visible code block is still byte-for-byte its
+head JSON-LD.
+
+**Also added to the register as row 14, because it kept coming up and was
+tracked nowhere:** two Netlify projects are public with no password —
+`noven-2-0-preview` (a full Noven-branded copy of the business, raised as D0.1a
+on 2026-08-04 and still open) and `aesthetic-unicorn-619923`, which appears in
+no operating document at all. Live crawlable copies under the dead name are
+directly against the thing being worked on this session.
+
 ### 2026-08-06 (the self-audit is published — `/ask-your-ai/`)
 
 **The owner's idea, and it is a good one:** put our own audit on the site with a

@@ -323,13 +323,18 @@ const audit = plan('audit');
           <h2>What happened next</h2>
         </div>
         <div class="stack" data-reveal>
-          <p class="flag">
-            [PLACEHOLDER] This section is written to hold the second audit and does not yet contain
-            it. The rerun on {business.name} happens between the 26 August unfreeze and the
-            1 September launch (ops/plan-to-1-september.md, Phase 2). Replace the paragraphs below
-            with the findings and link the second report beside the first. Do not soften this section
-            if the answer is that nothing moved.
-          </p>
+          {/*
+            This section is written to hold the second audit and does not yet contain it. The rerun
+            on Wardith happens between the 26 August unfreeze and the 1 September launch
+            (ops/plan-to-1-september.md, Phase 2). Add the findings below and link the second report
+            beside the first. **Do not soften this section if the answer is that nothing moved** —
+            the paragraph about publishing it whatever it says is the whole point of the page, and
+            it is only worth anything if it holds on the bad result.
+
+            Was a visible [PLACEHOLDER] block until 2026-08-06. Removed before submitting the domain
+            to Search Console and Bing: it was an instruction to the next session, addressed to
+            nobody who reads the site, and it was about to be crawled and cached as if it were copy.
+          */}
           <p>
             The obvious question is where we stand now. We're running the same audit again, on the
             new name, before we open for business — the same ten questions, the same method, the same
@@ -341,6 +346,12 @@ const audit = plan('audit');
             for you and you'll be able to see exactly what it bought. If it didn't move, you'll get
             that too, with our honest reading of why. A business that publishes only its good audit
             has told you what kind of business it is.
+          </p>
+          <p>
+            And we'll keep doing it. We run this audit on ourselves at intervals and publish every
+            one of them on this page, dated, whatever they say — so you can watch what the work
+            actually does over time instead of taking our word for it. It is the same report a
+            client gets, run on the one business we are free to experiment on.
           </p>
         </div>
       </div>

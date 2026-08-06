@@ -39,6 +39,26 @@ export function organizationSchema(site: URL | undefined) {
       ...(business.founderPhoto ? { image: at(business.founderPhoto) } : {}),
       ...(business.founderLinkedIn ? { sameAs: [business.founderLinkedIn] } : {}),
     },
+    /* **There is deliberately no `address` here, and it is not an oversight.**
+     * Added 2026-08-06 to close finding 3 of the self-audit — a `PostalAddress`
+     * of locality "Wirral", region "Merseyside" — and taken straight back out
+     * the same day, because the footer of every page carries a visible
+     * `[PLACEHOLDER: address for service of documents]`. A page that tells a
+     * reader it has no address while telling a machine it has one is the exact
+     * drift this site claims cannot happen, on the one fact still outstanding.
+     *
+     * `PostalAddress` is also the wrong instrument for the true statement.
+     * "Kieran works from the Wirral" is true today; "post reaches this business
+     * at Wirral, Merseyside" is not, because there is no street line and no
+     * address for service yet. The type answers the question the footer says is
+     * unanswered.
+     *
+     * **The right fix is the address for service itself**, which is a real
+     * postal address, is not the founder's home, and has to be published by law
+     * anyway. When it lands, it fills the footer placeholder and this block at
+     * the same time, from one fact — and if it turns out not to be in
+     * Merseyside, nothing has to be retracted. See ROADMAP 1c and
+     * `ops/session-log.md`, 2026-08-06. */
     areaServed: business.areaServed,
     contactPoint: {
       '@type': 'ContactPoint',

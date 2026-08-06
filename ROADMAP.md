@@ -44,8 +44,12 @@ distinction everywhere else.
 
 **The site is live** at `wardith.co.uk`, on HTTPS, deployed from `main` by
 Netlify: nine static pages, readable by AI crawlers, with machine-readable
-business facts and a sitemap submitted and confirmed in Search Console. Email is
-`hello@wardith.co.uk` on Zoho. The brand assets are in and the palette
+business facts and a sitemap. **The Search Console property is still the old
+domain's** — a property is bound to the host it was verified for, so the rename
+did not carry it, and `wardith.co.uk` has none yet. Same for Bing, which never
+indexed the old domain either. `ops/search-console-and-bing.md`. Email is
+still `hello@novenstudio.co.uk` on Zoho — the new mailbox does not exist yet,
+and 1c-3 is where that sits. The brand assets are in and the palette
 matches them. **Phase 1a and 1b are closed.**
 
 **The Noven self-audit has run** — 2–3 August 2026, archived at
@@ -139,9 +143,24 @@ an entry at the end of each session") at the point the record matters most.
 **The critical path now:** the name decision (`ops/name-check/`, no cost,
 blocks identity, see 1c-2) → ICO helpline call (deadline Mon 10 Aug) → service
 address ordered → terms and privacy notice written → one payment possible end
-to end. **Free and not blocking anything, so do them whenever:** register with
-Bing Webmaster Tools (closes finding 2) and add the location field to the
-structured data (closes finding 3). The order page is still not on this path —
+to end. **Free and not blocking anything, so do it whenever:** register with
+Bing Webmaster Tools (closes finding 2).
+
+**Finding 3 was on that list until 2026-08-06 and has been taken off it: it is
+not free and it is not independent.** Adding a location to the structured data
+was tried that day and reverted within the hour. The footer of every page
+carries a visible `[PLACEHOLDER: address for service of documents]`, so a
+`PostalAddress` in the head — even locality-only — has the page telling a reader
+it has no address and a machine that it has one, which is the drift this site
+says is impossible. It would also have committed us to "Merseyside" before the
+address for service exists, and the fallback providers are not on the Wirral.
+
+**Finding 3 is therefore blocked on the address for service**, and closes with
+it rather than before it: whatever lands is a real postal address, is not the
+founder's home, and has to be published by law anyway, so it fills the footer
+placeholder and the structured data from one fact. Reasoning in
+`ops/session-log.md`, 2026-08-06, and in the note left in `schema.ts` where the
+block would go. The order page is still not on this path —
 a payment link in an email takes the first payment. `HANDOVER.md` has the
 longer version, written for someone with no context — **not yet updated to
 match this section.**
@@ -155,18 +174,23 @@ pay us £125.
 
 ### 1a. Facts only the owner can supply — closed
 
-All live on the site and in the structured data: `hello@wardith.co.uk` (the
-old Gmail forwards, and will for months); no phone, email only, and the site
+All live on the site and in the structured data: `hello@novenstudio.co.uk` (the
+old Gmail forwards, and will for months — and see 1c-3, because the address on
+the live domain has not been created yet); no phone, email only, and the site
 says why; reply within two working days; the Wirral, serving the UK remotely;
 Kieran Smith, sole trader, no company number, not VAT registered; the audit
 report within two working days of scope and payment being confirmed (moved from
 one working day on 2026-07-31 — `ops/audit-method.md` section 7 says why), and a
 Foundation plan within two working days of payment clearing. Founder bio,
 photograph, LinkedIn profile and Maersk as `alumniOf` are all in. The LinkedIn
-setup is done — profile amended, company page live. **`businessLinkedIn` is
-deliberately `null` from 2026-08-04**: renaming the page changes its slug, and
-a stale `sameAs` is a false machine-readable claim rather than a broken link.
-Set it once the renamed page has been opened — `ops/rename-to-wardith.md` D0.5. **But the copy on both LinkedIn About sections predates the 31 July
+setup is done — profile amended, company page live. **`businessLinkedIn` was
+deliberately `null` from 2026-08-04 and is set as of 2026-08-06** to
+`https://www.linkedin.com/company/wardith/`, supplied by the owner once the
+page was renamed. Holding it null through the rename was right: renaming the
+page changed its slug, so a value set earlier would have been a false
+machine-readable claim rather than a broken link. The Organization now
+publishes one `sameAs` on all nine pages — **the first surface outside this
+site that corroborates the name.** **But the copy on both LinkedIn About sections predates the 31 July
 repricing and still publishes the old prices**, so `ops/linkedin.md` was
 reopened on 2026-08-01 for a repaste — see `ops/own-facts-check.md`.
 
@@ -196,9 +220,11 @@ if clients actually start taking a month and leaving.
 `wardith.co.uk` owned and set in `astro.config.mjs` and `robots.txt`. Apex is
 primary, `www` redirects to it. Netlify deploys `main`; HTTPS confirmed via
 Netlify's API. Nothing to redirect — the domain only ever hosted the owner's own
-projects. `hello@wardith.co.uk` is live on Zoho Mail (Mail Lite, DNS at
+projects. **`hello@novenstudio.co.uk` is live on Zoho Mail** (Mail Lite, DNS at
 Namecheap, MX to `mx.zoho.eu`, SPF, DKIM, `p=none` DMARC), tested both
 directions; setup and failure checks in `ops/zoho-mail-setup.md`.
+**`hello@wardith.co.uk` does not exist yet** — 1c-3. This line said it did until
+2026-08-06; see the correction note at the top of `ops/own-facts-check.md` §2.
 
 ### 1c. Between launch and the first payment
 
@@ -221,10 +247,26 @@ provider's own site before committing.
       and an address where documents can be served, including on the website. A
       virtual office satisfies it. **V LOT chosen on cost (~£10–48/yr against
       ~£96–115), and its Trustpilot reviews are poor — reports of nothing being
-      delivered after payment.** Don't tick this off or remove the footer
-      placeholder until post through the address is confirmed working; fall back
-      to 1st Formations or Quality Company Formations (~£115/yr inc VAT) if it
-      doesn't land. **Never the home address:** this site is built so crawlers
+      delivered after payment.** Don't tick this off until post through the
+      address is confirmed working; fall back to 1st Formations or Quality
+      Company Formations (~£115/yr inc VAT) if it doesn't land.
+
+      **The footer placeholder is gone as of 2026-08-06, by the owner's
+      decision, and this instruction used to say the opposite.** It read "don't
+      remove the footer placeholder until post through the address is confirmed
+      working". Overridden on the eve of submitting the domain to Search Console
+      and Bing: what stood in the footer of all nine pages published the literal
+      token `[PLACEHOLDER`, named an internal repo file, and stated in writing
+      that a legal disclosure requirement had not been met. Indexed and repeated
+      by an assistant, that is a red flag handed to a prospect by the business's
+      own site — and the whole product is finding that fault on other people's.
+
+      **What replaces it is a commitment, not a tick: the address is published
+      before the first customer is onboarded.** Nothing on the site takes a
+      payment yet, which is what makes the removal defensible rather than
+      convenient. **The reminder is now a source comment in `Base.astro` and
+      this paragraph, and both are weaker than nine visible pages were.** That
+      is the cost of the decision and it is the owner's to carry. **Never the home address:** this site is built so crawlers
       read the business facts and repeat them confidently, which works against
       us on exactly this field, and it is a one-way door — the footer can be
       edited, indexes and archives cannot.
@@ -405,14 +447,19 @@ timetable and the money constraints are `ops/plan-to-1-september.md`.
 
 **Then these.**
 
-- [ ] **3. LinkedIn: rename the page, and decide about the slug.**
-      `business.ts` `businessLinkedIn` is deliberately `null`, so the site
-      currently publishes no `sameAs` for the company page. That costs nothing
-      — `schema.ts` omits the key entirely. Set it only once the renamed page
-      has been opened and the URL copied from the address bar. Repaste both
-      About sections from `ops/linkedin.md` §2 and §5.4 while in there: they
-      still publish the pre-31-July prices. New cover and logo PNGs are already
-      built in `assets/linkedin/`.
+- [x] **3. LinkedIn: the page is renamed and the slug is ours.**
+      `https://www.linkedin.com/company/wardith/` — supplied 2026-08-06 and set
+      in `business.ts`, so the Organization publishes a `sameAs` on all nine
+      pages. **Still open in the same job:** repaste both About sections from
+      `ops/linkedin.md` §2 and §5.4, swapping Noven for Wardith in that copy
+      first — the *live* page still publishes the pre-31-July prices (£30 /
+      £350 / from £75), and editing the name in place keeps them. The prices in
+      `ops/linkedin.md` are already current. New cover and logo PNGs are built
+      in `assets/linkedin/` and verified against their sources.
+
+      **Nobody has confirmed the page loads without a login**, which is the
+      one thing a `sameAs` needs to be worth anything to a crawler. Same
+      two-minute private-window check already owed on the founder profile.
 - [ ] **4. Delete or password `noven-2-0-preview` on Netlify.** A second
       project, deployed and publicly reachable with no password, carrying the
       old name. It is not in `ops/own-facts-check.md`. After the rename it is a
@@ -426,7 +473,11 @@ timetable and the money constraints are `ops/plan-to-1-september.md`.
       training.** The self-audit found Copilot had no record of the site
       *because Bing never indexed it*. Do them the week the site goes live, not
       the week of the pre-launch audit. Change of Address in Search Console
-      once the redirects are flipped.
+      once the redirects are flipped — they are.
+
+      **Written up in full 2026-08-06: `ops/search-console-and-bing.md`**, both
+      consoles start to finish, including which account to sign in as and why
+      it has to be that one.
 - [ ] **7. The rest of Phase F** — Zoho Books, Revolut Pro, the ICO record, and
       this repo's own name. `ops/rename-to-wardith.md`.
 - [ ] **8. Re-run `ops/own-facts-check.md` end to end** and record the date.

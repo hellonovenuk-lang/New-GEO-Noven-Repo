@@ -145,8 +145,15 @@ past.
   because **Bing's index is what Copilot answers from** (method section 2): the
   Copilot section of a report leans on indexation, not on mention rates. Do this
   *before* the run, not during it, so the indexation check has something to read.
-- **Google Search Console** — already set up and confirmed. Nothing to do beyond
-  having it open on the day.
+- **Google Search Console** — **this line was stale and is corrected
+  2026-08-06.** It read "already set up and confirmed, nothing to do beyond
+  having it open on the day", which was true of `novenstudio.co.uk` and is not
+  true of the live domain. **A Search Console property is bound to the host it
+  was verified for, so the rename did not carry it over**: `wardith.co.uk` is a
+  new property that has to be added, verified and have its sitemap submitted,
+  and the Change of Address has to be run from the old property. Full steps in
+  `ops/search-console-and-bing.md`. Do it before the run, like Bing above, or
+  the indexation half of the report has nothing to read.
 - **Rich Results Test** (`search.google.com/test/rich-results`) and the
   **Schema.org validator** (`validator.schema.org`) — for the structured data
   half of group 2 on the checklist.

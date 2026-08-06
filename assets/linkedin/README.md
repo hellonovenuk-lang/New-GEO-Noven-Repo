@@ -38,7 +38,7 @@ as they were supplied, never redrawn or retyped, so:
 
 The sentence is **"We make your business easy for AI assistants to find,
 understand and recommend."** — the site's own summary of the service, from the
-homepage, verbatim bar the pronoun. It is the answer to what Noven sells, and
+homepage, verbatim bar the pronoun. It is the answer to what Wardith sells, and
 because it *is* the site's sentence it can't drift from it.
 
 **It isn't the homepage headline**, which is what the og card carries. LinkedIn

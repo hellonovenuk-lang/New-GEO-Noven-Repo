@@ -28,6 +28,12 @@ export const business = {
   email: 'hello@novenstudio.co.uk',
   basedIn: 'the Wirral, UK',
   basedInShort: 'Wirral, UK',
+  /* Both of the above are prose, read by people, and say only what is true
+   * today: the founder works from the Wirral. **Neither is a postal address and
+   * neither should be turned into one** until the address for service exists —
+   * see the long note in `schema.ts` where an `address` block was added and
+   * removed on 2026-08-06. Whatever fills the footer placeholder is the value
+   * that belongs in the structured data, and it may not be in Merseyside. */
   areaServed: 'GB',
   areaServedLabel: 'United Kingdom',
   vatRegistered: false,
@@ -78,8 +84,17 @@ export const business = {
    * and store it without the `?viewAsMember=true` LinkedIn appends when you
    * preview your own page, which is a view-mode flag rather than the
    * canonical public URL. See `ops/rename-to-wardith.md` D0.5.
+   *
+   * **Set 2026-08-06**, once the page had been renamed and the URL supplied
+   * from the address bar. The slug changed with the name, so the old
+   * `novenstudio` URL is dead — which is exactly why this stayed null through
+   * the rename rather than shipping a `sameAs` pointing nowhere.
+   *
+   * Stored verbatim as supplied, trailing slash included: that is what
+   * LinkedIn serves as the page's own address, and this value is a claim that
+   * the two are the same thing rather than a link for a person to click.
    */
-  businessLinkedIn: null as string | null,
+  businessLinkedIn: 'https://www.linkedin.com/company/wardith/' as string | null,
 
   /**
    * Path to the founder's photograph in site/public. Setting it does two

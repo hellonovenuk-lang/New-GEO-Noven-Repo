@@ -69,8 +69,11 @@ Wirral, working remotely across the UK. One person, no employees.
   explicitly allowed in `robots.txt`, an XML sitemap, and JSON-LD structured
   data. Visible facts and machine-readable facts both read from one file
   (`site/src/data/business.ts`) so they cannot drift apart.
-- **Email** — `hello@wardith.co.uk` on Zoho Mail, tested both directions.
-  The old Gmail address forwards to it.
+- **Email** — `hello@novenstudio.co.uk` on Zoho Mail, tested both directions.
+  The old Gmail address forwards to it. **`hello@wardith.co.uk` has not been
+  created yet**, which is why the site still publishes the old address: a
+  working address on the dead domain beats a bouncing one on the live domain,
+  and this is the only inbound channel on a business with no phone and no form.
 - **Search Console** — sitemap submitted and confirmed, six pages.
 - **Brand** — the supplied assets are in and used as-is.
 - **LinkedIn** — founder profile and company page, both linked from the
