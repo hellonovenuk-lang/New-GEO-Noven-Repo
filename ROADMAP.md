@@ -180,10 +180,14 @@ report within two working days of scope and payment being confirmed (moved from
 one working day on 2026-07-31 — `ops/audit-method.md` section 7 says why), and a
 Foundation plan within two working days of payment clearing. Founder bio,
 photograph, LinkedIn profile and Maersk as `alumniOf` are all in. The LinkedIn
-setup is done — profile amended, company page live. **`businessLinkedIn` is
-deliberately `null` from 2026-08-04**: renaming the page changes its slug, and
-a stale `sameAs` is a false machine-readable claim rather than a broken link.
-Set it once the renamed page has been opened — `ops/rename-to-wardith.md` D0.5. **But the copy on both LinkedIn About sections predates the 31 July
+setup is done — profile amended, company page live. **`businessLinkedIn` was
+deliberately `null` from 2026-08-04 and is set as of 2026-08-06** to
+`https://www.linkedin.com/company/wardith/`, supplied by the owner once the
+page was renamed. Holding it null through the rename was right: renaming the
+page changed its slug, so a value set earlier would have been a false
+machine-readable claim rather than a broken link. The Organization now
+publishes one `sameAs` on all nine pages — **the first surface outside this
+site that corroborates the name.** **But the copy on both LinkedIn About sections predates the 31 July
 repricing and still publishes the old prices**, so `ops/linkedin.md` was
 reopened on 2026-08-01 for a repaste — see `ops/own-facts-check.md`.
 
@@ -424,14 +428,19 @@ timetable and the money constraints are `ops/plan-to-1-september.md`.
 
 **Then these.**
 
-- [ ] **3. LinkedIn: rename the page, and decide about the slug.**
-      `business.ts` `businessLinkedIn` is deliberately `null`, so the site
-      currently publishes no `sameAs` for the company page. That costs nothing
-      — `schema.ts` omits the key entirely. Set it only once the renamed page
-      has been opened and the URL copied from the address bar. Repaste both
-      About sections from `ops/linkedin.md` §2 and §5.4 while in there: they
-      still publish the pre-31-July prices. New cover and logo PNGs are already
-      built in `assets/linkedin/`.
+- [x] **3. LinkedIn: the page is renamed and the slug is ours.**
+      `https://www.linkedin.com/company/wardith/` — supplied 2026-08-06 and set
+      in `business.ts`, so the Organization publishes a `sameAs` on all nine
+      pages. **Still open in the same job:** repaste both About sections from
+      `ops/linkedin.md` §2 and §5.4, swapping Noven for Wardith in that copy
+      first — the *live* page still publishes the pre-31-July prices (£30 /
+      £350 / from £75), and editing the name in place keeps them. The prices in
+      `ops/linkedin.md` are already current. New cover and logo PNGs are built
+      in `assets/linkedin/` and verified against their sources.
+
+      **Nobody has confirmed the page loads without a login**, which is the
+      one thing a `sameAs` needs to be worth anything to a crawler. Same
+      two-minute private-window check already owed on the founder profile.
 - [ ] **4. Delete or password `noven-2-0-preview` on Netlify.** A second
       project, deployed and publicly reachable with no password, carrying the
       old name. It is not in `ops/own-facts-check.md`. After the rename it is a

@@ -97,6 +97,8 @@ read off the live page, and both need the owner's eyes.
 | 10 | Email signature on `hello@` | Owner, in Zoho | `[PLACEHOLDER: not recorded anywhere in this repo — does it quote a price?]` | Unknown | Owner to check |
 | 11 | Directory or listing entries | Owner | Unknown | `[PLACEHOLDER: no record of any having been created]` | Owner to confirm none exist |
 | 12 | Old site content at `novenstudio.co.uk` | Replaced | Yes, a different business's | Replaced before launch; caches may persist | Nothing to do but wait |
+| 13 | **The site's `sameAs` claim** — Organization JSON-LD on all nine pages says this business and `linkedin.com/company/wardith/` are the same thing | Repo → Netlify, but its *truth* depends on row 3 | No | **New 2026-08-06.** The slug is right and the URL carries no tracking or view-mode parameters. **Nobody has confirmed the page loads without a login**, and a `sameAs` to a page a crawler cannot read corroborates nothing | Owner: open it in a private window. Same check already owed on the founder profile |
+| 14 | **Two stale Netlify projects**, both public with no password: `noven-2-0-preview.netlify.app` (a full Noven-branded copy) and `aesthetic-unicorn-619923.netlify.app` (in no ops document at all) | Owner, in Netlify | Unknown — the preview predates the repricing | **Live, crawlable copies of this business under the dead name**, with nothing pointing home. `rename-to-wardith.md` D0.1a raised the first on 2026-08-04 and it is still open; the second was found 2026-08-06 | Delete, or set a password. Do not leave |
 
 **Rows 3 and 4 are the whole of the actionable problem.** Two paste operations,
 about ten minutes, and they are the only surfaces we control that are currently

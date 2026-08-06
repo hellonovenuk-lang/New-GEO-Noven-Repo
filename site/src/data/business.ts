@@ -84,8 +84,17 @@ export const business = {
    * and store it without the `?viewAsMember=true` LinkedIn appends when you
    * preview your own page, which is a view-mode flag rather than the
    * canonical public URL. See `ops/rename-to-wardith.md` D0.5.
+   *
+   * **Set 2026-08-06**, once the page had been renamed and the URL supplied
+   * from the address bar. The slug changed with the name, so the old
+   * `novenstudio` URL is dead — which is exactly why this stayed null through
+   * the rename rather than shipping a `sameAs` pointing nowhere.
+   *
+   * Stored verbatim as supplied, trailing slash included: that is what
+   * LinkedIn serves as the page's own address, and this value is a claim that
+   * the two are the same thing rather than a link for a person to click.
    */
-  businessLinkedIn: null as string | null,
+  businessLinkedIn: 'https://www.linkedin.com/company/wardith/' as string | null,
 
   /**
    * Path to the founder's photograph in site/public. Setting it does two

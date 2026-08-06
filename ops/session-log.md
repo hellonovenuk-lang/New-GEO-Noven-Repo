@@ -110,6 +110,43 @@ session came from writing down something we wanted to be true — a mailbox that
 did not exist, a location we had not confirmed — rather than something checked.
 The site's whole pitch is that it does not do that.
 
+**Last thing, and it is the one that actually moves the problem the owner
+asked about: the company page is renamed and `businessLinkedIn` is set.**
+`https://www.linkedin.com/company/wardith/`, supplied by the owner. The
+Organization now publishes one `sameAs` on all nine pages, and it renders in
+the homepage record panel as well as the head, so the visible and
+machine-readable versions still agree byte for byte.
+
+**Holding it at `null` through the rename was the right call and is worth
+keeping as a pattern.** Renaming a LinkedIn page changes its slug, so any value
+set before the rename would have been a published claim that this business and a
+dead URL are the same thing — not a broken link, a false statement, on a site
+whose entire pitch is that its own facts are correct. `schema.ts` omits the key
+rather than emitting an empty array, so waiting cost exactly nothing. **A
+missing `sameAs` is invisible; a wrong one is a lie.**
+
+**Why this matters more than anything else outstanding.** The diagnosis for why
+assistants still answer "Noven" was that the name had exactly one surface
+asserting it — wardith.co.uk, on its own authority, corroborated by nothing.
+This is the second surface, and it is the one a stranger checks. It does not
+work overnight and it does not replace getting the new domain indexed, but it is
+the first thing that makes the name checkable rather than merely claimed.
+
+**One thing is not verified and is recorded as row 13 of
+`ops/own-facts-check.md`: nobody has confirmed the page loads without a login.**
+This session's network policy blocks LinkedIn as well as `wardith.co.uk`, so it
+could not be checked from here. A `sameAs` pointing at a page a crawler is shown
+a login wall for corroborates nothing — it is the same fault as the
+`linkedin.com/me` rule already written in ROADMAP 1a, arriving through a
+different door. Two minutes in a private window settles it.
+
+**Also added to the register as row 14, because it kept coming up and was
+tracked nowhere:** two Netlify projects are public with no password —
+`noven-2-0-preview` (a full Noven-branded copy of the business, raised as D0.1a
+on 2026-08-04 and still open) and `aesthetic-unicorn-619923`, which appears in
+no operating document at all. Live crawlable copies under the dead name are
+directly against the thing being worked on this session.
+
 ### 2026-08-06 (the self-audit is published — `/ask-your-ai/`)
 
 **The owner's idea, and it is a good one:** put our own audit on the site with a

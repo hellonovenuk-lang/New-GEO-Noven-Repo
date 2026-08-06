@@ -306,8 +306,10 @@ subset of the head's Service schema.
 
 **Three things did not survive a mechanical rename, and are worth knowing:**
 
-- **`businessLinkedIn` is `null`, not the old slug.** See D0.5. `schema.ts`
-  omits the key rather than emitting an empty array, so this costs nothing.
+- **`businessLinkedIn` was `null`, not the old slug.** See D0.5. `schema.ts`
+  omits the key rather than emitting an empty array, so this cost nothing while
+  it lasted. **Set 2026-08-06 to `https://www.linkedin.com/company/wardith/`**
+  once the page was renamed and the URL supplied — F1.
 - **Three passages invited the reader to ask an assistant what Noven does and
   compare the answer.** That test returned nothing under the old name — the
   self-audit proved it — so the invitation was already failing before the
@@ -687,10 +689,17 @@ Worked from the register in `ops/own-facts-check.md` section 3. **After the
 switch, that register needs re-running in full** — this is precisely the trigger
 its section 6 describes.
 
-- [ ] **F1. LinkedIn company page — name and URL slug.** Both. The slug is
-      published in our own structured data as `sameAs`, so the old URL dies the
-      moment it changes. **Do this inside the same window as the site switch**,
-      and confirm the new URL before setting `business.ts` line 57 (C1).
+- [x] **F1. DONE 2026-08-06. Both.** The page is renamed and the slug is
+      `wardith`: `https://www.linkedin.com/company/wardith/`. Set in
+      `business.ts`, so the Organization now publishes it as `sameAs` on all
+      nine pages. The old `novenstudio` URL is dead, which is why this value
+      was held at `null` through the rename rather than shipped pointing
+      nowhere — see D0.5, and the recommendation there was followed exactly.
+
+      **Not yet confirmed: that the page loads without a login.** A `sameAs`
+      to a page a crawler cannot read corroborates nothing. Open it in a
+      private window — the same check ROADMAP 1a already owes on the founder
+      profile.
 - [ ] **F2. LinkedIn company page About** — still publishing the pre-31-July
       prices (£30 / £350 / from £75). Repaste from `ops/linkedin.md` §5.4 with
       the new name. Two jobs, one paste.
