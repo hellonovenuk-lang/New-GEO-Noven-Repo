@@ -184,6 +184,57 @@ start to finish. Three things in it are worth knowing without opening it:
   is rationed. For a domain this new that is the fastest route into any index,
   and it feeds the one Copilot reads.
 
+**Last change of the session, and the owner's call: all three visible
+`[PLACEHOLDER]` blocks are off the site.** Made on the eve of submitting the
+domain to Search Console and Bing, which is the argument for the timing — the
+placeholders had been live since launch and survivable while nothing indexed the
+domain. Submission is the moment that stops being true: they go from text on a
+page nobody visits to two search indexes and whatever the assistants cache.
+
+**The footer one was the serious one.** On all nine pages it published the
+literal token `[PLACEHOLDER`, the name of an internal repo file (`ROADMAP.md`),
+and a written statement that a legal disclosure requirement had not been met.
+The owner's reasoning: it is compliance-relevant, not customer-relevant, and
+handing a crawler a red flag to repeat to a prospect is a strange thing for
+*this* business to do. Agreed, and the direction is safe — the removal publishes
+less, not more.
+
+**What it costs, said plainly: the reminder is now weaker than what it
+replaced.** `ROADMAP.md` used to instruct the opposite — "don't remove the
+footer placeholder until post through the address is confirmed working" — and
+that instruction is now overridden and marked as overridden. A loud flag on nine
+pages is impossible to forget; a source comment in `Base.astro` and a paragraph
+in the roadmap are not. **The commitment that replaces the tick: the address is
+published before the first customer is onboarded**, not before launch. Nothing
+on the site takes a payment yet, which is what makes this defensible rather than
+merely convenient. `ops/accounts.md`'s 24 August row has had its consequence
+rewritten to match — the risk is no longer "the gap is visible on launch day",
+it is "the gap is invisible".
+
+**The other two were replaced with copy rather than deleted**, which is what the
+owner asked for and is the better answer in both cases:
+
+- **Homepage, "Where's the proof?"** — the case-studies placeholder is gone and
+  the section now ends by pointing at `/ask-your-ai/`: we ran the audit on
+  ourselves before selling one, failed it, published it in full, and changed the
+  name because of what it found. That is proof of method for a business with no
+  clients, and it was already sitting on the site unlinked from the one section
+  whose entire subject is the absence of proof.
+- **`/ask-your-ai/`, "What happened next"** — that block was never customer copy
+  at all. It was an instruction to the next session, addressed to nobody who
+  reads the site, and it was about to be crawled as if it were prose. Moved into
+  a source comment; the paragraphs it sat above already stood on their own. Added
+  in its place, at the owner's request, the standing commitment: **the audit is
+  re-run on ourselves at intervals and every one is published on that page,
+  dated, whatever it says.** That generalises what was already promised about the
+  second run, and it is the strongest thing on the site — no competitor with real
+  clients is publishing their own bad results.
+
+**Verified after the change: zero `[PLACEHOLDER]` anywhere in the built output,
+and no internal reference of any kind** — no `ROADMAP`, no `ops/`, no `.astro`,
+no `business.ts`. The homepage's visible code block is still byte-for-byte its
+head JSON-LD.
+
 **Also added to the register as row 14, because it kept coming up and was
 tracked nowhere:** two Netlify projects are public with no password —
 `noven-2-0-preview` (a full Noven-branded copy of the business, raised as D0.1a

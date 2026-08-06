@@ -78,7 +78,7 @@ other than this table. **The rest are still only here.**
 | When | What | If missed |
 |---|---|---|
 | **~10 Aug 2026** | ICO publishes the registered address on a bulk-downloadable public register | The owner's home address published permanently. Copies survive any later amendment |
-| **24 Aug 2026** | V LOT decision point: delivered, or the ~£115/yr fallback gets bought on the 26th | The address-for-service `[PLACEHOLDER]` is still in the footer of all seven pages on launch day |
+| **24 Aug 2026** | V LOT decision point: delivered, or the ~£115/yr fallback gets bought on the 26th | **The consequence changed on 2026-08-06.** The footer placeholder was removed, so the site no longer shows the gap — it publishes no address at all, silently. Launch day now arrives with a legal disclosure missing and nothing on the page to say so. The commitment is that it lands before the first customer, not before launch |
 | **26 Aug 2026** | Spending freeze lifts. API balances first, address for service second | Six days to 1 September and nothing bought |
 | **1 Sept 2026** | Operational, accepting clients, outreach active — the owner's deadline, set 2026-08-04 | — |
 | **6 Oct 2026** *(in the calendar)* | Extend the three Wardith domains to 5+ years; decide whether to consolidate the registrar, now the 60-day transfer lock has lifted | Left on a one-year term, renewing at GoDaddy's higher rate, across two registrars |

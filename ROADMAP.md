@@ -247,10 +247,26 @@ provider's own site before committing.
       and an address where documents can be served, including on the website. A
       virtual office satisfies it. **V LOT chosen on cost (~£10–48/yr against
       ~£96–115), and its Trustpilot reviews are poor — reports of nothing being
-      delivered after payment.** Don't tick this off or remove the footer
-      placeholder until post through the address is confirmed working; fall back
-      to 1st Formations or Quality Company Formations (~£115/yr inc VAT) if it
-      doesn't land. **Never the home address:** this site is built so crawlers
+      delivered after payment.** Don't tick this off until post through the
+      address is confirmed working; fall back to 1st Formations or Quality
+      Company Formations (~£115/yr inc VAT) if it doesn't land.
+
+      **The footer placeholder is gone as of 2026-08-06, by the owner's
+      decision, and this instruction used to say the opposite.** It read "don't
+      remove the footer placeholder until post through the address is confirmed
+      working". Overridden on the eve of submitting the domain to Search Console
+      and Bing: what stood in the footer of all nine pages published the literal
+      token `[PLACEHOLDER`, named an internal repo file, and stated in writing
+      that a legal disclosure requirement had not been met. Indexed and repeated
+      by an assistant, that is a red flag handed to a prospect by the business's
+      own site — and the whole product is finding that fault on other people's.
+
+      **What replaces it is a commitment, not a tick: the address is published
+      before the first customer is onboarded.** Nothing on the site takes a
+      payment yet, which is what makes the removal defensible rather than
+      convenient. **The reminder is now a source comment in `Base.astro` and
+      this paragraph, and both are weaker than nine visible pages were.** That
+      is the cost of the decision and it is the owner's to carry. **Never the home address:** this site is built so crawlers
       read the business facts and repeat them confidently, which works against
       us on exactly this field, and it is a one-way door — the footer can be
       edited, indexes and archives cannot.
