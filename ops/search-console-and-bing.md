@@ -151,11 +151,20 @@ worth much less than they were first written up as.
 Go to the **`novenstudio.co.uk`** property → **Settings** → **Change of
 address** → select `wardith.co.uk` as the destination → **Validate & Update**.
 
-**It checks the redirects itself.** Netlify 301s every non-primary domain to the
-primary, page for page, and `wardith.co.uk` is primary — so this should pass
-without anything being written. If it reports the redirects are missing, stop:
-that means the domain flip has regressed, and that is a bigger problem than
-indexation.
+**It checks the redirects itself, and on 2026-08-06 that check earned its
+keep.** This paragraph used to say the validation "should pass without anything
+being written", because Netlify 301s non-primary domains to the primary. **It
+did not, because Netlify was not doing that** — `novenstudio.co.uk` was serving
+the whole Wardith site at its own address, with no redirect at all, and so were
+`wardith.com` and `wardith.uk`. Seven explicit rules now live in `netlify.toml`.
+Full account in `ops/rename-to-wardith.md` D3 and in the session log.
+
+**Keep the instinct that came out of it.** If this check fails, do not work
+around it and do not skip the tool — read what it says. Google's validator is
+the only thing in this repo's toolchain that fetches the old domain and reports
+what it actually got, and it found a fault nine days old that four documents had
+assumed away. The failure text is under the chevron; expand it rather than
+guessing from the summary line.
 
 **If `wardith.co.uk` is not in the dropdown, it is a property-type mismatch**,
 and it has a two-minute fix rather than being a dead end. The old property is
