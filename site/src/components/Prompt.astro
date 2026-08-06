@@ -1,0 +1,103 @@
+---
+/* A block of writing meant to be lifted off the page and pasted into an AI
+ * assistant.
+ *
+ * Deliberately not the `.code` panel. That one exists to be *read* — it is
+ * this site's own structured data, on display as evidence. This one exists to
+ * be *taken*, so it is set in the body face at body size rather than in mono
+ * at 0.76rem: nobody proofreads a paragraph they are about to hand to a
+ * machine, but plenty of people read it once to decide whether they trust the
+ * business that wrote it.
+ *
+ * The text is passed in as data rather than as markup children, and the copy
+ * button builds its clipboard string from the same values the page renders.
+ * That is the same rule the JSON-LD follows on the rest of the site: what a
+ * person sees and what leaves the page cannot drift apart. A numbered list
+ * copied out of the DOM loses its numbering, which is exactly the kind of
+ * silent difference this arrangement prevents.
+ *
+ * With JavaScript off the button never appears — it is unhidden by the script
+ * that gives it its behaviour — and the prompt is still complete, selectable
+ * and readable. There is no version of this component that shows a control
+ * which does nothing.
+ */
+
+interface Props {
+  /** Sentence-case caption. Says what the prompt is for, in the reader's words. */
+  caption: string;
+  /** Accessible name for the block. */
+  label: string;
+  /** Opening paragraph. Always present — a prompt with no instruction is a note. */
+  intro: string;
+  /** Optional numbered checks. Rendered as a list; copied with their numbers. */
+  points?: string[];
+  /** Optional closing paragraph, after the points. */
+  outro?: string;
+  /** Optional line under the block, in the page's own voice rather than the prompt's. */
+  note?: string;
+}
+
+const { caption, label, intro, points = [], outro, note } = Astro.props;
+
+/* The exact string the copy button puts on the clipboard. Built here, beside
+ * the values that render, so the two are one decision. */
+const copyText = [
+  intro,
+  ...(points.length ? [points.map((p, i) => `${i + 1}. ${p}`).join('\n')] : []),
+  ...(outro ? [outro] : []),
+].join('\n\n');
+---
+
+<figure class="prompt" data-prompt data-copy-text={copyText}>
+  <figcaption class="prompt-head">
+    <span class="prompt-dot" aria-hidden="true"></span>
+    <span>{caption}</span>
+    <button type="button" class="prompt-copy" data-prompt-copy hidden>Copy</button>
+  </figcaption>
+
+  <div class="prompt-body" role="region" aria-label={label}>
+    <p>{intro}</p>
+    {
+      points.length > 0 && (
+        <ol class="prompt-points">
+          {points.map((point) => (
+            <li>{point}</li>
+          ))}
+        </ol>
+      )
+    }
+    {outro && <p>{outro}</p>}
+  </div>
+
+  {note && <p class="prompt-foot">{note}</p>}
+</figure>
+
+<script>
+  /* Progressive enhancement, and nothing else. The prompt is complete without
+     this file; all it adds is not having to select four hundred words by hand
+     on a phone. */
+  document.querySelectorAll<HTMLElement>('[data-prompt]').forEach((figure) => {
+    const button = figure.querySelector<HTMLButtonElement>('[data-prompt-copy]');
+    const text = figure.dataset.copyText;
+    if (!button || !text || !navigator.clipboard) return;
+
+    button.hidden = false;
+
+    let restore = 0;
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        /* Denied permission, or an insecure context. Say nothing false: the
+           text is still on the page and still selectable. */
+        button.textContent = 'Select it instead';
+        window.clearTimeout(restore);
+        restore = window.setTimeout(() => (button.textContent = 'Copy'), 3000);
+        return;
+      }
+      button.textContent = 'Copied';
+      window.clearTimeout(restore);
+      restore = window.setTimeout(() => (button.textContent = 'Copy'), 2000);
+    });
+  });
+</script>

@@ -1444,7 +1444,243 @@ li a:hover {
   left: 0;
 }
 
-/* ---------------------------------------------------------------- 10 motion */
+/* ------------------------------------------- 10 prompts and the published report */
+
+/* A block of writing meant to be lifted off the page and pasted into an
+   assistant. Set in the body face at body size, unlike `.code` — that panel is
+   evidence to be read, this one is a tool to be taken, and a paragraph a
+   person is about to hand to a machine should not be set at 0.76rem. */
+.prompt {
+  margin: var(--s5) 0;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--paper-2);
+  max-width: var(--measure);
+  overflow: hidden;
+}
+
+.prompt-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-faint);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.prompt-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--brass);
+  flex: none;
+}
+
+/* Rendered hidden and unhidden by script, so a reader without JavaScript is
+   never offered a control that does nothing. */
+.prompt-copy {
+  margin-left: auto;
+  flex: none;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: var(--paper);
+  color: var(--ink-soft);
+  font: inherit;
+  cursor: pointer;
+}
+
+.prompt-copy:hover {
+  color: var(--ink);
+  border-color: var(--ink-faint);
+}
+
+.prompt-body {
+  padding: var(--s4) 1.15rem;
+  background: var(--paper);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+.prompt-body > :last-child {
+  margin-bottom: 0;
+}
+
+.prompt-points {
+  padding-left: 1.3rem;
+  margin-bottom: 1.15rem;
+}
+
+.prompt-points li {
+  margin-bottom: 0.6rem;
+  padding-left: 0.2rem;
+}
+
+/* The page's own voice, after the prompt has finished speaking. */
+.prompt-foot {
+  padding: 0.85rem 1.15rem;
+  border-top: 1px solid var(--rule);
+  margin: 0;
+  max-width: none;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+/* --- The published report ------------------------------------------------ */
+
+/* Reproduced rather than summarised, so the report page runs narrower than a
+   normal page and reads as a document. */
+.doc {
+  max-width: 44rem;
+}
+
+.doc h2 {
+  margin-top: var(--s7);
+  max-width: 26ch;
+}
+
+.doc h2:first-child {
+  margin-top: 0;
+}
+
+.doc h3 {
+  margin-top: var(--s5);
+}
+
+/* Where the site speaks over the top of the document — a correction, a
+   redaction, a price that has moved since. Never mixed into the report's own
+   voice: the reader has to be able to tell which is which. */
+.doc-note {
+  border-left: 2px solid var(--brass);
+  background: var(--paper-2);
+  padding: var(--s3) var(--s4);
+  margin: var(--s4) 0;
+  max-width: var(--measure);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.doc-note > :last-child {
+  margin-bottom: 0;
+}
+
+.doc-note strong {
+  color: var(--ink);
+}
+
+/* A verbatim answer from an assistant. The whole audit rests on quoting what
+   came back rather than characterising it, so these carry attribution. */
+.doc-quote {
+  margin: var(--s4) 0;
+  padding-left: var(--s4);
+  border-left: 1px solid var(--rule);
+  max-width: var(--measure);
+}
+
+.doc-quote p {
+  font-family: var(--display);
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.doc-quote cite {
+  display: block;
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+}
+
+/* Tables scroll inside their own box rather than pushing the page sideways. */
+.doc-table {
+  overflow-x: auto;
+  margin: var(--s4) 0;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+}
+
+.doc-table table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 32rem;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  background: var(--paper);
+}
+
+.doc-table th,
+.doc-table td {
+  text-align: left;
+  padding: 0.6rem 0.85rem;
+  border-bottom: 1px solid var(--rule-soft);
+  vertical-align: top;
+}
+
+.doc-table thead th {
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+  background: var(--paper-2);
+  border-bottom-color: var(--rule);
+  white-space: nowrap;
+}
+
+.doc-table tbody tr:last-child th,
+.doc-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.doc-table tbody th {
+  font-weight: 400;
+  color: var(--ink);
+  min-width: 18rem;
+}
+
+/* The run counts. Mono so the columns line up down the page. */
+.doc-table td {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.doc-table:focus-visible {
+  outline-offset: 2px;
+}
+
+/* Sits under the scroll box rather than inside it as a <caption>. A caption
+   lives inside the table and therefore inherits its min-width, so on a phone
+   the note explaining the table scrolls off the side of the thing it explains. */
+.doc-table-note {
+  margin: -0.5rem 0 var(--s5);
+  max-width: var(--measure);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--ink-faint);
+}
+
+/* Sign-off at the foot of the report. */
+.doc-sign {
+  margin-top: var(--s7);
+  padding-top: var(--s4);
+  border-top: 1px solid var(--rule);
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.doc-sign p {
+  margin-bottom: 0.5rem;
+}
+
+/* ---------------------------------------------------------------- 11 motion */
 
 /* Everything below is gated on .js, which only exists once the script runs.
    With JS off — or for a crawler that never runs it — nothing is hidden. */

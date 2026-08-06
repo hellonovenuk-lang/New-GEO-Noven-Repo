@@ -11,6 +11,90 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-06 (the self-audit is published — `/ask-your-ai/`)
+
+**The owner's idea, and it is a good one:** put our own audit on the site with a
+prompt telling the reader to hand it to their own AI assistant and ask what it
+makes of the quality, credibility and price. He had already done this privately
+and found assistants complimentary about the work. Two jobs in one — promotion,
+and preparing a client for what the audit actually reads like.
+
+**Two pages, not one.** `/ask-your-ai/` carries the argument;
+`/ask-your-ai/self-audit/` reproduces the 3 August report in full.
+
+**The report is published as HTML, and the PDF is secondary. This was the main
+technical decision.** The obvious build was a PDF download. It is the wrong one
+for this business: the standing rule is that the site stays crawlable static
+HTML, and this is now the richest page on the site for the exact questions we
+want to be found for — ten real questions, four assistants named, verbatim
+answers, a competitor distribution, a method. Putting that behind a format
+these systems read least well would be a strange thing for *this* business to
+do. The report page is 2,469 words of crawlable text with `Report` JSON-LD
+naming the Organization as author, publisher and subject.
+
+**Three things in the delivered report fought with publishing it, and each was
+resolved by declaring it rather than by editing quietly.**
+
+- **It names eleven real competitors, with counts.** The owner's instruction was
+  not to name them: most are genuine businesses doing real work, and none asked
+  to appear in our marketing. The names are out and the counts stay, because the
+  *distribution* is the finding — one business took roughly a fifth of every
+  recommendation going — and it survives the names coming out.
+- **It quotes £125 and £750, which moved to £250 and £800 on 5 August.** A
+  prospect reading it could take £125 for the current fee. The figures are left
+  as written with a correction beside them. That paragraph is itself about a
+  stale price sitting in Google's stored description of our pages, so publishing
+  it creates one more copy of exactly the fault it describes — said out loud on
+  the page rather than tidied away.
+- **It is branded Noven.** Kept, and made the hook. The audit is why the rename
+  happened, so the page leads with the failure and explains the name in the
+  second section. A silently rebranded report would be less credible, not more.
+
+**Nothing in the report body was altered to flatter the present.** Where the
+document is out of date it is left out of date and marked. A record quietly
+corrected is not a record.
+
+**The competitor section became the best part of the page, after the owner
+reframed it.** The first draft was a complaint about businesses publishing
+"best provider" pages awarding themselves the title. The owner's version is
+better: most named competitors are genuine and unnamed out of fairness, some
+are not — fake accreditations, claims that outrun the operating period — and
+rather than characterise anyone, the page hands the reader a due-diligence
+prompt to check *any* provider. **Including us.** The page then pre-empts its
+own result: run it on Wardith and you will find a one-person business, a name
+with no record behind it, no awards, no accreditations and no testimonials.
+Saying that before the reader discovers it is the whole posture of the site.
+
+**Nothing is asserted about any identifiable competitor.** The section describes
+a practice, names nobody, claims nothing about anyone's motive, and does not
+assert that those pages are why anyone outranks us. Sharpening it further needs
+evidence that can be pointed at, and should be discussed before it is written.
+
+**Standing rules held to, and checked rather than assumed:** no acronym anywhere
+in the copy; no all-caps tags, no three-column feature rows, no repeated
+calls-to-action — the page asks once, in the footer, and deliberately not in the
+body, because a "book now" button halfway down a page arguing for taking nobody's
+word for anything would undo it. Verified in the built output: **0 elements
+hidden with JavaScript disabled** on both pages (2,122 and 2,469 words readable),
+**0 WCAG AA contrast failures** on either, and no horizontal overflow at 390px or
+1280px. The new `Prompt` component builds its clipboard string from the same
+values it renders, so what a reader copies and what they read cannot drift — the
+same rule the JSON-LD follows, applied to a numbered list, which loses its
+numbering if copied out of the DOM.
+
+**What is deliberately unfinished.** The "What happened next" section is a
+`[PLACEHOLDER]` block holding space for the Wardith rerun between the 26 August
+unfreeze and the 1 September launch. It is written to be publishable whichever
+way the rerun goes, and the page says so in its own copy: *a business that
+publishes only its good audit has told you what kind of business it is.*
+
+**The PDF is an owner job and the master is ready.**
+`Noven-audit-report-2026-08-03-for-publication.docx` is the redacted version
+with the three notes inserted, sitting beside the untouched original. It has to
+be exported from Word rather than converted — `CLAUDE.md`, and LibreOffice in
+the session container could not load any document at all, including a plain text
+file. No PDF is linked from the site, so there is no broken link waiting.
+
 ### 2026-08-05 (the second repricing — 250 / 800 / 150 / 400 / 700)
 
 **Audit £125 → £250. Foundation £750 → £800. Maintain £95 → £150, Grow £250 →

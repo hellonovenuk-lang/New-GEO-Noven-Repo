@@ -43,7 +43,7 @@ distinction everywhere else.
 ## Where we are today
 
 **The site is live** at `wardith.co.uk`, on HTTPS, deployed from `main` by
-Netlify: seven static pages, readable by AI crawlers, with machine-readable
+Netlify: nine static pages, readable by AI crawlers, with machine-readable
 business facts and a sitemap submitted and confirmed in Search Console. Email is
 `hello@wardith.co.uk` on Zoho. The brand assets are in and the palette
 matches them. **Phase 1a and 1b are closed.**
@@ -545,7 +545,24 @@ finding about their business rather than a pitch.
 - [ ] Written permission to publish results from the first clients.
 - [ ] Record before-and-after, both dated.
 - [ ] Publish the first case study on the home page, replacing the placeholder.
-- [ ] Publish our own before-and-after — see the Noven self-audit in 3a.
+- [x] **Publish our own audit — done 2026-08-06.** `/ask-your-ai/` carries the
+      argument and `/ask-your-ai/self-audit/` reproduces the 3 August report in
+      full, as HTML rather than as a PDF so that the assistants can actually
+      read it. Names of the eleven competitors withheld, old prices left as
+      written with a correction beside them, both declared on the page.
+      Reasoning in `ops/session-log.md`, 2026-08-06.
+- [ ] **The "after" half of that page is still empty, and it is the point of
+      it.** The `[PLACEHOLDER]` block in the last section of `/ask-your-ai/`
+      holds space for the Wardith rerun (2c/Phase 2 of
+      `ops/plan-to-1-september.md`, between the 26 August unfreeze and the
+      1 September launch). Publish it whichever way it goes — the page already
+      commits to that in writing.
+- [ ] **Export the client PDF of the self-audit from Word.** The redacted master
+      is `ops/audits/noven-2026-08-02/Noven-audit-report-2026-08-03-for-publication.docx`,
+      beside the untouched original. `CLAUDE.md` requires the export to come
+      from Word rather than a converter. Nothing on the site links a PDF yet, so
+      this is additive — add the download to `/ask-your-ai/` once the file
+      exists.
 
 ### 2e. Later, only if the above works
 
