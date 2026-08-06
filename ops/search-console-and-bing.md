@@ -136,8 +136,17 @@ Google.**
 - **Results come back** — run it, as below. Those pages are where the Noven
   answer still lives.
 
-**Record the number either way.** It is the only measurement anyone has taken of
-whether Google indexed the old domain, and G2's six-month comparison wants it.
+**RUN 2026-08-06: four results.** So Google did index the old domain, unlike
+Bing, and Change of Address is worth doing. Four pages describing a business
+called Noven sit in the index and each is a live source for the exact answer the
+rename was meant to stop.
+
+**Four is now the decay baseline.** Re-run `site:novenstudio.co.uk` at the
+six-month check and record what is left. That number — how long indexed pages
+survive a 301 plus Change of Address — is the one measurement out of this whole
+migration that transfers to a client, because it measures something we caused.
+See G2 in `ops/rename-to-wardith.md` for why the two *name* question sets are
+worth much less than they were first written up as.
 
 Go to the **`novenstudio.co.uk`** property → **Settings** → **Change of
 address** → select `wardith.co.uk` as the destination → **Validate & Update**.

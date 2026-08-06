@@ -753,14 +753,46 @@ its section 6 describes.
       honest answer will be "nothing" for months, and that is not a comparison —
       it is a different question.
 
-      **The way to keep it valuable is to run both.** At the six-month re-check,
-      ask the frozen Noven questions *and* the same questions about Wardith. The
-      first measures **how long a dead name persists**; the second measures **how
-      fast a new one is learned.** Nobody else has that measurement, it costs one
-      extra batch of queries, and it is the single most useful piece of evidence
-      this business could own — the product's own claim, tested on the only
-      business we are allowed to experiment on. Fold the decision into
-      `ops/audit-method.md` before the re-check, not after.
+      **Revised 2026-08-06, after the owner asked what the six-month re-check is
+      actually for. Half of what was written here was wrong.**
+
+      It said: run both question sets, the Noven one measuring *how long a dead
+      name persists* and the Wardith one *how fast a new one is learned*, and
+      called the pair "the single most useful piece of evidence this business
+      could own". Taken apart:
+
+      - **The Noven half does not measure what it claims, because the name was
+        never ours.** The frozen q06/q07 asked *"what do you know about Noven?"*
+        and all thirty answers described the Miami pharmaceutical company; not
+        one of 210 answers cited `novenstudio.co.uk`. Re-running them measures
+        **how long a pharma company keeps owning its own name.** The answer is
+        "indefinitely", it is free to know today, and it is nothing to do with
+        this business. **There is no dead identity to decay because the
+        assistants never held one.** Demote it to a one-line null-check; do not
+        build a finding on it.
+      - **The Wardith half is the real measurement and is weaker than claimed.**
+        Three limits, all of which have to travel with any number quoted from
+        it: **n = 1**; it is the **best possible case**, because "Wardith" has no
+        occupant competing for it, where a client called *Smith & Co
+        Accountants* competes with hundreds; and **it is not the client's
+        situation**, since clients do not rename — they keep a name and fix the
+        facts attached to it. Quoting it to a prospect without those caveats
+        would be exactly the unfalsifiable number `/ask-your-ai/` tells people to
+        be suspicious of.
+      - **The measurement worth adding, which this item never named:** how long
+        the pages indexed under `novenstudio.co.uk` take to disappear after the
+        301s and Change of Address. **The baseline is 4**, measured by the owner
+        on 2026-08-06 — the first and only time anyone has run
+        `site:novenstudio.co.uk` on Google. That one is clean, transferable to
+        any client migration, and unlike the name questions it measures
+        something we caused.
+
+      **And the measurement that actually answers the sales question — "how long
+      until this works?" — arrives with clients, not here.** Time from *facts
+      corrected and indexed* to *named in an answer*, across several real
+      businesses. Wardith contributes one best-case data point to that and
+      cannot substitute for it. Fold this into `ops/audit-method.md` before the
+      re-check, not after.
 - [ ] **G3. Expect both names in the world at once, for months.** That is not a
       fault and it does not need fixing beyond the redirects. `own-facts-check.md`
       section 1 already explains why: correcting the sources we control is the
