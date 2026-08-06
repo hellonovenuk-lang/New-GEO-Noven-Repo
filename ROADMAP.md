@@ -140,9 +140,24 @@ an entry at the end of each session") at the point the record matters most.
 **The critical path now:** the name decision (`ops/name-check/`, no cost,
 blocks identity, see 1c-2) → ICO helpline call (deadline Mon 10 Aug) → service
 address ordered → terms and privacy notice written → one payment possible end
-to end. **Free and not blocking anything, so do them whenever:** register with
-Bing Webmaster Tools (closes finding 2) and add the location field to the
-structured data (closes finding 3). The order page is still not on this path —
+to end. **Free and not blocking anything, so do it whenever:** register with
+Bing Webmaster Tools (closes finding 2).
+
+**Finding 3 was on that list until 2026-08-06 and has been taken off it: it is
+not free and it is not independent.** Adding a location to the structured data
+was tried that day and reverted within the hour. The footer of every page
+carries a visible `[PLACEHOLDER: address for service of documents]`, so a
+`PostalAddress` in the head — even locality-only — has the page telling a reader
+it has no address and a machine that it has one, which is the drift this site
+says is impossible. It would also have committed us to "Merseyside" before the
+address for service exists, and the fallback providers are not on the Wirral.
+
+**Finding 3 is therefore blocked on the address for service**, and closes with
+it rather than before it: whatever lands is a real postal address, is not the
+founder's home, and has to be published by law anyway, so it fills the footer
+placeholder and the structured data from one fact. Reasoning in
+`ops/session-log.md`, 2026-08-06, and in the note left in `schema.ts` where the
+block would go. The order page is still not on this path —
 a payment link in an email takes the first payment. `HANDOVER.md` has the
 longer version, written for someone with no context — **not yet updated to
 match this section.**

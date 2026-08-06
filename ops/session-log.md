@@ -63,14 +63,52 @@ address on the dead domain beats a bouncing one on the live domain. The code was
 never wrong; only the documents describing it were. Nothing about what the site
 publishes changed today.
 
-**Also done: finding 3 of the self-audit is closed.** The Organization now
-carries a `PostalAddress` with `addressLocality: Wirral` and `addressRegion:
-Merseyside` on all nine pages. The pages had always said "the Wirral" in prose
-and the structured data had said only `areaServed: GB` — which answers a
-different question, and cost all fifteen checks that asked for someone local.
-Locality and region only; a note in `business.ts` records that a street line
-never goes there, because this business trades from a home address and that is
-the one fact a crawler-readable site cannot take back.
+**Finding 3 was closed and then reopened the same hour, and the owner was right
+to stop it.** A `PostalAddress` of locality "Wirral", region "Merseyside" was
+added to the Organization on all nine pages, on the reasoning that the pages
+already said "the Wirral" in prose and `ops/own-facts-check.md` already carried
+"Wirral, UK — city level, never a street" as a standing fact, so nothing new was
+being published.
+
+**The owner's objection was that the address for service is not confirmed** —
+V LOT replied after eight days and did not inspire confidence, and the fallback
+providers are not on the Wirral. That is right on its own: committing the
+structured data to Merseyside before knowing where the address lands risks
+publishing a fact that has to be retracted.
+
+**Checking it turned up a worse version of the same objection.**
+`site/src/layouts/Base.astro` carries a visible
+`[PLACEHOLDER: address for service of documents]` in the footer of **every
+page**. So the change had each page telling a human reader it has no address
+while telling a machine, in the head of that same page, that it has one. **That
+is precisely the drift the homepage claims is impossible** — the site shows its
+own JSON-LD and says the visible facts and the machine-readable facts are built
+from one file and cannot disagree. Building the exception into the one fact
+still outstanding, on the page that makes the claim, would have been the
+cheapest possible way to lose the argument the whole site rests on.
+
+**And `PostalAddress` was the wrong instrument regardless.** "Kieran works from
+the Wirral" is true today. "Post reaches this business at Wirral, Merseyside" is
+not — there is no street line and no address for service. The type answers the
+exact question the footer says is unanswered.
+
+**Reverted in full.** `site/src` now differs from before the change only in
+comments; the built output is unchanged, and the homepage's visible block is
+still byte-for-byte its head JSON-LD. A note is left in `schema.ts` where the
+block would go, so the next person to spot finding 3 does not re-add it.
+
+**Finding 3 is now blocked on the address for service rather than free**, and
+`ROADMAP.md` has been corrected — it listed the fix as "free and not blocking
+anything". It closes *with* the address rather than before it: whatever lands is
+a real postal address, is not the founder's home, and is a legal disclosure that
+has to be published anyway, so it fills the footer placeholder and the
+structured data from a single fact. If it is not in Merseyside, nothing has to
+be taken back.
+
+**The general lesson, and it is the second time today.** Both faults this
+session came from writing down something we wanted to be true — a mailbox that
+did not exist, a location we had not confirmed — rather than something checked.
+The site's whole pitch is that it does not do that.
 
 ### 2026-08-06 (the self-audit is published — `/ask-your-ai/`)
 

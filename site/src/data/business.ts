@@ -28,24 +28,12 @@ export const business = {
   email: 'hello@novenstudio.co.uk',
   basedIn: 'the Wirral, UK',
   basedInShort: 'Wirral, UK',
-
-  /**
-   * Where the business actually is, in the two fields a machine reads:
-   * `addressLocality` and `addressRegion`. Split out from `basedIn` — which is
-   * prose, and reads "the Wirral, UK" — because finding 3 of the 2 August
-   * self-audit was that the pages said the Wirral in words a person reads
-   * while the structured data said only `GB`. It cost all fifteen checks that
-   * asked for someone on the Wirral.
-   *
-   * **Locality and region only, and never a street line.** This business
-   * trades from the founder's home, and a home address published on a site
-   * built for crawlers to ingest is the one fact that cannot be taken back —
-   * it is the same exposure the ICO register problem is about. Nothing here
-   * says anything the pages have not already said in prose.
-   */
-  locality: 'Wirral',
-  region: 'Merseyside',
-
+  /* Both of the above are prose, read by people, and say only what is true
+   * today: the founder works from the Wirral. **Neither is a postal address and
+   * neither should be turned into one** until the address for service exists —
+   * see the long note in `schema.ts` where an `address` block was added and
+   * removed on 2026-08-06. Whatever fills the footer placeholder is the value
+   * that belongs in the structured data, and it may not be in Merseyside. */
   areaServed: 'GB',
   areaServedLabel: 'United Kingdom',
   vatRegistered: false,
