@@ -704,14 +704,13 @@ is worth more than the link is.
 
 ## Phase E — mail
 
-- [ ] **E1. Add the new domain in Zoho** — `ops/zoho-mail-setup.md` is a
-      step-by-step for exactly this job on the old domain. Reuse it; the
-      Namecheap-specific quirks in it apply to whichever panel you end up in.
-      **Stay on Zoho.** `ops/third-party-services.md` A1 already rejected
-      Microsoft 365 and Google Workspace, and the rename does not change that
-      argument.
-- [ ] **E2. Create `hello@wardith.co.uk`** as the licensed user. Aliases are
-      free; second users are not.
+- [x] **E1. DONE 2026-08-06.** The domain is added and verified in Zoho —
+      `zoho-verification=zb15356033.zmverify.zoho.eu` is in the zone, alongside
+      MX to `mx.zoho.eu`, one `v=spf1`, DKIM at `zmail._domainkey` and DMARC.
+      Stayed on Zoho as `ops/third-party-services.md` A1 decided.
+- [x] **E2. DONE 2026-08-06. `hello@wardith.co.uk` exists and receives** — the
+      owner confirmed mail lands in the Zoho inbox, and `business.ts` was
+      flipped to it the same day. Aliases are free; second users are not.
 - [ ] **E3. Keep `hello@novenstudio.co.uk` receiving for at least 12 months.**
       It is the address published on both LinkedIn pages, in the ICO record and
       in whatever has already been cached. Mail to it must not bounce.

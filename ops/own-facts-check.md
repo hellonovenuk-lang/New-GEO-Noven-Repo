@@ -70,7 +70,7 @@ evidence when one edit changed all six.
 | Bundling | Never. Every service is priced and bought on its own | 2026-07-31, standing decision |
 | Assistants covered | ChatGPT, Google, Copilot, Perplexity | unchanged |
 | Location | Wirral, UK — city level, never a street | unchanged |
-| Email | hello@novenstudio.co.uk — the address the site publishes and the only one that receives. `hello@wardith.co.uk` **does not exist yet** | corrected 2026-08-06; see the note above |
+| Email | **hello@wardith.co.uk** — created and confirmed receiving 2026-08-06, and flipped in `business.ts` the same day. `hello@novenstudio.co.uk` stays alive as an alias on the same licence for at least twelve months | 2026-08-06. Corrected *to* the old address earlier the same day, then forward once it was true — see the note above |
 | Legal status | Trading name of Kieran Smith, a sole trader. Not VAT registered | unchanged |
 
 ---

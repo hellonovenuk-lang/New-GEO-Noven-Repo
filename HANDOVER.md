@@ -69,11 +69,12 @@ Wirral, working remotely across the UK. One person, no employees.
   explicitly allowed in `robots.txt`, an XML sitemap, and JSON-LD structured
   data. Visible facts and machine-readable facts both read from one file
   (`site/src/data/business.ts`) so they cannot drift apart.
-- **Email** — `hello@novenstudio.co.uk` on Zoho Mail, tested both directions.
-  The old Gmail address forwards to it. **`hello@wardith.co.uk` has not been
-  created yet**, which is why the site still publishes the old address: a
-  working address on the dead domain beats a bouncing one on the live domain,
-  and this is the only inbound channel on a business with no phone and no form.
+- **Email** — `hello@wardith.co.uk` on Zoho Mail, created 2026-08-06 and
+  confirmed receiving. It is what the site publishes. `hello@novenstudio.co.uk`
+  stays alive as an alias on the same licence for at least twelve months, and
+  the old Gmail forwards in too. **Not yet checked: that mail sent *from* the
+  new address passes SPF, DKIM and DMARC at the far end** — DNS is in place,
+  but present records are not the same as a passing check.
 - **Search Console** — sitemap submitted and confirmed, six pages.
 - **Brand** — the supplied assets are in and used as-is.
 - **LinkedIn** — founder profile and company page, both linked from the

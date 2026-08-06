@@ -11,21 +11,34 @@ export const business = {
   legalNote: 'Wardith is a trading name of Kieran Smith, a sole trader.',
   founder: 'Kieran Smith',
   /**
-   * **Still the old domain on purpose, and this is the first thing to change.**
+   * **Flipped to the live domain 2026-08-06, once mail actually arrived.**
    *
-   * The site published as Wardith on 2026-08-04, before the Zoho work was
-   * done. `hello@wardith.co.uk` does not exist yet, and this value goes into
-   * the structured data and the contact page on every page of the site — so
-   * setting it early would publish a bouncing address as the only inbound
-   * channel on a business with no phone and no contact form. An enquiry lost
-   * that way is lost silently; nobody tells you it bounced.
+   * This held `hello@novenstudio.co.uk` for two days after the site published
+   * as Wardith, deliberately: the value goes into the structured data and the
+   * contact page on *every* page, and it is the only inbound channel on a
+   * business with no phone and no contact form. A working address on the dead
+   * domain was a smaller fault than a bouncing one on the live domain, because
+   * an enquiry lost to a bounce is lost silently — nobody tells you.
    *
-   * A working address on the old domain is a smaller fault than a broken one
-   * on the new domain. Flip this to `hello@wardith.co.uk` the moment the Zoho
-   * alias exists and a test message has arrived — `ops/rename-to-wardith.md`
-   * D0.4, and roadmap 1c-3.
+   * **The condition for flipping it was "the alias exists and a test message
+   * has arrived", and both were met before this changed.** The owner confirmed
+   * mail to `hello@wardith.co.uk` lands in the Zoho inbox, and the zone was
+   * read independently: MX to `mx.zoho.eu`, exactly one `v=spf1` record, a
+   * `zmail._domainkey` DKIM key, and DMARC `p=none` whose `rua` now points at a
+   * mailbox that exists.
+   *
+   * **`hello@novenstudio.co.uk` must keep receiving for at least twelve
+   * months** — it is in the ICO record, on both LinkedIn pages and in whatever
+   * is already cached. It is an alias on the same licence, not a second user.
+   * See `ops/rename-to-wardith.md` E3.
+   *
+   * **Still owed, and it is not visible from the site:** nobody has confirmed
+   * mail sent *from* this address passes SPF, DKIM and DMARC at the receiving
+   * end. DNS being present is not the same as authentication passing, and a new
+   * domain that fails it gets quietly filtered — a failure that looks exactly
+   * like nobody replying. `ops/rename-to-wardith.md` D0.4 step 5 is the test.
    */
-  email: 'hello@novenstudio.co.uk',
+  email: 'hello@wardith.co.uk',
   basedIn: 'the Wirral, UK',
   basedInShort: 'Wirral, UK',
   /* Both of the above are prose, read by people, and say only what is true
