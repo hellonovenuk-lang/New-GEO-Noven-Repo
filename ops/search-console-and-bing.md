@@ -102,10 +102,42 @@ is correctly excluded.
 two entries pointing at overlapping sets is noise in the one report you will be
 reading to judge whether any of this worked.
 
-### 1.4 Change of Address, from the *old* property
+### 1.4 Change of Address — check whether it is worth doing at all
 
-This is the step that tells Google the two domains are one business rather than
-two, and it is the reason the old property must not be deleted.
+**Rewritten 2026-08-06, after the owner pushed back on it, and he was right.**
+This section originally said Change of Address "tells Google the two domains are
+one business" and treated it as a required step. That framing came from the
+standard site-move advice and **it does not fit this business.**
+
+**Change of Address exists to carry accumulated ranking signal across a move.
+There is none to carry.** This document's own Phase-B argument in
+`ops/rename-to-wardith.md` already settled it: not one of 210 automated answers
+cited `novenstudio.co.uk`, the domain was never advertised anywhere but LinkedIn,
+and it had a single page view before the switch. Nothing is being transferred.
+
+**The residual reason is the reverse of the one first written down: retiring old
+entries, not moving authority.** If Google holds indexed pages describing a
+business called Noven, each is a live source for the exact answer the rename was
+meant to stop — so replacing them faster has some value. But that depends on
+those pages existing, **and nobody has ever checked whether they do.**
+
+**What is actually known, and the gap in it:**
+
+| | Recorded | Means |
+|---|---|---|
+| Bing | `site:novenstudio.co.uk` returns **zero** | Never indexed. Confirmed in the self-audit |
+| Google | "sitemap submitted and confirmed, six pages" | **The sitemap was processed and six URLs read from it.** Not six pages indexed — a softer fact than the sentence reads |
+
+**So run the 15-second check before the tool: `site:novenstudio.co.uk` on
+Google.**
+
+- **Zero results** — skip this section. There is nothing to consolidate and the
+  tool would achieve nothing. Go to Bing.
+- **Results come back** — run it, as below. Those pages are where the Noven
+  answer still lives.
+
+**Record the number either way.** It is the only measurement anyone has taken of
+whether Google indexed the old domain, and G2's six-month comparison wants it.
 
 Go to the **`novenstudio.co.uk`** property → **Settings** → **Change of
 address** → select `wardith.co.uk` as the destination → **Validate & Update**.
@@ -122,17 +154,17 @@ on their own; Change of Address accelerates it and makes the intent explicit,
 but it is not the load-bearing part. Note what it said and move on.
 
 **Keep the old property forever. The owner asked directly on 2026-08-06 whether
-it could be deleted: no.** Three reasons, and the first is the one that bites
-immediately:
+it could be deleted: no — and this holds even if the check above says to skip
+Change of Address entirely.** The two questions were conflated when this was
+first written and they are independent:
 
-1. **Change of Address is run *from* the old property.** Delete it and the tool
-   goes with it — there is no other way to tell Google the two domains are one
-   business.
-2. It is the only view of what is still being served from the dead name.
-3. It holds the before/after that G2 in the rename document wants at the
+1. It is the only view of what is still being served from the dead name.
+2. It holds the before/after that G2 in the rename document wants at the
    six-month check — *how long a dead name persists* against *how fast a new one
    is learned*. That measurement is the single most useful piece of evidence
    this business could own, and one deletion destroys the first half of it.
+3. And if the check does say to run Change of Address, the tool lives inside the
+   old property — deleting it takes the tool with it.
 
 It costs nothing to keep and there is no benefit to removing it.
 
