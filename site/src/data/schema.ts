@@ -39,6 +39,18 @@ export function organizationSchema(site: URL | undefined) {
       ...(business.founderPhoto ? { image: at(business.founderPhoto) } : {}),
       ...(business.founderLinkedIn ? { sameAs: [business.founderLinkedIn] } : {}),
     },
+    // Finding 3 of the 2 August self-audit: nothing told a machine where this
+    // business works. `areaServed: GB` says which country will be served, not
+    // where the business is, and the two are different questions — an
+    // assistant asked for someone on the Wirral has nothing to match against.
+    // Locality and region only; see the note in `business.ts` for why a street
+    // line never goes here.
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: business.locality,
+      addressRegion: business.region,
+      addressCountry: business.areaServed,
+    },
     areaServed: business.areaServed,
     contactPoint: {
       '@type': 'ContactPoint',

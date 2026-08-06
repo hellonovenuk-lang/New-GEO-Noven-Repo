@@ -28,6 +28,24 @@ export const business = {
   email: 'hello@novenstudio.co.uk',
   basedIn: 'the Wirral, UK',
   basedInShort: 'Wirral, UK',
+
+  /**
+   * Where the business actually is, in the two fields a machine reads:
+   * `addressLocality` and `addressRegion`. Split out from `basedIn` — which is
+   * prose, and reads "the Wirral, UK" — because finding 3 of the 2 August
+   * self-audit was that the pages said the Wirral in words a person reads
+   * while the structured data said only `GB`. It cost all fifteen checks that
+   * asked for someone on the Wirral.
+   *
+   * **Locality and region only, and never a street line.** This business
+   * trades from the founder's home, and a home address published on a site
+   * built for crawlers to ingest is the one fact that cannot be taken back —
+   * it is the same exposure the ICO register problem is about. Nothing here
+   * says anything the pages have not already said in prose.
+   */
+  locality: 'Wirral',
+  region: 'Merseyside',
+
   areaServed: 'GB',
   areaServedLabel: 'United Kingdom',
   vatRegistered: false,
