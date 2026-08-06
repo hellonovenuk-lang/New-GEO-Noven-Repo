@@ -662,3 +662,58 @@ there is no client to upset and no invoice to amend. **This is the last
 repricing that is free.** The next one lands on somebody who is already
 paying, on plans with no minimum term — which makes it a churn event with
 nothing holding them.
+
+---
+
+## 12. We never publish a timescale, and never sell on one
+
+**Decided by the owner 2026-08-06**, when a session proposed measuring how long
+the old domain's indexed pages take to disappear and called the result
+"transferable to a client". Measuring it is right. **Telling a client a number
+is not**, and the reasoning generalises past this one measurement to any
+"how long until it works" figure.
+
+**The first reason is that it contradicts something we already publish.** Both
+LinkedIn About sections and the site say, in terms: *we don't guarantee outcomes
+— nobody controls what an AI assistant says*. "Old information clears in about
+thirty days" **is an outcome guarantee**, made about a system we have just
+disclaimed control over. If it lands at ninety for that client we have broken a
+promise we were never required to make — on a business whose whole pitch is that
+its own facts are consistent. It is the exact fault we are paid to find,
+committed by us, in the sales conversation.
+
+**The second reason is commercial and it is the owner's, recorded in his own
+framing:** a published completion time turns the work into a project with an end
+state. A client told "thirty days" reasonably buys one month, waits for the old
+data to clear, confirms the new data, and leaves. We would be funding our own
+churn with our own measurement.
+
+**The third reason is that it is the wrong question anyway.** Decay is a
+*migration* metric — how long stale information about a moved or renamed business
+takes to disappear. Almost no client is migrating. It looked valuable because it
+is *our* question, from the rename, not theirs.
+
+**The client's question is the opposite one and has no endpoint:** how much of
+what their customers ask are they showing up for. Coverage expands, competitors
+work on the same thing, facts drift, and new questions appear. That is what
+Maintain, Grow and Lead are already sold on — ten questions a month, a new answer
+page a month, a quarterly review of who is being named ahead of you. **None of
+that completes**, which is the honest basis for a monthly plan.
+
+**A test worth keeping:** if the only reason a client has to keep paying is that
+their old information has not finished disappearing, the retainer is a project
+and they are right to leave. Section 5 does not rest on that and must not start
+to.
+
+### What to say instead
+
+Qualitative, never quantitative. *"Weeks to months, it isn't linear, and it
+doesn't stop — the assistants and their sources change constantly, and so do your
+competitors."* That sets an expectation without drawing a finish line, and it
+stays inside the outcome disclaimer rather than quietly voiding it.
+
+**Measure the decay internally regardless.** It tells us what to say when a
+client asks why nothing has moved yet, whether the Foundation does anything, and
+whether our turnaround promises are sane. That was always the point of the
+self-measurement — see G2 in `ops/rename-to-wardith.md`. Self-knowledge, not a
+sales asset.

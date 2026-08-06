@@ -783,9 +783,17 @@ its section 6 describes.
         the pages indexed under `novenstudio.co.uk` take to disappear after the
         301s and Change of Address. **The baseline is 4**, measured by the owner
         on 2026-08-06 — the first and only time anyone has run
-        `site:novenstudio.co.uk` on Google. That one is clean, transferable to
-        any client migration, and unlike the name questions it measures
-        something we caused.
+        `site:novenstudio.co.uk` on Google. That one is clean and, unlike the
+        name questions, measures something we caused.
+
+        **It was first written up here as "transferable to any client
+        migration". That phrasing is withdrawn** — it smuggled in a
+        client-facing use that does not survive examination. The owner's
+        objection on 2026-08-06: publishing any "how long until it works" figure
+        is an outcome guarantee about systems we explicitly say we do not
+        control, and it turns a retainer into a project with an end state.
+        **Measure it for ourselves; never quote it to a client.** The rule and
+        the full reasoning are `ops/service-tiers.md` section 12.
 
       **And the measurement that actually answers the sales question — "how long
       until this works?" — arrives with clients, not here.** Time from *facts
