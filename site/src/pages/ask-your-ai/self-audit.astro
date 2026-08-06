@@ -1,0 +1,479 @@
+---
+/* The August 2026 self-audit, published in full.
+ *
+ * **This is a record, not copy.** The words below are the report as it was
+ * delivered on 3 August 2026, under the old name, at the old prices. Nothing
+ * in the body is updated to match how the business looks now — the point of
+ * publishing it is that it is the actual document, and a record quietly
+ * corrected to flatter the present is not a record. Where something has since
+ * changed, a marked note sits *beside* the original wording rather than
+ * replacing it, so a reader can always tell the report's voice from ours.
+ *
+ * Two departures from the delivered document, both deliberate and both
+ * declared on the page:
+ *
+ *   1. The competitors named in the "who gets recommended instead" table are
+ *      not named here. They are real businesses that did not ask to appear in
+ *      our marketing, and `/ask-your-ai/` promises the reader we don't name
+ *      them. The counts are unchanged — the shape of that table is the
+ *      finding, and the shape survives the names coming out.
+ *   2. The four price figures the report quoted are removed, not updated. They
+ *      were correct on 3 August and superseded five days later, and the
+ *      paragraph they sat in is *about* an assistant serving a stale price for
+ *      this business — so restating them, even beside a correction, would put
+ *      four wrong numbers about our own fees onto a page these systems read.
+ *      The finding survives without them; the risk does not survive with them.
+ *
+ * **Do not add a price figure to this page** — not a historical one, and not a
+ * current one either. A correct price here is a second copy that can go stale
+ * on its own, and the argument for the redaction above is precisely that this
+ * page is not where a price should be read. Link `/pricing/`, which is built
+ * from `business.ts` and is the same source the Offer structured data uses.
+ *
+ * Why this exists as HTML rather than only as a PDF: the standing rule is that
+ * this site stays crawlable static HTML, and this is the single richest page
+ * on it for the questions the business wants to be found for. A PDF would put
+ * the best evidence we have behind a format these systems read least well —
+ * which would be a strange thing for this business, of all businesses, to do.
+ */
+
+import Base from '../../layouts/Base.astro';
+import { business, plan, money } from '../../data/business';
+
+const title = 'Our own audit, August 2026 — Wardith';
+const description =
+  'The full audit we ran on our own business before selling one: ten questions, 228 answers, and a verdict that we had the wrong name. Published as delivered.';
+
+const audit = plan('audit');
+const foundation = plan('foundation');
+
+/* The report as a machine-readable object. A business that sells consistent,
+ * readable business information publishing a report about itself, in the
+ * format the assistants read, is the same argument the rest of the site makes
+ * — made once more, about the one document that carries the most weight. */
+const reportSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Report',
+  '@id': new URL('/ask-your-ai/self-audit/#report', Astro.site).href,
+  headline: 'What AI assistants say about Noven',
+  name: 'What AI assistants say about Noven',
+  description:
+    'A self-audit of how ChatGPT, Gemini, Copilot and Perplexity answered ten questions about AI assistant visibility, and what they believed about the business itself. 228 recorded answers over 2 and 3 August 2026.',
+  datePublished: '2026-08-03',
+  inLanguage: 'en-GB',
+  author: { '@id': new URL('/#organization', Astro.site).href },
+  publisher: { '@id': new URL('/#organization', Astro.site).href },
+  about: { '@id': new URL('/#organization', Astro.site).href },
+  isAccessibleForFree: true,
+};
+
+/* The seven automated questions and how they came back, exactly as recorded.
+ * Every cell was "never" — the table is here because a reader should see the
+ * questions and the run counts rather than take "0 times" on trust. */
+const questions: { q: string; runs: number }[] = [
+  { q: 'Who can help my business show up when people ask ChatGPT for a recommendation?', runs: 10 },
+  { q: 'Can you recommend someone in the UK who gets small businesses mentioned by AI assistants?', runs: 5 },
+  { q: 'I need someone on the Wirral who can get my business recommended by AI assistants', runs: 5 },
+  { q: "Who's good at getting small service businesses recommended by AI assistants?", runs: 5 },
+  { q: 'Which UK businesses do this for sole traders and small firms rather than big brands?', runs: 5 },
+  { q: 'Customers are finding people through ChatGPT and we never come up — who do I call?', runs: 10 },
+  { q: "I'm looking for someone in the UK to do this. What are my options and what should it cost?", runs: 5 },
+];
+
+/* The businesses named instead of us, counted across every run. Names removed
+ * — see the header comment. The counts are the delivered figures. */
+const namedInstead = [36, 29, 14, 12, 9, 8, 8, 8, 7, 7];
+---
+
+<Base title={title} description={description} schema={[reportSchema]}>
+  <section class="hero hero--rules">
+    <div class="wrap">
+      <h1>Our own audit, in full</h1>
+      <p class="lede" data-reveal>
+        This is the report as it was delivered on 3 August 2026 — under the old name, at the old
+        prices, with the verdict that the business had picked the wrong one. It is reproduced
+        rather than summarised, because a summary of your own bad news is not evidence of anything.
+      </p>
+      <p style="margin-top: 1.5rem;">
+        <a href="/ask-your-ai/">Back to why this is here, and what to do with it</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap wrap--narrow">
+      <div class="doc-note" data-reveal>
+        <p>
+          <strong>Two things we took out, and nothing else.</strong> The businesses the assistants
+          named instead of us are not named here — they are real firms who did not ask to appear in
+          our marketing, and the run counts carry the finding without them. And the four prices the
+          report quoted are gone: they were correct on 3 August 2026 and superseded five days later,
+          and this page is not where anyone should be reading what we charge. The
+          <a href="/pricing/">pricing page</a> is the only place that should answer that, and it is
+          where the machine-readable version comes from too.
+        </p>
+        <p>
+          Both removals are marked where they happen. Everything else is as written, including the
+          parts that have since been acted on — where the report is out of date, it is left out of
+          date rather than quietly corrected.
+        </p>
+      </div>
+
+      <div class="doc">
+        <header data-reveal>
+          <h2 style="margin-top: 0;">What AI assistants say about Noven</h2>
+          <p class="doc-sign" style="margin-top: 0; border-top: none; padding-top: 0;">
+            Prepared for Kieran Smith · 3 August 2026
+          </p>
+        </header>
+
+        <h3 data-reveal>What we did</h3>
+        <div data-reveal>
+          <p>
+            On 2 and 3 August 2026 we asked the AI assistants your customers use — ChatGPT, Google's
+            Gemini, Microsoft Copilot and Perplexity — ten questions of the kind someone would ask
+            after noticing that customers find businesses through ChatGPT.
+          </p>
+          <p>
+            We asked each question five times, and the three most important ten times, because these
+            systems do not give the same answer twice. We recorded 228 answers in full. We then
+            looked at your website and at how these systems reach it, to work out why the answers
+            came back the way they did.
+          </p>
+          <p>Two things worth knowing before you read the rest:</p>
+          <ul class="ticks">
+            <li>
+              <strong>Their answers vary.</strong> The same question asked five times can produce
+              five different answers. That is why we ask everything several times and report a range
+              rather than a verdict. Anyone who gives you a single confident score is reporting one
+              roll of a dice.
+            </li>
+            <li>
+              <strong>We check through the developer versions of these systems.</strong> The apps on
+              your phone answer slightly differently and take your own history into account, so if
+              you ask ChatGPT about yourself you may see something different from what we saw. Both
+              are real. Neither is the whole picture.
+            </li>
+          </ul>
+        </div>
+
+        <h2 data-reveal>Where you show up today</h2>
+        <div data-reveal>
+          <p>
+            Across the 168 checks where we did not mention your name, Noven was named 0 times.
+          </p>
+
+          <div class="doc-table" tabindex="0" role="region" aria-label="What we asked, and how each assistant answered">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">What we asked</th>
+                  <th scope="col">ChatGPT</th>
+                  <th scope="col">Gemini</th>
+                  <th scope="col">Perplexity</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  questions.map(({ q, runs }) => (
+                    <tr>
+                      <th scope="row">{q}</th>
+                      <td>never (0 of {runs})</td>
+                      <td>never (0 of {runs})</td>
+                      <td>never (0 of {runs})</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+          <p class="doc-table-note">
+            Bands: never (0 of 5), occasionally (1–2), often (3–4), consistently (5).
+          </p>
+
+          <p>
+            Copilot and Google's AI results can't be checked automatically, so we asked those by
+            hand — the three questions that matter most, three times each, in a logged-out browser.
+            Noven was not named in any of the 18 answers. Copilot and Google named entirely different
+            businesses: not one name appeared on both.
+          </p>
+        </div>
+
+        <h2 data-reveal>What they believe about you</h2>
+        <div data-reveal>
+          <p>This is where the audit found something more serious than absence.</p>
+          <p>
+            When we asked all three assistants “What do you know about Noven?” — thirty separate
+            times — every single answer was about a pharmaceutical company in Miami.
+          </p>
+
+          <blockquote class="doc-quote">
+            <p>
+              “There are several entities named ‘Noven’… Noven Pharmaceuticals, Inc. — a Miami-based
+              specialty pharmaceutical company founded in 1987, focused on transdermal drug delivery
+              (patches)”
+            </p>
+            <cite>Perplexity, 2 August 2026</cite>
+          </blockquote>
+
+          <p>
+            Then we asked the harder version, naming your location: “Is Noven on the Wirral any good,
+            and what do they do?” Even handed the town, only one assistant found you:
+          </p>
+
+          <blockquote class="doc-quote">
+            <p>
+              “Noven is a digital services consultancy based on the Wirral, Merseyside, run by sole
+              founder Kieran Smith.”
+            </p>
+            <cite>Gemini, 2 August 2026</cite>
+          </blockquote>
+
+          <p>
+            Gemini got this right five times out of five. ChatGPT did not. Four times out of five it
+            answered about a building firm:
+          </p>
+
+          <blockquote class="doc-quote">
+            <p>
+              “If you mean Noven Build Limited — the building/renovation firm that appears in North
+              West trade listings — I'd be cautious rather than enthusiastic.”
+            </p>
+            <cite>ChatGPT, 2 August 2026</cite>
+          </blockquote>
+
+          <p>
+            That is the finding that matters most. Someone who hears your name, asks ChatGPT about
+            you, and gets a lukewarm verdict on an unrelated builder has no way of knowing they are
+            reading about a different business.
+          </p>
+          <p>
+            Asked who your alternatives are, all three assistants answered with pharmaceutical
+            companies.
+          </p>
+          <p>
+            <strong>One wrong fact of a different kind, already corrected.</strong> Google's stored
+            description of your pages still carried prices from an earlier version of the site —
+            less than a quarter of what you actually charge. Anyone asking an assistant what this
+            should cost was being given the wrong number. You asked Google to re-read the pages on
+            3 August; that takes days to weeks to settle.
+          </p>
+
+          <div class="doc-note">
+            <p>
+              <strong>The figures in this paragraph have been removed rather than updated.</strong>
+              The report quoted four prices, all correct on 3 August 2026 and all superseded five
+              days later. Restating them here — even beside a correction — would put four wrong
+              numbers about our own fees onto a page these systems read, which is the finding above
+              happening to us a second time. A stale price is one of the most common wrong facts an
+              assistant holds about a business, and a page full of superseded figures is an
+              efficient way to create more of them.
+            </p>
+            <p>
+              This is the only edit of its kind in the document, and it is subtraction rather than
+              revision — nothing has been rewritten to say something it did not say. The
+              <a href="/pricing/">pricing page</a> is the one place any price for this business
+              should be read, and it is where the machine-readable version comes from too.
+            </p>
+          </div>
+        </div>
+
+        <h2 data-reveal>Who gets recommended instead</h2>
+        <div data-reveal>
+          <p>Named in the answers to the questions above, counted across all runs:</p>
+
+          <div class="doc-table" tabindex="0" role="region" aria-label="Businesses named instead of us, and how often">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Business</th>
+                  <th scope="col">Times named</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  namedInstead.map((count, i) => (
+                    <tr>
+                      <th scope="row">Named business {i + 1}</th>
+                      <td>{count}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+          <p class="doc-table-note">
+            Ten businesses were named this often across the runs. The names are withheld here — see
+            the note below.
+          </p>
+
+          <div class="doc-note">
+            <p>
+              <strong>The names are in the delivered report and are not published here.</strong>
+              Most of them are genuine businesses doing real work, and none of them asked to appear
+              in ours. The counts are the part that matters: one business took roughly a fifth of
+              every recommendation going, and ten names between them accounted for the field. That
+              is what an absent business is up against, and it reads the same without the names on it.
+            </p>
+          </div>
+
+          <p>
+            One of the businesses named by Google when we asked by hand about the Wirral also
+            appeared in the automated runs — so it holds that ground on more than one system.
+          </p>
+          <p>
+            <strong>What the named businesses visibly have that you don't:</strong> a page about this
+            specific service that has been live long enough to be read, and appearances on other
+            people's “best of” lists. Your site was published days before this audit ran. Not one of
+            the 210 automated answers cited novenstudio.co.uk as a source.
+          </p>
+        </div>
+
+        <h2 data-reveal>What we found on your website</h2>
+        <div data-reveal>
+          <p>
+            We check four things, in this order. Most of them your site already gets right — worth
+            saying plainly, because a report that lists only faults can't tell you whether your site
+            is in good order or whether we simply didn't look.
+          </p>
+
+          <h3>1. Can the assistants get to you at all?</h3>
+          <p>
+            Three of the four, yes. Copilot, no. Your site invites every major assistant's software
+            by name and turns none of them away. There is a working list of your pages for them to
+            follow and it points at the right address. No password, no redirect and no security
+            challenge stands in front of any of it — which is where we most often find a business
+            accidentally shut out. The exception is Microsoft: it holds no record of your site at
+            all, so Copilot cannot reach you however open the door is. That's finding 2 below.
+          </p>
+
+          <h3>2. Can they read you once they're in?</h3>
+          <p>
+            Yes. Your words are in the page itself rather than assembled afterwards inside a
+            visitor's browser. That sounds like a detail and isn't: sites built with some popular
+            tools arrive as an empty shell that only a person's browser fills in, and an assistant
+            reading one of those gets nothing at all. Yours is readable as it stands, on every page.
+          </p>
+
+          <h3>3. Are your business facts written where a machine can find them?</h3>
+          <p>
+            Nearly all of them. Your name, what you do, your email, your services and all five of
+            your prices exist in a form built for machines, not only as words on a page. They are
+            produced from a single record, so what a person reads and what a machine reads cannot
+            drift apart — a problem we find on most sites and won't find on yours. Publishing your
+            prices is the most valuable single thing on this list, and most businesses don't: an
+            assistant asked “roughly what should this cost” can only name a business that published
+            a number.
+          </p>
+          <p>
+            One fact is missing from that record, and it's the one you'd most want there: where you
+            work. The pages say “the Wirral” in words a person reads. The machine-readable version
+            says only “United Kingdom” — no town, no area. That's finding 3.
+          </p>
+
+          <h3>4. Does anything on your site answer the questions customers ask?</h3>
+          <p>
+            Six of the ten. Your pricing page answers “what are my options and what should it cost”
+            outright, with real figures, which is the hardest of the ten to answer well. Two have
+            nothing behind them at all: someone looking on the Wirral, and who your alternatives are.
+            Those two are the gap list — and the Wirral one is the same problem as the missing
+            location, showing up from a different direction.
+          </p>
+          <p>
+            So: two of the four in good order, one missing a single fact, one absent from Microsoft's
+            records altogether. A better starting position than most sites we see — which is why the
+            recommendation below is short.
+          </p>
+        </div>
+
+        <h2 data-reveal>What's holding you back</h2>
+        <div data-reveal>
+          <h3>1. Your name belongs to somebody else — at least four times over.</h3>
+          <p>
+            A US pharmaceutical company, a North West builder, an AI product trading as noven.studio,
+            and a fourth business at noven.io all answer to Noven. The third is the most damaging:
+            its name is your web address with the dot moved, and it works in your field. This costs
+            you the moment anyone hears your name and checks. Fixing it isn't website work — it needs
+            a decision about the name before anything else is worth doing.
+          </p>
+
+          <h3>2. Copilot doesn't have your website on file at all.</h3>
+          <p>
+            It cost you every one of the nine hand-checked Copilot answers, and it would stay true
+            however good your website was — your site invites Microsoft in, but nobody has told
+            Microsoft it exists. Registering is free and takes about fifteen minutes, then days or
+            weeks before anything shifts.
+          </p>
+
+          <h3>3. Nothing tells a machine where you work.</h3>
+          <p>
+            It cost you all 15 checks when we asked for someone on the Wirral: there was simply
+            nothing to match you against. This is the one item here that is a small, contained change
+            to your website, and fixing it closes one of the two missing question pages at the same
+            time.
+          </p>
+        </div>
+
+        <h2 data-reveal>What we'd do about it</h2>
+        <div data-reveal>
+          <p>
+            Findings 2 and 3 are ordinary Foundation work, both worth doing. Finding 1 isn't, and
+            it's the bigger problem: no amount of website work stops an assistant thinking you're a
+            pharmaceutical company, and every improvement under the current name accrues to a name
+            four other businesses answer to.
+          </p>
+          <p>
+            So the honest order is the name first, then the rest. We'd rather say that now than take
+            a fee for work that wouldn't hold.
+          </p>
+        </div>
+
+        <h2 data-reveal>What this doesn't tell you</h2>
+        <div data-reveal>
+          <ul class="ticks">
+            <li>
+              These answers are from 2 and 3 August 2026. They will be different next month — that is
+              the nature of the systems, not a flaw in the checking.
+            </li>
+            <li>
+              Five runs is enough to tell “never” from “sometimes” from “usually”. It is not enough to
+              read a small change as a trend.
+            </li>
+            <li>
+              We can't see inside these systems, and nobody outside the companies that run them can.
+              What we can see is what they say and what they draw on.
+            </li>
+            <li>
+              We haven't checked your listings elsewhere — directories, Companies House, review
+              counts, or whether your details match across them. On most audits that is where the
+              largest number of fixable problems turn up, and it is the obvious next thing to look at.
+            </li>
+            <li>
+              Gemini declined to search the web on 14 of its 70 answers, and ChatGPT on 5 of its 70 —
+              those came from memory rather than from looking, and we've counted them as they came.
+            </li>
+          </ul>
+          <p>
+            If you'd like the raw record — every question, every run, every answer in full — just ask
+            and we'll send it over.
+          </p>
+        </div>
+
+        <div class="doc-sign" data-reveal>
+          <p>Kieran Smith · Noven · hello@novenstudio.co.uk</p>
+          <p>Noven is one person. The person who wrote this report is the person who did the work.</p>
+        </div>
+      </div>
+
+      <div class="doc-note" style="margin-top: 3rem;" data-reveal>
+        <p>
+          <strong>What happened after this report.</strong> The name went first, exactly as the
+          recommendation said it should. {business.name} is the same business under a name no one else
+          answers to. Findings 2 and 3 were both acted on. Whether any of it worked is a question
+          with an answer we don't have yet, and we would rather publish it than describe it — see
+          <a href="/ask-your-ai/">the page this came from</a> for when.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

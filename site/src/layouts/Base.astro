@@ -18,6 +18,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 const navItems = [
   { href: '/how-it-works/', label: 'How it works' },
   { href: '/pricing/', label: 'Pricing' },
+  // Sits between the service pages and the ones about us, because that is
+  // where it belongs in the argument: it is the evidence for the first two
+  // and the reason to believe the last two.
+  { href: '/ask-your-ai/', label: 'Ask your AI' },
   { href: '/faq/', label: 'FAQ' },
   { href: '/about/', label: 'About' },
 ];
