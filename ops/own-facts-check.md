@@ -40,6 +40,24 @@ away first — see section 5.
 The source of truth is `site/src/data/business.ts`. Nothing below is a second
 copy to maintain; it is here so a check can be run without reading TypeScript.
 
+**Corrected 2026-08-06, and the way it broke is worth keeping.** The Email row
+read `hello@wardith.co.uk`, and so did `ROADMAP.md`, `HANDOVER.md`,
+`ops/accounts.md`, `ops/third-party-services.md`, `ops/README.md` and the
+LinkedIn copy in `ops/linkedin.md` — a block of text meant to be pasted into a
+public About section. **None of it was true.** The C10 sweep in
+`ops/rename-to-wardith.md` replaced the old domain with the new one across the
+operating documents, which was right for every sentence describing *the site*
+and wrong for every sentence describing *the mailbox* — because the mailbox did
+not change. A true statement about an address that works was rewritten into a
+false statement about an address that does not exist.
+
+**This register is the thing that is supposed to catch that**, and it did not,
+because it was swept too. Two rules out of it: a find-and-replace across the
+operating documents needs the mailbox rows read by hand afterwards, and **the
+Email row is checked against `business.ts` and against a real test message, not
+against the other documents** — six files agreeing with each other is not
+evidence when one edit changed all six.
+
 | Fact | Value as at 2026-08-05 | Changed on |
 |---|---|---|
 | Audit | £250 one-off | 2026-08-05 (was £125; £30 before 2026-07-31) |
@@ -52,7 +70,7 @@ copy to maintain; it is here so a check can be run without reading TypeScript.
 | Bundling | Never. Every service is priced and bought on its own | 2026-07-31, standing decision |
 | Assistants covered | ChatGPT, Google, Copilot, Perplexity | unchanged |
 | Location | Wirral, UK — city level, never a street | unchanged |
-| Email | hello@wardith.co.uk | unchanged |
+| Email | hello@novenstudio.co.uk — the address the site publishes and the only one that receives. `hello@wardith.co.uk` **does not exist yet** | corrected 2026-08-06; see the note above |
 | Legal status | Trading name of Kieran Smith, a sole trader. Not VAT registered | unchanged |
 
 ---

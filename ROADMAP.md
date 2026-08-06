@@ -45,7 +45,8 @@ distinction everywhere else.
 **The site is live** at `wardith.co.uk`, on HTTPS, deployed from `main` by
 Netlify: nine static pages, readable by AI crawlers, with machine-readable
 business facts and a sitemap submitted and confirmed in Search Console. Email is
-`hello@wardith.co.uk` on Zoho. The brand assets are in and the palette
+still `hello@novenstudio.co.uk` on Zoho — the new mailbox does not exist yet,
+and 1c-3 is where that sits. The brand assets are in and the palette
 matches them. **Phase 1a and 1b are closed.**
 
 **The Noven self-audit has run** — 2–3 August 2026, archived at
@@ -155,8 +156,9 @@ pay us £125.
 
 ### 1a. Facts only the owner can supply — closed
 
-All live on the site and in the structured data: `hello@wardith.co.uk` (the
-old Gmail forwards, and will for months); no phone, email only, and the site
+All live on the site and in the structured data: `hello@novenstudio.co.uk` (the
+old Gmail forwards, and will for months — and see 1c-3, because the address on
+the live domain has not been created yet); no phone, email only, and the site
 says why; reply within two working days; the Wirral, serving the UK remotely;
 Kieran Smith, sole trader, no company number, not VAT registered; the audit
 report within two working days of scope and payment being confirmed (moved from
@@ -196,9 +198,11 @@ if clients actually start taking a month and leaving.
 `wardith.co.uk` owned and set in `astro.config.mjs` and `robots.txt`. Apex is
 primary, `www` redirects to it. Netlify deploys `main`; HTTPS confirmed via
 Netlify's API. Nothing to redirect — the domain only ever hosted the owner's own
-projects. `hello@wardith.co.uk` is live on Zoho Mail (Mail Lite, DNS at
+projects. **`hello@novenstudio.co.uk` is live on Zoho Mail** (Mail Lite, DNS at
 Namecheap, MX to `mx.zoho.eu`, SPF, DKIM, `p=none` DMARC), tested both
 directions; setup and failure checks in `ops/zoho-mail-setup.md`.
+**`hello@wardith.co.uk` does not exist yet** — 1c-3. This line said it did until
+2026-08-06; see the correction note at the top of `ops/own-facts-check.md` §2.
 
 ### 1c. Between launch and the first payment
 

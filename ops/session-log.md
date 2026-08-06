@@ -11,6 +11,67 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-06 (later — why the assistants still say Noven, and a fact we got wrong about ourselves)
+
+**The owner's question:** assistants asked to review `wardith.co.uk/` still come
+back describing Noven. What is left to do.
+
+**First finding: it is not the site.** Checked against the built output. All
+nine canonicals are `wardith.co.uk`, every `<title>` ends "— Wardith", the
+Organization JSON-LD is `name: Wardith` / `url: https://wardith.co.uk/`,
+`robots.txt` names the AI crawlers and points at the right sitemap, the sitemap
+lists eight `wardith.co.uk` URLs, and Netlify confirms `wardith.co.uk` is the
+primary domain with a ready deploy. The `json-code.ts` invariant still holds.
+**The rename landed. The site is not the reason.**
+
+**The reason is that the name is two days old and nothing outside this site says
+it.** `businessLinkedIn` is null, so the Organization publishes no `sameAs` at
+all — wardith.co.uk asserts its own identity on its own authority and nothing
+corroborates it. Meanwhile `novenstudio.co.uk` is still in the search indexes
+under the old title and description, and a 301 does not rewrite an index entry.
+An assistant asked about a URL it cannot retrieve falls back to the name it
+*can* corroborate, which is still Noven. That is the same diagnosis the self-
+audit reached about the old name, arriving from the other direction: **identity
+is corroboration across surfaces, and there is currently one surface.**
+
+**Second finding, and this one is a fault of ours.** `ROADMAP.md` claimed
+`hello@wardith.co.uk` was "live on Zoho Mail … tested both directions" and that
+Phase 1b was closed on it. It is not live. It has never been created. The same
+false claim was in `HANDOVER.md`, `ops/accounts.md` (which had the licence the
+wrong way round), `ops/third-party-services.md`, `ops/README.md`,
+`ops/own-facts-check.md` — and in the block of `ops/linkedin.md` copy written to
+be pasted into a public About section, which would have published a bouncing
+address as the only contact route on a business with no phone and no form.
+
+**How it happened is the useful part.** C10 of `ops/rename-to-wardith.md` swept
+the old domain to the new one across the operating documents. That was right for
+every sentence describing the *site* and wrong for every sentence describing the
+*mailbox*, because the mailbox did not move. One find-and-replace turned a true
+statement about an address that works into a false statement about an address
+that does not exist, in six files at once.
+
+**And the register that exists to catch exactly this missed it, because it was
+swept too.** `ops/own-facts-check.md` is the list of every surface publishing our
+facts; its Email row was rewritten by the same pass. Six documents agreeing with
+each other is not evidence when one edit changed all six. Two rules written into
+that file: after a bulk rename, the mailbox rows get read by hand, and the Email
+row is checked against `business.ts` and a real test message rather than against
+the other documents.
+
+**`business.ts` was right the whole time**, and its comment says why — a working
+address on the dead domain beats a bouncing one on the live domain. The code was
+never wrong; only the documents describing it were. Nothing about what the site
+publishes changed today.
+
+**Also done: finding 3 of the self-audit is closed.** The Organization now
+carries a `PostalAddress` with `addressLocality: Wirral` and `addressRegion:
+Merseyside` on all nine pages. The pages had always said "the Wirral" in prose
+and the structured data had said only `areaServed: GB` — which answers a
+different question, and cost all fifteen checks that asked for someone local.
+Locality and region only; a note in `business.ts` records that a street line
+never goes there, because this business trades from a home address and that is
+the one fact a crawler-readable site cannot take back.
+
 ### 2026-08-06 (the self-audit is published — `/ask-your-ai/`)
 
 **The owner's idea, and it is a good one:** put our own audit on the site with a
