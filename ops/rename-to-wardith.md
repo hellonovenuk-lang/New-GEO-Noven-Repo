@@ -744,11 +744,17 @@ its section 6 describes.
 - [x] **F2. DONE 2026-08-06.** The company page About is rewritten by the
       owner: no Noven, and the prices match the site.
 - [x] **F3. DONE 2026-08-06**, same pass — the founder profile About too.
-- [ ] **F4. Google Search Console.** The new domain is a **new property** — add
-      and verify it, submit the new sitemap, then use the **Change of Address**
-      tool, which requires the D3 redirects to already be live. Keep the old
-      property; do not delete it. **Step by step in
-      `ops/search-console-and-bing.md` part 1**, written 2026-08-06.
+- [x] **F4. Google Search Console — verified, and the move is running.
+      2026-08-06.** `wardith.co.uk` added as a Domain property and verified
+      through GoDaddy Domain Connect; **Change of Address accepted**,
+      `novenstudio.co.uk` → `wardith.co.uk`. The old property is kept.
+
+      **This item said the tool "requires the D3 redirects to already be live",
+      and that sentence is what caught D3 being wrong.** The first attempt
+      failed, the redirects turned out never to have existed, seven rules went
+      into `netlify.toml`, and the second attempt passed. Sitemap, live-URL test
+      and indexing requests still to confirm — `ops/search-console-and-bing.md`
+      §1.3, §1.5, §1.6.
 - [ ] **F5. Bing Webmaster Tools.** Still not set up, and it was already a
       finding. A brand-new domain with no history makes it more urgent, not
       less — Copilot answers from Bing. **Part 2 of the same document**, and
