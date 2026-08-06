@@ -521,6 +521,23 @@ find. Two acceptable answers, both a minute's work:
 Do **not** just leave it. Add whichever was chosen to `ops/own-facts-check.md`
 so the next sweep knows it exists.
 
+**DONE 2026-08-06: deleted, and it was not alone.** Listing the Netlify team
+turned up a *third* project, `aesthetic-unicorn-619923`, also public and in no
+operating document anywhere. Both are now deleted; one project remains,
+`kaleidoscopic-cuchufli-ff7b1a`, serving `wardith.co.uk`. Confirmed against the
+API rather than taken on trust.
+
+**The generalisable bit: this was found by listing the team, not by reading the
+register.** D0.1a existed because somebody happened to look; the third project
+had no entry to find. **A surface nobody documented is a surface nobody
+checks** — so the sweep in `ops/own-facts-check.md` now lists the Netlify team
+rather than working from its own rows. Same argument applies to any host where
+creating something is a click.
+
+Timing mattered: done before the domain was submitted to Search Console and
+Bing, so no crawler was ever offered a Noven-branded duplicate with nothing
+pointing home.
+
 ### D0.3 — Wait for TLS, and check it before anything else moves
 
 **PASSED 2026-08-04.** `https://wardith.co.uk` serves with a valid certificate
