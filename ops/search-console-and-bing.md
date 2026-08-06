@@ -157,10 +157,30 @@ without anything being written. If it reports the redirects are missing, stop:
 that means the domain flip has regressed, and that is a bigger problem than
 indexation.
 
-**If the tool refuses the pairing, do not fight it.** The two properties may be
-different types, and the constraint changes. The 301s carry most of the signal
-on their own; Change of Address accelerates it and makes the intent explicit,
-but it is not the load-bearing part. Note what it said and move on.
+**If `wardith.co.uk` is not in the dropdown, it is a property-type mismatch**,
+and it has a two-minute fix rather than being a dead end. The old property is
+most likely a **URL-prefix** property and the new one is a **Domain** property.
+Add `https://wardith.co.uk/` as a *second*, URL-prefix property — **both types
+can be held for the same site at once and they do not conflict** — verify it off
+the DNS record already in the zone, then reopen Change of address and it will be
+listed.
+
+**If it still refuses after that, do not fight it.** The 301s carry most of the
+signal on their own; Change of Address accelerates them and makes the intent
+explicit, but it is not the load-bearing part. Note what it said and move on.
+
+**After it is accepted:**
+
+- **Leave the redirects alone.** Google treats the move as a signal lasting
+  roughly 180 days. `ops/accounts.md` already commits to keeping
+  `novenstudio.co.uk` registered for at least three years, which is stronger and
+  is the binding number.
+- **Do not submit the old sitemap again**, and do not delete the old property.
+- **Do not expect the four indexed pages to go this week.** Weeks, not days.
+  Re-run `site:novenstudio.co.uk` at one month and at six months; **4** is the
+  baseline, measured 2026-08-06.
+- The old property's numbers falling while the new one's rise is the tool
+  working, not something breaking.
 
 **Keep the old property forever. The owner asked directly on 2026-08-06 whether
 it could be deleted: no — and this holds even if the check above says to skip
