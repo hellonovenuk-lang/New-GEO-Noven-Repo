@@ -333,11 +333,28 @@ matches `wardith.co.uk` itself**, so no loop.
 site too.** A1 says they are owned and redirecting and never published as an
 address. The first half was not true either.
 
+**Deployed and confirmed the same evening.** Merge `a54e17e`, Netlify deploy
+`6a751b6b`, production, ready, 13 seconds. **The deploy summary now reads
+"7 redirect rules processed — All redirect rules deployed without errors."**
+That is the same line that had been reading *"No redirect rules processed"* on
+every build since the flip, which makes it the cheapest possible regression test
+for this fault: **if that line ever says "No redirect rules processed" again,
+the redirects are gone.** Read it on every deploy that touches `netlify.toml`.
+
 **The general lesson, and it is the fourth of this shape today.** A confident
 sentence written before the change, never re-tested after it. The other three
 were the mailbox, the Search Console property, and the six-page sitemap claim.
 **This one is the worst, because the document that contained the wrong
 assumption also contained the check that would have caught it.**
+
+**And the deeper one, which is about this repo rather than about Netlify.**
+Every fault today was found by something *outside* the repo refusing to agree
+with it — Google's validator, a browser address bar, the owner's own memory of
+what he had set up. Nothing inside the repo caught any of them, because the repo
+was the thing making the claims. **A document cannot verify itself, and a
+build passing proves the build passed.** The checks that earned their keep today
+all had one property: they asked a system we do not control what it actually
+sees.
 
 ### 2026-08-06 (the self-audit is published — `/ask-your-ai/`)
 
