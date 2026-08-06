@@ -106,9 +106,15 @@ const audit = plan('audit');
     </div>
   </section>
 
-  <Statement cite="Most findings are a list of fixes. Occasionally the finding is bigger than the fixes, and you need to hear it from someone with no incentive to soften it.">
-    The audit that only ever finds small problems is not an audit.
-  </Statement>
+  {/* Statement carries no layout of its own — every other page sets it in a
+      section and a wrap, and it needs both or it runs to the viewport edge. */}
+  <section class="section">
+    <div class="wrap">
+      <Statement cite="Most findings are a list of fixes. Occasionally the finding is bigger than the fixes, and you need to hear it from someone with no incentive to soften it.">
+        The audit that only ever finds small problems is not an audit.
+      </Statement>
+    </div>
+  </section>
 
   <section class="section">
     <div class="wrap">
