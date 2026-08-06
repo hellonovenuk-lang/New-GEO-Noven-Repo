@@ -521,6 +521,23 @@ find. Two acceptable answers, both a minute's work:
 Do **not** just leave it. Add whichever was chosen to `ops/own-facts-check.md`
 so the next sweep knows it exists.
 
+**DONE 2026-08-06: deleted, and it was not alone.** Listing the Netlify team
+turned up a *third* project, `aesthetic-unicorn-619923`, also public and in no
+operating document anywhere. Both are now deleted; one project remains,
+`kaleidoscopic-cuchufli-ff7b1a`, serving `wardith.co.uk`. Confirmed against the
+API rather than taken on trust.
+
+**The generalisable bit: this was found by listing the team, not by reading the
+register.** D0.1a existed because somebody happened to look; the third project
+had no entry to find. **A surface nobody documented is a surface nobody
+checks** — so the sweep in `ops/own-facts-check.md` now lists the Netlify team
+rather than working from its own rows. Same argument applies to any host where
+creating something is a click.
+
+Timing mattered: done before the domain was submitted to Search Console and
+Bing, so no crawler was ever offered a Noven-branded duplicate with nothing
+pointing home.
+
 ### D0.3 — Wait for TLS, and check it before anything else moves
 
 **PASSED 2026-08-04.** `https://wardith.co.uk` serves with a valid certificate
@@ -647,13 +664,37 @@ is worth more than the link is.
       the 404, and `.com` and `.uk` folded in too, so only one address ever
       resolves content.
 
-      **No redirect rules need writing.** Netlify 301s every non-primary domain
-      to the primary, preserving the path, so promoting `wardith.co.uk` to
-      primary reverses all of it in one action — provided `novenstudio.co.uk`,
-      `wardith.com` and `wardith.uk` all stay *attached* to the site. **Verify
-      the direction actually flipped, on the day, with a real request to a real
-      inner page.** This is the step where an assumption costs every old link
-      the business has.
+      **"No redirect rules need writing" was wrong, and it cost nine days.**
+      This item said Netlify 301s every non-primary domain to the primary, so
+      promoting `wardith.co.uk` would reverse everything in one action. **It
+      does not, or not on this site.** Found 2026-08-06: `novenstudio.co.uk`,
+      `wardith.com` and `wardith.uk` were all *serving the full site at their
+      own addresses*, with no redirect at all.
+
+      **What found it, and what should have.** Google's Change of Address
+      validator failed with "Redirect wasn't found" against
+      `https://novenstudio.co.uk/`, `/pricing/` and `/about/`, and the browser
+      confirmed it — the old domain rendered the Wardith homepage with
+      `novenstudio.co.uk` still in the address bar. **Every Netlify deploy
+      summary had also been reporting "No redirect rules processed" since the
+      flip, and nobody read it.** The instruction two lines above — *verify the
+      direction actually flipped, with a real request to a real inner page* —
+      was right and was not carried out. Writing the check down is not doing it.
+
+      **Fixed by seven explicit rules in `netlify.toml`**, which is version
+      controlled and diffable rather than a dashboard setting nobody can see the
+      history of. `force = true` on every one: without it a redirect only fires
+      when no file matches the path, and every path here has a file — so the
+      rules would be silently ignored for exactly the pages that matter.
+
+      **Why this mattered more than the tool that surfaced it.** The old domain
+      was serving *current* content, which keeps it alive in the index instead
+      of retiring it — and a crawler or assistant reaching `novenstudio.co.uk`
+      found Wardith's own pages sitting there. That is not a stale mention of a
+      dead name; it is a live statement that the two are one site, published at
+      the strongest level available, while the owner was asking why assistants
+      keep saying Noven. Canonicals pointing at `wardith.co.uk` are what stopped
+      it being worse — **but a canonical is a hint and a 301 is not.**
 - [ ] **D4. Say what the merge publishes, then merge.** Per `CLAUDE.md`: this
       one publishes a new business name, a new URL on every page, new JSON-LD
       identity and two new `sameAs` links. It is the largest one-way door this
@@ -736,14 +777,54 @@ its section 6 describes.
       honest answer will be "nothing" for months, and that is not a comparison —
       it is a different question.
 
-      **The way to keep it valuable is to run both.** At the six-month re-check,
-      ask the frozen Noven questions *and* the same questions about Wardith. The
-      first measures **how long a dead name persists**; the second measures **how
-      fast a new one is learned.** Nobody else has that measurement, it costs one
-      extra batch of queries, and it is the single most useful piece of evidence
-      this business could own — the product's own claim, tested on the only
-      business we are allowed to experiment on. Fold the decision into
-      `ops/audit-method.md` before the re-check, not after.
+      **Revised 2026-08-06, after the owner asked what the six-month re-check is
+      actually for. Half of what was written here was wrong.**
+
+      It said: run both question sets, the Noven one measuring *how long a dead
+      name persists* and the Wardith one *how fast a new one is learned*, and
+      called the pair "the single most useful piece of evidence this business
+      could own". Taken apart:
+
+      - **The Noven half does not measure what it claims, because the name was
+        never ours.** The frozen q06/q07 asked *"what do you know about Noven?"*
+        and all thirty answers described the Miami pharmaceutical company; not
+        one of 210 answers cited `novenstudio.co.uk`. Re-running them measures
+        **how long a pharma company keeps owning its own name.** The answer is
+        "indefinitely", it is free to know today, and it is nothing to do with
+        this business. **There is no dead identity to decay because the
+        assistants never held one.** Demote it to a one-line null-check; do not
+        build a finding on it.
+      - **The Wardith half is the real measurement and is weaker than claimed.**
+        Three limits, all of which have to travel with any number quoted from
+        it: **n = 1**; it is the **best possible case**, because "Wardith" has no
+        occupant competing for it, where a client called *Smith & Co
+        Accountants* competes with hundreds; and **it is not the client's
+        situation**, since clients do not rename — they keep a name and fix the
+        facts attached to it. Quoting it to a prospect without those caveats
+        would be exactly the unfalsifiable number `/ask-your-ai/` tells people to
+        be suspicious of.
+      - **The measurement worth adding, which this item never named:** how long
+        the pages indexed under `novenstudio.co.uk` take to disappear after the
+        301s and Change of Address. **The baseline is 4**, measured by the owner
+        on 2026-08-06 — the first and only time anyone has run
+        `site:novenstudio.co.uk` on Google. That one is clean and, unlike the
+        name questions, measures something we caused.
+
+        **It was first written up here as "transferable to any client
+        migration". That phrasing is withdrawn** — it smuggled in a
+        client-facing use that does not survive examination. The owner's
+        objection on 2026-08-06: publishing any "how long until it works" figure
+        is an outcome guarantee about systems we explicitly say we do not
+        control, and it turns a retainer into a project with an end state.
+        **Measure it for ourselves; never quote it to a client.** The rule and
+        the full reasoning are `ops/service-tiers.md` section 12.
+
+      **And the measurement that actually answers the sales question — "how long
+      until this works?" — arrives with clients, not here.** Time from *facts
+      corrected and indexed* to *named in an answer*, across several real
+      businesses. Wardith contributes one best-case data point to that and
+      cannot substitute for it. Fold this into `ops/audit-method.md` before the
+      re-check, not after.
 - [ ] **G3. Expect both names in the world at once, for months.** That is not a
       fault and it does not need fixing beyond the redirects. `own-facts-check.md`
       section 1 already explains why: correcting the sources we control is the

@@ -236,11 +236,108 @@ no `business.ts`. The homepage's visible code block is still byte-for-byte its
 head JSON-LD.
 
 **Also added to the register as row 14, because it kept coming up and was
-tracked nowhere:** two Netlify projects are public with no password —
+tracked nowhere:** two Netlify projects were public with no password —
 `noven-2-0-preview` (a full Noven-branded copy of the business, raised as D0.1a
-on 2026-08-04 and still open) and `aesthetic-unicorn-619923`, which appears in
+on 2026-08-04 and still open) and `aesthetic-unicorn-619923`, which appeared in
 no operating document at all. Live crawlable copies under the dead name are
 directly against the thing being worked on this session.
+
+**Both deleted by the owner the same evening, and confirmed against the API:
+one project remains on the team.** Row 14 closed, D0.1a closed. **The
+generalisable bit is how the second one was found — by listing the team, not by
+reading the register.** D0.1a existed because somebody happened to look; the
+third project had no entry to find. A surface nobody documented is a surface
+nobody checks, so the sweep now lists the host rather than working from its own
+rows. The same argument applies anywhere creating a public thing is one click.
+
+---
+
+**Merged and deployed, and this is the publishing moment the session was
+building to.** `main` at `d35557a`, Netlify deploy `ready` in production,
+`commit_ref` confirmed against the API, 12-second build, secret scan clean over
+28 files.
+
+**What went live:** the `sameAs`, and no page saying `[PLACEHOLDER` any more.
+Everything else in the merge was records.
+
+**The full verification was run against the merged result before the push, not
+against the branch** — nine pages, every canonical on `wardith.co.uk`, the
+`sameAs` present on all nine Organization blocks, the five prices unchanged at
+250 / 800 / 150 / 400 / 700, zero placeholders, no internal path in any visible
+text, `robots.txt` and sitemap on the new domain, and the homepage's visible
+code block still byte-for-byte its head JSON-LD. That last one is the site's
+central claim and a merge is exactly when it would break unnoticed.
+
+**Order of operations mattered and is worth keeping.** The Netlify copies were
+deleted, then the merge deployed, and only then is the domain submitted for
+indexing. Reversing any two of those hands a crawler either a Noven-branded
+duplicate or a pre-merge page with the placeholders still on it — and the first
+crawl of a new domain is the one that sets the initial index entry.
+
+**Next session picks up at `ops/search-console-and-bing.md`**, which is written
+and unstarted. Nothing in the repo blocks it.
+
+---
+
+### 2026-08-06 (last — the redirects never existed, and Google's rejected form found it)
+
+**Change of Address failed validation, and the failure was worth more than the
+tool.** "301-redirect from homepage — Redirected outside the destination site."
+The instruction had been to stop and report if that check failed, and stopping
+was right.
+
+**The site was being served at four addresses with no redirect anywhere.**
+`novenstudio.co.uk` rendered the Wardith homepage *with `novenstudio.co.uk`
+still in the address bar*. Google's expanded panel said "Redirect wasn't found"
+against `https://novenstudio.co.uk/`, `/pricing/` and `/about/`. All four apex
+domains resolve to Netlify's `75.2.60.5`, and `netlify.toml` contained no
+redirect rules at all.
+
+**The assumption that caused it is written down in D3 of
+`ops/rename-to-wardith.md`: "No redirect rules need writing — Netlify 301s every
+non-primary domain to the primary."** It does not, or not on this site.
+Everything downstream was built on that sentence: D0.1 called the alias
+behaviour "a live proof that DNS and TLS are correct", D3 called flipping the
+primary "the whole of it", and the roadmap recorded the switch as done.
+
+**Two lines below that assumption, the same item says: *verify the direction
+actually flipped, on the day, with a real request to a real inner page.* That
+was the correct instruction and it was never carried out.** Writing a check down
+is not doing it. Nine days passed.
+
+**And the evidence was in every deploy.** Netlify's own summary has been
+reporting **"No redirect rules processed"** on every build since the flip,
+including the one read out in full earlier today while confirming the merge.
+It was read as boilerplate.
+
+**Why it mattered more than a failed tool.** The old domain was serving *current*
+content, which keeps it alive in the index rather than retiring it — and it
+means a crawler or an assistant reaching `novenstudio.co.uk` found Wardith's own
+pages sitting there under the old name. **That is not a stale mention of a dead
+name; it is a live statement that the two are one site**, published at the
+strongest level available, while the owner was in this same session asking why
+assistants keep saying Noven. It is a plausible contributor to exactly that.
+
+Canonicals pointing at `wardith.co.uk` on every page are what stopped it being
+worse. **A canonical is a hint and a 301 is not.**
+
+**Fixed with seven explicit rules in `netlify.toml`** — version controlled and
+diffable, rather than a dashboard setting with no history. Every one carries
+`force = true`, which is load-bearing: without it a redirect only fires when no
+file matches the path, and every path here has a file, so the rules would be
+silently ignored for precisely the pages that matter. `:splat` keeps it page for
+page, which D3 committed to. Validated before deploy: seven rules, and **no rule
+matches `wardith.co.uk` itself**, so no loop.
+
+**Also caught by the same check: `wardith.com` and `wardith.uk` were serving the
+site too.** A1 says they are owned and redirecting and never published as an
+address. The first half was not true either.
+
+**The general lesson, and it is the fourth of this shape today.** A confident
+sentence written before the change, never re-tested after it. The other three
+were the mailbox, the Search Console property, and the six-page sitemap claim.
+**This one is the worst, because the document that contained the wrong
+assumption also contained the check that would have caught it.**
 
 ### 2026-08-06 (the self-audit is published — `/ask-your-ai/`)
 

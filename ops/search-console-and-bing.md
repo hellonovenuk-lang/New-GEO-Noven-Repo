@@ -56,7 +56,17 @@ You already control DNS for this domain at GoDaddy, and the apex/`www` split is
 exactly the thing a Domain property removes. Enter `wardith.co.uk` — **no
 `https://` and no `www`**, just the bare domain.
 
-### 1.2 Verify it with a TXT record at GoDaddy
+### 1.2 Verify it — and on GoDaddy this is one click
+
+**Done 2026-08-06, and it never needed the hand-typed record below.** Search
+Console offered to verify automatically, took the owner straight to GoDaddy to
+approve it, and wrote the TXT itself. **Take that route whenever it is offered.**
+It is what the `_domainconnect` CNAME in the zone is for, and it removes the
+error class that actually happens on this account — a transposed character,
+caught once already on `wardith.uk`'s apex A record.
+
+The manual steps are kept below for the two domains that may still need them,
+and for whenever the automatic flow is not offered.
 
 Google shows a string starting `google-site-verification=`. Copy it.
 
@@ -92,30 +102,131 @@ is correctly excluded.
 two entries pointing at overlapping sets is noise in the one report you will be
 reading to judge whether any of this worked.
 
-### 1.4 Change of Address, from the *old* property
+### 1.4 Change of Address — check whether it is worth doing at all
 
-This is the step that tells Google the two domains are one business rather than
-two, and it is the reason the old property must not be deleted.
+**Rewritten 2026-08-06, after the owner pushed back on it, and he was right.**
+This section originally said Change of Address "tells Google the two domains are
+one business" and treated it as a required step. That framing came from the
+standard site-move advice and **it does not fit this business.**
+
+**Change of Address exists to carry accumulated ranking signal across a move.
+There is none to carry.** This document's own Phase-B argument in
+`ops/rename-to-wardith.md` already settled it: not one of 210 automated answers
+cited `novenstudio.co.uk`, the domain was never advertised anywhere but LinkedIn,
+and it had a single page view before the switch. Nothing is being transferred.
+
+**The residual reason is the reverse of the one first written down: retiring old
+entries, not moving authority.** If Google holds indexed pages describing a
+business called Noven, each is a live source for the exact answer the rename was
+meant to stop — so replacing them faster has some value. But that depends on
+those pages existing, **and nobody has ever checked whether they do.**
+
+**What is actually known, and the gap in it:**
+
+| | Recorded | Means |
+|---|---|---|
+| Bing | `site:novenstudio.co.uk` returns **zero** | Never indexed. Confirmed in the self-audit |
+| Google | "sitemap submitted and confirmed, six pages" | **The sitemap was processed and six URLs read from it.** Not six pages indexed — a softer fact than the sentence reads |
+
+**So run the 15-second check before the tool: `site:novenstudio.co.uk` on
+Google.**
+
+- **Zero results** — skip this section. There is nothing to consolidate and the
+  tool would achieve nothing. Go to Bing.
+- **Results come back** — run it, as below. Those pages are where the Noven
+  answer still lives.
+
+**RUN 2026-08-06: four results.** So Google did index the old domain, unlike
+Bing, and Change of Address is worth doing. Four pages describing a business
+called Noven sit in the index and each is a live source for the exact answer the
+rename was meant to stop.
+
+**Four is now the decay baseline.** Re-run `site:novenstudio.co.uk` at the
+six-month check and record what is left. That number — how long indexed pages
+survive a 301 plus Change of Address — is the one measurement out of this whole
+migration that transfers to a client, because it measures something we caused.
+See G2 in `ops/rename-to-wardith.md` for why the two *name* question sets are
+worth much less than they were first written up as.
 
 Go to the **`novenstudio.co.uk`** property → **Settings** → **Change of
 address** → select `wardith.co.uk` as the destination → **Validate & Update**.
 
-**It checks the redirects itself.** Netlify 301s every non-primary domain to the
-primary, page for page, and `wardith.co.uk` is primary — so this should pass
-without anything being written. If it reports the redirects are missing, stop:
-that means the domain flip has regressed, and that is a bigger problem than
-indexation.
+**It checks the redirects itself, and on 2026-08-06 that check earned its
+keep.** This paragraph used to say the validation "should pass without anything
+being written", because Netlify 301s non-primary domains to the primary. **It
+did not, because Netlify was not doing that** — `novenstudio.co.uk` was serving
+the whole Wardith site at its own address, with no redirect at all, and so were
+`wardith.com` and `wardith.uk`. Seven explicit rules now live in `netlify.toml`.
+Full account in `ops/rename-to-wardith.md` D3 and in the session log.
 
-**If the tool refuses the pairing, do not fight it.** The two properties may be
-different types, and the constraint changes. The 301s carry most of the signal
-on their own; Change of Address accelerates it and makes the intent explicit,
-but it is not the load-bearing part. Note what it said and move on.
+**Keep the instinct that came out of it.** If this check fails, do not work
+around it and do not skip the tool — read what it says. Google's validator is
+the only thing in this repo's toolchain that fetches the old domain and reports
+what it actually got, and it found a fault nine days old that four documents had
+assumed away. The failure text is under the chevron; expand it rather than
+guessing from the summary line.
 
-**Keep the old property forever.** It is the only way to see what is still being
-served from the dead name, and deleting it destroys the before/after that G2 in
-the rename document wants at the six-month check.
+**If `wardith.co.uk` is not in the dropdown, it is a property-type mismatch**,
+and it has a two-minute fix rather than being a dead end. The old property is
+most likely a **URL-prefix** property and the new one is a **Domain** property.
+Add `https://wardith.co.uk/` as a *second*, URL-prefix property — **both types
+can be held for the same site at once and they do not conflict** — verify it off
+the DNS record already in the zone, then reopen Change of address and it will be
+listed.
 
-### 1.5 Ask for the important pages directly
+**If it still refuses after that, do not fight it.** The 301s carry most of the
+signal on their own; Change of Address accelerates them and makes the intent
+explicit, but it is not the load-bearing part. Note what it said and move on.
+
+**After it is accepted:**
+
+- **Leave the redirects alone.** Google treats the move as a signal lasting
+  roughly 180 days. `ops/accounts.md` already commits to keeping
+  `novenstudio.co.uk` registered for at least three years, which is stronger and
+  is the binding number.
+- **Do not submit the old sitemap again**, and do not delete the old property.
+- **Do not expect the four indexed pages to go this week.** Weeks, not days.
+  Re-run `site:novenstudio.co.uk` at one month and at six months; **4** is the
+  baseline, measured 2026-08-06.
+- The old property's numbers falling while the new one's rise is the tool
+  working, not something breaking.
+
+**Keep the old property forever. The owner asked directly on 2026-08-06 whether
+it could be deleted: no — and this holds even if the check above says to skip
+Change of Address entirely.** The two questions were conflated when this was
+first written and they are independent:
+
+1. It is the only view of what is still being served from the dead name.
+2. It holds the before/after that G2 in the rename document wants at the
+   six-month check — *how long a dead name persists* against *how fast a new one
+   is learned*. That measurement is the single most useful piece of evidence
+   this business could own, and one deletion destroys the first half of it.
+3. And if the check does say to run Change of Address, the tool lives inside the
+   old property — deleting it takes the tool with it.
+
+It costs nothing to keep and there is no benefit to removing it.
+
+### 1.5 Test the live URL first — this is the check nothing else can do
+
+**Before requesting indexing, use URL Inspection → `https://wardith.co.uk/` →
+Test live URL → View tested page → HTML.** That is a live fetch showing exactly
+what Googlebot receives. Search the HTML for two strings:
+
+- `PLACEHOLDER` — must be **zero hits**
+- `company/wardith` — must appear once, in the JSON-LD
+
+**Why this matters more than it looks.** Every check in this repo runs against
+the built output in `dist` or against the Netlify API. **The session's network
+policy blocks `wardith.co.uk`**, so no assistant working here has ever seen what
+a crawler actually gets from the live host — that is the one link in the chain
+this repo cannot verify itself, and it is stated as such in
+`ops/own-facts-check.md` row 1. URL Inspection closes it, from the crawler's own
+side, for free.
+
+It will say "URL is not on Google". That is expected on a domain days old and is
+not a fault.
+
+### 1.6 Ask for the important pages directly
 
 **URL Inspection** (top search bar) → paste a URL → **Request indexing**.
 
