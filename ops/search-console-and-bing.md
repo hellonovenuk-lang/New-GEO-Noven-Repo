@@ -56,7 +56,17 @@ You already control DNS for this domain at GoDaddy, and the apex/`www` split is
 exactly the thing a Domain property removes. Enter `wardith.co.uk` — **no
 `https://` and no `www`**, just the bare domain.
 
-### 1.2 Verify it with a TXT record at GoDaddy
+### 1.2 Verify it — and on GoDaddy this is one click
+
+**Done 2026-08-06, and it never needed the hand-typed record below.** Search
+Console offered to verify automatically, took the owner straight to GoDaddy to
+approve it, and wrote the TXT itself. **Take that route whenever it is offered.**
+It is what the `_domainconnect` CNAME in the zone is for, and it removes the
+error class that actually happens on this account — a transposed character,
+caught once already on `wardith.uk`'s apex A record.
+
+The manual steps are kept below for the two domains that may still need them,
+and for whenever the automatic flow is not offered.
 
 Google shows a string starting `google-site-verification=`. Copy it.
 
@@ -111,11 +121,42 @@ different types, and the constraint changes. The 301s carry most of the signal
 on their own; Change of Address accelerates it and makes the intent explicit,
 but it is not the load-bearing part. Note what it said and move on.
 
-**Keep the old property forever.** It is the only way to see what is still being
-served from the dead name, and deleting it destroys the before/after that G2 in
-the rename document wants at the six-month check.
+**Keep the old property forever. The owner asked directly on 2026-08-06 whether
+it could be deleted: no.** Three reasons, and the first is the one that bites
+immediately:
 
-### 1.5 Ask for the important pages directly
+1. **Change of Address is run *from* the old property.** Delete it and the tool
+   goes with it — there is no other way to tell Google the two domains are one
+   business.
+2. It is the only view of what is still being served from the dead name.
+3. It holds the before/after that G2 in the rename document wants at the
+   six-month check — *how long a dead name persists* against *how fast a new one
+   is learned*. That measurement is the single most useful piece of evidence
+   this business could own, and one deletion destroys the first half of it.
+
+It costs nothing to keep and there is no benefit to removing it.
+
+### 1.5 Test the live URL first — this is the check nothing else can do
+
+**Before requesting indexing, use URL Inspection → `https://wardith.co.uk/` →
+Test live URL → View tested page → HTML.** That is a live fetch showing exactly
+what Googlebot receives. Search the HTML for two strings:
+
+- `PLACEHOLDER` — must be **zero hits**
+- `company/wardith` — must appear once, in the JSON-LD
+
+**Why this matters more than it looks.** Every check in this repo runs against
+the built output in `dist` or against the Netlify API. **The session's network
+policy blocks `wardith.co.uk`**, so no assistant working here has ever seen what
+a crawler actually gets from the live host — that is the one link in the chain
+this repo cannot verify itself, and it is stated as such in
+`ops/own-facts-check.md` row 1. URL Inspection closes it, from the crawler's own
+side, for free.
+
+It will say "URL is not on Google". That is expected on a domain days old and is
+not a fault.
+
+### 1.6 Ask for the important pages directly
 
 **URL Inspection** (top search bar) → paste a URL → **Request indexing**.
 
