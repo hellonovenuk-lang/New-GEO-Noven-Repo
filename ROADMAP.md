@@ -44,7 +44,10 @@ distinction everywhere else.
 
 **The site is live** at `wardith.co.uk`, on HTTPS, deployed from `main` by
 Netlify: nine static pages, readable by AI crawlers, with machine-readable
-business facts and a sitemap submitted and confirmed in Search Console. Email is
+business facts and a sitemap. **The Search Console property is still the old
+domain's** — a property is bound to the host it was verified for, so the rename
+did not carry it, and `wardith.co.uk` has none yet. Same for Bing, which never
+indexed the old domain either. `ops/search-console-and-bing.md`. Email is
 still `hello@novenstudio.co.uk` on Zoho — the new mailbox does not exist yet,
 and 1c-3 is where that sits. The brand assets are in and the palette
 matches them. **Phase 1a and 1b are closed.**
@@ -454,7 +457,11 @@ timetable and the money constraints are `ops/plan-to-1-september.md`.
       training.** The self-audit found Copilot had no record of the site
       *because Bing never indexed it*. Do them the week the site goes live, not
       the week of the pre-launch audit. Change of Address in Search Console
-      once the redirects are flipped.
+      once the redirects are flipped — they are.
+
+      **Written up in full 2026-08-06: `ops/search-console-and-bing.md`**, both
+      consoles start to finish, including which account to sign in as and why
+      it has to be that one.
 - [ ] **7. The rest of Phase F** — Zoho Books, Revolut Pro, the ICO record, and
       this repo's own name. `ops/rename-to-wardith.md`.
 - [ ] **8. Re-run `ops/own-facts-check.md` end to end** and record the date.

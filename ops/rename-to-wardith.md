@@ -696,21 +696,23 @@ its section 6 describes.
       was held at `null` through the rename rather than shipped pointing
       nowhere — see D0.5, and the recommendation there was followed exactly.
 
-      **Not yet confirmed: that the page loads without a login.** A `sameAs`
-      to a page a crawler cannot read corroborates nothing. Open it in a
-      private window — the same check ROADMAP 1a already owes on the founder
-      profile.
-- [ ] **F2. LinkedIn company page About** — still publishing the pre-31-July
-      prices (£30 / £350 / from £75). Repaste from `ops/linkedin.md` §5.4 with
-      the new name. Two jobs, one paste.
-- [ ] **F3. LinkedIn founder profile About** — same, from `ops/linkedin.md` §2.
+      **Confirmed 2026-08-06: the page loads in a private window**, so a
+      crawler is not shown a login wall and the `sameAs` is worth what it
+      claims. That check is what separates a corroborating link from a
+      decorative one — see `ops/own-facts-check.md` row 13.
+- [x] **F2. DONE 2026-08-06.** The company page About is rewritten by the
+      owner: no Noven, and the prices match the site.
+- [x] **F3. DONE 2026-08-06**, same pass — the founder profile About too.
 - [ ] **F4. Google Search Console.** The new domain is a **new property** — add
       and verify it, submit the new sitemap, then use the **Change of Address**
       tool, which requires the D3 redirects to already be live. Keep the old
-      property; do not delete it.
+      property; do not delete it. **Step by step in
+      `ops/search-console-and-bing.md` part 1**, written 2026-08-06.
 - [ ] **F5. Bing Webmaster Tools.** Still not set up, and it was already a
       finding. A brand-new domain with no history makes it more urgent, not
-      less — Copilot answers from Bing.
+      less — Copilot answers from Bing. **Part 2 of the same document**, and
+      note there is nothing to migrate: Bing never indexed the old domain
+      either, so this is a clean first submission rather than a move.
 - [ ] **F6. Zoho Books** — trading name on invoices and any invoice template.
 - [ ] **F7. Revolut Pro** — the trading name shown on the audit payment link and
       whatever a customer sees on their statement.

@@ -140,6 +140,35 @@ a login wall for corroborates nothing — it is the same fault as the
 `linkedin.com/me` rule already written in ROADMAP 1a, arriving through a
 different door. Two minutes in a private window settles it.
 
+**Both LinkedIn checks came back clean the same evening.** The page loads in a
+private window, so the `sameAs` points at something a crawler can actually read
+— row 13 resolved. And the owner rewrote both About sections: no Noven, and the
+prices match the site. **Rows 3 and 4 of the register are closed**, which were
+described in that file as "the whole of the actionable problem" and had been
+open since 1 August. F2 and F3 of the rename are done with them.
+
+**Next: `ops/search-console-and-bing.md`, written this session.** Both consoles
+start to finish. Three things in it are worth knowing without opening it:
+
+- **A Search Console property is bound to the host it was verified for, so the
+  rename did not carry it.** `wardith.co.uk` has no property at all. This had
+  gone unnoticed because `ops/audit-setup.md` §5 said "already set up and
+  confirmed, nothing to do" — true of the old domain, false since 4 August, and
+  the pre-run checklist for the next audit. Corrected, along with the same claim
+  in `ROADMAP.md`'s "where we are today" and `ops/accounts.md`. **That is the
+  third stale "closed" claim found today** and they all have one shape: a
+  sentence that was true before the rename and was never re-read after it.
+- **Sign in as `hello.noven.uk@gmail.com`.** Change of Address only offers the
+  pairing to an owner of *both* properties, and that account owns the old one.
+  It carries the dead name and stays — F10 settled that it is an identity, not a
+  brand surface.
+- **Bing is now the more urgent of the two**, which inverts how it has been
+  filed since July. There is nothing to migrate — Bing never indexed the old
+  domain, so this is a clean first submission rather than a move — and its URL
+  Submission tool takes all eight pages at once where Google's request-indexing
+  is rationed. For a domain this new that is the fastest route into any index,
+  and it feeds the one Copilot reads.
+
 **Also added to the register as row 14, because it kept coming up and was
 tracked nowhere:** two Netlify projects are public with no password —
 `noven-2-0-preview` (a full Noven-branded copy of the business, raised as D0.1a
