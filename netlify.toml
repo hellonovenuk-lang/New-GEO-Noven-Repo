@@ -2,3 +2,94 @@
   base = "site"
   command = "npm run build"
   publish = "dist"
+
+# ---------------------------------------------------------------------------
+# One address serves this site. Everything else 301s to it, page for page.
+#
+# **Written 2026-08-06, because the assumption these rules replace was wrong.**
+# `ops/rename-to-wardith.md` D3 said "no redirect rules need writing — Netlify
+# 301s every non-primary domain to the primary". It does not, or not here:
+# `novenstudio.co.uk`, `wardith.com` and `wardith.uk` were all *serving* the
+# full site at their own addresses, with no redirect at all. Google's Change of
+# Address validator is what found it — "Redirect wasn't found" against
+# `https://novenstudio.co.uk/`, `/pricing/` and `/about/` — and the browser
+# confirmed it: the old domain rendered the Wardith homepage with
+# `novenstudio.co.uk` still in the address bar. Every deploy summary had also
+# been saying "No redirect rules processed" and nobody read it.
+#
+# Why it matters more than the tool that found it:
+#
+#   1. **The whole site was live at four addresses.** Canonicals point at
+#      `wardith.co.uk` on every page, which is what stopped this being worse,
+#      but a canonical is a hint and a 301 is not.
+#   2. **The old domain was serving *current* content.** That keeps it alive in
+#      the index rather than retiring it — the opposite of what the rename
+#      wanted, and it is why four pages still answer to `site:novenstudio.co.uk`.
+#   3. **It ties the two names together at the strongest possible level.** A
+#      crawler or an assistant that reaches `novenstudio.co.uk` finds Wardith's
+#      own pages there. That is not a stale mention of the old name, it is a
+#      live statement that the two are one site — which is exactly the thing
+#      the owner asked to eliminate.
+#
+# `force = true` is load-bearing. Without it a redirect only fires when no file
+# matches the path, and every one of these paths has a file — so the rules would
+# be silently ignored for precisely the pages that matter.
+#
+# `:splat` keeps it page for page, which D3 committed to: `/pricing/` lands on
+# `/pricing/`, not on the homepage. Old paths that no longer exist — the
+# indexed `/approach` is one — will 301 and then 404 on the live domain. That is
+# correct and honest; sending dead paths to the homepage produces soft 404s,
+# which Google treats worse than a real one.
+#
+# **No rule matches `wardith.co.uk` itself, so no loop is possible.** Keep it
+# that way: adding one would take the site down.
+# ---------------------------------------------------------------------------
+
+# The old name. Must keep working for years, not months — `ops/accounts.md`
+# rates a lapse here as every old link and cached answer dying at once.
+[[redirects]]
+  from = "https://novenstudio.co.uk/*"
+  to = "https://wardith.co.uk/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.novenstudio.co.uk/*"
+  to = "https://wardith.co.uk/:splat"
+  status = 301
+  force = true
+
+# Held so nobody else has them, and so a mistyped address still lands. A1 of
+# the rename: these are never published as an address anywhere.
+[[redirects]]
+  from = "https://wardith.com/*"
+  to = "https://wardith.co.uk/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.wardith.com/*"
+  to = "https://wardith.co.uk/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://wardith.uk/*"
+  to = "https://wardith.co.uk/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.wardith.uk/*"
+  to = "https://wardith.co.uk/:splat"
+  status = 301
+  force = true
+
+# The apex is primary and the canonical everywhere. Netlify is believed to do
+# this pair automatically, but "believed to" is what produced the fault above,
+# so it is written down.
+[[redirects]]
+  from = "https://www.wardith.co.uk/*"
+  to = "https://wardith.co.uk/:splat"
+  status = 301
+  force = true

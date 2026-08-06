@@ -664,13 +664,37 @@ is worth more than the link is.
       the 404, and `.com` and `.uk` folded in too, so only one address ever
       resolves content.
 
-      **No redirect rules need writing.** Netlify 301s every non-primary domain
-      to the primary, preserving the path, so promoting `wardith.co.uk` to
-      primary reverses all of it in one action — provided `novenstudio.co.uk`,
-      `wardith.com` and `wardith.uk` all stay *attached* to the site. **Verify
-      the direction actually flipped, on the day, with a real request to a real
-      inner page.** This is the step where an assumption costs every old link
-      the business has.
+      **"No redirect rules need writing" was wrong, and it cost nine days.**
+      This item said Netlify 301s every non-primary domain to the primary, so
+      promoting `wardith.co.uk` would reverse everything in one action. **It
+      does not, or not on this site.** Found 2026-08-06: `novenstudio.co.uk`,
+      `wardith.com` and `wardith.uk` were all *serving the full site at their
+      own addresses*, with no redirect at all.
+
+      **What found it, and what should have.** Google's Change of Address
+      validator failed with "Redirect wasn't found" against
+      `https://novenstudio.co.uk/`, `/pricing/` and `/about/`, and the browser
+      confirmed it — the old domain rendered the Wardith homepage with
+      `novenstudio.co.uk` still in the address bar. **Every Netlify deploy
+      summary had also been reporting "No redirect rules processed" since the
+      flip, and nobody read it.** The instruction two lines above — *verify the
+      direction actually flipped, with a real request to a real inner page* —
+      was right and was not carried out. Writing the check down is not doing it.
+
+      **Fixed by seven explicit rules in `netlify.toml`**, which is version
+      controlled and diffable rather than a dashboard setting nobody can see the
+      history of. `force = true` on every one: without it a redirect only fires
+      when no file matches the path, and every path here has a file — so the
+      rules would be silently ignored for exactly the pages that matter.
+
+      **Why this mattered more than the tool that surfaced it.** The old domain
+      was serving *current* content, which keeps it alive in the index instead
+      of retiring it — and a crawler or assistant reaching `novenstudio.co.uk`
+      found Wardith's own pages sitting there. That is not a stale mention of a
+      dead name; it is a live statement that the two are one site, published at
+      the strongest level available, while the owner was asking why assistants
+      keep saying Noven. Canonicals pointing at `wardith.co.uk` are what stopped
+      it being worse — **but a canonical is a hint and a 301 is not.**
 - [ ] **D4. Say what the merge publishes, then merge.** Per `CLAUDE.md`: this
       one publishes a new business name, a new URL on every page, new JSON-LD
       identity and two new `sameAs` links. It is the largest one-way door this

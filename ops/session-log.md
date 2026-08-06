@@ -277,6 +277,68 @@ crawl of a new domain is the one that sets the initial index entry.
 **Next session picks up at `ops/search-console-and-bing.md`**, which is written
 and unstarted. Nothing in the repo blocks it.
 
+---
+
+### 2026-08-06 (last — the redirects never existed, and Google's rejected form found it)
+
+**Change of Address failed validation, and the failure was worth more than the
+tool.** "301-redirect from homepage — Redirected outside the destination site."
+The instruction had been to stop and report if that check failed, and stopping
+was right.
+
+**The site was being served at four addresses with no redirect anywhere.**
+`novenstudio.co.uk` rendered the Wardith homepage *with `novenstudio.co.uk`
+still in the address bar*. Google's expanded panel said "Redirect wasn't found"
+against `https://novenstudio.co.uk/`, `/pricing/` and `/about/`. All four apex
+domains resolve to Netlify's `75.2.60.5`, and `netlify.toml` contained no
+redirect rules at all.
+
+**The assumption that caused it is written down in D3 of
+`ops/rename-to-wardith.md`: "No redirect rules need writing — Netlify 301s every
+non-primary domain to the primary."** It does not, or not on this site.
+Everything downstream was built on that sentence: D0.1 called the alias
+behaviour "a live proof that DNS and TLS are correct", D3 called flipping the
+primary "the whole of it", and the roadmap recorded the switch as done.
+
+**Two lines below that assumption, the same item says: *verify the direction
+actually flipped, on the day, with a real request to a real inner page.* That
+was the correct instruction and it was never carried out.** Writing a check down
+is not doing it. Nine days passed.
+
+**And the evidence was in every deploy.** Netlify's own summary has been
+reporting **"No redirect rules processed"** on every build since the flip,
+including the one read out in full earlier today while confirming the merge.
+It was read as boilerplate.
+
+**Why it mattered more than a failed tool.** The old domain was serving *current*
+content, which keeps it alive in the index rather than retiring it — and it
+means a crawler or an assistant reaching `novenstudio.co.uk` found Wardith's own
+pages sitting there under the old name. **That is not a stale mention of a dead
+name; it is a live statement that the two are one site**, published at the
+strongest level available, while the owner was in this same session asking why
+assistants keep saying Noven. It is a plausible contributor to exactly that.
+
+Canonicals pointing at `wardith.co.uk` on every page are what stopped it being
+worse. **A canonical is a hint and a 301 is not.**
+
+**Fixed with seven explicit rules in `netlify.toml`** — version controlled and
+diffable, rather than a dashboard setting with no history. Every one carries
+`force = true`, which is load-bearing: without it a redirect only fires when no
+file matches the path, and every path here has a file, so the rules would be
+silently ignored for precisely the pages that matter. `:splat` keeps it page for
+page, which D3 committed to. Validated before deploy: seven rules, and **no rule
+matches `wardith.co.uk` itself**, so no loop.
+
+**Also caught by the same check: `wardith.com` and `wardith.uk` were serving the
+site too.** A1 says they are owned and redirecting and never published as an
+address. The first half was not true either.
+
+**The general lesson, and it is the fourth of this shape today.** A confident
+sentence written before the change, never re-tested after it. The other three
+were the mailbox, the Search Console property, and the six-page sitemap claim.
+**This one is the worst, because the document that contained the wrong
+assumption also contained the check that would have caught it.**
+
 ### 2026-08-06 (the self-audit is published — `/ask-your-ai/`)
 
 **The owner's idea, and it is a good one:** put our own audit on the site with a
