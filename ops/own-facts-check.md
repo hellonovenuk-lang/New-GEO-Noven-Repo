@@ -70,7 +70,7 @@ evidence when one edit changed all six.
 | Bundling | Never. Every service is priced and bought on its own | 2026-07-31, standing decision |
 | Assistants covered | ChatGPT, Google, Copilot, Perplexity | unchanged |
 | Location | Wirral, UK — city level, never a street | unchanged |
-| Email | hello@novenstudio.co.uk — the address the site publishes and the only one that receives. `hello@wardith.co.uk` **does not exist yet** | corrected 2026-08-06; see the note above |
+| Email | **hello@wardith.co.uk** — created and confirmed receiving 2026-08-06, and flipped in `business.ts` the same day. `hello@novenstudio.co.uk` stays alive as an alias on the same licence for at least twelve months | 2026-08-06. Corrected *to* the old address earlier the same day, then forward once it was true — see the note above |
 | Legal status | Trading name of Kieran Smith, a sole trader. Not VAT registered | unchanged |
 
 ---
@@ -91,7 +91,7 @@ read off the live page, and both need the owner's eyes.
 | 4 | **LinkedIn founder profile — About** | Owner, in LinkedIn | Yes | **Fixed 2026-08-06**, same pass | Re-check at the next sweep |
 | 5 | LinkedIn tagline and role description | Owner | No prices | Believed fine — no numbers in either | Check while in there |
 | 6 | This repo | Owner + sessions | Yes, in the ops docs | Was carrying old prices in seven files until 2026-08-01; corrected | Done |
-| 7 | Google Search Console | Owner | Indirect | **`wardith.co.uk` Domain property added and verified 2026-08-06**, via GoDaddy Domain Connect rather than a hand-typed TXT. Sitemap, live-URL test, indexing requests and Change of Address still to run. **The `novenstudio.co.uk` property is kept permanently** — Change of Address runs *from* it, and it holds half the six-month measurement | `ops/search-console-and-bing.md` part 1, from §1.3 |
+| 7 | Google Search Console | Owner | Indirect | **`wardith.co.uk` Domain property added and verified 2026-08-06**, via GoDaddy Domain Connect rather than a hand-typed TXT. **Change of Address accepted 2026-08-06** — Search Console shows "This site is currently moving to wardith.co.uk", running to roughly Feb 2027. Sitemap, live-URL test and indexing requests still to confirm. **The `novenstudio.co.uk` property is kept permanently** — the move runs *from* it, and it holds half the six-month measurement | `ops/search-console-and-bing.md` §1.3, §1.5, §1.6 |
 | 8 | Bing Webmaster Tools | Owner | Indirect | **Not set up**, and now the more urgent of the two: a brand-new domain with no history, and Copilot answers from Bing's index | `ops/search-console-and-bing.md` part 2. Nothing to migrate — Bing never indexed the old domain either |
 | 9 | ICO public register entry | ICO | No | Name and **home address**, publishing ~10 Aug 2026 | Separate and more urgent — `HANDOVER.md` section 4 |
 | 10 | Email signature on `hello@` | Owner, in Zoho | `[PLACEHOLDER: not recorded anywhere in this repo — does it quote a price?]` | Unknown | Owner to check |

@@ -279,6 +279,53 @@ and unstarted. Nothing in the repo blocks it.
 
 ---
 
+### 2026-08-06 (later still — the mailbox lands, and the last Noven leaves the structured data)
+
+**`hello@wardith.co.uk` exists and receives.** The owner created it in Zoho and
+confirmed mail arrives. The zone was then read independently rather than taken
+on trust: MX to `mx.zoho.eu` / `mx2` / `mx3`, **exactly one `v=spf1`**, a DKIM
+key at `zmail._domainkey`, and DMARC `p=none` — whose `rua` now points at a
+mailbox that exists, closing a loose end flagged earlier the same evening when
+that address was still fictional.
+
+**So `business.ts` flipped, and with it the last machine-readable Noven on the
+site.** The email was 25 of the 43 occurrences counted a few hours before —
+present in the Organization and ContactPoint JSON-LD of all nine pages, and
+visible on the homepage inside the very panel captioned *"What an AI assistant
+reads on this page"*. The site was pointing at a box and telling assistants to
+read it, and the box contained the old domain.
+
+**Seven of nine pages now contain no reference to the old name in any form.**
+What remains is confined to the two `/ask-your-ai/` pages and is deliberate: the
+name-change explanation, and the reproduced 3 August report, which carries the
+finding *"not one of the 210 automated answers cited novenstudio.co.uk"* and the
+report's own signature block. **Both stay.** The standing decision is that
+nothing in that report is altered to flatter the present, and neither is
+misleading — the old address still receives and must for twelve months.
+
+**Holding the old address on the site for two days was right and is worth
+keeping as a pattern.** A working address on a dead domain beats a bouncing one
+on a live domain, because an enquiry lost to a bounce is lost silently. The
+condition written into the code — *flip when the alias exists and a test message
+has arrived* — was met before anything changed. That is the same shape as
+`businessLinkedIn` being held at `null` through the rename, and both were right
+for the same reason: **a wrong published fact is worse than a missing one.**
+
+**Still owed, and it is invisible from the site:** nobody has sent *from* the new
+address and confirmed `SPF: PASS`, `DKIM: PASS`, `DMARC: PASS` in a real
+message's headers. DNS records existing is not the same as authentication
+passing, and a new domain that fails gets filtered silently — which in launch
+week is indistinguishable from nobody replying. D0.4 step 5.
+
+**Records closed with it:** ROADMAP 1c-3, rename E1 and E2, and the Search
+Console rows in `ROADMAP.md` and `ops/accounts.md`, which still said
+`wardith.co.uk` had no property hours after it got one. **That is the same stale
+class as everything else found today, caught this time within the hour** —
+because the sweep was done against what had just been verified rather than
+against what the documents already said.
+
+---
+
 ### 2026-08-06 (last — the redirects never existed, and Google's rejected form found it)
 
 **Change of Address failed validation, and the failure was worth more than the
@@ -333,11 +380,28 @@ matches `wardith.co.uk` itself**, so no loop.
 site too.** A1 says they are owned and redirecting and never published as an
 address. The first half was not true either.
 
+**Deployed and confirmed the same evening.** Merge `a54e17e`, Netlify deploy
+`6a751b6b`, production, ready, 13 seconds. **The deploy summary now reads
+"7 redirect rules processed — All redirect rules deployed without errors."**
+That is the same line that had been reading *"No redirect rules processed"* on
+every build since the flip, which makes it the cheapest possible regression test
+for this fault: **if that line ever says "No redirect rules processed" again,
+the redirects are gone.** Read it on every deploy that touches `netlify.toml`.
+
 **The general lesson, and it is the fourth of this shape today.** A confident
 sentence written before the change, never re-tested after it. The other three
 were the mailbox, the Search Console property, and the six-page sitemap claim.
 **This one is the worst, because the document that contained the wrong
 assumption also contained the check that would have caught it.**
+
+**And the deeper one, which is about this repo rather than about Netlify.**
+Every fault today was found by something *outside* the repo refusing to agree
+with it — Google's validator, a browser address bar, the owner's own memory of
+what he had set up. Nothing inside the repo caught any of them, because the repo
+was the thing making the claims. **A document cannot verify itself, and a
+build passing proves the build passed.** The checks that earned their keep today
+all had one property: they asked a system we do not control what it actually
+sees.
 
 ### 2026-08-06 (the self-audit is published — `/ask-your-ai/`)
 

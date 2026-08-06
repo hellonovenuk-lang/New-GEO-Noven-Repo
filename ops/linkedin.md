@@ -547,7 +547,7 @@ contradict anything else it reads.
 > you're emailing him, and the report you get back is one he wrote.
 >
 > Noven is a trading name of Kieran Smith, a sole trader.
-> hello@novenstudio.co.uk
+> hello@wardith.co.uk
 
 That's roughly 1,750 characters, leaving room.
 
@@ -684,7 +684,7 @@ exactly.
 | What it does | The `business.description` sentence, word for word | Site JSON-LD, company page About, your About |
 | Location | Wirral, UK — city level, never a street | Site, company page, your role location |
 | Area served | United Kingdom | Site, company page About, your role description |
-| Email | hello@novenstudio.co.uk — **the address that receives.** `hello@wardith.co.uk` does not exist yet; publish it nowhere until the Zoho alias is made and a test message has arrived | Site contact page, company page About |
+| Email | **hello@wardith.co.uk** — created and confirmed receiving 2026-08-06, and what the site now publishes. `hello@novenstudio.co.uk` still receives and must for at least twelve months, but is no longer the address to publish anywhere | Site contact page, company page About |
 | Legal status | Trading name of Kieran Smith, a sole trader | Site footer, company page About |
 | Prices | £250 / £800 / £150 / £400 / £700 | Site pricing page, both About sections |
 | Cancellation | No minimum term, no notice period | Site (three places), both About sections |

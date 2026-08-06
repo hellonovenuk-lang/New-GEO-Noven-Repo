@@ -148,6 +148,13 @@ migration that transfers to a client, because it measures something we caused.
 See G2 in `ops/rename-to-wardith.md` for why the two *name* question sets are
 worth much less than they were first written up as.
 
+**ACCEPTED 2026-08-06.** Search Console now shows *"This site is currently
+moving to wardith.co.uk"*, date started 6 August 2026, on the
+`novenstudio.co.uk` property. It only passed on the second attempt — the first
+failed and that failure is what uncovered the missing redirects. **Do not press
+CANCEL MOVE**, which sits next to it on that screen; the move is a signal Google
+carries for roughly 180 days and cancelling it restarts nothing useful.
+
 Go to the **`novenstudio.co.uk`** property → **Settings** → **Change of
 address** → select `wardith.co.uk` as the destination → **Validate & Update**.
 

@@ -59,7 +59,7 @@ in the business with no time budget at all.
 | File | What it decides | Status |
 |---|---|---|
 | `third-party-services.md` | Every outside service the business needs, with a pick, a cost and a reason for each. Read only the **Picks** for the shortlist | Live — prices restated against the repricing on 2026-08-01; some sections still predate decisions made later in the same file, and say so |
-| `zoho-mail-setup.md` | How `hello@novenstudio.co.uk` was set up, and how to diagnose it if it breaks. Reuse it for the `wardith.co.uk` alias, which is not made yet | Closed — still written as a to-do list |
+| `zoho-mail-setup.md` | How the mailbox was set up, and how to diagnose it if it breaks. Written for `hello@novenstudio.co.uk`; reused on 2026-08-06 for `hello@wardith.co.uk`, which is now the published address | Closed — still written as a to-do list |
 | `linkedin.md` | The profile rewrite and the company page | **Reopened 2026-08-01** — the copy pasted into LinkedIn predates the repricing, so both About sections publish old prices |
 
 ## The record
