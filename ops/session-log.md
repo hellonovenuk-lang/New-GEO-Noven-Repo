@@ -11,6 +11,131 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-07 (Competitor analysis Part 2 — the raw data, and what it overturned)
+
+**Done:** `runs-clean.csv` supplied by the owner and mined against Part 1's desk
+research. `ops/competitor-analysis.md` now carries both halves and one execution
+plan; `ROADMAP.md` 2f rewritten from "start a new session here" to six execution
+items. **The file was read in the scratchpad and not committed**
+(`ops/audit-method.md` §5). Confirmed for the owner that it is the same data as
+the Noven audit — `audit_id = noven-2026-08-02` on all 210 rows.
+
+**The finding that changes the framing: there is no incumbent.** The audit
+report's table — Tilio 36, nine more behind — reads as a pecking order to climb.
+Counted against the right denominator (165 rows where a business could have been
+recommended) Tilio is named in 28%, second place 23%, third 12%, and **62 of the
+165 answers name nobody at all.** 41 businesses in total, against the report's
+ten. That is not a market with leaders to displace; it is one that has not
+formed. Everything else in the plan is cheaper in that light.
+
+**Part 1's main recommendation had to be withdrawn, and this is the reason to
+keep writing these documents down.** Part 1 called "get Wardith added to the
+existing third-party listicles" the highest-leverage, lowest-risk option of all.
+WebFetch was blocked that session, so it rested on search snippets. This session
+WebFetch worked, so all of them were actually read — and **they are not
+third-party.** Buried Agency's list of the best agencies is published by Buried
+Agency, which ranks itself first. So does FirstMotion's, Sort The Clicks',
+Okapi's, Tilio's, ClickSlice's, Rank4AI's. None has a submission form, an
+editorial email, or stated criteria for applying. The recommendation was to ask
+competitors for a favour, and the honest expected answer is no.
+
+**The same evidence points somewhere better.** Every one of those publishers got
+cited *by writing the list*. Answers citing a list name 3.3 businesses; answers
+citing none name 1.2. Part 1 had already agreed a self-inclusive comparison page
+was fair game and listed it third of three options. The data promotes it to
+first. **It is emphatically not the parked "trust score" idea** — no invented
+scores, no pass/fail criteria, real providers described accurately, Wardith's
+authorship on the page, every claim verifiable before publication. That
+distinction is the whole reason "Considered and not done" was written, and it
+held up: it stopped the wrong version being re-proposed while leaving the
+defensible one available.
+
+**One genuinely open door, and it is small and free.** On the Wirral question
+the field is five businesses, not forty-one — and Bold Online Marketing is named
+in 15 of 15 runs, on all three assistants. Two of them cited
+`threebestrated.co.uk/marketing-agencies-in-wirral` as a source. It is a real
+directory, Bold is on it, and it says "List your business for Free!" That is the
+cheapest concrete action in the whole piece of work.
+
+**The rename is vindicated by data that didn't exist when it was decided.**
+`ops/rename-to-wardith.md` argued the move mainly from there being no indexation
+equity to lose, which is true but defensive. The raw answers are worse than that
+argument assumed: asked "What do you know about Noven?", **0 of 30 runs
+described this business** and all 30 described Noven Pharmaceuticals, the US
+patch maker. Adding "on the Wirral" didn't fix it — ChatGPT 0 of 5, and
+Perplexity confidently offered a North West *builder* and a Wirral *IT support
+firm* instead, which is worse than silence. Asked for "the main alternatives to
+Noven", ChatGPT answered about managed IT service providers. Only Gemini got it
+right, 5 of 5, and that is a point about Google having indexed the site rather
+than about the name. Nothing here reopens the decision; it closes the argument.
+
+**A method problem found by accident, and it matters more than the analysis.**
+All 479 of Gemini's cited URLs are `vertexaisearch.cloud.google.com` redirect
+wrappers that resolve nowhere readable. **For one of the four assistants we sell
+coverage of, `sources_cited` is structurally empty.** `ops/audit-method.md` §5
+lists the column without saying so, and that document feeds client reports. A
+report must never imply we can see what Gemini read. On the roadmap as a fix.
+
+**Recorded as a limit, not smoothed over:** the supplied export is
+pre-classification — `outcome` and `competitors` are blank on all 210 rows — so
+the report's own mention counts could not be re-derived from it. Every count in
+Part 2 comes from matching names against `answer_text` directly, which is why
+the numbers don't tie to the report's table. Said plainly in the document rather
+than reconciled away.
+
+**Then, at the owner's request: the commercial reading, filed where each piece
+belongs.** The execution plan in `ops/competitor-analysis.md` was reordered by
+size of ticket rather than by ease, and two things came out of the data that the
+analysis write-up had under-weighted.
+
+**The biggest number in the dataset is a pricing number, not a visibility one.**
+All three assistants quote a **median £1,500/month**, and they describe
+£500–£1,500 as *freelancer and consultant* rates with agency work above. Lead is
+£700. The consequence is specific and it is new: **a buyer who arrives through
+an assistant has been anchored at £1,500 by the assistant itself**, and then
+reaches a pricing page asking under half that. `ops/service-tiers.md` §1 argues
+we are priced against local search agencies and against a quiet phone, not
+against agency quotes — that argument is untouched and still right for the buyer
+it describes. It is simply no longer the only comparison the buyer has seen.
+
+**Filed in `ops/service-tiers.md` §8, not acted on.** That document owns pricing,
+this one doesn't, and an assistant does not move a price. Both entries are
+written to say what they do *not* settle as well as what they show — the audit
+one explicitly is **not** a case for moving the £250, only for asking whether a
+deeper second tier nearer the £750 the assistants quote is worth having.
+
+**The play with the best return for the effort is the cheapest one here.**
+Re-running q06–q08 under "Wardith" costs three questions. Under "Noven" it was
+0 of 30. If it flips, it produces the one thing no competitor on any of the
+sixty cited lists has and no amount of copywriting can manufacture: a dated,
+measured before-and-after on our own business. `CLAUDE.md` forbids inventing
+results, and **that prohibition is exactly what makes a real one valuable** — it
+is the only honest answer a months-old business has to "why would I pay a
+stranger £800."
+
+**One gap in the market that the write-up had recorded as a statistic and not as
+an opportunity:** 62 of the 165 opportunity rows name **no business at all** —
+better than a third of the demand goes to vetting advice instead of a
+recommendation, and nothing currently occupies that ground. A plain-words page
+on telling a real practitioner from a rebranded one costs credibility nothing,
+because it is already the voice of `/ask-your-ai/`.
+
+**A brand decision was asked for and deliberately left unanswered.** The
+comparison page is the exact situation `CLAUDE.md`'s single deliberate exception
+was written for on 2026-08-01 — a buyer arriving holding the acronym, and a site
+that contains the word nowhere being unable to be the answer. But that exception
+was granted for **one** FAQ entry, by the owner, on the record. Whether it
+stretches to a second page is not an assistant's call, and the page does not
+start until the owner rules. Recorded in both the doc and `ROADMAP.md` as
+blocking rather than assumed either way.
+
+**What this merge publishes: nothing visible.** Four documents changed —
+`ops/competitor-analysis.md`, `ops/service-tiers.md`, `ops/session-log.md`,
+`ROADMAP.md`. No file under `site/`, no copy, no JSON-LD, no price. Netlify will
+rebuild and serve a byte-identical site. Said out loud because `CLAUDE.md` asks
+for it before every merge, and because "nothing visible" is the honest answer
+often enough to be worth stating rather than skipping.
+
 ### 2026-08-07 (Bing — the fourth assistant gets a route in)
 
 **Done:** Bing Webmaster Tools set up for `wardith.co.uk`, indexing requested on
