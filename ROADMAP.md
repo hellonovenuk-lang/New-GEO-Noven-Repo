@@ -530,8 +530,18 @@ timetable and the money constraints are `ops/plan-to-1-september.md`.
       remains, serving `wardith.co.uk`. **The lesson is how the second was
       found — by listing the host, not by reading the register.** A surface
       nobody documented is a surface nobody checks.
-- [ ] **5. Re-export `Email Signature.svg` on one domain.** It reads
-      `hello@wardith.com` above `wardith.co.uk`. Do not use it until fixed.
+- [x] **5. Email signature — done 2026-08-07, and not by re-exporting.**
+      `Email Signature.svg` read `hello@wardith.com` above `wardith.co.uk` and
+      was never installed. It is **replaced** by
+      `assets/brand/email-signature.html`, with the SVG kept as the supplied
+      original. Two reasons re-exporting was the wrong fix: **email cannot
+      render SVG** — Outlook, Gmail's web client and most corporate gateways
+      drop it — and **its text is outlined paths**, so correcting two words
+      meant a Canva round trip. That friction is what produced the two-domain
+      fault, and the address for service still has to be added on 26 August, so
+      the format was the root cause rather than the wording. The new one is live
+      text with the wordmark as a hosted PNG rasterised from the committed SVG.
+      **Owner: install it in Zoho for new mail and for replies.**
 - [x] **6a. Google Search Console — done 2026-08-06.** `wardith.co.uk` verified
       as a Domain property through GoDaddy Domain Connect, and **Change of
       Address accepted and running to roughly February 2027.** The old property

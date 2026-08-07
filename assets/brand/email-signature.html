@@ -1,0 +1,107 @@
+<!-- Wardith email signature — paste into Zoho Mail.
+
+     Written 2026-08-07 to replace `Email Signature.svg`, which is kept in this
+     folder as the supplied original and should not be used. Two reasons it was
+     replaced rather than re-exported:
+
+     1. **It said `hello@wardith.com` above `wardith.co.uk`** — two domains, one
+        business, in the asset that goes out on every message. That is precisely
+        the fault this business is sold to find in other people's businesses.
+     2. **Its text is outlined paths, not type.** Correcting two words meant a
+        Canva round trip, and the address for service still has to be added on
+        26 August. Facts baked into artwork have to be re-exported every time
+        they change; facts in live text are an edit. Given the fault above was
+        caused by exactly that friction, the format was the root cause.
+
+     **Email cannot render SVG.** Outlook, Gmail's web client and most corporate
+     gateways drop it or show a broken image, so an SVG signature was never
+     going to survive contact with a recipient regardless of what it said.
+
+     **How to install it in Zoho Mail:** Settings → Mail → Signatures → new
+     signature → open the source view (the `<>` button in the editor toolbar) →
+     paste everything below the marker → save. Set it for new mail *and* for
+     replies; a signature that only appears on new messages is missing from the
+     majority of what you send.
+
+     **Design notes, so a later session does not "improve" it by accident:**
+
+     - **Tables and inline styles only.** Not a style choice — Outlook renders
+       through Word, which ignores `<style>` blocks, floats and flexbox.
+     - **The font stack is the one CLAUDE.md already picked**: Palatino Linotype
+       for the serif, Segoe UI for the sans. Both ship with Windows and Office,
+       so this matches the site on the machines that will actually open it.
+       Newsreader and IBM Plex are webfonts and do not exist in email.
+     - **The wordmark is the committed artwork**, rasterised from
+       `site/public/logo.svg` at 2x (312x58 actual, 156x29 displayed) with no
+       path data altered — the SVG was placed in a page at a fixed size and
+       photographed, which is the same "never redraw the logo" rule
+       `assets/brand/trim.mjs` works under. Regenerate it that way if it is ever
+       needed at another size. It is served from the live site at
+       `/signature-wordmark.png` so that it resolves for the recipient, which
+       means **the file has to stay in `site/public/`** — deleting it as an
+       orphan would silently break every signature already sitting in somebody
+       else's inbox. **If images are blocked** — the default in
+       Outlook desktop and many corporate clients — the `alt` text renders as
+       the business name in navy, so the signature degrades to type rather than
+       to a broken-image icon.
+     - **One accent, the brass hairline.** Everything else is type and spacing.
+     - **No service description**, deliberately. The old email banner said "AI
+       Visibility Services" and removing it closed a fault that stood open from
+       27 July (`ops/rename-to-wardith.md` B7). Nothing goes back in that slot
+       without the owner deciding it should.
+
+     **[PLACEHOLDER: address for service.]** A sole trader whose trading name is
+     not their own surname has to disclose the owner's name and an address for
+     service on business correspondence. The name is here; the address is parked
+     until 26 August. When it exists, uncomment the marked row below and put it
+     there — one line, no invention. Flagged to the owner 2026-08-07.
+-->
+
+<!-- ────────── paste from here ────────── -->
+<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+  <tr>
+    <td style="padding:0 0 12px 0;">
+      <img src="https://wardith.co.uk/signature-wordmark.png"
+           width="156" height="29" alt="Wardith"
+           style="display:block;border:0;outline:none;text-decoration:none;
+                  width:156px;height:29px;
+                  font-family:'Palatino Linotype',Palatino,Georgia,serif;
+                  font-size:20px;color:#170969;font-weight:600;">
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:0 0 10px 0;
+               font-family:'Palatino Linotype',Palatino,Georgia,serif;
+               font-size:15px;line-height:20px;color:#16161d;">
+      Kieran&nbsp;Smith<span style="color:#8a6a28;">&nbsp;&nbsp;·&nbsp;&nbsp;</span><span style="font-family:'Segoe UI',Tahoma,Arial,sans-serif;font-size:13px;color:#4a4a55;">Founder</span>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:0;background-color:#8a6a28;height:1px;line-height:1px;font-size:0;">&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="padding:10px 0 0 0;
+               font-family:'Segoe UI',Tahoma,Arial,sans-serif;
+               font-size:13px;line-height:21px;color:#16161d;">
+      <a href="mailto:hello@wardith.co.uk" style="color:#170969;text-decoration:none;">hello@wardith.co.uk</a><span style="color:#8a6a28;">&nbsp;&nbsp;·&nbsp;&nbsp;</span><a href="https://wardith.co.uk/" style="color:#170969;text-decoration:none;">wardith.co.uk</a><span style="color:#8a6a28;">&nbsp;&nbsp;·&nbsp;&nbsp;</span><a href="https://www.linkedin.com/company/wardith/" style="color:#170969;text-decoration:none;">LinkedIn</a>
+    </td>
+  </tr>
+  <!-- Address for service goes here once it exists. Delete this comment and
+       uncomment the row below.
+  <tr>
+    <td style="padding:2px 0 0 0;
+               font-family:'Segoe UI',Tahoma,Arial,sans-serif;
+               font-size:12px;line-height:18px;color:#4a4a55;">
+      ADDRESS FOR SERVICE
+    </td>
+  </tr>
+  -->
+  <tr>
+    <td style="padding:8px 0 0 0;
+               font-family:'Segoe UI',Tahoma,Arial,sans-serif;
+               font-size:11px;line-height:16px;color:#6a6a75;">
+      Wardith is a trading name of Kieran Smith, a sole trader.
+    </td>
+  </tr>
+</table>
+<!-- ────────── to here ────────── -->
