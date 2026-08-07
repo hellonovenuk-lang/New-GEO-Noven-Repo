@@ -539,7 +539,10 @@ timetable and the money constraints are `ops/plan-to-1-september.md`.
       six-month measurement. `site:novenstudio.co.uk` returned **4** results,
       which is now the decay baseline — re-run it at one month and at six.
       **Sitemap submitted and indexing requested on all eight pages, same day.**
-      The Google side is complete.
+      **Live-URL test run 2026-08-07 and passed** — zero `PLACEHOLDER`, the
+      `sameAs` correct, no "Noven" on the homepage, checked against what
+      Googlebot actually receives rather than against `dist`. The Google side is
+      complete.
 - [x] **6b. Bing Webmaster Tools — done 2026-08-07.** `wardith.co.uk`
       submitted with indexing requested on all eight indexable pages. A clean
       first submission: there was nothing to migrate and no equity at risk,

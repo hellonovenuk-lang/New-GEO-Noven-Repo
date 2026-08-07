@@ -752,10 +752,12 @@ its section 6 describes.
       and that sentence is what caught D3 being wrong.** The first attempt
       failed, the redirects turned out never to have existed, seven rules went
       into `netlify.toml`, and the second attempt passed. **Sitemap submitted
-      and indexing requested on all eight pages, 2026-08-06.** §1.5, the live-URL
-      test, is the one step still outstanding — and it is the only check in this
-      whole migration that no session can perform, because the network policy
-      blocks `wardith.co.uk`. `ops/search-console-and-bing.md`.
+      and indexing requested on all eight pages, 2026-08-06. §1.5, the live-URL
+      test, done 2026-08-07 and passed** — the last step, and the only check in
+      this migration no session can perform, because the network policy blocks
+      `wardith.co.uk`. It also caught the check itself being wrong: §1.5 expected
+      `company/wardith` once and the homepage carries it twice by design.
+      **F4 is closed.** `ops/search-console-and-bing.md`.
 - [x] **F5. Bing Webmaster Tools — done 2026-08-07.** `wardith.co.uk` submitted
       with indexing requested on all eight indexable pages. A clean first
       submission rather than a move: Bing had never indexed the old domain

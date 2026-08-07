@@ -66,11 +66,41 @@ excluded from the sitemap and correctly never submitted. Worth writing down
 because "nine pages" and "eight pages" both appear across the operating
 documents and both are right about different things.
 
-**Left open:** §1.5, the live-URL test in Google's URL Inspection. It is the
-only check in this migration **no session can run** — the network policy blocks
-`wardith.co.uk`, so every verification in this repo has been against `dist` or
-the Netlify API, never against what a crawler actually receives from the live
-host. Two minutes, and it closes the one gap `own-facts-check.md` row 1 names.
+**And then §1.5 was run, and passed.** The owner ran Google's URL Inspection on
+the homepage and supplied the returned HTML. Zero `PLACEHOLDER`, the
+`company/wardith` `sameAs` correctly formed, `hello@wardith.co.uk` in both the
+Organization and the `contactPoint`, the canonical right, and **no occurrence of
+"Noven" anywhere on the page.**
+
+**This is the first time anything in this repo has been checked against what a
+crawler actually receives.** The network policy blocks `wardith.co.uk`, so every
+verification any session has ever done ran against `dist` or the Netlify API —
+both of which prove the *build* is right and neither of which proves the live
+host serves it. `own-facts-check.md` row 1 has named that gap since it was
+written. It is closed for the homepage; the pricing page is the one page
+carrying prices that still has not been seen live.
+
+**The check caught its own instructions being wrong.** §1.5 said
+`company/wardith` "must appear once, in the JSON-LD". On the homepage it should
+appear **twice** — head JSON-LD and visible code block — because those two being
+byte-for-byte identical is the site's central claim, enforced by
+`site/src/lib/json-code.ts`. So the check as written would have passed a
+homepage that had silently lost half of the thing the page is about. Corrected.
+Fifth wrong claim found in two days, and the same shape as the other four: a
+sentence written from what was expected rather than from what was looked at.
+
+**One thing observed and deliberately not fixed.** In the rendered HTML the
+visible code block is empty — every token span present, no text. That is the
+typing animation, which blanks the text nodes and types them back at ~620
+chars/sec, and URL Inspection shows *rendered* HTML, so the snapshot landed
+inside that window. Bounded honestly: the head JSON-LD is unaffected, the raw
+HTML carries the full block, most AI crawlers do not execute JavaScript at all,
+every fact in the panel is also in `<head>` on the same page, and the page's own
+"view source and compare" instruction points at raw HTML where both copies are
+present. **Nothing is lost from any index.** Changing the animation to satisfy a
+two-second snapshot would cost the panel the argument it exists to make, which
+is a bad exchange. Written into §1.5 as understood-and-accepted so the next
+session does not rediscover it as a bug.
 
 ---
 

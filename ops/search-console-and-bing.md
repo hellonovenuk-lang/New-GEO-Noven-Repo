@@ -215,12 +215,48 @@ It costs nothing to keep and there is no benefit to removing it.
 
 ### 1.5 Test the live URL first — this is the check nothing else can do
 
-**Before requesting indexing, use URL Inspection → `https://wardith.co.uk/` →
-Test live URL → View tested page → HTML.** That is a live fetch showing exactly
-what Googlebot receives. Search the HTML for two strings:
+> **DONE 2026-08-07, and it passed.** The owner ran it on the homepage and
+> supplied the HTML. `PLACEHOLDER`: zero. `company/wardith`: present and
+> correctly formed in the Organization `sameAs`. Also confirmed from the live
+> host, which no session can reach: `hello@wardith.co.uk` in both the
+> Organization and the `contactPoint`, the canonical on `https://wardith.co.uk/`,
+> and **no occurrence of "Noven" anywhere on the page.** This closes the gap
+> named in `own-facts-check.md` row 1 — every other check in this repo runs
+> against `dist` or the Netlify API.
+
+**Use URL Inspection → `https://wardith.co.uk/` → Test live URL → View tested
+page → HTML.** That is a live fetch showing exactly what Googlebot receives.
+Search the HTML for two strings:
 
 - `PLACEHOLDER` — must be **zero hits**
-- `company/wardith` — must appear once, in the JSON-LD
+- `company/wardith` — **twice on the homepage, once everywhere else.** This
+  line said "once" until 2026-08-07 and was wrong about the one page it tells
+  you to test. The homepage carries it in the head JSON-LD *and* inside the
+  visible code block, and those two being byte-for-byte identical is the site's
+  central claim — `site/src/lib/json-code.ts` exists to enforce it. One hit on
+  the homepage would be a real fault, and the check as written would have
+  called it a pass.
+
+**Expect the homepage's visible code block to be empty in this view, and do not
+treat it as a fault.** URL Inspection shows *rendered* HTML — after JavaScript —
+and the block types itself in at ~620 chars/sec from an emptied start, so a
+snapshot taken inside that window catches bare `<span class="tk-key"></span>`
+tokens with no text. What follows from that is worth being precise about,
+because it looks worse than it is:
+
+- **The head JSON-LD is unaffected** and fully present in the render. That is
+  what carries the structured data.
+- **The raw HTML carries the full block** — verifiable in `dist`. Most AI
+  crawlers do not execute JavaScript, so they receive it.
+- **Nothing is lost from any index either way**, because every fact in the
+  visible block is also in `<head>` on the same page.
+- **The page's own instruction still holds.** It says *view source and compare*;
+  view-source shows raw HTML, where both copies are there.
+
+**Do not "fix" this by changing the animation.** The panel exists to be watched
+being written, that is the argument it makes, and trading it for two seconds of
+a rendering crawler's snapshot is a bad exchange. It is understood and accepted,
+not outstanding.
 
 **Why this matters more than it looks.** Every check in this repo runs against
 the built output in `dist` or against the Netlify API. **The session's network
