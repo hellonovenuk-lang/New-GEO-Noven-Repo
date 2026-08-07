@@ -226,7 +226,14 @@ annual-only (`ops/third-party-services.md` B1b).
 against £115 removes most of the reason it was queued behind the freeze at all,
 and it removes the six-day squeeze between the 26th and launch if it is started
 earlier. **Whether to start it before the 26th is the owner's call** — but the
-lead time is real: identity verification plus post, and neither is instant.
+lead time is real: identity verification (usually approved within 24 hours)
+plus post, and neither is instant.
+
+**Confirmed by the owner on 7 August, so the remaining work is mechanical.**
+Follow `ops/third-party-services.md` **B1c** — it carries the purchase steps,
+the two traps worth a wasted month (Street address not PO Box; register
+"Wardith" as its own verified step), and the order the footer, the ICO address
+change and the locality decision have to follow.
 
 **Trading on 1 September with that placeholder still on the site is publishing
 a visible legal gap on a site whose entire pitch is that its own facts are

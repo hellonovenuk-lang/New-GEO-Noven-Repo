@@ -321,11 +321,16 @@ provider's own site before committing.
       billing.** 1st Formations and Quality Company Formations — the two best
       reviewed — are **annual-only**, so they were ruled out by cadence rather
       than by quality, and the £5/yr gap that had decided the earlier
-      comparison turned out not to be the deciding variable at all. The pick is
-      **UK Postbox** (`ops/third-party-services.md` B1b): company 06723381,
-      trading since 2008, HMRC AML supervision XLML00000192390, and a "business
-      trading address" sold to sole traders in those words. **Stop comparing
-      providers and buy it.**
+      comparison turned out not to be the deciding variable at all.
+
+      **UK Postbox confirmed by the owner, 2026-08-07** (company 06723381,
+      trading since 2008, HMRC AML supervision XLML00000192390, a "business
+      trading address" sold to sole traders in those words). **The comparison
+      is closed. What remains is a purchase, and it has a runbook —
+      `ops/third-party-services.md` B1c**, which covers the two traps (buy the
+      Street address not the PO Box; register the trading name "Wardith" as its
+      own verified step), the ID check, and the order the downstream work has
+      to happen in.
 
       **The footer placeholder is gone as of 2026-08-06, by the owner's
       decision, and this instruction used to say the opposite.** It read "don't

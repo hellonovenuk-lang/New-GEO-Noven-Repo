@@ -152,12 +152,18 @@ to sole traders explicitly (`ops/third-party-services.md` B1b).
 **This is now a purchase with nothing left to decide, and it is £12 rather than
 £115** — which is the single biggest change to this plan, because the address
 no longer needs a large payment to unblock the ICO fix, the footer and the pay
-button. Order it first because it has a lead time (ID verification plus post),
-then do the desk work while it travels. Two things to get right on the day:
-**buy the Business *Street* Address, not the cheaper Business PO Box** — a PO
-Box is not valid for this — and **register the trading name Wardith**
-explicitly, since post addressed to a name a provider holds no record of is
-typically returned or destroyed.
+button. Order it first because it has a lead time (ID verification is usually
+approved within 24 hours, then post has to travel), then do the desk work while
+it travels.
+
+**Follow the runbook at `ops/third-party-services.md` B1c rather than working it
+out at the checkout.** The two traps it exists to prevent: **buy the Business
+*Street* Address, not the cheaper Business PO Box**, which is invalid for this;
+and **register the trading name "Wardith" as its own verified step**, because
+post addressed to a name the provider holds no record of is typically returned
+or destroyed. It also covers the ID check — which leaves a soft footprint on
+the owner's personal credit file — and the order the footer, the ICO address
+change and the structured-data locality decision have to happen in.
 
 **3. Write the terms of service and the privacy notice, and publish both.**
 Nothing external blocks these. Use the ICO's own free privacy notice generator.

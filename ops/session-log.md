@@ -158,6 +158,70 @@ and find the V LOT payment details off the card statement while it is recent.
 
 ---
 
+### 2026-08-07 (owner confirms UK Postbox; purchase runbook written)
+
+**Done:** the owner confirmed UK Postbox. The comparison is closed and the item
+is now a purchase, so the work this session was turning a decision into
+something that can be executed without re-reading six sections — **new section
+`ops/third-party-services.md` B1c, the runbook**. A row for UK Postbox was
+added to the `ops/accounts.md` register pre-filled and marked not-yet-bought,
+and the status changed from "the pick" to "confirmed" across `ROADMAP.md`,
+`HANDOVER.md` and `ops/plan-to-1-september.md`.
+
+**Four operational facts found in their user agreement and verification pages
+that were not known when the decision was made.** None of them changes the
+decision; all four would have been unpleasant to discover at the checkout.
+
+1. **The ID check leaves a soft footprint on the owner's personal credit
+   file.** Their terms say it is an ID check only and affects neither the
+   credit report nor the ability to borrow. It is recorded because it touches
+   the owner personally and should not be a surprise. Verification is
+   biometric, usually approved **within 24 hours**.
+2. **Registering the trading name is its own verified step**, not a text field
+   — UK Postbox publishes a separate "Add Business Names" verification guide
+   alongside its per-legal-status guides, and there is a specific **"Sole
+   Trader"** guide to download *before* signing up.
+3. **An inactive account gets its mail returned to sender after a month, and
+   purged and shredded at six.** On a £12 subscription paid by card, a failed
+   payment is a plausible event — and its consequence is a silently broken
+   legal disclosure on the site plus returned statutory post. That risk is now
+   the "if missed" column of the `ops/accounts.md` row.
+4. **Leaving is a project, not a cancel button.** Their terms require the
+   address to be moved off ICO, HMRC and everywhere else *before* closing, or
+   continued use stays chargeable. Icon Offices sets the same trap. **This is
+   the strongest argument yet for choosing once**, and it sharpens the note in
+   B1b about switching to an annual provider later if capital eases: that is a
+   change of address across the footer, the JSON-LD, the ICO record and HMRC,
+   not a swap of direct debits.
+
+**One cost recorded as unknown rather than assumed, per `CLAUDE.md`.** Their
+user agreement refers to "the standard setup fee", but **no setup fee appears
+on the pricing page, the business address page or in the terms** — the only
+mention is in a clause about re-creating a lapsed account. It may be £0 for new
+signups. It is `[PLACEHOLDER]` in B1b and in the accounts row, with an
+instruction to read the checkout total before confirming. **The B1 comparison
+was run entirely on headline monthly rates, so if a setup fee exists it is a
+gap in that comparison and not just a line on an invoice.**
+
+**Why the runbook orders the downstream work rather than listing it.** Buying
+the address is step one of nine, and the last three — footer, ICO address
+change, structured-data locality — are the ones that actually close the
+original risk. The ICO change is why this became urgent at all: registration
+`C1995412` carries the owner's home address on a bulk-downloadable public
+register. **Buying the address and stopping there fixes nothing**, which is the
+failure mode a runbook is for.
+
+**Still open and deliberately not resolved here:** the Trustpilot score
+(reported as both 4.0 and 4.7; Trustpilot blocks automated fetching, so it is a
+five-minute human check before paying), the setup fee, and the locality
+question — whether the structured data eventually says Poole, Dorset or says
+nothing.
+
+**Next:** buy it, following B1c; fill in the `ops/accounts.md` row the same
+day; then the footer and the ICO address change.
+
+---
+
 ### 2026-08-07 (Bing — the fourth assistant gets a route in)
 
 **Done:** Bing Webmaster Tools set up for `wardith.co.uk`, indexing requested on

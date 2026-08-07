@@ -284,11 +284,25 @@ quarterly £38.87 pro-rata (£155.48/yr vs £144/yr)**, on a longer trading
 history. Icon Offices stays the second-choice quarterly option and nothing
 more.*
 
-#### B1b. UK Postbox — the pick (7 August 2026)
+#### B1b. UK Postbox — chosen by the owner, 7 August 2026
+
+**Status: decided, not yet bought.** The owner confirmed the choice on 7 August
+after the monthly-billing constraint ruled out the annual-only providers. The
+runbook for actually buying it is **B1c** below.
 
 **Product:** Business Street Address, **Lytchett House, Poole, Dorset, BH16**.
 **£10/month exc VAT, £12/month inc VAT (£144/yr), billed monthly, cancel any
 time.** Mail plan is a separate component and **can be £0** on pay-as-you-go.
+
+**One cost we could not pin down, flagged rather than assumed.** Their user
+agreement refers to "the standard setup fee at the time of the new account
+being requested", but **no setup fee is published on their pricing page, their
+business address page or in the terms themselves** — the only mention is in a
+clause about re-creating a lapsed account. It may well be £0 for a new signup.
+**Treat the first month as `[PLACEHOLDER: setup fee, if any]` + £12 and read
+the checkout total before confirming.** If there is one, record it in
+`ops/accounts.md` and add it here, because the whole comparison in B1 was run
+on headline monthly rates.
 
 **Why it wins on the constraint that actually binds.** It is the only provider
 checked that is simultaneously monthly, credentialled, long-established and
@@ -326,8 +340,9 @@ substantially the whole cost.
 1. **No in-person collection, by policy.** They do not release post at the
    sorting facility; everything is scanned or forwarded. Irrelevant to us and
    arguably better, but it is the opposite of Icon Offices' cheap tier.
-2. **Identity verification is required and has its own process.** Build the
-   lead time in rather than discovering it on the day; have ID ready.
+2. **Identity verification is required**, biometric and AI-led, typically
+   approved **within 24 hours**, and it **leaves a soft ID-check footprint on
+   the owner's credit file**. Steps and documents in B1c.
 3. **A PO Box will not do.** Their Business **PO Box** is cheaper and is
    marketed at sole traders, but their own FAQ confirms a PO Box is not a valid
    registered office, and the same objection applies to an address for service
@@ -349,6 +364,85 @@ It still would not: **none of the credible providers is in the north-west**, and
 the address that lands will say Dorset. That is a decision to take deliberately
 when the address arrives — publish the real locality, or publish no locality —
 and not a reason to pick a worse provider for geography.
+
+#### B1c. Buying it — the runbook
+
+*Written 2026-08-07, after the owner confirmed the choice. Everything here is
+checked against UK Postbox's own pricing page, business address page, identity
+verification page and user agreement (reviewed 27 February 2024). Anything not
+checkable in advance is marked `[PLACEHOLDER]` rather than guessed.*
+
+**Before you start, have ready:** photo ID, proof of home address, a card, and
+about half an hour. **Download their "Sole Trader" verification guide first** —
+they publish a separate guide per legal status and it tells you exactly which
+documents that route needs, which is faster than uploading and being rejected.
+
+**The order of operations, which matters:**
+
+1. **Buy the Business *Street* Address, Poole (Lytchett House, BH16), £12/month
+   inc VAT.** Not the Business PO Box — cheaper, marketed at sole traders, and
+   invalid for this. Not a London address unless you want to pay £18–42 for a
+   postcode nobody will check.
+2. **Choose the pay-as-you-go mail plan (£0/month)** unless there's a reason
+   not to. Page scans are £1.20 each; at a handful of letters a year that beats
+   any monthly plan.
+3. **Read the checkout total before confirming** — see the setup-fee note in
+   B1b. If a fee appears, it is a fact for `ops/accounts.md`, not a surprise
+   to absorb.
+4. **Complete identity verification.** It is biometric and AI-led, most people
+   finish in minutes, and **approval is typically within 24 hours** during
+   their operating hours. **It leaves a soft footprint on the owner's credit
+   file** — an ID check only; their terms state it does not affect the credit
+   report or the ability to borrow. Recorded because it is the owner's personal
+   credit file and should not be discovered afterwards.
+5. **Register the trading name "Wardith" on the account.** They publish a
+   separate **"Add Business Names"** verification guide, so this is its own
+   step with its own checks — not a free-text field. **Post arriving for a name
+   they hold no record of is the standard way mail gets returned in this
+   industry.** Do this before publishing the address anywhere.
+6. **Record it in `ops/accounts.md` the same day** — account email, the full
+   allocated address, monthly cost, billing date, and any setup fee. This is a
+   recurring charge on a card and belongs in the register, not in a chat log.
+
+**Then, and only then, the downstream work it unblocks:**
+
+7. **Put the address in the site footer**, replacing the gap left when the
+   `[PLACEHOLDER]` was removed on 2026-08-06.
+8. **Change the ICO registration `C1995412` to the new address** — this is the
+   original reason the address became urgent. The home address is on a
+   bulk-downloadable public register.
+9. **Decide the `PostalAddress` / locality question deliberately** — see the
+   note above. The honest answer is now "Poole, Dorset", not "Merseyside".
+
+**Five terms worth knowing, all from their user agreement:**
+
+1. **They open and scan everything.** "You authorise us to open all physical
+   mail we receive on your behalf, whether or not the mail is addressed to
+   you." That is how a scanning service works, but it means client
+   correspondence sent by post is read by a third party — relevant to the
+   privacy notice, which is still to be written.
+2. **Do not let the account lapse.** Inactive accounts have mail held one
+   month, then **returned to sender**; after six months the account is purged,
+   physical mail shredded and digital deleted. A failed card payment on a £12
+   subscription could quietly break the legal disclosure on the site.
+3. **You must move the address off before closing the account** — including
+   with HMRC — or "the time using a UK Postbox address will be chargeable" for
+   as long as it is still in use. The same trap Icon Offices sets. **Exiting
+   this service is a project, not a cancel button**, which is the real argument
+   for choosing once and staying.
+4. **No refund of unused plan time** on cancellation, only any account credit.
+   At £12/month that is trivial, which is a further point for monthly.
+5. **Service is "AS-IS"** with no liability for "timeliness, deletion,
+   mis-delivery or failure to store". Every provider in this market says this.
+   It is the reason the address is a place documents can be *served*, not a
+   guarantee they arrive.
+
+**One thing to check before paying, carried over from B1:** their Trustpilot
+score is reported as both 4.0 and 4.7 by different sources and we could not
+resolve it — Trustpilot blocks automated fetching. **Look at the recent reviews
+on the day.** This file's history is that V LOT's poor reviews were correctly
+flagged and it was bought anyway; the check is five minutes and has already
+been skipped once at a cost.
 
 **Why now rather than later.** The roadmap already makes this call in 1a and 1c
 and the reasoning holds: a sole trader using a business name that isn't their own
