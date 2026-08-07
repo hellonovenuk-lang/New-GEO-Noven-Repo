@@ -31,7 +31,7 @@ on them rather than replacing them.
 | What | Pick | Cost | When |
 |---|---|---|---|
 | Business bank account | Revolut Pro (set up) | Free | Before first payment |
-| Address for service | V LOT (ordered, pending) — fallback: 1st Formations/QCF | ~£10–48/yr (V LOT) or ~£115/yr inc VAT (fallback) | Before visibly trading |
+| Address for service | **1st Formations** (or Quality Company Formations). V LOT dead — refund requested 2026-08-07 | ~£115/yr inc VAT | Before visibly trading |
 | Email on the domain | Zoho Mail (Mail Lite) | £14.40/yr inc VAT | Any time — cheap win |
 | Data protection registration | ICO, direct — **registered 30 Jul 2026** | £47/yr (Direct Debit) | Done |
 | Privacy notice | ICO's own free generator | Free | Before first client data |
@@ -169,7 +169,8 @@ reliability, because a dropped delivery here means a missed legal document:**
 
 | Provider | Cost/yr | Reviews | Note |
 |---|---|---|---|
-| V LOT (vlot.uk) | £9.99–£47.88 | **Poor** — Trustpilot reports of no service after payment, unresponsive support | Cheapest found |
+| ~~V LOT (vlot.uk)~~ | ~~£9.99–£47.88~~ | **Poor** — Trustpilot reports of no service after payment, unresponsive support | **Dead. Paid ~29 Jul, nothing delivered, refund requested 2026-08-07** |
+| Icon Offices (iconoffices.co.uk) | £45.76 headline — **£120.12 for the usable tier** | 4.0/5, ~1,150 reviews, **7% one-star** | Assessed 2026-08-07 and not taken. See B1a |
 | Seed Formations | £72 | Mixed (~3.7/5) — includes a specific complaint of legal documents sent to the address not being forwarded | Explicitly sole-trader marketed |
 | Rapid Formations | £96 | Established, less review data pulled | Business Address Service |
 | **1st Formations** | £96 + VAT (~£115.20 inc VAT) | **4.8–4.9/5, ~23,000+ reviews** | Business Address Service |
@@ -179,13 +180,85 @@ reliability, because a dropped delivery here means a missed legal document:**
 **Pick, if reliability is the priority:** 1st Formations or Quality Company
 Formations, ~£115/yr inc VAT — effectively tied, both well-reviewed at scale.
 
-**Decision actually made (29 July 2026):** went with **V LOT** despite the
-reviews, on cost — capital is tight, and £10–48/yr is a meaningful saving
-against £115/yr right now. Flagged the risk before ordering. Order placed;
-address not yet delivered. **Don't rely on this for anything time-sensitive
-until mail through it is confirmed working** — if it doesn't turn up within a
-few days, fall back to 1st Formations or Quality Company Formations. See
-`ROADMAP.md` 1a for the live status.
+**Decision, 7 August 2026: buy 1st Formations.** The cheap route has now been
+tried twice and cost more than it saved. The 29 July decision was to take
+**V LOT** on cost (~£10–48/yr) despite its reviews, with the risk flagged
+before ordering; it took payment and delivered nothing, and the owner requested
+a refund on 7 August. Icon Offices was researched the same day as the
+replacement and comes out at £120.12 for the tier that actually works — more
+than 1st Formations, on a worse review record. There is no cheaper credible
+option left to find. See `ROADMAP.md` 1a for the live status.
+
+**One live per-item cost to expect at 1st Formations**, which is not in the £96:
+scan-and-email is **£0.50 per letter** and postal forwarding is **Royal Mail
+rates plus a 15% handling fee**. At this business's mail volume — a handful of
+statutory letters a year — that is a few pounds annually, not a reason to
+re-open the choice. It is recorded so the first invoice is not a surprise.
+
+#### B1a. Icon Offices — why it was assessed and not taken (7 August 2026)
+
+Checked directly against their own pricing page, their terms and conditions,
+Companies House and Trustpilot, not against their marketing.
+
+**What is genuinely good about them.** They are a real, established company —
+Icon Offices Limited, company number **10343713**, incorporated 24 August 2016,
+active — and they hold the registrations this product is supposed to have: a
+Companies House **ACSP** (agent number AP000227), **HMRC AML supervision**
+(XNML00000198642) and an ICO registration. Their virtual office terms clause 3
+**explicitly permits** using the address as a business address on a company
+website, on contracts and on invoices, which is the category-2 product above
+and the thing a sole trader's disclosure duty needs. On the product definition,
+they pass where V LOT never did.
+
+**Why we are not buying it anyway — the headline price is not the price.**
+
+| Tier | Annual inc VAT | Mail forwarding | Scan & email |
+|---|---|---|---|
+| Bronze | £45.76 | **No** | **No** |
+| Silver | £120.12 | Yes | Yes |
+| Gold | £200.20 | Yes | Yes |
+| Platinum | £273.00 | Yes | Yes |
+
+The advertised "£0.99 per week" is Bronze, and Bronze is **collect in person, by
+appointment, during office hours**. Their terms say so twice: Bronze customers
+"are not eligible for on-demand postage or scanning services at an additional
+cost", and post over 100g must be collected in person. Their nine addresses are
+in Essex, London, Glasgow, Edinburgh and Belfast. **From the Wirral, Bronze is
+not a service.** The first tier that forwards post is Silver at £120.12/yr —
+which is *more* than 1st Formations at £115.20, against a 4.0 Trustpilot score
+with 7% one-star reviews versus 4.8–4.9 across 23,000. Paying more for less
+reliability on the one item whose failure mode is a missed legal document is
+the same mistake as V LOT, in the other direction.
+
+**Four things in their terms worth knowing, whoever we eventually buy from,
+because they are not unique to Icon Offices:**
+
+1. **"Free" forwarding means no handling fee, not free delivery.** Icon's free
+   forwarding is the cheapest postage, **no tracking, no insurance, no delivery
+   guarantee**, and only up to 100g; over that you arrange your own courier.
+   They then disclaim liability for post lost, damaged or never delivered
+   (clauses 10, 21, 24). Every provider in this market disclaims this. It means
+   the address is a place documents can be *served*, not a guarantee they arrive.
+2. **Clause 6: they may change your allocated address or cancel the service at
+   any time**, and take no responsibility for your costs. For an address that
+   goes into JSON-LD and gets cached and copied by assistants, that is a real
+   exposure and worth checking for in whichever contract we do sign.
+3. **Clause 3 has an odd carve-out** — you "cannot include our address where it
+   may not be legally appropriate such as court summons or subpoenas". Read
+   narrowly that is about what *we* put on court paperwork; read broadly it
+   rubs against the whole point of an address for service of documents.
+   **If we ever do buy from a provider with that wording, ask them in writing
+   first and keep the answer.**
+4. **Trading names must be registered with the provider and approved.** Post
+   arriving for a name they hold no record of "may be destroyed or returned to
+   sender" (clause 27). Whoever we buy from, register **Wardith** with them
+   explicitly, not just the owner's own name.
+
+**What would make Icon Offices worth revisiting.** One thing only: they bill
+**quarterly at £38.87** where 1st Formations is **annual-only at £115.20 up
+front**. If capital is tighter on 26 August than expected, ~£39 buys a working
+address now against £115. That is a cash-flow choice, not a saving — held
+quarterly for a year it costs £155.48 — and it is the only argument for them.
 
 **Why now rather than later.** The roadmap already makes this call in 1a and 1c
 and the reasoning holds: a sole trader using a business name that isn't their own
@@ -200,8 +273,11 @@ assistants, with crawler permissions, structured data and a sitemap. Everything
 that makes it good at that makes a home address in the footer harder to take
 back. The footer can be edited; indexes, caches and archives cannot.
 
-**At £30 a year this is the cheapest item on the list and the one with the
-longest tail if you get it wrong.** Do it before the domain switches over.
+**At ~£115 a year this is a small item on the list and the one with the longest
+tail if you get it wrong** — the sentence here used to say "£30 a year", which
+was the corrected-away Hoxton Mix figure and never a real price for this
+product. Two attempts to beat £115 have now cost a wasted payment to V LOT and
+a day of research into Icon Offices. Buy the reliable one.
 
 ### B2. Professional indemnity insurance
 
@@ -769,11 +845,12 @@ Worth writing down so they don't get re-proposed:
    offered to new sign-ups on the EU/US/AU data centres, found while actually
    setting this up. Do it in the same sitting as the Netlify DNS work in
    roadmap 1b.
-3. **Virtual office address** — ordered via V LOT (~£10–48/yr), pending
-   delivery; confirm mail actually arrives before relying on it, and fall back
-   to 1st Formations or Quality Company Formations (~£115/yr inc VAT) if it
-   doesn't. Should land *before* the domain switches over, not after — see
-   B1.
+3. **Virtual office address** — **1st Formations or Quality Company Formations,
+   ~£115/yr inc VAT.** V LOT was ordered on 29 July and delivered nothing;
+   written off with a refund requested on 7 August. Confirm mail actually
+   arrives before relying on it, and register the trading name **Wardith** with
+   the provider. Should land *before* the domain switches over, not after —
+   see B1 and B1a.
 4. **Cloudflare Web Analytics** — free, one script tag.
 5. ~~Business bank account~~ — **done**, Revolut Pro, see C1.
 6. ~~ICO self-assessment, then the fee if due~~ — **done**, 30 July 2026,
@@ -785,9 +862,9 @@ Worth writing down so they don't get re-proposed:
 9. **Build the audit question set and the recording format** — no cost, and it's
    the actual product.
 
-Items 1–4 total roughly **£30–65 for the year** at V LOT's pricing (or
-£95–130 if the fallback to 1st Formations/QCF is needed) and can all be done
-in an afternoon. Items 5–9 are gated on real events rather than dates.
+Items 1–4 total roughly **£130 for the year** — the £30–65 figure that stood
+here assumed V LOT's pricing, and that supplier is gone. Items 5–9 are gated on
+real events rather than dates.
 
 ---
 

@@ -38,7 +38,7 @@ the domain row is the one that matters most.
 
 | Dependency | Status |
 |---|---|
-| **Address for service** | V LOT paid ~29 Jul 2026, nothing delivered. Order reference, amount and payment method **all unrecorded** — which is what a chargeback would need. Fallback decided (1st Formations / Quality Company Formations, ~£115/yr) and not yet ordered |
+| **Address for service** | **V LOT written off 2026-08-07 — refund requested by the owner.** Paid ~29 Jul, nothing delivered; order reference, amount and payment method **all still unrecorded**, which is what a chargeback needs if the refund is refused. **Icon Offices assessed the same day and rejected on price** (`ops/third-party-services.md` B1a). 1st Formations / Quality Company Formations, ~£115/yr, is now the plan outright and is **not yet ordered** — buy on 26 Aug |
 | **Professional indemnity insurance** | Not bought. Should precede the first Foundation, which is where a live client site gets changed. Absent from `ROADMAP.md` entirely; researched in `ops/third-party-services.md` |
 | **API accounts** — OpenAI, Google AI Studio, Perplexity | **This row was stale and is corrected 2026-08-04.** All three were opened and used for the self-audit on 2 August — 210 runs. What is *not* known is the true cost: `ops/audits/noven-2026-08-02/README.md` records **OpenAI alone at $12.63 for ~75 queries** against `ops/audit-setup.md` §6's estimate of ~£1.20 per 150, and the Gemini and Perplexity totals were never recorded. Every audit delivered spends real money on the day. Get the three real totals before the 26 August unfreeze — see `ops/plan-to-1-september.md` |
 | **Password vault** | Recommended as step one of nine and there is no evidence it exists. See below |
@@ -78,7 +78,7 @@ other than this table. **The rest are still only here.**
 | When | What | If missed |
 |---|---|---|
 | **~10 Aug 2026** | ICO publishes the registered address on a bulk-downloadable public register | The owner's home address published permanently. Copies survive any later amendment |
-| **24 Aug 2026** | V LOT decision point: delivered, or the ~£115/yr fallback gets bought on the 26th | **The consequence changed on 2026-08-06.** The footer placeholder was removed, so the site no longer shows the gap — it publishes no address at all, silently. Launch day now arrives with a legal disclosure missing and nothing on the page to say so. The commitment is that it lands before the first customer, not before launch |
+| ~~**24 Aug 2026**~~ | ~~V LOT decision point~~ — **resolved early, 2026-08-07: V LOT written off, refund requested, ~£115/yr provider bought on the 26th.** Nothing to decide on the 24th; the date is kept only so the record reads straight | **The consequence changed on 2026-08-06.** The footer placeholder was removed, so the site no longer shows the gap — it publishes no address at all, silently. Launch day now arrives with a legal disclosure missing and nothing on the page to say so. The commitment is that it lands before the first customer, not before launch |
 | **26 Aug 2026** | Spending freeze lifts. API balances first, address for service second | Six days to 1 September and nothing bought |
 | **1 Sept 2026** | Operational, accepting clients, outreach active — the owner's deadline, set 2026-08-04 | — |
 | **6 Oct 2026** *(in the calendar)* | Extend the three Wardith domains to 5+ years; decide whether to consolidate the registrar, now the 60-day transfer lock has lifted | Left on a one-year term, renewing at GoDaddy's higher rate, across two registrars |

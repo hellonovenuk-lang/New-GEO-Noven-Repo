@@ -176,9 +176,14 @@ blocking, both about an address:**
 1. **The ICO published, or is about to publish, the owner's home address** on a
    bulk-downloadable public register. Time-critical — deadline **Monday 10
    August 2026** — see 1c.
-2. **The service address hasn't landed.** V LOT took payment and may have
-   delivered nothing. It blocks the ICO fix, the site footer, and the audit's
-   pay button.
+2. **The service address hasn't landed, and the cheap route is now closed.**
+   **V LOT is dead as of 2026-08-07** — it took payment ~29 July, delivered
+   nothing, and the owner has requested a refund. Icon Offices was researched
+   the same day as a replacement and came out *more expensive* than the
+   fallback for the tier that actually forwards post. **So there is no cheaper
+   option left: the ~£115/yr fallback is the answer, and it is a purchase, not
+   a decision.** It blocks the ICO fix, the site footer, and the audit's pay
+   button.
 
 Nothing in the last three days' work touched the ICO call, the service address,
 the terms of service, the privacy notice or the payment link — see 1c below.
@@ -289,14 +294,24 @@ provider's own site before committing.
       Revolut became a UK bank in March 2026, and already the owner's bank. One
       caveat: FSCS cover is shared across Pro and personal under one £120,000
       cap, not doubled. `ops/third-party-services.md` C1.
-- [ ] **Address for service of documents — ordered, not delivered.** Trading
-      under a business name as a sole trader carries a legal duty to show a name
-      and an address where documents can be served, including on the website. A
-      virtual office satisfies it. **V LOT chosen on cost (~£10–48/yr against
-      ~£96–115), and its Trustpilot reviews are poor — reports of nothing being
-      delivered after payment.** Don't tick this off until post through the
-      address is confirmed working; fall back to 1st Formations or Quality
-      Company Formations (~£115/yr inc VAT) if it doesn't land.
+- [ ] **Address for service of documents — not bought. Buy 1st Formations (or
+      Quality Company Formations), ~£115/yr inc VAT.** Trading under a business
+      name as a sole trader carries a legal duty to show a name and an address
+      where documents can be served, including on the website. A virtual office
+      satisfies it. Don't tick this off until post through the address is
+      confirmed working.
+
+      **V LOT is finished, 2026-08-07.** It was chosen on 29 July on cost
+      (~£10–48/yr against ~£96–115) with its poor Trustpilot reviews flagged at
+      the time; it took payment ~29 July, delivered nothing, and the owner has
+      requested a refund. **Icon Offices was researched the same day as the
+      cheap replacement and rejected on the numbers, not on suspicion** — it is
+      a real ACSP-registered company, but its £45.76 headline tier does not
+      forward post at all (collect in person, in Essex or London or Scotland),
+      and the first tier that does costs £120.12, more than the fallback, on a
+      4.0 Trustpilot score against 4.8–4.9. Full working in
+      `ops/third-party-services.md` B1a. **There is no cheaper credible option
+      left to look for — stop looking and buy the reliable one on the 26th.**
 
       **The footer placeholder is gone as of 2026-08-06, by the owner's
       decision, and this instruction used to say the opposite.** It read "don't

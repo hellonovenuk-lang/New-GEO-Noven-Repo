@@ -11,6 +11,74 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-07 (V LOT written off; Icon Offices assessed and not taken)
+
+**Done:** the owner requested a refund from V LOT, closing the 29 July decision
+for good. Icon Offices (`iconoffices.co.uk`) was researched as the cheap
+replacement and **rejected on the numbers**. The pick reverts to the fallback
+that was already identified on 29 July — 1st Formations or Quality Company
+Formations, ~£115/yr inc VAT — and it is now a purchase for the 26th with
+nothing left to decide. Written into `ops/third-party-services.md` (new section
+B1a), `ROADMAP.md`, `HANDOVER.md`, `ops/accounts.md` and
+`ops/plan-to-1-september.md`.
+
+**Icon Offices is not a V LOT.** That is worth saying plainly, because the easy
+conclusion after being burned is that everything cheap is a scam, and it would
+be the wrong lesson. Icon Offices Limited is company **10343713**, incorporated
+24 August 2016 and active; it holds a Companies House **ACSP** registration
+(AP000227), **HMRC AML supervision** (XNML00000198642) and an ICO registration.
+Its terms, clause 3, explicitly permit publishing the address on a company
+website, contracts and invoices — which is the category-2 product B1 says we
+need, and the thing several cheaper providers quietly do not sell. It failed on
+price, not on legitimacy.
+
+**The reason it fails on price is the reason the whole cheap end of this market
+looks cheap.** The advertised tier is £0.99/week — £45.76/yr — and it does not
+forward post. Their own terms say Bronze customers "are not eligible for
+on-demand postage or scanning services at an additional cost", and anything
+over 100g must be collected in person, by appointment, at an address in Essex,
+London, Glasgow, Edinburgh or Belfast. **From the Wirral that is not a service,
+it is a storage locker.** The first tier that forwards is Silver at £120.12/yr
+— *more* than 1st Formations at £115.20 — and Icon Offices sits at 4.0 on
+Trustpilot with 7% one-star against 1st Formations' 4.8–4.9 across ~23,000
+reviews. Paying more for worse reliability on the one purchase whose failure
+mode is a missed legal document is the V LOT mistake made backwards.
+
+**The general lesson, recorded because it will recur:** in this market the
+headline price is the price of a mailbox you cannot reach, and the real price
+of a usable business address is ~£115–120 whoever you buy it from. B1 has been
+wrong about this twice now — first the "£30/yr Hoxton Mix" figure corrected on
+29 July, then V LOT — and both errors were the same error: pricing the tier,
+not the service. **When a supplier's cheapest plan is a tenth of the market
+rate, find the feature that has been removed before assuming a bargain.**
+
+**Four contract terms recorded in B1a for whoever we actually buy from**, since
+none of them is unique to Icon Offices: "free" forwarding means no handling fee,
+not tracked or insured delivery; providers reserve the right to change or
+cancel your allocated address at will, which matters for an address that goes
+into JSON-LD and gets cached; Icon's clause 3 carve-out about court summonses
+sits oddly against an address whose purpose is service of documents, and is
+worth asking about in writing if similar wording appears in the contract we
+sign; and the trading name must be registered with the provider or post to it
+may be returned or destroyed — so **Wardith** gets registered explicitly, not
+just the owner's own name.
+
+**What the write-off actually costs the plan.** The V LOT payment is gone
+unless the refund lands, and the amount is still unrecorded — the order
+reference, amount and payment method were never written down, and a chargeback
+needs all three. More importantly it removes the last free route to closing the
+address: `ops/plan-to-1-september.md` was built around "chasing V LOT is free
+and is the only route that closes this before the 26th", and that sentence is
+now false. The address is a firm ~£115 on 26 August, six days before launch,
+with a postal lead time and KYC inside that window. **Check 1st Formations'
+turnaround and ID requirements before the 26th** rather than discovering them
+on the day.
+
+**Next:** buy it on the 26th; before then, find the V LOT payment details off
+the card statement while it is still recent.
+
+---
+
 ### 2026-08-07 (Bing — the fourth assistant gets a route in)
 
 **Done:** Bing Webmaster Tools set up for `wardith.co.uk`, indexing requested on

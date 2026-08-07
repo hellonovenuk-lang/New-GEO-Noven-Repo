@@ -139,11 +139,17 @@ amending the ICO's own record does nothing about the copies.
 
 ### Then, roughly a day and a half of desk work
 
-**2. Order the fallback service address (~£115/yr, 1st Formations or Quality
-Company Formations).** The cheaper supplier already chosen — V LOT — took payment
-around 29 July and has delivered nothing; the session log's own conclusion on 30
-July was to take the fallback. That decision has not been executed. Order it
-first because it has a postal lead time, then do the desk work while it travels.
+**2. Order the service address (~£115/yr, 1st Formations or Quality Company
+Formations).** The cheaper supplier chosen on 29 July — V LOT — took payment
+around then and delivered nothing; the session log's conclusion on 30 July was
+to take the fallback, and **on 7 August the owner requested a refund from V LOT
+and the fallback became the plan outright**. Icon Offices was checked the same
+day as a cheaper replacement and is *dearer* than the fallback once you buy a
+tier that forwards post (`ops/third-party-services.md` B1a). **This is now a
+purchase with nothing left to decide.** Order it first because it has a postal
+lead time, then do the desk work while it travels. Register the trading name
+**Wardith** with the provider explicitly — post addressed to a name a provider
+holds no record of is typically returned or destroyed.
 
 **3. Write the terms of service and the privacy notice, and publish both.**
 Nothing external blocks these. Use the ICO's own free privacy notice generator.
