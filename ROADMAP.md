@@ -732,10 +732,7 @@ repo — `ops/audit-method.md` §5) and has not started.
       which Wardith appears on none of; every one has a dedicated service page;
       published pricing is normal in this category and Wardith undercuts it;
       "digital PR / citation strategy" is sold as its own line, which Wardith's
-      product doesn't currently touch. Two leads on individual competitors
-      opened, one resolved-open (Tilio testimonial), one strong but needing a
-      primary-source check (MarGen founder also runs the directory that ranked
-      it #1). Full detail and sourcing in the doc.
+      product doesn't currently touch. Full detail and sourcing in the doc.
 - [ ] **Considered and explicitly not done: any public ranking, "trust score",
       or named-competitor comparison.** Worked through in detail, parked by the
       owner — defamation and UK comparative-advertising exposure for a

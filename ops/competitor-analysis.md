@@ -82,56 +82,6 @@ mention count. Points toward content and citation strategy as the operative
 variable, not years in business. Useful because it means the gap is closeable
 quickly, not a tenure problem.
 
-### Finding 6 — the Tilio testimonial lead (open, not resolved)
-
-Investigated at the user's prompt, using WebSearch plus two screenshots the
-user supplied directly from Tilio's site and from two LinkedIn profiles.
-
-- **Confirmed:** the testimonial is real content on `tilio.co.uk` — Daniel
-  Dale-Tucker, "Founder at Areon."
-- **Confirmed:** Jack (Tilio's co-founder) attended Falmouth University
-  2015–2018 (Games Development); Daniel Dale-Tucker attended Falmouth
-  University 2016–2019 (Business) — overlapping years, same institution. A
-  real, checkable personal-network connection between reviewer and founder.
-- **Open:** "Founder at Areon" does not appear in the visible sections of
-  Daniel's own LinkedIn profile (the two screenshots supplied showed
-  Education, Licences, Volunteering and part of Experience — not the top of
-  the profile). A search-indexed snippet of the same LinkedIn profile shows
-  his headline as "Account Manager @ VoiceFlex." Companies House was not
-  checked — WebFetch was unavailable all session.
-- **Verdict: not proof of anything, and not to be treated as such.** It's a
-  documented, real gap between a marketing claim and what's independently
-  checkable so far — genuinely stronger than "why would a web designer need
-  this," which is where the question started, but still short of a documented
-  case. Would need: the top of Daniel's LinkedIn profile, and a Companies
-  House check for an "Areon" company with him listed as director.
-
-### Finding 7 — MarGen / Digital Agency Leaders (the strongest lead found this session)
-
-Confirmed to a much higher standard than Finding 6 — multiple independent
-search results corroborate this without requiring inference:
-
-- Leeroy Powell is publicly identified, by his own LinkedIn and by multiple
-  other sources, as **both** "Founder & CEO of MarGen" (a Sheffield-based
-  GEO/AEO agency) **and** "CEO & Group Founder" of **Digital Agency Leaders**
-  (`digitalagencyleaders.net`), a directory-and-rankings publication, also
-  Sheffield-based.
-- Digital Agency Leaders' own "15 Best AI SEO Agencies in the UK (2026)"
-  ranking placed MarGen at #1. MarGen republished this on its own site
-  ("MarGen Ranked the UK's #1 AI SEO Agency for 2026"). Two of the top three
-  spots in a ranking claiming UK-wide scope went to Sheffield firms.
-- Leeroy Powell is also credited with a "Director of the Year 2022" award from
-  "AI Publishing Solutions" — an accrediting body not yet verified as
-  independent or as existing in any substantive form. Same pattern the site's
-  own `/ask-your-ai/` due-diligence prompt already tells a reader to check for.
-- **Open, and it's the one fact that decides what this actually is:** whether
-  Digital Agency Leaders discloses the MarGen connection anywhere on the
-  ranking page or its About page. Disclosed → an agency owner transparently
-  also running a directory, unremarkable. Undisclosed → a real, structural
-  conflict of interest in a ranking that reads as independent. **Needs an
-  actual page visit** — WebFetch was unavailable this session; the owner was
-  going to check directly.
-
 ---
 
 ## Considered and not done — read this before proposing it again
@@ -191,33 +141,30 @@ is treated the same as any audit data and **must not be committed to this
 repo**. Work with it in place (or the scratchpad), don't add it to git.
 
 1. **Test WebFetch first**, on a throwaway domain. This session's environment
-   blocked it entirely; a new session's might not. If it works, go back and
-   resolve the two open items from Part 1 — Daniel Dale-Tucker's actual
-   LinkedIn headline and Companies House record, and whether Digital Agency
-   Leaders discloses the MarGen connection — before relying on either finding
-   further.
+   blocked it entirely; a new session's might not. Useful either way for
+   verifying whatever `sources_cited` turns up.
 2. **Mine every competitor mention, not just Tilio.** For every row where the
    `competitors` column names a business — all ten from the aggregate table,
    plus anything else that turns up in the raw data that didn't make the
    top-10 cut — pull the matching `answer_text` and `sources_cited`.
 3. **Test Finding 1 against real data.** Do the listicles identified in Part 1
-   (Tilio's own list, ClickSlice's lists, the Digital Agency Leaders ranking,
-   the other third-party sites) actually appear in `sources_cited`? That's the
-   difference between "plausible from desk research" and "confirmed by what
-   the assistants actually cited."
-4. **Check specifically for `digitalagencyleaders.net` or `margen.net`** in
-   `sources_cited` — direct evidence either way on Finding 7.
-5. **Break it down by provider** (ChatGPT / Gemini / Perplexity) — which cite
+   (Tilio's own list, ClickSlice's lists, the other third-party sites) actually
+   appear in `sources_cited`? That's the difference between "plausible from
+   desk research" and "confirmed by what the assistants actually cited."
+4. **Break it down by provider** (ChatGPT / Gemini / Perplexity) — which cite
    directories and listicles most, which cite competitors' own sites, since
    that decides which lever (get-listed-elsewhere vs. own service pages)
    matters more and where.
-6. **Cross-reference Part 1 and Part 2 into one execution plan** — the actual
+5. **Cross-reference Part 1 and Part 2 into one execution plan** — the actual
    deliverable this was all for. Concretely: which listicles to approach for
    inclusion first, whether a "digital PR / citation" line belongs in the
    product (Finding 4) at Foundation, Grow or Lead level, and what a safe
    self-inclusive comparison page should say, all prioritised by what the real
    citation data shows matters most rather than by what merely seemed
    plausible from desk research alone.
-7. **No public "expose / trust-score / ranking" content** — that's parked, per
+6. **No public "expose / trust-score / ranking" content** — that's parked, per
    the "Considered and not done" section above, unless the owner deliberately
    reopens it.
+7. **Any individual-competitor observations should come from this pass's own
+   data, on their own merits** — not carried over from anything outside this
+   document.
