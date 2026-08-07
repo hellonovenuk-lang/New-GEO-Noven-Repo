@@ -139,17 +139,25 @@ amending the ICO's own record does nothing about the copies.
 
 ### Then, roughly a day and a half of desk work
 
-**2. Order the service address (~£115/yr, 1st Formations or Quality Company
-Formations).** The cheaper supplier chosen on 29 July — V LOT — took payment
-around then and delivered nothing; the session log's conclusion on 30 July was
-to take the fallback, and **on 7 August the owner requested a refund from V LOT
-and the fallback became the plan outright**. Icon Offices was checked the same
-day as a cheaper replacement and is *dearer* than the fallback once you buy a
-tier that forwards post (`ops/third-party-services.md` B1a). **This is now a
-purchase with nothing left to decide.** Order it first because it has a postal
-lead time, then do the desk work while it travels. Register the trading name
-**Wardith** with the provider explicitly — post addressed to a name a provider
-holds no record of is typically returned or destroyed.
+**2. Order the service address — UK Postbox Business Street Address, Poole,
+£12/month inc VAT.** The cheaper supplier chosen on 29 July — V LOT — took
+payment around then and delivered nothing; **on 7 August the owner requested a
+refund**. Icon Offices was checked the same day and rejected. The deciding
+constraint, set by the owner, is **monthly billing**: 1st Formations and
+Quality Company Formations are better reviewed but **annual-only at £115 up
+front**, so they are out on cadence. UK Postbox is monthly, HMRC AML supervised
+(XLML00000192390), trading since 2008, and sells a "business trading address"
+to sole traders explicitly (`ops/third-party-services.md` B1b).
+
+**This is now a purchase with nothing left to decide, and it is £12 rather than
+£115** — which is the single biggest change to this plan, because the address
+no longer needs a large payment to unblock the ICO fix, the footer and the pay
+button. Order it first because it has a lead time (ID verification plus post),
+then do the desk work while it travels. Two things to get right on the day:
+**buy the Business *Street* Address, not the cheaper Business PO Box** — a PO
+Box is not valid for this — and **register the trading name Wardith**
+explicitly, since post addressed to a name a provider holds no record of is
+typically returned or destroyed.
 
 **3. Write the terms of service and the privacy notice, and publish both.**
 Nothing external blocks these. Use the ICO's own free privacy notice generator.

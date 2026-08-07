@@ -77,6 +77,85 @@ on the day.
 **Next:** buy it on the 26th; before then, find the V LOT payment details off
 the card statement while it is still recent.
 
+**Superseded within the hour — see the entry below.** The owner set a
+monthly-billing constraint straight after reading this, and 1st Formations does
+not offer one. The V LOT and Icon Offices findings above still stand; the
+conclusion does not.
+
+---
+
+### 2026-08-07 (the address, decided properly: UK Postbox, £12/month)
+
+**Done:** the owner said the annual payment is not affordable right now and
+asked for monthly or quarterly. **1st Formations and Quality Company Formations
+— the two best-reviewed providers, and the conclusion reached one entry above —
+are annual-only, so both were ruled out by cadence rather than quality.** The
+pick is **UK Postbox's Business Street Address, Poole, Dorset: £10/month exc
+VAT, £12/month inc VAT, billed monthly, cancel any time.** Written up as
+`ops/third-party-services.md` B1b and propagated through `ROADMAP.md`,
+`HANDOVER.md`, `ops/accounts.md` and `ops/plan-to-1-september.md`.
+
+**The mistake in the earlier entry is worth naming, because it was a process
+mistake and not a research one.** Six providers were compared on annual cost
+before anybody had established that an annual payment was possible. The whole
+morning's comparison turned on £120.12 against £115.20 — a £5 gap — and the
+variable that actually decided the purchase was never in the table. **Ask what
+shape the money has to be in before pricing anything.** B1 now carries billing
+cadence as a selection criterion rather than a payment detail.
+
+**Why UK Postbox rather than the other monthly options.** It is the only
+provider checked that is monthly, credentialled, long-established *and* under
+£15/month. Hoxton Mix is monthly and well-reviewed at £21/mo + VAT — roughly
+£302/yr, twice the price. Icon Offices bills quarterly at £38.87, which is
+£155.48/yr, so it is dearer than UK Postbox *and* carries the weaker record
+that got it rejected in the first place; it stays second choice and nothing
+more.
+
+**Checked the same way Icon Offices was, which is the test V LOT never got.**
+UK Postbox Ltd is **company 06723381**, trading since 2008; **HMRC AML
+supervision MLR XLML00000192390**; ICO registration ZA038907; VAT registered.
+Their own page sells a "**Business Trading Address** — to use on marketing
+materials and stationery", states the service suits "a sole trader,
+partnership, limited company or PLC", and carries an FAQ for exactly our case:
+a sole trader not registered at Companies House. **That is the category-2
+product sold as such, with no inference needed** — which is more than can be
+said for most of this market.
+
+**One number recorded as unresolved rather than rounded in our favour.**
+Trustpilot returns 403 to direct fetching, and search results report UK
+Postbox's score as both **4.0 and 4.7** across ~800 reviews. Those are
+materially different claims and we could not settle which is current. It is in
+the B1 table as unresolved, and it is a five-minute check on the day. **Given
+this file's history with supplier reviews — V LOT's were poor and were
+correctly flagged, and we bought anyway — do the check before paying, not
+after.**
+
+**Three traps written into B1b for the day of purchase:** buy the Business
+**Street** Address, not their cheaper Business PO Box, because a PO Box is not
+valid for this and their own FAQ says so; identity verification is a real step
+with its own lead time; and pay-as-you-go page scans are £1.20 each on top of
+the £12, which at our volume is pennies but should not be a surprise.
+
+**What this does to the plan, which is the biggest practical change.**
+`ops/plan-to-1-september.md` was built around a ~£115 lump sum that could not
+be paid before the freeze lifted on 26 August, leaving six days to launch for a
+purchase with a postal lead time. **£12 is a different kind of decision.**
+Whether it fits inside the freeze is the owner's call and is deliberately not
+assumed either way in the plan — but the option exists now, and it is the only
+route that gets the disclosure onto the site before an early sale rather than
+after one.
+
+**Left unsolved, and flagged rather than quietly dropped:** the address is in
+Poole, Dorset. **None of the credible providers is in the north-west**, so the
+locality question `ROADMAP.md` raised on 2026-08-06 — whether to put a
+`PostalAddress` in the structured data, and whether it says Merseyside — is not
+answered by this purchase and is not a reason to pick a worse provider for
+geography. Decide it deliberately when the address arrives: publish the real
+locality, or publish none.
+
+**Next:** buy it (date is the owner's call); check the Trustpilot score first;
+and find the V LOT payment details off the card statement while it is recent.
+
 ---
 
 ### 2026-08-07 (Bing — the fourth assistant gets a route in)

@@ -31,7 +31,7 @@ on them rather than replacing them.
 | What | Pick | Cost | When |
 |---|---|---|---|
 | Business bank account | Revolut Pro (set up) | Free | Before first payment |
-| Address for service | **1st Formations** (or Quality Company Formations). V LOT dead — refund requested 2026-08-07 | ~£115/yr inc VAT | Before visibly trading |
+| Address for service | **UK Postbox** — Business Street Address, Poole. Monthly, on the owner's cash-flow constraint. V LOT dead — refund requested 2026-08-07 | **£12/mo inc VAT** (£144/yr) | Before visibly trading |
 | Email on the domain | Zoho Mail (Mail Lite) | £14.40/yr inc VAT | Any time — cheap win |
 | Data protection registration | ICO, direct — **registered 30 Jul 2026** | £47/yr (Direct Debit) | Done |
 | Privacy notice | ICO's own free generator | Free | Before first client data |
@@ -165,35 +165,52 @@ buying:**
    need.
 
 **Within category 2, checked on price and on Trustpilot/reviews.co.uk
-reliability, because a dropped delivery here means a missed legal document:**
+reliability, because a dropped delivery here means a missed legal document —
+and, since 7 August, on billing cadence:**
 
-| Provider | Cost/yr | Reviews | Note |
-|---|---|---|---|
-| ~~V LOT (vlot.uk)~~ | ~~£9.99–£47.88~~ | **Poor** — Trustpilot reports of no service after payment, unresponsive support | **Dead. Paid ~29 Jul, nothing delivered, refund requested 2026-08-07** |
-| Icon Offices (iconoffices.co.uk) | £45.76 headline — **£120.12 for the usable tier** | 4.0/5, ~1,150 reviews, **7% one-star** | Assessed 2026-08-07 and not taken. See B1a |
-| Seed Formations | £72 | Mixed (~3.7/5) — includes a specific complaint of legal documents sent to the address not being forwarded | Explicitly sole-trader marketed |
-| Rapid Formations | £96 | Established, less review data pulled | Business Address Service |
-| **1st Formations** | £96 + VAT (~£115.20 inc VAT) | **4.8–4.9/5, ~23,000+ reviews** | Business Address Service |
-| **Quality Company Formations** | £96 + VAT (~£115.20 inc VAT) | **4.7–4.8/5, ~2,500 reviews** | Business Address Service |
-| Hoxton Mix | £180–300 | 4.6–4.7/5 | Reliable but not cheap once corrected |
+**Billing cadence is a selection criterion, not a payment detail.** *Added
+2026-08-07, on the owner's constraint: capital is tight now, so an annual
+£115 up front is a harder purchase than £12 a month, even though the annual
+one is cheaper over a year.* This split the table in a way that price alone
+never showed — **the two best-reviewed providers are annual-only and therefore
+unavailable**, and the question becomes which of the monthly providers is
+trustworthy rather than which provider is cheapest.
 
-**Pick, if reliability is the priority:** 1st Formations or Quality Company
-Formations, ~£115/yr inc VAT — effectively tied, both well-reviewed at scale.
+| Provider | Cost | Billing | Reviews | Note |
+|---|---|---|---|---|
+| ~~V LOT (vlot.uk)~~ | ~~£9.99–£47.88/yr~~ | — | **Poor** | **Dead. Paid ~29 Jul, nothing delivered, refund requested 2026-08-07** |
+| **UK Postbox** — Business Street Address, Poole | **£10/mo exc VAT = £12/mo inc VAT** (£144/yr) | **Monthly, cancel any time** | ~800 reviews, **score unresolved: 4.0 and 4.7 both reported** — verify | **The pick, 2026-08-07.** See B1b |
+| Icon Offices — Silver | £38.87/quarter (£155.48/yr) | **Quarterly** | 4.0/5, ~1,150 reviews, **7% one-star** | Cheapest quarterly, weakest record. See B1a |
+| Hoxton Mix | £21/mo + VAT ≈ £25.20 inc (~£302/yr) | Monthly | 4.6–4.7/5 | Well-reviewed and monthly, but twice UK Postbox |
+| Seed Formations | £72/yr | Annual | Mixed (~3.7/5) — includes a complaint of legal documents not being forwarded | Explicitly sole-trader marketed |
+| Rapid Formations | £96/yr | Annual | Established, less review data pulled | Business Address Service |
+| **1st Formations** | £96 + VAT (~£115.20/yr) | **Annual only** | **4.8–4.9/5, ~23,000+ reviews** | Best reviewed. **Ruled out by cadence, not by quality** |
+| **Quality Company Formations** | £96 + VAT (~£115.20/yr) | **Annual only** | **4.7–4.8/5, ~2,500 reviews** | Same |
 
-**Decision, 7 August 2026: buy 1st Formations.** The cheap route has now been
-tried twice and cost more than it saved. The 29 July decision was to take
-**V LOT** on cost (~£10–48/yr) despite its reviews, with the risk flagged
-before ordering; it took payment and delivered nothing, and the owner requested
-a refund on 7 August. Icon Offices was researched the same day as the
-replacement and comes out at £120.12 for the tier that actually works — more
-than 1st Formations, on a worse review record. There is no cheaper credible
-option left to find. See `ROADMAP.md` 1a for the live status.
+**Decision, 7 August 2026: UK Postbox, Business Street Address, Poole, £12/month
+inc VAT.** Full working in B1b below.
 
-**One live per-item cost to expect at 1st Formations**, which is not in the £96:
-scan-and-email is **£0.50 per letter** and postal forwarding is **Royal Mail
-rates plus a 15% handling fee**. At this business's mail volume — a handful of
-statutory letters a year — that is a few pounds annually, not a reason to
-re-open the choice. It is recorded so the first invoice is not a surprise.
+**How this decision moved twice in one day, since the log should show it
+straight.** The morning position was *buy 1st Formations, ~£115/yr* — reached
+after V LOT was written off and Icon Offices was researched and rejected for
+costing £120.12 against 1st Formations' £115.20. That reasoning was sound and
+is unchanged; it was answering the wrong question. **The owner then set the
+real constraint — monthly or quarterly billing — and 1st Formations does not
+offer it at any price.** So the £5/yr difference that decided the morning's
+comparison turned out not to be the deciding variable at all.
+
+**The lesson worth keeping:** we compared six providers on annual cost before
+anyone established that an annual payment was affordable. Ask what shape the
+money has to be in before pricing anything again.
+
+**Every provider in this market charges per item on top of the headline, and
+none of them leads with it.** 1st Formations adds **£0.50 per letter** scanned
+and **Royal Mail rates plus a 15% handling fee** to forward; Quality Company
+Formations charges **£1 per item** scanned; UK Postbox charges **£1.20 per page
+scan** on pay-as-you-go, plus postage to forward. At this business's volume — a
+handful of statutory letters a year — all of these are pennies, and none is a
+reason to re-open the choice. Recorded so the first invoice is not a surprise,
+and so the next comparison starts from the all-in number.
 
 #### B1a. Icon Offices — why it was assessed and not taken (7 August 2026)
 
@@ -260,6 +277,79 @@ front**. If capital is tighter on 26 August than expected, ~£39 buys a working
 address now against £115. That is a cash-flow choice, not a saving — held
 quarterly for a year it costs £155.48 — and it is the only argument for them.
 
+*Postscript, same day: the owner did set that constraint, so this paragraph
+became the live question within hours of being written. Icon Offices is still
+not the answer — **UK Postbox bills monthly at £12 and is cheaper than Icon's
+quarterly £38.87 pro-rata (£155.48/yr vs £144/yr)**, on a longer trading
+history. Icon Offices stays the second-choice quarterly option and nothing
+more.*
+
+#### B1b. UK Postbox — the pick (7 August 2026)
+
+**Product:** Business Street Address, **Lytchett House, Poole, Dorset, BH16**.
+**£10/month exc VAT, £12/month inc VAT (£144/yr), billed monthly, cancel any
+time.** Mail plan is a separate component and **can be £0** on pay-as-you-go.
+
+**Why it wins on the constraint that actually binds.** It is the only provider
+checked that is simultaneously monthly, credentialled, long-established and
+under £15/month. Hoxton Mix is monthly and well-reviewed at twice the price;
+Icon Offices is quarterly and costs more per year on a weaker record; the two
+best-reviewed providers do not sell monthly at all.
+
+**The credentials, checked the same way Icon Offices was** — this is the test
+B1 should have applied to V LOT and didn't:
+
+- **UK Postbox Ltd, company number 06723381**, trading since 2008 — eight years
+  longer than Icon Offices.
+- **HMRC anti-money-laundering supervision: MLR XLML00000192390.** This is the
+  registration that makes a virtual address provider lawful to operate, and the
+  thing to demand of anyone selling one.
+- **ICO data protection registration ZA038907**, and VAT registered
+  (GB 456 8521 65).
+
+**It sells the category-2 product explicitly, to sole traders specifically.**
+Their own page lists "**Business Trading Address** — to use on marketing
+materials and stationery" as a supported use, and states the service is "suited
+to all types of company structures, whether you're a sole trader, partnership,
+limited company or PLC". They carry an FAQ for exactly our case — a sole trader
+not registered at Companies House — telling you to sign up as a sole trader.
+**No inference required; this is the disclosure-duty product, sold as such.**
+
+**What it costs beyond the £12**, so the first invoice is not a surprise:
+pay-as-you-go page scans are **£1.20 each**, or a mail plan can be added
+monthly; physical forwarding is charged at courier/postage cost. At this
+business's volume — a handful of statutory letters a year — the £12 is
+substantially the whole cost.
+
+**Four things to know before signing up:**
+
+1. **No in-person collection, by policy.** They do not release post at the
+   sorting facility; everything is scanned or forwarded. Irrelevant to us and
+   arguably better, but it is the opposite of Icon Offices' cheap tier.
+2. **Identity verification is required and has its own process.** Build the
+   lead time in rather than discovering it on the day; have ID ready.
+3. **A PO Box will not do.** Their Business **PO Box** is cheaper and is
+   marketed at sole traders, but their own FAQ confirms a PO Box is not a valid
+   registered office, and the same objection applies to an address for service
+   of documents. **Buy the Business *Street* Address.**
+4. **Poole, Dorset is not Merseyside** — see the note below, which applies to
+   every credible provider, not just this one.
+
+**On the annual comparison, stated plainly rather than buried:** £144/yr
+against 1st Formations' £115.20 means **monthly costs about £29/yr more**. That
+is the price of not paying £115 in one go, and it is a reasonable price. If
+capital eases later, switching to an annual provider is a change of address —
+which, once it is in the footer and the JSON-LD, is not free. **Prefer to make
+this choice once.**
+
+**The locality question this does not solve.** `ROADMAP.md` records that adding
+a `PostalAddress` to the structured data was tried on 2026-08-06 and reverted,
+partly because it would commit us to "Merseyside" before the address existed.
+It still would not: **none of the credible providers is in the north-west**, and
+the address that lands will say Dorset. That is a decision to take deliberately
+when the address arrives — publish the real locality, or publish no locality —
+and not a reason to pick a worse provider for geography.
+
 **Why now rather than later.** The roadmap already makes this call in 1a and 1c
 and the reasoning holds: a sole trader using a business name that isn't their own
 surname must disclose their name and an address where documents can be served,
@@ -273,11 +363,13 @@ assistants, with crawler permissions, structured data and a sitemap. Everything
 that makes it good at that makes a home address in the footer harder to take
 back. The footer can be edited; indexes, caches and archives cannot.
 
-**At ~£115 a year this is a small item on the list and the one with the longest
-tail if you get it wrong** — the sentence here used to say "£30 a year", which
-was the corrected-away Hoxton Mix figure and never a real price for this
-product. Two attempts to beat £115 have now cost a wasted payment to V LOT and
-a day of research into Icon Offices. Buy the reliable one.
+**At £12 a month this is a small item on the list and the one with the longest
+tail if you get it wrong.** This sentence has now been wrong twice: it first
+said "£30 a year", which was the corrected-away Hoxton Mix figure and never a
+real price for this product, and then "~£115 a year", which was right about the
+market and wrong about how we can pay. **The pattern in both errors is quoting
+a number without checking what it buys or how it is billed.** Buy the
+credentialled one — see B1b.
 
 ### B2. Professional indemnity insurance
 
@@ -845,12 +937,13 @@ Worth writing down so they don't get re-proposed:
    offered to new sign-ups on the EU/US/AU data centres, found while actually
    setting this up. Do it in the same sitting as the Netlify DNS work in
    roadmap 1b.
-3. **Virtual office address** — **1st Formations or Quality Company Formations,
-   ~£115/yr inc VAT.** V LOT was ordered on 29 July and delivered nothing;
-   written off with a refund requested on 7 August. Confirm mail actually
-   arrives before relying on it, and register the trading name **Wardith** with
-   the provider. Should land *before* the domain switches over, not after —
-   see B1 and B1a.
+3. **Virtual office address** — **UK Postbox Business Street Address, Poole,
+   £12/month inc VAT.** V LOT was ordered on 29 July and delivered nothing;
+   written off with a refund requested on 7 August. Monthly billing was the
+   owner's constraint and it ruled out the better-reviewed annual-only
+   providers. Confirm mail actually arrives before relying on it, and register
+   the trading name **Wardith** with the provider. Should land *before* the
+   domain switches over, not after — see B1, B1a and B1b.
 4. **Cloudflare Web Analytics** — free, one script tag.
 5. ~~Business bank account~~ — **done**, Revolut Pro, see C1.
 6. ~~ICO self-assessment, then the fee if due~~ — **done**, 30 July 2026,
@@ -862,9 +955,10 @@ Worth writing down so they don't get re-proposed:
 9. **Build the audit question set and the recording format** — no cost, and it's
    the actual product.
 
-Items 1–4 total roughly **£130 for the year** — the £30–65 figure that stood
-here assumed V LOT's pricing, and that supplier is gone. Items 5–9 are gated on
-real events rather than dates.
+Items 1–4 total roughly **£160 for the year, but only ~£27 to start** — the
+address is now £12/month rather than a lump sum, which is the whole point of
+choosing it. The £30–65 figure that stood here assumed V LOT's pricing, and
+that supplier is gone. Items 5–9 are gated on real events rather than dates.
 
 ---
 

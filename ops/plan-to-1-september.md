@@ -81,13 +81,18 @@ disclosure requirement for trading under a name that is not the owner's own.
 Taking money before that is resolved is the owner's call to make knowingly,
 not something to discover afterwards.
 
-**Updated 2026-08-07: there is no longer a free route to closing this.** V LOT
-was written off and a refund requested; Icon Offices was researched as the
-cheap replacement and came out dearer than the fallback for a tier that
-forwards post. So this item cannot be finished inside the freeze at all — it
-becomes ~£115 on the 26th, and the honest version of this section is that an
-early sale before the 26th happens with the disclosure still missing, or it
-doesn't happen.
+**Updated 2026-08-07, twice.** First: there is no longer a free route to
+closing this — V LOT was written off and a refund requested, and Icon Offices
+came out dearer than the fallback. Then the owner set a monthly-billing
+constraint, which ruled out the annual-only providers and landed on **UK
+Postbox at £12/month** (`ops/third-party-services.md` B1b).
+
+**That changes this section's whole shape.** It was written around a ~£115
+lump sum that could not happen before the 26th. **£12 is a different kind of
+decision**, and whether it fits inside the freeze is the owner's call rather
+than something to assume either way — but the option now exists, and taking it
+early is the only thing that gets the disclosure onto the site before an early
+sale rather than after one.
 
 ---
 
@@ -203,22 +208,29 @@ It also puts a question against the £150 Maintain price, which was set against
 the wrong estimate. **Not a decision for this window** — do not reprice while
 launching — but it needs answering before the first monthly client renews.
 
-**2. The address for service. Certain, not conditional.**
+**2. The address for service. Certain, not conditional — and now £12/month.**
 
-~£115/yr inc VAT (1st Formations / Quality Company Formations). This is a
-legal disclosure requirement for trading under a name that is not the owner's
-own, and the rename does not change that — "Wardith" is a trading name exactly
-as "Noven" was. It is the `[PLACEHOLDER]` in the footer of all seven pages.
+**UK Postbox, Business Street Address, Poole: £12/month inc VAT**, monthly,
+cancel any time. This is a legal disclosure requirement for trading under a
+name that is not the owner's own, and the rename does not change that —
+"Wardith" is a trading name exactly as "Noven" was. It is the `[PLACEHOLDER]`
+in the footer of all seven pages.
 
-**This heading used to read "if V LOT has not delivered". As of 2026-08-07 the
-condition is gone** — V LOT is written off with a refund requested, and the one
-cheap alternative worth checking, Icon Offices, prices its post-forwarding tier
-at £120.12 against the fallback's £115.20 (`ops/third-party-services.md` B1a).
-So this is a firm ~£115 on the 26th, not a contingency. Budget it as spent.
+**This heading used to read "if V LOT has not delivered", and then "a firm ~£115
+on the 26th". Both are superseded as of 2026-08-07.** V LOT is written off with
+a refund requested; Icon Offices was rejected; and the owner's monthly-billing
+constraint ruled out 1st Formations and Quality Company Formations, which are
+annual-only (`ops/third-party-services.md` B1b).
+
+**The practical effect is that this stopped being a big-ticket item.** £12
+against £115 removes most of the reason it was queued behind the freeze at all,
+and it removes the six-day squeeze between the 26th and launch if it is started
+earlier. **Whether to start it before the 26th is the owner's call** — but the
+lead time is real: identity verification plus post, and neither is instant.
 
 **Trading on 1 September with that placeholder still on the site is publishing
 a visible legal gap on a site whose entire pitch is that its own facts are
-correct.** There is no longer a version of this where it resolves for free.
+correct.**
 
 **3. The pre-launch audit — run it on Wardith, before 1 September.**
 
@@ -301,11 +313,12 @@ once on a real customer.
    not the same as the business being operational, and only one of those is on
    the 1 September promise.
 2. **The address for service is bought on the 26th and does not arrive in
-   time** — which is now the certain path, not the pessimistic one, since V LOT
-   was written off on 7 August. Six days from purchase to launch, and the
-   provider has to issue the address and clear KYC inside it. **Check 1st
-   Formations' turnaround and ID requirements before the 26th**, so the date is
-   known rather than hoped for, and have the ID documents ready on the day.
+   time** — six days from purchase to launch, with UK Postbox having to verify
+   identity and issue the address inside it. **This risk is now largely under
+   the owner's control**, because at £12/month the purchase no longer has to
+   wait for the 26th at all. If it does wait, **check UK Postbox's verification
+   turnaround before then** and have ID documents ready on the day, so the date
+   is known rather than hoped for.
 3. **`novenstudio.co.uk` expires in the freeze window.** Low probability,
    total impact, and currently unknown. See above.
 
@@ -321,8 +334,8 @@ plan.
 |---|---|
 | **Today, 4 Aug** | Look up `novenstudio.co.uk` expiry and registrar. Confirm GoDaddy auto-renew. Find the Canva billing date |
 | **Mon 10 Aug** | ICO call — address and trading name. Deadline, no undo |
-| ~~**Mon 24 Aug**~~ | ~~V LOT decision point~~ — **decided early on 7 Aug: written off, refund requested.** Before this date instead: check 1st Formations' turnaround and ID requirements |
-| **Wed 26 Aug** | Spending capacity returns. API balances first, address for service second — **~£115, now a certainty rather than a contingency** |
+| ~~**Mon 24 Aug**~~ | ~~V LOT decision point~~ — **decided early on 7 Aug: written off, UK Postbox chosen.** Before this date instead: check UK Postbox's ID verification turnaround |
+| **Wed 26 Aug** | Spending capacity returns. API balances first, address for service second — **£12/month, not ~£115. Owner's call whether it waits this long at all** |
 | **Tue 1 Sept** | **Hard launch.** Operational, outreach active |
 
 **No date for the first sale, on purpose.** Under the revenue exception it can
