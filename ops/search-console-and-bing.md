@@ -260,6 +260,16 @@ sitemap covers the rest.
 
 ## Part 2 — Bing Webmaster Tools
 
+> **DONE 2026-08-07.** `wardith.co.uk` is submitted and indexing was requested
+> on all eight indexable pages. **One step is recorded as unconfirmed rather
+> than assumed: §2.3, the sitemap.** URL Submission does not require a sitemap,
+> so having done §2.4 is not evidence §2.3 happened — and if the §2.1 import
+> carried it across, it did so silently. Open **Sitemaps** in Bing once and
+> either see `sitemap-index.xml` listed or submit it. Thirty seconds.
+>
+> The rest of this part is kept as written, because it is the procedure for the
+> next domain and because the reasoning below is what made the job worth doing.
+
 **Nothing is being migrated here, because there is nothing to migrate.** The
 self-audit found Bing had never indexed `novenstudio.co.uk` at all — so there is
 no Change of Address to do, no old property to preserve, and no equity to lose.

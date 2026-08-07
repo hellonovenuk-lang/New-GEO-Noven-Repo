@@ -47,9 +47,10 @@ Netlify: nine static pages, readable by AI crawlers, with machine-readable
 business facts and a sitemap. **Search Console has a verified Domain property
 for `wardith.co.uk` as of 2026-08-06 and the Change of Address is running** —
 the rename did not carry the old property over, because a property is bound to
-the host it was verified for. **Bing is still not set up**, and it is now the
-more urgent of the two: Copilot answers from it and it has never indexed this
-business under either name. `ops/search-console-and-bing.md`. Email is
+the host it was verified for. **Bing Webmaster Tools is set up as of 2026-08-07**,
+with all eight indexable pages submitted — which matters because Copilot answers
+out of Bing's index, and Bing had never indexed this business under either name.
+**Both search consoles are now done.** `ops/search-console-and-bing.md`. Email is
 **`hello@wardith.co.uk` on Zoho** — created and confirmed receiving
 2026-08-06, and published on the site the same day. The brand assets are in and the palette
 matches them. **Phase 1a and 1b are closed.**
@@ -112,7 +113,10 @@ C, because the blocker is **identity, not the site**:
    `novenstudio.co.uk`.
 2. **Copilot has no record of the site at all** — `site:novenstudio.co.uk`
    returns nothing on Bing, which is what Copilot retrieves from. Free to fix,
-   ~15 minutes, days to weeks to take effect.
+   ~15 minutes, days to weeks to take effect. **Acted on 2026-08-07:**
+   `wardith.co.uk` submitted to Bing Webmaster Tools with all eight pages
+   requested. Not yet *closed* — that needs `site:wardith.co.uk` on Bing to
+   return them.
 3. **Nothing tells a machine where the business works.** The pages say "the
    Wirral"; the structured data says only `GB`. Cost all 15 checks that asked
    for someone on the Wirral.
@@ -536,13 +540,17 @@ timetable and the money constraints are `ops/plan-to-1-september.md`.
       which is now the decay baseline — re-run it at one month and at six.
       **Sitemap submitted and indexing requested on all eight pages, same day.**
       The Google side is complete.
-- [ ] **6b. Bing Webmaster Tools — still not done, and now the single highest
-      -leverage free job left.** Copilot answers from Bing and Bing has never
-      indexed this business under either name, so there is nothing to migrate
-      and no equity at risk — a clean first submission. Its URL Submission tool
-      takes all eight pages at once where Google's request-indexing is rationed.
-      **`ops/search-console-and-bing.md` part 2**, which is written and
-      unstarted.
+- [x] **6b. Bing Webmaster Tools — done 2026-08-07.** `wardith.co.uk`
+      submitted with indexing requested on all eight indexable pages. A clean
+      first submission: there was nothing to migrate and no equity at risk,
+      because Bing had never indexed this business under either name. **This
+      closes the retrieval side for Copilot**, which answers out of Bing's index
+      and was the one assistant of the four with no direct route to the site.
+      `novenstudio.co.uk` was deliberately not added — it only 301s away now.
+      **One loose end, deliberately recorded as unknown rather than assumed:**
+      nobody has confirmed the sitemap is listed under Bing's Sitemaps panel.
+      URL Submission does not require it, so submitting URLs is not evidence it
+      is there. Thirty seconds to check — `ops/own-facts-check.md` row 8.
 - [ ] **7. The rest of Phase F** — Zoho Books, Revolut Pro, the ICO record, and
       this repo's own name. `ops/rename-to-wardith.md`.
 - [ ] **8. Re-run `ops/own-facts-check.md` end to end** and record the date.
@@ -613,10 +621,12 @@ unused so far.
       live-tested as 404s. **`/approach` was still in Google's index on
       2026-08-06** — `site:novenstudio.co.uk` returns 4 results, which is now
       the decay baseline for the six-month re-check.
-- [ ] **Bing Webmaster Tools — still not done, and now a named finding, not a
-      guess.** The self-audit confirmed Copilot holds no record of the site at
-      all (`site:novenstudio.co.uk` returns nothing on Bing). Free, ~15
-      minutes, days to weeks to take effect.
+- [x] **Bing Webmaster Tools — done 2026-08-07**, closing self-audit finding 2.
+      The finding was that Copilot held no record of the site at all
+      (`site:novenstudio.co.uk` returned nothing on Bing). `wardith.co.uk` is now
+      submitted with all eight pages requested. **Submission is not indexation:**
+      the finding is only truly closed when `site:wardith.co.uk` on Bing returns
+      the eight pages, which is days to weeks away. See 1c-6b.
 - [x] **Ask the assistants what they say about Noven — done, via the self-audit
       (3a), 2–3 August 2026.** Not the result hoped for: not named once across
       210 automated answers, and every "what do you know about Noven" answer

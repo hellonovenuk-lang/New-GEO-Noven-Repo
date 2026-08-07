@@ -11,6 +11,69 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-07 (Bing — the fourth assistant gets a route in)
+
+**Done:** Bing Webmaster Tools set up for `wardith.co.uk`, indexing requested on
+all eight indexable pages. `ops/search-console-and-bing.md` part 2, written
+2026-08-06 and executed today. `novenstudio.co.uk` deliberately not added — it
+only 301s away now, so submitting it would be asking Bing to index a redirect.
+
+**Why this one mattered more than its fifteen minutes suggest.** The audit sells
+coverage of four assistants. Three of them — ChatGPT, Google, Perplexity — reach
+a site through routes nobody can submit to directly. **Copilot is the exception:
+it answers out of Bing's index, and Bing takes submissions.** So of the four
+assistants we charge to be found in, exactly one had a door, and until today
+nobody had knocked on it. Self-audit finding 2 was that Copilot held no record of
+this business at all, under either name. That is now acted on.
+
+**Both search consoles are done.** Google closed 2026-08-06, Bing today. It is
+the first point since the rename at which the indexation side of our own house
+is in the state we would require of a client at the end of a Foundation.
+
+**Submission is not indexation, and the log should not blur them.** Nothing here
+proves a single page is *in* Bing's index. The proof is `site:wardith.co.uk`
+returning eight pages, and it is days to weeks away on a domain four days old
+with no inbound links. Both `ROADMAP.md` entries were written to say "acted on"
+rather than "closed" for exactly this reason — the same distinction the audit
+draws for clients, applied to us.
+
+**One thing recorded as unknown rather than assumed: the sitemap.** The owner
+reported requesting indexing on all pages, which is §2.4. It does not follow that
+§2.3 happened — **URL Submission does not require a sitemap**, so doing the one
+is not evidence of the other, and if the §2.1 import from Search Console carried
+it across it did so with nothing on screen to say so. Written into
+`own-facts-check.md` row 8 and the part 2 header as a thirty-second check rather
+than assumed either way. **This is the habit the 2026-08-06 session cost a
+morning to learn:** four claims in this repo turned out to be inferences that had
+hardened into statements of fact, one of them ("no redirect rules need writing")
+sitting two lines above an instruction to verify it that nobody ran. An
+unconfirmed thing is cheap to write down as unconfirmed and expensive to
+discover later.
+
+**Also clarified today, on the owner's question — why Google got a
+recommendation of five URLs and Bing gets all eight.** Google's request-indexing
+quota is in the low tens per day and shared across the property, so §1.6
+recommended spending it on the five pages that most need a manual nudge and
+leaving the rest to the sitemap. Bing's URL Submission allowance is in the
+thousands, so the scarcity that shaped the Google advice does not exist there.
+In the event the owner did all eight on both, which was right on both counts:
+eight is well inside Google's quota, nothing was competing for it, and a
+request-indexing call is a stronger signal than a sitemap entry — the sitemap
+says a page exists, the request says look now.
+
+**Nine routes build, eight are submitted.** The ninth is `404.astro`, correctly
+excluded from the sitemap and correctly never submitted. Worth writing down
+because "nine pages" and "eight pages" both appear across the operating
+documents and both are right about different things.
+
+**Left open:** §1.5, the live-URL test in Google's URL Inspection. It is the
+only check in this migration **no session can run** — the network policy blocks
+`wardith.co.uk`, so every verification in this repo has been against `dist` or
+the Netlify API, never against what a crawler actually receives from the live
+host. Two minutes, and it closes the one gap `own-facts-check.md` row 1 names.
+
+---
+
 ### 2026-08-06 (later — why the assistants still say Noven, and a fact we got wrong about ourselves)
 
 **The owner's question:** assistants asked to review `wardith.co.uk/` still come
