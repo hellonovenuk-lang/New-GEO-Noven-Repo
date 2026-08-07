@@ -83,6 +83,59 @@ Part 2 comes from matching names against `answer_text` directly, which is why
 the numbers don't tie to the report's table. Said plainly in the document rather
 than reconciled away.
 
+**Then, at the owner's request: the commercial reading, filed where each piece
+belongs.** The execution plan in `ops/competitor-analysis.md` was reordered by
+size of ticket rather than by ease, and two things came out of the data that the
+analysis write-up had under-weighted.
+
+**The biggest number in the dataset is a pricing number, not a visibility one.**
+All three assistants quote a **median £1,500/month**, and they describe
+£500–£1,500 as *freelancer and consultant* rates with agency work above. Lead is
+£700. The consequence is specific and it is new: **a buyer who arrives through
+an assistant has been anchored at £1,500 by the assistant itself**, and then
+reaches a pricing page asking under half that. `ops/service-tiers.md` §1 argues
+we are priced against local search agencies and against a quiet phone, not
+against agency quotes — that argument is untouched and still right for the buyer
+it describes. It is simply no longer the only comparison the buyer has seen.
+
+**Filed in `ops/service-tiers.md` §8, not acted on.** That document owns pricing,
+this one doesn't, and an assistant does not move a price. Both entries are
+written to say what they do *not* settle as well as what they show — the audit
+one explicitly is **not** a case for moving the £250, only for asking whether a
+deeper second tier nearer the £750 the assistants quote is worth having.
+
+**The play with the best return for the effort is the cheapest one here.**
+Re-running q06–q08 under "Wardith" costs three questions. Under "Noven" it was
+0 of 30. If it flips, it produces the one thing no competitor on any of the
+sixty cited lists has and no amount of copywriting can manufacture: a dated,
+measured before-and-after on our own business. `CLAUDE.md` forbids inventing
+results, and **that prohibition is exactly what makes a real one valuable** — it
+is the only honest answer a months-old business has to "why would I pay a
+stranger £800."
+
+**One gap in the market that the write-up had recorded as a statistic and not as
+an opportunity:** 62 of the 165 opportunity rows name **no business at all** —
+better than a third of the demand goes to vetting advice instead of a
+recommendation, and nothing currently occupies that ground. A plain-words page
+on telling a real practitioner from a rebranded one costs credibility nothing,
+because it is already the voice of `/ask-your-ai/`.
+
+**A brand decision was asked for and deliberately left unanswered.** The
+comparison page is the exact situation `CLAUDE.md`'s single deliberate exception
+was written for on 2026-08-01 — a buyer arriving holding the acronym, and a site
+that contains the word nowhere being unable to be the answer. But that exception
+was granted for **one** FAQ entry, by the owner, on the record. Whether it
+stretches to a second page is not an assistant's call, and the page does not
+start until the owner rules. Recorded in both the doc and `ROADMAP.md` as
+blocking rather than assumed either way.
+
+**What this merge publishes: nothing visible.** Four documents changed —
+`ops/competitor-analysis.md`, `ops/service-tiers.md`, `ops/session-log.md`,
+`ROADMAP.md`. No file under `site/`, no copy, no JSON-LD, no price. Netlify will
+rebuild and serve a byte-identical site. Said out loud because `CLAUDE.md` asks
+for it before every merge, and because "nothing visible" is the honest answer
+often enough to be worth stating rather than skipping.
+
 ### 2026-08-07 (Bing — the fourth assistant gets a route in)
 
 **Done:** Bing Webmaster Tools set up for `wardith.co.uk`, indexing requested on

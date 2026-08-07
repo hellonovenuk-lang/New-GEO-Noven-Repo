@@ -349,6 +349,32 @@ them.** That is lucky, and it is a reason not to disturb the structure.
   and roadmap 3b/3c both carried it as open. What remains is build work, not a
   decision: write the fallback into onboarding, and split the access request
   into two stages.
+- **Opened 2026-08-07 — the assistants quote a higher market than we price
+  into, and they quote it to our buyers.** From the self-audit's raw answers
+  (`ops/competitor-analysis.md`, Part 2 Finding H): across the two questions
+  that ask what this should cost, **the median figure quoted is £1,500/month,
+  and it is the same median on all three assistants.** More pointedly, they
+  describe **£500–£1,500 as freelancer and consultant rates**, with agency work
+  above that band. **Lead is £700.** A buyer who arrives through an assistant
+  has therefore been anchored at £1,500 *by the assistant* before reaching our
+  pricing page, and finds a top tier asking under half of it. Section 1 of this
+  document positions us against local search agencies at £395–£1,500; that
+  comparison is still true, but it is no longer the only one the buyer has seen.
+  **Two things this does not settle.** It does not say raise Lead — §1's whole
+  argument is that our client is weighing a monthly fee against a quiet phone,
+  not against an agency quote, and that argument is untouched by what an
+  assistant says to a different buyer. And it does not say cheap is wrong; it
+  says cheap is no longer self-evidently *read* as value in this specific
+  category. **The owner's decision, and it wants making deliberately rather than
+  by inertia.**
+- **Opened 2026-08-07 — the audit sits at the floor of the band the assistants
+  quote.** Same source: the assistants put an initial visibility audit at
+  "often **£250–£750**". Ours is £250 — credible, and the cheapest honest entry
+  point, which §9 argues for at length and which this evidence supports. The
+  open question is only whether a **deeper second audit tier** nearer £750 is
+  worth having, given the audit is also the Foundation qualifier (§6) and a
+  higher-priced audit pre-qualifies a better £800 buyer. **Not a case for moving
+  the £250.** An input that did not exist when the £250 was set on 2026-08-05.
 - **Found while applying the copy:** every plan in `business.ts` carries a
   `summary` field, documented as "used in the record panels", and **nothing
   reads it.** Left alone rather than churned — the existing values still fit the

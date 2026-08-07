@@ -747,21 +747,41 @@ the doc.
       no submission route. There is nothing to apply to. Don't re-propose it —
       read Part 2's Finding C.
 
-**Execution, in order (full detail in the doc):**
+**The plays, biggest ticket first. Full detail in the doc's execution plan.
+Every one of them costs nothing and fits inside the spending freeze.**
 
+- [ ] **Two pricing decisions are now open, and they are the owner's.** The
+      assistants quote a **median £1,500/month** — the same median on all three
+      — and call £500–£1,500 *freelancer* rates with agency work above. Lead is
+      £700. Separately, they put an initial audit at "often £250–£750"; ours is
+      at the floor. Written up as open decisions in `ops/service-tiers.md` §8
+      with the reasoning and the two things they do *not* settle. **Evidence
+      only — an assistant does not move a price.**
+- [ ] **Re-run q06–q08 under "Wardith" once indexed — the proof asset.** Under
+      "Noven" 0 of 30 runs identified the business, and ChatGPT answered the
+      comparison question about managed IT providers. If it flips, it is a
+      dated, measured before/after on our own business — the only honest proof a
+      months-old business can offer against the £800. Three questions, no cost.
+- [ ] **Draft Wardith's own honest comparison page.** Best-evidenced action in
+      either part. Needs owner sign-off before `main` — publishing is deploying.
+      **Blocked on the brand decision below.**
+- [ ] **Answer the question that gets no names.** 62 of 165 answers name no
+      business at all — over a third of the demand goes to vetting advice. A
+      plain-words page on how to tell a real practitioner from a rebranded one.
+      Nothing occupies that ground, and it fits the "you don't need us" voice.
 - [ ] **List on ThreeBestRated (Wirral) — free, and the only open door found.**
       Already cited by two assistants on the Wirral question; the competitor
-      named in 15 of 15 runs there is already listed.
-- [ ] **Draft Wardith's own honest comparison page.** Best-evidenced action in
-      either part. Needs owner sign-off before `main` — publishing is
-      deploying. Constraints in the doc.
-- [ ] **Re-run q06–q08 under "Wardith" once indexed.** Under "Noven", 0 of 30
-      runs identified the business and ChatGPT answered the comparison question
-      about managed IT providers. Clean before/after on the rename.
+      named in 15 of 15 runs there is already listed. Takes minutes.
 - [ ] **Fix `ops/audit-method.md` §5 on Gemini.** All 479 of Gemini's cited
       URLs are opaque `vertexaisearch` redirects — no source analysis is
       possible for it. The method doc lists `sources_cited` without saying so,
-      and that feeds client reports.
+      and that feeds client reports. **Promise-accuracy, not housekeeping.**
+- [ ] **Open brand decision, asked 2026-08-07, not yet answered.** The
+      comparison page is where a buyer arrives holding the industry acronym —
+      the case `CLAUDE.md`'s single deliberate exception was written for. That
+      exception was granted for **one** FAQ entry, by the owner. Whether it
+      stretches to a second page is not an assistant's call. The page does not
+      start until this is answered.
 - [ ] **Reddit roundup threads — owner's decision, not a default.** Real
       citation weight, real disclosure risk. Not started without an explicit yes.
 - [ ] **No product change yet.** Whether a digital-PR/citation line belongs in

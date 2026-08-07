@@ -429,37 +429,105 @@ assistants themselves quote — credible, and the cheapest honest entry point.
 Ordered by what the data supports, cheapest first. Nothing here is published
 without the owner's agreement, and none of it reopens "Considered and not done".
 
-1. **List on ThreeBestRated (Wirral).** Free, open, already cited by two
-   assistants on the Wirral question, and the one competitor named in 15 of 15
-   runs is already on it. Finding F. Do this first — it is the only
-   already-open door in the dataset.
-2. **Write and publish Wardith's own honest comparison page.** The
-   best-evidenced action here (Findings B and C): it is how all sixty cited
-   publishers got cited, Perplexity consumes them at 21% of everything it cites,
-   and Part 1 already agreed the self-inclusive form is fair game. Constraints,
-   all from "Considered and not done": real providers described accurately, no
-   invented scores or pass/fail criteria, Wardith's authorship stated on the
-   page, every factual claim about another business verifiable from their own
-   site and held before publication. **Draft it, then get the owner's sign-off
-   before it goes near `main`** — publishing is deploying, per `CLAUDE.md`.
-3. **Re-run q06–q08 under "Wardith" once indexed.** Finding G. Three questions,
-   a clean before/after on the rename, and it directly measures whether the
-   1 September work is landing.
-4. **Fix the audit method's Gemini gap.** Finding E1. `ops/audit-method.md` §5
-   must say that Gemini returns opaque redirect URLs and that no source analysis
-   is possible for it. This is a promise-accuracy problem in a document that
-   feeds client reports, not a nicety.
-5. **Leave the product alone for now.** Part 1's Finding 4 asked whether a
-   digital-PR/citation line belongs in Foundation, Grow or Lead. Finding I says
-   this dataset cannot answer that, and item 2 above is the same lever at zero
-   cost and zero product risk. Revisit after the comparison page has been live
-   long enough to measure. **Do not add a service line on the strength of
-   desk research alone.**
-6. **Reddit: owner's decision, not a default action.** Finding D. Open door,
-   real citation weight, and real disclosure risk. Not started without an
-   explicit yes.
+**Ordered by size of ticket, not by ease.** Nothing here is published without
+the owner's agreement, and none of it reopens "Considered and not done".
 
-**Both parts of this piece of work are now closed.** What remains is execution,
-tracked in `ROADMAP.md` 2f. If it is picked up cold: read "Considered and not
-done" before proposing anything public that names a competitor, and read
-Finding C before proposing that we ask to be added to someone's list.
+**Every play costs nothing.** That is not a coincidence worth glossing over —
+`ops/plan-to-1-september.md` freezes spending until 26 August, and the whole of
+this list fits inside the freeze. There is no play below that has to wait for
+money.
+
+### The two revenue plays — evidence only, decision is the owner's
+
+Both belong to `ops/service-tiers.md`, which owns pricing. Recorded there as
+open decisions on 2026-08-07 with a pointer back here. **This document does not
+move a price and an assistant should not.**
+
+1. **The top of the ladder is priced below what the assistants themselves quote.**
+   All three put the median at **£1,500/month**, and they describe £500–£1,500
+   as *freelancer and consultant* rates with agency work above it. Lead is £700.
+   A buyer who arrives through an assistant has been anchored at £1,500 **by the
+   assistant** and then finds a page asking under half that. Finding H already
+   records the correction this forces on Part 1: below-market doesn't
+   automatically read as value, it can read as a different category of supplier.
+   **This is the largest single revenue lever in the dataset.**
+2. **The audit sits at the floor of the band the assistants quote.** They put an
+   initial audit at "often **£250–£750**". The audit is at £250. Since it is also
+   the Foundation qualifier (`ops/service-tiers.md` §6), a deeper tier nearer the
+   top of that band would raise both the order value and the quality of the buyer
+   who reaches the £800. **Not a recommendation to raise the £250** — the
+   honest-entry-point argument in §1 is real and may outweigh this. It is an
+   input that did not exist when the £250 was set.
+
+### The proof play — what actually unlocks the £800
+
+3. **Re-run q06–q08 under "Wardith" once the site is indexed.** Finding G:
+   0 of 30 runs identified the business under the old name. If that flips, it
+   produces something **no competitor on any of the sixty cited lists has** — a
+   dated, measured, genuinely-ours before-and-after. `CLAUDE.md` forbids
+   inventing results, which is exactly why a real one is worth disproportionately
+   more: it is the only honest answer a months-old business has to "why would I
+   pay a stranger £800". Three questions, no cost. **Highest value per unit of
+   effort in this document.**
+
+### The visibility plays
+
+4. **Publish Wardith's own honest comparison page.** Best-evidenced action in
+   either part (Findings B and C): it is how all sixty cited publishers got
+   cited, and Perplexity takes 21% of everything it cites from pages of this
+   shape. Part 1 already agreed the self-inclusive form is fair game.
+   Constraints, all from "Considered and not done": real providers described
+   accurately, no invented scores or pass/fail criteria, Wardith's authorship
+   stated on the page, every factual claim about another business verifiable
+   from their own site and held before publication. **Draft it, then get the
+   owner's sign-off before it goes near `main`** — publishing is deploying, per
+   `CLAUDE.md`. **Blocked on one brand decision — see below.**
+5. **Answer the question that gets no names.** **62 of the 165 opportunity rows
+   name no business at all** (Finding A) — better than a third of the demand goes
+   to vetting advice rather than a recommendation. Nothing currently occupies
+   that ground: a plain-words page on how to tell a real practitioner from a
+   rebranded one. It is close to the voice the site already has on
+   `/ask-your-ai/` and the "you don't need us" promise, so it costs credibility
+   nothing to write. Lower ticket than 4, but it is demonstrably what the
+   assistants reach for when they decline to name anyone.
+6. **List on ThreeBestRated (Wirral).** Free, open, already cited by two
+   assistants on the Wirral question, and the competitor named in 15 of 15 runs
+   there is already on it. Finding F. **The only already-open door in the
+   dataset** — do it first, it takes minutes.
+
+### The method fix — not optional, and not a nicety
+
+7. **Fix `ops/audit-method.md` §5 on Gemini.** Finding E1: all 479 of Gemini's
+   cited URLs are opaque redirect wrappers, so no source analysis is possible
+   for one of the four assistants we sell coverage of. The method doc lists
+   `sources_cited` without saying so, and it feeds client reports. This is a
+   promise-accuracy problem, and it outranks everything above it except 6 on
+   urgency because it is a thing we might otherwise imply falsely to a paying
+   client.
+
+### Deliberately not done
+
+8. **No new service line yet.** Part 1's Finding 4 asked whether a
+   digital-PR/citation line belongs in Foundation, Grow or Lead. Finding I says
+   this dataset cannot answer it, and play 4 is the same lever at zero cost and
+   zero product risk. Revisit once the comparison page has been live long enough
+   to measure. **Do not add a service line on desk research alone.**
+9. **Reddit: the owner's decision, not a default action.** Finding D. Real
+   citation weight, real disclosure risk. Not started without an explicit yes.
+
+### The open brand decision, flagged not taken
+
+**Play 4 needs a ruling that is the owner's alone.** A comparison page is
+precisely where a buyer arrives *holding* the industry acronym — the situation
+`CLAUDE.md`'s single deliberate exception was written for on 2026-08-01, and the
+same failure the audit is sold to find on other people's sites. But that
+exception was granted for **one** FAQ entry, by the owner, on the record.
+Whether it stretches to a second page is not an assistant's call. Without it the
+page is hard to find; with it, it is a second crack in a rule set for good
+reasons. **Asked on 2026-08-07 and not yet answered — play 4 does not start
+until it is.**
+
+**Both parts of the analysis are closed.** What remains is execution, tracked in
+`ROADMAP.md` 2f. If it is picked up cold: read "Considered and not done" before
+proposing anything public that names a competitor, and read Finding C before
+proposing that we ask to be added to someone's list.
