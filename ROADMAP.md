@@ -511,9 +511,9 @@ timetable and the money constraints are `ops/plan-to-1-september.md`.
       name.** Cover and logo PNGs in `assets/linkedin/` were rebuilt for Wardith
       and re-verified against their sources.
 
-      **One thing left in the same job:** check the About sections do not still
-      show `hello@novenstudio.co.uk`. They were rewritten before
-      `hello@wardith.co.uk` existed.
+      **Checked 2026-08-06: both About sections show `hello@wardith.co.uk`.**
+      LinkedIn and the site now agree on the name, the prices and the contact
+      address — which is the audit's third promise, run on ourselves.
 
       **Both closed 2026-08-06.** The owner rewrote both About sections — no
       Noven, prices matching the site — and confirmed in a private window that
@@ -534,7 +534,8 @@ timetable and the money constraints are `ops/plan-to-1-september.md`.
       is kept permanently: the move runs from it, and it holds half the
       six-month measurement. `site:novenstudio.co.uk` returned **4** results,
       which is now the decay baseline — re-run it at one month and at six.
-      Sitemap, live-URL test and indexing requests still to confirm.
+      **Sitemap submitted and indexing requested on all eight pages, same day.**
+      The Google side is complete.
 - [ ] **6b. Bing Webmaster Tools — still not done, and now the single highest
       -leverage free job left.** Copilot answers from Bing and Bing has never
       indexed this business under either name, so there is nothing to migrate

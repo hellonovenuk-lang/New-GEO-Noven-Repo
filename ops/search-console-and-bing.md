@@ -90,7 +90,7 @@ adding a second record.
 
 ### 1.3 Submit the sitemap
 
-New property → **Sitemaps** → enter:
+**DONE 2026-08-06.** New property → **Sitemaps** → enter:
 
     sitemap-index.xml
 
@@ -234,6 +234,11 @@ It will say "URL is not on Google". That is expected on a domain days old and is
 not a fault.
 
 ### 1.6 Ask for the important pages directly
+
+**DONE 2026-08-06 — and the owner did all eight rather than the five below**,
+which is fine: the quota is per day, eight is well inside it, and the reason for
+being selective was to avoid spending it on pages the sitemap already covers.
+With the whole site submitted there is nothing left to ration.
 
 **URL Inspection** (top search bar) → paste a URL → **Request indexing**.
 

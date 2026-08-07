@@ -279,6 +279,25 @@ and unstarted. Nothing in the repo blocks it.
 
 ---
 
+### 2026-08-06 (close — the Google side is finished)
+
+**Sitemap submitted, indexing requested on all eight pages, and both LinkedIn
+About sections confirmed showing `hello@wardith.co.uk`.** That closes the Google
+half of `ops/search-console-and-bing.md` and the last thread left hanging by the
+mailbox move — the About copy had been rewritten a few hours before the new
+address existed, so it was worth re-reading rather than assuming.
+
+**All three of the audit's own promises now hold for this business.** The facts
+are readable by machines, they are consistent across every surface we control,
+and the surfaces agree with each other: the site, the structured data, the
+company page and the founder profile all carry one name, one set of prices and
+one contact address. That is the check `ops/own-facts-check.md` exists to run,
+and it is the first time it has passed end to end.
+
+**What is left is not on the Google side.** Bing has never indexed this business
+under either name, and Copilot answers from Bing — `ops/search-console-and-bing.md`
+part 2, written and unstarted. It is the highest-leverage free job in the file.
+
 ### 2026-08-06 (later still — the mailbox lands, and the last Noven leaves the structured data)
 
 **`hello@wardith.co.uk` exists and receives.** The owner created it in Zoho and
