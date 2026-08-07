@@ -11,6 +11,50 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-07 (a skill that checks this repo against itself)
+
+**Done:** `.claude/skills/repo-consistency/` — a skill that sweeps the repo for
+facts that contradict each other, references pointing at nothing, self-describing
+prose gone stale, and duplicated writing. `scripts/check.py` does the mechanical
+half; `SKILL.md` and the two reference documents carry the judgement.
+
+**Why a script and not just instructions.** The expensive part of keeping this
+repo honest is not deciding what to fix, it is *finding* it: forty thousand words
+where a stale number looks exactly like a fresh one. Reading it all costs a
+fortune in tokens per session and still misses things. The script runs in a
+second, costs nothing, and reads `site/src/data/business.ts` for the canonical
+facts — so it stays correct as prices change without anyone editing it.
+
+**It found real drift on its first run, which is the argument for it.**
+`ROADMAP.md` and `HANDOVER.md` still carry the whole superseded ladder — £125 /
+£750 / £95 / £250 / £495 — as current fact, two days after the repricing.
+`ops/README.md` says "fourteen files" (18) and describes a 1,100-line session log
+(2,726). Eight operating documents carry no status, so a decision written down
+still reads exactly like a thing that works. **None of this is fixed yet** — the
+skill exists, the sweep has not been run as a piece of work.
+
+**The historical files are excluded, deliberately and by name.** This log, the
+delivered audits, and `rename-to-wardith.md` are the record: old prices and the
+old name are *correct* there, and "fixing" them would destroy the reasoning that
+stops a settled decision being re-argued. That exclusion is in
+`scripts/config.json` rather than in the code, so it is visible and editable.
+
+**Two owner decisions, made 2026-08-07.** Reasoning may be *condensed*, not only
+deduplicated — so `references/editing.md` sets out what a passage must survive
+with (the decision and its date, the constraint that stops it being reopened, any
+outstanding falsifiable condition, and who decided it) against what can go. And
+the skill fixes what it is confident about rather than only reporting, on a
+branch, with the diff shown — which is the workflow `CLAUDE.md` already requires.
+
+**Known false positives are written down rather than left to be rediscovered.**
+The name of a past event — "the Noven self-audit" — is not drift, and renaming it
+would make the documents describe something that never happened. `ops/README.md`
+citing files it records as deleted *should* dangle. Both are in
+`references/checks.md`, because an unfixed false positive is re-investigated on
+every future run and that costs more than the fix.
+
+---
+
 ### 2026-08-07 (Bing — the fourth assistant gets a route in)
 
 **Done:** Bing Webmaster Tools set up for `wardith.co.uk`, indexing requested on

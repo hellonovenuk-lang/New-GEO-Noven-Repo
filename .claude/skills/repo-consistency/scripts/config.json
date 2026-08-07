@@ -1,0 +1,62 @@
+{
+  "_comment": [
+    "Configuration for check.py. Edit this rather than the script when the",
+    "business changes. Every value here is a fact about this repo, not about",
+    "consistency checking in general.",
+    "",
+    "canonical_source: the file the checker reads current facts out of. It is",
+    "the single source of truth for name, email and prices, and says so in its",
+    "own header comment. If that ever stops being true, this checker is wrong.",
+    "",
+    "superseded_terms: names, domains and addresses the business used to use.",
+    "Finding one outside a historical path usually means a rename was left",
+    "half-done. Add to this list on the day a rename happens, not later.",
+    "",
+    "historical_paths: files whose job is to record what happened. Old names and",
+    "old prices are CORRECT here and must not be 'fixed' — editing them destroys",
+    "the record of why a decision went the way it did. The session log, the",
+    "rename plan and delivered client audits are all in this category.",
+    "",
+    "plan_aliases: how a plan gets named in prose, so a price sitting next to it",
+    "can be checked against the canonical number for that plan."
+  ],
+
+  "canonical_source": "site/src/data/business.ts",
+
+  "superseded_terms": [
+    "Noven Studio",
+    "novenstudio.co.uk",
+    "hello@novenstudio.co.uk",
+    "Noven"
+  ],
+
+  "historical_paths": [
+    "ops/session-log.md",
+    "ops/rename-to-wardith.md",
+    "ops/audits/",
+    ".claude/skills/",
+    "node_modules/",
+    ".git/"
+  ],
+
+  "plan_aliases": {
+    "audit": ["audit"],
+    "foundation": ["foundation"],
+    "maintain": ["maintain"],
+    "grow": ["grow"],
+    "lead": ["lead"]
+  },
+
+  "status_vocabulary": [
+    "Live",
+    "Decided, unvalidated",
+    "Closed",
+    "Stub",
+    "Reopened"
+  ],
+
+  "status_required_in": ["ops/"],
+
+  "duplicate_min_chars": 200,
+  "duplicate_similarity": 0.75
+}
