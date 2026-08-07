@@ -718,21 +718,21 @@ Not until there are paying clients and proof.
 - [ ] LinkedIn, or wherever our buyers actually are.
 - [ ] [PLACEHOLDER: decide after the first ten conversations]
 
-### 2f. Competitor citation analysis — **start a new session here**
+### 2f. Competitor citation analysis — **analysis closed, execution open**
 
-**`ops/competitor-analysis.md`.** Two-part piece of work, prompted by the Aug 2
-self-audit's "who gets recommended instead" table (Tilio named 36 times, nine
-more competitors behind it). Part 1 — desk research on what those competitors
-visibly do differently — is done (2026-08-07). Part 2 needs
-`runs-clean.csv` (raw verbatim answer data, owner's machine only, never this
-repo — `ops/audit-method.md` §5) and has not started.
+**`ops/competitor-analysis.md`.** Both parts done 2026-08-07. Part 1 was desk
+research; Part 2 mined `runs-clean.csv` (raw verbatim answer data, owner's
+machine only, never this repo — `ops/audit-method.md` §5; supplied, read in
+place, not committed). What is left is the six-item execution plan at the end of
+the doc.
 
-- [x] **Part 1 — desk research.** Findings: nearly every named competitor
-      either publishes or appears on a self-inclusive "best of" listicle,
-      which Wardith appears on none of; every one has a dedicated service page;
-      published pricing is normal in this category and Wardith undercuts it;
-      "digital PR / citation strategy" is sold as its own line, which Wardith's
-      product doesn't currently touch. Full detail and sourcing in the doc.
+- [x] **Part 1 — desk research.** Competitors publish or appear on
+      self-inclusive "best of" listicles; each has a dedicated service page;
+      published pricing is normal in the category. Full detail in the doc.
+- [x] **Part 2 — the raw data.** Headline: **there is no incumbent.** 41
+      businesses named, the leader in only 28% of the 165 opportunity rows, and
+      more than a third of answers name nobody. Listicles confirmed as the
+      mechanism (answers citing one name 3.3 businesses; citing none, 1.2).
 - [ ] **Considered and explicitly not done: any public ranking, "trust score",
       or named-competitor comparison.** Worked through in detail, parked by the
       owner — defamation and UK comparative-advertising exposure for a
@@ -740,12 +740,33 @@ repo — `ops/audit-method.md` §5) and has not started.
       problem independent of whether the claim was true. Reasoning in full in
       the doc's "Considered and not done" section — **read it before
       re-proposing this**, the argument doesn't need re-running from scratch.
-- [ ] **Part 2 — mine `runs-clean.csv` per-competitor, cross-reference against
-      Part 1, produce one execution plan.** Instructions are written and
-      waiting in the doc's final section. Triggered by the owner supplying the
-      file. Test WebFetch at the start of the new session before assuming this
-      session's `EGRESS_BLOCKED` block still applies — it may be
-      session-specific.
+      **Part 2 does not reopen it.**
+- [ ] **Part 1's main recommendation is withdrawn.** "Approach the third-party
+      listicles to get listed" was called the highest-leverage option. Part 2
+      fetched all of them: they are agency-published, self-inclusive, and have
+      no submission route. There is nothing to apply to. Don't re-propose it —
+      read Part 2's Finding C.
+
+**Execution, in order (full detail in the doc):**
+
+- [ ] **List on ThreeBestRated (Wirral) — free, and the only open door found.**
+      Already cited by two assistants on the Wirral question; the competitor
+      named in 15 of 15 runs there is already listed.
+- [ ] **Draft Wardith's own honest comparison page.** Best-evidenced action in
+      either part. Needs owner sign-off before `main` — publishing is
+      deploying. Constraints in the doc.
+- [ ] **Re-run q06–q08 under "Wardith" once indexed.** Under "Noven", 0 of 30
+      runs identified the business and ChatGPT answered the comparison question
+      about managed IT providers. Clean before/after on the rename.
+- [ ] **Fix `ops/audit-method.md` §5 on Gemini.** All 479 of Gemini's cited
+      URLs are opaque `vertexaisearch` redirects — no source analysis is
+      possible for it. The method doc lists `sources_cited` without saying so,
+      and that feeds client reports.
+- [ ] **Reddit roundup threads — owner's decision, not a default.** Real
+      citation weight, real disclosure risk. Not started without an explicit yes.
+- [ ] **No product change yet.** Whether a digital-PR/citation line belongs in
+      a tier can't be answered from this data; the comparison page is the same
+      lever at zero cost. Revisit after it has been live long enough to measure.
 
 ---
 

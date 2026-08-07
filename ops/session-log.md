@@ -11,6 +11,78 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-07 (Competitor analysis Part 2 — the raw data, and what it overturned)
+
+**Done:** `runs-clean.csv` supplied by the owner and mined against Part 1's desk
+research. `ops/competitor-analysis.md` now carries both halves and one execution
+plan; `ROADMAP.md` 2f rewritten from "start a new session here" to six execution
+items. **The file was read in the scratchpad and not committed**
+(`ops/audit-method.md` §5). Confirmed for the owner that it is the same data as
+the Noven audit — `audit_id = noven-2026-08-02` on all 210 rows.
+
+**The finding that changes the framing: there is no incumbent.** The audit
+report's table — Tilio 36, nine more behind — reads as a pecking order to climb.
+Counted against the right denominator (165 rows where a business could have been
+recommended) Tilio is named in 28%, second place 23%, third 12%, and **62 of the
+165 answers name nobody at all.** 41 businesses in total, against the report's
+ten. That is not a market with leaders to displace; it is one that has not
+formed. Everything else in the plan is cheaper in that light.
+
+**Part 1's main recommendation had to be withdrawn, and this is the reason to
+keep writing these documents down.** Part 1 called "get Wardith added to the
+existing third-party listicles" the highest-leverage, lowest-risk option of all.
+WebFetch was blocked that session, so it rested on search snippets. This session
+WebFetch worked, so all of them were actually read — and **they are not
+third-party.** Buried Agency's list of the best agencies is published by Buried
+Agency, which ranks itself first. So does FirstMotion's, Sort The Clicks',
+Okapi's, Tilio's, ClickSlice's, Rank4AI's. None has a submission form, an
+editorial email, or stated criteria for applying. The recommendation was to ask
+competitors for a favour, and the honest expected answer is no.
+
+**The same evidence points somewhere better.** Every one of those publishers got
+cited *by writing the list*. Answers citing a list name 3.3 businesses; answers
+citing none name 1.2. Part 1 had already agreed a self-inclusive comparison page
+was fair game and listed it third of three options. The data promotes it to
+first. **It is emphatically not the parked "trust score" idea** — no invented
+scores, no pass/fail criteria, real providers described accurately, Wardith's
+authorship on the page, every claim verifiable before publication. That
+distinction is the whole reason "Considered and not done" was written, and it
+held up: it stopped the wrong version being re-proposed while leaving the
+defensible one available.
+
+**One genuinely open door, and it is small and free.** On the Wirral question
+the field is five businesses, not forty-one — and Bold Online Marketing is named
+in 15 of 15 runs, on all three assistants. Two of them cited
+`threebestrated.co.uk/marketing-agencies-in-wirral` as a source. It is a real
+directory, Bold is on it, and it says "List your business for Free!" That is the
+cheapest concrete action in the whole piece of work.
+
+**The rename is vindicated by data that didn't exist when it was decided.**
+`ops/rename-to-wardith.md` argued the move mainly from there being no indexation
+equity to lose, which is true but defensive. The raw answers are worse than that
+argument assumed: asked "What do you know about Noven?", **0 of 30 runs
+described this business** and all 30 described Noven Pharmaceuticals, the US
+patch maker. Adding "on the Wirral" didn't fix it — ChatGPT 0 of 5, and
+Perplexity confidently offered a North West *builder* and a Wirral *IT support
+firm* instead, which is worse than silence. Asked for "the main alternatives to
+Noven", ChatGPT answered about managed IT service providers. Only Gemini got it
+right, 5 of 5, and that is a point about Google having indexed the site rather
+than about the name. Nothing here reopens the decision; it closes the argument.
+
+**A method problem found by accident, and it matters more than the analysis.**
+All 479 of Gemini's cited URLs are `vertexaisearch.cloud.google.com` redirect
+wrappers that resolve nowhere readable. **For one of the four assistants we sell
+coverage of, `sources_cited` is structurally empty.** `ops/audit-method.md` §5
+lists the column without saying so, and that document feeds client reports. A
+report must never imply we can see what Gemini read. On the roadmap as a fix.
+
+**Recorded as a limit, not smoothed over:** the supplied export is
+pre-classification — `outcome` and `competitors` are blank on all 210 rows — so
+the report's own mention counts could not be re-derived from it. Every count in
+Part 2 comes from matching names against `answer_text` directly, which is why
+the numbers don't tie to the report's table. Said plainly in the document rather
+than reconciled away.
+
 ### 2026-08-07 (Bing — the fourth assistant gets a route in)
 
 **Done:** Bing Webmaster Tools set up for `wardith.co.uk`, indexing requested on
