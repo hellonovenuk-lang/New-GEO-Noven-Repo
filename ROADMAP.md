@@ -176,9 +176,18 @@ blocking, both about an address:**
 1. **The ICO published, or is about to publish, the owner's home address** on a
    bulk-downloadable public register. Time-critical — deadline **Monday 10
    August 2026** — see 1c.
-2. **The service address hasn't landed.** V LOT took payment and may have
-   delivered nothing. It blocks the ICO fix, the site footer, and the audit's
-   pay button.
+2. **The service address hasn't landed. Settled 2026-08-07: UK Postbox,
+   £12/month.** V LOT is dead — it took payment ~29 July, delivered nothing,
+   and the owner has requested a refund. Icon Offices was researched as the
+   cheap replacement and rejected. **The owner then set the constraint that
+   actually decided it — monthly or quarterly billing, because capital is tight
+   now — and the two best-reviewed providers are annual-only.** The pick is
+   **UK Postbox's Business Street Address, Poole, £12/month inc VAT**, an
+   HMRC-AML-supervised provider trading since 2008 that sells a business
+   trading address to sole traders explicitly. `ops/third-party-services.md`
+   B1b. **This item stopped being a £115 lump sum and became £12** — it blocks
+   the ICO fix, the site footer, and the audit's pay button, and it no longer
+   needs a large payment to unblock any of them.
 
 Nothing in the last three days' work touched the ICO call, the service address,
 the terms of service, the privacy notice or the payment link — see 1c below.
@@ -289,14 +298,39 @@ provider's own site before committing.
       Revolut became a UK bank in March 2026, and already the owner's bank. One
       caveat: FSCS cover is shared across Pro and personal under one £120,000
       cap, not doubled. `ops/third-party-services.md` C1.
-- [ ] **Address for service of documents — ordered, not delivered.** Trading
-      under a business name as a sole trader carries a legal duty to show a name
-      and an address where documents can be served, including on the website. A
-      virtual office satisfies it. **V LOT chosen on cost (~£10–48/yr against
-      ~£96–115), and its Trustpilot reviews are poor — reports of nothing being
-      delivered after payment.** Don't tick this off until post through the
-      address is confirmed working; fall back to 1st Formations or Quality
-      Company Formations (~£115/yr inc VAT) if it doesn't land.
+- [ ] **Address for service of documents — not bought. Buy UK Postbox's
+      Business Street Address, Poole, £12/month inc VAT.** Trading under a
+      business name as a sole trader carries a legal duty to show a name and an
+      address where documents can be served, including on the website. A
+      virtual office satisfies it. Don't tick this off until post through the
+      address is confirmed working. **Buy the *Street* address, not their
+      cheaper Business PO Box — a PO Box is not a valid address for this.**
+
+      **V LOT is finished, 2026-08-07.** It was chosen on 29 July on cost
+      (~£10–48/yr against ~£96–115) with its poor Trustpilot reviews flagged at
+      the time; it took payment ~29 July, delivered nothing, and the owner has
+      requested a refund. **Icon Offices was researched the same day as the
+      cheap replacement and rejected on the numbers, not on suspicion** — it is
+      a real ACSP-registered company, but its £45.76 headline tier does not
+      forward post at all (collect in person, in Essex or London or Scotland),
+      and the first tier that does costs £120.12, more than the fallback, on a
+      4.0 Trustpilot score against 4.8–4.9. Full working in
+      `ops/third-party-services.md` B1a.
+
+      **Then the owner set the constraint that decided it: monthly or quarterly
+      billing.** 1st Formations and Quality Company Formations — the two best
+      reviewed — are **annual-only**, so they were ruled out by cadence rather
+      than by quality, and the £5/yr gap that had decided the earlier
+      comparison turned out not to be the deciding variable at all.
+
+      **UK Postbox confirmed by the owner, 2026-08-07** (company 06723381,
+      trading since 2008, HMRC AML supervision XLML00000192390, a "business
+      trading address" sold to sole traders in those words). **The comparison
+      is closed. What remains is a purchase, and it has a runbook —
+      `ops/third-party-services.md` B1c**, which covers the two traps (buy the
+      Street address not the PO Box; register the trading name "Wardith" as its
+      own verified step), the ID check, and the order the downstream work has
+      to happen in.
 
       **The footer placeholder is gone as of 2026-08-06, by the owner's
       decision, and this instruction used to say the opposite.** It read "don't
@@ -718,21 +752,21 @@ Not until there are paying clients and proof.
 - [ ] LinkedIn, or wherever our buyers actually are.
 - [ ] [PLACEHOLDER: decide after the first ten conversations]
 
-### 2f. Competitor citation analysis — **start a new session here**
+### 2f. Competitor citation analysis — **analysis closed, execution open**
 
-**`ops/competitor-analysis.md`.** Two-part piece of work, prompted by the Aug 2
-self-audit's "who gets recommended instead" table (Tilio named 36 times, nine
-more competitors behind it). Part 1 — desk research on what those competitors
-visibly do differently — is done (2026-08-07). Part 2 needs
-`runs-clean.csv` (raw verbatim answer data, owner's machine only, never this
-repo — `ops/audit-method.md` §5) and has not started.
+**`ops/competitor-analysis.md`.** Both parts done 2026-08-07. Part 1 was desk
+research; Part 2 mined `runs-clean.csv` (raw verbatim answer data, owner's
+machine only, never this repo — `ops/audit-method.md` §5; supplied, read in
+place, not committed). What is left is the six-item execution plan at the end of
+the doc.
 
-- [x] **Part 1 — desk research.** Findings: nearly every named competitor
-      either publishes or appears on a self-inclusive "best of" listicle,
-      which Wardith appears on none of; every one has a dedicated service page;
-      published pricing is normal in this category and Wardith undercuts it;
-      "digital PR / citation strategy" is sold as its own line, which Wardith's
-      product doesn't currently touch. Full detail and sourcing in the doc.
+- [x] **Part 1 — desk research.** Competitors publish or appear on
+      self-inclusive "best of" listicles; each has a dedicated service page;
+      published pricing is normal in the category. Full detail in the doc.
+- [x] **Part 2 — the raw data.** Headline: **there is no incumbent.** 41
+      businesses named, the leader in only 28% of the 165 opportunity rows, and
+      more than a third of answers name nobody. Listicles confirmed as the
+      mechanism (answers citing one name 3.3 businesses; citing none, 1.2).
 - [ ] **Considered and explicitly not done: any public ranking, "trust score",
       or named-competitor comparison.** Worked through in detail, parked by the
       owner — defamation and UK comparative-advertising exposure for a
@@ -740,12 +774,53 @@ repo — `ops/audit-method.md` §5) and has not started.
       problem independent of whether the claim was true. Reasoning in full in
       the doc's "Considered and not done" section — **read it before
       re-proposing this**, the argument doesn't need re-running from scratch.
-- [ ] **Part 2 — mine `runs-clean.csv` per-competitor, cross-reference against
-      Part 1, produce one execution plan.** Instructions are written and
-      waiting in the doc's final section. Triggered by the owner supplying the
-      file. Test WebFetch at the start of the new session before assuming this
-      session's `EGRESS_BLOCKED` block still applies — it may be
-      session-specific.
+      **Part 2 does not reopen it.**
+- [ ] **Part 1's main recommendation is withdrawn.** "Approach the third-party
+      listicles to get listed" was called the highest-leverage option. Part 2
+      fetched all of them: they are agency-published, self-inclusive, and have
+      no submission route. There is nothing to apply to. Don't re-propose it —
+      read Part 2's Finding C.
+
+**The plays, biggest ticket first. Full detail in the doc's execution plan.
+Every one of them costs nothing and fits inside the spending freeze.**
+
+- [ ] **Two pricing decisions are now open, and they are the owner's.** The
+      assistants quote a **median £1,500/month** — the same median on all three
+      — and call £500–£1,500 *freelancer* rates with agency work above. Lead is
+      £700. Separately, they put an initial audit at "often £250–£750"; ours is
+      at the floor. Written up as open decisions in `ops/service-tiers.md` §8
+      with the reasoning and the two things they do *not* settle. **Evidence
+      only — an assistant does not move a price.**
+- [ ] **Re-run q06–q08 under "Wardith" once indexed — the proof asset.** Under
+      "Noven" 0 of 30 runs identified the business, and ChatGPT answered the
+      comparison question about managed IT providers. If it flips, it is a
+      dated, measured before/after on our own business — the only honest proof a
+      months-old business can offer against the £800. Three questions, no cost.
+- [ ] **Draft Wardith's own honest comparison page.** Best-evidenced action in
+      either part. Needs owner sign-off before `main` — publishing is deploying.
+      **Blocked on the brand decision below.**
+- [ ] **Answer the question that gets no names.** 62 of 165 answers name no
+      business at all — over a third of the demand goes to vetting advice. A
+      plain-words page on how to tell a real practitioner from a rebranded one.
+      Nothing occupies that ground, and it fits the "you don't need us" voice.
+- [ ] **List on ThreeBestRated (Wirral) — free, and the only open door found.**
+      Already cited by two assistants on the Wirral question; the competitor
+      named in 15 of 15 runs there is already listed. Takes minutes.
+- [ ] **Fix `ops/audit-method.md` §5 on Gemini.** All 479 of Gemini's cited
+      URLs are opaque `vertexaisearch` redirects — no source analysis is
+      possible for it. The method doc lists `sources_cited` without saying so,
+      and that feeds client reports. **Promise-accuracy, not housekeeping.**
+- [ ] **Open brand decision, asked 2026-08-07, not yet answered.** The
+      comparison page is where a buyer arrives holding the industry acronym —
+      the case `CLAUDE.md`'s single deliberate exception was written for. That
+      exception was granted for **one** FAQ entry, by the owner. Whether it
+      stretches to a second page is not an assistant's call. The page does not
+      start until this is answered.
+- [ ] **Reddit roundup threads — owner's decision, not a default.** Real
+      citation weight, real disclosure risk. Not started without an explicit yes.
+- [ ] **No product change yet.** Whether a digital-PR/citation line belongs in
+      a tier can't be answered from this data; the comparison page is the same
+      lever at zero cost. Revisit after it has been live long enough to measure.
 
 ---
 
