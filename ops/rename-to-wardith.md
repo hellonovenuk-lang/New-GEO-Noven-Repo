@@ -107,7 +107,8 @@ warm white and the footer on navy.
 | `Logo - Dark Mode.svg` | `assets/brand/Logo Dark.svg` | `site/public/logo-dark.svg` |
 | `Favicon.svg` (navy W.) | `assets/brand/Favicon.svg` | `site/public/favicon.svg` |
 | `Icon Mark.svg` (white W.) | `assets/brand/Icon Mark.svg` | not used on the site |
-| `Email Signature.svg` | `assets/brand/Email Signature.svg` | not used on the site |
+| `Email Signature.svg` | `assets/brand/Email Signature.svg` | **superseded 2026-08-07, never installed** — see below |
+| — (built here, not supplied) | `assets/brand/email-signature.html` | `site/public/signature-wordmark.png` — **must stay; it is the image every sent signature points at** |
 | `LinkedIn Banner.svg` | `assets/brand/LinkedIn Banner.svg` | not used on the site |
 
 **Still outstanding after the drop:**
@@ -153,6 +154,28 @@ gets pasted into other people's address books.
 recommendation there is unchanged: `wardith.co.uk` for both, with `.com` and
 `.uk` owned and redirecting. Nothing else in the set carries a domain, so this
 is the only asset affected.
+
+**Resolved 2026-08-07 — and re-exporting turned out to be the wrong fix.**
+The signature was **replaced** rather than corrected, by
+`assets/brand/email-signature.html`. The SVG stays in this folder as the
+supplied original and is not installed anywhere.
+
+Two reasons the format was the real fault, not the wording:
+
+1. **Email cannot render SVG.** Outlook, Gmail's web client and most corporate
+   gateways drop it or show a broken image. A corrected SVG would have been a
+   correct signature that recipients could not see — so this asset was never
+   going to work no matter which domain it named.
+2. **Its text is outlined paths, not type.** Fixing two words meant a Canva
+   round trip. **That friction is what produced the fault**: an asset whose
+   facts can only be changed by re-exporting is an asset whose facts go stale.
+   The address for service still has to be added on 26 August, which would have
+   been a second round trip. Live text makes both an edit.
+
+The replacement carries the wordmark as a PNG rasterised from the committed
+`site/public/logo.svg` — no path data altered, same rule `trim.mjs` works
+under — with every fact as live text beneath it. `hello@wardith.co.uk` and
+`wardith.co.uk`, one domain, matching `business.ts`.
 
 ---
 

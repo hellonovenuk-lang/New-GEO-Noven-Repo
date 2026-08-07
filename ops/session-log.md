@@ -89,6 +89,48 @@ homepage that had silently lost half of the thing the page is about. Corrected.
 Fifth wrong claim found in two days, and the same shape as the other four: a
 sentence written from what was expected rather than from what was looked at.
 
+**Bing sitemap confirmed in, and the first `site:wardith.co.uk` on Bing returns
+nothing.** That is the expected reading one day after submission on a domain
+four days old with no inbound links, and it is the zero this measurement starts
+from. **Self-audit finding 2 closes when it returns eight, and not before** —
+worth holding to, because the temptation with a submitted-and-waiting job is to
+tick it and move on. Weekly check.
+
+**The email signature was replaced rather than re-exported, and the reason is
+the interesting part.** `Email Signature.svg` said `hello@wardith.com` above
+`wardith.co.uk` — two domains, one business, on the highest-frequency surface
+there is. Roadmap item 5 said "re-export on one domain". That was the wrong fix
+twice over:
+
+1. **Email cannot render SVG.** Outlook, Gmail's web client and most corporate
+   gateways drop it. A corrected SVG would have been a correct signature nobody
+   could see, and the fault would have looked closed.
+2. **Its text is outlined paths, not type** — so correcting two words meant a
+   Canva round trip. **That friction is what produced the fault.** An asset
+   whose facts can only be changed by re-exporting is an asset whose facts go
+   stale, and the address for service still has to go in on 26 August, which
+   would have been a second round trip.
+
+So the format was the root cause and the wording was the symptom. Replaced with
+`assets/brand/email-signature.html`: table-based, inline styles, every fact live
+text, wordmark as a PNG rasterised from the committed `logo.svg` with no path
+data altered. The SVG stays in `assets/brand/` as the supplied original, and
+`ops/rename-to-wardith.md` B7's closed fault stays closed — no service
+description went back in.
+
+**Two details worth not losing.** The font stack is the Palatino Linotype /
+Segoe UI pair `CLAUDE.md` already chose for documents, because Newsreader and
+IBM Plex are webfonts that do not exist in email — so this matches the site on
+the machines that will actually open it. And `site/public/signature-wordmark.png`
+**must not be deleted as an orphan**: it is the image every signature already
+sitting in somebody else's inbox points at.
+
+**Flagged, not invented:** a sole trader whose trading name is not their own
+surname has to disclose the owner's name and an address for service on business
+correspondence. The name is in the signature; the address is parked until
+26 August, and the row is in the file commented out rather than filled with a
+guess.
+
 **One thing observed and deliberately not fixed.** In the rendered HTML the
 visible code block is empty — every token span present, no text. That is the
 typing animation, which blanks the text nodes and types them back at ~620
