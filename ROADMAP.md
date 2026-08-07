@@ -54,6 +54,44 @@ business under either name. `ops/search-console-and-bing.md`. Email is
 2026-08-06, and published on the site the same day. The brand assets are in and the palette
 matches them. **Phase 1a and 1b are closed.**
 
+### What changed on 2026-08-06, and the one thing it should change about how you work
+
+**The session started from "assistants asked to review `wardith.co.uk` still
+answer Noven" and ended up finding four wrong claims in this repo.** Full
+reasoning in `ops/session-log.md`; the short version, because it affects what
+you can trust in these files:
+
+| Claim | Reality |
+|---|---|
+| `hello@wardith.co.uk` "live on Zoho, tested both directions" — in six files | Had never been created. Now real, and the site publishes it |
+| Search Console "already set up, nothing to do" | A property is bound to its host; the live domain had none |
+| "Sitemap submitted and confirmed, six pages" | Six URLs *read from a sitemap*, not six pages indexed |
+| **"No redirect rules need writing — Netlify 301s non-primary domains"** | **It did not. The whole site was being served at four addresses for nine days** |
+
+**The redirect one is the one to understand.** `novenstudio.co.uk` was not
+redirecting — it was serving the Wardith site at its own address. So a crawler
+reaching the old domain found the new business sitting there under the old name:
+not a stale mention, a live statement that the two are one site. Seven explicit
+301 rules are now in `netlify.toml`, and Netlify's deploy summary is the
+regression test — **if it ever says "No redirect rules processed" again, they
+are gone.**
+
+**Three of the four came from a sentence written before a change and never
+re-tested after it, and the fourth from publishing something unchecked.** Those
+need different habits: re-read anything marked done before 4 August, and verify
+anything new against the world rather than against another document. **Every one
+was caught by something outside this repo refusing to agree with it** — Google's
+validator, a browser address bar, the owner's memory. Nothing inside caught any
+of them, because the repo was what made the claims.
+
+**Also closed that day:** the LinkedIn company page renamed and published as
+`sameAs` (the first surface outside this site corroborating the name), both
+About sections rewritten, two stale public Netlify copies deleted, all three
+visible `[PLACEHOLDER]` blocks taken off the site, and Change of Address
+accepted.
+
+---
+
 **The Noven self-audit has run** — 2–3 August 2026, archived at
 `ops/audits/noven-2026-08-02/`. This is the biggest change since this file was
 last written, and it reorders what's next more than any single item below it.
@@ -96,12 +134,15 @@ brand of that name exists — so the tool was deliberately not run on it, which 
 argued out in `ops/session-log.md`, 2026-08-04, rather than left looking like a
 skipped step.
 
-**Deciding the name is not doing the rename, and almost none of the rename is
-done.** The domain is not bought, Companies House and the trade mark register
-are not checked, and everything from the canonicals to both LinkedIn pages still
-says Noven. That work, and the order to do it in, is 1c-2. A domain, a logo and
-a company record are far cheaper to get right before they exist than after —
-which is the whole reason the name went first.
+**The rename is done, as of 2026-08-06.** This paragraph used to say "almost
+none of the rename is done — the domain is not bought, and everything from the
+canonicals to both LinkedIn pages still says Noven". All of that was true when
+written on 4 August and none of it is true now. Domains bought, site published,
+LinkedIn renamed, mail moved, redirects written, Search Console migrated.
+
+**Still not done from that paragraph: Companies House and the trade mark
+register have never been checked.** That is the one piece of the name decision
+that remains open, it is free, and it is listed below.
 
 **Two method faults the audit surfaced, neither fixed yet:**
 
@@ -118,7 +159,7 @@ which is the whole reason the name went first.
   rather than hidden; usually where the most fixable findings live. A paying
   client's audit shouldn't repeat the omission.
 
-**Also done this session:** report template Rule 10 — every report must now say
+**Also done in the 2026-08-03 session:** report template Rule 10 — every report must now say
 what a business is getting right, not only what's wrong — applied retroactively
 to the archived Noven report; and a new `CLAUDE.md` rule that documents meant
 for a person (client reports, quotes, invoices) are Office files with the PDF
@@ -428,14 +469,19 @@ timetable and the money constraints are `ops/plan-to-1-september.md`.
 
 **Do these two first. Both are on the critical path and both are free.**
 
-- [ ] **1. Make `wardith.co.uk` the primary domain in Netlify.** Site
-      configuration → Domain management → set primary. **Thirty seconds, and
-      until it is done the site publishes a contradiction:** every canonical
-      says `wardith.co.uk`, but `wardith.co.uk` currently 301s *to*
-      `novenstudio.co.uk`, because the old domain is still primary. Flipping it
-      reverses every redirect at once and completes the switch. Verify the
-      direction actually flipped with a real request to a real inner page —
-      `ops/rename-to-wardith.md` D1 and D3.
+- [x] **1. DONE — `wardith.co.uk` is primary in Netlify, and the redirects it
+      was assumed to bring were written by hand on 2026-08-06.** This item said
+      flipping the primary "reverses every redirect at once and completes the
+      switch". **It did not.** For nine days afterwards `novenstudio.co.uk`,
+      `wardith.com` and `wardith.uk` all *served* the full site at their own
+      addresses with no redirect at all. Seven explicit 301 rules now live in
+      `netlify.toml`.
+
+      **The instruction in this item's own last sentence — verify the direction
+      actually flipped with a real request to a real inner page — was right and
+      was never carried out.** Writing a check down is not doing it. Google's
+      Change of Address validator eventually found it. `ops/rename-to-wardith.md`
+      D3.
 - [x] **2. DONE 2026-08-06. `hello@wardith.co.uk` exists and the site
       publishes it.** The owner created the alias and confirmed mail arrives in
       the Zoho inbox; the zone was then read independently — MX to `mx.zoho.eu`,
@@ -461,34 +507,41 @@ timetable and the money constraints are `ops/plan-to-1-september.md`.
 - [x] **3. LinkedIn: the page is renamed and the slug is ours.**
       `https://www.linkedin.com/company/wardith/` — supplied 2026-08-06 and set
       in `business.ts`, so the Organization publishes a `sameAs` on all nine
-      pages. **Still open in the same job:** repaste both About sections from
-      `ops/linkedin.md` §2 and §5.4, swapping Noven for Wardith in that copy
-      first — the *live* page still publishes the pre-31-July prices (£30 /
-      £350 / from £75), and editing the name in place keeps them. The prices in
-      `ops/linkedin.md` are already current. New cover and logo PNGs are built
-      in `assets/linkedin/` and verified against their sources.
+      pages — **the first surface outside this site that corroborates the
+      name.** Cover and logo PNGs in `assets/linkedin/` were rebuilt for Wardith
+      and re-verified against their sources.
 
-      **Nobody has confirmed the page loads without a login**, which is the
-      one thing a `sameAs` needs to be worth anything to a crawler. Same
-      two-minute private-window check already owed on the founder profile.
-- [ ] **4. Delete or password `noven-2-0-preview` on Netlify.** A second
-      project, deployed and publicly reachable with no password, carrying the
-      old name. It is not in `ops/own-facts-check.md`. After the rename it is a
-      stale public copy of the business under a dead name — the exact fault the
-      audit is sold to find.
+      **One thing left in the same job:** check the About sections do not still
+      show `hello@novenstudio.co.uk`. They were rewritten before
+      `hello@wardith.co.uk` existed.
+
+      **Both closed 2026-08-06.** The owner rewrote both About sections — no
+      Noven, prices matching the site — and confirmed in a private window that
+      the company page loads without a login, which is the one thing a `sameAs`
+      needs to be worth anything to a crawler.
+- [x] **4. DONE 2026-08-06 — and there were two, not one.** `noven-2-0-preview`
+      was a full Noven-branded copy of the business, public with no password.
+      Listing the Netlify team turned up a second, `aesthetic-unicorn-619923`,
+      which appeared in no operating document at all. Both deleted; one project
+      remains, serving `wardith.co.uk`. **The lesson is how the second was
+      found — by listing the host, not by reading the register.** A surface
+      nobody documented is a surface nobody checks.
 - [ ] **5. Re-export `Email Signature.svg` on one domain.** It reads
       `hello@wardith.com` above `wardith.co.uk`. Do not use it until fixed.
-- [ ] **6. Bing Webmaster Tools and Google Search Console, on the new domain.**
-      Free, and promoted from housekeeping to the highest-leverage jobs in the
-      plan: **indexation is what could get Wardith named by launch, not
-      training.** The self-audit found Copilot had no record of the site
-      *because Bing never indexed it*. Do them the week the site goes live, not
-      the week of the pre-launch audit. Change of Address in Search Console
-      once the redirects are flipped — they are.
-
-      **Written up in full 2026-08-06: `ops/search-console-and-bing.md`**, both
-      consoles start to finish, including which account to sign in as and why
-      it has to be that one.
+- [x] **6a. Google Search Console — done 2026-08-06.** `wardith.co.uk` verified
+      as a Domain property through GoDaddy Domain Connect, and **Change of
+      Address accepted and running to roughly February 2027.** The old property
+      is kept permanently: the move runs from it, and it holds half the
+      six-month measurement. `site:novenstudio.co.uk` returned **4** results,
+      which is now the decay baseline — re-run it at one month and at six.
+      Sitemap, live-URL test and indexing requests still to confirm.
+- [ ] **6b. Bing Webmaster Tools — still not done, and now the single highest
+      -leverage free job left.** Copilot answers from Bing and Bing has never
+      indexed this business under either name, so there is nothing to migrate
+      and no equity at risk — a clean first submission. Its URL Submission tool
+      takes all eight pages at once where Google's request-indexing is rationed.
+      **`ops/search-console-and-bing.md` part 2**, which is written and
+      unstarted.
 - [ ] **7. The rest of Phase F** — Zoho Books, Revolut Pro, the ICO record, and
       this repo's own name. `ops/rename-to-wardith.md`.
 - [ ] **8. Re-run `ops/own-facts-check.md` end to end** and record the date.
@@ -547,11 +600,18 @@ unused so far.
 
 - [x] Build verified: 7 pages, correct canonicals, all JSON-LD parses, sitemap
       and robots.txt ship. Read on desktop and mobile, owner confirms both.
-- [x] **Sitemap submitted and confirmed in Search Console** — Success, 6 pages.
+- [x] **Sitemap submitted and confirmed in Search Console — for the *old*
+      domain, and "6 pages" means less than it reads.** It is the sitemap being
+      processed and six URLs read from it, not six pages indexed. Corrected
+      2026-08-06 after this line was used to conclude the indexation job was
+      done; a Search Console property is bound to its host, so none of this
+      carried to `wardith.co.uk`, which needed a new property. See 1c-6a.
+
       Five URLs from whatever occupied the domain before Noven (`/terms`,
       `/work`, `/approach`, `/privacy`, `/start`) were submitted for removal and
-      live-tested as 404s, which is Google registering they're gone. Nothing
-      further to do.
+      live-tested as 404s. **`/approach` was still in Google's index on
+      2026-08-06** — `site:novenstudio.co.uk` returns 4 results, which is now
+      the decay baseline for the six-month re-check.
 - [ ] **Bing Webmaster Tools — still not done, and now a named finding, not a
       guess.** The self-audit confirmed Copilot holds no record of the site at
       all (`site:novenstudio.co.uk` returns nothing on Bing). Free, ~15
