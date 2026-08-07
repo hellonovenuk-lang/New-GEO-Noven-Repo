@@ -11,6 +11,216 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-07 (V LOT written off; Icon Offices assessed and not taken)
+
+**Done:** the owner requested a refund from V LOT, closing the 29 July decision
+for good. Icon Offices (`iconoffices.co.uk`) was researched as the cheap
+replacement and **rejected on the numbers**. The pick reverts to the fallback
+that was already identified on 29 July — 1st Formations or Quality Company
+Formations, ~£115/yr inc VAT — and it is now a purchase for the 26th with
+nothing left to decide. Written into `ops/third-party-services.md` (new section
+B1a), `ROADMAP.md`, `HANDOVER.md`, `ops/accounts.md` and
+`ops/plan-to-1-september.md`.
+
+**Icon Offices is not a V LOT.** That is worth saying plainly, because the easy
+conclusion after being burned is that everything cheap is a scam, and it would
+be the wrong lesson. Icon Offices Limited is company **10343713**, incorporated
+24 August 2016 and active; it holds a Companies House **ACSP** registration
+(AP000227), **HMRC AML supervision** (XNML00000198642) and an ICO registration.
+Its terms, clause 3, explicitly permit publishing the address on a company
+website, contracts and invoices — which is the category-2 product B1 says we
+need, and the thing several cheaper providers quietly do not sell. It failed on
+price, not on legitimacy.
+
+**The reason it fails on price is the reason the whole cheap end of this market
+looks cheap.** The advertised tier is £0.99/week — £45.76/yr — and it does not
+forward post. Their own terms say Bronze customers "are not eligible for
+on-demand postage or scanning services at an additional cost", and anything
+over 100g must be collected in person, by appointment, at an address in Essex,
+London, Glasgow, Edinburgh or Belfast. **From the Wirral that is not a service,
+it is a storage locker.** The first tier that forwards is Silver at £120.12/yr
+— *more* than 1st Formations at £115.20 — and Icon Offices sits at 4.0 on
+Trustpilot with 7% one-star against 1st Formations' 4.8–4.9 across ~23,000
+reviews. Paying more for worse reliability on the one purchase whose failure
+mode is a missed legal document is the V LOT mistake made backwards.
+
+**The general lesson, recorded because it will recur:** in this market the
+headline price is the price of a mailbox you cannot reach, and the real price
+of a usable business address is ~£115–120 whoever you buy it from. B1 has been
+wrong about this twice now — first the "£30/yr Hoxton Mix" figure corrected on
+29 July, then V LOT — and both errors were the same error: pricing the tier,
+not the service. **When a supplier's cheapest plan is a tenth of the market
+rate, find the feature that has been removed before assuming a bargain.**
+
+**Four contract terms recorded in B1a for whoever we actually buy from**, since
+none of them is unique to Icon Offices: "free" forwarding means no handling fee,
+not tracked or insured delivery; providers reserve the right to change or
+cancel your allocated address at will, which matters for an address that goes
+into JSON-LD and gets cached; Icon's clause 3 carve-out about court summonses
+sits oddly against an address whose purpose is service of documents, and is
+worth asking about in writing if similar wording appears in the contract we
+sign; and the trading name must be registered with the provider or post to it
+may be returned or destroyed — so **Wardith** gets registered explicitly, not
+just the owner's own name.
+
+**What the write-off actually costs the plan.** The V LOT payment is gone
+unless the refund lands, and the amount is still unrecorded — the order
+reference, amount and payment method were never written down, and a chargeback
+needs all three. More importantly it removes the last free route to closing the
+address: `ops/plan-to-1-september.md` was built around "chasing V LOT is free
+and is the only route that closes this before the 26th", and that sentence is
+now false. The address is a firm ~£115 on 26 August, six days before launch,
+with a postal lead time and KYC inside that window. **Check 1st Formations'
+turnaround and ID requirements before the 26th** rather than discovering them
+on the day.
+
+**Next:** buy it on the 26th; before then, find the V LOT payment details off
+the card statement while it is still recent.
+
+**Superseded within the hour — see the entry below.** The owner set a
+monthly-billing constraint straight after reading this, and 1st Formations does
+not offer one. The V LOT and Icon Offices findings above still stand; the
+conclusion does not.
+
+---
+
+### 2026-08-07 (the address, decided properly: UK Postbox, £12/month)
+
+**Done:** the owner said the annual payment is not affordable right now and
+asked for monthly or quarterly. **1st Formations and Quality Company Formations
+— the two best-reviewed providers, and the conclusion reached one entry above —
+are annual-only, so both were ruled out by cadence rather than quality.** The
+pick is **UK Postbox's Business Street Address, Poole, Dorset: £10/month exc
+VAT, £12/month inc VAT, billed monthly, cancel any time.** Written up as
+`ops/third-party-services.md` B1b and propagated through `ROADMAP.md`,
+`HANDOVER.md`, `ops/accounts.md` and `ops/plan-to-1-september.md`.
+
+**The mistake in the earlier entry is worth naming, because it was a process
+mistake and not a research one.** Six providers were compared on annual cost
+before anybody had established that an annual payment was possible. The whole
+morning's comparison turned on £120.12 against £115.20 — a £5 gap — and the
+variable that actually decided the purchase was never in the table. **Ask what
+shape the money has to be in before pricing anything.** B1 now carries billing
+cadence as a selection criterion rather than a payment detail.
+
+**Why UK Postbox rather than the other monthly options.** It is the only
+provider checked that is monthly, credentialled, long-established *and* under
+£15/month. Hoxton Mix is monthly and well-reviewed at £21/mo + VAT — roughly
+£302/yr, twice the price. Icon Offices bills quarterly at £38.87, which is
+£155.48/yr, so it is dearer than UK Postbox *and* carries the weaker record
+that got it rejected in the first place; it stays second choice and nothing
+more.
+
+**Checked the same way Icon Offices was, which is the test V LOT never got.**
+UK Postbox Ltd is **company 06723381**, trading since 2008; **HMRC AML
+supervision MLR XLML00000192390**; ICO registration ZA038907; VAT registered.
+Their own page sells a "**Business Trading Address** — to use on marketing
+materials and stationery", states the service suits "a sole trader,
+partnership, limited company or PLC", and carries an FAQ for exactly our case:
+a sole trader not registered at Companies House. **That is the category-2
+product sold as such, with no inference needed** — which is more than can be
+said for most of this market.
+
+**One number recorded as unresolved rather than rounded in our favour.**
+Trustpilot returns 403 to direct fetching, and search results report UK
+Postbox's score as both **4.0 and 4.7** across ~800 reviews. Those are
+materially different claims and we could not settle which is current. It is in
+the B1 table as unresolved, and it is a five-minute check on the day. **Given
+this file's history with supplier reviews — V LOT's were poor and were
+correctly flagged, and we bought anyway — do the check before paying, not
+after.**
+
+**Three traps written into B1b for the day of purchase:** buy the Business
+**Street** Address, not their cheaper Business PO Box, because a PO Box is not
+valid for this and their own FAQ says so; identity verification is a real step
+with its own lead time; and pay-as-you-go page scans are £1.20 each on top of
+the £12, which at our volume is pennies but should not be a surprise.
+
+**What this does to the plan, which is the biggest practical change.**
+`ops/plan-to-1-september.md` was built around a ~£115 lump sum that could not
+be paid before the freeze lifted on 26 August, leaving six days to launch for a
+purchase with a postal lead time. **£12 is a different kind of decision.**
+Whether it fits inside the freeze is the owner's call and is deliberately not
+assumed either way in the plan — but the option exists now, and it is the only
+route that gets the disclosure onto the site before an early sale rather than
+after one.
+
+**Left unsolved, and flagged rather than quietly dropped:** the address is in
+Poole, Dorset. **None of the credible providers is in the north-west**, so the
+locality question `ROADMAP.md` raised on 2026-08-06 — whether to put a
+`PostalAddress` in the structured data, and whether it says Merseyside — is not
+answered by this purchase and is not a reason to pick a worse provider for
+geography. Decide it deliberately when the address arrives: publish the real
+locality, or publish none.
+
+**Next:** buy it (date is the owner's call); check the Trustpilot score first;
+and find the V LOT payment details off the card statement while it is recent.
+
+---
+
+### 2026-08-07 (owner confirms UK Postbox; purchase runbook written)
+
+**Done:** the owner confirmed UK Postbox. The comparison is closed and the item
+is now a purchase, so the work this session was turning a decision into
+something that can be executed without re-reading six sections — **new section
+`ops/third-party-services.md` B1c, the runbook**. A row for UK Postbox was
+added to the `ops/accounts.md` register pre-filled and marked not-yet-bought,
+and the status changed from "the pick" to "confirmed" across `ROADMAP.md`,
+`HANDOVER.md` and `ops/plan-to-1-september.md`.
+
+**Four operational facts found in their user agreement and verification pages
+that were not known when the decision was made.** None of them changes the
+decision; all four would have been unpleasant to discover at the checkout.
+
+1. **The ID check leaves a soft footprint on the owner's personal credit
+   file.** Their terms say it is an ID check only and affects neither the
+   credit report nor the ability to borrow. It is recorded because it touches
+   the owner personally and should not be a surprise. Verification is
+   biometric, usually approved **within 24 hours**.
+2. **Registering the trading name is its own verified step**, not a text field
+   — UK Postbox publishes a separate "Add Business Names" verification guide
+   alongside its per-legal-status guides, and there is a specific **"Sole
+   Trader"** guide to download *before* signing up.
+3. **An inactive account gets its mail returned to sender after a month, and
+   purged and shredded at six.** On a £12 subscription paid by card, a failed
+   payment is a plausible event — and its consequence is a silently broken
+   legal disclosure on the site plus returned statutory post. That risk is now
+   the "if missed" column of the `ops/accounts.md` row.
+4. **Leaving is a project, not a cancel button.** Their terms require the
+   address to be moved off ICO, HMRC and everywhere else *before* closing, or
+   continued use stays chargeable. Icon Offices sets the same trap. **This is
+   the strongest argument yet for choosing once**, and it sharpens the note in
+   B1b about switching to an annual provider later if capital eases: that is a
+   change of address across the footer, the JSON-LD, the ICO record and HMRC,
+   not a swap of direct debits.
+
+**One cost recorded as unknown rather than assumed, per `CLAUDE.md`.** Their
+user agreement refers to "the standard setup fee", but **no setup fee appears
+on the pricing page, the business address page or in the terms** — the only
+mention is in a clause about re-creating a lapsed account. It may be £0 for new
+signups. It is `[PLACEHOLDER]` in B1b and in the accounts row, with an
+instruction to read the checkout total before confirming. **The B1 comparison
+was run entirely on headline monthly rates, so if a setup fee exists it is a
+gap in that comparison and not just a line on an invoice.**
+
+**Why the runbook orders the downstream work rather than listing it.** Buying
+the address is step one of nine, and the last three — footer, ICO address
+change, structured-data locality — are the ones that actually close the
+original risk. The ICO change is why this became urgent at all: registration
+`C1995412` carries the owner's home address on a bulk-downloadable public
+register. **Buying the address and stopping there fixes nothing**, which is the
+failure mode a runbook is for.
+
+**Still open and deliberately not resolved here:** the Trustpilot score
+(reported as both 4.0 and 4.7; Trustpilot blocks automated fetching, so it is a
+five-minute human check before paying), the setup fee, and the locality
+question — whether the structured data eventually says Poole, Dorset or says
+nothing.
+
+**Next:** buy it, following B1c; fill in the `ops/accounts.md` row the same
+day; then the footer and the ICO address change.
+
+---
 ### 2026-08-07 (Competitor analysis Part 2 — the raw data, and what it overturned)
 
 **Done:** `runs-clean.csv` supplied by the owner and mined against Part 1's desk

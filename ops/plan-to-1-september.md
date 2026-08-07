@@ -79,9 +79,20 @@ are free:
 `[PLACEHOLDER]` in the footer of all seven pages, and it is a legal
 disclosure requirement for trading under a name that is not the owner's own.
 Taking money before that is resolved is the owner's call to make knowingly,
-not something to discover afterwards. **Chasing V LOT is free and is the only
-route that closes it before the 26th** — which moves it from an admin chore to
-the thing standing between here and an early sale.
+not something to discover afterwards.
+
+**Updated 2026-08-07, twice.** First: there is no longer a free route to
+closing this — V LOT was written off and a refund requested, and Icon Offices
+came out dearer than the fallback. Then the owner set a monthly-billing
+constraint, which ruled out the annual-only providers and landed on **UK
+Postbox at £12/month** (`ops/third-party-services.md` B1b).
+
+**That changes this section's whole shape.** It was written around a ~£115
+lump sum that could not happen before the 26th. **£12 is a different kind of
+decision**, and whether it fits inside the freeze is the owner's call rather
+than something to assume either way — but the option now exists, and taking it
+early is the only thing that gets the disclosure onto the site before an early
+sale rather than after one.
 
 ---
 
@@ -141,12 +152,12 @@ business somebody can safely pay:
   **C1995412**). This has a deadline and no undo — the home address publishes
   to a bulk-downloadable register. **The freeze is not a reason to delay it;
   the fee is already paid.** Ask about the trading name on the same call.
-- **Chase V LOT.** Money was paid ~29 July and nothing was delivered. Chasing
-  is free, and it is the only route to an address for service that does *not*
-  need £115 on the 26th. **Give it a deadline: if V LOT has not delivered by
-  24 August, the fallback gets bought on the 26th.** Also find the order
-  reference, amount and payment method — a chargeback needs all three, and
-  none of them is written down.
+- **Recover the V LOT money.** *Rewritten 2026-08-07 — this used to say "chase
+  V LOT" as a free route to an address. It isn't one; the owner has requested a
+  refund and the address gets bought on the 26th.* What is left here is only
+  the money: **find the order reference, amount and payment method.** A
+  chargeback needs all three if the refund is refused, and none of them is
+  written down anywhere. Do it while the card statement still shows it.
 - **The password vault** (Bitwarden, free tier) and an emergency-access
   grantee. `ops/accounts.md` calls this the whole answer to bus factor.
 - **Zoho's recovery address** — five minutes, owed since 29 July, currently
@@ -197,16 +208,36 @@ It also puts a question against the £150 Maintain price, which was set against
 the wrong estimate. **Not a decision for this window** — do not reprice while
 launching — but it needs answering before the first monthly client renews.
 
-**2. The address for service, if V LOT has not delivered.**
+**2. The address for service. Certain, not conditional — and now £12/month.**
 
-~£115/yr inc VAT (1st Formations / Quality Company Formations). This is a
-legal disclosure requirement for trading under a name that is not the owner's
-own, and the rename does not change that — "Wardith" is a trading name exactly
-as "Noven" was. It is the `[PLACEHOLDER]` in the footer of all seven pages.
+**UK Postbox, Business Street Address, Poole: £12/month inc VAT**, monthly,
+cancel any time. This is a legal disclosure requirement for trading under a
+name that is not the owner's own, and the rename does not change that —
+"Wardith" is a trading name exactly as "Noven" was. It is the `[PLACEHOLDER]`
+in the footer of all seven pages.
+
+**This heading used to read "if V LOT has not delivered", and then "a firm ~£115
+on the 26th". Both are superseded as of 2026-08-07.** V LOT is written off with
+a refund requested; Icon Offices was rejected; and the owner's monthly-billing
+constraint ruled out 1st Formations and Quality Company Formations, which are
+annual-only (`ops/third-party-services.md` B1b).
+
+**The practical effect is that this stopped being a big-ticket item.** £12
+against £115 removes most of the reason it was queued behind the freeze at all,
+and it removes the six-day squeeze between the 26th and launch if it is started
+earlier. **Whether to start it before the 26th is the owner's call** — but the
+lead time is real: identity verification (usually approved within 24 hours)
+plus post, and neither is instant.
+
+**Confirmed by the owner on 7 August, so the remaining work is mechanical.**
+Follow `ops/third-party-services.md` **B1c** — it carries the purchase steps,
+the two traps worth a wasted month (Street address not PO Box; register
+"Wardith" as its own verified step), and the order the footer, the ICO address
+change and the locality decision have to follow.
 
 **Trading on 1 September with that placeholder still on the site is publishing
 a visible legal gap on a site whose entire pitch is that its own facts are
-correct.** Buy it, or chase V LOT hard enough that it lands.
+correct.**
 
 **3. The pre-launch audit — run it on Wardith, before 1 September.**
 
@@ -288,9 +319,12 @@ once on a real customer.
    and satisfying and writing a target list is neither. The site being live is
    not the same as the business being operational, and only one of those is on
    the 1 September promise.
-2. **V LOT stays silent and the address for service is bought on the 26th** —
-   which is fine, unless the provider takes longer than six days to issue it.
-   **Check the fallback provider's turnaround before the 26th**, so the date
+2. **The address for service is bought on the 26th and does not arrive in
+   time** — six days from purchase to launch, with UK Postbox having to verify
+   identity and issue the address inside it. **This risk is now largely under
+   the owner's control**, because at £12/month the purchase no longer has to
+   wait for the 26th at all. If it does wait, **check UK Postbox's verification
+   turnaround before then** and have ID documents ready on the day, so the date
    is known rather than hoped for.
 3. **`novenstudio.co.uk` expires in the freeze window.** Low probability,
    total impact, and currently unknown. See above.
@@ -307,8 +341,8 @@ plan.
 |---|---|
 | **Today, 4 Aug** | Look up `novenstudio.co.uk` expiry and registrar. Confirm GoDaddy auto-renew. Find the Canva billing date |
 | **Mon 10 Aug** | ICO call — address and trading name. Deadline, no undo |
-| **Mon 24 Aug** | V LOT decision point: delivered, or the fallback gets bought |
-| **Wed 26 Aug** | Spending capacity returns. API balances first, address for service second |
+| ~~**Mon 24 Aug**~~ | ~~V LOT decision point~~ — **decided early on 7 Aug: written off, UK Postbox chosen.** Before this date instead: check UK Postbox's ID verification turnaround |
+| **Wed 26 Aug** | Spending capacity returns. API balances first, address for service second — **£12/month, not ~£115. Owner's call whether it waits this long at all** |
 | **Tue 1 Sept** | **Hard launch.** Operational, outreach active |
 
 **No date for the first sale, on purpose.** Under the revenue exception it can
