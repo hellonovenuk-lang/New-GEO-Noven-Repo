@@ -718,6 +718,35 @@ Not until there are paying clients and proof.
 - [ ] LinkedIn, or wherever our buyers actually are.
 - [ ] [PLACEHOLDER: decide after the first ten conversations]
 
+### 2f. Competitor citation analysis — **start a new session here**
+
+**`ops/competitor-analysis.md`.** Two-part piece of work, prompted by the Aug 2
+self-audit's "who gets recommended instead" table (Tilio named 36 times, nine
+more competitors behind it). Part 1 — desk research on what those competitors
+visibly do differently — is done (2026-08-07). Part 2 needs
+`runs-clean.csv` (raw verbatim answer data, owner's machine only, never this
+repo — `ops/audit-method.md` §5) and has not started.
+
+- [x] **Part 1 — desk research.** Findings: nearly every named competitor
+      either publishes or appears on a self-inclusive "best of" listicle,
+      which Wardith appears on none of; every one has a dedicated service page;
+      published pricing is normal in this category and Wardith undercuts it;
+      "digital PR / citation strategy" is sold as its own line, which Wardith's
+      product doesn't currently touch. Full detail and sourcing in the doc.
+- [ ] **Considered and explicitly not done: any public ranking, "trust score",
+      or named-competitor comparison.** Worked through in detail, parked by the
+      owner — defamation and UK comparative-advertising exposure for a
+      one-person business, and (for one variant) an undisclosed-self-promotion
+      problem independent of whether the claim was true. Reasoning in full in
+      the doc's "Considered and not done" section — **read it before
+      re-proposing this**, the argument doesn't need re-running from scratch.
+- [ ] **Part 2 — mine `runs-clean.csv` per-competitor, cross-reference against
+      Part 1, produce one execution plan.** Instructions are written and
+      waiting in the doc's final section. Triggered by the owner supplying the
+      file. Test WebFetch at the start of the new session before assuming this
+      session's `EGRESS_BLOCKED` block still applies — it may be
+      session-specific.
+
 ---
 
 ## Phase 3 — Outcome (actually doing the work we've promised)
