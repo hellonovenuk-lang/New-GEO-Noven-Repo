@@ -1,5 +1,7 @@
 # Third-party services — what we need, and who to use
 
+**Status: Live** — prices restated against the repricing on 2026-08-01; some sections predate decisions made later in the same file, and say so.
+
 **Internal document.** This is a working note for the owner, not client-facing
 copy. It names products and categories plainly so decisions can be made quickly.
 
@@ -56,7 +58,7 @@ money that has already arrived.
 
 ### A1. Email on the domain — Zoho Mail
 
-**Pick:** Zoho Mail, on `novenstudio.co.uk`.
+**Pick:** Zoho Mail, on `wardith.co.uk`.
 
 **Cost:** The Forever Free plan covers up to 5 users on one custom domain with
 5 GB each — **but Zoho no longer offers it to new sign-ups on the EU, US or AU

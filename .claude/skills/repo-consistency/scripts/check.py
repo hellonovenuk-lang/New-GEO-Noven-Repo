@@ -174,14 +174,48 @@ def check_facts(root, config, facts, findings):
     # 150 queries" is a running cost, not a price, and matching it as "£1"
     # produced a confident, wrong finding on the first run of this script.
     money = re.compile(r"£\s?(\d[\d,]*)(?!\.\d)")
+    record_heading = config["record_section_heading"]
+    current_prices = set(facts["prices"].values())
+    canonical_ladder = [facts["prices"][k] for k in config["plan_aliases"]
+                        if k in facts["prices"]]
     seen_amounts = defaultdict(list)
 
     for rel, path in collect_files(root, config, TEXT_SUFFIXES | CODE_SUFFIXES):
         if is_historical(rel, config) or rel == config["canonical_source"]:
             continue
+        record_level = None
+        prev_line = ""
         for n, line in enumerate(read_lines(path), 1):
+
+            # A live document can contain sections whose job is to record a
+            # price change — "## 9. The repricing — 2026-07-31" is the argument
+            # for today's prices and has to state yesterday's. Flagging those is
+            # not merely noise: acting on it would rewrite the reasoning into
+            # nonsense ("Audit £250 → £250").
+            #
+            # The pattern is deliberately narrow. An earlier version accepted any
+            # dated heading containing "changed", which swallowed ROADMAP.md's
+            # "What changed on 2026-08-06" — a status section describing the
+            # present — and with it a genuinely stale £95 sitting underneath.
+            # Suppressing a real finding is far worse than printing a noisy one,
+            # so this errs towards reporting.
+            heading = re.match(r"^(#{1,6})\s+(.*)$", line)
+            if heading:
+                level, text = len(heading.group(1)), heading.group(2)
+                # Subsections stay inside their parent record section; only a
+                # heading at the same or higher level closes it.
+                if record_level is not None and level <= record_level:
+                    record_level = None
+                if record_level is None and re.search(
+                        record_heading, text, re.I):
+                    record_level = level
+            if record_level is not None:
+                prev_line = line
+                continue
+
             matches = list(money.finditer(line))
             if not matches:
+                prev_line = line
                 continue
             lowered = line.lower()
 
@@ -194,21 +228,82 @@ def check_facts(root, config, facts, findings):
                 for m in re.finditer(rf"\b{re.escape(alias)}\b", lowered):
                     alias_positions.append((m.start(), plan_id))
 
-            # A line comparing old and new, or quoting a range, is usually
-            # discussing prices rather than stating one.
-            discursive = bool(re.search(r"[–—]|\bwas\b|\bpreviously\b|\bold\b|"
-                                        r"\bsuperseded\b|\bused to\b|\bfrom £",
-                                        line, re.I))
+            # A line comparing old and new, quoting a range, or weighing a price
+            # that does not exist yet is discussing prices rather than stating
+            # one. The arrow is the giveaway for a move ("Audit £125 → £250");
+            # the hedges are the giveaway for a hypothetical ("whether a deeper
+            # tier nearer £750 is worth having").
+            discursive = bool(re.search(
+                r"→|->|[–—]|\bwas\b|\bpreviously\b|\bold\b|\bsuperseded\b|"
+                # "whether" was tried here and removed: it is ordinary English
+                # ("re-check whether Maintain's £95/month still holds") and it
+                # demoted two genuinely stale prices to a softer grade.
+                r"\bused to\b|\bfrom £|\bwhat changed\b|\bnearer\b|"
+                r"\baround\b|\broughly\b|\bcirca\b|\bhigher-priced\b|"
+                r"\bwould be\b|\bcould be\b",
+                line + " " + prev_line, re.I))
+
+            # Every £ figure on the line, pence included. The attribution test
+            # below needs to see fees like "£0.20" even though they are never
+            # candidates themselves — otherwise a fee column is invisible and an
+            # amount binds to a plan name three columns away.
+            all_money = [m.start() for m in re.finditer(r"£\s?\d", line)]
+
+            # A ladder quoted without naming its plans — "Monthly plans (£95 /
+            # £250 / £495)" — carries no alias for the rule below to bind to, so
+            # it slipped through entirely until a heading in ROADMAP.md was found
+            # still advertising the superseded ladder. Three or more amounts on
+            # one line, not one of them a current price, is that shape.
+            # Bound to lines that actually claim to be listing our plans. An
+            # unbound version flagged the ICO fee and the domain renewal, and
+            # "none of them current" also missed this very case, because £250 is
+            # a current price — the audit's — sitting inside a stale monthly
+            # ladder. What matters is that every amount in a plan ladder should
+            # be a current plan price.
+            if len(matches) >= 3 and not discursive and re.search(
+                    r"\b(plans?|tiers?|ladder|pricing)\b", lowered):
+                values = [int(m.group(1).replace(",", "")) for m in matches]
+                stale = [v for v in values if v not in current_prices]
+                if stale:
+                    findings.append(Finding(
+                        "facts", "error", rel, n,
+                        "price ladder containing "
+                        + ", ".join(f"£{v:,}" for v in stale)
+                        + ", which "
+                        + ("is not a" if len(stale) == 1 else "are not")
+                        + " current price"
+                        + ("" if len(stale) == 1 else "s")
+                        + " — the ladder is now "
+                        + " / ".join(f"£{p:,}" for p in canonical_ladder),
+                        evidence=line.strip()[:200],
+                    ))
 
             for m in matches:
                 value = int(m.group(1).replace(",", ""))
                 seen_amounts[value].append(f"{rel}:{n}")
                 if not alias_positions:
                     continue
-                _, plan_id = min(alias_positions,
-                                 key=lambda ap: abs(ap[0] - m.start()))
+                pos, plan_id = min(alias_positions,
+                                   key=lambda ap: abs(ap[0] - m.start()))
+
+                # Only bind an amount to a plan name when no other £ figure sits
+                # between the two. A table row like "£800 Foundation | invoice |
+                # £0 (bank transfer)" names one plan and two amounts, and the £0
+                # is a bank fee — attaching it to Foundation invents a fault.
+                lo, hi = min(pos, m.start()), max(pos, m.start())
+                if any(lo < other < hi for other in all_money
+                       if other != m.start()):
+                    continue
+
                 expected = facts["prices"].get(plan_id)
                 if expected is None or value == expected:
+                    continue
+
+                # If the line already states this plan's correct price, the
+                # other number is something else — a fee, a competitor's rate, a
+                # running cost. "an audit's tool cost lands under £2 against a
+                # £250 audit" is the document being right, not wrong.
+                if re.search(rf"£\s?{expected:,}(?![\d.])".replace(",", "[,]?"), line):
                     continue
                 findings.append(Finding(
                     "facts", "verify" if discursive else "error", rel, n,
@@ -219,6 +314,8 @@ def check_facts(root, config, facts, findings):
                     evidence=line.strip()[:200],
                     fix="" if discursive else f"£{expected:,}",
                 ))
+
+            prev_line = line
 
     current = set(facts["prices"].values())
     for value, places in sorted(seen_amounts.items()):
@@ -264,8 +361,23 @@ def check_names(root, config, facts, findings):
                 hits[(rel, term)][bucket].append((n, line.strip()[:160]))
                 break
 
+    # Pairs a previous run judged correct-as-history, with the reason. Recorded
+    # rather than pattern-matched, because "the Noven self-audit" is the name of
+    # a past event and no regex reliably tells that from a stale fact. They are
+    # still printed — downgraded, with the reason — so the judgement stays
+    # visible and can be reversed, instead of silently disappearing.
+    reviewed = {(r["path"], r["term"]): r.get("reason", "")
+                for r in config.get("reviewed_names", [])}
+
     for (rel, term), buckets in sorted(hits.items()):
         live, hist = buckets["live"], buckets["historical"]
+        if (rel, term) in reviewed:
+            findings.append(Finding(
+                "names", "note", rel, (live or hist)[0][0],
+                f"'{term}' appears {len(live) + len(hist)}x — reviewed and kept: "
+                f"{reviewed[(rel, term)]}",
+            ))
+            continue
         if live:
             where = ", ".join(f"line {n}" for n, _ in live[:4])
             more = f" and {len(live) - 4} more" if len(live) > 4 else ""
@@ -309,11 +421,30 @@ def check_refs(root, config, findings):
             if not rel_p.startswith(("node_modules/", ".git/")):
                 by_basename[path.name].append(rel_p)
 
+    # Paths that are built rather than committed. `dist/index.html` is missing
+    # from a clean checkout by design, and reporting it teaches the reader to
+    # skim this check.
+    built = re.compile(r"^(dist|build|out|\.astro|node_modules)/")
+
+    # Files a document legitimately names but that live outside this repo.
+    # `ops/audit-method.md` §5 puts client audit data in the client's own folder
+    # on purpose — the per-run `timings.md` is supposed to be absent here.
+    external_files = set(config.get("external_files", []))
+
     for rel, path in collect_files(root, config, TEXT_SUFFIXES):
         if is_historical(rel, config):
             continue
         here = Path(rel).parent
+        in_deleted_section = False
         for n, line in enumerate(read_lines(path), 1):
+
+            # A section headed "Deleted 2026-07-31" exists to say what is gone.
+            # Its references dangle on purpose, and the explanation is the point.
+            heading = re.match(r"^#{1,6}\s+(.*)$", line)
+            if heading:
+                in_deleted_section = bool(re.search(
+                    r"\b(deleted|removed|retired|closed)\b", heading.group(1), re.I))
+
             for target in ref.findall(line):
                 candidates = [
                     root / target,
@@ -324,10 +455,14 @@ def check_refs(root, config, findings):
                     continue
                 if "/" not in target and by_basename.get(target):
                     continue
-                # Deliberate mentions of deleted files are a record, not a bug.
-                historical = re.search(
+                if built.match(target) or target in external_files:
+                    continue
+                # Deliberate mentions of deleted files are a record, not a bug —
+                # as is a ticked checklist item recording the deletion.
+                historical = in_deleted_section or re.match(
+                    r"\s*[-*]\s*\[[xX]\]", line) or re.search(
                     r"\b(deleted|removed|renamed|formerly|was|used to|no longer|"
-                    r"replaced|never|if either becomes real)\b", line, re.I)
+                    r"replaced|never|resolved|if either becomes real)\b", line, re.I)
                 findings.append(Finding(
                     "refs", "note" if historical else "error", rel, n,
                     f"reference to `{target}` which does not exist"

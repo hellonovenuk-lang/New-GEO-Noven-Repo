@@ -8,7 +8,7 @@ explicitly overrides them.
 - Client-facing language is plain and outcome-led. Say what the customer gets,
   in words a busy business owner would use.
 - No search-industry jargon in the copy that persuades — headlines, navigation,
-  body text, meta descriptions. **Noven never describes itself with an
+  body text, meta descriptions. **Wardith never describes itself with an
   acronym.**
 - **One deliberate exception, decided by the owner 2026-08-01.** A single FAQ
   entry or answer page may name the industry's terms — "GEO", "AEO", "SEO" and

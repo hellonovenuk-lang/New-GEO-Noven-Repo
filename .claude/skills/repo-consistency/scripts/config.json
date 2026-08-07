@@ -20,16 +20,13 @@
     "plan_aliases: how a plan gets named in prose, so a price sitting next to it",
     "can be checked against the canonical number for that plan."
   ],
-
   "canonical_source": "site/src/data/business.ts",
-
   "superseded_terms": [
     "Noven Studio",
     "novenstudio.co.uk",
     "hello@novenstudio.co.uk",
     "Noven"
   ],
-
   "historical_paths": [
     "ops/session-log.md",
     "ops/rename-to-wardith.md",
@@ -38,15 +35,23 @@
     "node_modules/",
     ".git/"
   ],
-
   "plan_aliases": {
-    "audit": ["audit"],
-    "foundation": ["foundation"],
-    "maintain": ["maintain"],
-    "grow": ["grow"],
-    "lead": ["lead"]
+    "audit": [
+      "audit"
+    ],
+    "foundation": [
+      "foundation"
+    ],
+    "maintain": [
+      "maintain"
+    ],
+    "grow": [
+      "grow"
+    ],
+    "lead": [
+      "lead"
+    ]
   },
-
   "status_vocabulary": [
     "Live",
     "Decided, unvalidated",
@@ -54,9 +59,165 @@
     "Stub",
     "Reopened"
   ],
-
-  "status_required_in": ["ops/"],
-
+  "status_required_in": [
+    "ops/"
+  ],
+  "_external_files_note": [
+    "Files the documents name on purpose that are not in this repo, so",
+    "the refs check does not report them as broken. Client audit data",
+    "lives in the client's own folder outside the repo — ops/audit-",
+    "method.md section 5 — so the per-run timings.md is meant to be absent."
+  ],
+  "external_files": [
+    "timings.md",
+    "runs.csv",
+    "runs-clean.csv"
+  ],
   "duplicate_min_chars": 200,
-  "duplicate_similarity": 0.75
+  "duplicate_similarity": 0.75,
+  "_record_section_note": [
+    "A heading matching this pattern marks a section whose job is to record a",
+    "price change, so the old prices inside it are correct and are skipped by",
+    "the facts check. It runs until the next heading of the same or higher",
+    "level, so subsections stay inside it.",
+    "",
+    "Keep this narrow. A loose version ('any dated heading saying changed')",
+    "matched ROADMAP.md's 'What changed on 2026-08-06' — a section about the",
+    "present — and silently hid a stale price underneath it. A noisy finding",
+    "costs a glance; a suppressed one costs the whole point of the check."
+  ],
+  "record_section_heading": "\\b(repricing|price history|superseded prices)\\b",
+  "_reviewed_names_note": [
+    "File/term pairs judged correct as written, with the reason and the date the",
+    "judgement was made. The names check downgrades these to notes instead of",
+    "errors, so a later run does not re-investigate them from scratch.",
+    "",
+    "This is a record of a decision, not a mute button: the mentions are still",
+    "printed with the reason attached. Delete an entry to put it back in front of",
+    "the reader — and do delete it if the file's purpose changes.",
+    "",
+    "Reviewed 2026-08-07."
+  ],
+  "reviewed_names": [
+    {
+      "path": "ops/audit-method.md",
+      "term": "Noven",
+      "reason": "ICO registration record and self-audit references, both dated events"
+    },
+    {
+      "path": "ops/audit-setup.md",
+      "term": "Noven",
+      "reason": "the document is about the Noven test run; that is what the run was called"
+    },
+    {
+      "path": "ops/audit-site-checklist.md",
+      "term": "Noven",
+      "reason": "names the 2026-08-02 self-audit and the run it was called at the time"
+    },
+    {
+      "path": "ops/competitor-analysis.md",
+      "term": "Noven",
+      "reason": "names the 2026-08-02 self-audit and the run it was called at the time"
+    },
+    {
+      "path": "ops/service-tiers.md",
+      "term": "Noven",
+      "reason": "names the 2026-08-02 self-audit and the run it was called at the time"
+    },
+    {
+      "path": "ops/name-check/README.md",
+      "term": "Noven",
+      "reason": "the name collision this tool was built to test"
+    },
+    {
+      "path": "ops/name-check/name_check.py",
+      "term": "Noven",
+      "reason": "the name collision this tool was built to test"
+    },
+    {
+      "path": "ops/site-check/README.md",
+      "term": "Noven",
+      "reason": "names the 2026-08-02 self-audit and the run it was called at the time"
+    },
+    {
+      "path": "ops/site-check/site_check.py",
+      "term": "Noven",
+      "reason": "names the 2026-08-02 self-audit and the run it was called at the time"
+    },
+    {
+      "path": "ops/search-console-and-bing.md",
+      "term": "Noven",
+      "reason": "names the 2026-08-02 self-audit and the run it was called at the time"
+    },
+    {
+      "path": "ops/search-console-and-bing.md",
+      "term": "novenstudio.co.uk",
+      "reason": "the old domain as an owned asset still needing Change of Address"
+    },
+    {
+      "path": "ops/own-facts-check.md",
+      "term": "Noven",
+      "reason": "names the 2026-08-02 self-audit and the run it was called at the time"
+    },
+    {
+      "path": "ops/own-facts-check.md",
+      "term": "novenstudio.co.uk",
+      "reason": "the old domain as a surface still being checked"
+    },
+    {
+      "path": "ops/plan-to-1-september.md",
+      "term": "novenstudio.co.uk",
+      "reason": "the old domain as an owned asset with unrecorded registrar and expiry"
+    },
+    {
+      "path": "ops/third-party-services.md",
+      "term": "Noven",
+      "reason": "quotes the roadmap as it was written at the time"
+    },
+    {
+      "path": "ops/third-party-services.md",
+      "term": "hello@novenstudio.co.uk",
+      "reason": "reasoning for rejecting ImprovMX, written against the address of the day"
+    },
+    {
+      "path": "HANDOVER.md",
+      "term": "hello@novenstudio.co.uk",
+      "reason": "records that the alias must keep receiving for twelve months"
+    },
+    {
+      "path": "assets/brand/trim.mjs",
+      "term": "Noven",
+      "reason": "comment about the committed brand set as verified on 2026-08-04"
+    },
+    {
+      "path": "assets/og/og.html",
+      "term": "Noven",
+      "reason": "comment recording the wordmark ratio it was derived from"
+    },
+    {
+      "path": "site/src/data/business.ts",
+      "term": "hello@novenstudio.co.uk",
+      "reason": "the comment explaining why the address was flipped and when"
+    },
+    {
+      "path": "site/src/pages/ask-your-ai/index.astro",
+      "term": "Noven",
+      "reason": "a published section whose subject is why the name changed; rewriting it would delete the explanation"
+    },
+    {
+      "path": "site/src/pages/ask-your-ai/self-audit.astro",
+      "term": "Noven",
+      "reason": "published reproduction of the dated self-audit report"
+    },
+    {
+      "path": "site/src/pages/ask-your-ai/self-audit.astro",
+      "term": "novenstudio.co.uk",
+      "reason": "published reproduction of the dated self-audit report"
+    },
+    {
+      "path": "site/src/pages/ask-your-ai/self-audit.astro",
+      "term": "hello@novenstudio.co.uk",
+      "reason": "the report's original signature; the alias still receives"
+    }
+  ]
 }

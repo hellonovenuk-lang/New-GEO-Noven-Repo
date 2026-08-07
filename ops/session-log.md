@@ -11,6 +11,93 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-07 (the consistency sweep, run for the first time)
+
+**Done:** ran `repo-consistency` across the repo after merging main. 90 errors
+down to 9. The nine that remain are three files that need the owner, listed at
+the end.
+
+**The prices were the point.** `HANDOVER.md` published the entire superseded
+ladder in its product table — £125 / £750 / £95 / £250 / £495 — six days after
+the repricing, and `ROADMAP.md` carried it in six more places including two
+section headings. That is the document a newcomer is told to read first quoting
+prices the business does not charge. Corrected against `business.ts` throughout.
+
+**Stale counts were replaced rather than reset.** `ops/README.md` claimed
+fourteen files (18) and a 1,100-line session log (3,105). Updating the numbers
+would have started the same clock again, so the counts are gone: "long, newest
+first" cannot go stale. The same for the root `README.md` entry.
+
+**Four live artefacts still signed themselves Noven** — the audit report
+template, the monthly record template, the standing rule in `CLAUDE.md`, and the
+Zoho pick in `third-party-services.md`. The first two are what every future
+client sees. Fixed.
+
+**Every operating document now carries a status.** `ops/README.md` defined the
+Live / Decided-unvalidated / Closed / Stub vocabulary on 2026-07-31 and asked
+for it in each file's header; eight files never got one. The wording was copied
+from the index's own table so the two cannot disagree. `plan-to-1-september.md`
+was not in that table and is marked Live — a judgement, not a lookup.
+
+**The scan did not catch everything on the first pass, and that is the finding
+worth keeping.** Three gaps, all now closed:
+
+- **A ladder with no plan names beside it was invisible.** `### 3c. Monthly
+  plans (£95 / £250 / £495)` has no plan named next to any number, so
+  price-to-plan matching had nothing to bind to. Worse, the obvious fallback —
+  "does the line contain a current price?" — also passes it, because £250 *is*
+  current: it is the audit's, sitting inside a stale monthly ladder. Now checked
+  as a set: every amount in a plan ladder must be a current plan price.
+- **A heuristic hid a real fault.** Sections were skipped when their heading was
+  dated and said "changed", to protect the repricing records in
+  `service-tiers.md` §9 and §11. That also matched `ROADMAP.md`'s "What changed
+  on 2026-08-06" — a section about the present — and silently swallowed a stale
+  £95 underneath it. The pattern is now narrow, lives in the config, and carries
+  the warning: a noisy finding costs a glance, a suppressed one costs the check.
+- **`timings.md` was reported as a broken reference** and investigated from
+  scratch before anyone remembered `audit-method.md` §5 puts client audit data
+  outside this repo. Files like that are now named in the config.
+
+**Precision matters as much as recall, for one reason.** The first run produced
+90 errors, most of them correct-as-written; a check nobody trusts is a check
+nobody reads, and the real drift hides in the noise. False positives were fixed
+at the source — fee columns, pence, price transitions, wrapped prose, build
+output, ticked-off history — not waved through.
+
+**The 24 name judgements are written down, not pattern-matched.** "The Noven
+self-audit" is the name of a past event, and no regex reliably tells that from a
+stale fact — the phrasings are a long tail with no shared shape. So each file
+was judged once and recorded in `reviewed_names` with its reason and date. They
+still print, downgraded, so the judgement stays visible and reversible.
+
+**Left for the owner, deliberately:**
+
+1. **`ops/linkedin.md`** — 42 mentions. `ops/README.md` already marks it
+   Reopened because the copy pasted into LinkedIn predates the repricing. The
+   fix is on LinkedIn, not only in the file, so it is not ours to silently make.
+2. **`ops/zoho-mail-setup.md`** — written throughout for
+   `hello@novenstudio.co.uk`. Marked Closed, and reused on 2026-08-06 for the
+   new address. Rewriting a closed record and rewriting a live runbook are
+   different jobs, and which one this is depends on whether it will be followed
+   again.
+3. **`ROADMAP.md`** — 18 mentions mixing live statements with self-audit
+   history. Needs reading rather than replacing.
+
+**No prose was condensed this run.** The consistency errors were the live risk —
+published prices that were wrong — and mixing a large rewrite into that diff
+would have made both harder to review. Word count went *up* slightly, from
+122,950 to 123,037, because eight status headers were added. The condensing pass
+is a separate piece of work; `ROADMAP.md` is the target, since it says itself
+that it exists to stay short enough to read at the start of every session and is
+now the largest live document at 8,846 words.
+
+**What a merge publishes: nothing visible.** No file under `site/` changed —
+Netlify will rebuild and serve a byte-identical site. The corrected prices are in
+the operating documents only; the site has always rendered them from
+`business.ts` and has been right throughout.
+
+---
+
 ### 2026-08-07 (a skill that checks this repo against itself)
 
 **Done:** `.claude/skills/repo-consistency/` — a skill that sweeps the repo for

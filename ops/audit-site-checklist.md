@@ -1,5 +1,7 @@
 # The website checklist
 
+**Status: Decided, unvalidated** — written down, never yet performed.
+
 **Internal working document.** What we look at during an audit, in the order we
 look at it. Copy this file into the client's audit folder and fill it in — the
 filled copy is the working note the report is written from, and it is never sent

@@ -153,7 +153,7 @@ that remains open, it is free, and it is listed below.
 - **The cost estimate in `ops/audit-setup.md` §6 is wrong.** It budgets ~£1.20
   per 150 queries. OpenAI alone billed **$12.63** for ~75 queries; Gemini's and
   Perplexity's totals were never recorded. This bears directly on whether
-  Maintain's £95/month is priced correctly.
+  Maintain's £150/month is priced correctly.
 - **The raw answer data was never archived.** `runs-clean.csv` — the 210 rows
   every figure in the report traces to — existed only on the owner's machine
   during the run and isn't in the audit folder. Nothing in the report has
@@ -354,7 +354,7 @@ provider's own site before committing.
 
 #### Before money changes hands
 
-- [D] **The £125 audit is paid on the website, upfront**, through our own order
+- [D] **The £250 audit is paid on the website, upfront**, through our own order
       page that hands off to a Revolut Pro payment link for the money only.
       Revolut's own custom fields were rejected because **field values only
       surface against a successful payment**, so an abandoned checkout would
@@ -371,8 +371,8 @@ provider's own site before committing.
       link in an email takes the first payment, and this page is a scaling tool
       for roughly sale five onward. Still blocked behind the terms, the privacy notice and
       the address whenever it is built.
-- [D] **The £750 Foundation is invoiced**, with the contract sent alongside once
-      both sides agree to start. At £750 the card fee is real money, there's
+- [D] **The £800 Foundation is invoiced**, with the contract sent alongside once
+      both sides agree to start. At £800 the card fee is real money, there's
       already a conversation, and bank transfer is free.
       - [x] Copy fix on `pricing.astro`: "booking" now reads *payment clearing*,
             so the two-day clock can't be started by someone who signed and
@@ -830,7 +830,7 @@ Every one of them costs nothing and fits inside the spending freeze.**
 without reinventing them each time, and a monthly client gets something real
 every month.
 
-### 3a. The audit (£125)
+### 3a. The audit (£250)
 
 Promised on the site: what each assistant says about businesses like theirs;
 what they know and believe about this business and whether it's accurate; what's
@@ -866,8 +866,8 @@ above; what the run confirmed or changed about the method is below.
 - [ ] **Fix the cost estimate.** `ops/audit-setup.md` §6 says ~£1.20 per 150
       queries. OpenAI alone cost $12.63 for ~75 queries on the real run;
       Gemini's and Perplexity's totals were never captured. Get those two
-      figures, correct §6, then re-check whether Maintain's £95/month
-      (`ops/service-tiers.md` section 9) still holds at the real cost.
+      figures, correct §6, then re-check whether Maintain's £150/month
+      (`ops/service-tiers.md` section 11) still holds at the real cost.
 - [ ] **Archive the run data on every future audit, before the report is
       written.** `runs-clean.csv` — the 210 rows every number in the Noven
       report traces to — was never saved into the audit folder; it lived only
@@ -898,7 +898,7 @@ above; what the run confirmed or changed about the method is below.
       costs rather than only that it happens. Carry both onto the order page when
       it's built.
 
-### 3b. The Foundation (£750)
+### 3b. The Foundation (£800)
 
 Promised: crawler access, structured machine-readable facts, consistent facts
 across the web, and pages that answer customer questions — all on the client's
@@ -926,7 +926,7 @@ existing site. We don't build websites.
 - [ ] What we hand over at the end, and how we show what changed.
 - [ ] Do the first one, time it, then fix the process.
 
-### 3c. Monthly plans (£95 / £250 / £495)
+### 3c. Monthly plans (£150 / £400 / £700)
 
 **Published on the site — `ops/service-tiers.md` has the reasoning.** Three
 verbs, not three intensities: Maintain holds your position, Grow closes the gaps,

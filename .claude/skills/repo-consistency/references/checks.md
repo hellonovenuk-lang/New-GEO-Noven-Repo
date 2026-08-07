@@ -23,8 +23,25 @@ Run one at a time with `--only <name>`.
 ## facts
 
 Reads `site/src/data/business.ts` — the declared single source of truth — and
-compares every `£` amount in prose against the canonical price of whichever plan
-is named nearest to it on the line.
+does two things with it.
+
+**One: attribution.** Every `£` amount is compared against the canonical price
+of the plan named nearest to it on the line. Three guards keep that honest, each
+added after it produced a wrong finding on this repo:
+
+- no other `£` figure may sit between the name and the amount, or a fee column
+  three cells away gets charged to a plan;
+- if the line already states that plan's correct price, the other number is
+  something else — a bank fee, a competitor's rate, a running cost;
+- pence amounts are ignored, because `£1.20 per 150 queries` is a cost, not a
+  price, and matching it as `£1` is a confident lie.
+
+**Two: ladders.** A line that claims to list plans or tiers and carries three or
+more amounts is checked as a set — every amount in it should be a current plan
+price. This exists because attribution alone cannot see
+`### 3c. Monthly plans (£95 / £250 / £495)`: no plan is named beside the
+numbers. Nor does "does it contain a current price?" catch it, since £250 *is*
+current — it is the audit's — sitting inside a stale monthly ladder.
 
 This is the check that matters most, because prices are rendered from
 `business.ts` on the site but restated by hand in the operating documents, and
@@ -32,15 +49,26 @@ prose does not recompile. When this repo was first scanned, `ROADMAP.md` and
 `HANDOVER.md` still carried the entire superseded ladder — £125 / £750 / £95 /
 £250 / £495 — as current fact, four days after the repricing.
 
-**Where it is wrong:** a line comparing an old price with a new one, or quoting
-a range, is discussion rather than a statement. Those are downgraded to
-`verify` and given no suggested fix, but the downgrade is a keyword guess. Read
-the evidence line before changing a number — the fix is printed as a
-suggestion, not an instruction.
+**Where it is wrong:** a line comparing an old price with a new one, quoting a
+range, or weighing a price that does not exist yet is discussion rather than a
+statement. Those are downgraded to `verify` and given no suggested fix, but the
+downgrade is a keyword guess. Read the evidence line before changing a number —
+the fix is printed as a suggestion, not an instruction.
 
-Amounts with pence (`£1.20 per 150 queries`) are ignored on purpose: they are
-running costs, not prices, and matching them as `£1` produced a confident wrong
-finding on this script's first run.
+The test reads the previous line as well as the current one, because prose
+wraps: "The old ladder" sat one line above the numbers it introduced, and
+judging the number line alone called a history lesson a fault.
+
+Whole sections can be records too. A heading matching
+`record_section_heading` in the config — "The repricing — 2026-08-05" — marks a
+section that has to state yesterday's prices to explain today's, and its
+contents are skipped down to the next heading of the same or higher level.
+
+**Keep that pattern narrow.** An earlier version accepted any dated heading
+containing "changed", which swallowed `ROADMAP.md`'s "What changed on
+2026-08-06" — a section about the present — and with it a genuinely stale £95
+underneath. A noisy finding costs a glance. A suppressed one costs the whole
+point of the check, silently. When in doubt, report.
 
 ## names
 
@@ -58,6 +86,18 @@ narration — ticked checklist items, past tense, "formerly", "archived" — are
 separated out and reported as notes. The split is a keyword guess, so check
 whether a mention describes today or describes 2026-08-02 before rewriting it.
 
+**When you have judged a file, record it.** `reviewed_names` in the config holds
+file/term pairs already found correct, each with its reason and the date. Those
+drop to notes — still printed, reason attached, so the judgement stays visible
+and can be reversed — instead of arriving as errors every run. Twenty-four pairs
+were recorded on 2026-08-07 after a full triage.
+
+This is the honest way to quieten this check. The alternative, tightening the
+regex until the noise stops, was tried and rejected: the mentions are spread
+across a long tail of phrasings with no pattern that separates "the Noven
+self-audit" from a stale fact, and every tightening risks hiding real drift.
+Delete an entry whenever a file's purpose changes.
+
 ## refs
 
 Backticked paths that resolve to no file. Bare names are matched anywhere in the
@@ -68,10 +108,16 @@ records that `org-chart.md` and `escalation-rules.md` were deleted and why —
 that reference *should* dangle, and removing it removes the explanation. Lines
 containing deletion language are downgraded to notes for this reason.
 
-A reference to a file that does not exist *yet* — `timings.md`, which an audit
-run is supposed to create — is a real finding but not necessarily a fault. It
-means the document assumes something the repo does not provide. Decide whether
-the file should exist or the instruction should change.
+Three more classes are excluded, each for its own reason:
+
+- **Build output.** `dist/index.html` is absent from a clean checkout by design.
+- **Ticked checklist items and "Deleted" sections.** `- [x] ops/spine.md →
+  ops/client-record.md` records the rename; the dangle is the record working.
+- **Files that live outside this repo**, listed as `external_files` in the
+  config. `ops/audit-method.md` §5 puts client audit data in the client's own
+  folder, so the per-run `timings.md` is *supposed* to be missing here. That one
+  was investigated from scratch before being recognised — which is exactly the
+  cost this document exists to prevent.
 
 ## sections
 
