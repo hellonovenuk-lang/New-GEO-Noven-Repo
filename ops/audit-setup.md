@@ -140,11 +140,12 @@ protect the card; the script cap protects the afternoon.
 None of these cost anything, and two of them close open roadmap items on the way
 past.
 
-- **Bing Webmaster Tools** (`bing.com/webmasters`) — submit `wardith.co.uk`
-  and the sitemap. This is roadmap 1e's outstanding item, and it matters here
-  because **Bing's index is what Copilot answers from** (method section 2): the
-  Copilot section of a report leans on indexation, not on mention rates. Do this
-  *before* the run, not during it, so the indexation check has something to read.
+- **Bing Webmaster Tools** (`bing.com/webmasters`) — **done 2026-08-07.**
+  `wardith.co.uk` submitted and indexing requested on all eight pages. It
+  mattered here because **Bing's index is what Copilot answers from** (method
+  section 2): the Copilot section of a report leans on indexation, not on
+  mention rates, so this had to happen *before* a run rather than during one, or
+  the indexation check has nothing to read. On the day, just have it open.
 - **Google Search Console** — **this line was stale and is corrected
   2026-08-06.** It read "already set up and confirmed, nothing to do beyond
   having it open on the day", which was true of `novenstudio.co.uk` and is not
@@ -542,7 +543,9 @@ Everything above, as a list to tick on the morning of the run.
 - [ ] Default model identifier recorded for each provider
 - [ ] Perplexity's per-request fee confirmed against their own pricing page, and
       method section 6 corrected if it differs
-- [ ] Bing Webmaster Tools set up, sitemap submitted
+- [x] Bing Webmaster Tools set up, all eight URLs submitted *(2026-08-07;
+      confirm the sitemap is listed under Sitemaps — see `own-facts-check.md`
+      row 8)*
 - [ ] Logged-out browser profile ready, UK locale
 - [ ] `clients/noven/audit-2026-08-XX/` created outside the repo, backed up
 - [ ] `runs.csv` and `questions.csv` created with the exact headers

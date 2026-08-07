@@ -32,6 +32,7 @@ the domain row is the one that matters most.
 | **ICO registration `C1995412`** | Legal requirement to process personal data | £47/yr, Direct Debit | ~30 Jul 2027 *(inferred from "renews annually")* | Penalty of up to **£4,000** against a £47 fee |
 | **Google Search Console** | Sitemap, indexation, removals. **Two properties: `wardith.co.uk` (Domain, verified 2026-08-06 via GoDaddy Domain Connect) and `novenstudio.co.uk`, with a Change of Address running between them to ~Feb 2027.** Keep the old one permanently — the move runs from it, and it holds the before/after the six-month re-check needs | Free | n/a | The only indexation diagnostic |
 | **LinkedIn** | Founder profile and company page, both published in the structured data as `sameAs` | Free | n/a | Published `sameAs` points at a dead URL, breaking the site's own consistency claim |
+| **Bing Webmaster Tools** | **Set up 2026-08-07.** `wardith.co.uk` submitted and indexing requested on all eight indexable pages. **This is the account that feeds Copilot**, which answers out of Bing's index — one of the four assistants the audit covers, and the only one whose retrieval source we can submit to directly. `novenstudio.co.uk` is deliberately **not** added: it only 301s away now | Free | n/a | Copilot loses its only direct route to this site. Bing never indexed the old domain either, so there is no fallback to decay back to — the site would simply be absent |
 
 ### Ordered, decided or needed but not yet in place
 
@@ -40,7 +41,6 @@ the domain row is the one that matters most.
 | **Address for service** | V LOT paid ~29 Jul 2026, nothing delivered. Order reference, amount and payment method **all unrecorded** — which is what a chargeback would need. Fallback decided (1st Formations / Quality Company Formations, ~£115/yr) and not yet ordered |
 | **Professional indemnity insurance** | Not bought. Should precede the first Foundation, which is where a live client site gets changed. Absent from `ROADMAP.md` entirely; researched in `ops/third-party-services.md` |
 | **API accounts** — OpenAI, Google AI Studio, Perplexity | **This row was stale and is corrected 2026-08-04.** All three were opened and used for the self-audit on 2 August — 210 runs. What is *not* known is the true cost: `ops/audits/noven-2026-08-02/README.md` records **OpenAI alone at $12.63 for ~75 queries** against `ops/audit-setup.md` §6's estimate of ~£1.20 per 150, and the Gemini and Perplexity totals were never recorded. Every audit delivered spends real money on the day. Get the three real totals before the 26 August unfreeze — see `ops/plan-to-1-september.md` |
-| **Bing Webmaster Tools** | Not done, and promoted 2026-08-06 to the more urgent of the two indexation jobs: the domain is days old with no history, Copilot answers from Bing, and Bing never indexed the old domain either — so there is nothing to migrate and no equity at risk. Steps in `ops/search-console-and-bing.md` |
 | **Password vault** | Recommended as step one of nine and there is no evidence it exists. See below |
 | **Client data storage** | Undecided. `ops/client-record.md` |
 

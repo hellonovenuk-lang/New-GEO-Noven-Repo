@@ -751,14 +751,20 @@ its section 6 describes.
       **This item said the tool "requires the D3 redirects to already be live",
       and that sentence is what caught D3 being wrong.** The first attempt
       failed, the redirects turned out never to have existed, seven rules went
-      into `netlify.toml`, and the second attempt passed. Sitemap, live-URL test
-      and indexing requests still to confirm — `ops/search-console-and-bing.md`
-      §1.3, §1.5, §1.6.
-- [ ] **F5. Bing Webmaster Tools.** Still not set up, and it was already a
-      finding. A brand-new domain with no history makes it more urgent, not
-      less — Copilot answers from Bing. **Part 2 of the same document**, and
-      note there is nothing to migrate: Bing never indexed the old domain
-      either, so this is a clean first submission rather than a move.
+      into `netlify.toml`, and the second attempt passed. **Sitemap submitted
+      and indexing requested on all eight pages, 2026-08-06. §1.5, the live-URL
+      test, done 2026-08-07 and passed** — the last step, and the only check in
+      this migration no session can perform, because the network policy blocks
+      `wardith.co.uk`. It also caught the check itself being wrong: §1.5 expected
+      `company/wardith` once and the homepage carries it twice by design.
+      **F4 is closed.** `ops/search-console-and-bing.md`.
+- [x] **F5. Bing Webmaster Tools — done 2026-08-07.** `wardith.co.uk` submitted
+      with indexing requested on all eight indexable pages. A clean first
+      submission rather than a move: Bing had never indexed the old domain
+      either, so nothing migrated and nothing was at risk. Closes self-audit
+      finding 2 on the action side — Copilot now has a route to this site where
+      it previously had none. **Indexation itself is days to weeks away**, and
+      `site:wardith.co.uk` on Bing is the thing that proves it.
 - [ ] **F6. Zoho Books** — trading name on invoices and any invoice template.
 - [ ] **F7. Revolut Pro** — the trading name shown on the audit payment link and
       whatever a customer sees on their statement.
