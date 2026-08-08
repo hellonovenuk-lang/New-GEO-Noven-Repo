@@ -86,6 +86,19 @@ narration — ticked checklist items, past tense, "formerly", "archived" — are
 separated out and reported as notes. The split is a keyword guess, so check
 whether a mention describes today or describes 2026-08-02 before rewriting it.
 
+**The same applies to prices, via `reviewed_facts`.** A repo about money is full
+of amounts that are not plan prices — hourly rates, API costs, a competitor's
+median, twenty clients' combined revenue — and the attribution rule binds them to
+the nearest plan name, which is right often enough to be worth keeping and wrong
+often enough to be re-triaged every run. Ten were judged on 2026-08-08. Keyed on
+**file and amount, not line**, so a condensing pass moving the text does not
+strand the entry.
+
+**It can only ever downgrade a `verify`.** An error — a document stating a price
+this business has stopped charging — cannot be silenced from the config, and the
+code makes that structural rather than a convention. Tested both ways before it
+was committed. If a fact is wrong, fix the fact.
+
 **When you have judged a file, record it.** `reviewed_names` in the config holds
 file/term pairs already found correct, each with its reason and the date. Those
 drop to notes — still printed, reason attached, so the judgement stays visible

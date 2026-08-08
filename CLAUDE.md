@@ -24,6 +24,23 @@ explicitly overrides them.
   free. Being brief in the record costs the next session, which then has to
   work the argument out again.
 
+## Reading
+
+*Added 2026-08-08, after a session read 3,539 lines of the session log — about
+six sessions' worth of this repo's whole baseline — to answer one question.*
+
+- **Locate first, then read the range.** Grep or run the checker to find the
+  line, then read around it. Reading a 700-line file to use one section is the
+  most common way a session spends its budget on nothing.
+- **Don't browse for faults.** `repo-consistency` names the line in a second.
+  Opening files hoping to spot drift costs more than the drift.
+- **Never re-read a file to check an edit landed.** The edit fails loudly if it
+  didn't.
+- **When a whole file genuinely has to be read, bank the result.** Some
+  judgements need everything — deciding which session-log entries were still
+  live needed all of it. That is fine once. Write the conclusion down as a rule
+  where the next session will meet it, or the same read gets paid for again.
+
 ## Language
 
 - Client-facing language is plain and outcome-led. Say what the customer gets,

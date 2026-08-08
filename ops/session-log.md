@@ -27,6 +27,65 @@ document had its argument stripped and sends the reader here.
 
 ---
 
+### 2026-08-08 (the condensing pass, run on the files a session actually opens)
+
+**The owner's reason: usage limits are arriving faster.** So the target was
+reading cost, not correctness — the scanner was already at 0 errors before this
+started and the whole pass added none.
+
+**`ROADMAP.md`: 7,774 → 6,211 words, 20% off.** It is the one file whose header
+tells every session to read it start to finish, so it is worth more per word cut
+than anything else here. What went was the second telling, in every case: the
+three method faults were written out in full in "Where we are today" *and* in 3a;
+1e restated 1c-3's two search-console items; the seven closed rename items in
+1c-3 carried a paragraph of history each where a closed item is supposed to carry
+its decision and its live consequence. **Section 3e went entirely** — it recorded
+the deletion of three stub files in July, which `ops/README.md` already carries.
+
+**Nothing open was touched.** Every `[ ]` and `[D]` item, every date, reference
+number, phone number and URL survives — the ICO deadline and helpline, `C1995412`,
+the £120,000 FSCS cap, the decay baseline of 4, the DMARC test still owed, the
+redirect regression test.
+
+**One real fault found, and no checker could have found it.** The "Open questions
+for the owner" section still led with **"Does Noven keep its name?"** — settled
+on 4 August, in the same file that announces the rename in its own banner. It is
+the same shape as the three contradictions found on 7 August: a paragraph correct
+when written and never re-read after the thing it described changed. Replaced
+with the brand decision from 2f, which is genuinely open.
+
+**`ops/search-console-and-bing.md`: 3,031 → 1,038 words, 66% off** — the clearest
+settled-versus-live case in the repo. It was a click-by-click runbook for two
+consoles that were both finished on 6 and 7 August. **The setup steps are gone**;
+what stays is what outlives the job: the four things that must not be undone
+(keep the old property, never press CANCEL MOVE, leave the redirects, don't add
+the old domain to Bing), the three checks still owed, the §1.5 live-URL test
+because it is the only check in this repo that asks a system we do not control
+what it actually sees, and the validator lesson that found the missing redirects.
+Its own header now says it is closed as a runbook and live as standing rules.
+**It had claimed the click steps were "kept as written, because it is the
+procedure for the next domain"** — there is no next domain, and keeping a
+procedure for a situation we have not met is the thing `ROADMAP.md` says in its
+own header that we do not do.
+
+**`ops/README.md` was not indexing four of its own files** —
+`competitor-analysis.md`, `plan-to-1-september.md`, `rename-to-wardith.md` and
+`search-console-and-bing.md`, one of which is the launch timetable. An index
+missing a quarter of its folder is worse than no index, because it is trusted.
+Two new sections added and all four given a status.
+
+**One false positive written into the scanner rather than left to recur.**
+`ops/README.md` describing "the full Noven → Wardith changeover" reads as a
+current-fact use of the dead name; it is the title of a past event, and the file
+it points at is the record of that event. In `reviewed_names` with the reason,
+per the documented practice.
+
+**Repo prose 92,600 → 88,551 words.** Scanner: 0 errors before, 0 after.
+
+**What a merge publishes: nothing visible.** No file under `site/` changed.
+
+---
+
 ### 2026-08-07 (V LOT written off; Icon Offices assessed and not taken)
 
 **Done:** the owner requested a refund from V LOT, closing the 29 July decision

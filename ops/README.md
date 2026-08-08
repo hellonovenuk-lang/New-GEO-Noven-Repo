@@ -60,11 +60,25 @@ in the business with no time budget at all.
 |---|---|---|
 | `third-party-services.md` | Every outside service the business needs, with a pick, a cost and a reason for each. Read only the **Picks** for the shortlist | Live — prices restated against the repricing on 2026-08-01; some sections still predate decisions made later in the same file, and say so |
 
+## The rename, and the run-up to launch
+
+| File | What it decides | Status |
+|---|---|---|
+| `plan-to-1-september.md` | The timetable: no further spending until 26 August, fully operational with outreach active by 1 September, and what has to happen in between | Live |
+| `rename-to-wardith.md` | The full Noven → Wardith changeover, seven phases. Phases A–D0 and F1–F5 are done; **Phase F's remainder is the open part**. Also holds the G2 six-month measurement | Live — mostly closed, and it is also the record of how the rename went |
+| `search-console-and-bing.md` | What must not be undone in either console, the checks still owed, and the decay baseline. **The step-by-step setup is gone** — both consoles were completed 6–7 August | Closed as a runbook, live as standing rules |
+
+## Outreach and the competition
+
+| File | What it decides | Status |
+|---|---|---|
+| `competitor-analysis.md` | Who else the assistants name, why they get named, and the six-item execution plan that came out of it. **Read "Considered and not done" before proposing any ranking or comparison page** | Live — analysis closed, execution open |
+
 ## The record
 
 | File | What it is | Status |
 |---|---|---|
-| `session-log.md` | Long, newest first: why every decision went the way it did. **Do not read front to back.** Go to it when you need the argument behind something, and read the entry before re-opening a settled decision | Live |
+| `session-log.md` | Newest first: why the decisions still in force went the way they did. **Do not read front to back.** Go to it when you need the argument behind something, and read the entry before re-opening a settled decision. Trimmed 2026-08-08 to the live entries — its own header carries the rule | Live |
 
 ## Deleted 2026-07-31
 

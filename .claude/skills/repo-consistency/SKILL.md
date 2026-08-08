@@ -21,7 +21,9 @@ machine can read them. The audit's third promise is exactly that, run on other
 people's businesses. A repo that contradicts itself is therefore not untidy — it
 is the product failing on the vendor.
 
-The second reason is cost. There are roughly forty thousand words of prose here.
+The second reason is cost. This repo holds tens of thousands of words of prose —
+run the `bloat` check for the current figure rather than trusting a number
+written here, which is how the last one went stale by more than double.
 Every session that reads the wrong half of it pays for the privilege, and a
 duplicated paragraph is paid for twice. Cutting what nobody needs to read is
 work with a return.
