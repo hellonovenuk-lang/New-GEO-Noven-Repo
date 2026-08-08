@@ -1,5 +1,7 @@
 # The audit report template
 
+**Status: Decided, unvalidated** — written down, never yet performed.
+
 **Internal document.** The report the client receives, and the rules for writing
 it. Copy the template below into the client's audit folder, fill it in, export to
 PDF, attach to a short email.
@@ -239,9 +241,9 @@ just ask and we'll send it over.
 
 ---
 
-**{Kieran Smith} · Noven · {email}**
+**{Kieran Smith} · Wardith · {email}**
 
-*Noven is one person. The person who wrote this report is the person who did the
+*Wardith is one person. The person who wrote this report is the person who did the
 work.*
 
 ---
@@ -250,7 +252,7 @@ work.*
 
 Short. The report is the document; the email is a note attached to it.
 
-> Subject: Your Noven audit — {business}
+> Subject: Your Wardith audit — {business}
 >
 > Hi {name},
 >

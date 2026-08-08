@@ -11,6 +11,275 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-08 (closed decisions stripped, on the owner's sharper rule)
+
+**The owner's instruction, and it is now the rule in the skill:** when a
+decision is made and acted on, the comparison that produced it has no further
+job. Delete it. Not condense — delete. The example given was the bank account:
+Revolut Pro has been open since 30 July, so nothing about Mettle, Starling or
+Tide has any material gain left.
+
+**`ops/third-party-services.md`: 10,112 → 6,534 words, down 35%.** It was the
+largest live document in the repo and almost entirely supplier comparisons for
+decisions already taken.
+
+- **C1 bank account, 65 lines → 12.** Five paragraphs argued Mettle, Starling
+  and Tide *after* the account was open. What survives: the account, the shared
+  £120,000 FSCS cap (not doubled), and the unverified Zoho Books bank feed.
+- **B1 address for service, 68 lines → 22.** An eight-row provider comparison
+  table for a decision closed on 7 August. What survives: the two-products
+  distinction, because buying the registered-office product buys nothing a sole
+  trader can use; the per-item charges nobody leads with; and the lesson — six
+  providers were compared on annual cost before anyone established that an
+  annual payment was affordable.
+- **B1a, 72 lines → 24.** V LOT and Icon Offices are one line each now. **The
+  four contract traps were kept and re-titled**, because they are generic to the
+  market and the purchase is still pending — they are the only part of that
+  section that can still change an action.
+- **C2 getting paid, 117 lines → 50.** The Stripe comparison and the
+  fee-percentage re-check went. The instruction not to "simplify" the order page
+  back onto Revolut's own fields stayed, because that is a mistake somebody will
+  otherwise make twice.
+- **D1 ICO, 32 lines → 10.** The section still carried "before paying, run the
+  self-assessment" guidance for a registration completed on 30 July.
+- **E1, 42 lines → 12.** A priced survey of five platforms we are not buying.
+
+**`ops/service-tiers.md`: 6,672 → 6,343.** §9 records a repricing that has itself
+been superseded by §11. The superseded *levels* went; the pricing **axis** — that
+tiers separate on answer pages rather than question volume — stayed, because it
+is still the model in force. That distinction is the whole judgement in this
+file: §9's numbers are dead, §9's argument is live.
+
+**What was kept everywhere, against the instruction to be aggressive:** anything
+still unverified about the thing we chose, every account and reference number,
+every renewal date and cap, and one line naming each rejected option so nobody
+re-proposes it. The standing "we do not bundle" decision was left intact — it
+says in its own text that it is not to be reopened.
+
+**Why this is safe, and it stops being safe without it.** This log is the archive
+of why, it is never condensed, and git holds every prior version. Before deleting
+each argument it was checked to be here — the Mettle/Starling reasoning is at
+30 July, V LOT and Icon Offices appear thirty times. **Stripping a live document
+is moving the reader to where the record actually lives, not destroying it.**
+The rule now written into the skill says to check the log first and, if it does
+not carry the reasoning, to put a dated line there before cutting.
+
+**Nothing broke.** No section pointer resolves to a missing section, no
+reference dangles, and no file under `site/` changed. **Repo prose is 119,562
+words, down from 122,950 at the start of this work** — and that is net of two
+long session-log entries added along the way.
+
+**Still oversized and untouched, in order:** `ops/audit-setup.md` (5,398) and
+`ops/audit-method.md` (4,344) are runbooks for a process never yet run, so most
+of their length is operative rather than historical; `ops/linkedin.md` (6,251)
+is the file already marked Reopened and waiting on the owner;
+`ops/competitor-analysis.md` (4,951) is three days old with an open execution
+plan. `HANDOVER.md` was assessed and left — 3,290 words across ten sections
+whose whole job is orienting somebody with no context.
+
+---
+
+### 2026-08-07 (the condensing pass, and three contradictions it turned up)
+
+**Done:** condensed `ROADMAP.md` from 9,474 words to 8,384 — 11.5% — by applying
+the rule the file already states about itself: *"Closed items here are one line
+and a pointer; go to the log or the `ops/` doc when you need the argument."*
+That rule was being broken for pages at a time.
+
+**Nothing open was touched.** 70 open items before and after, six `[D]` markers,
+31 headings, every date and reference intact — the ICO deadline and helpline
+number, the registration reference, the domain-renewal dates, the 26 August
+unfreeze. Three `[x]` items became two where one closed item was being told in
+two places.
+
+**What was cut, in every case, was the second telling.** The provider comparison
+for the address for service was written out in full twice in this file and three
+times in `ops/third-party-services.md`. The name decision was re-argued in a
+section whose own heading says it is settled. Section 1e restated Search Console
+and Bing almost sentence for sentence from 1c-3.
+
+**One `[PLACEHOLDER]` came out, and it was not a real one.** The Finding 3
+paragraph *quoted* the footer token `[PLACEHOLDER: address for service of
+documents]` — describing what the footer displayed until the owner removed it on
+2026-08-06. It marked no unknown fact. Every placeholder that marks something
+nobody knows is still there.
+
+**Three contradictions surfaced that no checker could have found**, because each
+is two statements that are individually well-formed and jointly impossible:
+
+1. **Section 1b said `hello@wardith.co.uk` "does not exist yet"** — twenty-four
+   lines after the header said it was created, confirmed and published. 1b was
+   written before 2026-08-06 and never revisited.
+2. **The critical path still led with the name decision and Bing registration.**
+   Both closed — 2026-08-04 and 2026-08-07 — and both listed as closed elsewhere
+   in the same file.
+3. **Finding 3's paragraph described the footer placeholder as present** on
+   every page, three days after 1c recorded the owner removing it.
+
+All three are the same failure: a paragraph written before a change, correct
+when written, never re-read after it. That is the failure the 2026-08-06 session
+already named — "re-read anything marked done before 4 August" — and this file
+was still carrying three instances of it.
+
+**A fourth is left open, because it is a question rather than a fault.**
+`ops/README.md` marks `linkedin.md` **Reopened**, on the grounds that both About
+sections publish pre-repricing prices. `ROADMAP.md` 1c-3 item 3 says the owner
+rewrote both on 2026-08-06 with prices matching the site. Both cannot be true.
+The evidence favours the roadmap, but only somebody looking at LinkedIn can
+settle it — so nothing was changed.
+
+**Two more stale live statements, fixed:** the cancellation-terms reasoning
+argued a notice period was not worth it "at £95–495", a range from two
+repricings ago; and the standing rule about Maersk forbade implying "they
+endorse Noven".
+
+**The checker learned one more thing, and it was the most valuable of the run.**
+`ROADMAP.md` said a stranger should be able to "read the site, understand the
+offer, email us, and pay us £125" — no plan named, one amount, so neither
+price-to-plan matching nor the ladder rule could see it. Comparing against a
+list of prices this business has *stopped* charging needs no context at all,
+which is exactly why it catches what the cleverer rules miss. `superseded_prices`
+in the config; 30 and 75 were dropped from it after colliding with supplier
+costs, since a £30 Hoxton Mix plan is not our old audit price.
+
+**Repo prose is down from 122,950 words to 122,754** despite eight status
+headers and this entry being added.
+
+**What a merge publishes: nothing visible.** No file under `site/` changed.
+
+---
+
+### 2026-08-07 (the consistency sweep, run for the first time)
+
+**Done:** ran `repo-consistency` across the repo after merging main. 90 errors
+down to 9. The nine that remain are three files that need the owner, listed at
+the end.
+
+**The prices were the point.** `HANDOVER.md` published the entire superseded
+ladder in its product table — £125 / £750 / £95 / £250 / £495 — six days after
+the repricing, and `ROADMAP.md` carried it in six more places including two
+section headings. That is the document a newcomer is told to read first quoting
+prices the business does not charge. Corrected against `business.ts` throughout.
+
+**Stale counts were replaced rather than reset.** `ops/README.md` claimed
+fourteen files (18) and a 1,100-line session log (3,105). Updating the numbers
+would have started the same clock again, so the counts are gone: "long, newest
+first" cannot go stale. The same for the root `README.md` entry.
+
+**Four live artefacts still signed themselves Noven** — the audit report
+template, the monthly record template, the standing rule in `CLAUDE.md`, and the
+Zoho pick in `third-party-services.md`. The first two are what every future
+client sees. Fixed.
+
+**Every operating document now carries a status.** `ops/README.md` defined the
+Live / Decided-unvalidated / Closed / Stub vocabulary on 2026-07-31 and asked
+for it in each file's header; eight files never got one. The wording was copied
+from the index's own table so the two cannot disagree. `plan-to-1-september.md`
+was not in that table and is marked Live — a judgement, not a lookup.
+
+**The scan did not catch everything on the first pass, and that is the finding
+worth keeping.** Three gaps, all now closed:
+
+- **A ladder with no plan names beside it was invisible.** `### 3c. Monthly
+  plans (£95 / £250 / £495)` has no plan named next to any number, so
+  price-to-plan matching had nothing to bind to. Worse, the obvious fallback —
+  "does the line contain a current price?" — also passes it, because £250 *is*
+  current: it is the audit's, sitting inside a stale monthly ladder. Now checked
+  as a set: every amount in a plan ladder must be a current plan price.
+- **A heuristic hid a real fault.** Sections were skipped when their heading was
+  dated and said "changed", to protect the repricing records in
+  `service-tiers.md` §9 and §11. That also matched `ROADMAP.md`'s "What changed
+  on 2026-08-06" — a section about the present — and silently swallowed a stale
+  £95 underneath it. The pattern is now narrow, lives in the config, and carries
+  the warning: a noisy finding costs a glance, a suppressed one costs the check.
+- **`timings.md` was reported as a broken reference** and investigated from
+  scratch before anyone remembered `audit-method.md` §5 puts client audit data
+  outside this repo. Files like that are now named in the config.
+
+**Precision matters as much as recall, for one reason.** The first run produced
+90 errors, most of them correct-as-written; a check nobody trusts is a check
+nobody reads, and the real drift hides in the noise. False positives were fixed
+at the source — fee columns, pence, price transitions, wrapped prose, build
+output, ticked-off history — not waved through.
+
+**The 24 name judgements are written down, not pattern-matched.** "The Noven
+self-audit" is the name of a past event, and no regex reliably tells that from a
+stale fact — the phrasings are a long tail with no shared shape. So each file
+was judged once and recorded in `reviewed_names` with its reason and date. They
+still print, downgraded, so the judgement stays visible and reversible.
+
+**Left for the owner, deliberately:**
+
+1. **`ops/linkedin.md`** — 42 mentions. `ops/README.md` already marks it
+   Reopened because the copy pasted into LinkedIn predates the repricing. The
+   fix is on LinkedIn, not only in the file, so it is not ours to silently make.
+2. **`ops/zoho-mail-setup.md`** — written throughout for
+   `hello@novenstudio.co.uk`. Marked Closed, and reused on 2026-08-06 for the
+   new address. Rewriting a closed record and rewriting a live runbook are
+   different jobs, and which one this is depends on whether it will be followed
+   again.
+3. **`ROADMAP.md`** — 18 mentions mixing live statements with self-audit
+   history. Needs reading rather than replacing.
+
+**No prose was condensed this run.** The consistency errors were the live risk —
+published prices that were wrong — and mixing a large rewrite into that diff
+would have made both harder to review. Word count went *up* slightly, from
+122,950 to 123,037, because eight status headers were added. The condensing pass
+is a separate piece of work; `ROADMAP.md` is the target, since it says itself
+that it exists to stay short enough to read at the start of every session and is
+now the largest live document at 8,846 words.
+
+**What a merge publishes: nothing visible.** No file under `site/` changed —
+Netlify will rebuild and serve a byte-identical site. The corrected prices are in
+the operating documents only; the site has always rendered them from
+`business.ts` and has been right throughout.
+
+---
+
+### 2026-08-07 (a skill that checks this repo against itself)
+
+**Done:** `.claude/skills/repo-consistency/` — a skill that sweeps the repo for
+facts that contradict each other, references pointing at nothing, self-describing
+prose gone stale, and duplicated writing. `scripts/check.py` does the mechanical
+half; `SKILL.md` and the two reference documents carry the judgement.
+
+**Why a script and not just instructions.** The expensive part of keeping this
+repo honest is not deciding what to fix, it is *finding* it: forty thousand words
+where a stale number looks exactly like a fresh one. Reading it all costs a
+fortune in tokens per session and still misses things. The script runs in a
+second, costs nothing, and reads `site/src/data/business.ts` for the canonical
+facts — so it stays correct as prices change without anyone editing it.
+
+**It found real drift on its first run, which is the argument for it.**
+`ROADMAP.md` and `HANDOVER.md` still carry the whole superseded ladder — £125 /
+£750 / £95 / £250 / £495 — as current fact, two days after the repricing.
+`ops/README.md` says "fourteen files" (18) and describes a 1,100-line session log
+(2,726). Eight operating documents carry no status, so a decision written down
+still reads exactly like a thing that works. **None of this is fixed yet** — the
+skill exists, the sweep has not been run as a piece of work.
+
+**The historical files are excluded, deliberately and by name.** This log, the
+delivered audits, and `rename-to-wardith.md` are the record: old prices and the
+old name are *correct* there, and "fixing" them would destroy the reasoning that
+stops a settled decision being re-argued. That exclusion is in
+`scripts/config.json` rather than in the code, so it is visible and editable.
+
+**Two owner decisions, made 2026-08-07.** Reasoning may be *condensed*, not only
+deduplicated — so `references/editing.md` sets out what a passage must survive
+with (the decision and its date, the constraint that stops it being reopened, any
+outstanding falsifiable condition, and who decided it) against what can go. And
+the skill fixes what it is confident about rather than only reporting, on a
+branch, with the diff shown — which is the workflow `CLAUDE.md` already requires.
+
+**Known false positives are written down rather than left to be rediscovered.**
+The name of a past event — "the Noven self-audit" — is not drift, and renaming it
+would make the documents describe something that never happened. `ops/README.md`
+citing files it records as deleted *should* dangle. Both are in
+`references/checks.md`, because an unfixed false positive is re-investigated on
+every future run and that costs more than the fix.
+
+---
+
 ### 2026-08-07 (V LOT written off; Icon Offices assessed and not taken)
 
 **Done:** the owner requested a refund from V LOT, closing the 29 July decision

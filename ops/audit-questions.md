@@ -1,5 +1,7 @@
 # The questions we ask the assistants
 
+**Status: Decided, unvalidated** — written down, never yet performed.
+
 **Internal document.** The ten-question frame used in every audit, how it changes
 by trade and area, and the rules that keep two audits comparable. Written
 2026-07-30 as part of roadmap 3a.

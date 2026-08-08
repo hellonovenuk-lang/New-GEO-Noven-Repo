@@ -35,11 +35,11 @@ recommendable to those assistants.
 
 | Product | Price | What the customer gets |
 |---|---|---|
-| **Audit** | £125 one-off | A written report on how the assistants answer questions about their business today, what they believe, what's blocking them, and an honest recommendation — including "you don't need us" |
-| **Foundation** | £750 one-off | A fixed scope of setup work on the customer's **existing** website: crawler access, structured machine-readable facts, consistent facts across the web, and **two** permanent pages answering customer questions. Wardith does not build websites |
-| **Maintain** | £95/month | 10 questions tracked monthly, facts kept current, a one-page written record. Reports gaps, does not close them |
-| **Grow** | £250/month | Maintain across 15 questions, plus one new answer page a month |
-| **Lead** | £495/month | 25 questions, two answer pages a month, plus a quarterly review of competitors named ahead of them |
+| **Audit** | £250 one-off | A written report on how the assistants answer questions about their business today, what they believe, what's blocking them, and an honest recommendation — including "you don't need us" |
+| **Foundation** | £800 one-off | A fixed scope of setup work on the customer's **existing** website: crawler access, structured machine-readable facts, consistent facts across the web, and **two** permanent pages answering customer questions. Wardith does not build websites |
+| **Maintain** | £150/month | 10 questions tracked monthly, facts kept current, a one-page written record. Reports gaps, does not close them |
+| **Grow** | £400/month | Maintain across 15 questions, plus one new answer page a month |
+| **Lead** | £700/month | 25 questions, two answer pages a month, plus a quarterly review of competitors named ahead of them |
 
 **The commercial logic:** the audit is the smallest thing sold and the qualifier
 for the Foundation. Foundations are year-one income. The monthly plans are what
@@ -114,7 +114,7 @@ Ordered by what it stops.
 | **A decision on where client data lives** | The privacy notice, and delivering the first audit lawfully. Constraint: **it cannot be this repo**, which is public |
 | **API accounts, keys and spend caps** | Running any audit at all |
 | **A working payment route** | Revenue |
-| **A Foundation method and time budget** | The £750 product, and knowing whether it makes money |
+| **A Foundation method and time budget** | The £800 product, and knowing whether it makes money |
 | **Professional indemnity insurance** | Nothing yet — but it should precede the first Foundation, since that means changing a client's live website |
 
 ---
@@ -270,7 +270,7 @@ Nobody else can settle these, and several are currently blocking work.
    building any cold list. *Not legal advice — check it.*
 5. **Whether the new prices survive contact.** They were set from estimated
    effort, not measured effort. If the self-audit shows Maintain takes three
-   hours rather than one, `ops/service-tiers.md` section 9 gets rewritten, not
+   hours rather than one, `ops/service-tiers.md` section 11 gets rewritten, not
    defended.
 
 *Settled on 2026-07-31 and recorded here so they aren't reopened:* the Foundation
@@ -316,7 +316,7 @@ insurance renewed; delete client records past their retention period.
    the repo. The rest is a detailed task list; skim it.
 3. **`CLAUDE.md`** — the standing rules for any change. Short, and binding.
 4. **`ops/`** — the operating documents. See the index in `ops/README.md`.
-5. **`ops/session-log.md`** — 1,100 lines, newest first, the full record of why
+5. **`ops/session-log.md`** — long, newest first, the full record of why
    every decision went the way it did. Do not read it front to back. Go to it
    when you want to know *why* something is the way it is, and do not re-argue
    a settled decision without reading its entry first.
@@ -358,7 +358,7 @@ the owner being hit by a bus.
 
 The gap is between deciding and doing. Five documents specify an audit that has
 never been run once. Three monthly plans are published and priced, and now have a
-record format, but none has been delivered to anyone. A £750 product is on sale
+record format, but none has been delivered to anyone. An £800 product is on sale
 with a fixed scope, no method and no time budget behind it.
 
 None of that is a crisis, because nobody has paid yet. All of it becomes a

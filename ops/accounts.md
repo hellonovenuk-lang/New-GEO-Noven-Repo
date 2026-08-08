@@ -1,5 +1,7 @@
 # Accounts, dependencies and renewals
 
+**Status: Live** — with real gaps marked `[PLACEHOLDER]`.
+
 **Internal document.** Every outside thing this business depends on, what it
 costs, when it renews, and what breaks if it lapses. Written 2026-07-31.
 

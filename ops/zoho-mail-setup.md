@@ -1,5 +1,7 @@
 # Zoho Mail — finishing `hello@novenstudio.co.uk`
 
+**Status: Closed** — the job it describes is finished; still written as a to-do list.
+
 **Internal document.** Written 2026-07-29. Steps to follow inside Zoho's admin
 console and the DNS panel, which only the owner can sign into.
 

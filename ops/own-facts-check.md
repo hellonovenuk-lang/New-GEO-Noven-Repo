@@ -1,5 +1,7 @@
 # Our own facts — everywhere they are published, and whether they agree
 
+**Status: Live** — two surfaces known wrong.
+
 **Internal document.** The register of every place Noven's own business facts
 appear, what each one must say, and what it currently says. Written 2026-08-01,
 prompted by the owner noticing that assistants still describe Noven's services

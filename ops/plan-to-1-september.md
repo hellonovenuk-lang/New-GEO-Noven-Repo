@@ -1,5 +1,7 @@
 # The run to 1 September
 
+**Status: Live** — the run it describes is in progress.
+
 **Internal document.** Written 2026-08-04, the day the owner set two hard
 constraints on this business. Everything else in `ops/` describes what to do.
 This one describes **when, and with what money.**
