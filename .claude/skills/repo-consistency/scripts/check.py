@@ -179,6 +179,8 @@ def check_facts(root, config, facts, findings):
     superseded_prices = set(config.get("superseded_prices", []))
     canonical_ladder = [facts["prices"][k] for k in config["plan_aliases"]
                         if k in facts["prices"]]
+    reviewed_facts = {(r["path"], r["amount"]): r.get("reason", "")
+                      for r in config.get("reviewed_facts", [])}
     seen_amounts = defaultdict(list)
 
     for rel, path in collect_files(root, config, TEXT_SUFFIXES | CODE_SUFFIXES):
@@ -330,6 +332,25 @@ def check_facts(root, config, facts, findings):
                 # £250 audit" is the document being right, not wrong.
                 if re.search(rf"£\s?{expected:,}(?![\d.])".replace(",", "[,]?"), line):
                     continue
+                # A figure judged once and recorded stays judged. Same pattern
+                # as reviewed_names: still printed, downgraded, with the reason
+                # attached, so the call is visible and reversible rather than
+                # silently gone.
+                #
+                # Deliberately only reachable for the `discursive` (verify)
+                # grade. An error here is a flat contradiction — a document
+                # stating a price this business does not charge — and no review
+                # entry may silence one. If a fact is wrong, fix the fact.
+                reviewed_reason = reviewed_facts.get((rel, value))
+                if reviewed_reason is not None and discursive:
+                    findings.append(Finding(
+                        "facts", "note", rel, n,
+                        f"£{value:,} next to the {plan_id} plan — reviewed and "
+                        f"kept: {reviewed_reason}",
+                        evidence=line.strip()[:200],
+                    ))
+                    continue
+
                 findings.append(Finding(
                     "facts", "verify" if discursive else "error", rel, n,
                     f"£{value:,} stated next to the {plan_id} plan, "

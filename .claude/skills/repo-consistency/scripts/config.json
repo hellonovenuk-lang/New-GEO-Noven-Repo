@@ -295,5 +295,68 @@
     350,
     495,
     750
+  ],
+  "_reviewed_facts_note": [
+    "Amounts that are correct as written but read as price drift, judged once so",
+    "they are not re-triaged every run. Keyed on file and amount, not line, so",
+    "they survive a condensing pass moving the text.",
+    "",
+    "These only ever downgrade the 'verify' grade. An ERROR — a document stating a",
+    "price this business does not charge — can never be silenced from here. If a",
+    "fact is wrong, fix the fact.",
+    "",
+    "Reviewed 2026-08-08."
+  ],
+  "reviewed_facts": [
+    {
+      "path": "ROADMAP.md",
+      "amount": 150,
+      "reason": "'£150-700' is the monthly ladder's own range, in the cancellation reasoning"
+    },
+    {
+      "path": "ROADMAP.md",
+      "amount": 1500,
+      "reason": "the median monthly fee the assistants quote for agencies — competitor evidence, not our price"
+    },
+    {
+      "path": "ops/audit-method.md",
+      "amount": 30,
+      "reason": "'when the audit went from £30 to £125' — a dated statement about a price move"
+    },
+    {
+      "path": "ops/audit-method.md",
+      "amount": 36,
+      "reason": "'£36-50 an hour' is an hourly rate, not a plan price"
+    },
+    {
+      "path": "ops/audit-method.md",
+      "amount": 3,
+      "reason": "the API tool cost of running one audit, not what an audit is sold for"
+    },
+    {
+      "path": "ops/plan-to-1-september.md",
+      "amount": 10,
+      "reason": "the planned API balance top-up per provider"
+    },
+    {
+      "path": "ops/service-tiers.md",
+      "amount": 3000,
+      "reason": "twenty Maintain clients' combined monthly revenue — an outcome, not a price"
+    },
+    {
+      "path": "ops/service-tiers.md",
+      "amount": 750,
+      "reason": "a hypothetical deeper audit tier the assistants' data raises as an open question"
+    },
+    {
+      "path": "ops/service-tiers.md",
+      "amount": 800,
+      "reason": "the Foundation's real price, discussed alongside the audit"
+    },
+    {
+      "path": "ops/third-party-services.md",
+      "amount": 2,
+      "reason": "the per-audit API cost in the supplier table"
+    }
   ]
 }
