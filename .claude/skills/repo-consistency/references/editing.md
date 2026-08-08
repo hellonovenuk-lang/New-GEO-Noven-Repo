@@ -56,11 +56,18 @@ What goes, however well written:
 - The argument that the decision "still holds up". It holds up; it is in force.
 
 **This is safe here for one specific reason, and it stops being safe without
-it.** `ops/session-log.md` is the archive of why, it is never condensed, and git
-holds every prior version besides. Stripping a live document is not destroying
-the record — it is moving the reader to the one place the record actually lives.
-Before deleting an argument, check the log carries it. If it does not, put a
-dated line there first.
+it.** `ops/session-log.md` is the archive of why, and git holds every prior
+version besides. Stripping a live document is not destroying the record — it is
+moving the reader to the one place the record actually lives. Before deleting an
+argument, check the log carries it. If it does not, put a dated line there first.
+
+**And the log itself is trimmed on the same rule, which makes the pointer a
+dependency rather than a courtesy.** It was cut from 3,539 lines to 1,430 on
+2026-08-08; entries whose decision is settled *and* recorded elsewhere go, and
+entries a live document points at by date stay for that reason alone. So when
+you strip an argument out of a live file and send the reader to the log, **write
+the dated pointer** — it is what marks that entry as load-bearing and stops the
+next trim taking it.
 
 ## The four things a passage must survive with
 

@@ -198,8 +198,9 @@ of the operating documents describe procedures that have never been performed.
 Not a fault. It exists so a condensing pass starts where the reading cost is
 rather than wherever a file happened to be open.
 
-Length is often earned — `ops/session-log.md` is a quarter of all prose here and
-should not be cut, because it is the record. Look instead for long files that
+Length is often earned. `ops/session-log.md` is the largest file here and is the
+record, so it is not cut for being long — it is cut only on the settled-versus-live
+rule in its own header, and never by this check. Look instead for long files that
 are *read often*, and for sections inside them that restate what an earlier
 section already said.
 
