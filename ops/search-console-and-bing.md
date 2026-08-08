@@ -16,8 +16,8 @@ Bing**.
 a spending freeze until 26 August and nothing below breaches it. If a screen
 asks for payment, something is wrong — stop and say so.
 
-**One principle throughout, borrowed from `ops/zoho-mail-setup.md`: if a screen
-shows you a value that differs from one written here, trust the screen.** These
+**One principle throughout: if a screen shows you a value that differs from one
+written here, trust the screen.** These
 consoles change their wording and their menus more often than this file gets
 read.
 

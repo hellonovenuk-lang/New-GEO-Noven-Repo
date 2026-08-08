@@ -560,8 +560,7 @@ Everything above, as a list to tick on the morning of the run.
 
 **And on the day after the run**, from the same document:
 
-- [ ] LinkedIn company page About repasted from `ops/linkedin.md` section 5.4
-- [ ] LinkedIn founder profile About repasted from `ops/linkedin.md` section 2
+- [x] Both LinkedIn About sections — done, confirmed correct 2026-08-08
 - [ ] Anything the run turned up that we publish and had not noticed
 
 ---

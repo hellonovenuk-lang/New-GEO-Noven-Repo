@@ -241,8 +241,7 @@ if clients actually start taking a month and leaving.
 primary, `www` redirects to it. Netlify deploys `main`; HTTPS confirmed via
 Netlify's API. Mail is **`hello@wardith.co.uk` on Zoho**, created and confirmed
 receiving 2026-08-06; `hello@novenstudio.co.uk` stays alive as an alias and must
-keep receiving for at least twelve months. Setup and failure checks in
-`ops/zoho-mail-setup.md`.
+keep receiving for at least twelve months.
 
 ### 1c. Between launch and the first payment
 

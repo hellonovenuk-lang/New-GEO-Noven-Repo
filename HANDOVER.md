@@ -178,12 +178,9 @@ dated before-and-after baseline, and produces the one number the whole business
 plan rests on — how long a month of Maintain actually takes. Start at
 `ops/audit-setup.md`.
 
-**4b. The day after the run, repaste both LinkedIn About sections.** Ten
-minutes. Both were written before the 31 July repricing and still publish
-£30 / £350 / from £75 — the only surfaces we control that contradict the site.
-The corrected copy is in `ops/linkedin.md`; the reason it waits until *after*
-the run is in `ops/own-facts-check.md` section 5. That document is the register
-of everywhere our own facts appear, and it is worth ten minutes on its own.
+**4b. Done — both LinkedIn About sections were confirmed correct on
+2026-08-08.** `ops/own-facts-check.md` is the register of everywhere our own
+facts appear, and is worth ten minutes on its own.
 
 **5. Make one payment possible end to end.** Create and test a Revolut Pro
 payment link with a real small payment; decide invoice or receipt; choose where
