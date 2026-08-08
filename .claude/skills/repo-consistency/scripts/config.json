@@ -75,6 +75,33 @@
   ],
   "duplicate_min_chars": 200,
   "duplicate_similarity": 0.75,
+  "_reviewed_dupes_note": [
+    "Passages duplicated on purpose, by file pair, with the reason. checks.md",
+    "allows exactly one case: a banner repeated at the top of several entry",
+    "points so that no reader misses it. The rename banner is that case.",
+    "",
+    "The exemption is conditional on the copies staying identical. While they",
+    "are, the finding drops to a note with the reason attached. The moment they",
+    "diverge it becomes an ERROR rather than the usual verify — a banner saying",
+    "different things in three places is worse than one written once, and it is",
+    "the specific failure this entry exists to catch.",
+    "",
+    "Reviewed 2026-08-08."
+  ],
+  "reviewed_dupes": [
+    {
+      "paths": ["README.md", "HANDOVER.md"],
+      "reason": "the rename banner, repeated at each entry point on purpose"
+    },
+    {
+      "paths": ["README.md", "ROADMAP.md"],
+      "reason": "the rename banner, repeated at each entry point on purpose"
+    },
+    {
+      "paths": ["HANDOVER.md", "ROADMAP.md"],
+      "reason": "the rename banner, repeated at each entry point on purpose"
+    }
+  ],
   "_record_section_note": [
     "A heading matching this pattern marks a section whose job is to record a",
     "price change, so the old prices inside it are correct and are skipped by",
@@ -96,9 +123,19 @@
     "printed with the reason attached. Delete an entry to put it back in front of",
     "the reader — and do delete it if the file's purpose changes.",
     "",
-    "Reviewed 2026-08-07."
+    "Reviewed 2026-08-07. ROADMAP.md added 2026-08-08 — see its entries."
   ],
   "reviewed_names": [
+    {
+      "path": "ROADMAP.md",
+      "term": "Noven",
+      "reason": "the self-audit findings section: 'Noven' is the name the audit found to be taken, and the assistants' wrong answers are quoted. Renaming it would describe an audit that never happened. Judged 2026-08-08 across all 15 mentions"
+    },
+    {
+      "path": "ROADMAP.md",
+      "term": "novenstudio.co.uk",
+      "reason": "the audit's own findings — no answer cited the old domain, and Bing held no record of it — plus the redirect fault found on it 2026-08-06. All three are dated events. Judged 2026-08-08"
+    },
     {
       "path": "ops/audit-method.md",
       "term": "Noven",

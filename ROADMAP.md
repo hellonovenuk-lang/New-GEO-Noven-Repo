@@ -55,91 +55,51 @@ out of Bing's index, and Bing had never indexed this business under either name.
 2026-08-06, and published on the site the same day. The brand assets are in and the palette
 matches them. **Phase 1a and 1b are closed.**
 
-### What changed on 2026-08-06, and the one thing it should change about how you work
+### The habit this repo has to work by
 
-**The session started from "assistants asked to review `wardith.co.uk` still
-answer Noven" and ended up finding four wrong claims in this repo.** Full
-reasoning in `ops/session-log.md`; the short version, because it affects what
-you can trust in these files:
-
-| Claim | Reality |
-|---|---|
-| `hello@wardith.co.uk` "live on Zoho, tested both directions" — in six files | Had never been created. Now real, and the site publishes it |
-| Search Console "already set up, nothing to do" | A property is bound to its host; the live domain had none |
-| "Sitemap submitted and confirmed, six pages" | Six URLs *read from a sitemap*, not six pages indexed |
-| **"No redirect rules need writing — Netlify 301s non-primary domains"** | **It did not. The whole site was being served at four addresses for nine days** |
+**On 2026-08-06 four claims in these files turned out to be false** — the Zoho
+mailbox "tested both directions" had never been created; Search Console "already
+set up" had no property on the live domain; "sitemap confirmed, six pages"
+counted URLs read from a sitemap, not pages indexed; and "Netlify 301s
+non-primary domains" was wrong in a way that mattered most.
 
 **The redirect one is the one to understand.** `novenstudio.co.uk` was not
-redirecting — it was serving the Wardith site at its own address. So a crawler
-reaching the old domain found the new business sitting there under the old name:
-not a stale mention, a live statement that the two are one site. Seven explicit
-301 rules are now in `netlify.toml`, and Netlify's deploy summary is the
+redirecting — it served the Wardith site at its own address for nine days. A
+crawler reaching the old domain found the new business sitting there under the
+old name: not a stale mention, a live statement that the two are one site. Seven
+explicit 301 rules are now in `netlify.toml`, and Netlify's deploy summary is the
 regression test — **if it ever says "No redirect rules processed" again, they
 are gone.**
 
-**Three of the four came from a sentence written before a change and never
-re-tested after it, and the fourth from publishing something unchecked.** Those
-need different habits: re-read anything marked done before 4 August, and verify
-anything new against the world rather than against another document. **Every one
-was caught by something outside this repo refusing to agree with it** — Google's
-validator, a browser address bar, the owner's memory. Nothing inside caught any
-of them, because the repo was what made the claims.
-
-**Also closed that day:** the LinkedIn company page renamed and published as
-`sameAs` (the first surface outside this site corroborating the name), both
-About sections rewritten, two stale public Netlify copies deleted, all three
-visible `[PLACEHOLDER]` blocks taken off the site, and Change of Address
-accepted.
+**The habit, and the reason this section exists: re-read anything marked done
+before 4 August, and verify anything new against the world rather than against
+another document.** Every one of the four was caught by something outside this
+repo refusing to agree with it — Google's validator, a browser address bar, the
+owner's memory. Nothing inside caught any of them, because the repo was what
+made the claims. Full reasoning in `ops/session-log.md`, 2026-08-06.
 
 ---
 
-**The Noven self-audit has run** — 2–3 August 2026, archived at
-`ops/audits/noven-2026-08-02/`, and it reorders what is next more than anything
-else in this file.
+**The Noven self-audit — 2–3 August 2026, archived at
+`ops/audits/noven-2026-08-02/`. Verdict C**, and not for the reason the method
+expected: the site passed all three tests and the blocker was **identity**. Its
+three findings still order this file.
 
-**Verdict C, and not for the reason the method expected.** The checklist and the
-report template both describe C as a broken-*site* problem. The site was the
-opposite of all three tests and still verdicted C, because the blocker is
-**identity, not the site**:
-
-1. **"Noven" belongs to somebody else, at least four times over** — a Miami
-   pharmaceutical company, a North West builder, and (most damaging) an AI
-   product trading as `noven.studio`, a name that is ours with the dot moved,
-   working in the same field. Asked "what do you know about Noven" thirty times
-   across three assistants, **every answer described the pharma company.**
-   Asked the harder question naming the Wirral, ChatGPT still named the builder
-   four times out of five. Not one of 210 automated answers cited
-   `novenstudio.co.uk`.
-2. **Copilot has no record of the site at all** — `site:novenstudio.co.uk`
-   returns nothing on Bing, which is what Copilot retrieves from. Free to fix,
-   ~15 minutes, days to weeks to take effect. **Acted on 2026-08-07:**
-   `wardith.co.uk` submitted to Bing Webmaster Tools with all eight pages
-   requested. Not yet *closed* — that needs `site:wardith.co.uk` on Bing to
-   return them.
+1. **The name belonged to somebody else, at least four times over** — including
+   an AI product trading as `noven.studio`, the same name with the dot moved.
+   Not one of 210 automated answers cited the site. **Answered: the name is
+   WARDITH and the rename is done as of 2026-08-06** — domains, site, LinkedIn,
+   mail, redirects, Search Console. Detail in 1c-2. **Still open, and free:
+   Companies House and the trade mark register have never been checked.**
+2. **Copilot had no record of the site at all**, because it retrieves from
+   Bing's index. **Acted on 2026-08-07** — `wardith.co.uk` submitted with all
+   eight pages. **Not closed until `site:wardith.co.uk` on Bing returns them.**
 3. **Nothing tells a machine where the business works.** The pages say "the
    Wirral"; the structured data says only `GB`. Cost all 15 checks that asked
-   for someone on the Wirral.
+   for someone on the Wirral. **Blocked on the address for service and closes
+   with it** — see below.
 
-**The report's own recommendation: fix the name before anything else.** No
-amount of website work — including the Foundation — stops an assistant
-believing Noven is a pharmaceutical company, and every future improvement under
-the current name accrues to a name at least three other businesses already
-answer to. Findings 2 and 3 are ordinary, fast Foundation-shaped fixes. Finding
-1 isn't, and it now sits ahead of everything else in this file — see 1c-2.
-
-**Finding 1 is answered as of 2026-08-04: the name is WARDITH**, built from the
-back half of *Edward* and the back half of *Smith*. It is the third candidate —
-`ops/name-check/` killed Locito (12 collisions of 12) and Tovan (11 of 12).
-WARDITH has no occupant, so the tool was deliberately not run on it; argued out
-in `ops/session-log.md`, 2026-08-04, rather than left looking like a skipped
-step.
-
-**The rename is done as of 2026-08-06** — domains bought, site published,
-LinkedIn renamed, mail moved, redirects written, Search Console migrated.
-**Except one piece, still open and free: Companies House and the trade mark
-register have never been checked.**
-
-**Two method faults the audit surfaced, neither fixed yet:**
+**Three method faults the audit surfaced, none fixed:**
 
 - **The cost estimate in `ops/audit-setup.md` §6 is wrong.** It budgets ~£1.20
   per 150 queries. OpenAI alone billed **$12.63** for ~75 queries; Gemini's and
@@ -154,13 +114,6 @@ register have never been checked.**
   rather than hidden; usually where the most fixable findings live. A paying
   client's audit shouldn't repeat the omission.
 
-**Also done in the 2026-08-03 session:** report template Rule 10 — every report must now say
-what a business is getting right, not only what's wrong — applied retroactively
-to the archived Noven report; and a new `CLAUDE.md` rule that documents meant
-for a person (client reports, quotes, invoices) are Office files with the PDF
-exported from Word, which is why the archive holds both `report.md` and a
-`.docx`.
-
 **Unchanged since 1 August, and still gating a live pay button — two things
 blocking, both about an address:**
 
@@ -168,28 +121,24 @@ blocking, both about an address:**
    bulk-downloadable public register. Time-critical — deadline **Monday 10
    August 2026** — see 1c.
 2. **The service address is decided but not bought. UK Postbox's Business
-   Street Address, Poole, £12/month inc VAT**, settled 2026-08-07 after V LOT
-   failed and the owner set a monthly-billing constraint. Buying it is a
-   purchase with a runbook — 1c below, `ops/third-party-services.md` B1b–B1c.
-   **It stopped being a £115 lump sum and became £12**, and it blocks the ICO
-   fix, the footer and the pay button.
+   Street Address, Poole, £12/month inc VAT**, settled 2026-08-07. Buying it is
+   a purchase with a runbook — 1c below, `ops/third-party-services.md` B1b–B1c.
+   It blocks the ICO fix, the footer, the pay button and finding 3.
 
 **The critical path now:** ICO helpline call (deadline Mon 10 Aug) → service
 address ordered → terms and privacy notice written → one payment possible end to
 end. The order page is not on it — a payment link in an email takes the first
 payment.
 
-**Finding 3 — telling a machine where the business works — is blocked on the
-address for service and closes with it.** A locality-only `PostalAddress` was
-tried on 2026-08-06 and reverted within the hour: it would have committed us to
-"Merseyside" before the real address existed, and the providers are not on the
-Wirral. Whatever lands is a real postal address, is not the founder's home, and
-has to be published by law anyway — so it fills the footer and the structured
-data from one fact. Reasoning in `ops/session-log.md`, 2026-08-06, and in the
-note left in `schema.ts` where the block would go.
+**Why finding 3 waits rather than being part-solved.** A locality-only
+`PostalAddress` was tried on 2026-08-06 and reverted within the hour: it would
+have committed us to "Merseyside" before the real address existed, and the
+providers are not on the Wirral. Whatever lands is a real postal address, is not
+the founder's home, and has to be published by law anyway — so it fills the
+footer and the structured data from one fact. The note in `schema.ts` marks
+where the block goes.
 
-**`HANDOVER.md` has the longer version and is not yet updated to match this
-section.**
+**`HANDOVER.md` has the longer version of all of this.**
 
 ---
 
@@ -263,32 +212,22 @@ provider's own site before committing.
       Business Street Address, Poole, £12/month inc VAT.** Trading under a
       business name as a sole trader carries a legal duty to show a name and an
       address where documents can be served, including on the website. A
-      virtual office satisfies it. Don't tick this off until post through the
-      address is confirmed working. **Buy the *Street* address, not their
+      virtual office satisfies it. **Buy the *Street* address, not their
       cheaper Business PO Box — a PO Box is not a valid address for this.**
+      Don't tick this off until post through the address is confirmed working.
+      Runbook — both traps, the ID check, the order the downstream work happens
+      in — is `ops/third-party-services.md` B1c. The provider comparison is
+      closed in B1a–B1b, along with the V LOT refund still outstanding; don't
+      reopen it.
 
-      **The comparison is closed** — V LOT took payment ~29 July and delivered
-      nothing (refund requested); Icon Offices was rejected on the numbers; the
-      two best-reviewed providers are annual-only and the owner needs monthly or
-      quarterly billing. Working in `ops/third-party-services.md` B1a–B1b.
-      **What remains is a purchase, and it has a runbook — B1c**, covering both
-      traps, the ID check, and the order the downstream work happens in.
+      **The footer carries no address, and what stands in its place is a
+      commitment: it is published before the first customer is onboarded.**
+      Defensible only while nothing on the site takes a payment. The reminder
+      is a comment in `Base.astro`.
 
-      **The footer placeholder was removed 2026-08-06 by the owner, reversing
-      this instruction.** It had published the literal token `[PLACEHOLDER`, named
-      an internal repo file, and stated in writing on all nine pages that a legal
-      disclosure requirement was unmet — a red flag handed to a prospect by the
-      business's own site, which is the exact fault the product finds on other
-      people's. **What replaces it is a commitment, not a tick: the address is
-      published before the first customer is onboarded.** Nothing takes a payment
-      yet, which is what makes that defensible. The reminder is now a comment in
-      `Base.astro` and this paragraph, both weaker than nine visible pages were —
-      the cost of the decision, and the owner's to carry.
-
-      **Never the home address.** This site is built so crawlers read the
-      business facts and repeat them confidently, which works against us on this
-      field, and it is a one-way door: the footer can be edited, indexes and
-      archives cannot.
+      **Never the home address.** The footer can be edited; indexes and archives
+      cannot, and this site is built so crawlers repeat its business facts
+      confidently.
 
 #### Before money changes hands
 
@@ -776,7 +715,7 @@ above; what the run confirmed or changed about the method is below.
 - [ ] **Total time still isn't known.** The on-site checklist alone took ~25
       minutes (group 3 not started); nothing records how long the API run,
       classification and report-writing took end to end. This is the one
-      number `ops/service-tiers.md` section 9's pricing rests on, and the
+      number `ops/service-tiers.md` section 11's pricing rests on, and the
       self-audit was supposed to produce it. It still hasn't — see 3c.
 - [ ] **Build the runner.** Still deliberately deferred — written now it would
       be a transcription of `audit_query.py`, the exact script archived with
@@ -828,12 +767,12 @@ Lead beats the competitors named ahead of you. **The upgrade engine is the
 monthly record itself** — it reports the gaps and doesn't close them, so nobody
 has to sell anything.
 
-**Repriced 2026-07-31** (`ops/service-tiers.md` section 9). The tiers now
-separate on **answer pages** — 0 / 1 / 2 a month — rather than on question
-volume, which rises gently at 10 / 15 / 25 instead of doubling. The old ladder
-paid less per hour at every step up, because question volume is pure cost to us
-and a page is a permanent asset to the client. Lead's fortnightly cadence is
-gone.
+**The tiers separate on answer pages** — 0 / 1 / 2 a month — rather than on
+question volume, which rises gently at 10 / 15 / 25 instead of doubling. The old
+ladder paid less per hour at every step up, because question volume is pure cost
+to us and a page is a permanent asset to the client. Lead's fortnightly cadence
+is gone. That structure was set 2026-07-31 (`ops/service-tiers.md` §9); **the
+prices above are §11's, set 2026-08-05.**
 
 - [D] What happens each month at each level — live on the pricing page, in
       how-it-works and in the structured data. **Never yet delivered to anyone.**

@@ -171,6 +171,18 @@ in triplicate. That is a judgement about who reads what, and only you can make
 it. If you keep it, keep it *identical* — a divergent banner is the worst
 outcome available.
 
+**Record that judgement in `reviewed_dupes` rather than re-making it.** Same
+principle as `reviewed_names`: file pair, plus the reason. The rename banner was
+recorded on 2026-08-08 after being re-investigated on three consecutive runs.
+
+The exemption is **conditional on the copies staying identical**, and that is
+enforced rather than trusted. While they match, the finding drops to a note with
+the reason attached. The moment they drift it is reported as an **error** — a
+higher grade than an ordinary duplicate gets, because a banner saying different
+things at three entry points is worse than one written once, and catching that
+is the entire reason the pair is worth listing. An exemption that went quiet on
+divergence would be hiding the one thing it was written to watch.
+
 ## status
 
 `ops/README.md` defines a four-word vocabulary — **Live**, **Decided,
@@ -190,6 +202,13 @@ Length is often earned — `ops/session-log.md` is a quarter of all prose here a
 should not be cut, because it is the record. Look instead for long files that
 are *read often*, and for sections inside them that restate what an earlier
 section already said.
+
+**One shape is worth scanning for by eye, because no check finds it.** A
+checklist item whose first paragraph is an instruction and whose remaining
+paragraphs are history: a closed comparison, the justification of a change
+already shipped, a reflection on what a decision cost. The unticked box makes
+the whole entry read as live. `ROADMAP.md` §1c carried 311 words this way and
+needed 185. The method is in `editing.md`, worked example 2.
 
 ---
 

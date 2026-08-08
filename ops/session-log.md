@@ -11,6 +11,157 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-08 (full consistency sweep — HANDOVER.md was carrying a known-false claim)
+
+Ran the repo-consistency skill across the whole repo, with the rules sharpened
+earlier the same day. **2 errors → 0.** The interesting result was not the
+errors; it was `HANDOVER.md`, which `ROADMAP.md` had been flagging as stale in
+its own last line and which nobody had reconciled.
+
+**`HANDOVER.md` — six corrections, all of them facts.**
+
+1. **"Search Console — sitemap submitted and confirmed, six pages"** was still
+   listed under *Live and working*. **This is one of the four claims the
+   2026-08-06 session proved false**, recorded in `ROADMAP.md`'s table and never
+   propagated here. It was wrong twice over: it counted URLs read from a
+   sitemap rather than pages indexed, and the property it described was bound to
+   the dead domain. Replaced with the true state — verified Domain property
+   2026-08-06, Change of Address running, Bing set up 2026-08-07 — and with the
+   outstanding condition that neither is closed until `site:wardith.co.uk`
+   returns the pages. **A handover document restating a claim the business had
+   already caught and corrected is the worst version of this fault**, because it
+   is the file a stranger is told to read first.
+2. **The Foundation priced at £750 in two places** — the "never performed" list
+   and the vocabulary — against £800 in `business.ts`, in this file's own
+   product table, and in its own "what does not exist" table. The file
+   contradicted itself twice.
+3. **"seven static pages"** → nine. Confirmed against the page files, not
+   against other prose: `ops/own-facts-check.md` row 1 and `ROADMAP.md` both say
+   nine, eight of them indexable.
+4. **The repricing paragraph attributed today's ladder to the wrong event.** It
+   said prices were raised on 2026-07-31 and pointed at `service-tiers.md` §9.
+   §9 is the 31 July repricing; **§11, on 2026-08-05, set the numbers in the
+   table above it.** Now names both, and keeps §9's structural reasoning
+   (tiers separate on answer pages, not question volume) which is still in force.
+5. **Status date 2026-07-31** on a file describing events through 2026-08-08.
+6. **"the section 'Where we are today' is the best 20 lines in the repo"** — it
+   was 150 lines. Replaced with a phrasing that cannot go stale.
+
+**Two stale section pointers in `ROADMAP.md`, both the same fault as (4):** the
+total-time item said the number "§9's pricing rests on" when today's pricing is
+§11's, and §3c announced "Repriced 2026-07-31 (§9)" under a heading showing
+§11's prices. This is exactly the drift `checks.md` describes for the `sections`
+check — literally true, stale as guidance, and it never breaks.
+
+**Condensing: `ROADMAP.md`'s "Where we are today", 1,394 → 923 words (34%).**
+It is the first thing `HANDOVER.md` tells a new reader to open, and it had
+become a history dump. Cut under the sharpened rules: the retelling of the name
+collision evidence (the rename is done; `1c-2` owns the detail), the
+"Also closed that day" list (owned by `own-facts-check.md` rows 1 and 13), the
+2026-08-03 session summary (both outcomes are live rules in `CLAUDE.md` and the
+report template), and the V LOT/£115 comparison. **Everything falsifiable
+stayed** — the redirect regression test, the three findings' open conditions,
+Companies House and the trade mark register unchecked, the three method faults,
+the ICO deadline, the critical path, and why finding 3 waits rather than being
+part-solved. The section heading is now "The habit this repo has to work by",
+which is what that half of it is actually for.
+
+`HANDOVER.md` came down only 1.4% and that is the honest number — it was a
+correctness pass, not a condensing one. The address block lost the duplicated
+provider comparison (~130 words, owned by `third-party-services.md` B1a–B1c);
+the Search Console and repricing corrections cost most of it back. The AML
+supervision number dropped with the comparison is in `accounts.md` and
+`third-party-services.md` B1b — checked before cutting.
+
+**Two judgements recorded in the scanner rather than re-made every run:**
+
+- **`ROADMAP.md`'s 15 "Noven" and 3 "novenstudio.co.uk" mentions** were both
+  errors. All are the self-audit's findings — the name the audit found taken,
+  the assistants' wrong answers, the old domain no answer cited, the redirect
+  fault found on it. Renaming them would describe an audit that never happened.
+  Added to `reviewed_names` with the reason, per the documented practice.
+- **The rename banner in `README`/`HANDOVER`/`ROADMAP`** is the one duplication
+  `checks.md` explicitly allows, and it had been re-investigated on three
+  consecutive runs. `reviewed_dupes` now records it — **and enforces the
+  condition the allowance depends on.** While the three copies are identical the
+  finding is a note; the moment they drift it is reported as an **error**, a
+  higher grade than an ordinary duplicate, because a banner saying different
+  things at three entry points is the failure the exemption exists to watch for.
+  An exemption that went quiet on divergence would hide its own reason for
+  existing. Tested both ways before committing.
+
+**Not touched:** the `[PLACEHOLDER]` for the domain registrar and renewal date
+in `HANDOVER.md` §5 — still the dependency whose failure is total and still
+nobody has looked it up. The 13 remaining `facts` findings were read and are all
+correct: supplier costs, hourly rates, competitor rates, hypothetical tiers, and
+`ops/audit-method.md` §6, which carries its own "superseded on price" banner and
+says it is left as it stood on purpose.
+
+---
+
+### 2026-08-08 (the condensing rules sharpened, after they missed a case)
+
+**Trigger:** the owner read `ROADMAP.md` §1c — the address-for-service item —
+and asked why 311 words of settled argument were still being paid for on every
+read. It had survived a full condensing pass three commits earlier. The
+interesting question was not the passage but why the rules let it through.
+
+**The gap.** `editing.md`'s most aggressive rule — a closed decision keeps
+almost nothing — fired only when a decision was "made **and acted on**". The
+provider was chosen 2026-08-07 but not yet bought, so the item fell back to the
+gentler "four things a passage must survive with", which protects anything
+touching a constraint or a commitment. **An unticked box was reading as an open
+argument.** It is not: the errand was open, the argument had been over for a
+day.
+
+**Three changes to `.claude/skills/repo-consistency/references/editing.md`:**
+
+1. **A comparison closes when the choice is made, not when the money moves.**
+   With the explicit fork a future session has to answer — is the *choice* still
+   open, or only the *errand*? The second case keeps the runbook and the traps
+   and deletes the comparison outright.
+2. **Narrative colour is now a named category of cut.** Sentences that
+   editorialise a decision's weight, irony or cost without stating a fact,
+   constraint or outstanding condition. These had no category at all before, so
+   they could only ever be cut by accident — and they read as the most serious
+   writing on the page, which is exactly why they survive. The test given is
+   whether deleting the sentence could let someone do the wrong thing later.
+3. **"What never goes" was being over-applied.** The bullet protecting
+   statements about what the business will not do now says plainly that it
+   protects the *rule*, not the paragraphs of history around it — a rule buried
+   in narrative is easier to miss than one standing alone. A new bullet protects
+   an undated commitment standing in for a completed task, which is the one line
+   in that passage nobody should ever cut.
+
+Worked example 2 in `editing.md` carries the before, the after, and a
+rule-by-rule verdict table for each clause. `SKILL.md` gets the two
+counter-intuitive cuts inline rather than by reference; `checks.md` gains a
+by-eye tell under `bloat`, since no mechanical check finds this shape:
+**an item whose first paragraph is an instruction and whose remaining
+paragraphs are history.**
+
+**The passage itself: 311 → 185 words, 40% off.** What went was one closed
+provider comparison (owned by `ops/third-party-services.md` B1a–B1b, refund
+included), one justification of the footer-placeholder removal the owner had
+already shipped (carried by this log and by the `Base.astro` comment — checked
+before deleting, per the rule), and four sentences of colour. What stayed: what
+to buy and at what price, the PO Box trap, "don't tick until post arrives", the
+runbook pointer, the commitment that the address is published before the first
+customer is onboarded, and **never the home address** with its one-way-door
+reason.
+
+**Scanner unchanged either side of this work** — 2 errors, 70 verify, 73 notes
+before and after. That is the honest result, not a failure: this class of bloat
+is a judgement about sentences and no check will ever find it. It is also why
+the tell went into `checks.md` in words.
+
+**Not done, and flagged rather than taken:** the `Base.astro` comment is now the
+third copy of the footer-placeholder justification and runs to ~20 lines. It is
+a deliberate one — the owner made it the sole carrier of a reminder that used to
+be visible on nine pages — so condensing it is the owner's call, not a tidy-up.
+
+---
+
 ### 2026-08-08 (two finished documents deleted)
 
 **Done:** `ops/linkedin.md` and `ops/zoho-mail-setup.md` deleted. The owner
