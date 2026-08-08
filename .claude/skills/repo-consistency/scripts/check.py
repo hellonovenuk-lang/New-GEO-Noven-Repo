@@ -176,6 +176,7 @@ def check_facts(root, config, facts, findings):
     money = re.compile(r"£\s?(\d[\d,]*)(?!\.\d)")
     record_heading = config["record_section_heading"]
     current_prices = set(facts["prices"].values())
+    superseded_prices = set(config.get("superseded_prices", []))
     canonical_ladder = [facts["prices"][k] for k in config["plan_aliases"]
                         if k in facts["prices"]]
     seen_amounts = defaultdict(list)
@@ -185,7 +186,9 @@ def check_facts(root, config, facts, findings):
             continue
         record_level = None
         prev_line = ""
-        for n, line in enumerate(read_lines(path), 1):
+        file_lines = read_lines(path)
+        for n, line in enumerate(file_lines, 1):
+            next_line = file_lines[n] if n < len(file_lines) else ""
 
             # A live document can contain sections whose job is to record a
             # price change — "## 9. The repricing — 2026-07-31" is the argument
@@ -275,6 +278,28 @@ def check_facts(root, config, facts, findings):
                         + ("" if len(stale) == 1 else "s")
                         + " — the ladder is now "
                         + " / ".join(f"£{p:,}" for p in canonical_ladder),
+                        evidence=line.strip()[:200],
+                    ))
+
+            # A price this business has retired, stated as if it still applied.
+            # Attribution cannot catch these on its own: "a stranger can read the
+            # site and pay us £125" names no plan and holds one amount, so there
+            # is nothing to bind to — yet £125 has not been charged since
+            # 2026-08-05. Comparing against the list of what we used to charge
+            # needs no context at all, which is exactly why it catches the cases
+            # the cleverer rules miss.
+            near = " ".join(filter(None, [prev_line, line, next_line]))
+            windowed = discursive or bool(re.search(
+                r"→|->|\bwas\b|\bpreviously\b|\bold\b|\brepricing\b|"
+                r"\bsuperseded\b|\bused to\b|\bno £", near, re.I))
+
+            for m in matches:
+                value = int(m.group(1).replace(",", ""))
+                if value in superseded_prices and not windowed:
+                    findings.append(Finding(
+                        "facts", "error", rel, n,
+                        f"£{value:,} is a price this business has stopped "
+                        f"charging, stated here as current",
                         evidence=line.strip()[:200],
                     ))
 

@@ -94,14 +94,13 @@ accepted.
 ---
 
 **The Noven self-audit has run** — 2–3 August 2026, archived at
-`ops/audits/noven-2026-08-02/`. This is the biggest change since this file was
-last written, and it reorders what's next more than any single item below it.
+`ops/audits/noven-2026-08-02/`, and it reorders what is next more than anything
+else in this file.
 
-**The result: verdict C, and not for the reason the method expected.**
-`checklist.md` and the report template both describe C as a broken-*site*
-problem — no website, a Facebook page standing in, a site that can't take
-structured data. Noven's site is the opposite of all three and still verdicts
-C, because the blocker is **identity, not the site**:
+**Verdict C, and not for the reason the method expected.** The checklist and the
+report template both describe C as a broken-*site* problem. The site was the
+opposite of all three tests and still verdicted C, because the blocker is
+**identity, not the site**:
 
 1. **"Noven" belongs to somebody else, at least four times over** — a Miami
    pharmaceutical company, a North West builder, and (most damaging) an AI
@@ -128,25 +127,17 @@ the current name accrues to a name at least three other businesses already
 answer to. Findings 2 and 3 are ordinary, fast Foundation-shaped fixes. Finding
 1 isn't, and it now sits ahead of everything else in this file — see 1c-2.
 
-**Finding 1 is answered as of 2026-08-04: the name is WARDITH.** Built from the
-owner's own name — the back half of *Edward*, the back half of *Smith*. It is
-the third candidate. `ops/name-check/` ran on the first two and killed both:
-Locito collided 12 times out of 12 with Localito Marketplace Ltd and the Lockito
-app; Tovan collided 11 times out of 12 with Tovan.ai and two registered
-companies. WARDITH has no occupant to collide with — no company, product or
-brand of that name exists — so the tool was deliberately not run on it, which is
-argued out in `ops/session-log.md`, 2026-08-04, rather than left looking like a
-skipped step.
+**Finding 1 is answered as of 2026-08-04: the name is WARDITH**, built from the
+back half of *Edward* and the back half of *Smith*. It is the third candidate —
+`ops/name-check/` killed Locito (12 collisions of 12) and Tovan (11 of 12).
+WARDITH has no occupant, so the tool was deliberately not run on it; argued out
+in `ops/session-log.md`, 2026-08-04, rather than left looking like a skipped
+step.
 
-**The rename is done, as of 2026-08-06.** This paragraph used to say "almost
-none of the rename is done — the domain is not bought, and everything from the
-canonicals to both LinkedIn pages still says Noven". All of that was true when
-written on 4 August and none of it is true now. Domains bought, site published,
+**The rename is done as of 2026-08-06** — domains bought, site published,
 LinkedIn renamed, mail moved, redirects written, Search Console migrated.
-
-**Still not done from that paragraph: Companies House and the trade mark
-register have never been checked.** That is the one piece of the name decision
-that remains open, it is free, and it is listed below.
+**Except one piece, still open and free: Companies House and the trade mark
+register have never been checked.**
 
 **Two method faults the audit surfaced, neither fixed yet:**
 
@@ -176,84 +167,57 @@ blocking, both about an address:**
 1. **The ICO published, or is about to publish, the owner's home address** on a
    bulk-downloadable public register. Time-critical — deadline **Monday 10
    August 2026** — see 1c.
-2. **The service address hasn't landed. Settled 2026-08-07: UK Postbox,
-   £12/month.** V LOT is dead — it took payment ~29 July, delivered nothing,
-   and the owner has requested a refund. Icon Offices was researched as the
-   cheap replacement and rejected. **The owner then set the constraint that
-   actually decided it — monthly or quarterly billing, because capital is tight
-   now — and the two best-reviewed providers are annual-only.** The pick is
-   **UK Postbox's Business Street Address, Poole, £12/month inc VAT**, an
-   HMRC-AML-supervised provider trading since 2008 that sells a business
-   trading address to sole traders explicitly. `ops/third-party-services.md`
-   B1b. **This item stopped being a £115 lump sum and became £12** — it blocks
-   the ICO fix, the site footer, and the audit's pay button, and it no longer
-   needs a large payment to unblock any of them.
+2. **The service address is decided but not bought. UK Postbox's Business
+   Street Address, Poole, £12/month inc VAT**, settled 2026-08-07 after V LOT
+   failed and the owner set a monthly-billing constraint. Buying it is a
+   purchase with a runbook — 1c below, `ops/third-party-services.md` B1b–B1c.
+   **It stopped being a £115 lump sum and became £12**, and it blocks the ICO
+   fix, the footer and the pay button.
 
-Nothing in the last three days' work touched the ICO call, the service address,
-the terms of service, the privacy notice or the payment link — see 1c below.
+**The critical path now:** ICO helpline call (deadline Mon 10 Aug) → service
+address ordered → terms and privacy notice written → one payment possible end to
+end. The order page is not on it — a payment link in an email takes the first
+payment.
 
-**`ops/session-log.md` has a gap of its own:** no entry exists for the audit
-run, the archiving, or the name-check tool, breaking the file's own rule ("add
-an entry at the end of each session") at the point the record matters most.
+**Finding 3 — telling a machine where the business works — is blocked on the
+address for service and closes with it.** A locality-only `PostalAddress` was
+tried on 2026-08-06 and reverted within the hour: it would have committed us to
+"Merseyside" before the real address existed, and the providers are not on the
+Wirral. Whatever lands is a real postal address, is not the founder's home, and
+has to be published by law anyway — so it fills the footer and the structured
+data from one fact. Reasoning in `ops/session-log.md`, 2026-08-06, and in the
+note left in `schema.ts` where the block would go.
 
-**The critical path now:** the name decision (`ops/name-check/`, no cost,
-blocks identity, see 1c-2) → ICO helpline call (deadline Mon 10 Aug) → service
-address ordered → terms and privacy notice written → one payment possible end
-to end. **Free and not blocking anything, so do it whenever:** register with
-Bing Webmaster Tools (closes finding 2).
-
-**Finding 3 was on that list until 2026-08-06 and has been taken off it: it is
-not free and it is not independent.** Adding a location to the structured data
-was tried that day and reverted within the hour. The footer of every page
-carries a visible `[PLACEHOLDER: address for service of documents]`, so a
-`PostalAddress` in the head — even locality-only — has the page telling a reader
-it has no address and a machine that it has one, which is the drift this site
-says is impossible. It would also have committed us to "Merseyside" before the
-address for service exists, and the fallback providers are not on the Wirral.
-
-**Finding 3 is therefore blocked on the address for service**, and closes with
-it rather than before it: whatever lands is a real postal address, is not the
-founder's home, and has to be published by law anyway, so it fills the footer
-placeholder and the structured data from one fact. Reasoning in
-`ops/session-log.md`, 2026-08-06, and in the note left in `schema.ts` where the
-block would go. The order page is still not on this path —
-a payment link in an email takes the first payment. `HANDOVER.md` has the
-longer version, written for someone with no context — **not yet updated to
-match this section.**
+**`HANDOVER.md` has the longer version and is not yet updated to match this
+section.**
 
 ---
 
 ## Phase 1 — Build (get to a site that can take a real customer)
 
 **Done when:** a stranger can read the site, understand the offer, email us, and
-pay us £125.
+pay us £250.
 
 ### 1a. Facts only the owner can supply — closed
 
-All live on the site and in the structured data: `hello@wardith.co.uk` (created
-2026-08-06; the old Gmail and `hello@novenstudio.co.uk` both keep receiving, and
-will for months); no phone, email only, and the site
-says why; reply within two working days; the Wirral, serving the UK remotely;
-Kieran Smith, sole trader, no company number, not VAT registered; the audit
-report within two working days of scope and payment being confirmed (moved from
-one working day on 2026-07-31 — `ops/audit-method.md` section 7 says why), and a
-Foundation plan within two working days of payment clearing. Founder bio,
-photograph, LinkedIn profile and Maersk as `alumniOf` are all in. The LinkedIn
-setup is done — profile amended, company page live. **`businessLinkedIn` was
-deliberately `null` from 2026-08-04 and is set as of 2026-08-06** to
-`https://www.linkedin.com/company/wardith/`, supplied by the owner once the
-page was renamed. Holding it null through the rename was right: renaming the
-page changed its slug, so a value set earlier would have been a false
-machine-readable claim rather than a broken link. The Organization now
-publishes one `sameAs` on all nine pages — **the first surface outside this
-site that corroborates the name.** **But the copy on both LinkedIn About sections predates the 31 July
-repricing and still publishes the old prices**, so `ops/linkedin.md` was
-reopened on 2026-08-01 for a repaste — see `ops/own-facts-check.md`.
+All live on the site and in the structured data: `hello@wardith.co.uk`; no
+phone, email only, and the site says why; reply within two working days; the
+Wirral, serving the UK remotely; Kieran Smith, sole trader, no company number,
+not VAT registered; the audit report within two working days of scope and payment
+being confirmed (moved from one working day on 2026-07-31 — `ops/audit-method.md`
+section 7 says why), and a Foundation plan within two working days of payment
+clearing. Founder bio, photograph, LinkedIn profile and Maersk as `alumniOf` are
+all in.
+
+**`businessLinkedIn` was held `null` through the rename on purpose** and set
+2026-08-06 once the page was renamed and the URL supplied. Renaming a page
+changes its slug, so a value set earlier would have been a false machine-readable
+claim rather than a broken link — see 1c-3 item 3 for the closed status.
 
 **Cancellation terms**, live on three pages: monthly plans roll month to month,
 no minimum term, **no notice period**; the month already paid for runs out, no
 part-month refunds. Chosen against the agency norm because a notice period costs
-more in friction than it recovers at £95–495, and the Foundation being a
+more in friction than it recovers at £150–700, and the Foundation being a
 separate one-off already covers the front-loaded work. Add a minimum term only
 if clients actually start taking a month and leaving.
 
@@ -265,7 +229,7 @@ if clients actually start taking a month and leaving.
   `session` — this repo is built for crawlers to ingest, which is the worst
   place to put a credential.
 - Maersk is named in plain text only. Never their logo, never anything implying
-  they endorse Noven.
+  they endorse Wardith.
 
 - [ ] **Owner, two minutes:** open the LinkedIn profile URL in a private window.
       If it loads without a login prompt it's publicly visible, which is the
@@ -275,12 +239,10 @@ if clients actually start taking a month and leaving.
 
 `wardith.co.uk` owned and set in `astro.config.mjs` and `robots.txt`. Apex is
 primary, `www` redirects to it. Netlify deploys `main`; HTTPS confirmed via
-Netlify's API. Nothing to redirect — the domain only ever hosted the owner's own
-projects. **`hello@novenstudio.co.uk` is live on Zoho Mail** (Mail Lite, DNS at
-Namecheap, MX to `mx.zoho.eu`, SPF, DKIM, `p=none` DMARC), tested both
-directions; setup and failure checks in `ops/zoho-mail-setup.md`.
-**`hello@wardith.co.uk` does not exist yet** — 1c-3. This line said it did until
-2026-08-06; see the correction note at the top of `ops/own-facts-check.md` §2.
+Netlify's API. Mail is **`hello@wardith.co.uk` on Zoho**, created and confirmed
+receiving 2026-08-06; `hello@novenstudio.co.uk` stays alive as an alias and must
+keep receiving for at least twelve months. Setup and failure checks in
+`ops/zoho-mail-setup.md`.
 
 ### 1c. Between launch and the first payment
 
@@ -306,51 +268,28 @@ provider's own site before committing.
       address is confirmed working. **Buy the *Street* address, not their
       cheaper Business PO Box — a PO Box is not a valid address for this.**
 
-      **V LOT is finished, 2026-08-07.** It was chosen on 29 July on cost
-      (~£10–48/yr against ~£96–115) with its poor Trustpilot reviews flagged at
-      the time; it took payment ~29 July, delivered nothing, and the owner has
-      requested a refund. **Icon Offices was researched the same day as the
-      cheap replacement and rejected on the numbers, not on suspicion** — it is
-      a real ACSP-registered company, but its £45.76 headline tier does not
-      forward post at all (collect in person, in Essex or London or Scotland),
-      and the first tier that does costs £120.12, more than the fallback, on a
-      4.0 Trustpilot score against 4.8–4.9. Full working in
-      `ops/third-party-services.md` B1a.
+      **The comparison is closed** — V LOT took payment ~29 July and delivered
+      nothing (refund requested); Icon Offices was rejected on the numbers; the
+      two best-reviewed providers are annual-only and the owner needs monthly or
+      quarterly billing. Working in `ops/third-party-services.md` B1a–B1b.
+      **What remains is a purchase, and it has a runbook — B1c**, covering both
+      traps, the ID check, and the order the downstream work happens in.
 
-      **Then the owner set the constraint that decided it: monthly or quarterly
-      billing.** 1st Formations and Quality Company Formations — the two best
-      reviewed — are **annual-only**, so they were ruled out by cadence rather
-      than by quality, and the £5/yr gap that had decided the earlier
-      comparison turned out not to be the deciding variable at all.
+      **The footer placeholder was removed 2026-08-06 by the owner, reversing
+      this instruction.** It had published the literal token `[PLACEHOLDER`, named
+      an internal repo file, and stated in writing on all nine pages that a legal
+      disclosure requirement was unmet — a red flag handed to a prospect by the
+      business's own site, which is the exact fault the product finds on other
+      people's. **What replaces it is a commitment, not a tick: the address is
+      published before the first customer is onboarded.** Nothing takes a payment
+      yet, which is what makes that defensible. The reminder is now a comment in
+      `Base.astro` and this paragraph, both weaker than nine visible pages were —
+      the cost of the decision, and the owner's to carry.
 
-      **UK Postbox confirmed by the owner, 2026-08-07** (company 06723381,
-      trading since 2008, HMRC AML supervision XLML00000192390, a "business
-      trading address" sold to sole traders in those words). **The comparison
-      is closed. What remains is a purchase, and it has a runbook —
-      `ops/third-party-services.md` B1c**, which covers the two traps (buy the
-      Street address not the PO Box; register the trading name "Wardith" as its
-      own verified step), the ID check, and the order the downstream work has
-      to happen in.
-
-      **The footer placeholder is gone as of 2026-08-06, by the owner's
-      decision, and this instruction used to say the opposite.** It read "don't
-      remove the footer placeholder until post through the address is confirmed
-      working". Overridden on the eve of submitting the domain to Search Console
-      and Bing: what stood in the footer of all nine pages published the literal
-      token `[PLACEHOLDER`, named an internal repo file, and stated in writing
-      that a legal disclosure requirement had not been met. Indexed and repeated
-      by an assistant, that is a red flag handed to a prospect by the business's
-      own site — and the whole product is finding that fault on other people's.
-
-      **What replaces it is a commitment, not a tick: the address is published
-      before the first customer is onboarded.** Nothing on the site takes a
-      payment yet, which is what makes the removal defensible rather than
-      convenient. **The reminder is now a source comment in `Base.astro` and
-      this paragraph, and both are weaker than nine visible pages were.** That
-      is the cost of the decision and it is the owner's to carry. **Never the home address:** this site is built so crawlers
-      read the business facts and repeat them confidently, which works against
-      us on exactly this field, and it is a one-way door — the footer can be
-      edited, indexes and archives cannot.
+      **Never the home address.** This site is built so crawlers read the
+      business facts and repeat them confidently, which works against us on this
+      field, and it is a one-way door: the footer can be edited, indexes and
+      archives cannot.
 
 #### Before money changes hands
 
@@ -472,30 +411,18 @@ prerequisite for further investment in the current identity, not a
 someday-decision. The report's own words: **"the honest order is the name
 first, then the rest."**
 
-- [x] **Decide whether Noven keeps its name.** It does not. **The name is
-      WARDITH** — the owner's call, 2026-08-04, after Locito and Tovan were
-      shortlisted and both rejected by `ops/name-check/`. Reasoning in
+- [x] **The name is WARDITH** — the owner's call, 2026-08-04, after
+      `ops/name-check/` rejected Locito and Tovan. **Deliberately not run for
+      WARDITH**, with the reason recorded beside the name in `names.txt`: the
+      tool finds occupants, and a free search found none. Reasoning in
       `ops/session-log.md`, 2026-08-04.
-- [x] **Run candidates through `ops/name-check/` before anything else touches
-      them.** Done for Locito and Tovan, both rejected. **Deliberately not run
-      for WARDITH**, and the reason is written into `names.txt` beside the
-      name: the tool finds occupants, a free search found no occupant, so the
-      queries would only confirm what was already known. That exception is
-      recorded rather than quietly taken.
-
-- [x] **Buy the domain.** `wardith.co.uk`, `wardith.com` and `wardith.uk`, all
-      three at GoDaddy on 2026-08-04, **one year only**. Extending them to a
-      long term is in the owner's calendar for 6 Oct 2026, with a backstop on
-      4 Jun 2027 — the first dated obligation in this business to exist outside
-      a markdown table. Recorded in `ops/accounts.md`.
-
-- [x] **Decide which of the three domains the business *is*.** `wardith.co.uk`,
-      owner's call 2026-08-04. `.com` and `.uk` are owned and redirecting and
-      are never published as a contact detail.
-- [x] **Publish the site as Wardith.** Merged to `main` on 2026-08-04, so the
-      live site, every canonical, the sitemap and the JSON-LD identity are all
-      Wardith on `wardith.co.uk`. DNS, TLS and the page-for-page redirects are
-      verified working on all three new domains.
+- [x] **Domains bought and the site published as Wardith**, 2026-08-04.
+      `wardith.co.uk` is the business; `.com` and `.uk` redirect and are never
+      published as a contact detail. Every canonical, the sitemap and the JSON-LD
+      identity are Wardith. **All three are one-year registrations** — extending
+      them is in the owner's calendar for 6 Oct 2026, backstop 4 Jun 2027, the
+      first dated obligation in this business held outside a markdown table.
+      `ops/accounts.md`.
 
 ---
 
@@ -507,30 +434,23 @@ timetable and the money constraints are `ops/plan-to-1-september.md`.
 
 **Do these two first. Both are on the critical path and both are free.**
 
-- [x] **1. DONE — `wardith.co.uk` is primary in Netlify, and the redirects it
-      was assumed to bring were written by hand on 2026-08-06.** This item said
-      flipping the primary "reverses every redirect at once and completes the
-      switch". **It did not.** For nine days afterwards `novenstudio.co.uk`,
-      `wardith.com` and `wardith.uk` all *served* the full site at their own
-      addresses with no redirect at all. Seven explicit 301 rules now live in
-      `netlify.toml`.
-
-      **The instruction in this item's own last sentence — verify the direction
-      actually flipped with a real request to a real inner page — was right and
-      was never carried out.** Writing a check down is not doing it. Google's
-      Change of Address validator eventually found it. `ops/rename-to-wardith.md`
-      D3.
+- [x] **1. DONE — redirects written by hand, 2026-08-06.** This item had assumed
+      that making `wardith.co.uk` primary in Netlify "reverses every redirect at
+      once". **It did not:** for nine days `novenstudio.co.uk`, `wardith.com` and
+      `wardith.uk` all *served* the full site at their own addresses. Seven
+      explicit 301 rules now live in `netlify.toml`, and Netlify's deploy summary
+      is the regression test. **The check this item told you to run — a real
+      request to a real inner page — was never carried out, and Google's
+      validator found the fault instead. Writing a check down is not doing it.**
+      `ops/rename-to-wardith.md` D3.
 - [x] **2. DONE 2026-08-06. `hello@wardith.co.uk` exists and the site
       publishes it.** The owner created the alias and confirmed mail arrives in
       the Zoho inbox; the zone was then read independently — MX to `mx.zoho.eu`,
       exactly one `v=spf1`, a `zmail._domainkey` DKIM key, and DMARC `p=none`
-      whose `rua` now points at a mailbox that exists rather than one that did
-      not. `business.ts` flipped the same day.
-
-      **Holding the old address on the site for two days after the rename was
-      right** — a working address on the dead domain beats a bouncing one on the
-      live domain, and it is the only inbound channel on a business with no
-      phone and no form.
+      with a live `rua`. `business.ts` flipped the same day. Holding the old
+      address for two days after the rename was right: a working address on the
+      dead domain beats a bouncing one on the live domain, and it is the only
+      inbound channel on a business with no phone and no form.
 
       **One half of the test is still owed and is invisible from the site:**
       nobody has sent *from* the new address and confirmed `SPF: PASS`,
@@ -542,39 +462,26 @@ timetable and the money constraints are `ops/plan-to-1-september.md`.
 
 **Then these.**
 
-- [x] **3. LinkedIn: the page is renamed and the slug is ours.**
-      `https://www.linkedin.com/company/wardith/` — supplied 2026-08-06 and set
-      in `business.ts`, so the Organization publishes a `sameAs` on all nine
-      pages — **the first surface outside this site that corroborates the
-      name.** Cover and logo PNGs in `assets/linkedin/` were rebuilt for Wardith
-      and re-verified against their sources.
-
-      **Checked 2026-08-06: both About sections show `hello@wardith.co.uk`.**
-      LinkedIn and the site now agree on the name, the prices and the contact
-      address — which is the audit's third promise, run on ourselves.
-
-      **Both closed 2026-08-06.** The owner rewrote both About sections — no
-      Noven, prices matching the site — and confirmed in a private window that
-      the company page loads without a login, which is the one thing a `sameAs`
-      needs to be worth anything to a crawler.
-- [x] **4. DONE 2026-08-06 — and there were two, not one.** `noven-2-0-preview`
-      was a full Noven-branded copy of the business, public with no password.
-      Listing the Netlify team turned up a second, `aesthetic-unicorn-619923`,
-      which appeared in no operating document at all. Both deleted; one project
-      remains, serving `wardith.co.uk`. **The lesson is how the second was
-      found — by listing the host, not by reading the register.** A surface
-      nobody documented is a surface nobody checks.
-- [x] **5. Email signature — done 2026-08-07, and not by re-exporting.**
-      `Email Signature.svg` read `hello@wardith.com` above `wardith.co.uk` and
-      was never installed. It is **replaced** by
-      `assets/brand/email-signature.html`, with the SVG kept as the supplied
-      original. Two reasons re-exporting was the wrong fix: **email cannot
-      render SVG** — Outlook, Gmail's web client and most corporate gateways
-      drop it — and **its text is outlined paths**, so correcting two words
-      meant a Canva round trip. That friction is what produced the two-domain
-      fault, and the address for service still has to be added on 26 August, so
-      the format was the root cause rather than the wording. The new one is live
-      text with the wordmark as a hosted PNG rasterised from the committed SVG.
+- [x] **3. LinkedIn renamed and closed, 2026-08-06.**
+      `https://www.linkedin.com/company/wardith/` is set in `business.ts`, so the
+      Organization publishes a `sameAs` on all nine pages — **the first surface
+      outside this site that corroborates the name.** The owner rewrote both
+      About sections and confirmed in a private window that the page loads
+      without a login, which is the one thing a `sameAs` needs to be worth
+      anything to a crawler. Cover and logo PNGs rebuilt and re-verified.
+- [x] **4. Stale public Netlify copies deleted, 2026-08-06 — and there were two,
+      not one.** `noven-2-0-preview` was a full Noven-branded copy of the
+      business, public with no password; listing the Netlify team turned up a
+      second that appeared in no operating document at all. **The lesson is how
+      the second was found — by listing the host, not by reading the register.**
+      A surface nobody documented is a surface nobody checks.
+- [x] **5. Email signature — done 2026-08-07, and not by re-exporting.** The
+      supplied SVG read `hello@wardith.com` above `wardith.co.uk` and was never
+      installed. **Replaced** by `assets/brand/email-signature.html` — live text
+      with the wordmark as a PNG — because email cannot render SVG and its text
+      is outlined paths, so correcting two words meant a Canva round trip. That
+      friction caused the fault, and the address for service still has to go in
+      on 26 August, so the format was the root cause rather than the wording.
       **Owner: install it in Zoho for new mail and for replies.**
 - [x] **6a. Google Search Console — done 2026-08-06.** `wardith.co.uk` verified
       as a Domain property through GoDaddy Domain Connect, and **Change of
@@ -656,29 +563,17 @@ unused so far.
 
 - [x] Build verified: 7 pages, correct canonicals, all JSON-LD parses, sitemap
       and robots.txt ship. Read on desktop and mobile, owner confirms both.
-- [x] **Sitemap submitted and confirmed in Search Console — for the *old*
-      domain, and "6 pages" means less than it reads.** It is the sitemap being
-      processed and six URLs read from it, not six pages indexed. Corrected
-      2026-08-06 after this line was used to conclude the indexation job was
-      done; a Search Console property is bound to its host, so none of this
-      carried to `wardith.co.uk`, which needed a new property. See 1c-6a.
-
-      Five URLs from whatever occupied the domain before Noven (`/terms`,
-      `/work`, `/approach`, `/privacy`, `/start`) were submitted for removal and
-      live-tested as 404s. **`/approach` was still in Google's index on
-      2026-08-06** — `site:novenstudio.co.uk` returns 4 results, which is now
-      the decay baseline for the six-month re-check.
-- [x] **Bing Webmaster Tools — done 2026-08-07**, closing self-audit finding 2.
-      The finding was that Copilot held no record of the site at all
-      (`site:novenstudio.co.uk` returned nothing on Bing). `wardith.co.uk` is now
-      submitted with all eight pages requested. **Submission is not indexation:**
-      the finding is only truly closed when `site:wardith.co.uk` on Bing returns
-      the eight pages, which is days to weeks away. See 1c-6b.
-- [x] **Ask the assistants what they say about Noven — done, via the self-audit
-      (3a), 2–3 August 2026.** Not the result hoped for: not named once across
-      210 automated answers, and every "what do you know about Noven" answer
-      described a Miami pharmaceutical company. Full findings in "Where we are
-      today" above.
+- [x] **Both search consoles done** — Google 2026-08-06, Bing 2026-08-07. Detail
+      in 1c-3 items 6a and 6b, which this section used to restate in full.
+      **Submission is not indexation**, and neither is closed until
+      `site:wardith.co.uk` returns the eight pages on each.
+- [x] **Old-domain cleanup.** Five URLs from whatever occupied the domain before
+      Noven (`/terms`, `/work`, `/approach`, `/privacy`, `/start`) submitted for
+      removal and live-tested as 404s. `site:novenstudio.co.uk` returned 4
+      results on 2026-08-06 — **the decay baseline for the six-month re-check.**
+- [x] **Ask the assistants what they say about us — done via the self-audit,
+      2–3 August 2026.** Not the result hoped for: not named once across 210
+      answers. Findings in "Where we are today" above.
 
 ---
 

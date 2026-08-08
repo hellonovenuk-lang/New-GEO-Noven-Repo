@@ -219,5 +219,30 @@
       "term": "hello@novenstudio.co.uk",
       "reason": "the report's original signature; the alias still receives"
     }
+  ],
+  "_superseded_prices_note": [
+    "Prices this business has charged and stopped charging, from the repricing",
+    "records in ops/service-tiers.md sections 9 and 11. Any of these stated",
+    "outside a record section or a historical file is drift.",
+    "",
+    "This exists because attribution is not enough. 'a stranger can read the site",
+    "and pay us £125' names no plan and holds one amount, so neither the",
+    "price-to-plan rule nor the ladder rule can see it — but £125 is a price this",
+    "business has not charged since 2026-08-05.",
+    "",
+    "250 is deliberately absent: it was Grow's old monthly price and is now the",
+    "audit's, so it cannot be judged from the number alone.",
+    "",
+    "30 and 75 were dropped after they collided with supplier costs — a £30",
+    "Hoxton Mix plan is not our old audit price. Small round numbers are common",
+    "in other people's pricing, and both were retired at the first repricing",
+    "rather than the current one."
+  ],
+  "superseded_prices": [
+    95,
+    125,
+    350,
+    495,
+    750
   ]
 }

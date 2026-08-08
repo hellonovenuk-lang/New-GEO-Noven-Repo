@@ -11,6 +11,76 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-07 (the condensing pass, and three contradictions it turned up)
+
+**Done:** condensed `ROADMAP.md` from 9,474 words to 8,384 — 11.5% — by applying
+the rule the file already states about itself: *"Closed items here are one line
+and a pointer; go to the log or the `ops/` doc when you need the argument."*
+That rule was being broken for pages at a time.
+
+**Nothing open was touched.** 70 open items before and after, six `[D]` markers,
+31 headings, every date and reference intact — the ICO deadline and helpline
+number, the registration reference, the domain-renewal dates, the 26 August
+unfreeze. Three `[x]` items became two where one closed item was being told in
+two places.
+
+**What was cut, in every case, was the second telling.** The provider comparison
+for the address for service was written out in full twice in this file and three
+times in `ops/third-party-services.md`. The name decision was re-argued in a
+section whose own heading says it is settled. Section 1e restated Search Console
+and Bing almost sentence for sentence from 1c-3.
+
+**One `[PLACEHOLDER]` came out, and it was not a real one.** The Finding 3
+paragraph *quoted* the footer token `[PLACEHOLDER: address for service of
+documents]` — describing what the footer displayed until the owner removed it on
+2026-08-06. It marked no unknown fact. Every placeholder that marks something
+nobody knows is still there.
+
+**Three contradictions surfaced that no checker could have found**, because each
+is two statements that are individually well-formed and jointly impossible:
+
+1. **Section 1b said `hello@wardith.co.uk` "does not exist yet"** — twenty-four
+   lines after the header said it was created, confirmed and published. 1b was
+   written before 2026-08-06 and never revisited.
+2. **The critical path still led with the name decision and Bing registration.**
+   Both closed — 2026-08-04 and 2026-08-07 — and both listed as closed elsewhere
+   in the same file.
+3. **Finding 3's paragraph described the footer placeholder as present** on
+   every page, three days after 1c recorded the owner removing it.
+
+All three are the same failure: a paragraph written before a change, correct
+when written, never re-read after it. That is the failure the 2026-08-06 session
+already named — "re-read anything marked done before 4 August" — and this file
+was still carrying three instances of it.
+
+**A fourth is left open, because it is a question rather than a fault.**
+`ops/README.md` marks `linkedin.md` **Reopened**, on the grounds that both About
+sections publish pre-repricing prices. `ROADMAP.md` 1c-3 item 3 says the owner
+rewrote both on 2026-08-06 with prices matching the site. Both cannot be true.
+The evidence favours the roadmap, but only somebody looking at LinkedIn can
+settle it — so nothing was changed.
+
+**Two more stale live statements, fixed:** the cancellation-terms reasoning
+argued a notice period was not worth it "at £95–495", a range from two
+repricings ago; and the standing rule about Maersk forbade implying "they
+endorse Noven".
+
+**The checker learned one more thing, and it was the most valuable of the run.**
+`ROADMAP.md` said a stranger should be able to "read the site, understand the
+offer, email us, and pay us £125" — no plan named, one amount, so neither
+price-to-plan matching nor the ladder rule could see it. Comparing against a
+list of prices this business has *stopped* charging needs no context at all,
+which is exactly why it catches what the cleverer rules miss. `superseded_prices`
+in the config; 30 and 75 were dropped from it after colliding with supplier
+costs, since a £30 Hoxton Mix plan is not our old audit price.
+
+**Repo prose is down from 122,950 words to 122,754** despite eight status
+headers and this entry being added.
+
+**What a merge publishes: nothing visible.** No file under `site/` changed.
+
+---
+
 ### 2026-08-07 (the consistency sweep, run for the first time)
 
 **Done:** ran `repo-consistency` across the repo after merging main. 90 errors

@@ -358,7 +358,7 @@ the owner being hit by a bus.
 
 The gap is between deciding and doing. Five documents specify an audit that has
 never been run once. Three monthly plans are published and priced, and now have a
-record format, but none has been delivered to anyone. A £750 product is on sale
+record format, but none has been delivered to anyone. An £800 product is on sale
 with a fixed scope, no method and no time budget behind it.
 
 None of that is a crisis, because nobody has paid yet. All of it becomes a
