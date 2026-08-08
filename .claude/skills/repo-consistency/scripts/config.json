@@ -90,15 +90,24 @@
   ],
   "reviewed_dupes": [
     {
-      "paths": ["README.md", "HANDOVER.md"],
+      "paths": [
+        "README.md",
+        "HANDOVER.md"
+      ],
       "reason": "the rename banner, repeated at each entry point on purpose"
     },
     {
-      "paths": ["README.md", "ROADMAP.md"],
+      "paths": [
+        "README.md",
+        "ROADMAP.md"
+      ],
       "reason": "the rename banner, repeated at each entry point on purpose"
     },
     {
-      "paths": ["HANDOVER.md", "ROADMAP.md"],
+      "paths": [
+        "HANDOVER.md",
+        "ROADMAP.md"
+      ],
       "reason": "the rename banner, repeated at each entry point on purpose"
     }
   ],
@@ -255,6 +264,11 @@
       "path": "site/src/pages/ask-your-ai/self-audit.astro",
       "term": "hello@novenstudio.co.uk",
       "reason": "the report's original signature; the alias still receives"
+    },
+    {
+      "path": "ops/README.md",
+      "term": "Noven",
+      "reason": "names the rename itself — 'the full Noven → Wardith changeover' is the title of a past event and the file it describes is the record of it. Renaming it would describe a changeover from Wardith to Wardith. Judged 2026-08-08"
     }
   ],
   "_superseded_prices_note": [
