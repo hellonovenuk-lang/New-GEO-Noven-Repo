@@ -191,6 +191,13 @@ should not be cut, because it is the record. Look instead for long files that
 are *read often*, and for sections inside them that restate what an earlier
 section already said.
 
+**One shape is worth scanning for by eye, because no check finds it.** A
+checklist item whose first paragraph is an instruction and whose remaining
+paragraphs are history: a closed comparison, the justification of a change
+already shipped, a reflection on what a decision cost. The unticked box makes
+the whole entry read as live. `ROADMAP.md` §1c carried 311 words this way and
+needed 185. The method is in `editing.md`, worked example 2.
+
 ---
 
 ## Fixing the scanner

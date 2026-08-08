@@ -11,6 +11,69 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-08 (the condensing rules sharpened, after they missed a case)
+
+**Trigger:** the owner read `ROADMAP.md` §1c — the address-for-service item —
+and asked why 311 words of settled argument were still being paid for on every
+read. It had survived a full condensing pass three commits earlier. The
+interesting question was not the passage but why the rules let it through.
+
+**The gap.** `editing.md`'s most aggressive rule — a closed decision keeps
+almost nothing — fired only when a decision was "made **and acted on**". The
+provider was chosen 2026-08-07 but not yet bought, so the item fell back to the
+gentler "four things a passage must survive with", which protects anything
+touching a constraint or a commitment. **An unticked box was reading as an open
+argument.** It is not: the errand was open, the argument had been over for a
+day.
+
+**Three changes to `.claude/skills/repo-consistency/references/editing.md`:**
+
+1. **A comparison closes when the choice is made, not when the money moves.**
+   With the explicit fork a future session has to answer — is the *choice* still
+   open, or only the *errand*? The second case keeps the runbook and the traps
+   and deletes the comparison outright.
+2. **Narrative colour is now a named category of cut.** Sentences that
+   editorialise a decision's weight, irony or cost without stating a fact,
+   constraint or outstanding condition. These had no category at all before, so
+   they could only ever be cut by accident — and they read as the most serious
+   writing on the page, which is exactly why they survive. The test given is
+   whether deleting the sentence could let someone do the wrong thing later.
+3. **"What never goes" was being over-applied.** The bullet protecting
+   statements about what the business will not do now says plainly that it
+   protects the *rule*, not the paragraphs of history around it — a rule buried
+   in narrative is easier to miss than one standing alone. A new bullet protects
+   an undated commitment standing in for a completed task, which is the one line
+   in that passage nobody should ever cut.
+
+Worked example 2 in `editing.md` carries the before, the after, and a
+rule-by-rule verdict table for each clause. `SKILL.md` gets the two
+counter-intuitive cuts inline rather than by reference; `checks.md` gains a
+by-eye tell under `bloat`, since no mechanical check finds this shape:
+**an item whose first paragraph is an instruction and whose remaining
+paragraphs are history.**
+
+**The passage itself: 311 → 185 words, 40% off.** What went was one closed
+provider comparison (owned by `ops/third-party-services.md` B1a–B1b, refund
+included), one justification of the footer-placeholder removal the owner had
+already shipped (carried by this log and by the `Base.astro` comment — checked
+before deleting, per the rule), and four sentences of colour. What stayed: what
+to buy and at what price, the PO Box trap, "don't tick until post arrives", the
+runbook pointer, the commitment that the address is published before the first
+customer is onboarded, and **never the home address** with its one-way-door
+reason.
+
+**Scanner unchanged either side of this work** — 2 errors, 70 verify, 73 notes
+before and after. That is the honest result, not a failure: this class of bloat
+is a judgement about sentences and no check will ever find it. It is also why
+the tell went into `checks.md` in words.
+
+**Not done, and flagged rather than taken:** the `Base.astro` comment is now the
+third copy of the footer-placeholder justification and runs to ~20 lines. It is
+a deliberate one — the owner made it the sole carrier of a reminder that used to
+be visible on nine pages — so condensing it is the owner's call, not a tidy-up.
+
+---
+
 ### 2026-08-08 (two finished documents deleted)
 
 **Done:** `ops/linkedin.md` and `ops/zoho-mail-setup.md` deleted. The owner

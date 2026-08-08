@@ -115,6 +115,18 @@ It can lose: restated context, the same point made twice with different
 examples, hedging, throat-clearing before the actual claim, and narration of
 what the reader is about to read.
 
+Two cuts do most of the work, and both are counter-intuitive enough to state
+here rather than leaving to the reference:
+
+- **A comparison closes when the choice is made, not when the money moves.** An
+  unticked box means the errand is open; it says nothing about the argument.
+  Once a provider is picked, the case against the ones that lost goes — the
+  runbook and the traps stay.
+- **Narrative colour goes, however good it is.** A sentence about what a
+  decision cost, who has to carry it, or how ironic it is changes nobody's next
+  action. The test: if deleting it could let someone do the wrong thing later,
+  it is a constraint and it stays. If it only makes them feel less, it goes.
+
 Report the saving in words, not as a vague claim of tightening.
 
 ## Structural changes

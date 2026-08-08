@@ -263,32 +263,22 @@ provider's own site before committing.
       Business Street Address, Poole, £12/month inc VAT.** Trading under a
       business name as a sole trader carries a legal duty to show a name and an
       address where documents can be served, including on the website. A
-      virtual office satisfies it. Don't tick this off until post through the
-      address is confirmed working. **Buy the *Street* address, not their
+      virtual office satisfies it. **Buy the *Street* address, not their
       cheaper Business PO Box — a PO Box is not a valid address for this.**
+      Don't tick this off until post through the address is confirmed working.
+      Runbook — both traps, the ID check, the order the downstream work happens
+      in — is `ops/third-party-services.md` B1c. The provider comparison is
+      closed in B1a–B1b, along with the V LOT refund still outstanding; don't
+      reopen it.
 
-      **The comparison is closed** — V LOT took payment ~29 July and delivered
-      nothing (refund requested); Icon Offices was rejected on the numbers; the
-      two best-reviewed providers are annual-only and the owner needs monthly or
-      quarterly billing. Working in `ops/third-party-services.md` B1a–B1b.
-      **What remains is a purchase, and it has a runbook — B1c**, covering both
-      traps, the ID check, and the order the downstream work happens in.
+      **The footer carries no address, and what stands in its place is a
+      commitment: it is published before the first customer is onboarded.**
+      Defensible only while nothing on the site takes a payment. The reminder
+      is a comment in `Base.astro`.
 
-      **The footer placeholder was removed 2026-08-06 by the owner, reversing
-      this instruction.** It had published the literal token `[PLACEHOLDER`, named
-      an internal repo file, and stated in writing on all nine pages that a legal
-      disclosure requirement was unmet — a red flag handed to a prospect by the
-      business's own site, which is the exact fault the product finds on other
-      people's. **What replaces it is a commitment, not a tick: the address is
-      published before the first customer is onboarded.** Nothing takes a payment
-      yet, which is what makes that defensible. The reminder is now a comment in
-      `Base.astro` and this paragraph, both weaker than nine visible pages were —
-      the cost of the decision, and the owner's to carry.
-
-      **Never the home address.** This site is built so crawlers read the
-      business facts and repeat them confidently, which works against us on this
-      field, and it is a one-way door: the footer can be edited, indexes and
-      archives cannot.
+      **Never the home address.** The footer can be edited; indexes and archives
+      cannot, and this site is built so crawlers repeat its business facts
+      confidently.
 
 #### Before money changes hands
 
