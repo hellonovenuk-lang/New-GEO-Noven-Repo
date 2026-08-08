@@ -67,8 +67,7 @@ Zoho's Forever Free plan is not offered to new sign-ups on the EU data centre,
 so it was never actually available to us.
 
 **Why Zoho rather than Google Workspace or Microsoft 365:** the owner already
-has Zoho Books — same login, same billing, no new vendor. Setup and failure
-checks are in `ops/zoho-mail-setup.md`.
+has Zoho Books — same login, same billing, no new vendor.
 
 ### A2. Site analytics — Cloudflare Web Analytics
 

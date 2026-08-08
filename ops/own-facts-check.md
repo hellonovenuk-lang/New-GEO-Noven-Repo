@@ -45,7 +45,7 @@ copy to maintain; it is here so a check can be run without reading TypeScript.
 **Corrected 2026-08-06, and the way it broke is worth keeping.** The Email row
 read `hello@wardith.co.uk`, and so did `ROADMAP.md`, `HANDOVER.md`,
 `ops/accounts.md`, `ops/third-party-services.md`, `ops/README.md` and the
-LinkedIn copy in `ops/linkedin.md` — a block of text meant to be pasted into a
+LinkedIn copy — a block of text meant to be pasted into a
 public About section. **None of it was true.** The C10 sweep in
 `ops/rename-to-wardith.md` replaced the old domain with the new one across the
 operating documents, which was right for every sentence describing *the site*
@@ -166,7 +166,7 @@ to experiment on.
 - **At the quarterly review**, alongside the renewals sweep in
   `HANDOVER.md` section 8.
 
-The rule that would have caught it is already written, in `ops/linkedin.md`:
+The rule that would have caught it was already written down:
 *if a price changes, it changes in both places or neither.* It was written down
 and not followed, which is the ordinary way this goes wrong. Hence a register
 rather than a resolution.

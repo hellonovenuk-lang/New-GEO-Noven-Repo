@@ -397,9 +397,8 @@ single source of truth and most of the rest follows from it.
       price by accident.
 - [x] **C10. Update the ops documents.** `novenstudio.co.uk` appears in
       `HANDOVER.md`, `README.md`, `ROADMAP.md`, `ops/README.md`,
-      `ops/accounts.md`, `ops/audit-setup.md`, `ops/linkedin.md`,
-      `ops/own-facts-check.md`, `ops/third-party-services.md` and
-      `ops/zoho-mail-setup.md`. **Leave the audit folder alone** —
+      `ops/accounts.md`, `ops/audit-setup.md`, `ops/own-facts-check.md` and
+      `ops/third-party-services.md`. **Leave the audit folder alone** —
       `ops/audits/noven-2026-08-02/` is a dated historical record and rewriting
       it would destroy the baseline. Same rule as the repricing: correct what
       claims to be current, never what is correctly dated history.
@@ -417,7 +416,7 @@ spending freeze until 26 August, and none of this breaches it. **If any screen
 in any of these steps asks for payment, stop and say so** — it means something
 is different from what is written here, and the answer is to wait, not to pay.
 
-**One principle throughout, borrowed from `ops/zoho-mail-setup.md`: if a screen
+**One principle throughout: if a screen
 shows you a value that differs from one written here, trust the screen.** These
 panels change, and the console knows things this document cannot — which data
 centre an account is on, which IP a host is currently using.
@@ -599,10 +598,9 @@ still being cached. Wait out the TTL and press **Renew certificate**.
 
 ### D0.4 — Zoho: `hello@wardith.co.uk`, as an alias
 
-`ops/zoho-mail-setup.md` is a step-by-step for this exact job on the old
-domain. It still applies; only the DNS panel changes, from Namecheap to
-GoDaddy. **Note the account is on the EU data centre, which is why every
-hostname ends `.eu`.**
+**Done 2026-08-06** — the alias exists, mail arrives, and `business.ts` was
+flipped the same day. **The account is on the EU data centre, which is why
+every hostname ends `.eu`.**
 
 **Add it as an alias on the existing user, not as a second user.** Aliases are
 free; users are £1/month each, and one Mail Lite licence is all this business
@@ -669,9 +667,8 @@ is worth more than the link is.
 
 4. While in there, the About text on **both** the company page and the founder
    profile still publishes the pre-31-July prices — £30 / £350 / from £75.
-   Repaste from `ops/linkedin.md` §5.4 and §2 with the new name. **Two faults,
-   one paste.** The new cover and logo PNGs are in `assets/linkedin/`, already
-   rebuilt for Wardith.
+   **Done — the owner confirmed both sections correct on 2026-08-08.** The new
+   cover and logo PNGs are in `assets/linkedin/`, rebuilt for Wardith.
 
 ---
 

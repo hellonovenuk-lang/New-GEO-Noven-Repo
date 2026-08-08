@@ -11,6 +11,64 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-08 (two finished documents deleted)
+
+**Done:** `ops/linkedin.md` and `ops/zoho-mail-setup.md` deleted. The owner
+confirmed both jobs complete and factually correct — the LinkedIn profile and
+company page, and the mailbox. **Repo prose 119,562 → 112,400 words**, a 7,162
+word cut from two files alone.
+
+**`ops/linkedin.md` was a rewrite plan, and the rewrite is done.** Headline
+copy, About copy for both surfaces, position-by-position fixes, company-page
+creation. Nothing in it describes a state of the world; all of it was
+instructions for a job now finished. It had also been the repo's largest single
+source of the old name — 42 mentions — which is what kept flagging it.
+
+**`ops/zoho-mail-setup.md` needed checking before it could go**, because its
+title said "how to diagnose it if it breaks" and the mailbox is the only inbound
+channel this business has. Everything in it that could still change an action
+was already recorded elsewhere, and each was verified before the file went:
+
+- the **SPF/DKIM/DMARC verification test** — which is *still owed* — is in
+  `ops/rename-to-wardith.md` D0.4 and flagged in `ROADMAP.md` and `business.ts`;
+- the **recovery-address fix**, owed since 29 July, is in `ops/accounts.md`,
+  `ops/rename-to-wardith.md` E5 and `ops/plan-to-1-september.md`;
+- the **twelve-month alias keepalive** and the Gmail forwarding are in
+  `ops/accounts.md` rows for Zoho Mail Lite and Gmail, and in `business.ts`;
+- the **DNS values** are in `ROADMAP.md` 1c-3 and `business.ts`.
+
+The one genuinely unique thing lost is the "if the first message out of Zoho
+doesn't arrive" diagnostic — and it was written for a mailbox created that same
+day, describing Zoho's new-account sending restriction. On a mailbox live since
+6 August it had already expired.
+
+**Two things were promoted rather than deleted, because the pointer was dying
+and the content was not.** `ops/own-facts-check.md` cited `linkedin.md` for the
+rule *"if a price changes, it changes in both places or neither"* — the rule is
+now written out where it is used. `ops/search-console-and-bing.md` and
+`ops/rename-to-wardith.md` both borrowed a principle from the mail doc — *if a
+screen shows a value that differs from one written here, trust the screen* —
+which now stands on its own in both.
+
+**Sixteen references were fixed, and three of them were open tasks that the
+owner's confirmation closes:** `HANDOVER.md` 4b, `ops/audit-setup.md`'s two
+day-after-the-run checklist items, and `ops/rename-to-wardith.md` item 4 all
+told a reader to repaste the LinkedIn About sections from a file that no longer
+exists, for a job already done. `ops/rename-to-wardith.md` D0.4 pointed at the
+mail doc as a step-by-step and is now simply marked done.
+
+**The checker confirms no reference dangles**, and the name findings fell from
+eight to two — both in `ROADMAP.md`, which still mixes live statements with
+self-audit history and needs reading rather than replacing. That is the one item
+left from the original list.
+
+**Deletion is recoverable and the record is intact.** Git holds both files in
+full, and this log carries the reasoning behind everything they contained.
+
+**What a merge publishes: nothing visible.** No file under `site/` changed.
+
+---
+
 ### 2026-08-08 (closed decisions stripped, on the owner's sharper rule)
 
 **The owner's instruction, and it is now the rule in the skill:** when a
