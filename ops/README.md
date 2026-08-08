@@ -1,7 +1,7 @@
 # The operating documents — index
 
-Fourteen files besides this index, and no obvious order to read them in. This is
-the order.
+The files in this folder have no obvious order to read them in. This is the
+order.
 
 New to the business? Read `HANDOVER.md` at the repo root first. It is the only
 document written for someone with no context.
@@ -44,7 +44,7 @@ in the business with no time budget at all.
 
 | File | What it decides | Status |
 |---|---|---|
-| `service-tiers.md` | What each plan contains, how long each is allowed to take, and why a client would move up. **Section 9 is the 2026-07-31 repricing** and the reasoning behind pricing on answer pages rather than question volume | Live — question counts and time budgets are still estimates |
+| `service-tiers.md` | What each plan contains, how long each is allowed to take, and why a client would move up. **Section 11 is the current repricing (2026-08-05)**; section 9 is the earlier 2026-07-31 one and carries the reasoning behind pricing on answer pages rather than question volume | Live — question counts and time budgets are still estimates |
 
 ## Running the business
 
@@ -59,14 +59,12 @@ in the business with no time budget at all.
 | File | What it decides | Status |
 |---|---|---|
 | `third-party-services.md` | Every outside service the business needs, with a pick, a cost and a reason for each. Read only the **Picks** for the shortlist | Live — prices restated against the repricing on 2026-08-01; some sections still predate decisions made later in the same file, and say so |
-| `zoho-mail-setup.md` | How the mailbox was set up, and how to diagnose it if it breaks. Written for `hello@novenstudio.co.uk`; reused on 2026-08-06 for `hello@wardith.co.uk`, which is now the published address | Closed — still written as a to-do list |
-| `linkedin.md` | The profile rewrite and the company page | **Reopened 2026-08-01** — the copy pasted into LinkedIn predates the repricing, so both About sections publish old prices |
 
 ## The record
 
 | File | What it is | Status |
 |---|---|---|
-| `session-log.md` | 1,100 lines, newest first: why every decision went the way it did. **Do not read front to back.** Go to it when you need the argument behind something, and read the entry before re-opening a settled decision | Live |
+| `session-log.md` | Long, newest first: why every decision went the way it did. **Do not read front to back.** Go to it when you need the argument behind something, and read the entry before re-opening a settled decision | Live |
 
 ## Deleted 2026-07-31
 

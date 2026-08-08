@@ -349,6 +349,32 @@ them.** That is lucky, and it is a reason not to disturb the structure.
   and roadmap 3b/3c both carried it as open. What remains is build work, not a
   decision: write the fallback into onboarding, and split the access request
   into two stages.
+- **Opened 2026-08-07 — the assistants quote a higher market than we price
+  into, and they quote it to our buyers.** From the self-audit's raw answers
+  (`ops/competitor-analysis.md`, Part 2 Finding H): across the two questions
+  that ask what this should cost, **the median figure quoted is £1,500/month,
+  and it is the same median on all three assistants.** More pointedly, they
+  describe **£500–£1,500 as freelancer and consultant rates**, with agency work
+  above that band. **Lead is £700.** A buyer who arrives through an assistant
+  has therefore been anchored at £1,500 *by the assistant* before reaching our
+  pricing page, and finds a top tier asking under half of it. Section 1 of this
+  document positions us against local search agencies at £395–£1,500; that
+  comparison is still true, but it is no longer the only one the buyer has seen.
+  **Two things this does not settle.** It does not say raise Lead — §1's whole
+  argument is that our client is weighing a monthly fee against a quiet phone,
+  not against an agency quote, and that argument is untouched by what an
+  assistant says to a different buyer. And it does not say cheap is wrong; it
+  says cheap is no longer self-evidently *read* as value in this specific
+  category. **The owner's decision, and it wants making deliberately rather than
+  by inertia.**
+- **Opened 2026-08-07 — the audit sits at the floor of the band the assistants
+  quote.** Same source: the assistants put an initial visibility audit at
+  "often **£250–£750**". Ours is £250 — credible, and the cheapest honest entry
+  point, which §9 argues for at length and which this evidence supports. The
+  open question is only whether a **deeper second audit tier** nearer £750 is
+  worth having, given the audit is also the Foundation qualifier (§6) and a
+  higher-priced audit pre-qualifies a better £800 buyer. **Not a case for moving
+  the £250.** An input that did not exist when the £250 was set on 2026-08-05.
 - **Found while applying the copy:** every plan in `business.ts` carries a
   `summary` field, documented as "used in the record panels", and **nothing
   reads it.** Left alone rather than churned — the existing values still fit the
@@ -362,89 +388,62 @@ them.** That is lucky, and it is a reason not to disturb the structure.
 **What changed.** Audit £30 → **£125**. Foundation £350 → **£750**, with the
 scope fixed. Maintain £75 → **£95**, Grow £125 → **£250**, Lead £250 → **£495**.
 Question counts 10 / 25 / 50 → **10 / 15 / 25**. Lead's fortnightly checking
-removed. Confirmed by the owner before the copy was applied.
+removed.
+
+*The levels here were superseded by §11 on 2026-08-05. What survives from this
+section is the pricing **axis**, which is still the model in force.*
 
 ### The finding that forced it: the ladder was inverted
 
-Price against the estimated true effort — the estimates are from documented step
-counts, not measurement, and the self-audit replaces them:
+Priced against estimated effort, **every step up earned less per hour than the
+one below it** — Lead, the premium tier, paid roughly the same as the loss
+leader. Success at selling made the business worse. That is not a pricing
+*level* problem, it is a pricing **axis** problem: the tiers were separated by
+question volume, and question volume is pure cost to us with no leverage.
+Selling more of it sold more of the owner's hours at a discount.
 
-| Product | Old price | Est. hours | Est. £/hour |
-|---|---|---|---|
-| Audit | £30 | 2.5–3.5 | £9–12 |
-| Foundation | £350 | 10–20 | £17–35 |
-| Maintain | £75/mo | 1.8–2.8 | £27–42 |
-| Grow | £125/mo | 4.5–7 | £18–28 |
-| Lead | £250/mo | 13–23 | £11–19 |
+### The fix: price on answer pages, not questions — still the model
 
-**Every step up earned less per hour than the one below it.** Lead — the premium
-tier — paid roughly the same as the loss leader. Success at selling made the
-business worse, which is not a pricing level problem. It is a pricing *axis*
-problem: the tiers were separated by question volume, and question volume is
-pure cost to us with no leverage. Selling more of it sold more of the owner's
-hours at a discount.
+A page is a permanent asset that keeps working after it is written; twenty-five
+extra questions is a longer spreadsheet. So the tiers separate on pages
+(**0 / 1 / 2 a month**), question counts rise gently rather than doubling, and
+each step up pays more per hour than the last. Section 5's upgrade logic is
+unaffected — the trigger for Grow → Lead was never volume, it was a named
+competitor.
 
-### The fix: price on answer pages, not questions
-
-A page is a permanent asset that keeps working after it is written. Twenty-five
-extra questions is a longer spreadsheet. So the tiers now separate on pages
-(0 / 1 / 2 a month), question counts rise gently rather than doubling, and each
-step up pays more per hour than the last. Section 5's upgrade logic is
-unaffected and arguably strengthened — the trigger for Grow → Lead was never
-volume, it was a named competitor.
-
-### Why the audit went to £125 rather than staying a loss leader
-
-Three reasons, in order of weight:
+### Why the audit is not a loss leader — still in force
 
 1. **Price is a quality signal where the buyer cannot judge the product in
-   advance.** £30 for a bespoke report reads as automated. The barrier at £125
-   is trust, not money, and trust is answered by the sample audit and a plain
-   refund line — not by a low number.
-2. **It selects the wrong buyer.** The audit's job is to convert to a Foundation.
-   A £30 buyer is not the same person as a £750 buyer.
-3. **It consumed the scarcest resource in the business.** At an estimated 2.5–3.5
-   hours, thirty-three audits a month — the volume needed to reach £1,000 —
-   is ~53 hours of near-minimum-wage work.
+   advance.** A very low price for a bespoke report reads as automated. The
+   barrier is trust, not money, and trust is answered by the sample audit and a
+   plain refund line — not by a low number.
+2. **A cheap audit selects the wrong buyer.** Its job is to convert to a
+   Foundation, and those are not the same person.
+3. **It consumes the scarcest resource in the business** — the owner's hours.
 
-The pricing page section that asked *"Why is the audit only £30?"* is now
-*"Why does the audit cost £125?"* and answers it with the method: repeated runs,
-verbatim quotes, competitors named, read by a person.
-
-**No founding rate.** Considered and declined by the owner. Launching flat at
-the new prices avoids running a discount game on a brand built on plain dealing.
+**No founding rate.** Considered and declined by the owner: launching flat
+avoids running a discount game on a brand built on plain dealing.
 
 ### Why the Foundation had to be capped as well as raised
 
 `how-it-works.astro` promised "writing or restructuring key **pages**" — plural,
-unbounded — and no time budget for the Foundation existed anywhere in this repo.
-Raising the price without fixing the scope would have raised the ceiling on an
-open-ended commitment. The scope is now four fixed pieces of work, of which the
-fourth is **two** answer pages, and the page says so. If the audit finds work
-outside those four, we say so rather than absorbing it.
+unbounded — with no time budget anywhere in this repo. Raising the price without
+fixing the scope would have raised the ceiling on an open-ended commitment. The
+scope is now four fixed pieces of work, the fourth being **two** answer pages,
+and the page says so. Work found outside those four is quoted, not absorbed.
 
-### The bundle that was proposed, applied, and backed out the same day
+### The bundle that was proposed and backed out the same day
 
-**Proposed:** the Foundation included free with twelve months of Grow — £750
-given away against £3,000 committed, converting a one-off buyer into a
-subscriber without discounting the standalone price.
+The Foundation was briefly offered free with twelve months of Grow. **It was
+wrong because nothing commits anyone to twelve months:** the monthly plans roll
+month to month with no minimum term, published in four places including the
+FAQPage structured data and the pricing page's meta description ("No lock-ins").
+So the offer let a client take the Foundation, pay for one month of Grow and
+cancel — £1,000 of work for £250, entirely within our published terms.
 
-**Why it was wrong, and it is worth recording rather than quietly deleting:
-nothing commits anyone to twelve months.** The monthly plans roll month to month
-with no minimum term, and that is published in four places — `faq.astro` ("Am I
-locked into a contract?" "No."), which feeds the FAQPage structured data;
-`pricing.astro` and `how-it-works.astro` in the cancellation paragraph; and the
-pricing page's own meta description, which ends "No lock-ins."
-
-So the offer as written let a client take the £750 Foundation, pay £250 for one
-month of Grow, and cancel before the next payment date — £1,000 of work for
-£250, entirely within our published terms. The "£3,000 committed" figure was
-simply false. **The cancellation policy is the older and better-argued decision
-(roadmap 1a) and it wins.**
-
-**Backed out of the site and this document on 2026-07-31**, the same day it went
-in. The lesson generalises: any offer phrased as "for N months" is incompatible
-with no-minimum-term, and the terms are not the thing to bend.
+**The cancellation policy is the older and better-argued decision and it wins.**
+The lesson generalises: **any offer phrased as "for N months" is incompatible
+with no-minimum-term, and the terms are not the thing to bend.**
 
 ### Standing decision: we do not bundle services — 2026-07-31
 

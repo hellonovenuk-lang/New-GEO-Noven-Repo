@@ -18,7 +18,7 @@ able to read this and know what is sold, what exists, what does not, what must
 happen next, and what has to happen every week forever. Everything here is
 either a fact recorded elsewhere in this repo or is marked as an estimate.
 
-**Status: 2026-07-31. The site is live. No customer has ever paid. Revenue to
+**Status: 2026-08-08. The site is live. No customer has ever paid. Revenue to
 date is £0.**
 
 If you read nothing else, read [What has to happen next](#what-has-to-happen-next).
@@ -35,24 +35,28 @@ recommendable to those assistants.
 
 | Product | Price | What the customer gets |
 |---|---|---|
-| **Audit** | £125 one-off | A written report on how the assistants answer questions about their business today, what they believe, what's blocking them, and an honest recommendation — including "you don't need us" |
-| **Foundation** | £750 one-off | A fixed scope of setup work on the customer's **existing** website: crawler access, structured machine-readable facts, consistent facts across the web, and **two** permanent pages answering customer questions. Wardith does not build websites |
-| **Maintain** | £95/month | 10 questions tracked monthly, facts kept current, a one-page written record. Reports gaps, does not close them |
-| **Grow** | £250/month | Maintain across 15 questions, plus one new answer page a month |
-| **Lead** | £495/month | 25 questions, two answer pages a month, plus a quarterly review of competitors named ahead of them |
+| **Audit** | £250 one-off | A written report on how the assistants answer questions about their business today, what they believe, what's blocking them, and an honest recommendation — including "you don't need us" |
+| **Foundation** | £800 one-off | A fixed scope of setup work on the customer's **existing** website: crawler access, structured machine-readable facts, consistent facts across the web, and **two** permanent pages answering customer questions. Wardith does not build websites |
+| **Maintain** | £150/month | 10 questions tracked monthly, facts kept current, a one-page written record. Reports gaps, does not close them |
+| **Grow** | £400/month | Maintain across 15 questions, plus one new answer page a month |
+| **Lead** | £700/month | 25 questions, two answer pages a month, plus a quarterly review of competitors named ahead of them |
 
 **The commercial logic:** the audit is the smallest thing sold and the qualifier
 for the Foundation. Foundations are year-one income. The monthly plans are what
 make the business worth owning.
 
-**Prices were raised on 2026-07-31, before the first sale.** The old ladder
-(£30 / £350 / £75 / £125 / £250) separated the monthly tiers by question volume,
-which is pure cost to Wardith and little extra value to the client — so every step
-up earned *less* per hour than the one below it. The tiers now separate on
-permanent answer pages. Full reasoning in `ops/service-tiers.md` section 9. The
-timing was deliberate: with no minimum term on any plan, a later price rise on
-existing clients is a churn event, so launch prices are the only ones that can be
-set for free.
+**Prices have been raised twice, both times before the first sale.** On
+2026-07-31 the tiers stopped separating on question volume — pure cost to
+Wardith, little extra value to the client, so every step up earned *less* per
+hour than the one below — and started separating on permanent answer pages
+(`ops/service-tiers.md` §9). **The prices in the table above were set on
+2026-08-05 (§11)**, once the self-audit had shown what the work actually
+produces; §9 had priced against estimated effort and said so.
+
+The timing was deliberate both times: with no minimum term on any plan, a later
+price rise on existing clients is a churn event, so launch prices are the only
+ones that can be set for free. **They were set from estimated effort, not
+measured effort** — see section 7.
 
 **Who runs it:** Kieran Smith, sole trader, trading as Wardith, based in the
 Wirral, working remotely across the UK. One person, no employees.
@@ -63,7 +67,7 @@ Wirral, working remotely across the UK. One person, no employees.
 
 **Live and working**
 
-- **The website** — `wardith.co.uk`, seven static pages on Astro, deployed
+- **The website** — `wardith.co.uk`, nine static pages on Astro, deployed
   from `main` by Netlify, HTTPS confirmed. It is deliberately built as a
   demonstration of the product: no client-side JavaScript, AI crawlers
   explicitly allowed in `robots.txt`, an XML sitemap, and JSON-LD structured
@@ -75,7 +79,12 @@ Wirral, working remotely across the UK. One person, no employees.
   the old Gmail forwards in too. **Not yet checked: that mail sent *from* the
   new address passes SPF, DKIM and DMARC at the far end** — DNS is in place,
   but present records are not the same as a passing check.
-- **Search Console** — sitemap submitted and confirmed, six pages.
+- **Search Console and Bing** — a verified Domain property for `wardith.co.uk`
+  since 2026-08-06 with the Change of Address running, and Bing Webmaster Tools
+  set up 2026-08-07 with all eight indexable pages submitted. Bing matters
+  because Copilot answers out of its index. Submitted is not indexed: neither is
+  closed until a `site:wardith.co.uk` search returns the pages.
+  `ops/search-console-and-bing.md`.
 - **Brand** — the supplied assets are in and used as-is.
 - **LinkedIn** — founder profile and company page, both linked from the
   structured data.
@@ -92,7 +101,7 @@ intentions**, not things that have happened:
 - The audit method — five documents in `ops/`, unusually thorough, never run.
 - The monthly plans — priced and published, never delivered to anyone. They now
   at least have a format: `ops/monthly-record-template.md`.
-- The Foundation — £750, published, scope now fixed, but with no delivery method
+- The Foundation — £800, published, scope now fixed, but with no delivery method
   written and **no estimate of how long it takes.** It is the only product in the
   business with no time budget at all.
 - The payment route — decided, not built, no payment ever taken.
@@ -114,7 +123,7 @@ Ordered by what it stops.
 | **A decision on where client data lives** | The privacy notice, and delivering the first audit lawfully. Constraint: **it cannot be this repo**, which is public |
 | **API accounts, keys and spend caps** | Running any audit at all |
 | **A working payment route** | Revenue |
-| **A Foundation method and time budget** | The £750 product, and knowing whether it makes money |
+| **A Foundation method and time budget** | The £800 product, and knowing whether it makes money |
 | **Professional indemnity insurance** | Nothing yet — but it should precede the first Foundation, since that means changing a client's live website |
 
 ---
@@ -139,11 +148,20 @@ amending the ICO's own record does nothing about the copies.
 
 ### Then, roughly a day and a half of desk work
 
-**2. Order the fallback service address (~£115/yr, 1st Formations or Quality
-Company Formations).** The cheaper supplier already chosen — V LOT — took payment
-around 29 July and has delivered nothing; the session log's own conclusion on 30
-July was to take the fallback. That decision has not been executed. Order it
-first because it has a postal lead time, then do the desk work while it travels.
+**2. Order the service address — UK Postbox Business Street Address, Poole,
+£12/month inc VAT.** Settled 2026-08-07; the provider comparison is closed in
+`ops/third-party-services.md` B1a–B1b and should not be reopened. **Order it
+first because it has a lead time** — ID verification usually clears within 24
+hours, then post has to travel — and do the desk work while it travels.
+
+**Follow the runbook at `ops/third-party-services.md` B1c rather than working it
+out at the checkout.** The two traps it exists to prevent: **buy the Business
+*Street* Address, not the cheaper Business PO Box**, which is invalid for this;
+and **register the trading name "Wardith" as its own verified step**, because
+post addressed to a name the provider holds no record of is typically returned
+or destroyed. It also covers the ID check — which leaves a soft footprint on
+the owner's personal credit file — and the order the footer, the ICO address
+change and the structured-data locality decision have to happen in.
 
 **3. Write the terms of service and the privacy notice, and publish both.**
 Nothing external blocks these. Use the ICO's own free privacy notice generator.
@@ -158,12 +176,9 @@ dated before-and-after baseline, and produces the one number the whole business
 plan rests on — how long a month of Maintain actually takes. Start at
 `ops/audit-setup.md`.
 
-**4b. The day after the run, repaste both LinkedIn About sections.** Ten
-minutes. Both were written before the 31 July repricing and still publish
-£30 / £350 / from £75 — the only surfaces we control that contradict the site.
-The corrected copy is in `ops/linkedin.md`; the reason it waits until *after*
-the run is in `ops/own-facts-check.md` section 5. That document is the register
-of everywhere our own facts appear, and it is worth ten minutes on its own.
+**4b. Done — both LinkedIn About sections were confirmed correct on
+2026-08-08.** `ops/own-facts-check.md` is the register of everywhere our own
+facts appear, and is worth ten minutes on its own.
 
 **5. Make one payment possible end to end.** Create and test a Revolut Pro
 payment link with a real small payment; decide invoice or receipt; choose where
@@ -250,7 +265,7 @@ Nobody else can settle these, and several are currently blocking work.
    building any cold list. *Not legal advice — check it.*
 5. **Whether the new prices survive contact.** They were set from estimated
    effort, not measured effort. If the self-audit shows Maintain takes three
-   hours rather than one, `ops/service-tiers.md` section 9 gets rewritten, not
+   hours rather than one, `ops/service-tiers.md` section 11 gets rewritten, not
    defended.
 
 *Settled on 2026-07-31 and recorded here so they aren't reopened:* the Foundation
@@ -292,11 +307,11 @@ insurance renewed; delete client records past their retention period.
 **Read in this order.** Stop when you know enough.
 
 1. **This file.**
-2. **`ROADMAP.md`** — the section "Where we are today" is the best 20 lines in
-   the repo. The rest is a detailed task list; skim it.
+2. **`ROADMAP.md`** — start at "Where we are today", which is the current state
+   and the critical path. The rest is a detailed task list; skim it.
 3. **`CLAUDE.md`** — the standing rules for any change. Short, and binding.
 4. **`ops/`** — the operating documents. See the index in `ops/README.md`.
-5. **`ops/session-log.md`** — 1,100 lines, newest first, the full record of why
+5. **`ops/session-log.md`** — long, newest first, the full record of why
    every decision went the way it did. Do not read it front to back. Go to it
    when you want to know *why* something is the way it is, and do not re-argue
    a settled decision without reading its entry first.
@@ -305,7 +320,7 @@ insurance renewed; delete client records past their retention period.
 
 Terms used throughout as though the reader already knows them:
 
-- **The Foundation** — the £750 one-off setup on the client's *existing* site.
+- **The Foundation** — the £800 one-off setup on the client's *existing* site.
   Not a website build.
 - **The four promises** — the Foundation's four deliverables: crawler access,
   structured machine-readable facts, consistent facts across the web, and pages
@@ -338,7 +353,7 @@ the owner being hit by a bus.
 
 The gap is between deciding and doing. Five documents specify an audit that has
 never been run once. Three monthly plans are published and priced, and now have a
-record format, but none has been delivered to anyone. A £750 product is on sale
+record format, but none has been delivered to anyone. An £800 product is on sale
 with a fixed scope, no method and no time budget behind it.
 
 None of that is a crisis, because nobody has paid yet. All of it becomes a

@@ -11,6 +11,819 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-08 (full consistency sweep — HANDOVER.md was carrying a known-false claim)
+
+Ran the repo-consistency skill across the whole repo, with the rules sharpened
+earlier the same day. **2 errors → 0.** The interesting result was not the
+errors; it was `HANDOVER.md`, which `ROADMAP.md` had been flagging as stale in
+its own last line and which nobody had reconciled.
+
+**`HANDOVER.md` — six corrections, all of them facts.**
+
+1. **"Search Console — sitemap submitted and confirmed, six pages"** was still
+   listed under *Live and working*. **This is one of the four claims the
+   2026-08-06 session proved false**, recorded in `ROADMAP.md`'s table and never
+   propagated here. It was wrong twice over: it counted URLs read from a
+   sitemap rather than pages indexed, and the property it described was bound to
+   the dead domain. Replaced with the true state — verified Domain property
+   2026-08-06, Change of Address running, Bing set up 2026-08-07 — and with the
+   outstanding condition that neither is closed until `site:wardith.co.uk`
+   returns the pages. **A handover document restating a claim the business had
+   already caught and corrected is the worst version of this fault**, because it
+   is the file a stranger is told to read first.
+2. **The Foundation priced at £750 in two places** — the "never performed" list
+   and the vocabulary — against £800 in `business.ts`, in this file's own
+   product table, and in its own "what does not exist" table. The file
+   contradicted itself twice.
+3. **"seven static pages"** → nine. Confirmed against the page files, not
+   against other prose: `ops/own-facts-check.md` row 1 and `ROADMAP.md` both say
+   nine, eight of them indexable.
+4. **The repricing paragraph attributed today's ladder to the wrong event.** It
+   said prices were raised on 2026-07-31 and pointed at `service-tiers.md` §9.
+   §9 is the 31 July repricing; **§11, on 2026-08-05, set the numbers in the
+   table above it.** Now names both, and keeps §9's structural reasoning
+   (tiers separate on answer pages, not question volume) which is still in force.
+5. **Status date 2026-07-31** on a file describing events through 2026-08-08.
+6. **"the section 'Where we are today' is the best 20 lines in the repo"** — it
+   was 150 lines. Replaced with a phrasing that cannot go stale.
+
+**Two stale section pointers in `ROADMAP.md`, both the same fault as (4):** the
+total-time item said the number "§9's pricing rests on" when today's pricing is
+§11's, and §3c announced "Repriced 2026-07-31 (§9)" under a heading showing
+§11's prices. This is exactly the drift `checks.md` describes for the `sections`
+check — literally true, stale as guidance, and it never breaks.
+
+**Condensing: `ROADMAP.md`'s "Where we are today", 1,394 → 923 words (34%).**
+It is the first thing `HANDOVER.md` tells a new reader to open, and it had
+become a history dump. Cut under the sharpened rules: the retelling of the name
+collision evidence (the rename is done; `1c-2` owns the detail), the
+"Also closed that day" list (owned by `own-facts-check.md` rows 1 and 13), the
+2026-08-03 session summary (both outcomes are live rules in `CLAUDE.md` and the
+report template), and the V LOT/£115 comparison. **Everything falsifiable
+stayed** — the redirect regression test, the three findings' open conditions,
+Companies House and the trade mark register unchecked, the three method faults,
+the ICO deadline, the critical path, and why finding 3 waits rather than being
+part-solved. The section heading is now "The habit this repo has to work by",
+which is what that half of it is actually for.
+
+`HANDOVER.md` came down only 1.4% and that is the honest number — it was a
+correctness pass, not a condensing one. The address block lost the duplicated
+provider comparison (~130 words, owned by `third-party-services.md` B1a–B1c);
+the Search Console and repricing corrections cost most of it back. The AML
+supervision number dropped with the comparison is in `accounts.md` and
+`third-party-services.md` B1b — checked before cutting.
+
+**Two judgements recorded in the scanner rather than re-made every run:**
+
+- **`ROADMAP.md`'s 15 "Noven" and 3 "novenstudio.co.uk" mentions** were both
+  errors. All are the self-audit's findings — the name the audit found taken,
+  the assistants' wrong answers, the old domain no answer cited, the redirect
+  fault found on it. Renaming them would describe an audit that never happened.
+  Added to `reviewed_names` with the reason, per the documented practice.
+- **The rename banner in `README`/`HANDOVER`/`ROADMAP`** is the one duplication
+  `checks.md` explicitly allows, and it had been re-investigated on three
+  consecutive runs. `reviewed_dupes` now records it — **and enforces the
+  condition the allowance depends on.** While the three copies are identical the
+  finding is a note; the moment they drift it is reported as an **error**, a
+  higher grade than an ordinary duplicate, because a banner saying different
+  things at three entry points is the failure the exemption exists to watch for.
+  An exemption that went quiet on divergence would hide its own reason for
+  existing. Tested both ways before committing.
+
+**Not touched:** the `[PLACEHOLDER]` for the domain registrar and renewal date
+in `HANDOVER.md` §5 — still the dependency whose failure is total and still
+nobody has looked it up. The 13 remaining `facts` findings were read and are all
+correct: supplier costs, hourly rates, competitor rates, hypothetical tiers, and
+`ops/audit-method.md` §6, which carries its own "superseded on price" banner and
+says it is left as it stood on purpose.
+
+---
+
+### 2026-08-08 (the condensing rules sharpened, after they missed a case)
+
+**Trigger:** the owner read `ROADMAP.md` §1c — the address-for-service item —
+and asked why 311 words of settled argument were still being paid for on every
+read. It had survived a full condensing pass three commits earlier. The
+interesting question was not the passage but why the rules let it through.
+
+**The gap.** `editing.md`'s most aggressive rule — a closed decision keeps
+almost nothing — fired only when a decision was "made **and acted on**". The
+provider was chosen 2026-08-07 but not yet bought, so the item fell back to the
+gentler "four things a passage must survive with", which protects anything
+touching a constraint or a commitment. **An unticked box was reading as an open
+argument.** It is not: the errand was open, the argument had been over for a
+day.
+
+**Three changes to `.claude/skills/repo-consistency/references/editing.md`:**
+
+1. **A comparison closes when the choice is made, not when the money moves.**
+   With the explicit fork a future session has to answer — is the *choice* still
+   open, or only the *errand*? The second case keeps the runbook and the traps
+   and deletes the comparison outright.
+2. **Narrative colour is now a named category of cut.** Sentences that
+   editorialise a decision's weight, irony or cost without stating a fact,
+   constraint or outstanding condition. These had no category at all before, so
+   they could only ever be cut by accident — and they read as the most serious
+   writing on the page, which is exactly why they survive. The test given is
+   whether deleting the sentence could let someone do the wrong thing later.
+3. **"What never goes" was being over-applied.** The bullet protecting
+   statements about what the business will not do now says plainly that it
+   protects the *rule*, not the paragraphs of history around it — a rule buried
+   in narrative is easier to miss than one standing alone. A new bullet protects
+   an undated commitment standing in for a completed task, which is the one line
+   in that passage nobody should ever cut.
+
+Worked example 2 in `editing.md` carries the before, the after, and a
+rule-by-rule verdict table for each clause. `SKILL.md` gets the two
+counter-intuitive cuts inline rather than by reference; `checks.md` gains a
+by-eye tell under `bloat`, since no mechanical check finds this shape:
+**an item whose first paragraph is an instruction and whose remaining
+paragraphs are history.**
+
+**The passage itself: 311 → 185 words, 40% off.** What went was one closed
+provider comparison (owned by `ops/third-party-services.md` B1a–B1b, refund
+included), one justification of the footer-placeholder removal the owner had
+already shipped (carried by this log and by the `Base.astro` comment — checked
+before deleting, per the rule), and four sentences of colour. What stayed: what
+to buy and at what price, the PO Box trap, "don't tick until post arrives", the
+runbook pointer, the commitment that the address is published before the first
+customer is onboarded, and **never the home address** with its one-way-door
+reason.
+
+**Scanner unchanged either side of this work** — 2 errors, 70 verify, 73 notes
+before and after. That is the honest result, not a failure: this class of bloat
+is a judgement about sentences and no check will ever find it. It is also why
+the tell went into `checks.md` in words.
+
+**Not done, and flagged rather than taken:** the `Base.astro` comment is now the
+third copy of the footer-placeholder justification and runs to ~20 lines. It is
+a deliberate one — the owner made it the sole carrier of a reminder that used to
+be visible on nine pages — so condensing it is the owner's call, not a tidy-up.
+
+---
+
+### 2026-08-08 (two finished documents deleted)
+
+**Done:** `ops/linkedin.md` and `ops/zoho-mail-setup.md` deleted. The owner
+confirmed both jobs complete and factually correct — the LinkedIn profile and
+company page, and the mailbox. **Repo prose 119,562 → 112,400 words**, a 7,162
+word cut from two files alone.
+
+**`ops/linkedin.md` was a rewrite plan, and the rewrite is done.** Headline
+copy, About copy for both surfaces, position-by-position fixes, company-page
+creation. Nothing in it describes a state of the world; all of it was
+instructions for a job now finished. It had also been the repo's largest single
+source of the old name — 42 mentions — which is what kept flagging it.
+
+**`ops/zoho-mail-setup.md` needed checking before it could go**, because its
+title said "how to diagnose it if it breaks" and the mailbox is the only inbound
+channel this business has. Everything in it that could still change an action
+was already recorded elsewhere, and each was verified before the file went:
+
+- the **SPF/DKIM/DMARC verification test** — which is *still owed* — is in
+  `ops/rename-to-wardith.md` D0.4 and flagged in `ROADMAP.md` and `business.ts`;
+- the **recovery-address fix**, owed since 29 July, is in `ops/accounts.md`,
+  `ops/rename-to-wardith.md` E5 and `ops/plan-to-1-september.md`;
+- the **twelve-month alias keepalive** and the Gmail forwarding are in
+  `ops/accounts.md` rows for Zoho Mail Lite and Gmail, and in `business.ts`;
+- the **DNS values** are in `ROADMAP.md` 1c-3 and `business.ts`.
+
+The one genuinely unique thing lost is the "if the first message out of Zoho
+doesn't arrive" diagnostic — and it was written for a mailbox created that same
+day, describing Zoho's new-account sending restriction. On a mailbox live since
+6 August it had already expired.
+
+**Two things were promoted rather than deleted, because the pointer was dying
+and the content was not.** `ops/own-facts-check.md` cited `linkedin.md` for the
+rule *"if a price changes, it changes in both places or neither"* — the rule is
+now written out where it is used. `ops/search-console-and-bing.md` and
+`ops/rename-to-wardith.md` both borrowed a principle from the mail doc — *if a
+screen shows a value that differs from one written here, trust the screen* —
+which now stands on its own in both.
+
+**Sixteen references were fixed, and three of them were open tasks that the
+owner's confirmation closes:** `HANDOVER.md` 4b, `ops/audit-setup.md`'s two
+day-after-the-run checklist items, and `ops/rename-to-wardith.md` item 4 all
+told a reader to repaste the LinkedIn About sections from a file that no longer
+exists, for a job already done. `ops/rename-to-wardith.md` D0.4 pointed at the
+mail doc as a step-by-step and is now simply marked done.
+
+**The checker confirms no reference dangles**, and the name findings fell from
+eight to two — both in `ROADMAP.md`, which still mixes live statements with
+self-audit history and needs reading rather than replacing. That is the one item
+left from the original list.
+
+**Deletion is recoverable and the record is intact.** Git holds both files in
+full, and this log carries the reasoning behind everything they contained.
+
+**What a merge publishes: nothing visible.** No file under `site/` changed.
+
+---
+
+### 2026-08-08 (closed decisions stripped, on the owner's sharper rule)
+
+**The owner's instruction, and it is now the rule in the skill:** when a
+decision is made and acted on, the comparison that produced it has no further
+job. Delete it. Not condense — delete. The example given was the bank account:
+Revolut Pro has been open since 30 July, so nothing about Mettle, Starling or
+Tide has any material gain left.
+
+**`ops/third-party-services.md`: 10,112 → 6,534 words, down 35%.** It was the
+largest live document in the repo and almost entirely supplier comparisons for
+decisions already taken.
+
+- **C1 bank account, 65 lines → 12.** Five paragraphs argued Mettle, Starling
+  and Tide *after* the account was open. What survives: the account, the shared
+  £120,000 FSCS cap (not doubled), and the unverified Zoho Books bank feed.
+- **B1 address for service, 68 lines → 22.** An eight-row provider comparison
+  table for a decision closed on 7 August. What survives: the two-products
+  distinction, because buying the registered-office product buys nothing a sole
+  trader can use; the per-item charges nobody leads with; and the lesson — six
+  providers were compared on annual cost before anyone established that an
+  annual payment was affordable.
+- **B1a, 72 lines → 24.** V LOT and Icon Offices are one line each now. **The
+  four contract traps were kept and re-titled**, because they are generic to the
+  market and the purchase is still pending — they are the only part of that
+  section that can still change an action.
+- **C2 getting paid, 117 lines → 50.** The Stripe comparison and the
+  fee-percentage re-check went. The instruction not to "simplify" the order page
+  back onto Revolut's own fields stayed, because that is a mistake somebody will
+  otherwise make twice.
+- **D1 ICO, 32 lines → 10.** The section still carried "before paying, run the
+  self-assessment" guidance for a registration completed on 30 July.
+- **E1, 42 lines → 12.** A priced survey of five platforms we are not buying.
+
+**`ops/service-tiers.md`: 6,672 → 6,343.** §9 records a repricing that has itself
+been superseded by §11. The superseded *levels* went; the pricing **axis** — that
+tiers separate on answer pages rather than question volume — stayed, because it
+is still the model in force. That distinction is the whole judgement in this
+file: §9's numbers are dead, §9's argument is live.
+
+**What was kept everywhere, against the instruction to be aggressive:** anything
+still unverified about the thing we chose, every account and reference number,
+every renewal date and cap, and one line naming each rejected option so nobody
+re-proposes it. The standing "we do not bundle" decision was left intact — it
+says in its own text that it is not to be reopened.
+
+**Why this is safe, and it stops being safe without it.** This log is the archive
+of why, it is never condensed, and git holds every prior version. Before deleting
+each argument it was checked to be here — the Mettle/Starling reasoning is at
+30 July, V LOT and Icon Offices appear thirty times. **Stripping a live document
+is moving the reader to where the record actually lives, not destroying it.**
+The rule now written into the skill says to check the log first and, if it does
+not carry the reasoning, to put a dated line there before cutting.
+
+**Nothing broke.** No section pointer resolves to a missing section, no
+reference dangles, and no file under `site/` changed. **Repo prose is 119,562
+words, down from 122,950 at the start of this work** — and that is net of two
+long session-log entries added along the way.
+
+**Still oversized and untouched, in order:** `ops/audit-setup.md` (5,398) and
+`ops/audit-method.md` (4,344) are runbooks for a process never yet run, so most
+of their length is operative rather than historical; `ops/linkedin.md` (6,251)
+is the file already marked Reopened and waiting on the owner;
+`ops/competitor-analysis.md` (4,951) is three days old with an open execution
+plan. `HANDOVER.md` was assessed and left — 3,290 words across ten sections
+whose whole job is orienting somebody with no context.
+
+---
+
+### 2026-08-07 (the condensing pass, and three contradictions it turned up)
+
+**Done:** condensed `ROADMAP.md` from 9,474 words to 8,384 — 11.5% — by applying
+the rule the file already states about itself: *"Closed items here are one line
+and a pointer; go to the log or the `ops/` doc when you need the argument."*
+That rule was being broken for pages at a time.
+
+**Nothing open was touched.** 70 open items before and after, six `[D]` markers,
+31 headings, every date and reference intact — the ICO deadline and helpline
+number, the registration reference, the domain-renewal dates, the 26 August
+unfreeze. Three `[x]` items became two where one closed item was being told in
+two places.
+
+**What was cut, in every case, was the second telling.** The provider comparison
+for the address for service was written out in full twice in this file and three
+times in `ops/third-party-services.md`. The name decision was re-argued in a
+section whose own heading says it is settled. Section 1e restated Search Console
+and Bing almost sentence for sentence from 1c-3.
+
+**One `[PLACEHOLDER]` came out, and it was not a real one.** The Finding 3
+paragraph *quoted* the footer token `[PLACEHOLDER: address for service of
+documents]` — describing what the footer displayed until the owner removed it on
+2026-08-06. It marked no unknown fact. Every placeholder that marks something
+nobody knows is still there.
+
+**Three contradictions surfaced that no checker could have found**, because each
+is two statements that are individually well-formed and jointly impossible:
+
+1. **Section 1b said `hello@wardith.co.uk` "does not exist yet"** — twenty-four
+   lines after the header said it was created, confirmed and published. 1b was
+   written before 2026-08-06 and never revisited.
+2. **The critical path still led with the name decision and Bing registration.**
+   Both closed — 2026-08-04 and 2026-08-07 — and both listed as closed elsewhere
+   in the same file.
+3. **Finding 3's paragraph described the footer placeholder as present** on
+   every page, three days after 1c recorded the owner removing it.
+
+All three are the same failure: a paragraph written before a change, correct
+when written, never re-read after it. That is the failure the 2026-08-06 session
+already named — "re-read anything marked done before 4 August" — and this file
+was still carrying three instances of it.
+
+**A fourth is left open, because it is a question rather than a fault.**
+`ops/README.md` marks `linkedin.md` **Reopened**, on the grounds that both About
+sections publish pre-repricing prices. `ROADMAP.md` 1c-3 item 3 says the owner
+rewrote both on 2026-08-06 with prices matching the site. Both cannot be true.
+The evidence favours the roadmap, but only somebody looking at LinkedIn can
+settle it — so nothing was changed.
+
+**Two more stale live statements, fixed:** the cancellation-terms reasoning
+argued a notice period was not worth it "at £95–495", a range from two
+repricings ago; and the standing rule about Maersk forbade implying "they
+endorse Noven".
+
+**The checker learned one more thing, and it was the most valuable of the run.**
+`ROADMAP.md` said a stranger should be able to "read the site, understand the
+offer, email us, and pay us £125" — no plan named, one amount, so neither
+price-to-plan matching nor the ladder rule could see it. Comparing against a
+list of prices this business has *stopped* charging needs no context at all,
+which is exactly why it catches what the cleverer rules miss. `superseded_prices`
+in the config; 30 and 75 were dropped from it after colliding with supplier
+costs, since a £30 Hoxton Mix plan is not our old audit price.
+
+**Repo prose is down from 122,950 words to 122,754** despite eight status
+headers and this entry being added.
+
+**What a merge publishes: nothing visible.** No file under `site/` changed.
+
+---
+
+### 2026-08-07 (the consistency sweep, run for the first time)
+
+**Done:** ran `repo-consistency` across the repo after merging main. 90 errors
+down to 9. The nine that remain are three files that need the owner, listed at
+the end.
+
+**The prices were the point.** `HANDOVER.md` published the entire superseded
+ladder in its product table — £125 / £750 / £95 / £250 / £495 — six days after
+the repricing, and `ROADMAP.md` carried it in six more places including two
+section headings. That is the document a newcomer is told to read first quoting
+prices the business does not charge. Corrected against `business.ts` throughout.
+
+**Stale counts were replaced rather than reset.** `ops/README.md` claimed
+fourteen files (18) and a 1,100-line session log (3,105). Updating the numbers
+would have started the same clock again, so the counts are gone: "long, newest
+first" cannot go stale. The same for the root `README.md` entry.
+
+**Four live artefacts still signed themselves Noven** — the audit report
+template, the monthly record template, the standing rule in `CLAUDE.md`, and the
+Zoho pick in `third-party-services.md`. The first two are what every future
+client sees. Fixed.
+
+**Every operating document now carries a status.** `ops/README.md` defined the
+Live / Decided-unvalidated / Closed / Stub vocabulary on 2026-07-31 and asked
+for it in each file's header; eight files never got one. The wording was copied
+from the index's own table so the two cannot disagree. `plan-to-1-september.md`
+was not in that table and is marked Live — a judgement, not a lookup.
+
+**The scan did not catch everything on the first pass, and that is the finding
+worth keeping.** Three gaps, all now closed:
+
+- **A ladder with no plan names beside it was invisible.** `### 3c. Monthly
+  plans (£95 / £250 / £495)` has no plan named next to any number, so
+  price-to-plan matching had nothing to bind to. Worse, the obvious fallback —
+  "does the line contain a current price?" — also passes it, because £250 *is*
+  current: it is the audit's, sitting inside a stale monthly ladder. Now checked
+  as a set: every amount in a plan ladder must be a current plan price.
+- **A heuristic hid a real fault.** Sections were skipped when their heading was
+  dated and said "changed", to protect the repricing records in
+  `service-tiers.md` §9 and §11. That also matched `ROADMAP.md`'s "What changed
+  on 2026-08-06" — a section about the present — and silently swallowed a stale
+  £95 underneath it. The pattern is now narrow, lives in the config, and carries
+  the warning: a noisy finding costs a glance, a suppressed one costs the check.
+- **`timings.md` was reported as a broken reference** and investigated from
+  scratch before anyone remembered `audit-method.md` §5 puts client audit data
+  outside this repo. Files like that are now named in the config.
+
+**Precision matters as much as recall, for one reason.** The first run produced
+90 errors, most of them correct-as-written; a check nobody trusts is a check
+nobody reads, and the real drift hides in the noise. False positives were fixed
+at the source — fee columns, pence, price transitions, wrapped prose, build
+output, ticked-off history — not waved through.
+
+**The 24 name judgements are written down, not pattern-matched.** "The Noven
+self-audit" is the name of a past event, and no regex reliably tells that from a
+stale fact — the phrasings are a long tail with no shared shape. So each file
+was judged once and recorded in `reviewed_names` with its reason and date. They
+still print, downgraded, so the judgement stays visible and reversible.
+
+**Left for the owner, deliberately:**
+
+1. **`ops/linkedin.md`** — 42 mentions. `ops/README.md` already marks it
+   Reopened because the copy pasted into LinkedIn predates the repricing. The
+   fix is on LinkedIn, not only in the file, so it is not ours to silently make.
+2. **`ops/zoho-mail-setup.md`** — written throughout for
+   `hello@novenstudio.co.uk`. Marked Closed, and reused on 2026-08-06 for the
+   new address. Rewriting a closed record and rewriting a live runbook are
+   different jobs, and which one this is depends on whether it will be followed
+   again.
+3. **`ROADMAP.md`** — 18 mentions mixing live statements with self-audit
+   history. Needs reading rather than replacing.
+
+**No prose was condensed this run.** The consistency errors were the live risk —
+published prices that were wrong — and mixing a large rewrite into that diff
+would have made both harder to review. Word count went *up* slightly, from
+122,950 to 123,037, because eight status headers were added. The condensing pass
+is a separate piece of work; `ROADMAP.md` is the target, since it says itself
+that it exists to stay short enough to read at the start of every session and is
+now the largest live document at 8,846 words.
+
+**What a merge publishes: nothing visible.** No file under `site/` changed —
+Netlify will rebuild and serve a byte-identical site. The corrected prices are in
+the operating documents only; the site has always rendered them from
+`business.ts` and has been right throughout.
+
+---
+
+### 2026-08-07 (a skill that checks this repo against itself)
+
+**Done:** `.claude/skills/repo-consistency/` — a skill that sweeps the repo for
+facts that contradict each other, references pointing at nothing, self-describing
+prose gone stale, and duplicated writing. `scripts/check.py` does the mechanical
+half; `SKILL.md` and the two reference documents carry the judgement.
+
+**Why a script and not just instructions.** The expensive part of keeping this
+repo honest is not deciding what to fix, it is *finding* it: forty thousand words
+where a stale number looks exactly like a fresh one. Reading it all costs a
+fortune in tokens per session and still misses things. The script runs in a
+second, costs nothing, and reads `site/src/data/business.ts` for the canonical
+facts — so it stays correct as prices change without anyone editing it.
+
+**It found real drift on its first run, which is the argument for it.**
+`ROADMAP.md` and `HANDOVER.md` still carry the whole superseded ladder — £125 /
+£750 / £95 / £250 / £495 — as current fact, two days after the repricing.
+`ops/README.md` says "fourteen files" (18) and describes a 1,100-line session log
+(2,726). Eight operating documents carry no status, so a decision written down
+still reads exactly like a thing that works. **None of this is fixed yet** — the
+skill exists, the sweep has not been run as a piece of work.
+
+**The historical files are excluded, deliberately and by name.** This log, the
+delivered audits, and `rename-to-wardith.md` are the record: old prices and the
+old name are *correct* there, and "fixing" them would destroy the reasoning that
+stops a settled decision being re-argued. That exclusion is in
+`scripts/config.json` rather than in the code, so it is visible and editable.
+
+**Two owner decisions, made 2026-08-07.** Reasoning may be *condensed*, not only
+deduplicated — so `references/editing.md` sets out what a passage must survive
+with (the decision and its date, the constraint that stops it being reopened, any
+outstanding falsifiable condition, and who decided it) against what can go. And
+the skill fixes what it is confident about rather than only reporting, on a
+branch, with the diff shown — which is the workflow `CLAUDE.md` already requires.
+
+**Known false positives are written down rather than left to be rediscovered.**
+The name of a past event — "the Noven self-audit" — is not drift, and renaming it
+would make the documents describe something that never happened. `ops/README.md`
+citing files it records as deleted *should* dangle. Both are in
+`references/checks.md`, because an unfixed false positive is re-investigated on
+every future run and that costs more than the fix.
+
+---
+
+### 2026-08-07 (V LOT written off; Icon Offices assessed and not taken)
+
+**Done:** the owner requested a refund from V LOT, closing the 29 July decision
+for good. Icon Offices (`iconoffices.co.uk`) was researched as the cheap
+replacement and **rejected on the numbers**. The pick reverts to the fallback
+that was already identified on 29 July — 1st Formations or Quality Company
+Formations, ~£115/yr inc VAT — and it is now a purchase for the 26th with
+nothing left to decide. Written into `ops/third-party-services.md` (new section
+B1a), `ROADMAP.md`, `HANDOVER.md`, `ops/accounts.md` and
+`ops/plan-to-1-september.md`.
+
+**Icon Offices is not a V LOT.** That is worth saying plainly, because the easy
+conclusion after being burned is that everything cheap is a scam, and it would
+be the wrong lesson. Icon Offices Limited is company **10343713**, incorporated
+24 August 2016 and active; it holds a Companies House **ACSP** registration
+(AP000227), **HMRC AML supervision** (XNML00000198642) and an ICO registration.
+Its terms, clause 3, explicitly permit publishing the address on a company
+website, contracts and invoices — which is the category-2 product B1 says we
+need, and the thing several cheaper providers quietly do not sell. It failed on
+price, not on legitimacy.
+
+**The reason it fails on price is the reason the whole cheap end of this market
+looks cheap.** The advertised tier is £0.99/week — £45.76/yr — and it does not
+forward post. Their own terms say Bronze customers "are not eligible for
+on-demand postage or scanning services at an additional cost", and anything
+over 100g must be collected in person, by appointment, at an address in Essex,
+London, Glasgow, Edinburgh or Belfast. **From the Wirral that is not a service,
+it is a storage locker.** The first tier that forwards is Silver at £120.12/yr
+— *more* than 1st Formations at £115.20 — and Icon Offices sits at 4.0 on
+Trustpilot with 7% one-star against 1st Formations' 4.8–4.9 across ~23,000
+reviews. Paying more for worse reliability on the one purchase whose failure
+mode is a missed legal document is the V LOT mistake made backwards.
+
+**The general lesson, recorded because it will recur:** in this market the
+headline price is the price of a mailbox you cannot reach, and the real price
+of a usable business address is ~£115–120 whoever you buy it from. B1 has been
+wrong about this twice now — first the "£30/yr Hoxton Mix" figure corrected on
+29 July, then V LOT — and both errors were the same error: pricing the tier,
+not the service. **When a supplier's cheapest plan is a tenth of the market
+rate, find the feature that has been removed before assuming a bargain.**
+
+**Four contract terms recorded in B1a for whoever we actually buy from**, since
+none of them is unique to Icon Offices: "free" forwarding means no handling fee,
+not tracked or insured delivery; providers reserve the right to change or
+cancel your allocated address at will, which matters for an address that goes
+into JSON-LD and gets cached; Icon's clause 3 carve-out about court summonses
+sits oddly against an address whose purpose is service of documents, and is
+worth asking about in writing if similar wording appears in the contract we
+sign; and the trading name must be registered with the provider or post to it
+may be returned or destroyed — so **Wardith** gets registered explicitly, not
+just the owner's own name.
+
+**What the write-off actually costs the plan.** The V LOT payment is gone
+unless the refund lands, and the amount is still unrecorded — the order
+reference, amount and payment method were never written down, and a chargeback
+needs all three. More importantly it removes the last free route to closing the
+address: `ops/plan-to-1-september.md` was built around "chasing V LOT is free
+and is the only route that closes this before the 26th", and that sentence is
+now false. The address is a firm ~£115 on 26 August, six days before launch,
+with a postal lead time and KYC inside that window. **Check 1st Formations'
+turnaround and ID requirements before the 26th** rather than discovering them
+on the day.
+
+**Next:** buy it on the 26th; before then, find the V LOT payment details off
+the card statement while it is still recent.
+
+**Superseded within the hour — see the entry below.** The owner set a
+monthly-billing constraint straight after reading this, and 1st Formations does
+not offer one. The V LOT and Icon Offices findings above still stand; the
+conclusion does not.
+
+---
+
+### 2026-08-07 (the address, decided properly: UK Postbox, £12/month)
+
+**Done:** the owner said the annual payment is not affordable right now and
+asked for monthly or quarterly. **1st Formations and Quality Company Formations
+— the two best-reviewed providers, and the conclusion reached one entry above —
+are annual-only, so both were ruled out by cadence rather than quality.** The
+pick is **UK Postbox's Business Street Address, Poole, Dorset: £10/month exc
+VAT, £12/month inc VAT, billed monthly, cancel any time.** Written up as
+`ops/third-party-services.md` B1b and propagated through `ROADMAP.md`,
+`HANDOVER.md`, `ops/accounts.md` and `ops/plan-to-1-september.md`.
+
+**The mistake in the earlier entry is worth naming, because it was a process
+mistake and not a research one.** Six providers were compared on annual cost
+before anybody had established that an annual payment was possible. The whole
+morning's comparison turned on £120.12 against £115.20 — a £5 gap — and the
+variable that actually decided the purchase was never in the table. **Ask what
+shape the money has to be in before pricing anything.** B1 now carries billing
+cadence as a selection criterion rather than a payment detail.
+
+**Why UK Postbox rather than the other monthly options.** It is the only
+provider checked that is monthly, credentialled, long-established *and* under
+£15/month. Hoxton Mix is monthly and well-reviewed at £21/mo + VAT — roughly
+£302/yr, twice the price. Icon Offices bills quarterly at £38.87, which is
+£155.48/yr, so it is dearer than UK Postbox *and* carries the weaker record
+that got it rejected in the first place; it stays second choice and nothing
+more.
+
+**Checked the same way Icon Offices was, which is the test V LOT never got.**
+UK Postbox Ltd is **company 06723381**, trading since 2008; **HMRC AML
+supervision MLR XLML00000192390**; ICO registration ZA038907; VAT registered.
+Their own page sells a "**Business Trading Address** — to use on marketing
+materials and stationery", states the service suits "a sole trader,
+partnership, limited company or PLC", and carries an FAQ for exactly our case:
+a sole trader not registered at Companies House. **That is the category-2
+product sold as such, with no inference needed** — which is more than can be
+said for most of this market.
+
+**One number recorded as unresolved rather than rounded in our favour.**
+Trustpilot returns 403 to direct fetching, and search results report UK
+Postbox's score as both **4.0 and 4.7** across ~800 reviews. Those are
+materially different claims and we could not settle which is current. It is in
+the B1 table as unresolved, and it is a five-minute check on the day. **Given
+this file's history with supplier reviews — V LOT's were poor and were
+correctly flagged, and we bought anyway — do the check before paying, not
+after.**
+
+**Three traps written into B1b for the day of purchase:** buy the Business
+**Street** Address, not their cheaper Business PO Box, because a PO Box is not
+valid for this and their own FAQ says so; identity verification is a real step
+with its own lead time; and pay-as-you-go page scans are £1.20 each on top of
+the £12, which at our volume is pennies but should not be a surprise.
+
+**What this does to the plan, which is the biggest practical change.**
+`ops/plan-to-1-september.md` was built around a ~£115 lump sum that could not
+be paid before the freeze lifted on 26 August, leaving six days to launch for a
+purchase with a postal lead time. **£12 is a different kind of decision.**
+Whether it fits inside the freeze is the owner's call and is deliberately not
+assumed either way in the plan — but the option exists now, and it is the only
+route that gets the disclosure onto the site before an early sale rather than
+after one.
+
+**Left unsolved, and flagged rather than quietly dropped:** the address is in
+Poole, Dorset. **None of the credible providers is in the north-west**, so the
+locality question `ROADMAP.md` raised on 2026-08-06 — whether to put a
+`PostalAddress` in the structured data, and whether it says Merseyside — is not
+answered by this purchase and is not a reason to pick a worse provider for
+geography. Decide it deliberately when the address arrives: publish the real
+locality, or publish none.
+
+**Next:** buy it (date is the owner's call); check the Trustpilot score first;
+and find the V LOT payment details off the card statement while it is recent.
+
+---
+
+### 2026-08-07 (owner confirms UK Postbox; purchase runbook written)
+
+**Done:** the owner confirmed UK Postbox. The comparison is closed and the item
+is now a purchase, so the work this session was turning a decision into
+something that can be executed without re-reading six sections — **new section
+`ops/third-party-services.md` B1c, the runbook**. A row for UK Postbox was
+added to the `ops/accounts.md` register pre-filled and marked not-yet-bought,
+and the status changed from "the pick" to "confirmed" across `ROADMAP.md`,
+`HANDOVER.md` and `ops/plan-to-1-september.md`.
+
+**Four operational facts found in their user agreement and verification pages
+that were not known when the decision was made.** None of them changes the
+decision; all four would have been unpleasant to discover at the checkout.
+
+1. **The ID check leaves a soft footprint on the owner's personal credit
+   file.** Their terms say it is an ID check only and affects neither the
+   credit report nor the ability to borrow. It is recorded because it touches
+   the owner personally and should not be a surprise. Verification is
+   biometric, usually approved **within 24 hours**.
+2. **Registering the trading name is its own verified step**, not a text field
+   — UK Postbox publishes a separate "Add Business Names" verification guide
+   alongside its per-legal-status guides, and there is a specific **"Sole
+   Trader"** guide to download *before* signing up.
+3. **An inactive account gets its mail returned to sender after a month, and
+   purged and shredded at six.** On a £12 subscription paid by card, a failed
+   payment is a plausible event — and its consequence is a silently broken
+   legal disclosure on the site plus returned statutory post. That risk is now
+   the "if missed" column of the `ops/accounts.md` row.
+4. **Leaving is a project, not a cancel button.** Their terms require the
+   address to be moved off ICO, HMRC and everywhere else *before* closing, or
+   continued use stays chargeable. Icon Offices sets the same trap. **This is
+   the strongest argument yet for choosing once**, and it sharpens the note in
+   B1b about switching to an annual provider later if capital eases: that is a
+   change of address across the footer, the JSON-LD, the ICO record and HMRC,
+   not a swap of direct debits.
+
+**One cost recorded as unknown rather than assumed, per `CLAUDE.md`.** Their
+user agreement refers to "the standard setup fee", but **no setup fee appears
+on the pricing page, the business address page or in the terms** — the only
+mention is in a clause about re-creating a lapsed account. It may be £0 for new
+signups. It is `[PLACEHOLDER]` in B1b and in the accounts row, with an
+instruction to read the checkout total before confirming. **The B1 comparison
+was run entirely on headline monthly rates, so if a setup fee exists it is a
+gap in that comparison and not just a line on an invoice.**
+
+**Why the runbook orders the downstream work rather than listing it.** Buying
+the address is step one of nine, and the last three — footer, ICO address
+change, structured-data locality — are the ones that actually close the
+original risk. The ICO change is why this became urgent at all: registration
+`C1995412` carries the owner's home address on a bulk-downloadable public
+register. **Buying the address and stopping there fixes nothing**, which is the
+failure mode a runbook is for.
+
+**Still open and deliberately not resolved here:** the Trustpilot score
+(reported as both 4.0 and 4.7; Trustpilot blocks automated fetching, so it is a
+five-minute human check before paying), the setup fee, and the locality
+question — whether the structured data eventually says Poole, Dorset or says
+nothing.
+
+**Next:** buy it, following B1c; fill in the `ops/accounts.md` row the same
+day; then the footer and the ICO address change.
+
+---
+### 2026-08-07 (Competitor analysis Part 2 — the raw data, and what it overturned)
+
+**Done:** `runs-clean.csv` supplied by the owner and mined against Part 1's desk
+research. `ops/competitor-analysis.md` now carries both halves and one execution
+plan; `ROADMAP.md` 2f rewritten from "start a new session here" to six execution
+items. **The file was read in the scratchpad and not committed**
+(`ops/audit-method.md` §5). Confirmed for the owner that it is the same data as
+the Noven audit — `audit_id = noven-2026-08-02` on all 210 rows.
+
+**The finding that changes the framing: there is no incumbent.** The audit
+report's table — Tilio 36, nine more behind — reads as a pecking order to climb.
+Counted against the right denominator (165 rows where a business could have been
+recommended) Tilio is named in 28%, second place 23%, third 12%, and **62 of the
+165 answers name nobody at all.** 41 businesses in total, against the report's
+ten. That is not a market with leaders to displace; it is one that has not
+formed. Everything else in the plan is cheaper in that light.
+
+**Part 1's main recommendation had to be withdrawn, and this is the reason to
+keep writing these documents down.** Part 1 called "get Wardith added to the
+existing third-party listicles" the highest-leverage, lowest-risk option of all.
+WebFetch was blocked that session, so it rested on search snippets. This session
+WebFetch worked, so all of them were actually read — and **they are not
+third-party.** Buried Agency's list of the best agencies is published by Buried
+Agency, which ranks itself first. So does FirstMotion's, Sort The Clicks',
+Okapi's, Tilio's, ClickSlice's, Rank4AI's. None has a submission form, an
+editorial email, or stated criteria for applying. The recommendation was to ask
+competitors for a favour, and the honest expected answer is no.
+
+**The same evidence points somewhere better.** Every one of those publishers got
+cited *by writing the list*. Answers citing a list name 3.3 businesses; answers
+citing none name 1.2. Part 1 had already agreed a self-inclusive comparison page
+was fair game and listed it third of three options. The data promotes it to
+first. **It is emphatically not the parked "trust score" idea** — no invented
+scores, no pass/fail criteria, real providers described accurately, Wardith's
+authorship on the page, every claim verifiable before publication. That
+distinction is the whole reason "Considered and not done" was written, and it
+held up: it stopped the wrong version being re-proposed while leaving the
+defensible one available.
+
+**One genuinely open door, and it is small and free.** On the Wirral question
+the field is five businesses, not forty-one — and Bold Online Marketing is named
+in 15 of 15 runs, on all three assistants. Two of them cited
+`threebestrated.co.uk/marketing-agencies-in-wirral` as a source. It is a real
+directory, Bold is on it, and it says "List your business for Free!" That is the
+cheapest concrete action in the whole piece of work.
+
+**The rename is vindicated by data that didn't exist when it was decided.**
+`ops/rename-to-wardith.md` argued the move mainly from there being no indexation
+equity to lose, which is true but defensive. The raw answers are worse than that
+argument assumed: asked "What do you know about Noven?", **0 of 30 runs
+described this business** and all 30 described Noven Pharmaceuticals, the US
+patch maker. Adding "on the Wirral" didn't fix it — ChatGPT 0 of 5, and
+Perplexity confidently offered a North West *builder* and a Wirral *IT support
+firm* instead, which is worse than silence. Asked for "the main alternatives to
+Noven", ChatGPT answered about managed IT service providers. Only Gemini got it
+right, 5 of 5, and that is a point about Google having indexed the site rather
+than about the name. Nothing here reopens the decision; it closes the argument.
+
+**A method problem found by accident, and it matters more than the analysis.**
+All 479 of Gemini's cited URLs are `vertexaisearch.cloud.google.com` redirect
+wrappers that resolve nowhere readable. **For one of the four assistants we sell
+coverage of, `sources_cited` is structurally empty.** `ops/audit-method.md` §5
+lists the column without saying so, and that document feeds client reports. A
+report must never imply we can see what Gemini read. On the roadmap as a fix.
+
+**Recorded as a limit, not smoothed over:** the supplied export is
+pre-classification — `outcome` and `competitors` are blank on all 210 rows — so
+the report's own mention counts could not be re-derived from it. Every count in
+Part 2 comes from matching names against `answer_text` directly, which is why
+the numbers don't tie to the report's table. Said plainly in the document rather
+than reconciled away.
+
+**Then, at the owner's request: the commercial reading, filed where each piece
+belongs.** The execution plan in `ops/competitor-analysis.md` was reordered by
+size of ticket rather than by ease, and two things came out of the data that the
+analysis write-up had under-weighted.
+
+**The biggest number in the dataset is a pricing number, not a visibility one.**
+All three assistants quote a **median £1,500/month**, and they describe
+£500–£1,500 as *freelancer and consultant* rates with agency work above. Lead is
+£700. The consequence is specific and it is new: **a buyer who arrives through
+an assistant has been anchored at £1,500 by the assistant itself**, and then
+reaches a pricing page asking under half that. `ops/service-tiers.md` §1 argues
+we are priced against local search agencies and against a quiet phone, not
+against agency quotes — that argument is untouched and still right for the buyer
+it describes. It is simply no longer the only comparison the buyer has seen.
+
+**Filed in `ops/service-tiers.md` §8, not acted on.** That document owns pricing,
+this one doesn't, and an assistant does not move a price. Both entries are
+written to say what they do *not* settle as well as what they show — the audit
+one explicitly is **not** a case for moving the £250, only for asking whether a
+deeper second tier nearer the £750 the assistants quote is worth having.
+
+**The play with the best return for the effort is the cheapest one here.**
+Re-running q06–q08 under "Wardith" costs three questions. Under "Noven" it was
+0 of 30. If it flips, it produces the one thing no competitor on any of the
+sixty cited lists has and no amount of copywriting can manufacture: a dated,
+measured before-and-after on our own business. `CLAUDE.md` forbids inventing
+results, and **that prohibition is exactly what makes a real one valuable** — it
+is the only honest answer a months-old business has to "why would I pay a
+stranger £800."
+
+**One gap in the market that the write-up had recorded as a statistic and not as
+an opportunity:** 62 of the 165 opportunity rows name **no business at all** —
+better than a third of the demand goes to vetting advice instead of a
+recommendation, and nothing currently occupies that ground. A plain-words page
+on telling a real practitioner from a rebranded one costs credibility nothing,
+because it is already the voice of `/ask-your-ai/`.
+
+**A brand decision was asked for and deliberately left unanswered.** The
+comparison page is the exact situation `CLAUDE.md`'s single deliberate exception
+was written for on 2026-08-01 — a buyer arriving holding the acronym, and a site
+that contains the word nowhere being unable to be the answer. But that exception
+was granted for **one** FAQ entry, by the owner, on the record. Whether it
+stretches to a second page is not an assistant's call, and the page does not
+start until the owner rules. Recorded in both the doc and `ROADMAP.md` as
+blocking rather than assumed either way.
+
+**What this merge publishes: nothing visible.** Four documents changed —
+`ops/competitor-analysis.md`, `ops/service-tiers.md`, `ops/session-log.md`,
+`ROADMAP.md`. No file under `site/`, no copy, no JSON-LD, no price. Netlify will
+rebuild and serve a byte-identical site. Said out loud because `CLAUDE.md` asks
+for it before every merge, and because "nothing visible" is the honest answer
+often enough to be worth stating rather than skipping.
+
 ### 2026-08-07 (Bing — the fourth assistant gets a route in)
 
 **Done:** Bing Webmaster Tools set up for `wardith.co.uk`, indexing requested on
