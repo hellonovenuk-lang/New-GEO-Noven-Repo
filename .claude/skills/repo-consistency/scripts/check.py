@@ -639,6 +639,18 @@ def check_dupes(root, config, findings):
     min_chars = config["duplicate_min_chars"]
     threshold = config["duplicate_similarity"]
 
+    # File pairs a previous run judged worth duplicating on purpose, with the
+    # reason. The live case is the rename banner repeated at the top of README,
+    # HANDOVER and ROADMAP so that no entry point misses it — deliberate, and
+    # only safe while the copies stay identical. Matched on the file pair rather
+    # than line numbers, which move. Downgraded to a note and still printed, so
+    # the judgement stays visible and a copy that starts to diverge is still
+    # reported at its real severity.
+    reviewed = {}
+    for r in config.get("reviewed_dupes", []):
+        a, b = r["paths"]
+        reviewed[frozenset((a, b))] = r.get("reason", "")
+
     paragraphs = []
     for rel, path in collect_files(root, config, TEXT_SUFFIXES):
         if is_historical(rel, config):
@@ -670,7 +682,30 @@ def check_dupes(root, config, findings):
             if not overlap:
                 continue
             score = overlap / len(sh_a | sh_b)
-            if score >= threshold:
+            if score < threshold:
+                continue
+
+            reason = reviewed.get(frozenset((rel_a, rel_b)))
+            if reason is not None and score >= 1.0:
+                # Deliberate, and still identical — which is the condition the
+                # judgement was made under.
+                findings.append(Finding(
+                    "dupes", "note", rel_a, line_a,
+                    f"identical to {rel_b}:{line_b} — reviewed and kept: {reason}",
+                    evidence=text_a[:200],
+                ))
+            elif reason is not None:
+                # Kept on purpose, but the copies have drifted apart. This is
+                # the outcome the judgement was meant to prevent, so it is
+                # reported louder than an ordinary duplicate, not quieter.
+                findings.append(Finding(
+                    "dupes", "error", rel_a, line_a,
+                    f"{int(score * 100)}% the same as {rel_b}:{line_b} — these are "
+                    f"kept in duplicate on purpose ({reason}) and have drifted "
+                    f"apart; make them identical again or drop the exemption",
+                    evidence=text_a[:200],
+                ))
+            else:
                 findings.append(Finding(
                     "dupes", "verify", rel_a, line_a,
                     f"{int(score * 100)}% the same as {rel_b}:{line_b} — "

@@ -18,7 +18,7 @@ able to read this and know what is sold, what exists, what does not, what must
 happen next, and what has to happen every week forever. Everything here is
 either a fact recorded elsewhere in this repo or is marked as an estimate.
 
-**Status: 2026-07-31. The site is live. No customer has ever paid. Revenue to
+**Status: 2026-08-08. The site is live. No customer has ever paid. Revenue to
 date is £0.**
 
 If you read nothing else, read [What has to happen next](#what-has-to-happen-next).
@@ -45,14 +45,18 @@ recommendable to those assistants.
 for the Foundation. Foundations are year-one income. The monthly plans are what
 make the business worth owning.
 
-**Prices were raised on 2026-07-31, before the first sale.** The old ladder
-(£30 / £350 / £75 / £125 / £250) separated the monthly tiers by question volume,
-which is pure cost to Wardith and little extra value to the client — so every step
-up earned *less* per hour than the one below it. The tiers now separate on
-permanent answer pages. Full reasoning in `ops/service-tiers.md` section 9. The
-timing was deliberate: with no minimum term on any plan, a later price rise on
-existing clients is a churn event, so launch prices are the only ones that can be
-set for free.
+**Prices have been raised twice, both times before the first sale.** On
+2026-07-31 the tiers stopped separating on question volume — pure cost to
+Wardith, little extra value to the client, so every step up earned *less* per
+hour than the one below — and started separating on permanent answer pages
+(`ops/service-tiers.md` §9). **The prices in the table above were set on
+2026-08-05 (§11)**, once the self-audit had shown what the work actually
+produces; §9 had priced against estimated effort and said so.
+
+The timing was deliberate both times: with no minimum term on any plan, a later
+price rise on existing clients is a churn event, so launch prices are the only
+ones that can be set for free. **They were set from estimated effort, not
+measured effort** — see section 7.
 
 **Who runs it:** Kieran Smith, sole trader, trading as Wardith, based in the
 Wirral, working remotely across the UK. One person, no employees.
@@ -63,7 +67,7 @@ Wirral, working remotely across the UK. One person, no employees.
 
 **Live and working**
 
-- **The website** — `wardith.co.uk`, seven static pages on Astro, deployed
+- **The website** — `wardith.co.uk`, nine static pages on Astro, deployed
   from `main` by Netlify, HTTPS confirmed. It is deliberately built as a
   demonstration of the product: no client-side JavaScript, AI crawlers
   explicitly allowed in `robots.txt`, an XML sitemap, and JSON-LD structured
@@ -75,7 +79,12 @@ Wirral, working remotely across the UK. One person, no employees.
   the old Gmail forwards in too. **Not yet checked: that mail sent *from* the
   new address passes SPF, DKIM and DMARC at the far end** — DNS is in place,
   but present records are not the same as a passing check.
-- **Search Console** — sitemap submitted and confirmed, six pages.
+- **Search Console and Bing** — a verified Domain property for `wardith.co.uk`
+  since 2026-08-06 with the Change of Address running, and Bing Webmaster Tools
+  set up 2026-08-07 with all eight indexable pages submitted. Bing matters
+  because Copilot answers out of its index. Submitted is not indexed: neither is
+  closed until a `site:wardith.co.uk` search returns the pages.
+  `ops/search-console-and-bing.md`.
 - **Brand** — the supplied assets are in and used as-is.
 - **LinkedIn** — founder profile and company page, both linked from the
   structured data.
@@ -92,7 +101,7 @@ intentions**, not things that have happened:
 - The audit method — five documents in `ops/`, unusually thorough, never run.
 - The monthly plans — priced and published, never delivered to anyone. They now
   at least have a format: `ops/monthly-record-template.md`.
-- The Foundation — £750, published, scope now fixed, but with no delivery method
+- The Foundation — £800, published, scope now fixed, but with no delivery method
   written and **no estimate of how long it takes.** It is the only product in the
   business with no time budget at all.
 - The payment route — decided, not built, no payment ever taken.
@@ -140,21 +149,10 @@ amending the ICO's own record does nothing about the copies.
 ### Then, roughly a day and a half of desk work
 
 **2. Order the service address — UK Postbox Business Street Address, Poole,
-£12/month inc VAT.** The cheaper supplier chosen on 29 July — V LOT — took
-payment around then and delivered nothing; **on 7 August the owner requested a
-refund**. Icon Offices was checked the same day and rejected. The deciding
-constraint, set by the owner, is **monthly billing**: 1st Formations and
-Quality Company Formations are better reviewed but **annual-only at £115 up
-front**, so they are out on cadence. UK Postbox is monthly, HMRC AML supervised
-(XLML00000192390), trading since 2008, and sells a "business trading address"
-to sole traders explicitly (`ops/third-party-services.md` B1b).
-
-**This is now a purchase with nothing left to decide, and it is £12 rather than
-£115** — which is the single biggest change to this plan, because the address
-no longer needs a large payment to unblock the ICO fix, the footer and the pay
-button. Order it first because it has a lead time (ID verification is usually
-approved within 24 hours, then post has to travel), then do the desk work while
-it travels.
+£12/month inc VAT.** Settled 2026-08-07; the provider comparison is closed in
+`ops/third-party-services.md` B1a–B1b and should not be reopened. **Order it
+first because it has a lead time** — ID verification usually clears within 24
+hours, then post has to travel — and do the desk work while it travels.
 
 **Follow the runbook at `ops/third-party-services.md` B1c rather than working it
 out at the checkout.** The two traps it exists to prevent: **buy the Business
@@ -309,8 +307,8 @@ insurance renewed; delete client records past their retention period.
 **Read in this order.** Stop when you know enough.
 
 1. **This file.**
-2. **`ROADMAP.md`** — the section "Where we are today" is the best 20 lines in
-   the repo. The rest is a detailed task list; skim it.
+2. **`ROADMAP.md`** — start at "Where we are today", which is the current state
+   and the critical path. The rest is a detailed task list; skim it.
 3. **`CLAUDE.md`** — the standing rules for any change. Short, and binding.
 4. **`ops/`** — the operating documents. See the index in `ops/README.md`.
 5. **`ops/session-log.md`** — long, newest first, the full record of why
@@ -322,7 +320,7 @@ insurance renewed; delete client records past their retention period.
 
 Terms used throughout as though the reader already knows them:
 
-- **The Foundation** — the £750 one-off setup on the client's *existing* site.
+- **The Foundation** — the £800 one-off setup on the client's *existing* site.
   Not a website build.
 - **The four promises** — the Foundation's four deliverables: crawler access,
   structured machine-readable facts, consistent facts across the web, and pages
