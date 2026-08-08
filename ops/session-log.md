@@ -11,6 +11,74 @@ decision never has to be re-argued from scratch.
 
 ---
 
+### 2026-08-08 (closed decisions stripped, on the owner's sharper rule)
+
+**The owner's instruction, and it is now the rule in the skill:** when a
+decision is made and acted on, the comparison that produced it has no further
+job. Delete it. Not condense — delete. The example given was the bank account:
+Revolut Pro has been open since 30 July, so nothing about Mettle, Starling or
+Tide has any material gain left.
+
+**`ops/third-party-services.md`: 10,112 → 6,534 words, down 35%.** It was the
+largest live document in the repo and almost entirely supplier comparisons for
+decisions already taken.
+
+- **C1 bank account, 65 lines → 12.** Five paragraphs argued Mettle, Starling
+  and Tide *after* the account was open. What survives: the account, the shared
+  £120,000 FSCS cap (not doubled), and the unverified Zoho Books bank feed.
+- **B1 address for service, 68 lines → 22.** An eight-row provider comparison
+  table for a decision closed on 7 August. What survives: the two-products
+  distinction, because buying the registered-office product buys nothing a sole
+  trader can use; the per-item charges nobody leads with; and the lesson — six
+  providers were compared on annual cost before anyone established that an
+  annual payment was affordable.
+- **B1a, 72 lines → 24.** V LOT and Icon Offices are one line each now. **The
+  four contract traps were kept and re-titled**, because they are generic to the
+  market and the purchase is still pending — they are the only part of that
+  section that can still change an action.
+- **C2 getting paid, 117 lines → 50.** The Stripe comparison and the
+  fee-percentage re-check went. The instruction not to "simplify" the order page
+  back onto Revolut's own fields stayed, because that is a mistake somebody will
+  otherwise make twice.
+- **D1 ICO, 32 lines → 10.** The section still carried "before paying, run the
+  self-assessment" guidance for a registration completed on 30 July.
+- **E1, 42 lines → 12.** A priced survey of five platforms we are not buying.
+
+**`ops/service-tiers.md`: 6,672 → 6,343.** §9 records a repricing that has itself
+been superseded by §11. The superseded *levels* went; the pricing **axis** — that
+tiers separate on answer pages rather than question volume — stayed, because it
+is still the model in force. That distinction is the whole judgement in this
+file: §9's numbers are dead, §9's argument is live.
+
+**What was kept everywhere, against the instruction to be aggressive:** anything
+still unverified about the thing we chose, every account and reference number,
+every renewal date and cap, and one line naming each rejected option so nobody
+re-proposes it. The standing "we do not bundle" decision was left intact — it
+says in its own text that it is not to be reopened.
+
+**Why this is safe, and it stops being safe without it.** This log is the archive
+of why, it is never condensed, and git holds every prior version. Before deleting
+each argument it was checked to be here — the Mettle/Starling reasoning is at
+30 July, V LOT and Icon Offices appear thirty times. **Stripping a live document
+is moving the reader to where the record actually lives, not destroying it.**
+The rule now written into the skill says to check the log first and, if it does
+not carry the reasoning, to put a dated line there before cutting.
+
+**Nothing broke.** No section pointer resolves to a missing section, no
+reference dangles, and no file under `site/` changed. **Repo prose is 119,562
+words, down from 122,950 at the start of this work** — and that is net of two
+long session-log entries added along the way.
+
+**Still oversized and untouched, in order:** `ops/audit-setup.md` (5,398) and
+`ops/audit-method.md` (4,344) are runbooks for a process never yet run, so most
+of their length is operative rather than historical; `ops/linkedin.md` (6,251)
+is the file already marked Reopened and waiting on the owner;
+`ops/competitor-analysis.md` (4,951) is three days old with an open execution
+plan. `HANDOVER.md` was assessed and left — 3,290 words across ten sections
+whose whole job is orienting somebody with no context.
+
+---
+
 ### 2026-08-07 (the condensing pass, and three contradictions it turned up)
 
 **Done:** condensed `ROADMAP.md` from 9,474 words to 8,384 — 11.5% — by applying

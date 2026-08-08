@@ -8,7 +8,46 @@ sentence and the repo forgets why, which is the one failure mode that compounds.
 
 So: cut words, keep facts. This document is the method.
 
+## A closed decision keeps almost nothing
+
+*Sharpened by the owner 2026-08-08, and it is the most aggressive rule here.*
+
+When a decision is **made and acted on** — the account is open, the supplier is
+paid, the name is bought — the comparison that produced it has no further job.
+Delete it. Not "condense": delete. A reader who will never reopen the question
+gains nothing from the case against the option that lost, and pays to read it
+every time.
+
+What survives a closed decision:
+
+- **What we use**, in one line.
+- **Facts that change a future action**: what it costs, when it renews, account
+  and reference numbers, caps and limits, the traps in using it.
+- **Anything still unverified** about the thing we chose.
+- **One line naming what was rejected**, and nothing more — enough that nobody
+  re-proposes it, without re-running the argument.
+
+What goes, however well written:
+
+- The merits of options not taken. `C1` carried five paragraphs on Mettle,
+  Starling and Tide *after* the Revolut account was open and in use.
+- "Superseded reasoning, kept for context." If it is superseded it is history,
+  and history lives in `ops/session-log.md`.
+- Advice about how to make the decision — lead times, what to check before
+  choosing — once it is made.
+- The argument that the decision "still holds up". It holds up; it is in force.
+
+**This is safe here for one specific reason, and it stops being safe without
+it.** `ops/session-log.md` is the archive of why, it is never condensed, and git
+holds every prior version besides. Stripping a live document is not destroying
+the record — it is moving the reader to the one place the record actually lives.
+Before deleting an argument, check the log carries it. If it does not, put a
+dated line there first.
+
 ## The four things a passage must survive with
+
+*These apply to decisions still in force, still contested, or not yet acted on.
+A closed one is governed by the rule above.*
 
 Before rewriting anything, find these in the original. If your rewrite has lost
 one, it is wrong however much shorter it is.
