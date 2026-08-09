@@ -444,33 +444,61 @@ only one that hands over a finished piece of work before any larger commitment.
 **Working when:** we have a repeatable way of getting conversations, and we know
 roughly how many approaches produce one paid audit.
 
+**The full playbook is `ops/outreach.md`**, written 2026-08-09. This section is
+the status; that file is the method, the legal position, the email and the
+record. Read it before sending anything.
+
 ### 2a. Before contacting anyone
 
-- [ ] One trade, one area. "Accountants and solicitors across the UK" is too
-      broad to write a good email to.
-- [ ] Decide how many we can realistically deliver for at once.
-- [ ] Set a working definition of a good first client.
+- [x] **One trade, one area — decided 2026-08-09: private clinics on the
+      Wirral.** Dental, cosmetic, physiotherapy, veterinary; CH41–CH49 and
+      CH60–CH63. Chosen because they are almost all limited companies (which
+      cold email requires — 2b), their customers really do ask an assistant for
+      a recommendation, and the area is small enough that one assistant run
+      covers the whole market.
+- [x] **A working definition of a good first client**, in `ops/outreach.md` §3,
+      under "What makes a good first client".
+- [ ] Decide how many we can realistically deliver for at once. **Still open,
+      and it caps the batch size.** Same question as `HANDOVER.md` §7 item 2.
 
-### 2b. The first approach — do the work before asking
+### 2b. Cold, because there is no network — and what that costs
 
-Run a mini audit *before* making contact, so the first email carries a real
-finding about their business rather than a pitch.
+**Decided 2026-08-09: the first clients are cold.** The owner does not have a
+business network, so the warm route below is closed rather than deferred.
 
-- [ ] Build a shortlist of [PLACEHOLDER: number] businesses.
-- [ ] For each, ask the assistants their customers' question and record whether
-      they're mentioned.
-- [ ] Write the email — short, one specific finding, the audit offer, no chasing
+- [x] **The legal position, worked out and written down** (`ops/outreach.md` §2).
+      Under PECR, limited companies and LLPs may be cold-emailed without prior
+      consent; sole traders and unincorporated partnerships may not. **Nobody is
+      contacted unless Companies House shows a live company.** This also settles
+      `HANDOVER.md` §7 item 4 — and it rules out the sole-trader buyers that same
+      document assumed were the market.
+- [ ] **Two blockers moved onto the critical path by this.** The first cold
+      email cannot be sent until `addressForService` and `clientDataStorage` are
+      set in `site/src/data/business.ts`: the address because every email must
+      carry it, the storage because there must be somewhere to keep the
+      do-not-contact record. Both are already open elsewhere (`HANDOVER.md`
+      steps 2 and 5) — cold outreach is what makes them urgent.
+- [ ] Build the list from Companies House by SIC code and postcode.
+      `[PLACEHOLDER: how many Wirral clinics exist per trade]`.
+- [ ] **Run the discovery questions once for the trade, not once per business.**
+      The plan used to say a mini audit per prospect; at cold volume that costs
+      real money for no extra insight. One run per trade and area names the
+      competitors ranked ahead of every clinic on the list at once, for about
+      $15 a batch. `ops/outreach.md` §4.
+- [ ] Send the email in batches of ten to twenty, so the wording can change on
+      what comes back. Draft in `ops/outreach.md` §5. One finding, the price in
+      the second paragraph, a link to the published self-audit, no chasing
       sequence.
-- [ ] Send in small batches so the email can change based on replies.
-- [ ] Keep a record of who was contacted, when, and what came back.
+- [ ] Keep a record of who was contacted, when, and what came back
+      (`ops/client-record.md` — not in this repo).
 
-### 2c. Warm routes (likely the first paying client)
+### 2c. Warm routes — closed 2026-08-09
 
-- [ ] List existing contacts who run businesses or know people who do.
-- [ ] Personal approach to each, offering the audit.
-- [ ] Ask satisfied clients for one introduction each — the only referral
-      mechanism we need for now.
-- [ ] [PLACEHOLDER: local business groups, networking, trade bodies worth trying]
+**The owner has no network to work.** Kept as a heading rather than deleted
+because three other documents pointed at it, and because one part of it comes
+back the moment there is a client: **ask satisfied clients for one introduction
+each.** That is still the only referral mechanism we need, and it has a
+prerequisite that does not exist yet.
 
 ### 2d. Proof — the thing that unlocks everything else
 

@@ -27,6 +27,63 @@ document had its argument stripped and sends the reader here.
 
 ---
 
+### 2026-08-09 (outreach goes cold, and the target is decided)
+
+- **The owner has no business network. Warm-first is closed, not deferred.**
+  Three documents were built on it — `HANDOVER.md` step 6 ("take the sample audit
+  to three warm contacts"), `ROADMAP.md` 2c, and §7 item 3 — and all three are
+  now corrected. `ops/outreach.md` is the new playbook.
+- **Two decisions taken by the owner the same day: private clinics, Wirral
+  only.** Dental, cosmetic, physiotherapy, veterinary. The reasoning is in
+  `ops/outreach.md` §1, and the order of the reasons matters: they are almost all
+  limited companies *first*, because that is a legal requirement rather than a
+  preference; their customers really do ask an assistant for a recommendation
+  second; the area is small enough for one assistant run to cover the whole
+  market third.
+- **The legal position is the load-bearing part of this entry.** Under PECR,
+  limited companies and LLPs are corporate subscribers and may be cold-emailed
+  without prior consent. Sole traders and unincorporated partnerships are treated
+  as individuals and may not. So **the target list is filtered on Companies House
+  before anyone is contacted**, and that filter builds the list at the same time.
+  *Not legal advice, and `ops/outreach.md` says so where it states the position.*
+- **This contradicted something already written down, and the contradiction is
+  the useful part.** `HANDOVER.md` said the target buyers are "mostly sole
+  traders". Cold-only rules that segment out entirely, so the buyer moves up a
+  notch — which happens to suit the £700 Lead tier better than a sole trader ever
+  did. The old line is corrected rather than left to be discovered.
+- **Cold moved two items onto the critical path that warm would have let us
+  skip.** Every cold email must carry the address for service, and there must be
+  somewhere permanent to keep a do-not-contact record. So
+  `business.addressForService` (£12/month, UK Postbox, has a lead time) and
+  `business.clientDataStorage` now block the **first email**, not the launch. The
+  privacy notice already carries the right paragraph — its "If we contact you
+  first" section was written on 2026-08-09 naming legitimate interest and
+  permanent opt-out recording — but it does not publish until those two values
+  exist. **Worth stating plainly because it is the real cost of the change of
+  plan.**
+- **The pre-work method changed, and the new one is better than what it
+  replaced.** `ROADMAP.md` 2b said run a mini audit on each prospect before
+  contacting them. Right for warm, unaffordable cold: the self-audit's recorded
+  cost was $12.63 on OpenAI alone for ~75 queries, so roughly $0.17 a query.
+  **Ask the discovery questions once per trade and area instead of once per
+  business.** One run produces, for every clinic on the list at once, both
+  whether they were named and — the part that sells — which competitors were
+  named ahead of them. About $15 for a whole batch. `ops/competitor-analysis.md`
+  had already established the mechanism on our own market.
+- **The email is drafted in full** (`ops/outreach.md` §5) with the reasoning for
+  each choice underneath it, so a later session does not edit it into a funnel:
+  competitor names are the whole email, the price goes in the second paragraph,
+  it links the published self-audit rather than attaching a PDF, and there is no
+  chasing sequence. **No free audits and no introductory rate** — recorded there
+  as a standing rule, because a free first audit is an introductory rate wearing
+  a different hat, and section 9 of `ops/service-tiers.md` settled that on
+  2026-07-31.
+- **Cold calling is explicitly not covered.** The email position does not
+  transfer to phone calls — TPS and CTPS are a separate piece of work. Written
+  into `ops/outreach.md` §9 so nobody assumes it does.
+
+---
+
 ### 2026-08-09 (the terms of service and the privacy notice — written, and switched off)
 
 - **Both documents are finished, and neither is a draft.** `/terms/` and

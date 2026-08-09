@@ -72,6 +72,7 @@ in the business with no time budget at all.
 
 | File | What it decides | Status |
 |---|---|---|
+| `outreach.md` | How the first clients are found: cold, private clinics on the Wirral, limited companies only. The legal position on cold email, how the list is built, the one-run-per-trade method, the email itself, and what a reply unlocks. **Read §2 before building any list** | Decided, unvalidated — nobody has been contacted |
 | `competitor-analysis.md` | Who else the assistants name, why they get named, and the six-item execution plan that came out of it. **Read "Considered and not done" before proposing any ranking or comparison page** | Live — analysis closed, execution open |
 
 ## The record

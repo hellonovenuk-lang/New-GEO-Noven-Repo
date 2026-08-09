@@ -205,8 +205,18 @@ still off — it also waits on the terms, the privacy notice and the address, th
 three items in step 3 and above. That is deliberate. Nothing in step 5 depends
 on it.
 
-**6. Take the sample audit to three warm contacts.** Warm rather than cold, for
-the reason in section 7.
+**6. Send the first cold batch. Rewritten 2026-08-09 — this used to say "take
+the sample audit to three warm contacts", and there are no warm contacts.** The
+owner has no business network, so the first clients are cold, and the whole
+method is `ops/outreach.md`: private clinics on the Wirral, limited companies
+only, one assistant run per trade rather than per business, ten to twenty emails
+at a time.
+
+**The thing to know before reading it:** cold email is lawful to companies and
+unlawful to sole traders, so steps 2 and 3 above stop being tidiness. Every
+email has to carry the address for service, and there has to be somewhere to
+keep a permanent do-not-contact record. **A warm route would have let us start
+without either.**
 
 ### Not on the critical path, despite appearances
 
@@ -272,16 +282,21 @@ written account register. That is an afternoon.
 
 Nobody else can settle these, and several are currently blocking work.
 
-1. **Which trade and which area to go after first.** Being in the Wirral gives a
-   credible local answer.
-2. **How much time per week there is for delivery.** This caps everything.
-3. **Whether any existing contact could be client number one.**
-4. **Cold outreach is a legal question, not just a marketing one.** Under PECR,
-   sole traders and unincorporated partnerships are treated like individuals for
-   marketing email, so unsolicited approaches to them generally need consent —
-   and this repo's own ICO notes say the target buyers are mostly sole traders.
-   Warm introductions sidestep this entirely. Confirm the position before
-   building any cold list. *Not legal advice — check it.*
+1. ~~**Which trade and which area to go after first.**~~ **Answered 2026-08-09:
+   private clinics on the Wirral.** `ops/outreach.md` §1 has the reasoning.
+2. **How much time per week there is for delivery.** This caps everything, and
+   it is now the only thing capping the size of the first outreach batch.
+   **Still open.**
+3. ~~**Whether any existing contact could be client number one.**~~ **Answered
+   2026-08-09: there is no network. The first client is cold.**
+4. **Cold outreach is a legal question, not just a marketing one — and it is now
+   the live route rather than the fallback.** Under PECR, limited companies and
+   LLPs may be emailed without prior consent; sole traders and unincorporated
+   partnerships are treated as individuals and may not. **So the target list is
+   filtered on Companies House before anyone is contacted**, and the sole-trader
+   buyers this document elsewhere assumes are the market are out of scope for
+   cold email. The position, and the two things it puts on the critical path,
+   are in `ops/outreach.md` §2. *Not legal advice — check it.*
 5. **Whether the new prices survive contact.** They were set from estimated
    effort, not measured effort. If the self-audit shows Maintain takes three
    hours rather than one, `ops/service-tiers.md` section 11 gets rewritten, not
