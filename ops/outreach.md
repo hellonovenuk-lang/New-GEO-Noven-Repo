@@ -263,6 +263,29 @@ clinic to get listed on a directory. Telling them they are already listed, that
 the assistant reads that exact page, and that it still recommends three
 competitors, is a fact nobody else in their inbox has.
 
+**Tier A is populated, and that was checked rather than assumed.** The
+2026-08-09 smoke test — three queries, one question — already surfaced several
+Wirral practices listed in the cited directories and named by no assistant.
+`ops/trade-run/README.md` has the detail.
+
+### The finding the smoke test changed, and the email should carry it
+
+**The three assistants barely agree with each other.** One question, one run
+each, roughly a dozen practices named across the three answers, **and not one
+named by all three.** No incumbent, even in a field this small — the same shape
+`ops/competitor-analysis.md` Finding A found nationally.
+
+**So "you are not mentioned" is the weaker version of the finding we can
+actually make.** The stronger one is specific and checkable:
+
+> You are the top recommendation on one of these and absent from the other two,
+> and here is which — or: these three practices come up on ChatGPT, a completely
+> different three come up on Gemini, and you are on neither list.
+
+Nobody in that trade knows this, because nobody checks all three. **When the full
+run is in, rewrite the §5 draft around it** — the draft currently makes the
+weaker claim, and it was written before there was evidence for the better one.
+
 **Two rules that keep this honest:**
 
 - **The named businesses are for studying, not targeting.** Why the top few get

@@ -1,8 +1,9 @@
 # The trade run
 
-**Status: built and smoke-tested against its own guards, never run for real.**
-No API call has been made from this folder — the balances and the questions are
-checked below before that changes.
+**Status: smoke test run and passed, 2026-08-09 17:08 UTC. The full run is the
+next step.** Three queries, q01, one per assistant. All five checks in
+`ops/audit-setup.md` §8 passed. What it proved is in "What the smoke test
+found" below, and one of those findings is worth more than the run.
 
 **What it does.** Asks the three assistants one trade-and-area question set,
 five times each, and logs every answer with the sources it cited. That produces
@@ -225,6 +226,64 @@ is copied for another trade:
 Check 3 still gets checked. A question naming the Wirral that comes back with
 American practices and US spellings is still a wasted run, and it is cheaper to
 find that out on three queries than on ninety.
+
+**Confirmed live on 2026-08-09.** Gemini's answer to q01 named seven Wirral
+practices by name and by town. **The rule works** — a place name in the question
+does what the missing locale parameter cannot. This is the first evidence either
+way since §8a recorded the limitation on 2 August, and it means Gemini's answers
+are usable in a trade run rather than discounted.
+
+---
+
+## What the smoke test found — 2026-08-09
+
+**Three queries, q01 only, one run per assistant. All five checks passed:** the
+search fired on all three, the model strings came back as the tiers intended
+(`gpt-5.5-2026-04-23`, `gemini-3.6-flash`, `perplexity/sonar`), every answer was
+UK-shaped, and the CSV survived with its multi-line answer text intact.
+
+**Practice names are deliberately not written down here.** A list of named local
+dental practices, in a repo written as though it were public, is the comparison
+the owner parked on defamation grounds — the rule is in `ops/outreach.md` §4 and
+it applies to our own working notes, not only to published pages. What follows is
+the shape of the answers, which is what the method needs.
+
+**Finding 1 — the three assistants do not agree, and barely overlap.** One
+question, one run each, and **roughly a dozen distinct practices were named
+across the three answers. Not one was named by all three.** Two practices
+appeared twice; everything else appeared once. This is
+`ops/competitor-analysis.md` Finding A repeating on an unrelated market: **there
+is no incumbent**, even locally, even in a field this small.
+
+**That is a stronger sales argument than the one the email currently makes.** A
+practice can be the top recommendation on one assistant and completely absent
+from another, and nobody in that trade knows it, because nobody checks all three.
+"You are invisible" is a weaker claim than "you are the top result on one of
+these and missing from the other two, and here is which".
+
+**Finding 2 — the answers are built from directories and Reddit, not from the
+practices' own websites.** Across the two assistants whose sources are readable,
+the citations were CQC, NHS service search, Yell, WhatClinic, ThreeBestRated and
+a long tail of dentist-listing sites — plus a striking volume of Reddit threads
+from r/Liverpool and r/Wirral. Practice websites appeared, but as confirmation
+after a directory had supplied the name.
+
+**Finding 3 — ThreeBestRated was cited again, by two of the three assistants**,
+on a question with nothing to do with our own market. It was already the "one
+open door" in `ops/competitor-analysis.md` Finding F. **Two independent
+questions, two assistants each. That is no longer a curiosity, it is a lever**,
+and it belongs in the audit deliverable as a concrete action rather than only in
+our own to-do list.
+
+**Finding 4 — Tier A prospects were visible in a single run.** Several practices
+appear in the cited directories and in no assistant's answer: listed on the exact
+pages the assistants read, and still not recommended. That is the ladder's top
+tier (`ops/outreach.md` §4), found in three queries rather than ninety, and it is
+the first evidence that the tier is populated rather than theoretical.
+
+**What is still outstanding from the smoke test:** check 5, the cost. Reading
+the three dashboards and dividing is the only way to get the per-query rates, and
+it is the number that decides whether Perplexity's balance covers a full run.
 
 **Then the real run — 6 questions × 3 assistants × 5 runs = 90 queries:**
 

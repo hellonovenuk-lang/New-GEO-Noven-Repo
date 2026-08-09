@@ -196,6 +196,52 @@ document had its argument stripped and sends the reader here.
   stops mattering — running dry silently charges the card, which during a
   spending freeze is the exact event the freeze exists to prevent. Flagged in
   `ops/accounts.md` and in the trade-run README rather than only here.
+- **The smoke test ran at 17:08 UTC and passed all five checks.** Three queries,
+  q01, one per assistant. Search fired on all three; model strings came back as
+  the intended tiers; every answer was UK-shaped; the CSV survived with its
+  multi-line answer text intact. **Check 5, the cost, is the one still
+  outstanding** — the per-query rates only exist once the three dashboards are
+  read.
+- **The geographic-word rule is confirmed live, and it was written down the day
+  before it was tested.** `ops/audit-setup.md` §8a recorded on 2 August that
+  Gemini's grounding tool has no locale parameter and cannot be fixed. q01 names
+  the Wirral, and **Gemini returned seven Wirral practices by name and by town.**
+  A place name in the question does what the missing parameter cannot, which
+  means Gemini's answers are usable in a trade run rather than discounted. First
+  evidence either way since the limitation was found.
+- **The finding that changes the product pitch: the three assistants barely
+  agree.** One question, one run each, **roughly a dozen distinct practices named
+  across the three answers and not one named by all three.** Two appeared twice,
+  everything else once. This is `ops/competitor-analysis.md` Finding A repeating
+  on a completely unrelated market — **no incumbent, even locally, even in a
+  field this small.**
+- **So the email's central claim should change, and the §5 draft now says so.**
+  "You are not mentioned" is the weak version. The strong version is *"you are
+  the top recommendation on one of these and absent from the other two, and here
+  is which"* — specific, checkable, and unknown to the prospect because nobody
+  checks all three. The draft was written before there was evidence for the
+  better claim; rewrite it when the full run lands.
+- **ThreeBestRated was cited again, by two of three assistants, on a question
+  with nothing to do with our own market.** It was already the one open door in
+  Finding F. **Two independent questions, two assistants each — it stops being a
+  curiosity and becomes a lever**, and it belongs in the audit deliverable as a
+  concrete action rather than only in our own list.
+- **The answers are built from directories and Reddit, not from practice
+  websites.** CQC, NHS service search, Yell, WhatClinic, ThreeBestRated, a long
+  tail of dentist-listing sites, and a striking volume of r/Liverpool and
+  r/Wirral threads. Practice sites appeared, but as confirmation after a
+  directory supplied the name. **Consistent with Finding B's listicle mechanism,
+  and it puts Reddit back on the table** — which `ROADMAP.md` 2f still holds as
+  an owner's decision, not a default.
+- **Tier A was populated in three queries.** Several practices appear in the
+  cited directories and in no assistant's answer — listed on the exact pages the
+  assistants read, and still not recommended. The ladder's top tier is real
+  rather than theoretical, found on one question rather than ninety.
+- **No practice names are recorded anywhere in this repo, and that is the rule
+  rather than an oversight.** A list of named local dental practices, in a repo
+  written as though it were public, is the comparison the owner parked on
+  defamation grounds. **The rule applies to our own working notes, not only to
+  published pages.** The findings above are all shape, not names.
 - **`.claude/settings.json` added, and it is deliberately two lines long.** The
   owner asked how to stop the permission prompts. Scanning the session's actual
   tool calls, **almost everything that recurs is already auto-allowed and never
