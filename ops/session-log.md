@@ -27,6 +27,94 @@ document had its argument stripped and sends the reader here.
 
 ---
 
+### 2026-08-09 (the visual communication pass — three diagrams, and the rejections)
+
+- **The brief:** the structural and copy review was already done and the site's
+  hierarchy, positioning, pricing and CTAs were treated as settled. This pass
+  asked one question only — where does a picture explain something faster than
+  the prose already does? — with an explicit expectation of three to five
+  additions across the whole site, and fewer if fewer are justified.
+- **Three built, and one presentation change.** Homepage: a figure showing the
+  same ten businesses on a results page and in an assistant's answer, seven of
+  them emptying out. How it works: a stage ladder whose branches are the exits,
+  so "every stage has to earn the next one" is visible before the reader has
+  read nine hundred words rather than after. Self-audit: the "who gets
+  recommended instead" table redrawn as bars, with Noven's own row at zero
+  underneath the ten. Pricing: the JSON block folded into a `<details>`.
+- **What was rejected, and why — these are settled, don't re-open them
+  without a reason.**
+  - *A journey diagram on Ask your AI.* The brief raised it. The page's whole
+    argument is already in its section headings, one screen apart, and the
+    hero says "Don't take our word for it" in six words. A four-box flow would
+    have restated headings the reader can already see, which is decoration.
+  - *A figures strip on Ask your AI* (228 answers / 0 in 168 / 30 of 30). Every
+    number real, but the self-audit page one click away now carries the visual
+    treatment of the same evidence. Twice is once too many.
+  - *Redrawing the seven-question "never (0 of N)" table on the self-audit.* The
+    twenty-one identical cells **are** the finding, and the run counts (0 of 10
+    against 0 of 5) are real information a mark would lose. Left alone.
+  - *Anything on About or FAQ.* About is short and personal; a Q&A is already
+    the most scannable form there is, and its markup feeds the FAQPage schema.
+- **The homepage record panel stays open and animated.** It was reviewed under
+  the same question and kept: on that page the code *is* the subject of the
+  section. The pricing block is different — there the sentence is the argument
+  and the code is the proof, so it now sits one click behind it. Both pages'
+  actual JSON-LD is untouched either way; folding a visible block changes
+  nothing a machine reads.
+- **Net page height across the four changed pages is +220px on about 25,000** —
+  the diagrams cost roughly what the folded JSON block and the shortened prose
+  gave back. **The site is not shorter, and it was not supposed to be.** What
+  changed is the order in which it can be understood: the shape first, the
+  argument after. Anyone measuring this pass by word count is measuring the
+  wrong thing.
+- **One accuracy decision worth keeping.** The self-audit chart adds a row that
+  is not in the delivered report — Noven at zero. That is an edit to a page
+  whose entire premise is that it reproduces the document unchanged, so it is
+  declared in the note under the chart, in the same way the two redactions are.
+  The zero itself is the report's own headline finding, stated twice above the
+  chart. A chart of who got recommended that omits the business commissioning
+  it is a chart with the point taken out.
+- **What the homepage figure deliberately does not claim.** No counts in the
+  labels, no percentages, no measured ratio — ten marks are "the businesses
+  that could answer", not a finding. The motion (the seven emptying) is timed
+  to start after the block has finished fading in, so the intermediate state
+  where the assistant lane looks like the results page is never what a reader
+  is left looking at.
+- **The 01/02/03 markers are gone from how-it-works, on the owner's second
+  instruction the same day — and this had been said before and not written
+  down, which is why it came back.** It is recorded here and in a comment on
+  `.stages` in `global.css` so a third session cannot reintroduce it. The
+  reasoning: the order is real and the `<ol>` still carries it, but a numbered
+  run of three reads as one three-step process the reader is partway through,
+  and that page's entire argument is that it is allowed to end at any of them.
+  A numbered marker is also the single most common tell of a generated layout
+  — the `frontend-design` skill names it explicitly — and it is only earned
+  where the sequence itself is the information. Here the *exits* are the
+  information. **Do not put them back.**
+- **The diagram marks were redrawn after a contrast check.** The first version
+  used `--paper-3` and `--rule`, which measure 1.1:1 and 1.3:1 against paper —
+  a diagram you have to be told is there. They are now three intensities of the
+  brand navy: 30% fill for a business on the results page, full navy for one
+  named in an answer, and that same 30% reduced to an outline for one the
+  answer left out. Solid-dark, solid-light, outline — fill and weight, so the
+  encoding never rests on hue. **It reaches about 2:1, not the 3:1 WCAG 1.4.11
+  asks of a meaningful graphic, and that is a judged trade rather than an
+  oversight:** the marks are `aria-hidden` and every word of what they show is
+  in the caption beside them at 6.75:1, and the tone that clears 3:1 on this
+  paper turns a quiet figure into a wireframe that fights the page. If the
+  graphic ever becomes the only carrier of something, this has to move.
+- **The site's own look sits near one of the current generated-design defaults**
+  — hairline rules, small radii, a serif display on warm off-white. Worth
+  knowing rather than acting on: the brand direction is fixed in `CLAUDE.md`
+  and wins, and what separates it in practice is the navy and brass rather than
+  the usual cream and terracotta, the three-voice serif/sans/mono system, and
+  the fact that the signature element is the business's own structured data
+  rather than an illustration. Raised so nobody re-derives the worry.
+- **Next:** nothing outstanding from this pass. The second self-audit, when it
+  lands, will produce genuinely comparable data for the first time — that is
+  the moment to ask whether a before/after visual is earned. It is not earned
+  on one data point.
+
 ### 2026-08-09 (the copy and conversion review, applied across all six selling pages)
 
 **The owner supplied a page-by-page review of the live site and asked for

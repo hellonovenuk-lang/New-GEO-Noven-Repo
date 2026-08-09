@@ -1,3 +1,8 @@
+# Astro's cache and logs. `site/.gitignore` already covers the one inside
+# `site/`; this catches the one a stray `astro` command leaves at the repo
+# root, which is how a preview log got committed on 2026-08-09.
+.astro/
+
 # Python bytecode from the skill scripts in .claude/skills/
 __pycache__/
 *.pyc

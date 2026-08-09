@@ -159,17 +159,27 @@ const offersOnly = { '@type': 'Service', name: business.serviceName, offers: off
           </div>
           <div>
             <p>
-              These prices are also published as structured data, so a machine has an explicit
-              version of them rather than having to infer them from the layout above. It's built
-              from the same numbers as the list, so the two can't disagree — which is exactly the
-              job Wardith does for clients. You don't need to read it to buy anything.
+              Every price above is also published in a form built for machines, produced from the
+              same numbers as the list — so the two can't disagree. That is exactly the job Wardith
+              does for clients, and you don't need to read a line of it to buy anything.
             </p>
-            <Code
-              caption="The prices, as an AI assistant reads them"
-              label="Wardith's prices as JSON-LD offers"
-              data={offersOnly}
-              note="Abridged from this page's structured data — the offers, without the surrounding business details. The prices above are what you pay. Wardith isn't VAT registered, so there's no VAT to add."
-            />
+            {/* Folded away 2026-08-09. The block itself was never the argument
+                — the sentence above is — and on a page whose job is to let
+                somebody decide what to spend, forty lines of JSON sitting open
+                mid-column is weight rather than evidence. It stays one click
+                from the claim it supports, which is what evidence is for. The
+                homepage keeps its record panel open: there the code *is* the
+                subject of the section. Native <details>, so it opens with no
+                script and the whole block is still in the page source. */}
+            <details class="disclose">
+              <summary>Show the machine-readable version</summary>
+              <Code
+                caption="The prices, as an AI assistant reads them"
+                label="Wardith's prices as JSON-LD offers"
+                data={offersOnly}
+                note="Abridged from this page's structured data — the offers, without the surrounding business details. The prices above are what you pay. Wardith isn't VAT registered, so there's no VAT to add."
+              />
+            </details>
             <p style="margin-top: 1.5rem;">
               Monthly plans roll month to month with no minimum term — tell us before your next
               payment date and there won't be one. The month you've paid for runs to the end; we
