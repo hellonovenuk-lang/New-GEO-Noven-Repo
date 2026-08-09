@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 .claude/skills/repo-consistency/scripts/check.py)",
+      "Bash(python3 .claude/skills/repo-consistency/scripts/check.py *)"
+    ]
+  }
+}

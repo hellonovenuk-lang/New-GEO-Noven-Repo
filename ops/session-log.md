@@ -196,6 +196,21 @@ document had its argument stripped and sends the reader here.
   stops mattering — running dry silently charges the card, which during a
   spending freeze is the exact event the freeze exists to prevent. Flagged in
   `ops/accounts.md` and in the trade-run README rather than only here.
+- **`.claude/settings.json` added, and it is deliberately two lines long.** The
+  owner asked how to stop the permission prompts. Scanning the session's actual
+  tool calls, **almost everything that recurs is already auto-allowed and never
+  prompted at all** — `sed`, `head`, `grep`, `tail`, `ls`, `wc`, and every
+  read-only `git` subcommand. Exactly one recurring command was both prompting
+  and safe to pre-approve: **the consistency checker**, run 15 times in one
+  session because `CLAUDE.md` tells every session to run it. It is verified
+  read-only — opens one config file, no writes, no subprocess, no network.
+- **What was deliberately left out, because the reason matters more than the
+  list.** `git add`, `git commit` and `git push` prompt seven times each in a
+  session and none of them is on the allowlist: they change the repository, and
+  `push` publishes. **A wildcard on `python3` was also refused** — it is
+  arbitrary code execution wearing a script's clothes, and in this repo it would
+  cover `trade_run.py`, which spends real money on API calls. The rule that
+  produced both: pre-approve a *named* read-only script, never an interpreter.
 - **The owner's local Claude Code terminal had neither git nor the keys, and
   that is one cause rather than two.** Claude Code on Windows runs its shell
   through Git Bash, which arrives with Git for Windows — with git missing, the
