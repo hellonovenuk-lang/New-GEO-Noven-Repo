@@ -112,7 +112,30 @@ export const business = {
    * data goes is worse than no notice, because it is a published claim to have
    * thought about it.
    */
-  clientDataStorage: null as { name: string; where: string } | null,
+  /**
+   * **Decided by the owner 2026-08-09: Microsoft OneDrive.** Chosen because
+   * Office is already paid for, so it adds no supplier and no cost; the `.docx`
+   * audit masters live there natively rather than being moved by hand; and
+   * version history gives a restore that can actually be tested, which is the
+   * condition above that a new account would not have met for weeks.
+   *
+   * **This does not publish `/privacy/` on its own** — the address for service
+   * is the other half, and it is still pending. **Nor is it finished until a
+   * backup has been restored once.** Setting a value here is a decision; the
+   * restore is the proof, and `ops/client-record.md` carries it as the open step.
+   *
+   * **`where` is deliberately a `[PLACEHOLDER]` and must not be guessed.** The
+   * privacy notice states, in published wording, which country holds the data.
+   * Microsoft's answer depends on the account type and the tenant's configured
+   * data residency, and it is not something to assert from general knowledge —
+   * it is checkable in the account itself in about two minutes. `/privacy/`
+   * will not publish while this string is a placeholder, which is the correct
+   * behaviour rather than a bug.
+   */
+  clientDataStorage: {
+    name: 'Microsoft OneDrive',
+    where: '[PLACEHOLDER: the data location Microsoft states for this account]',
+  } as { name: string; where: string } | null,
 
   areaServed: 'GB',
   areaServedLabel: 'United Kingdom',

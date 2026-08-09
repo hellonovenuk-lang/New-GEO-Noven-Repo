@@ -377,56 +377,84 @@ to answer once, sending it again does not improve it.
 comes back. `ROADMAP.md` 2b already required this and it survives the change to
 cold.
 
-**Draft, to fill in per clinic:**
+**Two drafts, because the run showed two different problems** and one letter
+cannot address both honestly. Which one a practice gets is decided by the
+mention table.
 
-> Subject: What ChatGPT says when someone asks for a dentist on the Wirral
+**Draft A — for a practice named by one or two assistants and missing from the
+rest.** Eighteen of the thirty-nine named practices are in this position.
+
+> Subject: You come up on Perplexity and not on ChatGPT
 >
 > Hello [name],
 >
-> I asked ChatGPT, Google's Gemini and Perplexity who the best dentist on the
-> Wirral is, a few different ways. [Practice A], [Practice B] and [Practice C]
-> came up. [Their practice] did not, on any of the three.
+> I asked ChatGPT, Google's Gemini and Perplexity for a dentist on the Wirral,
+> six different ways, five times each. Ninety answers in total.
 >
-> That is worth knowing because it is quietly becoming how people choose. It is
-> also fixable, and not by doing more of whatever an SEO agency is already doing
-> for you.
+> [Practice] came up [N] times on [assistant]. On [other assistant] it did not
+> come up once. The three that did come up there were [A], [B] and [C].
+>
+> That gap is worth knowing because more people are choosing this way every
+> month, and none of your competitors seem to know it either. It is also not
+> what an SEO agency is measuring for you.
 >
 > I run a small business on the Wirral that does one thing: find out what the AI
-> assistants say about a business, tell you exactly where the answer comes from,
-> and give you the list of what to change. The audit is £250 and it is a fixed
-> price. You get a written report and you can act on it yourself. Nothing is
-> tied to a monthly plan.
+> assistants say about a business, show you exactly which pages the answers are
+> built from, and give you the list of what to change. It is £250, fixed. You
+> get a written report and you can act on it yourself. Nothing is tied to a
+> monthly plan.
 >
 > I have published one of these in full, run on my own business, findings and
 > all: wardith.co.uk/ask-your-ai/self-audit/
 >
-> If it is useful, reply and I will send the questions I would ask about
+> If it is useful, reply and I will send the six questions I would ask about
 > [practice]. If not, say so and I will not contact you again.
 >
 > [Owner name]
 > Wardith, [address for service]
 >
-> I found your practice through Companies House and your website. If you would
-> rather I did not hold your details, say so and I will delete them.
+> I found your practice through Companies House and your own website. If you
+> would rather I did not hold your details, say so and I will delete them.
 
-**What the draft is doing, so it is not edited into a pitch by accident:**
+**Draft B — for a practice named by none of them.** Their problem is bigger and
+plainer, and pretending otherwise wastes the letter.
 
-- **The competitor names are the whole email.** Everything else is context for
-  them.
-- **It gives the price in the second paragraph.** A cold email that hides the
-  price reads as the beginning of a funnel, which is the exact thing
-  `ops/session-log.md` records the homepage being rewritten to avoid.
+> Subject: Ninety answers about Wirral dentists, and [practice] was in none
+>
+> Hello [name],
+>
+> I asked ChatGPT, Google's Gemini and Perplexity for a dentist on the Wirral,
+> six different ways, five times each. Thirty-nine practices got named across the
+> ninety answers. [Practice] was not one of them.
+>
+> The reason is not that you were passed over. The answers are built almost
+> entirely from a handful of directory pages and Reddit threads, and as far as I
+> can tell your practice is not on the ones being read.
+>
+> That is the cheaper end of this problem to fix, and some of it is free.
+>
+> [Rest as Draft A from "I run a small business" onward.]
+
+**What the drafts are doing, so they are not edited into a pitch by accident:**
+
+- **The number is the email.** "[N] times on one, zero on another" is checkable
+  in five minutes, which is exactly why it works. **Do not soften it into "you
+  may not be appearing".**
+- **Never claim the assistants disagree in general.** They mostly agree — 21 of
+  39 practices are named by all three. A prospect who checks that claim finds it
+  false and stops reading. The gap is per practice.
+- **It gives the price in the third paragraph.** A cold email that hides the
+  price reads as the start of a funnel, which is what the homepage was rewritten
+  to avoid.
 - **It links the self-audit rather than attaching a PDF.** An attachment from a
-  stranger is a security prompt; the published page is checkable and is the only
-  proof we have.
-- **It says "you can act on it yourself".** True, already published on the site,
-  and it is the line that separates us from an agency retainer.
-- **No jargon**, per `CLAUDE.md`. The email never names the industry acronym.
+  stranger is a security prompt; the published page is checkable.
+- **No jargon.** The email never names the industry acronym.
 
 **Never offered, and this is a standing rule rather than a style note:** no free
 audits, no introductory rate, no "first five clients" discount, no bundling the
 audit with a monthly plan. Settled 2026-07-31, `ops/service-tiers.md` section 9.
 A free audit is an introductory rate wearing a different hat.
+
 
 ---
 

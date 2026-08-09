@@ -196,6 +196,35 @@ document had its argument stripped and sends the reader here.
   stops mattering — running dry silently charges the card, which during a
   spending freeze is the exact event the freeze exists to prevent. Flagged in
   `ops/accounts.md` and in the trade-run README rather than only here.
+- **Client records live in Microsoft OneDrive. Decided by the owner 2026-08-09**,
+  closing the last open item in `ops/client-record.md`. Office is already paid
+  for, so no new supplier and no cost; the `.docx` audit masters live there
+  natively rather than being moved by hand; and version history gives a restore
+  that can actually be tested, which a new account could not have offered for
+  weeks.
+- **The decision named the provider and stopped there on purpose.**
+  `clientDataStorage.where` is a `[PLACEHOLDER]`, because **the privacy notice
+  states the country in published wording and it is not a fact to assert from
+  general knowledge** — Microsoft's answer depends on the account and the
+  tenant's configured residency. It is two minutes to check in the account. A
+  first draft of this entry had a confident country in it and it was wrong to
+  write; `CLAUDE.md`'s rule about inventing facts applies hardest to the
+  sentences that are about to be published.
+- **So the gate in `legal.ts` was tightened to match.** `privacyLive` previously
+  read `clientDataStorage !== null`, which would have published a notice naming
+  a supplier and saying `[PLACEHOLDER]` where the country goes. **It now checks
+  the string as well as the object.** Site rebuilt: nine pages, `/privacy/`,
+  `/terms/` and `/order/` all still correctly absent.
+- **The email draft is rewritten on the run, and it is now two drafts.** The
+  single letter could not honestly address both problems the data found.
+  **Draft A** for a practice named by one or two assistants and missing from the
+  rest — eighteen of thirty-nine are in that position, and the letter leads with
+  the count. **Draft B** for a practice named by none, whose problem is bigger
+  and plainer: they are absent from the directory pages the answers are built
+  from, which is the cheaper end to fix and partly free. **The instruction not to
+  claim the assistants disagree in general is written in next to the drafts**,
+  because that is the mistake a future session would make from memory of the
+  smoke test.
 - **The full run landed the same evening: 90 rows, zero errors, zero empty
   answers, sources on every row, all three model strings correct.** The balances
   covered it — Perplexity finished, so the fifty-cent shortfall predicted from
