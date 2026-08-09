@@ -152,6 +152,11 @@ permanent — bulk-downloadable data gets mirrored and the ICO amending its own
 record does nothing about copies — but it is low-impact, and it is not worth
 treating as the thing that stops everything else.**
 
+**Settled 2026-08-09: this is two calls, not one.** Tomorrow's call is about the
+trading name. **A second call goes in once the service address lands**, to change
+the registered address — there is no point asking them to change it to an address
+that does not exist yet, and the runbook's step 8 assumes the address is in hand.
+
 **The call is still worth making tomorrow, for two better reasons:**
 
 - **The trading name on the record.** The owner is not certain whether the

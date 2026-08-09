@@ -99,6 +99,39 @@ something goes wrong.
 **Decision, 7 August 2026: UK Postbox, Business Street Address, Poole,
 £12/month inc VAT.** Working in B1b, purchase runbook in B1c.
 
+**Reaffirmed 2026-08-09, after the owner asked whether it could be skipped to
+save money. It could. The reason to keep it is not the one this section
+implied.**
+
+**The law wants an address, not a *virtual* address.** Trading under a name that
+is not the owner's own surname triggers the business-names disclosure duty: the
+owner's name and an address for service must appear on the website, on invoices
+and on business correspondence. What is required is somewhere documents can
+effectively be served — **the owner's home address satisfies that completely.**
+So this £144/year buys privacy, not compliance, and the site could go fully
+compliant tomorrow for nothing. *Not legal advice.*
+
+**The reason to spend it anyway is specific to this business rather than
+general.** The address is published in the footer of every page, inside the
+Organization structured data as a machine-readable `PostalAddress`, in the terms,
+in the privacy notice and in every cold email. **This site is deliberately built
+to be maximally readable by AI crawlers, and the business exists because those
+systems absorb and repeat what they find.** Publishing a home address into them
+is a worse trade here than it would be for almost any other business, and it is
+not reversible: amending the source does not retrieve what has been crawled,
+cached and copied — the same mechanism that makes the ICO register's copies
+permanent.
+
+**Note the asymmetry that makes this different from the ICO question.** A public
+register is passive listing, and `HANDOVER.md` §4 downgrades it on the evidence.
+A website and a few hundred cold emails are active distribution. **Being relaxed
+about the first does not imply being relaxed about the second.**
+
+**If cash gets tight before the first sale, cancel it.** Monthly, cancel any
+time, and one edit to `business.addressForService` moves the footer, the
+structured data, the terms and the privacy notice together. That is what the
+single-value design in `site/src/data/business.ts` was for.
+
 **The market splits into two products, and buying the wrong one buys nothing:**
 
 1. **Director's / registered-office service address** — ~£22–39/yr. Companies

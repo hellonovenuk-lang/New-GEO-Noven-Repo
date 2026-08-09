@@ -196,6 +196,30 @@ document had its argument stripped and sends the reader here.
   stops mattering — running dry silently charges the card, which during a
   spending freeze is the exact event the freeze exists to prevent. Flagged in
   `ops/accounts.md` and in the trade-run README rather than only here.
+- **The owner asked whether the £12/month address could be skipped entirely, and
+  the honest answer separated two things the documents had tangled.** `B1` said
+  the address was a legal disclosure requirement, which is true, and left the
+  reader to infer that a *virtual* one was required, which is not. **The
+  business-names duty asks for an address where documents can be effectively
+  served, and a home address satisfies it completely.** The site could be fully
+  compliant tomorrow for nothing. **The £144/year buys privacy, not compliance**,
+  and `ops/third-party-services.md` B1 now says so.
+- **Kept anyway, and the reason is specific to this business rather than
+  general.** The address goes in the footer of every page, in the Organization
+  structured data as a machine-readable `PostalAddress`, in the terms, in the
+  privacy notice and in every cold email. **This site is built to be maximally
+  readable by AI crawlers, and the business exists because those systems absorb
+  and repeat what they find.** Publishing a home address into them is a worse
+  trade here than almost anywhere else, and it is not reversible for the same
+  reason the register's copies are not.
+- **The asymmetry is the thing to remember.** A public register is passive
+  listing; a crawled website and a few hundred cold emails are active
+  distribution. **Being relaxed about the first does not imply being relaxed
+  about the second**, and the same evidence does not cover both.
+- **Two ICO calls, not one.** Tomorrow's is about the trading name. The second
+  goes in once the service address exists, because asking them to change the
+  record to an address that has not arrived is pointless and runbook step 8
+  assumes it is in hand.
 - **The ICO address panic is downgraded, and the owner was right to push on it.**
   `HANDOVER.md` §4 treated the 10 August publication of the registered address as
   close to an emergency. The owner's argument: home addresses are ordinary for
