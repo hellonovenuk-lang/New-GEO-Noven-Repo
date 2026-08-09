@@ -133,19 +133,46 @@ Ordered by what it stops.
 
 The order below is by dependency and by irreversibility, not by importance.
 
-### Immediately — this one has a deadline and no undo
+### Immediately — but not for the reason this section used to give
 
 **1. Ring the ICO fees helpline: 0303 123 1113.**
 
 The ICO publishes each registered organisation's name and address on a public
 register that anyone can download in bulk, within seven working days of payment.
 Registration was paid on Thursday 30 July with the **owner's home address** on
-it. Treat **Monday 10 August 2026** as the deadline.
+it. **Monday 10 August 2026** is when that publishes.
 
-Ask them to hold or suppress publication pending a change of address. This costs
-nothing, takes fifteen minutes, and needs no other item to exist first. Once the
-address is on a bulk-downloadable register it gets mirrored and copied, and
-amending the ICO's own record does nothing about the copies.
+**Reassessed 2026-08-09, and the address is the least of it.** This section used
+to treat the publication as close to an emergency. The owner challenged that and
+the challenge holds up: **the address sits in a Birkenhead square with 281 active
+companies registered at it** (Companies House advanced search, checked
+2026-08-09). It does not read as residential to a human or to a scraper, and
+using a home address is ordinary for a sole trader. **The exposure is real and
+permanent — bulk-downloadable data gets mirrored and the ICO amending its own
+record does nothing about copies — but it is low-impact, and it is not worth
+treating as the thing that stops everything else.**
+
+**The call is still worth making tomorrow, for two better reasons:**
+
+- **The trading name on the record.** The owner is not certain whether the
+  registration was filed as "Noven". If it was, that is not a privacy problem, it
+  is a **published-fact problem**: `/privacy/` prints registration **C1995412**
+  and invites the reader to check it against the ICO's own register, because a
+  business selling verifiable facts should hand them over. A reader who checks
+  and finds a different name than the site claims has found exactly the fault
+  this business is sold to detect in other people's businesses. **Ask, and get it
+  corrected if it is wrong.**
+- **The address has to change anyway** once the service address lands — it is
+  step 8 of the `ops/third-party-services.md` B1c runbook. Asking about the
+  process on the same call costs nothing.
+
+**Suppression is still worth asking for while on the phone**, but as the third
+item rather than the first, and it is not a reason to delay anything if the
+answer is no.
+
+**Not verified from a session:** the ICO's register returns HTTP 403 to automated
+fetches, so whether a "Noven" entry exists could not be checked here. It has to
+be asked on the call or looked up in a browser.
 
 ### Then, roughly a day and a half of desk work
 
@@ -242,7 +269,7 @@ highest return on time in this document.
 
 | What | When | If missed |
 |---|---|---|
-| ICO home address publishes | **~10 August 2026** | Home address on a bulk-downloadable public register, permanently |
+| ICO home address publishes | **~10 August 2026** | Permanent, mirrored, and **low-impact** — the address sits among 281 registered companies and does not read as residential (reassessed 2026-08-09, §4). The live question on that record is whether it carries the old trading name |
 | ICO annual renewal | ~30 July 2027 | Penalty of up to £4,000 against a £47 fee. Note the real risk is a **silent Direct Debit failure**, so the check is "did it collect", not "did a reminder fire" |
 | Domain renewal | **[PLACEHOLDER: registrar, renewal date and auto-renew status are recorded nowhere in this repo]** | Total outage — site, email, structured data, every published link |
 | Zoho Mail renewal | ~29 July 2027 (inferred from purchase date) | The only contact channel on the site dies |

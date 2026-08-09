@@ -196,6 +196,30 @@ document had its argument stripped and sends the reader here.
   stops mattering — running dry silently charges the card, which during a
   spending freeze is the exact event the freeze exists to prevent. Flagged in
   `ops/accounts.md` and in the trade-run README rather than only here.
+- **The ICO address panic is downgraded, and the owner was right to push on it.**
+  `HANDOVER.md` §4 treated the 10 August publication of the registered address as
+  close to an emergency. The owner's argument: home addresses are ordinary for
+  sole traders, and his does not obviously read as one. **Checked rather than
+  accepted — Companies House advanced search returns 281 active companies with a
+  registered office in that Birkenhead square.** It reads as commercial to a
+  human and to a scraper. The exposure is real and permanent, because
+  bulk-downloadable data gets mirrored and amending the ICO's record does nothing
+  about copies, but **it is low-impact and it is not the thing that should be
+  stopping everything else.** §4 and the dates table are rewritten.
+- **The call still happens tomorrow, for a better reason the owner half-spotted:
+  the trading name on the record.** He is not sure whether it was filed as
+  "Noven". If it was, that is not a privacy problem — **it is a published-fact
+  problem.** `/privacy/` prints registration C1995412 and invites the reader to
+  check it against the ICO's own register, precisely because a business selling
+  verifiable facts should hand them over. **A reader who checks and finds a
+  different name has found the exact fault this business is sold to detect in
+  other people's businesses.** Suppression drops to third on the call, behind the
+  name and the coming address change.
+- **The ICO register could not be checked from a session — it returns HTTP 403 to
+  automated fetches.** Recorded as unverified rather than assumed either way.
+- **The owner's home locality is deliberately not written into this repo**, only
+  the fact that the address is shared with hundreds of registered businesses.
+  Same reasoning as the practice names: this repo is written as though public.
 - **Client records live in Microsoft OneDrive. Decided by the owner 2026-08-09**,
   closing the last open item in `ops/client-record.md`. Office is already paid
   for, so no new supplier and no cost; the `.docx` audit masters live there
