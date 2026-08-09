@@ -97,12 +97,41 @@ due-diligence commentary was compressed from four paragraphs to two: the
 argument is stronger as a structural observation about a young field than as a
 list of things other people do.
 
-**One item was not actioned and needs the owner, not a session.** Review §3F
-asks whether the current £250 audit covers the external corroborating sources
-the site tells clients matter — directories, review ecosystems, company records.
-That is a question about what the audit actually does, not about how it is
-described, and answering it in copy without changing `ops/audit-method.md` would
-be inventing scope. **Decide the scope first; the copy follows.**
+**Review §3F — the external corroborating sources — was first misread as an open
+scope question, and it is not one.** This session's initial reading was that
+nobody had decided whether the £250 audit checks directories, company records
+and review ecosystems, and that writing it into the copy would be inventing
+scope. **The owner challenged that and was right.** It has been decided since
+the checklist was written: `ops/audit-site-checklist.md` **Group 3, "Are the
+facts the same everywhere"** — fifteen minutes, hard stop — names nine sources
+and requires the name, address and phone recorded *exactly as written* in each:
+Google Business Profile, Bing Places, Companies House, the applicable
+professional register, two trade directories, LinkedIn, Facebook, plus the
+public Bing and Google index checks. The checklist calls it "in practice the
+group that produces the most findings on the most audits".
+
+**So §3F was always a copy fix, and it is now made.** The gap was that no
+selling page named any of those sources — How It Works said "the places these
+systems draw from", Pricing said nothing at all. All three of How It Works,
+Pricing and the FAQ now list them and say what is recorded. The old-address
+finding is called out by name, because the checklist flags it as the classic one
+clients do not know about, and it is the most legible proof that this half of
+the audit is real work rather than a line in a scope list.
+
+**Why the confusion was available to make, which is the part worth keeping.**
+Group 3 is specified in `audit-site-checklist.md` but has no counterpart in
+`audit-method.md`, whose sections cover the assistant-querying half only — so a
+session that reads the method document to find out what the audit does will
+conclude the off-site half does not exist. It also genuinely was not run on the
+self-audit (`ops/audits/noven-2026-08-02/checklist.md`: "Group 3 not started"),
+so the one published example of a finished report shows no off-site findings.
+The report is honest about it — "We haven't checked your listings elsewhere" is
+in its own limitations list — but that line was, until today, the only place on
+the entire site where those sources were named, which is precisely the failure
+§3F describes: telling a prospect these sources matter while appearing not to
+check them. **`ops/audit-method.md` should gain a pointer to Group 3.** Not done
+here; it is a one-line cross-reference and the next session that opens that file
+should add it.
 
 **Checked:** `npm run build` clean, `repo-consistency` clean (zero errors
 outside `node_modules`), homepage screenshotted at 1440 and 390 with JavaScript
