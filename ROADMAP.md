@@ -185,19 +185,28 @@ committing.
       page that hands off to a Revolut Pro payment link for the money only.
       Revolut's own custom fields were rejected because **field values only
       surface against a successful payment**, so an abandoned checkout would
-      leave us nothing; our form submits first. The four fields already exist on
-      `contact.astro`. Matching payment to submission is manual and should stay
-      manual. Full reasoning in `ops/session-log.md` (30 July) and
-      `ops/third-party-services.md` C2.
-      **Two copy jobs when the page is built:** draw the distinction between
-      email (to ask) and the form (to buy), rather than deleting `contact.astro`'s
-      "no forms" line, which is true and worth keeping; and carry the two
-      optional fields already added to `contact.astro` (what customers usually
-      ask; what a new customer is worth) onto the form.
+      leave us nothing; our form submits first. Matching payment to submission is
+      manual and should stay manual. Full reasoning in `ops/session-log.md`
+      (30 July) and `ops/third-party-services.md` C2.
       **Not on the critical path.** A payment link in an email takes the first
-      payment; this page is a scaling tool for roughly sale five onward. Still
-      blocked behind the terms, the privacy notice and the address whenever it
-      is built.
+      payment; this page is a scaling tool for roughly sale five onward. It stays
+      `[D]` until money has actually moved through it.
+      - [x] **The code is built and merged, switched off** (2026-08-09).
+            `/order/` carries the six fields and hands off to `/order/pay/`,
+            which carries the Revolut button; both copy jobs are done, including
+            the email-versus-form distinction on `contact.astro`. With the switch
+            in `site/src/data/order.ts` off, neither page is built, neither is in
+            the sitemap, and every order button still points at `/contact/`.
+      - [ ] **Four things turn it on**, and three of them are the prerequisites
+            below rather than anything to do with the page: the Revolut link
+            pasted into `order.ts`, `/terms/` published, `/privacy/` published
+            (naming Netlify as a processor — the form is a Netlify form), and one
+            line set once the footer carries the address. The terms and privacy
+            conditions check themselves against the pages existing.
+      - [ ] **On the day it goes live**, the page count in `HANDOVER.md`,
+            `ops/own-facts-check.md` and `ops/search-console-and-bing.md` moves
+            from nine to ten, and `/order/` gets submitted to Search Console and
+            Bing. `/order/pay/` is `noindex` and deliberately out of the sitemap.
 - [D] **The £800 Foundation is invoiced**, with the contract sent alongside once
       both sides agree to start. At £800 the card fee is real money, there's
       already a conversation, and bank transfer is free.

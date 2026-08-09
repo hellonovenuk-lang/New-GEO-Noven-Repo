@@ -92,13 +92,27 @@ def is_historical(rel_path, config):
     return any(rel_path.startswith(p) for p in config["historical_paths"])
 
 
+# Directories that are installed or generated rather than written. Matched on
+# any path segment, not just the first: this repo's dependencies and build
+# output live under `site/`, so the old `startswith("node_modules/")` test
+# matched nothing and every run drowned in a few thousand findings about
+# licences in `site/node_modules` and stale prices in `site/dist`. The rule is
+# the same in both places — if `npm` or Astro wrote it, it is not prose this
+# business is responsible for.
+GENERATED_DIRS = {"node_modules", "dist", "build", "out", ".git", ".astro", ".netlify"}
+
+
+def is_generated(rel_path):
+    return any(part in GENERATED_DIRS for part in Path(rel_path).parts)
+
+
 def collect_files(root, config, suffixes):
     out = []
     for path in sorted(root.rglob("*")):
         if not path.is_file() or path.suffix not in suffixes:
             continue
         rel = str(path.relative_to(root))
-        if any(rel.startswith(p) for p in ("node_modules/", ".git/")):
+        if is_generated(rel):
             continue
         out.append((rel, path))
     return out
@@ -464,13 +478,14 @@ def check_refs(root, config, findings):
     for path in root.rglob("*"):
         if path.is_file():
             rel_p = str(path.relative_to(root))
-            if not rel_p.startswith(("node_modules/", ".git/")):
+            if not is_generated(rel_p):
                 by_basename[path.name].append(rel_p)
 
     # Paths that are built rather than committed. `dist/index.html` is missing
     # from a clean checkout by design, and reporting it teaches the reader to
-    # skim this check.
-    built = re.compile(r"^(dist|build|out|\.astro|node_modules)/")
+    # skim this check. Matches at any depth — this project builds to
+    # `site/dist`, not `dist`.
+    built = re.compile(r"(^|/)(dist|build|out|\.astro|node_modules)/")
 
     # Files a document legitimately names but that live outside this repo.
     # `ops/audit-method.md` §5 puts client audit data in the client's own folder
@@ -770,8 +785,6 @@ def check_bloat(root, config, findings):
     """
     sizes = []
     for rel, path in collect_files(root, config, TEXT_SUFFIXES):
-        if any(rel.startswith(p) for p in ("node_modules/", ".git/")):
-            continue
         lines = read_lines(path)
         words = sum(len(l.split()) for l in lines)
         sizes.append((words, len(lines), rel))

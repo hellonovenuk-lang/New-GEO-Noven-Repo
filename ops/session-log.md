@@ -27,6 +27,52 @@ document had its argument stripped and sends the reader here.
 
 ---
 
+### 2026-08-09 (the order page and the Revolut hand-off — built, and switched off)
+
+- **What was asked:** get the Revolut payment link onto the website, do
+  everything possible in code, and come back with a short list of what only the
+  owner can do.
+- **Everything in code is done. Nothing is public.** `/order/` (the six-field
+  form) and `/order/pay/` (the Revolut button) exist behind a switch in
+  `site/src/data/order.ts`. Verified both ways: with the switch off the build
+  produces the same nine pages as before and the sitemap is unchanged; with it
+  on, eleven pages, `/order/` in the sitemap, `/order/pay/` `noindex` and
+  excluded.
+- **Why a switch rather than an unmerged branch.** The blockers are the terms,
+  the privacy notice and the address for service, and none of them is a coding
+  job. A branch left open would have made the code the thing that was waiting;
+  the switch makes the documents the thing that is waiting, which is true. It
+  also means this can merge and sit on `main` doing nothing until it is wanted.
+- **Two of the four conditions check themselves.** `termsPublished` and
+  `privacyPublished` are not booleans somebody has to remember to flip — they
+  are true when `/terms/` and `/privacy/` exist in `src/pages`. A payment form
+  that links to a 404 is the worst possible broken link, and this makes that
+  state unreachable rather than merely unlikely. The payment link and the
+  address line are set by hand; the address one cannot be derived, because it is
+  a fact about the rendered footer rather than a file.
+- **The form is a Netlify form, which is a data-protection fact, not a technical
+  one.** Submissions sit in Netlify's dashboard before they reach the inbox, so
+  Netlify is a processor and the privacy notice has to say so. Recorded in
+  `ops/accounts.md` and `ops/third-party-services.md` C2 as well, because
+  whoever writes that notice will not be reading this file.
+- **Spam defence is a honeypot field and nothing else.** The alternative Netlify
+  offers is reCAPTCHA, which would put Google's JavaScript on a site whose whole
+  argument is that it ships none.
+- **The footer's "order the audit" ask is suppressed on both order pages.**
+  A button back to the order form, shown to someone halfway through paying, is a
+  repeated call-to-action of exactly the kind the design rules ban.
+- **`repo-consistency` was reporting 142 errors, all of them false.** Its
+  skip-list tested `startswith("node_modules/")`, and this repo's dependencies
+  are at `site/node_modules` — so the moment a session runs `npm install`, the
+  checker starts reading Vite's licence files and the stale prices in
+  `site/dist`. Now matched on any path segment. Back to 0 errors. **This was
+  invisible until now only because no previous session had installed the site's
+  dependencies and then run the checker.**
+- **Not done, and deliberately:** the terms of service and the privacy notice
+  themselves. They are the blocker, they are a day's desk work, and drafting
+  them uninvited would have buried a payment-page diff under two legal
+  documents. Offered to the owner as the next piece of work.
+
 ### 2026-08-09 (the humanisation and voice pass — the final copy edit before launch)
 
 - **The brief:** the structural and visual passes were settled and out of scope.

@@ -1,0 +1,104 @@
+---
+/* `/order/pay/` — where the Netlify form lands, and where the Revolut link is.
+ *
+ * Same gate and the same reason for the dynamic filename as `/order/`: see the
+ * comment at the top of `../[...slug].astro`, and the switch in
+ * `src/data/order.ts`.
+ *
+ * **This page is `noindex` and is kept out of the sitemap** (the filter is in
+ * `astro.config.mjs`). It is the second half of a transaction, not a page
+ * anybody should arrive at from a search result — but it is a plain static page
+ * on a public site, so it is written to make sense to somebody who reaches it
+ * without having filled the form in.
+ */
+import Base from '../../../layouts/Base.astro';
+import { business, plan, money } from '../../../data/business';
+import { orderPageLive, paymentLink } from '../../../data/order';
+
+export function getStaticPaths() {
+  if (!orderPageLive) return [];
+  return [{ params: { slug: undefined } }];
+}
+
+/* Belt and braces. The gate above already guarantees this, and if that ever
+ * stops being true the build should stop rather than publish a pay page whose
+ * button goes nowhere. */
+if (!paymentLink) throw new Error('order/pay built with no payment link set — see data/order.ts');
+
+const title = 'Payment — Wardith';
+const description = 'Pay for the Wardith audit.';
+
+const audit = plan('audit');
+---
+
+<Base title={title} description={description} noindex>
+  <section class="hero hero--rules">
+    <div class="wrap">
+      <h1>Your details are in. Now the payment.</h1>
+      <p class="lede" data-reveal>
+        We've got your answers, and they're already with us whether or not you finish this step —
+        so if anything goes wrong from here, email us and we'll pick it up from where you left off.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split split--sticky">
+      <div data-reveal>
+        <h2>{money(audit.price)}, by card</h2>
+      </div>
+      <div data-reveal>
+        <p>
+          The payment is taken by Revolut on their own page. We never see your card details, and
+          nothing is stored here.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn" href={paymentLink} rel="noopener">
+            Pay {money(audit.price)} by card
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+              <path
+                d="M9 1l4 4-4 4M13 5H1"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="square"></path>
+            </svg>
+          </a>
+        </div>
+
+        <ul class="rows">
+          <li>
+            <strong>Reference</strong>
+            <span>
+              Use your business name if you're asked for one. It's how we match the payment to what
+              you told us, and it's done by hand rather than by software.
+            </span>
+          </li>
+          <li>
+            <strong>Receipt</strong>
+            <span>Revolut sends one to the email address you give them.</span>
+          </li>
+          <li>
+            <strong>Then</strong>
+            <span>
+              A reply from a person within two working days confirming scope, and your written
+              report within two working days of that.
+            </span>
+          </li>
+        </ul>
+
+        <p>
+          Would rather pay by bank transfer, or the card step won't play?
+          <a href={`mailto:${business.email}`}>{business.email}</a> — we'll sort it out. The
+          <a href="/terms/">refund position</a> covers a change of mind before we start.
+        </p>
+
+        <p class="cta-note">
+          Arrived here without filling anything in? Start at the
+          <a href="/order/">order form</a> — paying on its own doesn't tell us who you are or what
+          to look at.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

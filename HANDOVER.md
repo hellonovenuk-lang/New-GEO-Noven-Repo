@@ -104,7 +104,8 @@ intentions**, not things that have happened:
 - The Foundation — £800, published, scope now fixed, but with no delivery method
   written and **no estimate of how long it takes.** It is the only product in the
   business with no time budget at all.
-- The payment route — decided, not built, no payment ever taken.
+- The payment route — the website half is now built and switched off (see
+  step 5 below), and no payment has ever been taken.
 
 `ROADMAP.md` marks these `[D]` — decided on paper — rather than `[x]`. That
 distinction is the most important thing in the file.
@@ -185,6 +186,13 @@ payment link with a real small payment; decide invoice or receipt; choose where
 client records live (`ops/client-record.md`). Two hours. **A pasted payment link
 in an email takes the first payment — the order page is a scaling tool, not a
 gate.**
+
+The order page itself was built on 2026-08-09 and is **switched off**: `/order/`
+and `/order/pay/` are in the repo but are not built into the site, so nothing
+about them is public. Paste the link into `site/src/data/order.ts` and it is
+still off — it also waits on the terms, the privacy notice and the address, the
+three items in step 3 and above. That is deliberate. Nothing in step 5 depends
+on it.
 
 **6. Take the sample audit to three warm contacts.** Warm rather than cold, for
 the reason in section 7.

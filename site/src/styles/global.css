@@ -487,6 +487,19 @@ em {
   }
 }
 
+/* The order and payment pages drop the footer's ask — see `Base.astro`. Only
+   the navigation is left, and it takes the full width rather than sitting in
+   the right-hand column of a grid whose left column no longer exists. */
+.footer-top--quiet {
+  padding-bottom: var(--s5);
+}
+
+@media (min-width: 54rem) {
+  .footer-top--quiet {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .footer-bottom {
   display: grid;
   gap: var(--s5);
@@ -2009,7 +2022,129 @@ li a:hover {
   background: transparent;
 }
 
-/* ---------------------------------------------------------------- 12 motion */
+/* ------------------------------------------------------- 12 the order form */
+
+/* The only form on the site, and it exists to take money. It is styled to look
+   like the rest of the page rather than like a form builder: one column, real
+   labels above the field, hints in body text rather than inside the box as
+   placeholder text — a placeholder disappears the moment somebody types, which
+   is exactly when the hint was needed.
+
+   Field borders are deliberately darker than `--rule`. A hairline the colour of
+   the page furniture looks tidy and fails WCAG 1.4.11, which asks for 3:1 on
+   the edge of anything you are meant to interact with. On a payment form that
+   is not a detail. */
+.form {
+  max-width: var(--measure);
+  margin-top: var(--s4);
+}
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+  margin-bottom: var(--s4);
+}
+
+.field label {
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.field input,
+.field textarea {
+  font: inherit;
+  width: 100%;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid color-mix(in srgb, var(--ink) 45%, transparent);
+  border-radius: 2px;
+  padding: 0.7rem 0.85rem;
+  min-height: 48px;
+  transition: border-color 0.2s var(--ease);
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 6rem;
+  line-height: 1.55;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--ink-faint);
+}
+
+.field input:hover,
+.field textarea:hover,
+.field input:focus,
+.field textarea:focus {
+  border-color: var(--navy);
+}
+
+/* `:user-invalid` rather than `:invalid` — the latter marks every required
+   field red before the reader has typed a character. */
+.field input:user-invalid,
+.field textarea:user-invalid {
+  border-color: #9b2c2c;
+}
+
+.field-hint {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.field-hint code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+}
+
+.form-subhead {
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  margin: var(--s5) 0 var(--s4);
+  padding-top: var(--s4);
+  border-top: 1px solid var(--rule);
+}
+
+.field--consent {
+  margin-top: var(--s5);
+  padding-top: var(--s4);
+  border-top: 1px solid var(--rule);
+}
+
+.consent {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  font-weight: 400;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.consent input[type='checkbox'] {
+  width: 1.15rem;
+  height: 1.15rem;
+  min-height: 0;
+  margin: 0.28rem 0 0;
+  padding: 0;
+  accent-color: var(--navy);
+}
+
+.form-actions {
+  margin-top: var(--s5);
+}
+
+.form-actions .cta-note {
+  margin-top: var(--s3);
+}
+
+/* ---------------------------------------------------------------- 13 motion */
 
 /* Everything below is gated on .js, which only exists once the script runs.
    With JS off — or for a crawler that never runs it — nothing is hidden. */
