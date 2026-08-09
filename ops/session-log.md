@@ -196,6 +196,15 @@ document had its argument stripped and sends the reader here.
   stops mattering — running dry silently charges the card, which during a
   spending freeze is the exact event the freeze exists to prevent. Flagged in
   `ops/accounts.md` and in the trade-run README rather than only here.
+- **A design rule fell out of the smoke-test history, and it is worth more than
+  the run it was found for.** `ops/audit-setup.md` §8a records that Gemini's
+  grounding tool has no location parameter at this access tier, cannot be fixed,
+  and skews non-UK **specifically on questions carrying no geographic word of
+  their own**. Every question in the dentist set names the Wirral, Birkenhead or
+  Wallasey — which is what a real customer would type anyway. **Written into
+  `ops/trade-run/README.md` as a rule for every future trade question set**,
+  because it is the kind of property that survives one file and gets lost on the
+  first copy-paste.
 - **Source analysis is two assistants, not three**, wherever the ladder is used.
   Gemini's cited URLs are all opaque `vertexaisearch` redirects (Finding E), so
   every conclusion about *why* a business is named rests on ChatGPT and

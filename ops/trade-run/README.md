@@ -100,11 +100,32 @@ python3 trade_run.py --questions questions-wirral-dentists.csv \
     --client wirral-dentists --out ~/wardith-runs/wirral-dentists.csv --smoke
 ```
 
-Then check the five things in `ops/audit-setup.md` §8 on those three rows —
-the one that matters most here is **"does the answer look UK-shaped"**, because
-Gemini's grounding tool has no documented UK-locale parameter and a US answer to
-"best dentist on the Wirral" is a wasted run. Delete the smoke rows before the
-real run; they are tagged in the `notes` column.
+Then check the five things in `ops/audit-setup.md` §8 on those three rows. **The
+first one is the one that silently invalidates a whole run:** if there are no
+citations and the answer reads generic, the search tool did not fire and you are
+measuring the model's memory rather than what a customer would be told.
+
+Delete the smoke rows before the real run; they are tagged in the `notes` column.
+
+### Why the UK-locale problem mostly does not apply to a trade run
+
+`ops/audit-setup.md` §8a records that **Gemini's grounding tool has no
+location parameter at this access tier and cannot be fixed** — it is not a setup
+mistake, and the fix does not exist outside Google's enterprise product. The
+practical consequence recorded there is that Gemini skews non-UK **specifically
+on questions carrying no geographic word of their own.**
+
+**Every question in `questions-wirral-dentists.csv` names a place** — Wirral,
+Birkenhead or Wallasey. That is not luck and it should not be lost when the file
+is copied for another trade:
+
+> **Design rule for trade question sets: every question names the area.** It is
+> what a real customer would type anyway, and it is the only thing that keeps
+> Gemini's answers comparable with the other two.
+
+Check 3 still gets checked. A question naming the Wirral that comes back with
+American practices and US spellings is still a wasted run, and it is cheaper to
+find that out on three queries than on ninety.
 
 **Then the real run — 6 questions × 3 assistants × 5 runs = 90 queries:**
 
