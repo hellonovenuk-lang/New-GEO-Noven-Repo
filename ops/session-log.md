@@ -215,6 +215,30 @@ document had its argument stripped and sends the reader here.
   a supplier and saying `[PLACEHOLDER]` where the country goes. **It now checks
   the string as well as the object.** Site rebuilt: nine pages, `/privacy/`,
   `/terms/` and `/order/` all still correctly absent.
+- **The owner caught a real gap in the outreach method and it is now a rule:
+  the observation is free, the diagnosis is the product.** A first draft of
+  Draft B told the prospect *why* they were missing — that the answers are built
+  from directory pages they are not on. **That is the finding they would be
+  paying £250 for, given away in a sentence**, and it was written that way out of
+  a reflex to be maximally forthcoming rather than any reasoning.
+- **Why this is not a dishonesty question, written down because it will be
+  re-argued.** "You were named in none of ninety answers" is true and complete on
+  its own terms. Declining to add "and I think I know the reason" withholds
+  nothing the reader was promised and states nothing false. **The site's voice is
+  *you don't need us for everything*, not *here is the work for nothing*.** What
+  goes in the email is observation — what was asked, how often, who got named,
+  whether they did. What stays in the report is diagnosis.
+- **Two guardrails were attached, because the rule has a failure mode in each
+  direction.** **Never imply we do not know** — "there are a handful of reasons"
+  is honest, feigned puzzlement is not, and vagueness about our own knowledge is
+  the line. And **the audit has to be worth £250 without that finding**: ten
+  questions on their business, what the assistants believe about them and whether
+  it is true, their own site. **If a report ever reduces to "get listed on a
+  directory", the price is wrong rather than the customer.**
+- **The same rule generalises to the market-level findings.** How the answers are
+  built on the Wirral is known because ninety queries were paid for and analysed.
+  It is an asset: it belongs in client reports, not in cold emails and not on the
+  site.
 - **The email draft is rewritten on the run, and it is now two drafts.** The
   single letter could not honestly address both problems the data found.
   **Draft A** for a practice named by one or two assistants and missing from the

@@ -327,7 +327,9 @@ not hold.
 - **There is a top tier of four at 36–43% of rows, and no incumbent above it.**
   The leader is missing from a clear majority of answers.
 - **The practices nobody names are absent from the cited sources too.** They are
-  not being passed over, they are not present.
+  not being passed over, they are not present. **This one stays inside the
+  business** — it is a diagnosis, and §5's rule on what the email gives away
+  keeps diagnoses in the paid report.
 
 **So "you are not mentioned" is the weaker version of the finding we can
 actually make.** The stronger one is specific and checkable:
@@ -416,8 +418,7 @@ rest.** Eighteen of the thirty-nine named practices are in this position.
 > I found your practice through Companies House and your own website. If you
 > would rather I did not hold your details, say so and I will delete them.
 
-**Draft B — for a practice named by none of them.** Their problem is bigger and
-plainer, and pretending otherwise wastes the letter.
+**Draft B — for a practice named by none of them.**
 
 > Subject: Ninety answers about Wirral dentists, and [practice] was in none
 >
@@ -427,13 +428,48 @@ plainer, and pretending otherwise wastes the letter.
 > six different ways, five times each. Thirty-nine practices got named across the
 > ninety answers. [Practice] was not one of them.
 >
-> The reason is not that you were passed over. The answers are built almost
-> entirely from a handful of directory pages and Reddit threads, and as far as I
-> can tell your practice is not on the ones being read.
->
-> That is the cheaper end of this problem to fix, and some of it is free.
+> There are a handful of reasons that happens, and which one it is decides how
+> long it takes to fix. Some of it is quick. Working out which applies to you is
+> the job.
 >
 > [Rest as Draft A from "I run a small business" onward.]
+
+### What the email gives away, and what it does not
+
+*Rule set by the owner, 2026-08-09, correcting a first draft of Draft B that
+handed over the diagnosis for nothing.*
+
+**The observation is free. The diagnosis is the product.**
+
+- **Free, in the email:** what was asked, how many times, who got named, and
+  whether they did. All of it observation, all of it checkable, none of it
+  requiring us.
+- **Not free:** *why* a particular practice is missing, which pages the answers
+  are actually built from, which of those they are on, and what to change. That
+  is the £250, and a first draft of Draft B gave the headline finding away in a
+  sentence.
+
+**This is not a dishonesty question and it is worth being clear why.** "You were
+named in none of ninety answers" is true and complete on its own terms. Declining
+to add "and I think I know the reason" withholds nothing the reader was promised
+and states nothing false. The site's voice is *you don't need us for everything*,
+not *here is the work for nothing*.
+
+**Two guardrails, and they are the price of doing it this way:**
+
+- **Never imply we do not know.** "There are a handful of reasons" is honest.
+  "I have no idea why" would not be, and neither would a hint that the answer is
+  more mysterious than it is. Vagueness about our own knowledge is the line.
+- **The audit has to be worth the £250 on its own.** The directory question is
+  one finding, and the report cannot be that finding restated at length. It runs
+  ten questions on *their* business, checks what the assistants believe about
+  them and whether it is true, and reads their own site. **If a report ever comes
+  down to "get listed on a directory", the price is wrong, not the customer.**
+
+**The same rule applies to the market-level findings generally.** How the answers
+are constructed on the Wirral is a thing we now know because we paid for ninety
+queries and did the analysis. It is an asset. It goes in client reports, not in
+cold emails and not on the site.
 
 **What the drafts are doing, so they are not edited into a pitch by accident:**
 
