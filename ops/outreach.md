@@ -168,6 +168,31 @@ a client audit and does not go in `ops/audits/`, but the wording rules are the
 same, and a question that works here becomes part of the library that file
 describes as the compounding asset.
 
+### It is built — `ops/trade-run/`
+
+**Written 2026-08-09, smoke-tested against its own guards, never run for real.**
+The self-audit's throwaway query script turned out to be reusable, so it is
+copied to `ops/trade-run/trade_run.py` with three changes — the client name and
+the run count are flags, and the defaults suit a trade run. The dentist question
+set is beside it. Six questions, three assistants, five runs: **90 queries, one
+command.** The runbook is `ops/trade-run/README.md`.
+
+**Three things have to be true before it fires, and two of them are open:**
+
+- **API keys**, per `ops/audit-setup.md` §2. Already recorded.
+- **Funded balances.** `[PLACEHOLDER: what is left on the three accounts after
+  the 2 August self-audit is recorded nowhere.]` About $15 for this run. **A
+  spend inside the freeze window, so the owner's call.**
+- **Python 3.9+ on the machine it runs from.** Stdlib only, nothing to install.
+  `[PLACEHOLDER: whether Python is installed on the owner's Windows machine.]`
+
+**It stops at the raw answers, deliberately.** The `outcome` and `competitors`
+columns are written empty, because assigning them is the human judgement the
+audit budgets 60 to 110 minutes for. The mention table below is built from the
+answer text by hand — or by a second script written once we have seen what a real
+trade run's answers look like, which is the same reasoning that defers the audit
+runner.
+
 ### The mention table — who is named, and how often
 
 **We already have this method and it has been run once.**

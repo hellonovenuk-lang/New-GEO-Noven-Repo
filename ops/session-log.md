@@ -130,6 +130,42 @@ document had its argument stripped and sends the reader here.
     that they may not need us for it.
   - **Named consistently: not a prospect.** Nothing to sell them, and the audit's
     own voice is "you don't need us".
+- **The trade run is built: `ops/trade-run/`.** The owner asked whether we were
+  ready to fire the API calls for "dentists in Wirral". Nearly — and the gap was
+  smaller than expected, because **the self-audit's "throwaway" script was
+  already reusable**. It takes `--questions`, `--out`, `--cap`, `--smoke`, has a
+  hard query cap checked before the first call, and resumes after a provider
+  failure. Three changes made: the client name and the run count became flags
+  (they were hardcoded to `"noven"` and to the self-audit's five-vs-ten
+  experiment), and the defaults suit a trade run. **The original in
+  `ops/audits/noven-2026-08-02/` is frozen and was not touched** — it is part of
+  that audit's record.
+- **Its docstring said "delete this file after the audit — do not maintain it",
+  and that instruction was wrong.** Worth recording rather than quietly ignoring:
+  the script was written crude on purpose so its rough edges would specify the
+  real runner, and the rough edges turned out to be two hardcoded constants. The
+  deferral of the actual audit runner (`ROADMAP.md` 3a) is untouched — a trade
+  run is prospecting, not a paid audit, and this does not guess at the runner's
+  spec.
+- **Six questions written for Wirral dentists**, three discovery, one qualified,
+  one buying intent, one comparison, on the frame in `ops/audit-questions.md` §1.
+  6 × 3 assistants × 5 runs = **90 queries in one command**.
+- **Smoke-tested against its own guards, not against the APIs.** The cap check
+  fires before the first call and exits having spent nothing; the missing-key
+  guard exits cleanly; the header is written correctly. **No API call has been
+  made.** Two things are open and both are recorded as `[PLACEHOLDER]` rather
+  than assumed: **what is left on the three API balances after 2 August is
+  written down nowhere**, and whether Python is installed on the owner's Windows
+  machine. The run is about $15, which is a spend inside the freeze window and
+  therefore the owner's call.
+- **The run stops at raw answers on purpose.** `outcome` and `competitors` are
+  written empty, because classifying them is the judgement the audit budgets 60
+  to 110 minutes for. A second script to build the mention table is deliberately
+  not written until we have seen what a real trade run's answers look like —
+  the same reasoning that defers the runner, applied to the same trap.
+- **`ops/trade-run/`, not `ops/outreach/`.** A folder and a file with the same
+  name sitting beside each other is a trap for the next reader, and the repo
+  already has `name-check/` and `site-check/` as the pattern for a tool folder.
 - **Source analysis is two assistants, not three**, wherever the ladder is used.
   Gemini's cited URLs are all opaque `vertexaisearch` redirects (Finding E), so
   every conclusion about *why* a business is named rests on ChatGPT and

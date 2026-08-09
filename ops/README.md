@@ -73,6 +73,7 @@ in the business with no time budget at all.
 | File | What it decides | Status |
 |---|---|---|
 | `outreach.md` | How the first clients are found: cold, private clinics on the Wirral, limited companies only. The legal position on cold email, how the list is built, the one-run-per-trade method, the email itself, and what a reply unlocks. **Read §2 before building any list** | Decided, unvalidated — nobody has been contacted |
+| `trade-run/` | The tool `outreach.md` §4 depends on: asks the three assistants one trade-and-area question set and logs every answer with its sources. A reusable copy of the self-audit's throwaway script, plus the dentist questions. **Its README is the runbook, and lists the two things still open before it can fire** | Built and smoke-tested, never run for real |
 | `competitor-analysis.md` | Who else the assistants name, why they get named, and the six-item execution plan that came out of it. **Read "Considered and not done" before proposing any ranking or comparison page** | Live — analysis closed, execution open |
 
 ## The record
