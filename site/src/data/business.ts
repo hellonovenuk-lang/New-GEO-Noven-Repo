@@ -196,7 +196,7 @@ export const monthlies: Plan[] = [
     price: 700,
     summary: 'Front of mind.',
     schemaDescription:
-      'Monthly plan for businesses that want to be the first name an assistant gives: twenty-five questions checked every month, two new permanent answer pages each month, and a quarterly written review of the competitors being named ahead of you and why. £700 per month.',
+      'Monthly plan for competitive markets: twenty-five questions checked every month, two new permanent answer pages each month, and a quarterly written review of the competitors being named ahead of you and why. £700 per month.',
   },
 ];
 

@@ -33,8 +33,9 @@ const offersOnly = { '@type': 'Service', name: business.serviceName, offers: off
     <div class="wrap">
       <h1>What does Wardith cost?</h1>
       <p class="lede" data-reveal>
-        One service, three stages, plain numbers. You start with a {money(audit.price)} audit, and
-        every stage after that is only worth buying if the one before says so.
+        One service, three stages, plain numbers: diagnose the problem, fix the foundations, then
+        keep checking. You start with a {money(audit.price)} audit, and every stage after that is
+        only worth buying if the one before says so.
       </p>
     </div>
   </section>
@@ -58,6 +59,11 @@ const offersOnly = { '@type': 'Service', name: business.serviceName, offers: off
             <ul class="ticks">
               <li>What each assistant currently says when asked about businesses like yours.</li>
               <li>What they know and believe about your business, and whether it's accurate.</li>
+              <li>
+                Where your own details disagree with each other across the web — your Google
+                Business Profile, Bing Places, Companies House, your professional register, the
+                main directories and your social pages, each recorded exactly as it has you.
+              </li>
               <li>The specific things blocking you, in plain English.</li>
               <li>Our honest recommendation — including "you're fine, don't spend more money."</li>
             </ul>
@@ -73,11 +79,12 @@ const offersOnly = { '@type': 'Service', name: business.serviceName, offers: off
           </div>
           <div>
             <p>
-              The setup that gets you visible, done on the website you already have. It is a fixed
-              piece of work, not an open-ended one: crawler access for the AI systems, structured
-              machine-readable facts about your business, your facts made consistent everywhere they
-              appear online, and <strong>two permanent pages</strong> answering questions your
-              customers ask. Your audit decides which two.
+              The setup that fixes the underlying issues your audit found, done on the website you
+              already have. It is a fixed piece of work, not an open-ended one: crawler access for
+              the AI systems, structured machine-readable facts about your business, your facts made
+              consistent everywhere they appear online, and <strong>two permanent pages</strong>
+              answering questions your customers ask. Your audit decides which two — and if the
+              biggest thing in your way sits outside those four, the audit says that instead.
             </p>
             <p>
               We'll come back to you within two working days of your payment clearing, with a plan
@@ -98,10 +105,11 @@ const offersOnly = { '@type': 'Service', name: business.serviceName, offers: off
           <div>
             <p>
               The assistants change constantly, so staying visible is maintenance, not magic. The
-              three levels do three different jobs — hold your position, close the gaps, or get named
-              ahead of your competitors — and you can move between them at any time. What separates
-              them is how many permanent pages we write for you each month, because a page is the
-              part that keeps working after we've written it.
+              three levels do three different jobs — hold your position, close the gaps, or close
+              them faster across a wider set of questions — and you can move between them at any
+              time. What separates them is how much ground we cover each month and how many
+              permanent pages we write for you, because a page is the part that keeps working after
+              we've written it.
             </p>
           </div>
         </div>
@@ -110,17 +118,19 @@ const offersOnly = { '@type': 'Service', name: business.serviceName, offers: off
           <li class="level">
             <span class="level-name">Maintain</span>
             <p>
-              Holds the position the Foundation built. Every month we ask the assistants ten
-              questions your customers actually ask — five times each, because their answers vary —
-              and send you a short written record: where you appeared, what changed since last
-              month, and which questions you're still missing from. Your business facts stay
-              current, and we fix them when they drift.
+              <strong>Best if you mainly want to protect what the Foundation built and know where
+              you stand.</strong> Every month we ask the assistants ten questions your customers
+              actually ask — five times each, because their answers vary — and send you a short
+              written record: where you appeared, what changed since last month, and which questions
+              you're still missing from. Your business facts stay current, and we fix them when they
+              drift.
             </p>
             <span class="level-price">{money(monthlies[0].price)} /month</span>
           </li>
           <li class="level">
             <span class="level-name">Grow</span>
             <p>
+              <strong>Best if the audit found clear gaps and you want them actively closed.</strong>
               Everything in Maintain, across fifteen questions instead of ten. Each month we take
               one of the questions you're missing from and write the page that answers it properly,
               on your own site — yours to keep, working whether or not you stay with us. That's how
@@ -131,11 +141,11 @@ const offersOnly = { '@type': 'Service', name: business.serviceName, offers: off
           <li class="level">
             <span class="level-name">Lead</span>
             <p>
-              For businesses that want to be the first name mentioned, not just a name mentioned.
-              Twenty-five questions a month, and two new answer pages — so you build a body of
-              pages answering what your customers actually ask, faster than anyone in your field.
-              Every quarter you also get a written review of the competitors the assistants are
-              naming ahead of you, and our honest read on why.
+              <strong>Best in a competitive market, where you want gaps closed faster and want to
+              know who is being named ahead of you.</strong> Twenty-five questions a month and two
+              new answer pages, so coverage builds at roughly twice the rate of Grow across a wider
+              set of questions. Every quarter you also get a written review of the competitors the
+              assistants are naming ahead of you, and our honest read on why.
             </p>
             <span class="level-price">{money(monthlies[2].price)} /month</span>
           </li>
@@ -149,9 +159,10 @@ const offersOnly = { '@type': 'Service', name: business.serviceName, offers: off
           </div>
           <div>
             <p>
-              These are the prices an AI assistant reads from this page, written in the format
-              those systems are built to consume. It comes from the same numbers as the list above,
-              so the two can't disagree — which is exactly the job Wardith does for clients.
+              These prices are also published as structured data, so a machine has an explicit
+              version of them rather than having to infer them from the layout above. It's built
+              from the same numbers as the list, so the two can't disagree — which is exactly the
+              job Wardith does for clients. You don't need to read it to buy anything.
             </p>
             <Code
               caption="The prices, as an AI assistant reads them"

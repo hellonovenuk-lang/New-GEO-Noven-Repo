@@ -7,6 +7,15 @@
  * your own business for free → here is what the paid version adds → here is
  * how to check any provider, us included.
  *
+ * A 2026-08-09 copy review asked for the free self-test to appear earlier,
+ * because it is the most useful thing on the page and it currently sits fifth.
+ * The sections were **not** reordered: the same review's own recommended
+ * sequence is check-us-then-check-yourself, which is what the order above
+ * already does, and moving the self-test above the report would invert it.
+ * What was added instead is the skip link below the hero, so a reader who
+ * wants the test first can have it in one click without the argument being
+ * rearranged around them.
+ *
  * Every prompt on this page is written to be run against us as readily as
  * against anyone else. That is the whole point of it and it should stay true
  * of anything added later: the moment a prompt here is one we would not want
@@ -38,6 +47,10 @@ const audit = plan('audit');
         business. It would be strange to sell that without running it on ourselves first — so we
         did, before we sold a single one. We failed it. Badly enough that we changed the name of the
         company.
+      </p>
+      <p style="margin-top: 1.5rem;" data-reveal>
+        <a href="#test-your-own">Or skip us and test your own business first</a> — five minutes,
+        free, and it tells you whether you have a problem at all.
       </p>
     </div>
   </section>
@@ -158,7 +171,7 @@ const audit = plan('audit');
     </div>
   </section>
 
-  <section class="section section--tint">
+  <section class="section section--tint" id="test-your-own">
     <div class="wrap">
       <div class="split split--sticky">
         <div>
@@ -229,10 +242,12 @@ const audit = plan('audit');
               reporting one roll and hoping you don't know that.
             </li>
             <li>
-              <strong>A stranger's view rather than your own.</strong> The ChatGPT on your phone knows
-              you. It has your history, your location and your previous questions, and it flatters
-              you accordingly. We check through the developer versions, which is much closer to what
-              a customer who has never heard of you sees.
+              <strong>A stranger's view rather than your own.</strong> The assistant you normally use
+              may have your conversation history, your location and your saved preferences to draw
+              on, any of which can shape the answer you get about your own business. We check
+              through the developer versions of these systems, which carry none of that — closer to
+              what a customer who has never heard of you sees, though no test perfectly reproduces
+              another person's session.
             </li>
             <li>
               <strong>The reason, not just the result.</strong> Knowing you're absent isn't the same
@@ -261,24 +276,15 @@ const audit = plan('audit');
           <p>
             Plenty of the businesses these assistants named ahead of us are genuine — real people
             doing real work, much like ours, some of them better at parts of it than we are. We're
-            not naming them, and not because we're being coy: a competitor list dressed up as an
-            insight is just an advert with extra steps.
+            not naming any of them: a competitor list dressed up as an insight is just an advert
+            with extra steps.
           </p>
           <p>
-            But not all of them are. Look closely at some of the names that come up in this field and
-            you'll find accreditations from bodies that don't appear to exist, awards published on
-            the website of the business receiving them, and claims about size and track record that
-            sit oddly against how long the company has actually been operating.
-          </p>
-          <p>
-            It matters here more than in most trades, because assistants trust published sources and
-            are not yet good at asking who is speaking. A business that awards itself a title in the
-            right format gets recommended for it. That works, for now, and we'd rather say so than
-            pretend otherwise.
-          </p>
-          <p>
-            So before you pay anyone in this field — us included — paste this into whichever
-            assistant you use, along with the name and website of each provider you're considering.
+            The point is a structural one rather than a complaint. This is a young field, which
+            makes a weak claim easy to dress up as authority — and assistants read published sources
+            without being much good yet at asking who is speaking. So before you pay anyone in it —
+            us included — paste this into whichever assistant you use, along with the name and
+            website of each provider you're considering.
           </p>
 
           <Prompt

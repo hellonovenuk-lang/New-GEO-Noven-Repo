@@ -32,11 +32,11 @@ const description =
           businesses being left out have no idea it's happening.
         </p>
         <p>
-          Most of what determines who gets recommended is unglamorous and fixable: whether the AI
-          systems can read your website, whether the facts about your business agree with each other
-          across the web, and whether anything you've published actually answers the questions
-          customers ask. Almost no small firm has had this looked at. Wardith exists to do exactly
-          that, at prices a small firm can justify.
+          Many of the things that influence whether a business can be understood and recommended are
+          unglamorous and fixable: whether the AI systems can read your website, whether the facts
+          about your business agree with each other across the web, and whether anything you've
+          published actually answers the questions customers ask. Almost no small firm has had this
+          looked at. Wardith exists to do exactly that, at prices a small firm can justify.
         </p>
       </div>
     </div>
@@ -69,9 +69,9 @@ const description =
             </div>
             <div class="stage-body">
               <p>
-                Nobody controls what an AI assistant says. We work on the inputs these systems
-                demonstrably rely on and we measure the results, but we don't guarantee outcomes,
-                and we don't show numbers that can't be checked.
+                Nobody controls what an AI assistant says. We work on the inputs we can observe and
+                influence, and we measure what happens, but we separate what we can demonstrate
+                from what we're inferring — and we don't show numbers that can't be checked.
               </p>
             </div>
           </div>
@@ -86,9 +86,10 @@ const description =
                 real questions. If the approach works, you'll be able to see it working on us.
               </p>
               <p>
-                We ran our own audit before selling one, and failed it badly enough to change the
-                name of the company. <a href="/ask-your-ai/">The report is published in full</a>,
-                along with the prompts to check us — and anyone else you're considering.
+                And we'd rather you checked than took our word for it.
+                <a href="/ask-your-ai/">The prompts for interrogating this business</a> — and any
+                other provider you're weighing up — are published, along with the audit we ran on
+                ourselves before selling one to anybody.
               </p>
             </div>
           </div>
@@ -125,9 +126,9 @@ const description =
           <p>
             Kieran spent eight years in operations at {business.founderFormerEmployer}, making
             sure containers were sent and arrived as planned. That work is mostly about keeping
-            information accurate and consistent across systems that don't naturally agree, which is
-            a large part of what this work is too. He came across this problem by chance while
-            building a few websites, and found it interesting enough to build a business around.
+            information accurate and consistent across systems that don't naturally agree, and
+            noticing when one of them is quietly wrong — which turns out to be a large part of what
+            this work is too.
             {
               business.founderLinkedIn && (
                 <>
@@ -135,6 +136,15 @@ const description =
                 </>
               )
             }
+          </p>
+          <p>
+            He came across this problem by chance while building a few websites: the gap between
+            what a business publishes about itself and what an AI assistant actually believes about
+            it. Rather than assume, he started testing it properly — the same question put to
+            several assistants, repeatedly, and the answers written down. The first business he ran
+            the finished method on was his own. It failed badly enough that the company changed its
+            name, and Wardith was built around the method rather than the other way round.
+            <a href="/ask-your-ai/self-audit/">Read the audit that led to the name change</a>.
           </p>
           {
             !business.founderLinkedIn && (
@@ -163,7 +173,7 @@ const description =
 
   <section class="section">
     <div class="wrap">
-      <Statement cite="One person, one service, and a written record of everything promised.">
+      <Statement cite="One person, one focus, and a written record of everything promised.">
         Small enough that you always know <em>who did the work.</em>
       </Statement>
     </div>

@@ -689,18 +689,16 @@ li a:hover {
   margin-top: var(--s4);
 }
 
-/* Homepage hero: statement on the left, the record alongside it. */
-.hero-grid {
-  display: grid;
-  gap: var(--s6);
-  align-items: start;
-}
+/* `.hero-grid` lived here until 2026-08-09 — the homepage hero was a two-column
+   grid with the record panel alongside the headline. The record moved down the
+   page in the copy review of that date, the homepage hero became the same
+   single-column `hero--rules` every other page uses, and the rule had no
+   remaining user. Deleted rather than kept warm; git has it. */
 
-@media (min-width: 60rem) {
-  .hero-grid {
-    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
-    gap: clamp(2.5rem, 5vw, 4.5rem);
-  }
+/* The record panel where it now lives: in the body column of a split, under
+   the paragraph that introduces it. Needs the gap a paragraph would have. */
+.record-panel {
+  margin-top: var(--s4);
 }
 
 /* ------------------------------------------------------------- 8 the record */
