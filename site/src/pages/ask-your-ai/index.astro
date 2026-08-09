@@ -188,7 +188,7 @@ const audit = plan('audit');
             caption="Ask it five times, in five fresh chats"
             label="Prompt for testing your own business"
             intro="Who would you recommend for [what you do] in [where you are]?"
-            note="Fresh chats, not five messages in one — an assistant that has already answered will tend to agree with itself. Write down every business it names."
+            note="Fresh chats, not five messages in one — earlier answers can influence what comes next. Write down every business it names."
           />
 
           <p>Three things can happen, and they mean different things.</p>
@@ -251,8 +251,8 @@ const audit = plan('audit');
             </li>
             <li>
               <strong>The reason behind the result.</strong> Knowing you're absent isn't the same
-              as knowing why, and the reason is nearly always in your website or the sources these
-              systems use to reach it. In our case it was the name. In yours it might be that one of
+              as knowing why, and the reason is often somewhere in your website or the public
+              sources around it. In our case it was the name. In yours it might be that one of
               them has never indexed your site at all — which is exactly what we found had happened
               to us on Copilot.
             </li>
