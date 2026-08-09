@@ -263,6 +263,21 @@ document had its argument stripped and sends the reader here.
   a supplier and saying `[PLACEHOLDER]` where the country goes. **It now checks
   the string as well as the object.** Site rebuilt: nine pages, `/privacy/`,
   `/terms/` and `/order/` all still correctly absent.
+- **The emails' closing ask was wrong twice, and the owner caught both.** Both
+  drafts ended by offering to send "the six questions I'd ask about [practice]".
+  **Nobody wants six questions** — it is an artefact from our side of the desk,
+  offered as though the recipient would value it. And **it named a thing that
+  does not exist**: the audit is a ten-question frame (`ops/audit-questions.md`);
+  six was the trade run's number. The line survived from a draft written before
+  the run existed, which is how a stale detail gets carried into copy nobody
+  re-reads from the recipient's side.
+- **The replacement is the one thing they would actually want: the answers.** We
+  hold ninety of them. A practice owner reading the verbatim text where three
+  competitors get recommended and they do not is a stronger pull than any offer
+  we could construct, it costs nothing to send, and **it stays inside the
+  give-away rule because it is observation rather than diagnosis.** The source
+  list is stripped before sending — the sources are the diagnostic clue and they
+  belong in the paid report.
 - **`ops/voice.md` added, from `github.com/blader/humanizer`, on the owner's
   instruction and explicitly as a general framework rather than a checklist.**
   It applies to everything a customer reads and to nothing in `ops/` —

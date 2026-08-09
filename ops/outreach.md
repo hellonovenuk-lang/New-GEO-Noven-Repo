@@ -421,8 +421,8 @@ rest.** Eighteen of the thirty-nine named practices are in this position.
 > I've put one of these online in full, run on my own business, including the
 > parts that came back badly: wardith.co.uk/ask-your-ai/self-audit/
 >
-> If it's useful, reply and I'll send you the six questions I'd ask about
-> [practice]. If not, say so and I won't email you again.
+> If you'd like to see them, reply and I'll send you what the three of them
+> actually said, word for word. If not, say so and I won't email you again.
 >
 > [Owner name]
 > Wardith, [address for service]
@@ -495,6 +495,17 @@ cold emails and not on the site.
 - **The number is the email.** "[N] times on one, zero on another" is checkable
   in five minutes, which is exactly why it works. **Do not soften it into "you
   may not be appearing".**
+- **The ask is the answers, and it replaced a bad one on 2026-08-09.** The
+  drafts previously ended by offering to send "the six questions I'd ask about
+  [practice]". Wrong twice: nobody wants six questions, it is an artefact from
+  our side of the desk offered as though it were a benefit; and **the audit is a
+  ten-question frame** (`ops/audit-questions.md`), six being the trade run's
+  number, so the line named a thing that does not exist.
+  **Offer the verbatim answers instead.** We already hold ninety of them, a
+  practice owner genuinely wants to read the ones naming their competitors, and
+  it costs nothing to send.
+- **Send the answer text and not the source list.** The sources are the
+  diagnostic clue and they stay in the paid report, per the rule below.
 - **Never claim the assistants disagree in general.** They mostly agree — 21 of
   39 practices are named by all three. A prospect who checks that claim finds it
   false and stops reading. The gap is per practice.
