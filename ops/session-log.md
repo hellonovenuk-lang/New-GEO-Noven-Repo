@@ -119,19 +119,41 @@ clients do not know about, and it is the most legible proof that this half of
 the audit is real work rather than a line in a scope list.
 
 **Why the confusion was available to make, which is the part worth keeping.**
-Group 3 is specified in `audit-site-checklist.md` but has no counterpart in
-`audit-method.md`, whose sections cover the assistant-querying half only — so a
-session that reads the method document to find out what the audit does will
-conclude the off-site half does not exist. It also genuinely was not run on the
+Group 3 is specified in `audit-site-checklist.md`, and `audit-method.md` —
+whose numbered sections cover the assistant-querying half only — pointed at it
+twice, both times too thinly to register: four words in the companion-documents
+list ("what we look at on their website and off it") and a 15-minute row in the
+section 7 time budget. **A first draft of this entry said the method document
+"never mentions Group 3", which is wrong and has been corrected here.** The
+pointers existed; they were just skippable, which for a document a session reads
+to establish what the £250 buys is the same failure with a smaller cause. Fixed
+2026-08-09: the preamble of `audit-method.md` now says outright that the file
+covers half the audit, names Group 3's nine sources, and says both files have to
+be read. It also genuinely was not run on the
 self-audit (`ops/audits/noven-2026-08-02/checklist.md`: "Group 3 not started"),
 so the one published example of a finished report shows no off-site findings.
 The report is honest about it — "We haven't checked your listings elsewhere" is
 in its own limitations list — but that line was, until today, the only place on
 the entire site where those sources were named, which is precisely the failure
 §3F describes: telling a prospect these sources matter while appearing not to
-check them. **`ops/audit-method.md` should gain a pointer to Group 3.** Not done
-here; it is a one-line cross-reference and the next session that opens that file
-should add it.
+check them.
+
+**The two follow-ups this session left open were both closed the same day, on
+the owner's instruction, and they closed differently.** The `audit-method.md`
+pointer was a document fix and was simply made — tracking a one-paragraph edit
+costs more than doing it. Review Priority 3 could not be: its four items are
+gated on evidence that does not exist yet, and doing them now means inventing
+the thing they are supposed to be built from. They are now **roadmap 2g**, each
+carrying the specific gate that unlocks it, sitting in Phase 2 where the
+evidence will arrive rather than in a log entry nobody re-reads. **The
+distinction is worth reusing: a fix goes in the file, a wait goes in the
+roadmap.**
+
+**Found while placing 2g, and fixed:** roadmap 2d described "the `[PLACEHOLDER]`
+block in the last section of `/ask-your-ai/`". That block was removed on
+2026-08-06 — it was an instruction to the next session about to be crawled and
+cached as site copy, and it now lives in a source comment. The task it described
+is still open and still correct; only its landmark was gone.
 
 **Checked:** `npm run build` clean, `repo-consistency` clean (zero errors
 outside `node_modules`), homepage screenshotted at 1440 and 390 with JavaScript

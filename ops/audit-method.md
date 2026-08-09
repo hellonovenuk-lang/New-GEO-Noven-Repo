@@ -19,6 +19,25 @@ Companion documents:
 - `ops/audit-setup.md` — the practical setup: accounts, keys, spend caps, where
   the data lives, and the order to do it in on the day
 
+**This file covers the assistant-querying half of the audit only. The other half
+is not in it, and the audit is not what this file describes on its own.**
+Everything we check on the client's website — and, in the checklist's **Group 3,
+"Are the facts the same everywhere"**, across the public sources these systems
+draw on — lives in `ops/audit-site-checklist.md`. Group 3 names nine off-site
+sources (Google Business Profile, Bing Places, Companies House, the applicable
+professional register, two trade directories, LinkedIn, Facebook, plus public
+Bing and Google index checks), requires name, address and phone recorded
+*exactly as written* in each, and the checklist calls it "in practice the group
+that produces the most findings on the most audits".
+
+**Added 2026-08-09, after a session read this file to establish what the £250
+buys and concluded the off-site checks had never been scoped.** They had, since
+the checklist was written. The two pointers that existed — four words in the
+companion list above, and a 15-minute row in the section 7 time budget — were
+both true and both easy to read straight past, and the mistake nearly reached
+the site as a scope question put to the owner. **A session establishing what the
+audit covers has to read both files.**
+
 ---
 
 ## 1. What the audit is for, and what it is worth

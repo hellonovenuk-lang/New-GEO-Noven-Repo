@@ -461,11 +461,16 @@ finding about their business rather than a pitch.
       full, as HTML rather than PDF so the assistants can read it. Competitor
       names withheld and prices removed, both declared on the page.
 - [ ] **The "after" half of that page is still empty, and it is the point of
-      it.** The `[PLACEHOLDER]` block in the last section of `/ask-your-ai/`
+      it.** The "What happened next" section at the foot of `/ask-your-ai/`
       holds space for the Wardith rerun (Phase 2 of
       `ops/plan-to-1-september.md`, between the 26 August unfreeze and the
       1 September launch). Publish it whichever way it goes — the page already
-      commits to that in writing.
+      commits to that in writing. **There is no longer a visible
+      `[PLACEHOLDER]` there**; it was removed on 2026-08-06 before the domain
+      went to Search Console, because it was an instruction to the next session
+      about to be crawled and cached as if it were copy. The instruction now
+      lives in a source comment on the section, where a crawler will not find
+      it. Corrected here 2026-08-09.
 - [ ] **Export the client PDF of the self-audit from Word.** The redacted master
       is `ops/audits/noven-2026-08-02/Noven-audit-report-2026-08-03-for-publication.docx`,
       beside the untouched original. `CLAUDE.md` requires the export to come
@@ -535,6 +540,39 @@ spending freeze.**
 - [ ] **No product change yet.** Whether a digital-PR/citation line belongs in
       a tier can't be answered from this data. Revisit after the comparison page
       has been live long enough to measure.
+
+### 2g. Copy changes that outreach has to unlock first
+
+Priority 3 of the 2026-08-09 copy review (`ops/session-log.md`, that date).
+Priorities 1 and 2 were applied and merged the same day. **These four were
+deliberately not done, and the reason is the same each time: doing them now
+means inventing the evidence they are supposed to be built from.** Each names
+the specific thing that unlocks it — do not start one before its gate.
+
+- [ ] **Add or adjust FAQ entries from real objections.** *Gate: objections
+      appearing in actual outreach replies.* The review's own instruction is not
+      to add "Can my existing agency do this?" purely for completeness — only if
+      prospects raise it. If they do, the confident answer is: possibly, the
+      audit is yours and they can act on it, and Wardith exists because this
+      work falls between SEO, web development, reputation and information
+      architecture rather than sitting neatly in one of them.
+- [ ] **Replace the "no case studies" messaging.** *Gate: real client results,
+      published with written permission — which is 2d above.* It currently
+      appears on the homepage proof section and as an FAQ entry, and both are
+      honest and worth keeping until there is something truer to say. When there
+      is, the FAQ entry becomes "Where can I see examples of the work?"
+- [ ] **Merge the two overlapping trust answers on the FAQ.** *Gate: the case
+      studies above, because that is what changes their content.* "Why should I
+      trust a company with no case studies?" and the "Don't take our word for
+      any of this" closing block make a similar argument twice. Not urgent, and
+      not worth churning before the first of them has to be rewritten anyway.
+- [ ] **Refine who the site says it is for.** *Gate: which businesses actually
+      reply and buy.* The homepage currently names accountants, solicitors,
+      private clinics, consultancies and agencies. That list is a hypothesis.
+- [ ] **Do not expand services or content for completeness before the first 100
+      prospects have been approached.** Not a task — a standing constraint on
+      the four above, from the review. Recorded here so it is read alongside
+      them rather than in the log.
 
 ---
 
