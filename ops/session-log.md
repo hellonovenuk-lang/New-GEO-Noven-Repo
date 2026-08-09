@@ -166,6 +166,36 @@ document had its argument stripped and sends the reader here.
 - **`ops/trade-run/`, not `ops/outreach/`.** A folder and a file with the same
   name sitting beside each other is a trap for the next reader, and the repo
   already has `name-check/` and `site-check/` as the pattern for a tool folder.
+- **The API balances are known for the first time since 2 August**, given by the
+  owner: **OpenAI $16.00, Gemini £8.95, Perplexity $4.49.** Recorded in
+  `ops/accounts.md`, which had been carrying "the totals were never recorded" as
+  an open gap since 4 August.
+- **The verdict is two yes and one short, and the reasoning is worth keeping
+  because it will be reused for every trade run.** One run is **30 queries per
+  provider**, not 90. **There is exactly one measured rate in this business** —
+  OpenAI at $12.63 for ~75 queries on 2 August, about $0.17 a query — so all
+  three were priced at it and the borrowing was declared rather than hidden.
+  OpenAI has roughly three runs of headroom; Gemini is comfortable and grounded
+  search is normally cheaper than this; **Perplexity is short by about fifty
+  cents at the borrowed rate.** Sonar is genuinely cheaper than OpenAI web
+  search, so it may well cover it, and "may well" is not a balance check.
+- **The smoke test was already the required first step; it is now also the
+  measurement.** Three queries, one per provider, then read the three dashboards
+  and divide. About fifty cents to convert three borrowed estimates into three
+  measured per-query rates — **a number this business has needed since 2 August
+  and has never had**, and one that also feeds the open £150 Maintain question
+  in `ops/plan-to-1-september.md`.
+- **Running dry costs nothing, which is what makes it safe to just try.** The
+  providers run OpenAI, then Gemini, then Perplexity, so an exhausted Perplexity
+  balance fails last with sixty rows already flushed to disk, and re-running
+  retries only the errored rows. The downside is a $5 top-up and one repeated
+  command.
+- **The balance is not the thing to check first.** `ops/audit-setup.md` §4 says
+  to set £10 caps on all three and turn Perplexity's auto top-up off, and
+  **neither has ever been confirmed**. With auto top-up on, "is there enough"
+  stops mattering — running dry silently charges the card, which during a
+  spending freeze is the exact event the freeze exists to prevent. Flagged in
+  `ops/accounts.md` and in the trade-run README rather than only here.
 - **Source analysis is two assistants, not three**, wherever the ladder is used.
   Gemini's cited URLs are all opaque `vertexaisearch` redirects (Finding E), so
   every conclusion about *why* a business is named rests on ChatGPT and

@@ -37,14 +37,61 @@ the six categories — a set of six discovery questions counts one thing six tim
 1. **API keys in the environment**, per `ops/audit-setup.md` §2. `~/.noven/env`
    holds the keys; the three model variables are set from what that section
    recorded. **Do not guess a model name.**
-2. **Funded balances on all three.** `[PLACEHOLDER: the balance on each of the
-   three accounts after the 2 August self-audit is not recorded anywhere]`. The
-   self-audit cost **$12.63 on OpenAI alone for roughly 75 queries**, so this
-   run — 90 queries — is on the order of $15 across the three. **That is a spend
-   inside the freeze window and it is the owner's call**
-   (`ops/plan-to-1-september.md`).
+2. **Funded balances on all three. Read the next section — one of them is
+   short.**
 3. **Python 3.9 or later.** Stdlib only, nothing to install.
    `[PLACEHOLDER: whether Python is installed on the owner's Windows machine]`.
+
+---
+
+## Will the balances cover it? Two yes, one short
+
+**Balances as at 2026-08-09**, from the owner: **OpenAI $16.00, Gemini £8.95,
+Perplexity $4.49.**
+
+**One run is 30 queries per provider**, not 90 each — six questions, five runs.
+
+**There is exactly one measured rate in this business** and it is OpenAI's:
+**$12.63 for roughly 75 queries on the 2 August self-audit, so about $0.17 a
+query** with web search enabled. The Gemini and Perplexity totals from that day
+were never recorded, so the only honest thing to do is price all three at the
+one rate we have and say plainly that two of the three figures are borrowed.
+
+| Provider | Balance | 30 queries at $0.17 | Verdict |
+|---|---|---|---|
+| OpenAI | $16.00 | ~$5.05 | **Fine**, roughly three runs' worth of headroom. And this is the one rate that is real |
+| Gemini | £8.95 | ~$5.05 equivalent | **Fine.** Grounded search is charged per request and is normally cheaper than this, so the real figure should be well under |
+| Perplexity | $4.49 | ~$5.05 | **Short by about fifty cents** at the borrowed rate. Sonar is genuinely cheaper than OpenAI web search, so it may well cover it — but "may well" is not a balance check |
+
+**So the answer is: probably yes, and Perplexity is the one that might not
+finish.** Do not resolve that by guessing at Perplexity's price list.
+
+### The smoke test is the measurement, and that is what it is for
+
+Three queries, one per provider, costs pennies. **Then read all three dashboards
+and divide.** That converts every number above from a borrowed estimate into
+three measured per-query rates, which is a fact this business has needed since
+2 August and has never had. It also feeds the £150 Maintain question that
+`ops/plan-to-1-september.md` leaves open, and it costs about fifty cents to
+answer.
+
+Record the three rates in `ops/accounts.md` the same day.
+
+### If Perplexity does run dry, nothing is lost
+
+**The providers run in order: OpenAI, then Gemini, then Perplexity.** So an
+exhausted Perplexity balance fails last, with sixty rows already written and
+flushed to disk. Re-running the same command after a top-up **retries only the
+failed rows** — a row carrying an error is not counted as done. The cost of
+getting this wrong is a five-dollar top-up and one repeated command.
+
+### One thing to confirm before firing, and it is not about having enough
+
+**Check Perplexity's auto top-up is off.** `ops/audit-setup.md` §4 says to set
+it off and it has never been confirmed. With auto top-up on, "is the balance
+enough" stops mattering — running dry silently charges the card, which during a
+spending freeze is the exact event the freeze exists to prevent. The same
+section's £10 caps on all three have also never been confirmed as set.
 
 **Smoke test first. Always.** Three queries, one per provider, on q01:
 

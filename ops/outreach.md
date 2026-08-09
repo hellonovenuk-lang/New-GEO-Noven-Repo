@@ -180,9 +180,13 @@ command.** The runbook is `ops/trade-run/README.md`.
 **Three things have to be true before it fires, and two of them are open:**
 
 - **API keys**, per `ops/audit-setup.md` §2. Already recorded.
-- **Funded balances.** `[PLACEHOLDER: what is left on the three accounts after
-  the 2 August self-audit is recorded nowhere.]` About $15 for this run. **A
-  spend inside the freeze window, so the owner's call.**
+- **Funded balances — two are, one may not be.** As at 2026-08-09: OpenAI
+  $16.00, Gemini £8.95, Perplexity $4.49, against 30 queries each at the only
+  rate we have ever measured (~$0.17, from OpenAI on 2 August). **Perplexity is
+  short by about fifty cents on that borrowed rate**, and it runs last, so the
+  worst case is sixty rows banked and a five-dollar top-up. The arithmetic, and
+  the auto-top-up check that matters more than the balance, are in
+  `ops/trade-run/README.md`.
 - **Python 3.9+ on the machine it runs from.** Stdlib only, nothing to install.
   `[PLACEHOLDER: whether Python is installed on the owner's Windows machine.]`
 
