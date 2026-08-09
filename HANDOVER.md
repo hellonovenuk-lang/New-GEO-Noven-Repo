@@ -171,8 +171,8 @@ item rather than the first, and it is not a reason to delay anything if the
 answer is no.
 
 **Not verified from a session:** the ICO's register returns HTTP 403 to automated
-fetches, so whether a "Noven" entry exists could not be checked here. It has to
-be asked on the call or looked up in a browser.
+fetches, so whether the record still carries the pre-rename trading name could
+not be checked here. Ask on the call, or look it up in a browser.
 
 ### Then, roughly a day and a half of desk work
 
