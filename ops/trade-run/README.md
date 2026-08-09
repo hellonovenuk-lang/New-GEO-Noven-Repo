@@ -237,13 +237,15 @@ are usable in a trade run rather than discounted.
 
 ## What the smoke test found — 2026-08-09
 
-> **Sample size: three rows. One question, one run per assistant.** Everything
-> below is a signal to check against the full run, not a finding. The setup
-> checks are conclusive — a search either fired or it did not. **The claims about
-> the market are not**, and the owner was right to say so on the day: the
-> national version of the same claim rests on 165 rows, and this rests on three.
-> Re-read this section against the full run before any of it reaches a client or
-> an email.
+> **Superseded by the full run, and two of its four findings were wrong.** Kept
+> as written, because the correction is the more useful record. The full run —
+> 90 rows, same day — is in "What the full run found" below, and **the owner's
+> instruction to hold the analysis at the smoke test is what stopped two false
+> claims reaching an email.**
+>
+> **Sample size here: three rows. One question, one run per assistant.** The
+> setup checks were conclusive from that — a search either fired or it did not.
+> The market claims were not.
 
 **Three queries, q01 only, one run per assistant. All five checks passed:** the
 search fired on all three, the model strings came back as the tiers intended
@@ -292,6 +294,95 @@ the first evidence that the tier is populated rather than theoretical.
 **What is still outstanding from the smoke test:** check 5, the cost. Reading
 the three dashboards and dividing is the only way to get the per-query rates, and
 it is the number that decides whether Perplexity's balance covers a full run.
+
+---
+
+## What the full run found — 2026-08-09
+
+**90 rows. Six questions, three assistants, five runs each. Zero errors, zero
+empty answers, sources on every row, all three model strings correct.** The
+balances covered it — Perplexity finished, so the fifty-cent shortfall predicted
+from OpenAI's borrowed rate did not materialise.
+
+**Practice names stay out of this repo**, so the numbers below are shape and
+counts. The mention table itself went to the owner as a file, with the analysis.
+
+### The two smoke-test findings that were wrong
+
+- **"The three assistants barely agree, and not one practice was named by all
+  three."** **False at 90 rows.** 39 practices were named; **21 of them by all
+  three assistants**, 12 by two, 6 by one. Consensus is the normal case, not the
+  exception. The smoke test saw three single runs and read the sampling noise as
+  a market structure.
+- **"Tier A is populated"** — the tier of practices listed in the cited
+  directories but absent from the answers. The example given was a practice that
+  turned out, at 90 rows, to be named 18 times. **The tier is real but it is thin
+  and it had to be found a different way** — see below.
+
+### What actually holds
+
+- **There is a top tier, and it is more concentrated than the national market.**
+  Four practices sit at 36–43% of all rows. The national field's leader managed
+  28% (`ops/competitor-analysis.md` Finding A). **A local trade question is a
+  smaller, more settled field than the national one.**
+- **But nobody owns it.** The leader appears in 43% of rows, so **a majority of
+  answers to "who is the best dentist on the Wirral" do not mention the leading
+  practice.** There is a top tier without an incumbent.
+- **The per-assistant gap is the real finding, and it survived.** Stated as a
+  general claim it was wrong; stated per practice it is sharp and checkable.
+  **Of the 39 practices named, 18 are missing entirely from at least one
+  assistant** — including practices in the top ten overall. Several are named
+  well by one assistant and by neither of the other two.
+- **Being named tracks with having your own site cited.** The most-named
+  practices' own domains are among the most-cited sources. The never-named do not
+  appear as a domain at all.
+
+### The sources, and what they mean for the deliverable
+
+**4,902 source URLs across 90 rows.** 345 are Gemini's opaque
+`vertexaisearch` redirects — **7% of the total, but 100% of Gemini's**, so the
+limitation in `ops/competitor-analysis.md` Finding E is unchanged: source
+analysis is ChatGPT and Perplexity.
+
+**Ranked by how many of the 90 rows cite them**, the readable field is: NHS
+(41), Reddit (30), CQC (29), Wikipedia (29), then a dense tier of directories —
+Yell, WhatClinic, dentistlocator, alldentists, ThreeBestRated, mynextdentist,
+bestdentists, dentalchoices — at 16 to 25 rows each, interleaved with the
+top-named practices' own websites at 19 to 26.
+
+**Three things follow for the audit deliverable:**
+
+- **The directories are the mechanism, again**, and `ops/competitor-analysis.md`
+  Finding B is confirmed on an unrelated market.
+- **ThreeBestRated is cited in 20 of 90 rows.** Third confirmation. It lists only
+  three Wirral practices and **all three are named by the assistants.** It is a
+  free listing. This is now the single most evidenced action in the business.
+- **Reddit is cited in 30 of 90 rows** — a third of everything, mostly
+  r/Liverpool and r/Wirral threads asking for dentist recommendations. That is
+  higher than any single directory. `ROADMAP.md` 2f holds Reddit as an owner's
+  decision rather than a default, and this is the evidence that decision needs.
+
+**One oddity worth recording so nobody re-investigates it:** arXiv preprints are
+cited in 30 of 90 rows, entirely by one assistant, and are irrelevant to every
+question asked. It is retrieval noise, it does not affect the named-business
+counts, and it is not worth chasing.
+
+### How Tier A was actually found
+
+**Not from the run alone.** A practice absent from the answers is usually also
+absent from every cited URL — but a cited URL is often a directory *page*
+listing many practices, so absence from the URL list proves nothing about
+absence from the directory.
+
+**The method that works: fetch the cited directory pages and read who is on
+them, then cross-reference against the mention table.** Doing that for two of
+them immediately produced the tier — practices listed on a directory the
+assistants demonstrably read, named by one assistant and by neither of the other
+two, or not named at all.
+
+**That is a fourth question the audit can answer** and it costs nothing but a
+few page fetches: *which of the pages that feed the assistants is your practice
+on, and is being on them working?*
 
 **Delete the three smoke rows before the real run, and do it for a reason that
 is not tidiness.** The script skips any row that already succeeded, keyed on

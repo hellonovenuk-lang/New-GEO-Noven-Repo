@@ -311,31 +311,42 @@ competitors, is a fact nobody else in their inbox has.
 Wirral practices listed in the cited directories and named by no assistant.
 `ops/trade-run/README.md` has the detail.
 
-### The finding the smoke test pointed at — unconfirmed, and the email may need it
+### What the email should actually claim — settled by the full run, 2026-08-09
 
-**Three rows. One question, one run per assistant.** Held as a signal rather
-than a finding, on the owner's call, 2026-08-09: the national version of this
-claim rests on 165 rows. **Nothing here goes into an email or a client report
-before the full run confirms it.**
+**The general claim is dead and the specific one is strong.** The smoke test
+suggested the three assistants barely agree; at 90 rows **21 of the 39 named
+practices are named by all three.** Consensus is normal. Do not build an email on
+"the assistants disagree" — a prospect can check it in five minutes and it will
+not hold.
 
-**The three assistants barely agreed with each other.** One question, one run
-each, roughly a dozen practices named across the three answers, **and not one
-named by all three.** If it holds at 90 rows it is the same shape
-`ops/competitor-analysis.md` Finding A found nationally — no incumbent, even in a
-field this small.
+**What does hold, stated per practice:**
+
+- **Of the 39 practices named, 18 are missing entirely from at least one
+  assistant**, including some in the top ten overall. Being strong on ChatGPT and
+  absent from Perplexity is common, and no practice knows it.
+- **There is a top tier of four at 36–43% of rows, and no incumbent above it.**
+  The leader is missing from a clear majority of answers.
+- **The practices nobody names are absent from the cited sources too.** They are
+  not being passed over, they are not present.
 
 **So "you are not mentioned" is the weaker version of the finding we can
 actually make.** The stronger one is specific and checkable:
 
-> You are the top recommendation on one of these and absent from the other two,
-> and here is which — or: these three practices come up on ChatGPT, a completely
-> different three come up on Gemini, and you are on neither list.
+> You come up when people ask Perplexity for a dentist on the Wirral. You do not
+> come up on ChatGPT at all, on any of the five ways I asked. Here are the three
+> that do.
 
-Nobody in that trade knows this, because nobody checks all three. **If the full
-run confirms it, rewrite the §5 draft around it.** The draft currently makes the
-weaker claim, which is the right thing for it to do until the stronger one is
-evidenced — a cold email whose central fact does not survive being checked is
-worse than a dull one.
+**That is checkable in five minutes, true of eighteen practices out of
+thirty-nine, and known to none of them.** It is also the version that survives a
+sceptical reader, which the general claim would not have.
+
+**Rewrite the §5 draft around it.** The draft was written before the run and
+makes the weaker "you are not mentioned" claim.
+
+**And for the practices nobody names at all**, the honest line is different
+again, because their problem is bigger: they are absent from the directories the
+answers are built from, not passed over by them. That is a plainer sell and a
+faster first win.
 
 **Two rules that keep this honest:**
 

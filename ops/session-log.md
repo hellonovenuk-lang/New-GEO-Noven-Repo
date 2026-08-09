@@ -196,6 +196,51 @@ document had its argument stripped and sends the reader here.
   stops mattering — running dry silently charges the card, which during a
   spending freeze is the exact event the freeze exists to prevent. Flagged in
   `ops/accounts.md` and in the trade-run README rather than only here.
+- **The full run landed the same evening: 90 rows, zero errors, zero empty
+  answers, sources on every row, all three model strings correct.** The balances
+  covered it — Perplexity finished, so the fifty-cent shortfall predicted from
+  OpenAI's borrowed rate did not appear. **Check 5, the actual per-query cost,
+  is still owed from the dashboards.**
+- **Two of the four smoke-test findings were wrong, and the owner's instruction
+  to wait is what stopped them reaching an email.** Recorded at length in
+  `ops/trade-run/README.md` rather than quietly amended, because the correction
+  is the more useful record:
+  - **"Not one practice was named by all three assistants."** False. 39
+    practices were named and **21 of them by all three**, 12 by two, 6 by one.
+    **Consensus is the normal case.** Three single runs were read as a market
+    structure when they were sampling noise.
+  - **"Tier A is populated"**, with a named example. That example is named 18
+    times at 90 rows. The tier exists but had to be found a different way.
+- **What actually holds, and it is still a good story.** A **top tier of four at
+  36–43% of rows** — more concentrated than the national field, whose leader
+  managed 28%. **But no incumbent above it:** the leader is missing from a clear
+  majority of answers. And the finding that sells, once stated per practice
+  rather than in general: **18 of the 39 named practices are missing entirely
+  from at least one assistant**, including some in the top ten. Strong on
+  ChatGPT and absent from Perplexity is common, and nobody knows it.
+- **The email's central claim is rewritten on this.** "The assistants disagree"
+  is checkable in five minutes and would not survive. *"You come up on
+  Perplexity, you do not come up on ChatGPT at all, here are the three that do"*
+  is true of eighteen practices, checkable, and known to none of them.
+- **4,902 source URLs. 345 are Gemini's opaque redirects — 7% of the total and
+  100% of Gemini's**, so Finding E's limitation is unchanged rather than eased.
+- **ThreeBestRated is cited in 20 of 90 rows — third independent confirmation.**
+  It lists three Wirral practices and **all three are named by the assistants.**
+  Free to join. **It is now the single most evidenced action in the business.**
+- **Reddit is cited in 30 of 90 rows, more than any single directory.** Mostly
+  r/Liverpool and r/Wirral recommendation threads. `ROADMAP.md` 2f holds Reddit
+  as an owner's decision rather than a default; **this is the evidence that
+  decision was waiting for.**
+- **How Tier A is actually found, which is a method the audit gains.** A cited
+  URL is usually a directory *page* listing many practices, so absence from the
+  URL list proves nothing. **Fetch the cited directory pages, read who is on
+  them, cross-reference against the mention table.** Two fetches produced the
+  tier immediately. That is a fourth question the audit can answer for a client
+  at no cost: *which of the pages feeding the assistants are you on, and is it
+  working?*
+- **arXiv preprints appear in 30 of 90 rows, from one assistant, irrelevant to
+  every question.** Retrieval noise, no effect on the counts. Recorded so nobody
+  investigates it twice.
 - **The Companies House sweep is done for dental, and it can be done from a
   session rather than by hand.** Advanced search takes a SIC code and a postcode
   district in a plain URL — no account, no API key, thirteen fetches for the
