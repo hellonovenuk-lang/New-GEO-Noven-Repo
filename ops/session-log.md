@@ -81,6 +81,31 @@ document had its argument stripped and sends the reader here.
 - **Cold calling is explicitly not covered.** The email position does not
   transfer to phone calls — TPS and CTPS are a separate piece of work. Written
   into `ops/outreach.md` §9 so nobody assumes it does.
+- **Capacity answered the same day, and it reframes the business.** Three hours
+  a day comfortably, and materially more for a paid audit, **because one £250
+  audit offsets a whole day of the owner's other earnings.** Against the
+  2h40–3h30 audit budget in `ops/audit-method.md` §7 that is roughly two and a
+  half times his alternative hourly rate. **So delivery is not the constraint —
+  finding buyers is**, which is the opposite of what the capacity question was
+  asked to find out and is worth remembering the next time someone proposes
+  building product instead of selling.
+- **Batch size falls out of it: twenty a week**, with one stop rule — do not
+  send batch two while batch one has more than four audits still owed. Six
+  audits a week is the ceiling, four without stretching. **The binding
+  constraint turns out to be the size of the list, not the diary**, and the
+  answer to running out of prospects is to widen the area (Liverpool and Chester
+  were the runners-up) rather than to send more per week.
+- **Two things the arithmetic exposed rather than settled**, both recorded in
+  `ops/outreach.md` §7 so they are met at the point they matter:
+  - **No audit has ever been timed.** 2h40–3h30 is a budget, and the
+    classification step inside it — 60 to 110 minutes — has no prior estimate at
+    all. Every capacity number above is arithmetic on an estimate until the
+    Wardith run is timed.
+  - **Four audits a week is when the runner stops being deferrable.** Deferring
+    it was right and stays right — written before the first audit it is a guess
+    at a specification — but the only thing that fires the queries today is a
+    script marked throwaway, and the deferral's release condition is the first
+    real audit, which is what the outreach exists to produce.
 
 ---
 

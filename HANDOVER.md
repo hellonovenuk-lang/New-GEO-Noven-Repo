@@ -284,9 +284,13 @@ Nobody else can settle these, and several are currently blocking work.
 
 1. ~~**Which trade and which area to go after first.**~~ **Answered 2026-08-09:
    private clinics on the Wirral.** `ops/outreach.md` §1 has the reasoning.
-2. **How much time per week there is for delivery.** This caps everything, and
-   it is now the only thing capping the size of the first outreach batch.
-   **Still open.**
+2. ~~**How much time per week there is for delivery.**~~ **Answered 2026-08-09:
+   three hours a day comfortably, and more for a paid audit — one £250 audit
+   offsets a whole day of the owner's other earnings.** That is six audits a
+   week, four without stretching, so outreach goes out in batches of twenty.
+   `ops/outreach.md` §7. **It also reframes the business:** at 2h40–3h30 an
+   audit, delivery pays about two and a half times the owner's alternative hourly
+   work, so the constraint is finding buyers, not serving them.
 3. ~~**Whether any existing contact could be client number one.**~~ **Answered
    2026-08-09: there is no network. The first client is cold.**
 4. **Cold outreach is a legal question, not just a marketing one — and it is now

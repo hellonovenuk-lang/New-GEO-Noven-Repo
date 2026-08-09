@@ -265,10 +265,55 @@ write the real number next to it.
 | Replies per paid audit | Unknown | `[PLACEHOLDER]` |
 | Approaches per paid audit | **The number the whole plan rests on** | `[PLACEHOLDER]` |
 
-**Capacity caps the batch size, not ambition.** `HANDOVER.md` section 7 item 2 —
-how many hours a week exist for delivery — is still unanswered, and it decides
-how many audits can be sold at once. Do not send a batch larger than the number
-that could be delivered if every one of them said yes.
+### Capacity, and the batch size that comes out of it
+
+**Answered by the owner 2026-08-09: three hours a day comfortably, and more than
+that for a paid audit**, because one £250 audit offsets a whole day of his other
+earnings.
+
+That second half is the more useful number, and it is worth stating on its own:
+**an audit is budgeted at 2h40–3h30** (`ops/audit-method.md` §7), so at £250 it
+pays roughly two and a half times what an hour of the owner's alternative work
+does. **Delivery is not where the money is lost. Selling is.**
+
+The arithmetic, so a later session does not redo it:
+
+| | |
+|---|---|
+| Hours available | ~21/week at three a day, and flexible upward for paid work |
+| Running the business | ~2.5/week (`HANDOVER.md` §8: daily inbox, weekly batch, monthly reconciliation) |
+| Left for delivery | ~18/week, so **six audits a week**, or four without touching the flex |
+
+**So the batch size is twenty, sent weekly**, and the binding constraint is not
+what it was assumed to be:
+
+- **Twenty is safe on delivery.** An implausibly good cold outcome — one in four
+  replying *and buying* — is five audits, comfortably inside a week.
+- **Twenty is barely enough to learn from.** Two or three conversations and
+  possibly no sale is the realistic first batch. That is not failure, it is the
+  sample size.
+- **The real cap is the list, not the diary.** If the Wirral turns out to hold
+  forty clinics across the four trades, we run out of prospects before we run out
+  of hours. **The answer to that is to widen the area — Liverpool and Chester
+  were the runners-up when the Wirral was chosen — not to send more per week.**
+
+**The one stop rule:** do not send batch two while batch one has more than four
+audits still owed. Everything else is judgement.
+
+**Two things this exposes rather than settles.**
+
+- **Nobody has timed an audit.** 2h40–3h30 is a budget, and the classification
+  step inside it (60–110 minutes) has no prior estimate behind it at all —
+  `ops/audit-method.md` §7 says so and asks for it to be timed separately.
+  **Everything above is arithmetic on an estimate.** Time the Wardith run
+  (`HANDOVER.md` step 4) before the batch size is treated as a fact.
+- **Four audits a week is when the runner stops being deferrable.** The only
+  thing that fires the API queries today is
+  `ops/audits/noven-2026-08-02/audit_query.py`, which is marked throwaway and
+  says to delete it. Deferring the real runner was deliberate and correct
+  (`ROADMAP.md` 3a, `ops/audit-method.md` §7: written before audit one it is a
+  guess at a spec) — but its release condition is the first real audit, and the
+  first real audit is what this document is for.
 
 **Weekly, per `HANDOVER.md` section 8:** send the next batch, record what came
 back. Thirty minutes.

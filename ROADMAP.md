@@ -458,8 +458,15 @@ record. Read it before sending anything.
       covers the whole market.
 - [x] **A working definition of a good first client**, in `ops/outreach.md` §3,
       under "What makes a good first client".
-- [ ] Decide how many we can realistically deliver for at once. **Still open,
-      and it caps the batch size.** Same question as `HANDOVER.md` §7 item 2.
+- [x] **How many we can realistically deliver for at once — answered
+      2026-08-09.** Three hours a day comfortably, more for a paid audit, because
+      one £250 audit offsets a whole day of the owner's other earnings. That is
+      **six audits a week, four without touching the flex**, so the batch is
+      **twenty emails a week** with one stop rule: do not send batch two while
+      batch one has more than four audits still owed. Arithmetic in
+      `ops/outreach.md` §7, including the two things it exposes — **an audit has
+      never actually been timed**, and four a week is the point at which the
+      deferred runner (3a) stops being deferrable.
 
 ### 2b. Cold, because there is no network — and what that costs
 
