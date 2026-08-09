@@ -331,7 +331,22 @@ const namedInstead = [36, 29, 14, 12, 9, 8, 8, 8, 7, 7];
         <div data-reveal>
           <p>Named in the answers to the questions above, counted across all runs:</p>
 
-          <div class="doc-table" tabindex="0" role="region" aria-label="Businesses named instead of us, and how often">
+          {/* Still the delivered table — same ten rows, same counts, same
+              order — with the counts drawn as well as printed. Every number is
+              in the markup as text, so the bars add nothing that isn't already
+              readable; they exist because the finding here is a proportion,
+              and a column of ten integers is the slowest way to read one.
+
+              Noven's own row is added, at zero. It is not in the delivered
+              table and the note under the chart says so — but the zero is the
+              report's own headline finding, stated twice above, and a chart of
+              who got recommended that leaves out the business commissioning it
+              is a chart with the point taken out. */}
+          {/* No `tabindex` on this one, unlike the table above it. That
+              attribute is there so a keyboard user can scroll a table that
+              overflows sideways; this table is drawn to fit at every width, so
+              a focus stop on it would be a stop that does nothing. */}
+          <div class="doc-table doc-table--bars" role="region" aria-label="Businesses named instead of us, and how often">
             <table>
               <thead>
                 <tr>
@@ -344,16 +359,33 @@ const namedInstead = [36, 29, 14, 12, 9, 8, 8, 8, 7, 7];
                   namedInstead.map((count, i) => (
                     <tr>
                       <th scope="row">Named business {i + 1}</th>
-                      <td>{count}</td>
+                      <td>
+                        <span class="bar-cell">
+                          <span class="bar-track" aria-hidden="true">
+                            <span class="bar-fill" style={`--bar: ${(count / namedInstead[0]) * 100}%`} />
+                          </span>
+                          <span class="bar-num">{count}</span>
+                        </span>
+                      </td>
                     </tr>
                   ))
                 }
+                <tr class="is-us">
+                  <th scope="row">Noven</th>
+                  <td>
+                    <span class="bar-cell">
+                      <span class="bar-track bar-track--nil" aria-hidden="true" />
+                      <span class="bar-num">0</span>
+                    </span>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
           <p class="doc-table-note">
             Ten businesses were named this often across the runs. The names are withheld here — see
-            the note below.
+            the note below. Noven's own row, at zero, is added for comparison; the delivered table
+            listed the ten named businesses only.
           </p>
 
           <div class="doc-note">
@@ -361,8 +393,8 @@ const namedInstead = [36, 29, 14, 12, 9, 8, 8, 8, 7, 7];
               <strong>The names are in the delivered report and are not published here.</strong>
               Most of them are genuine businesses doing real work, and none of them asked to appear
               in ours. The counts are the part that matters: one business took roughly a fifth of
-              every recommendation going, and ten names between them accounted for the field. That
-              is what an absent business is up against, and it reads the same without the names on it.
+              every recommendation going. That is what an absent business is up against, and it
+              reads the same without the names on it.
             </p>
           </div>
 

@@ -8,7 +8,8 @@
  * seam. Brand colours are fixed: navy #170969, warm white #fffefa.
  *
  * Contents: 1 tokens · 2 reset · 3 typography · 4 layout · 5 header/footer
- * 6 buttons and links · 7 hero · 8 the record · 9 page furniture · 10 motion
+ * 6 buttons and links · 7 hero · 8 the record · 9 page furniture
+ * 10 prompts and the published report · 11 diagrams · 12 motion
  */
 
 /* ---------------------------------------------------------------- 1 tokens */
@@ -1678,10 +1679,367 @@ li a:hover {
   margin-bottom: 0.5rem;
 }
 
-/* ---------------------------------------------------------------- 11 motion */
+/* -------------------------------------------------------------- 11 diagrams */
+
+/* Three diagrams, added 2026-08-09. Each one earns its place by explaining
+ * something the page previously spent paragraphs on: the shape of an AI
+ * answer versus a results page, the shape of the service and where it can
+ * stop, and the shape of the recommendations we didn't get.
+ *
+ * They are built from the same parts as everything else — hairline rules, the
+ * mono for figures, brass for the one thing being pointed at — because a
+ * diagram in a visual language of its own reads as decoration bought in from
+ * somewhere, which is the opposite of what these are for.
+ *
+ * No canvas, no chart library, no raster. All three are ordinary markup, so
+ * they reflow rather than shrink, and the information in them is in the text
+ * rather than in the shapes. */
+
+/* --- The shortlist: a results page against an assistant's answer --------- */
+
+.lanes {
+  margin: var(--s4) 0 0;
+  padding: 0;
+  max-width: none;
+}
+
+.lanes-ask {
+  display: block;
+  padding: 0 0 var(--s4);
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.lanes-q {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(1.1rem, 1rem + 0.5vw, 1.3rem);
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.lanes-pair {
+  display: grid;
+  gap: var(--s5);
+}
+
+@media (min-width: 42rem) {
+  .lanes-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.5rem, 4vw, 2.75rem);
+  }
+}
+
+.lane {
+  border-top: 1px solid var(--rule);
+  padding-top: var(--s3);
+}
+
+.lane-title {
+  margin: 0 0 var(--s3);
+  max-width: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* Ten businesses that could answer the question, drawn the same size in both
+   lanes so the eye reads them as the same ten. */
+.lane-marks {
+  display: flex;
+  gap: 5px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--s3);
+  max-width: none;
+}
+
+.lane-marks li {
+  flex: 1 1 0;
+  height: 3rem;
+  margin: 0;
+  border: 1px solid var(--rule);
+  background: var(--paper-3);
+}
+
+/* Named in the answer: filled. Not named: an empty outline. Fill against no
+   fill, so the distinction survives without colour. */
+.lane-marks .is-named {
+  background: var(--navy);
+  border-color: var(--navy);
+}
+
+.lane-marks .is-unnamed {
+  background: transparent;
+  border-color: var(--rule);
+}
+
+.lane-note {
+  margin: 0;
+  max-width: none;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.lanes-foot {
+  margin: var(--s4) 0 0;
+  padding-top: var(--s3);
+  border-top: 1px solid var(--rule);
+  max-width: none;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 34rem) {
+  .lane-marks li {
+    height: 2.25rem;
+  }
+}
+
+/* --- The stages, and the exit from each one ------------------------------ */
+
+.ladder {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: 34rem;
+}
+
+.rung {
+  position: relative;
+  margin: 0;
+  padding: 0 0 var(--s5) 2.25rem;
+}
+
+/* The spine, drawn per rung so it closes up neatly whatever each one's height
+   turns out to be. It runs to the foot of the last rung and stops there. */
+.rung::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--rule);
+}
+
+/* The line starts at the first node rather than above it. */
+.rung:first-child::before {
+  top: 0.7rem;
+}
+
+.rung:last-child {
+  padding-bottom: 0;
+}
+
+.rung::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.45rem;
+  width: 9px;
+  height: 9px;
+  background: var(--navy);
+}
+
+.rung-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin: 0 0 0.2rem;
+  max-width: none;
+}
+
+.rung-num {
+  flex: none;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--brass);
+}
+
+.rung-name {
+  font-family: var(--display);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.rung-say {
+  margin: 0;
+  max-width: none;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+/* The branch away from the spine: this is the part of the diagram doing the
+   work, so it gets the brass. */
+.rung-exit {
+  position: relative;
+  margin: var(--s3) 0 0;
+  max-width: none;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.rung-exit::before {
+  content: '';
+  position: absolute;
+  left: -2rem;
+  top: 0.7em;
+  width: 1.5rem;
+  height: 1px;
+  background: var(--brass);
+}
+
+.rung-exit b {
+  font-weight: 500;
+  color: var(--brass);
+}
+
+/* --- Counts drawn as bars ------------------------------------------------ */
+
+/* Still a table: the bar is an extra cell in a row that already carries the
+   number as text, so nothing is communicated by length alone. */
+.doc-table--bars table {
+  min-width: 0;
+}
+
+.doc-table--bars tbody th {
+  min-width: 0;
+  width: 42%;
+  font-size: 0.82rem;
+}
+
+.doc-table--bars td {
+  width: 58%;
+  white-space: normal;
+}
+
+.bar-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.bar-track {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 2.5rem;
+  height: 10px;
+  background: var(--paper-3);
+}
+
+.bar-fill {
+  display: block;
+  height: 100%;
+  width: var(--bar, 0%);
+  background: var(--navy);
+}
+
+/* Zero has no bar to draw, which is the finding. A tick on the baseline says
+   the row was measured rather than left blank. */
+.bar-track--nil::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  background: var(--brass);
+}
+
+.bar-num {
+  flex: none;
+  width: 1.6rem;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--ink);
+}
+
+.doc-table--bars .is-us th,
+.doc-table--bars .is-us td {
+  background: color-mix(in srgb, var(--brass) 7%, transparent);
+}
+
+.doc-table--bars .is-us th {
+  box-shadow: inset 2px 0 0 var(--brass);
+  font-weight: 500;
+}
+
+/* --- Structured data, folded away ---------------------------------------- */
+
+/* The pricing page makes its point in a sentence; the code is the proof for
+   anyone who wants it. Native <details>, so it works with no script. */
+.disclose {
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--paper-2);
+  max-width: 34rem;
+  margin: var(--s4) 0;
+}
+
+.disclose > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  min-height: 44px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--ink);
+  list-style: none;
+}
+
+.disclose > summary::-webkit-details-marker {
+  display: none;
+}
+
+.disclose > summary::before {
+  content: '+';
+  font-family: var(--mono);
+  color: var(--brass);
+}
+
+.disclose[open] > summary::before {
+  content: '–';
+}
+
+.disclose[open] > summary {
+  border-bottom: 1px solid var(--rule);
+}
+
+.disclose .code {
+  border: none;
+  border-radius: 0;
+  max-width: none;
+  background: transparent;
+}
+
+/* ---------------------------------------------------------------- 12 motion */
 
 /* Everything below is gated on .js, which only exists once the script runs.
    With JS off — or for a crawler that never runs it — nothing is hidden. */
+
+/* The one animated diagram: the unnamed businesses start filled, like the
+   ones on the results page, and empty out once the figure is in view. It is
+   the narrowing, shown happening. Gated on .js so that with scripting off the
+   marks are simply drawn in their final state rather than stuck in the wrong
+   one — nothing here is ever the only way to read the diagram. */
+.js [data-reveal] .lane-marks .is-unnamed {
+  background: var(--paper-3);
+  border-color: var(--rule);
+}
+
+.js [data-reveal].is-in .lane-marks .is-unnamed {
+  background: transparent;
+  transition: background-color 0.45s var(--ease) 0.9s;
+}
 
 .js [data-reveal] {
   opacity: 0;
@@ -1723,6 +2081,13 @@ li a:hover {
 
   .js .hero h1 .word > span {
     transform: none;
+    transition: none;
+  }
+
+  /* The diagram lands in its finished state instead of emptying out. */
+  .js [data-reveal] .lane-marks .is-unnamed,
+  .js [data-reveal].is-in .lane-marks .is-unnamed {
+    background: transparent;
     transition: none;
   }
 

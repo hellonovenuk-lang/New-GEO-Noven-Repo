@@ -76,16 +76,58 @@ const recordNotes = {
       <div data-reveal>
         <p>
           Buying habits have changed. Someone who needs a professional service used to type a query
-          into Google and compare the results themselves. Now, many of them ask an AI assistant a
-          direct question — <em>"Who's a good commercial solicitor near Manchester?"</em> — and get
-          a short list of named businesses back.
+          into Google and compare the results themselves. Now, many of them put the question to an
+          AI assistant instead.
         </p>
-        <p>
-          If your business isn't in that short list, you're not losing a ranking position. You're
-          simply not part of the conversation, and you won't know it's happening, because there's
-          no results page to check.
-        </p>
-        <p>
+
+        {/* The whole commercial problem, drawn once. Both lanes show the same
+            ten businesses, so the difference the reader sees is exposure
+            rather than quality: on a results page all ten are there to be
+            compared; in an answer, most of them are simply never said out
+            loud. The prose underneath used to carry this and no longer has
+            to. Nothing here is a measured figure — it is the shape of the
+            thing, and the shape is the argument. */}
+        <figure class="lanes">
+          <figcaption class="lanes-ask">
+            A customer asks:
+            <span class="lanes-q">“Who's a good commercial solicitor near Manchester?”</span>
+          </figcaption>
+
+          <div class="lanes-pair">
+            <div class="lane">
+              <p class="lane-title">On a search engine</p>
+              <ul class="lane-marks" aria-hidden="true">
+                <li></li><li></li><li></li><li></li><li></li>
+                <li></li><li></li><li></li><li></li><li></li>
+              </ul>
+              <p class="lane-note">
+                Every firm that matches is on the page somewhere. The customer compares them and
+                picks.
+              </p>
+            </div>
+
+            <div class="lane">
+              <p class="lane-title">Through an AI assistant</p>
+              <ul class="lane-marks" aria-hidden="true">
+                <li class="is-named"></li><li class="is-named"></li><li class="is-named"></li>
+                <li class="is-unnamed"></li><li class="is-unnamed"></li><li class="is-unnamed"></li>
+                <li class="is-unnamed"></li><li class="is-unnamed"></li><li class="is-unnamed"></li>
+                <li class="is-unnamed"></li>
+              </ul>
+              <p class="lane-note">
+                A handful of names come back. The rest aren't ranked lower — they're not in the
+                answer.
+              </p>
+            </div>
+          </div>
+
+          <p class="lanes-foot">
+            So a business can now be left out before the customer ever reaches its website — and
+            there's no results page to check, so nobody tells you it happened.
+          </p>
+        </figure>
+
+        <p style="margin-top: 1.5rem;">
           The businesses that do appear tend to be the ones whose information these systems can
           find, read and corroborate. Most of that is fixable, and it's what Wardith works on.
         </p>

@@ -29,14 +29,59 @@ const howToSchema = {
       <h1>How does Wardith get you found?</h1>
       <p class="lede" data-reveal>
         Three stages, in order: find out where you stand, fix what's in the way, then keep you
-        visible as the AI systems change. Each stage only makes sense if the previous one says it's
-        worth doing.
+        visible as the AI systems change.
       </p>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
+      {/* The map, before the territory. The three stages below say what each
+          one contains; this says what shape the whole thing is — and, more to
+          the point, that it is allowed to end at any rung. That was previously
+          only discoverable from the closing statement, several hundred words
+          past the point where a reader decides whether this is a service or a
+          funnel. Deliberately carries no prices: the moment it does, it stops
+          being a diagram of the process and becomes a plan comparison. */}
+      <div class="split" style="margin-bottom: 3.5rem;">
+        <div data-reveal>
+          <h2>Three stages, and the way out of each one</h2>
+        </div>
+        <div data-reveal>
+          <ol class="ladder">
+            <li class="rung">
+              <p class="rung-head">
+                <span class="rung-num">01</span><span class="rung-name">Audit</span>
+              </p>
+              <p class="rung-say">Find out where you stand today.</p>
+              <p class="rung-exit">
+                <b>It can end here.</b> If there's nothing meaningful to fix, the report says so and
+                we don't sell you the next stage.
+              </p>
+            </li>
+            <li class="rung">
+              <p class="rung-head">
+                <span class="rung-num">02</span><span class="rung-name">Foundation</span>
+              </p>
+              <p class="rung-say">Fix what the audit found, on the website you already have.</p>
+              <p class="rung-exit">
+                <b>It can end here too.</b> Foundation is a one-off piece of work with a fixed
+                scope, and nothing about it obliges you to take a monthly plan.
+              </p>
+            </li>
+            <li class="rung">
+              <p class="rung-head">
+                <span class="rung-num">03</span><span class="rung-name">Ongoing</span>
+              </p>
+              <p class="rung-say">Keep checking, as the assistants and their sources change.</p>
+              <p class="rung-exit">
+                <b>And it can end whenever you like.</b> Monthly, no minimum term.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </div>
+
       <ol class="stages">
         <li class="stage" data-reveal>
           <div class="stage-head">
@@ -166,10 +211,15 @@ const howToSchema = {
             <strong>We don't build websites.</strong> The work happens on the site you already have.
             If your site has problems beyond our scope, the audit will say so honestly.
           </p>
+          {/* Shortened 2026-08-09 when the diagram above went in. The two
+              sentences that came out — audit and Foundation are one-offs,
+              monthly has no minimum term — are now the exits on the ladder,
+              and saying them twice on one page made the diagram look like
+              decoration rather than the place that fact lives. What is left is
+              the part the diagram can't carry: how you actually stop. */}
           <p>
-            <strong>We don't do lock-ins.</strong> The audit and Foundation are one-off payments.
-            Monthly plans roll month to month, with no minimum term — tell us before your next
-            payment date and there won't be one.
+            <strong>We don't do lock-ins.</strong> Tell us before your next payment date and there
+            won't be one.
           </p>
         </div>
       </div>
