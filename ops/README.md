@@ -50,6 +50,7 @@ in the business with no time budget at all.
 
 | File | What it decides | Status |
 |---|---|---|
+| `voice.md` | How to write anything a customer reads so it doesn't sound machine-written. A framework rather than a checklist. **The structural rule at the top matters more than the whole list below it** | Live |
 | `own-facts-check.md` | Every place Wardith's own facts are published, what each must say, and what it currently says. The audit's third promise, run on ourselves. **Read before the self-audit** | Live — two surfaces known wrong |
 | `accounts.md` | Every account, what it costs, when it renews, what breaks if it lapses, and the dates that need to be in a real calendar. **No credentials — this repo is private today but is written as if public** (`own-facts-check.md` section 4) | Live, with real gaps marked `[PLACEHOLDER]` |
 | `client-record.md` | What we keep about each client and prospect. Formerly `spine.md`, which named nothing a stranger could guess at | Fields decided, storage undecided |

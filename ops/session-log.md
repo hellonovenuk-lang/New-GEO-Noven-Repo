@@ -263,6 +263,30 @@ document had its argument stripped and sends the reader here.
   a supplier and saying `[PLACEHOLDER]` where the country goes. **It now checks
   the string as well as the object.** Site rebuilt: nine pages, `/privacy/`,
   `/terms/` and `/order/` all still correctly absent.
+- **`ops/voice.md` added, from `github.com/blader/humanizer`, on the owner's
+  instruction and explicitly as a general framework rather than a checklist.**
+  It applies to everything a customer reads and to nothing in `ops/` —
+  the operating documents are read by the assistant far more often than by a
+  person, and their reasoning is worth more than their rhythm. `CLAUDE.md` gains
+  a three-line pointer rather than the whole list.
+- **The owner's diagnosis of the first two emails was sharper than the source
+  material.** He said the subjects read as "an automated AI company you've
+  probably had thousands of emails from" rather than a new small business from
+  the Wirral. **The cause was structural rather than lexical: both emails opened
+  with the finding.** That is how automated outreach is built, because a template
+  has no self to introduce. A person says who they are first.
+- **So the top of `voice.md` is one structural rule, above the word-level list:
+  say who you are before you say what you found.** And its corollary for subject
+  lines: **a subject that makes a claim reads as a campaign, a subject that names
+  the thing reads as a person.** "[Practice] and ChatGPT" against "[Practice]
+  doesn't come up on ChatGPT". **That single change did more than every
+  word-level edit put together**, which is worth recording because the temptation
+  with a list of 33 tells is to work the list.
+- **Both drafts rewritten.** Introduction first, plainer register, the em dashes
+  and the rule-of-three rhythms out, "It's £250 and that's the whole cost"
+  instead of the three-clause marketing beat. **The give-away rule survived the
+  rewrite** — "which one it is I'd have to look at properly" keeps the diagnosis
+  inside the paid work without implying we know less than we do.
 - **The owner caught a real gap in the outreach method and it is now a rule:
   the observation is free, the diagnosis is the product.** A first draft of
   Draft B told the prospect *why* they were missing — that the answers are built

@@ -383,56 +383,75 @@ cold.
 cannot address both honestly. Which one a practice gets is decided by the
 mention table.
 
+**Rewritten 2026-08-09 against `ops/voice.md`.** The first versions opened with
+the finding, which is how automated outreach is built, and the subject lines made
+a claim, which is how a campaign is written. **Both now introduce the sender
+first and use a subject that names the thing rather than asserting something
+about it.** That change did more than every word-level edit put together.
+
 **Draft A — for a practice named by one or two assistants and missing from the
 rest.** Eighteen of the thirty-nine named practices are in this position.
 
-> Subject: You come up on Perplexity and not on ChatGPT
+> Subject: [Practice] and ChatGPT
 >
 > Hello [name],
 >
-> I asked ChatGPT, Google's Gemini and Perplexity for a dentist on the Wirral,
-> six different ways, five times each. Ninety answers in total.
+> I'm [owner], I run a small business on the Wirral doing one fairly narrow
+> thing. I check what the AI assistants say when somebody asks them to recommend
+> a local business.
 >
-> [Practice] came up [N] times on [assistant]. On [other assistant] it did not
-> come up once. The three that did come up there were [A], [B] and [C].
+> I ran the Wirral dentists last week, mostly to see what came back. ChatGPT,
+> Google's Gemini and Perplexity, six ways of asking, five times each. Ninety
+> answers.
 >
-> That gap is worth knowing because more people are choosing this way every
-> month, and none of your competitors seem to know it either. It is also not
-> what an SEO agency is measuring for you.
+> [Practice] came up [N] times, [N] on [assistant] and [N] on [assistant]. On
+> [missing assistant] it didn't come up at all. The names that kept coming back
+> there were [A], [B] and [C].
 >
-> I run a small business on the Wirral that does one thing: find out what the AI
-> assistants say about a business, show you exactly which pages the answers are
-> built from, and give you the list of what to change. It is £250, fixed. You
-> get a written report and you can act on it yourself. Nothing is tied to a
-> monthly plan.
+> I don't know how much that matters to you. It's becoming a normal way for
+> people to pick a dentist, and it isn't something an SEO agency would be
+> watching. There are a few reasons a practice gets left out of one assistant
+> and not the others. Which one it is decides whether it's a quick fix or a slow
+> one, and I'd have to look properly to tell you.
 >
-> I have published one of these in full, run on my own business, findings and
-> all: wardith.co.uk/ask-your-ai/self-audit/
+> That's what I do, if you want to know. It's £250 and that's the whole cost.
+> You get a written report, it's yours, and you can hand it to whoever looks
+> after your website. There's no monthly plan attached.
 >
-> If it is useful, reply and I will send the six questions I would ask about
-> [practice]. If not, say so and I will not contact you again.
+> I've put one of these online in full, run on my own business, including the
+> parts that came back badly: wardith.co.uk/ask-your-ai/self-audit/
+>
+> If it's useful, reply and I'll send you the six questions I'd ask about
+> [practice]. If not, say so and I won't email you again.
 >
 > [Owner name]
 > Wardith, [address for service]
+> hello@wardith.co.uk
 >
-> I found your practice through Companies House and your own website. If you
-> would rather I did not hold your details, say so and I will delete them.
+> I found the practice through Companies House and your own website. If you'd
+> rather I didn't keep your details, tell me and I'll delete them.
 
 **Draft B — for a practice named by none of them.**
 
-> Subject: Ninety answers about Wirral dentists, and [practice] was in none
+> Subject: [Practice] and AI search
 >
 > Hello [name],
 >
-> I asked ChatGPT, Google's Gemini and Perplexity for a dentist on the Wirral,
-> six different ways, five times each. Thirty-nine practices got named across the
-> ninety answers. [Practice] was not one of them.
+> I'm [owner], I run a small business on the Wirral doing one fairly narrow
+> thing. I check what the AI assistants say when somebody asks them to recommend
+> a local business.
 >
-> There are a handful of reasons that happens, and which one it is decides how
-> long it takes to fix. Some of it is quick. Working out which applies to you is
-> the job.
+> I ran the Wirral dentists last week. ChatGPT, Google's Gemini and Perplexity,
+> six ways of asking, five times each, so ninety answers altogether.
+> Thirty-nine practices got named somewhere across them.
 >
-> [Rest as Draft A from "I run a small business" onward.]
+> [Practice] wasn't one of them, on any of the three.
+>
+> There are a few reasons that happens and they aren't equally serious. Which
+> one it is for [practice] I'd have to look at properly, and it decides whether
+> it's a quick fix or a slow one.
+>
+> [Rest as Draft A from "That's what I do" onward.]
 
 ### What the email gives away, and what it does not
 
