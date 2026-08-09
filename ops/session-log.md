@@ -80,6 +80,36 @@ document had its argument stripped and sends the reader here.
   to start after the block has finished fading in, so the intermediate state
   where the assistant lane looks like the results page is never what a reader
   is left looking at.
+- **The 01/02/03 markers are gone from how-it-works, on the owner's second
+  instruction the same day — and this had been said before and not written
+  down, which is why it came back.** It is recorded here and in a comment on
+  `.stages` in `global.css` so a third session cannot reintroduce it. The
+  reasoning: the order is real and the `<ol>` still carries it, but a numbered
+  run of three reads as one three-step process the reader is partway through,
+  and that page's entire argument is that it is allowed to end at any of them.
+  A numbered marker is also the single most common tell of a generated layout
+  — the `frontend-design` skill names it explicitly — and it is only earned
+  where the sequence itself is the information. Here the *exits* are the
+  information. **Do not put them back.**
+- **The diagram marks were redrawn after a contrast check.** The first version
+  used `--paper-3` and `--rule`, which measure 1.1:1 and 1.3:1 against paper —
+  a diagram you have to be told is there. They are now three intensities of the
+  brand navy: 30% fill for a business on the results page, full navy for one
+  named in an answer, and that same 30% reduced to an outline for one the
+  answer left out. Solid-dark, solid-light, outline — fill and weight, so the
+  encoding never rests on hue. **It reaches about 2:1, not the 3:1 WCAG 1.4.11
+  asks of a meaningful graphic, and that is a judged trade rather than an
+  oversight:** the marks are `aria-hidden` and every word of what they show is
+  in the caption beside them at 6.75:1, and the tone that clears 3:1 on this
+  paper turns a quiet figure into a wireframe that fights the page. If the
+  graphic ever becomes the only carrier of something, this has to move.
+- **The site's own look sits near one of the current generated-design defaults**
+  — hairline rules, small radii, a serif display on warm off-white. Worth
+  knowing rather than acting on: the brand direction is fixed in `CLAUDE.md`
+  and wins, and what separates it in practice is the navy and brass rather than
+  the usual cream and terracotta, the three-voice serif/sans/mono system, and
+  the fact that the signature element is the business's own structured data
+  rather than an illustration. Raised so nobody re-derives the worry.
 - **Next:** nothing outstanding from this pass. The second self-audit, when it
   lands, will produce genuinely comparable data for the first time — that is
   the moment to ask whether a before/after visual is earned. It is not earned

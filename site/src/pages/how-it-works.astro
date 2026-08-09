@@ -50,9 +50,7 @@ const howToSchema = {
         <div data-reveal>
           <ol class="ladder">
             <li class="rung">
-              <p class="rung-head">
-                <span class="rung-num">01</span><span class="rung-name">Audit</span>
-              </p>
+              <p class="rung-name">Audit</p>
               <p class="rung-say">Find out where you stand today.</p>
               <p class="rung-exit">
                 <b>It can end here.</b> If there's nothing meaningful to fix, the report says so and
@@ -60,9 +58,7 @@ const howToSchema = {
               </p>
             </li>
             <li class="rung">
-              <p class="rung-head">
-                <span class="rung-num">02</span><span class="rung-name">Foundation</span>
-              </p>
+              <p class="rung-name">Foundation</p>
               <p class="rung-say">Fix what the audit found, on the website you already have.</p>
               <p class="rung-exit">
                 <b>It can end here too.</b> Foundation is a one-off piece of work with a fixed
@@ -70,9 +66,7 @@ const howToSchema = {
               </p>
             </li>
             <li class="rung">
-              <p class="rung-head">
-                <span class="rung-num">03</span><span class="rung-name">Ongoing</span>
-              </p>
+              <p class="rung-name">Ongoing</p>
               <p class="rung-say">Keep checking, as the assistants and their sources change.</p>
               <p class="rung-exit">
                 <b>And it can end whenever you like.</b> Monthly, no minimum term.
@@ -85,13 +79,8 @@ const howToSchema = {
       <ol class="stages">
         <li class="stage" data-reveal>
           <div class="stage-head">
-            <div class="stage-mark">
-              <span class="stage-num" aria-hidden="true">01</span>
-              <div>
-                <h3>The audit</h3>
-                <span class="stage-price">{money(audit.price)} · one-off</span>
-              </div>
-            </div>
+            <h3>The audit</h3>
+            <span class="stage-price">{money(audit.price)} · one-off</span>
           </div>
           <div class="stage-body">
             <p>
@@ -121,13 +110,8 @@ const howToSchema = {
 
         <li class="stage" data-reveal>
           <div class="stage-head">
-            <div class="stage-mark">
-              <span class="stage-num" aria-hidden="true">02</span>
-              <div>
-                <h3>The Foundation</h3>
-                <span class="stage-price">{money(foundation.price)} · one-off</span>
-              </div>
-            </div>
+            <h3>The Foundation</h3>
+            <span class="stage-price">{money(foundation.price)} · one-off</span>
           </div>
           <div class="stage-body">
             <p>
@@ -169,13 +153,8 @@ const howToSchema = {
 
         <li class="stage" data-reveal>
           <div class="stage-head">
-            <div class="stage-mark">
-              <span class="stage-num" aria-hidden="true">03</span>
-              <div>
-                <h3>Ongoing</h3>
-                <span class="stage-price">from {money(maintain.price)} · per month</span>
-              </div>
-            </div>
+            <h3>Ongoing</h3>
+            <span class="stage-price">from {money(maintain.price)} · per month</span>
           </div>
           <div class="stage-body">
             <p>

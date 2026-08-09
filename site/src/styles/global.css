@@ -1155,8 +1155,12 @@ li a:hover {
   color: var(--inv-soft);
 }
 
-/* Stages. Numbered only here, because these genuinely happen in order and
-   you cannot buy the third without the first. */
+/* Stages. **Not numbered, by the owner's decision 2026-08-09.** They carried
+   01/02/03 on the how-it-works page until then. The order is real — you cannot
+   buy the third without the first — and the <ol> still says so. But a numbered
+   run of three reads as one three-step process you are partway through, and
+   the whole argument of that page is that it is allowed to end at any of them.
+   The order survives; the sense of obligation does not. Do not put them back. */
 .stages {
   list-style: none;
   padding: 0;
@@ -1183,19 +1187,6 @@ li a:hover {
     grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
     gap: clamp(2.5rem, 6vw, 5.5rem);
   }
-}
-
-.stage-mark {
-  display: flex;
-  align-items: baseline;
-  gap: var(--s3);
-}
-
-.stage-num {
-  font-family: var(--mono);
-  font-size: 0.8rem;
-  color: var(--brass);
-  flex: none;
 }
 
 .stage-head h3 {
@@ -1701,6 +1692,8 @@ li a:hover {
   margin: var(--s4) 0 0;
   padding: 0;
   max-width: none;
+  /* Set once: the marks, and the state the marks animate out of, all read it. */
+  --lane-quiet: color-mix(in srgb, var(--navy) 30%, var(--paper));
 }
 
 .lanes-ask {
@@ -1756,16 +1749,22 @@ li a:hover {
   max-width: none;
 }
 
+/* Three states, one colour. A business on the results page is the brand navy
+   held well back; a business named in an answer is the same navy at full
+   strength; a business the answer left out is that first tone reduced to an
+   outline — drawn in exactly the tone the results page fills, which is the
+   relationship the diagram is about. Solid-dark, solid-light and outline are
+   three steps of fill and weight, so the encoding does not rest on hue.
+   `--rule` and `--paper-3` were the first attempt and were too faint to carry
+   it — 1.3:1 against paper, which is a diagram you have to be told is there. */
 .lane-marks li {
   flex: 1 1 0;
   height: 3rem;
   margin: 0;
-  border: 1px solid var(--rule);
-  background: var(--paper-3);
+  border: 1px solid transparent;
+  background: var(--lane-quiet);
 }
 
-/* Named in the answer: filled. Not named: an empty outline. Fill against no
-   fill, so the distinction survives without colour. */
 .lane-marks .is-named {
   background: var(--navy);
   border-color: var(--navy);
@@ -1773,7 +1772,7 @@ li a:hover {
 
 .lane-marks .is-unnamed {
   background: transparent;
-  border-color: var(--rule);
+  border-color: var(--lane-quiet);
 }
 
 .lane-note {
@@ -1846,22 +1845,11 @@ li a:hover {
   background: var(--navy);
 }
 
-.rung-head {
-  display: flex;
-  align-items: baseline;
-  gap: 0.6rem;
+/* No numeral — see the note on `.stages`. The node on the spine carries the
+   position, which is all the order this needs. */
+.rung-name {
   margin: 0 0 0.2rem;
   max-width: none;
-}
-
-.rung-num {
-  flex: none;
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  color: var(--brass);
-}
-
-.rung-name {
   font-family: var(--display);
   font-size: 1.2rem;
   font-weight: 500;
@@ -2032,13 +2020,15 @@ li a:hover {
    marks are simply drawn in their final state rather than stuck in the wrong
    one — nothing here is ever the only way to read the diagram. */
 .js [data-reveal] .lane-marks .is-unnamed {
-  background: var(--paper-3);
-  border-color: var(--rule);
+  background: var(--lane-quiet);
+  border-color: transparent;
 }
 
 .js [data-reveal].is-in .lane-marks .is-unnamed {
   background: transparent;
-  transition: background-color 0.45s var(--ease) 0.9s;
+  border-color: var(--lane-quiet);
+  transition: background-color 0.45s var(--ease) 0.9s,
+    border-color 0.45s var(--ease) 0.9s;
 }
 
 .js [data-reveal] {
@@ -2088,6 +2078,7 @@ li a:hover {
   .js [data-reveal] .lane-marks .is-unnamed,
   .js [data-reveal].is-in .lane-marks .is-unnamed {
     background: transparent;
+    border-color: var(--lane-quiet);
     transition: none;
   }
 
