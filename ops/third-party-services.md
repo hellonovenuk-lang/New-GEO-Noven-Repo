@@ -147,7 +147,15 @@ across this market and each has a failure mode that matters here:
 
 #### B1b. UK Postbox — chosen by the owner, 7 August 2026
 
-**Status: decided, not yet bought.** Runbook is **B1c** below.
+**Status: ordered Friday 7 August 2026, pending approval.** Identity
+verification is with UK Postbox and the owner is waiting on the outcome and on
+the confirmed address — expected Monday 10 August. **Nothing downstream moves
+until the address is confirmed in writing**, because it is published in the
+footer, in the Organization structured data, in the terms, in the privacy notice
+and in every cold email. Runbook is **B1c** below. Steps 1 to 4 are in flight;
+**steps 5 to 9 are the ones still owed**, and step 5 — registering the trading
+name "Wardith" on the account as its own verified step — is the one worth a
+wasted month if it is skipped.
 
 **Product:** Business Street Address, **Lytchett House, Poole, Dorset, BH16**.
 **£10/month exc VAT, £12/month inc VAT (£144/yr), billed monthly, cancel any

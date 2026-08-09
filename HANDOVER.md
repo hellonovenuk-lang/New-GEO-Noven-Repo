@@ -149,11 +149,17 @@ amending the ICO's own record does nothing about the copies.
 
 ### Then, roughly a day and a half of desk work
 
-**2. Order the service address — UK Postbox Business Street Address, Poole,
-£12/month inc VAT.** Settled 2026-08-07; the provider comparison is closed in
-`ops/third-party-services.md` B1a–B1b and should not be reopened. **Order it
-first because it has a lead time** — ID verification usually clears within 24
-hours, then post has to travel — and do the desk work while it travels.
+**2. The service address — ordered Friday 7 August 2026, pending approval.** UK
+Postbox Business Street Address, Poole, £12/month inc VAT. Identity verification
+is with the provider and the confirmed address is expected **Monday 10 August**.
+The provider comparison is closed in `ops/third-party-services.md` B1a–B1b and
+should not be reopened.
+
+**This is the item most other things are waiting behind**, so it is worth being
+precise about what "pending" means: **nothing that publishes the address moves
+until it is confirmed in writing.** That is the footer, the Organization
+structured data, the terms, the privacy notice and every cold email. The desk
+work below does not wait on it.
 
 **Follow the runbook at `ops/third-party-services.md` B1c rather than working it
 out at the checkout.** The two traps it exists to prevent: **buy the Business

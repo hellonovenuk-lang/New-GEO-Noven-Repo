@@ -485,6 +485,11 @@ business network, so the warm route below is closed rather than deferred.
       carry it, the storage because there must be somewhere to keep the
       do-not-contact record. Both are already open elsewhere (`HANDOVER.md`
       steps 2 and 5) — cold outreach is what makes them urgent.
+      **The address is ordered as of Friday 7 August and pending approval**;
+      identity verification is with UK Postbox and the confirmed address is
+      expected Monday 10 August. Steps 5 to 9 of the runbook
+      (`ops/third-party-services.md` B1c) are owed after it lands, and the
+      storage decision is untouched.
 - [ ] Build the list from Companies House by SIC code and postcode.
       `[PLACEHOLDER: how many Wirral clinics exist per trade]`.
 - [ ] **Run the discovery questions once for the trade, not once per business.**

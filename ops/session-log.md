@@ -95,6 +95,53 @@ document had its argument stripped and sends the reader here.
   constraint turns out to be the size of the list, not the diary**, and the
   answer to running out of prospects is to widen the area (Liverpool and Chester
   were the runners-up) rather than to send more per week.
+- **The address for service is ordered and pending approval**, told to us by the
+  owner: placed Friday 7 August, ID verification in flight, confirmed address
+  expected Monday 10 August. Marked as pending in four places rather than one —
+  `HANDOVER.md` step 2, `ROADMAP.md` 2b, `ops/third-party-services.md` B1b and
+  `ops/outreach.md` §2 — because "ordered" and "confirmed" are the same word to a
+  reader skimming for a blocker, and **it is confirmation in writing that
+  unblocks the footer, the structured data, the terms, the privacy notice and
+  every cold email.** Steps 5 to 9 of the B1c runbook are still owed after it
+  lands.
+- **The mention-counting method already existed and had been run once — it just
+  had not been written down as a method.** `ops/competitor-analysis.md` Part 2
+  counted 41 businesses across 165 opportunity rows and produced a ranked table
+  with a per-assistant split. `ops/outreach.md` §4 now carries it as a repeatable
+  procedure, with the detail that matters: **the `competitors` column was empty
+  on the export, so the counting was done by matching names against
+  `answer_text`** — and for outreach that is the better route anyway, because
+  **the Companies House list is the candidate name list**. We are not discovering
+  who exists, we are checking which of a known set got named.
+- **The new half is the complement, and it is the actual targeting method.**
+  Named businesses subtracted from the Companies House list is the prospect pool.
+  **But "not named" will be the normal condition** — the self-audit's own Wirral
+  question returned five businesses where the national one returned forty-one, so
+  on a local trade question the great majority of a list is invisible and absence
+  distinguishes nobody. So prospects are sorted by **how close they are to
+  appearing**, using `sources_cited`, which the run already captures:
+  - **Tier A, in the cited sources but not in the answers.** The best prospects,
+    and the finding this business exists to produce: they have already done the
+    obvious thing and it did not work. Anyone can tell a clinic to get listed;
+    telling them they *are* listed on the page the assistant reads and it still
+    names three competitors is a fact nobody else has.
+  - **Tier B, named occasionally.** A measurable gap rather than an absence.
+  - **Tier C, absent from everything.** Real, but their first fix is cheap enough
+    that they may not need us for it.
+  - **Named consistently: not a prospect.** Nothing to sell them, and the audit's
+    own voice is "you don't need us".
+- **Source analysis is two assistants, not three**, wherever the ladder is used.
+  Gemini's cited URLs are all opaque `vertexaisearch` redirects (Finding E), so
+  every conclusion about *why* a business is named rests on ChatGPT and
+  Perplexity. This is the third document now carrying that limit, and the
+  method-doc fix it implies is still open in `ROADMAP.md` 2f.
+- **The ladder is never published.** A ranked table of named local clinics is the
+  public comparison the owner parked on defamation and comparative-advertising
+  grounds. Written into `ops/outreach.md` §4 next to the ladder itself rather than
+  left in `competitor-analysis.md`, because that is where someone will be looking
+  at a ranked table and thinking it would make a good page. **Naming a prospect's
+  competitors privately to that prospect is a different act from publishing a
+  league table**, and only the first is in scope.
 - **Two things the arithmetic exposed rather than settled**, both recorded in
   `ops/outreach.md` §7 so they are met at the point they matter:
   - **No audit has ever been timed.** 2h40–3h30 is a budget, and the

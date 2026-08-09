@@ -70,9 +70,11 @@ the above rather than good manners:
   It does not publish, because it is waiting on the address for service and on
   the client-record storage decision (`ops/client-record.md`).
 - **The address for service** is what points 1 and 2 above require. UK Postbox,
-  £12/month, `ops/third-party-services.md` B1c. **Order it early:** identity
-  verification usually clears within 24 hours and then post has to travel, so it
-  is the one blocker here that cannot be closed on the day it is noticed.
+  £12/month, `ops/third-party-services.md` B1c. **Ordered Friday 7 August 2026
+  and pending approval** — identity verification is with the provider and the
+  confirmed address is expected Monday 10 August. Nothing that publishes the
+  address moves until it is confirmed in writing, and steps 5 to 9 of the runbook
+  are still owed after it is.
 
 **A warm route would have sidestepped both. Cold cannot.** This is the single
 biggest cost of the change of plan and it is worth saying plainly: the first cold
@@ -165,6 +167,85 @@ Derived from the one recorded figure above, so treat it as an order of magnitude
 a client audit and does not go in `ops/audits/`, but the wording rules are the
 same, and a question that works here becomes part of the library that file
 describes as the compounding asset.
+
+### The mention table — who is named, and how often
+
+**We already have this method and it has been run once.**
+`ops/competitor-analysis.md` Part 2 did exactly this on our own market: 210 rows
+from the self-audit, split into 45 identity rows and **165 opportunity rows**,
+then every business name counted across them. It produced a ranked table with a
+per-assistant split — Tilio 46 rows of 165, Rank4AI 38, third place 12% — and the
+finding that mattered, which was that **no business held even a third of the
+answers**.
+
+**How the counting actually worked, because it is not what the method doc
+assumes.** `audit_query.py` writes a `competitors` column, but on the export used
+for Part 2 that column was empty on all 210 rows, so the counting was done by
+**matching business names against `answer_text` directly**. That turned out to be
+the more useful route and it is the one to repeat here, for a reason specific to
+outreach: **the Companies House list from §3 is the candidate name list.** We are
+not discovering who exists, we are checking which of a known set got named.
+
+**The table to produce per trade run:**
+
+| Column | Where it comes from |
+|---|---|
+| Business | The Companies House list, plus any name the answers raise that is not on it |
+| Rows named | Count of opportunity rows whose `answer_text` contains the name |
+| % of opportunity rows | The share-of-voice number |
+| Split by assistant | ChatGPT / Gemini / Perplexity, counted separately |
+| Sources cited alongside | From `sources_cited` — **ChatGPT and Perplexity only** |
+
+**That last restriction is not optional.** Every one of Gemini's cited URLs is an
+opaque `vertexaisearch` redirect, so no source analysis is possible for it
+(`ops/competitor-analysis.md` Finding E). Any conclusion about *why* a business
+is named rests on two assistants, not three.
+
+**Expect a much shallower field than the national one.** The self-audit's own
+Wirral question returned **five businesses, not forty-one**, and one of them was
+named in every single run across all three assistants (Finding F). A local trade
+question is a small field with a clear owner, which is the shape this whole
+outreach depends on.
+
+### The visibility ladder — how the unnamed become the target list
+
+**The mention table answers "who is named". The prospect list is its
+complement**, and that subtraction is the targeting method:
+
+> **Companies House list, minus the businesses the mention table names, is the
+> pool. Everyone left is invisible on the question their own customers ask.**
+
+**But "not named" will be the normal condition, not a distinguishing one.** If
+the Wirral holds sixty dental practices and the answers name six, then 90% of the
+list is unnamed and "you are not mentioned" is true of almost everyone. **The
+useful sort is not named-versus-not. It is how close each one is to appearing**,
+and the run gives us that for free because it captures the sources the answers
+were built from:
+
+| Tier | What is true of them | Why they are ranked here |
+|---|---|---|
+| **A. In the sources, not in the answers** | Listed on a directory or listicle the assistants actually cited, and still not named | **The best prospects.** They have already done the obvious thing and it did not work, which is precisely what we sell. The email writes itself: you are on the page ChatGPT reads, and it still names three others |
+| **B. Named occasionally** | Appears in one or two runs out of fifteen | Second best. A measurable gap rather than an absence — "you come up about one time in five, these two come up every time" |
+| **C. Absent from everything** | Not named, and not in any cited source | Real prospects, and the fix starts somewhere concrete: get listed. Ranked below A because the first step is cheap enough that they may not need us for it |
+| **Not a prospect** | Named consistently, at the top | Nothing to sell them. Do not email them. §3's definition of a good first client already says this, and the audit's own voice is "you don't need us" |
+
+**Tier A is the finding this business exists to produce.** Anyone can tell a
+clinic to get listed on a directory. Telling them they are already listed, that
+the assistant reads that exact page, and that it still recommends three
+competitors, is a fact nobody else in their inbox has.
+
+**Two rules that keep this honest:**
+
+- **The named businesses are for studying, not targeting.** Why the top few get
+  named is the content of the audit deliverable — `ops/competitor-analysis.md`
+  Finding B established that listicles are the mechanism. It is not a reason to
+  approach them.
+- **Never publish the ladder, or any part of it.** A ranked table of named local
+  clinics is exactly the public comparison the owner parked on defamation and
+  comparative-advertising grounds. Read "Considered and not done" in
+  `ops/competitor-analysis.md` before proposing it again. **Naming a prospect's
+  competitors privately, in an email to that prospect, is a different act from
+  publishing a league table**, and only the first one is in scope.
 
 **Never send the trade run to a prospect as if it were their audit.** It is one
 finding, and the paid audit is ten questions on their own business. Blurring that
