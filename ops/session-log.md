@@ -204,6 +204,15 @@ document had its argument stripped and sends the reader here.
   and safe to pre-approve: **the consistency checker**, run 15 times in one
   session because `CLAUDE.md` tells every session to run it. It is verified
   read-only — opens one config file, no writes, no subprocess, no network.
+- **`.claude/settings.local.json` is now gitignored, and the distinction is
+  worth keeping.** `.claude/settings.json` is the shared allowlist, committed and
+  reviewable in a pull request like any other decision. The `.local.json` beside
+  it is whatever "don't ask again" recorded in one terminal on one machine, and
+  it should never arrive in a pull request dressed as a decision.
+- **One correction worth recording, because it will be assumed again.** Running
+  the allowlist skill does not make Claude Code *learn* from chat history. It is
+  a one-off scan that writes static rules to a file. What persists across
+  sessions is the file — nothing watches the conversation and adapts.
 - **What was deliberately left out, because the reason matters more than the
   list.** `git add`, `git commit` and `git push` prompt seven times each in a
   session and none of them is on the allowlist: they change the repository, and

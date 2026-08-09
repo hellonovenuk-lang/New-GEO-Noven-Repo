@@ -8,3 +8,9 @@ __pycache__/
 *.pyc
 
 .DS_Store
+
+# Permission approvals clicked in one terminal, on one machine. `.claude/
+# settings.json` is the shared, reviewed allowlist and IS committed; this file
+# is whatever "don't ask again" recorded locally, and it should never arrive in
+# a pull request as though it were a decision.
+.claude/settings.local.json
