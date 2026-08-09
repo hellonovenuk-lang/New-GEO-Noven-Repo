@@ -410,6 +410,12 @@ rest.** Eighteen of the thirty-nine named practices are in this position.
 > You can check that yourself in about two minutes, which is the main reason I'm
 > writing rather than guessing.
 >
+> One thing worth saying, because it's the first thing I'd want to test. I didn't
+> ask about [practice] by name. If you type the name in, all three will probably
+> tell you plenty, and accurately. I asked the way somebody looks for a dentist
+> when they don't have one yet and don't know who you are. That's the question
+> that brings in new patients, and it's a different question.
+>
 > What I sell is the reason behind it. Ten questions on [practice] across all
 > three assistants, where their answers are actually coming from, and a written
 > report on what's making them pick somebody else. It's £250, that's the entire
@@ -445,6 +451,12 @@ rest.** Eighteen of the thirty-nine named practices are in this position.
 >
 > That's checkable in about two minutes, which is why I'm writing rather than
 > guessing at it.
+>
+> One thing worth saying, because it's the first thing I'd want to test. I didn't
+> ask about [practice] by name. If you type the name in, all three will probably
+> tell you plenty, and accurately. I asked the way somebody looks for a dentist
+> when they don't have one yet and don't know who you are. That's the question
+> that brings in new patients, and it's a different question.
 >
 > A practice can be missing for a few different reasons and they aren't equally
 > hard to fix. What I sell is finding out which one applies to you. Ten questions
@@ -507,6 +519,22 @@ cold emails and not on the site.
 - **The number is the email.** "[N] times on one, zero on another" is checkable
   in five minutes, which is exactly why it works. **Do not soften it into "you
   may not be appearing".**
+- **Never say "you don't show up" without saying what was asked. This is the
+  one that would have cost replies.** Caught by the owner 2026-08-09. Every
+  question in the trade run is a **discovery** question — somebody looking for a
+  dentist who does not know the practice exists. **None of them asks about a
+  practice by name.** A sceptical owner's first move is to type their own name
+  into ChatGPT, get a full and accurate answer, and conclude we are wrong.
+  `ops/audit-questions.md` already separates discovery from named-business
+  questions as different categories, and `ops/competitor-analysis.md` splits
+  identity rows from opportunity rows for the same reason. **The email collapsed
+  a distinction the method already draws.**
+- **The fix makes the distinction the argument.** Both drafts now say plainly
+  that we did not ask by name, that the assistants will probably answer well if
+  you do, and that the question we asked is the one that brings in patients who
+  have never heard of you. **It converts the objection into the strongest
+  paragraph in the email** — it invites the check, and the check then proves our
+  point instead of refuting it.
 - **One destination, and it is the audit.** Two earlier versions failed here.
   The first offered "the six questions I'd ask about [practice]" — nobody wants
   six questions, it is an artefact from our side of the desk, and it named a

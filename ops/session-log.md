@@ -263,6 +263,26 @@ document had its argument stripped and sends the reader here.
   a supplier and saying `[PLACEHOLDER]` where the country goes. **It now checks
   the string as well as the object.** Site rebuilt: nine pages, `/privacy/`,
   `/terms/` and `/order/` all still correctly absent.
+- **The most serious copy error of the session, caught by the owner: the emails
+  said "you weren't in any of them" without saying what was asked.** Every
+  question in the trade run is a **discovery** question, from somebody who does
+  not know the practice exists. **None asks about a practice by name.** A
+  sceptical owner's first instinct is to type their own name into ChatGPT, get a
+  full and accurate answer back, and conclude the email is wrong — and they would
+  be entitled to.
+- **The repo already knew this and the copy ignored it.**
+  `ops/audit-questions.md` separates discovery from named-business questions as
+  distinct categories with distinct jobs, and `ops/competitor-analysis.md` splits
+  45 identity rows from 165 opportunity rows for exactly this reason. **The
+  distinction was drawn in the method and collapsed in the copy**, which is the
+  more useful lesson: the error was not a gap in what we knew, it was a failure
+  to carry it across documents.
+- **The fix turns the objection into the argument.** Both drafts now say we did
+  not ask by name, that the assistants will probably answer well if you do, and
+  that the question asked is the one that brings in patients who have never heard
+  of you. **It invites the check, and the check then demonstrates the point
+  rather than refuting it.** Written into §5 as a rule so it is not edited back
+  out by a later session tightening the copy.
 - **The emails took three passes to get a working close, and the owner rejected
   the first two.** Worth recording as a sequence, because each failure was a
   different kind.
