@@ -32,8 +32,18 @@ export const termsLive = business.addressForService !== null;
  * storage decision in `ops/client-record.md` is made, that list has a hole in
  * exactly the place a reader would look first — the place their own business's
  * details end up. Everything else in the notice is settled.
+ *
+ * **Both halves of the decision are checked, not just the provider.** The
+ * provider was named on 2026-08-09 (Microsoft OneDrive) while the country it
+ * holds the data in was left as a `[PLACEHOLDER]`, because that is a checkable
+ * fact about an account rather than something to assert. A notice that names a
+ * supplier and says `[PLACEHOLDER]` where the country goes is worse than no
+ * notice, so the gate reads the string as well as the object.
  */
-export const privacyLive = termsLive && business.clientDataStorage !== null;
+export const privacyLive =
+  termsLive &&
+  business.clientDataStorage !== null &&
+  !business.clientDataStorage.where.includes('PLACEHOLDER');
 
 /**
  * The footer links to whichever of the two exists. Both go live in the same

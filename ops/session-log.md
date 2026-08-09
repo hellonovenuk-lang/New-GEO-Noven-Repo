@@ -27,6 +27,568 @@ document had its argument stripped and sends the reader here.
 
 ---
 
+### 2026-08-09 (outreach goes cold, and the target is decided)
+
+- **The owner has no business network. Warm-first is closed, not deferred.**
+  Three documents were built on it — `HANDOVER.md` step 6 ("take the sample audit
+  to three warm contacts"), `ROADMAP.md` 2c, and §7 item 3 — and all three are
+  now corrected. `ops/outreach.md` is the new playbook.
+- **Two decisions taken by the owner the same day: private clinics, Wirral
+  only.** Dental, cosmetic, physiotherapy, veterinary. The reasoning is in
+  `ops/outreach.md` §1, and the order of the reasons matters: they are almost all
+  limited companies *first*, because that is a legal requirement rather than a
+  preference; their customers really do ask an assistant for a recommendation
+  second; the area is small enough for one assistant run to cover the whole
+  market third.
+- **The legal position is the load-bearing part of this entry.** Under PECR,
+  limited companies and LLPs are corporate subscribers and may be cold-emailed
+  without prior consent. Sole traders and unincorporated partnerships are treated
+  as individuals and may not. So **the target list is filtered on Companies House
+  before anyone is contacted**, and that filter builds the list at the same time.
+  *Not legal advice, and `ops/outreach.md` says so where it states the position.*
+- **This contradicted something already written down, and the contradiction is
+  the useful part.** `HANDOVER.md` said the target buyers are "mostly sole
+  traders". Cold-only rules that segment out entirely, so the buyer moves up a
+  notch — which happens to suit the £700 Lead tier better than a sole trader ever
+  did. The old line is corrected rather than left to be discovered.
+- **Cold moved two items onto the critical path that warm would have let us
+  skip.** Every cold email must carry the address for service, and there must be
+  somewhere permanent to keep a do-not-contact record. So
+  `business.addressForService` (£12/month, UK Postbox, has a lead time) and
+  `business.clientDataStorage` now block the **first email**, not the launch. The
+  privacy notice already carries the right paragraph — its "If we contact you
+  first" section was written on 2026-08-09 naming legitimate interest and
+  permanent opt-out recording — but it does not publish until those two values
+  exist. **Worth stating plainly because it is the real cost of the change of
+  plan.**
+- **The pre-work method changed, and the new one is better than what it
+  replaced.** `ROADMAP.md` 2b said run a mini audit on each prospect before
+  contacting them. Right for warm, unaffordable cold: the self-audit's recorded
+  cost was $12.63 on OpenAI alone for ~75 queries, so roughly $0.17 a query.
+  **Ask the discovery questions once per trade and area instead of once per
+  business.** One run produces, for every clinic on the list at once, both
+  whether they were named and — the part that sells — which competitors were
+  named ahead of them. About $15 for a whole batch. `ops/competitor-analysis.md`
+  had already established the mechanism on our own market.
+- **The email is drafted in full** (`ops/outreach.md` §5) with the reasoning for
+  each choice underneath it, so a later session does not edit it into a funnel:
+  competitor names are the whole email, the price goes in the second paragraph,
+  it links the published self-audit rather than attaching a PDF, and there is no
+  chasing sequence. **No free audits and no introductory rate** — recorded there
+  as a standing rule, because a free first audit is an introductory rate wearing
+  a different hat, and section 9 of `ops/service-tiers.md` settled that on
+  2026-07-31.
+- **Cold calling is explicitly not covered.** The email position does not
+  transfer to phone calls — TPS and CTPS are a separate piece of work. Written
+  into `ops/outreach.md` §9 so nobody assumes it does.
+- **Capacity answered the same day, and it reframes the business.** Three hours
+  a day comfortably, and materially more for a paid audit, **because one £250
+  audit offsets a whole day of the owner's other earnings.** Against the
+  2h40–3h30 audit budget in `ops/audit-method.md` §7 that is roughly two and a
+  half times his alternative hourly rate. **So delivery is not the constraint —
+  finding buyers is**, which is the opposite of what the capacity question was
+  asked to find out and is worth remembering the next time someone proposes
+  building product instead of selling.
+- **Batch size falls out of it: twenty a week**, with one stop rule — do not
+  send batch two while batch one has more than four audits still owed. Six
+  audits a week is the ceiling, four without stretching. **The binding
+  constraint turns out to be the size of the list, not the diary**, and the
+  answer to running out of prospects is to widen the area (Liverpool and Chester
+  were the runners-up) rather than to send more per week.
+- **The address for service is ordered and pending approval**, told to us by the
+  owner: placed Friday 7 August, ID verification in flight, confirmed address
+  expected Monday 10 August. Marked as pending in four places rather than one —
+  `HANDOVER.md` step 2, `ROADMAP.md` 2b, `ops/third-party-services.md` B1b and
+  `ops/outreach.md` §2 — because "ordered" and "confirmed" are the same word to a
+  reader skimming for a blocker, and **it is confirmation in writing that
+  unblocks the footer, the structured data, the terms, the privacy notice and
+  every cold email.** Steps 5 to 9 of the B1c runbook are still owed after it
+  lands.
+- **The mention-counting method already existed and had been run once — it just
+  had not been written down as a method.** `ops/competitor-analysis.md` Part 2
+  counted 41 businesses across 165 opportunity rows and produced a ranked table
+  with a per-assistant split. `ops/outreach.md` §4 now carries it as a repeatable
+  procedure, with the detail that matters: **the `competitors` column was empty
+  on the export, so the counting was done by matching names against
+  `answer_text`** — and for outreach that is the better route anyway, because
+  **the Companies House list is the candidate name list**. We are not discovering
+  who exists, we are checking which of a known set got named.
+- **The new half is the complement, and it is the actual targeting method.**
+  Named businesses subtracted from the Companies House list is the prospect pool.
+  **But "not named" will be the normal condition** — the self-audit's own Wirral
+  question returned five businesses where the national one returned forty-one, so
+  on a local trade question the great majority of a list is invisible and absence
+  distinguishes nobody. So prospects are sorted by **how close they are to
+  appearing**, using `sources_cited`, which the run already captures:
+  - **Tier A, in the cited sources but not in the answers.** The best prospects,
+    and the finding this business exists to produce: they have already done the
+    obvious thing and it did not work. Anyone can tell a clinic to get listed;
+    telling them they *are* listed on the page the assistant reads and it still
+    names three competitors is a fact nobody else has.
+  - **Tier B, named occasionally.** A measurable gap rather than an absence.
+  - **Tier C, absent from everything.** Real, but their first fix is cheap enough
+    that they may not need us for it.
+  - **Named consistently: not a prospect.** Nothing to sell them, and the audit's
+    own voice is "you don't need us".
+- **The trade run is built: `ops/trade-run/`.** The owner asked whether we were
+  ready to fire the API calls for "dentists in Wirral". Nearly — and the gap was
+  smaller than expected, because **the self-audit's "throwaway" script was
+  already reusable**. It takes `--questions`, `--out`, `--cap`, `--smoke`, has a
+  hard query cap checked before the first call, and resumes after a provider
+  failure. Three changes made: the client name and the run count became flags
+  (they were hardcoded to `"noven"` and to the self-audit's five-vs-ten
+  experiment), and the defaults suit a trade run. **The original in
+  `ops/audits/noven-2026-08-02/` is frozen and was not touched** — it is part of
+  that audit's record.
+- **Its docstring said "delete this file after the audit — do not maintain it",
+  and that instruction was wrong.** Worth recording rather than quietly ignoring:
+  the script was written crude on purpose so its rough edges would specify the
+  real runner, and the rough edges turned out to be two hardcoded constants. The
+  deferral of the actual audit runner (`ROADMAP.md` 3a) is untouched — a trade
+  run is prospecting, not a paid audit, and this does not guess at the runner's
+  spec.
+- **Six questions written for Wirral dentists**, three discovery, one qualified,
+  one buying intent, one comparison, on the frame in `ops/audit-questions.md` §1.
+  6 × 3 assistants × 5 runs = **90 queries in one command**.
+- **Smoke-tested against its own guards, not against the APIs.** The cap check
+  fires before the first call and exits having spent nothing; the missing-key
+  guard exits cleanly; the header is written correctly. **No API call has been
+  made.** Two things are open and both are recorded as `[PLACEHOLDER]` rather
+  than assumed: **what is left on the three API balances after 2 August is
+  written down nowhere**, and whether Python is installed on the owner's Windows
+  machine. The run is about $15, which is a spend inside the freeze window and
+  therefore the owner's call.
+- **The run stops at raw answers on purpose.** `outcome` and `competitors` are
+  written empty, because classifying them is the judgement the audit budgets 60
+  to 110 minutes for. A second script to build the mention table is deliberately
+  not written until we have seen what a real trade run's answers look like —
+  the same reasoning that defers the runner, applied to the same trap.
+- **`ops/trade-run/`, not `ops/outreach/`.** A folder and a file with the same
+  name sitting beside each other is a trap for the next reader, and the repo
+  already has `name-check/` and `site-check/` as the pattern for a tool folder.
+- **The API balances are known for the first time since 2 August**, given by the
+  owner: **OpenAI $16.00, Gemini £8.95, Perplexity $4.49.** Recorded in
+  `ops/accounts.md`, which had been carrying "the totals were never recorded" as
+  an open gap since 4 August.
+- **The verdict is two yes and one short, and the reasoning is worth keeping
+  because it will be reused for every trade run.** One run is **30 queries per
+  provider**, not 90. **There is exactly one measured rate in this business** —
+  OpenAI at $12.63 for ~75 queries on 2 August, about $0.17 a query — so all
+  three were priced at it and the borrowing was declared rather than hidden.
+  OpenAI has roughly three runs of headroom; Gemini is comfortable and grounded
+  search is normally cheaper than this; **Perplexity is short by about fifty
+  cents at the borrowed rate.** Sonar is genuinely cheaper than OpenAI web
+  search, so it may well cover it, and "may well" is not a balance check.
+- **The smoke test was already the required first step; it is now also the
+  measurement.** Three queries, one per provider, then read the three dashboards
+  and divide. About fifty cents to convert three borrowed estimates into three
+  measured per-query rates — **a number this business has needed since 2 August
+  and has never had**, and one that also feeds the open £150 Maintain question
+  in `ops/plan-to-1-september.md`.
+- **Running dry costs nothing, which is what makes it safe to just try.** The
+  providers run OpenAI, then Gemini, then Perplexity, so an exhausted Perplexity
+  balance fails last with sixty rows already flushed to disk, and re-running
+  retries only the errored rows. The downside is a $5 top-up and one repeated
+  command.
+- **The balance is not the thing to check first.** `ops/audit-setup.md` §4 says
+  to set £10 caps on all three and turn Perplexity's auto top-up off, and
+  **neither has ever been confirmed**. With auto top-up on, "is there enough"
+  stops mattering — running dry silently charges the card, which during a
+  spending freeze is the exact event the freeze exists to prevent. Flagged in
+  `ops/accounts.md` and in the trade-run README rather than only here.
+- **The owner asked whether the £12/month address could be skipped entirely, and
+  the honest answer separated two things the documents had tangled.** `B1` said
+  the address was a legal disclosure requirement, which is true, and left the
+  reader to infer that a *virtual* one was required, which is not. **The
+  business-names duty asks for an address where documents can be effectively
+  served, and a home address satisfies it completely.** The site could be fully
+  compliant tomorrow for nothing. **The £144/year buys privacy, not compliance**,
+  and `ops/third-party-services.md` B1 now says so.
+- **Kept anyway, and the reason is specific to this business rather than
+  general.** The address goes in the footer of every page, in the Organization
+  structured data as a machine-readable `PostalAddress`, in the terms, in the
+  privacy notice and in every cold email. **This site is built to be maximally
+  readable by AI crawlers, and the business exists because those systems absorb
+  and repeat what they find.** Publishing a home address into them is a worse
+  trade here than almost anywhere else, and it is not reversible for the same
+  reason the register's copies are not.
+- **The asymmetry is the thing to remember.** A public register is passive
+  listing; a crawled website and a few hundred cold emails are active
+  distribution. **Being relaxed about the first does not imply being relaxed
+  about the second**, and the same evidence does not cover both.
+- **Two ICO calls, not one.** Tomorrow's is about the trading name. The second
+  goes in once the service address exists, because asking them to change the
+  record to an address that has not arrived is pointless and runbook step 8
+  assumes it is in hand.
+- **The ICO address panic is downgraded, and the owner was right to push on it.**
+  `HANDOVER.md` §4 treated the 10 August publication of the registered address as
+  close to an emergency. The owner's argument: home addresses are ordinary for
+  sole traders, and his does not obviously read as one. **Checked rather than
+  accepted — Companies House advanced search returns 281 active companies with a
+  registered office in that Birkenhead square.** It reads as commercial to a
+  human and to a scraper. The exposure is real and permanent, because
+  bulk-downloadable data gets mirrored and amending the ICO's record does nothing
+  about copies, but **it is low-impact and it is not the thing that should be
+  stopping everything else.** §4 and the dates table are rewritten.
+- **The call still happens tomorrow, for a better reason the owner half-spotted:
+  the trading name on the record.** He is not sure whether it was filed as
+  "Noven". If it was, that is not a privacy problem — **it is a published-fact
+  problem.** `/privacy/` prints registration C1995412 and invites the reader to
+  check it against the ICO's own register, precisely because a business selling
+  verifiable facts should hand them over. **A reader who checks and finds a
+  different name has found the exact fault this business is sold to detect in
+  other people's businesses.** Suppression drops to third on the call, behind the
+  name and the coming address change.
+- **The ICO register could not be checked from a session — it returns HTTP 403 to
+  automated fetches.** Recorded as unverified rather than assumed either way.
+- **The owner's home locality is deliberately not written into this repo**, only
+  the fact that the address is shared with hundreds of registered businesses.
+  Same reasoning as the practice names: this repo is written as though public.
+- **Client records live in Microsoft OneDrive. Decided by the owner 2026-08-09**,
+  closing the last open item in `ops/client-record.md`. Office is already paid
+  for, so no new supplier and no cost; the `.docx` audit masters live there
+  natively rather than being moved by hand; and version history gives a restore
+  that can actually be tested, which a new account could not have offered for
+  weeks.
+- **The decision named the provider and stopped there on purpose.**
+  `clientDataStorage.where` is a `[PLACEHOLDER]`, because **the privacy notice
+  states the country in published wording and it is not a fact to assert from
+  general knowledge** — Microsoft's answer depends on the account and the
+  tenant's configured residency. It is two minutes to check in the account. A
+  first draft of this entry had a confident country in it and it was wrong to
+  write; `CLAUDE.md`'s rule about inventing facts applies hardest to the
+  sentences that are about to be published.
+- **So the gate in `legal.ts` was tightened to match.** `privacyLive` previously
+  read `clientDataStorage !== null`, which would have published a notice naming
+  a supplier and saying `[PLACEHOLDER]` where the country goes. **It now checks
+  the string as well as the object.** Site rebuilt: nine pages, `/privacy/`,
+  `/terms/` and `/order/` all still correctly absent.
+- **The most serious copy error of the session, caught by the owner: the emails
+  said "you weren't in any of them" without saying what was asked.** Every
+  question in the trade run is a **discovery** question, from somebody who does
+  not know the practice exists. **None asks about a practice by name.** A
+  sceptical owner's first instinct is to type their own name into ChatGPT, get a
+  full and accurate answer back, and conclude the email is wrong — and they would
+  be entitled to.
+- **The repo already knew this and the copy ignored it.**
+  `ops/audit-questions.md` separates discovery from named-business questions as
+  distinct categories with distinct jobs, and `ops/competitor-analysis.md` splits
+  45 identity rows from 165 opportunity rows for exactly this reason. **The
+  distinction was drawn in the method and collapsed in the copy**, which is the
+  more useful lesson: the error was not a gap in what we knew, it was a failure
+  to carry it across documents.
+- **The fix turns the objection into the argument.** Both drafts now say we did
+  not ask by name, that the assistants will probably answer well if you do, and
+  that the question asked is the one that brings in patients who have never heard
+  of you. **It invites the check, and the check then demonstrates the point
+  rather than refuting it.** Written into §5 as a rule so it is not edited back
+  out by a later session tightening the copy.
+- **The emails took three passes to get a working close, and the owner rejected
+  the first two.** Worth recording as a sequence, because each failure was a
+  different kind.
+  - **"Reply and I'll send the six questions I'd ask about [practice]."** Nobody
+    wants six questions: it is an artefact from our side of the desk offered as
+    though the recipient would value it. **And it named a thing that does not
+    exist** — the audit is a ten-question frame (`ops/audit-questions.md`), six
+    being the trade run's number. It survived from a draft written before the run
+    existed, which is how a stale detail gets carried into copy nobody re-reads
+    from the recipient's side.
+  - **"Reply and I'll send what they actually said."** A better offer, in the
+    wrong place. It sat immediately after the link to our own self-audit, so the
+    email ended with **two invitations and no instruction**, and "see them" had
+    no clear referent after a link had intervened. **A cold email gets one
+    action.**
+  - **What landed: one destination, and it is the audit.** The self-audit link is
+    reframed as proof rather than an alternative — "if you want to see what one
+    looks like first" — and the close is a single question. The verbatim answers
+    are kept, but as the *reply* to somebody who bites rather than as the ask.
+    That is the strongest possible second touch and it costs a copy-paste.
+- **Then the owner replaced the argument I had defended.** I had argued to keep
+  "you can check that yourself in about two minutes" as the credibility line. His
+  point: **showing beats telling them to go and look.** Quoting three of the six
+  questions verbatim, with who came back and how many times out of five, delivers
+  the fact instead of promising it, and does not ask a busy practice owner to do
+  our work. He was right, and the falsifiability survives as a short clause —
+  "those are the exact words I used, if you want to try them yourself" — which is
+  **stronger than the paragraph it replaced**, because the reader can now copy the
+  question straight out of the email.
+- **A trap that surfaced while building the lists: the six questions are not
+  interchangeable.** Two of them name a specific town. **Quoting the Birkenhead
+  question at a practice in Upton hands the reader a fair objection** and wastes
+  the email. q01, q04 and q06 are Wirral-wide and safe for anyone on the
+  peninsula. Written into §5 as a rule.
+- **Quoting questions leaks a little of the question library**, which
+  `ops/audit-questions.md` calls the asset that compounds. Judged worth it and
+  recorded so it is a decision rather than an oversight: three generic discovery
+  questions for one trade are not the asset, the library across trades and areas
+  is, and a client is shown all ten before their own audit runs anyway.
+- **`ops/voice.md` added, from `github.com/blader/humanizer`, on the owner's
+  instruction and explicitly as a general framework rather than a checklist.**
+  It applies to everything a customer reads and to nothing in `ops/` —
+  the operating documents are read by the assistant far more often than by a
+  person, and their reasoning is worth more than their rhythm. `CLAUDE.md` gains
+  a three-line pointer rather than the whole list.
+- **The owner's diagnosis of the first two emails was sharper than the source
+  material.** He said the subjects read as "an automated AI company you've
+  probably had thousands of emails from" rather than a new small business from
+  the Wirral. **The cause was structural rather than lexical: both emails opened
+  with the finding.** That is how automated outreach is built, because a template
+  has no self to introduce. A person says who they are first.
+- **So the top of `voice.md` is one structural rule, above the word-level list:
+  say who you are before you say what you found.** And its corollary for subject
+  lines: **a subject that makes a claim reads as a campaign, a subject that names
+  the thing reads as a person.** "[Practice] and ChatGPT" against "[Practice]
+  doesn't come up on ChatGPT". **That single change did more than every
+  word-level edit put together**, which is worth recording because the temptation
+  with a list of 33 tells is to work the list.
+- **Both drafts rewritten.** Introduction first, plainer register, the em dashes
+  and the rule-of-three rhythms out, "It's £250 and that's the whole cost"
+  instead of the three-clause marketing beat. **The give-away rule survived the
+  rewrite** — "which one it is I'd have to look at properly" keeps the diagnosis
+  inside the paid work without implying we know less than we do.
+- **The owner caught a real gap in the outreach method and it is now a rule:
+  the observation is free, the diagnosis is the product.** A first draft of
+  Draft B told the prospect *why* they were missing — that the answers are built
+  from directory pages they are not on. **That is the finding they would be
+  paying £250 for, given away in a sentence**, and it was written that way out of
+  a reflex to be maximally forthcoming rather than any reasoning.
+- **Why this is not a dishonesty question, written down because it will be
+  re-argued.** "You were named in none of ninety answers" is true and complete on
+  its own terms. Declining to add "and I think I know the reason" withholds
+  nothing the reader was promised and states nothing false. **The site's voice is
+  *you don't need us for everything*, not *here is the work for nothing*.** What
+  goes in the email is observation — what was asked, how often, who got named,
+  whether they did. What stays in the report is diagnosis.
+- **Two guardrails were attached, because the rule has a failure mode in each
+  direction.** **Never imply we do not know** — "there are a handful of reasons"
+  is honest, feigned puzzlement is not, and vagueness about our own knowledge is
+  the line. And **the audit has to be worth £250 without that finding**: ten
+  questions on their business, what the assistants believe about them and whether
+  it is true, their own site. **If a report ever reduces to "get listed on a
+  directory", the price is wrong rather than the customer.**
+- **The same rule generalises to the market-level findings.** How the answers are
+  built on the Wirral is known because ninety queries were paid for and analysed.
+  It is an asset: it belongs in client reports, not in cold emails and not on the
+  site.
+- **The email draft is rewritten on the run, and it is now two drafts.** The
+  single letter could not honestly address both problems the data found.
+  **Draft A** for a practice named by one or two assistants and missing from the
+  rest — eighteen of thirty-nine are in that position, and the letter leads with
+  the count. **Draft B** for a practice named by none, whose problem is bigger
+  and plainer: they are absent from the directory pages the answers are built
+  from, which is the cheaper end to fix and partly free. **The instruction not to
+  claim the assistants disagree in general is written in next to the drafts**,
+  because that is the mistake a future session would make from memory of the
+  smoke test.
+- **The full run landed the same evening: 90 rows, zero errors, zero empty
+  answers, sources on every row, all three model strings correct.** The balances
+  covered it — Perplexity finished, so the fifty-cent shortfall predicted from
+  OpenAI's borrowed rate did not appear. **Check 5, the actual per-query cost,
+  is still owed from the dashboards.**
+- **Two of the four smoke-test findings were wrong, and the owner's instruction
+  to wait is what stopped them reaching an email.** Recorded at length in
+  `ops/trade-run/README.md` rather than quietly amended, because the correction
+  is the more useful record:
+  - **"Not one practice was named by all three assistants."** False. 39
+    practices were named and **21 of them by all three**, 12 by two, 6 by one.
+    **Consensus is the normal case.** Three single runs were read as a market
+    structure when they were sampling noise.
+  - **"Tier A is populated"**, with a named example. That example is named 18
+    times at 90 rows. The tier exists but had to be found a different way.
+- **What actually holds, and it is still a good story.** A **top tier of four at
+  36–43% of rows** — more concentrated than the national field, whose leader
+  managed 28%. **But no incumbent above it:** the leader is missing from a clear
+  majority of answers. And the finding that sells, once stated per practice
+  rather than in general: **18 of the 39 named practices are missing entirely
+  from at least one assistant**, including some in the top ten. Strong on
+  ChatGPT and absent from Perplexity is common, and nobody knows it.
+- **The email's central claim is rewritten on this.** "The assistants disagree"
+  is checkable in five minutes and would not survive. *"You come up on
+  Perplexity, you do not come up on ChatGPT at all, here are the three that do"*
+  is true of eighteen practices, checkable, and known to none of them.
+- **4,902 source URLs. 345 are Gemini's opaque redirects — 7% of the total and
+  100% of Gemini's**, so Finding E's limitation is unchanged rather than eased.
+- **ThreeBestRated is cited in 20 of 90 rows — third independent confirmation.**
+  It lists three Wirral practices and **all three are named by the assistants.**
+  Free to join. **It is now the single most evidenced action in the business.**
+- **Reddit is cited in 30 of 90 rows, more than any single directory.** Mostly
+  r/Liverpool and r/Wirral recommendation threads. `ROADMAP.md` 2f holds Reddit
+  as an owner's decision rather than a default; **this is the evidence that
+  decision was waiting for.**
+- **How Tier A is actually found, which is a method the audit gains.** A cited
+  URL is usually a directory *page* listing many practices, so absence from the
+  URL list proves nothing. **Fetch the cited directory pages, read who is on
+  them, cross-reference against the mention table.** Two fetches produced the
+  tier immediately. That is a fourth question the audit can answer for a client
+  at no cost: *which of the pages feeding the assistants are you on, and is it
+  working?*
+- **arXiv preprints appear in 30 of 90 rows, from one assistant, irrelevant to
+  every question.** Retrieval noise, no effect on the counts. Recorded so nobody
+  investigates it twice.
+- **The Companies House sweep is done for dental, and it can be done from a
+  session rather than by hand.** Advanced search takes a SIC code and a postcode
+  district in a plain URL — no account, no API key, thirteen fetches for the
+  whole Wirral. **67 active limited companies on SIC 86230.** Method and the
+  per-district counts are in `ops/outreach.md` §3; **the names are not in the
+  repo**, same rule as the run data, and the CSV went to the owner directly.
+- **86230 is now confirmed by evidence rather than memory** — every district
+  returned dental businesses. The other four SIC codes are still unchecked and
+  the doc says so.
+- **67 companies is not 67 prospects, and the gap is the work.** Three things
+  have to come out, all visible in the raw data: **personal service companies**
+  (a dentist invoicing through their own limited company from somebody else's
+  chair — 17 rows flagged, no practice to make visible, not a prospect);
+  **suppliers, labs, training providers and referral services**, which share the
+  SIC code and are not patient-facing; and **shared registered offices — 22 of
+  the 67**, four companies at one postcode in three separate cases. That last one
+  is the accountant's-address trap the doc already warned about, now measured.
+- **The list is a floor, not a census.** A practice trading on the Wirral but
+  registered at an accountant's office in Liverpool does not appear at all.
+- **The binding constraint arrived earlier than expected.** §7 predicted the list
+  would run out before the diary did. On the dental number, **one trade does not
+  sustain a twenty-a-week batch for long** — so the other three trades' sweeps
+  are not optional extras, they are what keeps the batch fed.
+- **The smoke test ran at 17:08 UTC and passed all five checks.** Three queries,
+  q01, one per assistant. Search fired on all three; model strings came back as
+  the intended tiers; every answer was UK-shaped; the CSV survived with its
+  multi-line answer text intact. **Check 5, the cost, is the one still
+  outstanding** — the per-query rates only exist once the three dashboards are
+  read.
+- **The geographic-word rule is confirmed live, and it was written down the day
+  before it was tested.** `ops/audit-setup.md` §8a recorded on 2 August that
+  Gemini's grounding tool has no locale parameter and cannot be fixed. q01 names
+  the Wirral, and **Gemini returned seven Wirral practices by name and by town.**
+  A place name in the question does what the missing parameter cannot, which
+  means Gemini's answers are usable in a trade run rather than discounted. First
+  evidence either way since the limitation was found.
+- **The owner held the analysis at the smoke test, and was right to.** The setup
+  checks are conclusive from three rows — a search either fired or it did not.
+  **The market claims are not**, and they were written up in language that
+  outran the sample: the national version of "no incumbent" rests on 165 rows and
+  this rests on three. Both documents now carry the sample size in the first
+  line of the section rather than in a footnote, and neither claim goes into an
+  email or a client report before the full run.
+- **A live gotcha found while re-reading the script for this: the smoke rows
+  will be skipped rather than replaced.** `load_done` keys on assistant plus
+  question plus run number and skips anything that succeeded — and the smoke rows
+  *are* q01 run 1 on each assistant, with no error. A full run against the same
+  file leaves three rows tagged "delete this row" standing in for real data, and
+  the mention table would count them. **Delete them first.** In the README now,
+  with the reason rather than as housekeeping.
+- **The finding that changes the product pitch: the three assistants barely
+  agree.** One question, one run each, **roughly a dozen distinct practices named
+  across the three answers and not one named by all three.** Two appeared twice,
+  everything else once. This is `ops/competitor-analysis.md` Finding A repeating
+  on a completely unrelated market — **no incumbent, even locally, even in a
+  field this small.**
+- **So the email's central claim should change, and the §5 draft now says so.**
+  "You are not mentioned" is the weak version. The strong version is *"you are
+  the top recommendation on one of these and absent from the other two, and here
+  is which"* — specific, checkable, and unknown to the prospect because nobody
+  checks all three. The draft was written before there was evidence for the
+  better claim; rewrite it when the full run lands.
+- **ThreeBestRated was cited again, by two of three assistants, on a question
+  with nothing to do with our own market.** It was already the one open door in
+  Finding F. **Two independent questions, two assistants each — it stops being a
+  curiosity and becomes a lever**, and it belongs in the audit deliverable as a
+  concrete action rather than only in our own list.
+- **The answers are built from directories and Reddit, not from practice
+  websites.** CQC, NHS service search, Yell, WhatClinic, ThreeBestRated, a long
+  tail of dentist-listing sites, and a striking volume of r/Liverpool and
+  r/Wirral threads. Practice sites appeared, but as confirmation after a
+  directory supplied the name. **Consistent with Finding B's listicle mechanism,
+  and it puts Reddit back on the table** — which `ROADMAP.md` 2f still holds as
+  an owner's decision, not a default.
+- **Tier A was populated in three queries.** Several practices appear in the
+  cited directories and in no assistant's answer — listed on the exact pages the
+  assistants read, and still not recommended. The ladder's top tier is real
+  rather than theoretical, found on one question rather than ninety.
+- **No practice names are recorded anywhere in this repo, and that is the rule
+  rather than an oversight.** A list of named local dental practices, in a repo
+  written as though it were public, is the comparison the owner parked on
+  defamation grounds. **The rule applies to our own working notes, not only to
+  published pages.** The findings above are all shape, not names.
+- **`.claude/settings.json` added, and it is deliberately two lines long.** The
+  owner asked how to stop the permission prompts. Scanning the session's actual
+  tool calls, **almost everything that recurs is already auto-allowed and never
+  prompted at all** — `sed`, `head`, `grep`, `tail`, `ls`, `wc`, and every
+  read-only `git` subcommand. Exactly one recurring command was both prompting
+  and safe to pre-approve: **the consistency checker**, run 15 times in one
+  session because `CLAUDE.md` tells every session to run it. It is verified
+  read-only — opens one config file, no writes, no subprocess, no network.
+- **`.claude/settings.local.json` is now gitignored, and the distinction is
+  worth keeping.** `.claude/settings.json` is the shared allowlist, committed and
+  reviewable in a pull request like any other decision. The `.local.json` beside
+  it is whatever "don't ask again" recorded in one terminal on one machine, and
+  it should never arrive in a pull request dressed as a decision.
+- **One correction worth recording, because it will be assumed again.** Running
+  the allowlist skill does not make Claude Code *learn* from chat history. It is
+  a one-off scan that writes static rules to a file. What persists across
+  sessions is the file — nothing watches the conversation and adapts.
+- **What was deliberately left out, because the reason matters more than the
+  list.** `git add`, `git commit` and `git push` prompt seven times each in a
+  session and none of them is on the allowlist: they change the repository, and
+  `push` publishes. **A wildcard on `python3` was also refused** — it is
+  arbitrary code execution wearing a script's clothes, and in this repo it would
+  cover `trade_run.py`, which spends real money on API calls. The rule that
+  produced both: pre-approve a *named* read-only script, never an interpreter.
+- **The owner's local Claude Code terminal had neither git nor the keys, and
+  that is one cause rather than two.** Claude Code on Windows runs its shell
+  through Git Bash, which arrives with Git for Windows — with git missing, the
+  shell is not the one any of these instructions assume, so variables set in a
+  PowerShell window are invisible to it. Written into
+  `ops/trade-run/README.md` as "Setting up the machine", with the three
+  one-line checks that tell you which of git, Python and the keys file is
+  actually absent.
+- **The keys most likely already exist.** `ops/name-check/README.md` loads the
+  same three keys from `$HOME\.noven\env.ps1`, so if the name check was ever run
+  on that machine the file is there and needs dot-sourcing, not recreating.
+  **That file keeps the old name deliberately** — it is private to one machine,
+  nothing published reads it, and renaming it silently breaks the name-check
+  runbook. Same reasoning as `hello.noven.uk@gmail.com` in
+  `ops/rename-to-wardith.md` F10.
+- **The script's own error message was wrong on Windows** — it said
+  `source ~/.noven/env`, which is not how that machine loads it. It now names
+  the PowerShell form and points at the README. A setup instruction that is
+  wrong on the only machine it runs on is worse than no instruction.
+- **Python from `python.org`, not the Microsoft Store**, and tick "Add
+  python.exe to PATH". The Store build sandboxes file access in ways that break
+  a script writing outside the user profile, which is exactly what `--out` does.
+- **A design rule fell out of the smoke-test history, and it is worth more than
+  the run it was found for.** `ops/audit-setup.md` §8a records that Gemini's
+  grounding tool has no location parameter at this access tier, cannot be fixed,
+  and skews non-UK **specifically on questions carrying no geographic word of
+  their own**. Every question in the dentist set names the Wirral, Birkenhead or
+  Wallasey — which is what a real customer would type anyway. **Written into
+  `ops/trade-run/README.md` as a rule for every future trade question set**,
+  because it is the kind of property that survives one file and gets lost on the
+  first copy-paste.
+- **Source analysis is two assistants, not three**, wherever the ladder is used.
+  Gemini's cited URLs are all opaque `vertexaisearch` redirects (Finding E), so
+  every conclusion about *why* a business is named rests on ChatGPT and
+  Perplexity. This is the third document now carrying that limit, and the
+  method-doc fix it implies is still open in `ROADMAP.md` 2f.
+- **The ladder is never published.** A ranked table of named local clinics is the
+  public comparison the owner parked on defamation and comparative-advertising
+  grounds. Written into `ops/outreach.md` §4 next to the ladder itself rather than
+  left in `competitor-analysis.md`, because that is where someone will be looking
+  at a ranked table and thinking it would make a good page. **Naming a prospect's
+  competitors privately to that prospect is a different act from publishing a
+  league table**, and only the first is in scope.
+- **Two things the arithmetic exposed rather than settled**, both recorded in
+  `ops/outreach.md` §7 so they are met at the point they matter:
+  - **No audit has ever been timed.** 2h40–3h30 is a budget, and the
+    classification step inside it — 60 to 110 minutes — has no prior estimate at
+    all. Every capacity number above is arithmetic on an estimate until the
+    Wardith run is timed.
+  - **Four audits a week is when the runner stops being deferrable.** Deferring
+    it was right and stays right — written before the first audit it is a guess
+    at a specification — but the only thing that fires the queries today is a
+    script marked throwaway, and the deferral's release condition is the first
+    real audit, which is what the outreach exists to produce.
+
+---
+
 ### 2026-08-09 (the terms of service and the privacy notice — written, and switched off)
 
 - **Both documents are finished, and neither is a draft.** `/terms/` and

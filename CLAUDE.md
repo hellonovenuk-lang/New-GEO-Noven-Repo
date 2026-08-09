@@ -59,6 +59,13 @@ six sessions' worth of this repo's whole baseline — to answer one question.*
   when they ask for it — which is the exact failure the audit is sold to find on
   other people's businesses. See `ops/session-log.md`, 2026-08-01.
 
+- **Anything a customer reads gets checked against `ops/voice.md`** — site copy,
+  emails, reports, quotes. It is a framework for spotting machine-written tells,
+  adopted 2026-08-09 as a general overview rather than a checklist to satisfy
+  every time. **A sentence that breaks one of its rules and reads better for it
+  is the right sentence.** The one part of it that is not negotiable is the
+  no-fabrication rule, which the Facts section below already covers.
+
 ## Design
 
 - Credibility over design flair. The site must never look AI-generated.

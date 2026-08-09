@@ -5,14 +5,14 @@ lives. Renamed from `spine.md` on 2026-07-31 — "the spine" was a word used in
 three places and defined in none, and a stranger could not guess what the file
 was for from its name.
 
-**Status: the fields are decided, the retention is decided, the storage is
-not.** Nothing is being kept yet, because there is no client. This exists so that
-the first one doesn't start a spreadsheet from scratch, in the wrong place.
+**Status: the fields are decided, the retention is decided, and the storage
+provider was decided on 2026-08-09 — but two steps remain before `/privacy/` can
+publish.** Nothing is being kept yet, because there is no client. This exists so
+that the first one doesn't start a spreadsheet from scratch, in the wrong place.
 
-**The storage decision now blocks something visible.** `/privacy/` has to name
-who holds client records and where, so the notice does not publish until
-`clientDataStorage` is set in `site/src/data/business.ts`. It is no longer only
-an internal tidiness question.
+**The storage decision blocks something visible.** `/privacy/` has to name who
+holds client records and where. Naming the provider was half of it; **the
+country and the tested restore are the other half**, and both are below.
 
 ---
 
@@ -23,11 +23,24 @@ sole trader — their name, their business address, their contact details — is
 personal data under UK GDPR. That is what the ICO registration was taken out for
 (`ROADMAP.md` 1c), and putting it here would undo it in one commit.
 
-**Where it does live is still undecided.** `ROADMAP.md` 3d carries it. What is
-needed is one named provider with encryption at rest and a backup that has
-actually been restored once. A spreadsheet in the owner's own storage is fine —
-"a spreadsheet is fine until it isn't" — but which storage has to be a decision,
-not an assumption.
+**Decided by the owner 2026-08-09: Microsoft OneDrive.** Office is already paid
+for, so it adds no supplier and no cost; the `.docx` audit masters live there
+natively instead of being moved by hand; and version history gives a restore that
+can actually be tested, which a brand-new account could not have offered for
+weeks. `business.clientDataStorage` is set.
+
+**Two things are still owed before this counts as done, and they are not
+paperwork:**
+
+- **The country Microsoft holds the data in.** `business.clientDataStorage.where`
+  is deliberately a `[PLACEHOLDER]`, because the privacy notice states it in
+  published wording and the answer depends on the account rather than on
+  Microsoft in general. **Two minutes in the account settings.** `/privacy/` will
+  not build while the placeholder is there — the gate in `site/src/data/legal.ts`
+  checks the string, not just the object.
+- **A backup that has actually been restored once.** Naming a provider is a
+  decision; restoring a file is the proof, and the proof is the part that was
+  always the point.
 
 **The trigger to move to something else** (Zoho Bigin's free tier is the
 researched option) is when you can't answer *"who's due a check this week"* by

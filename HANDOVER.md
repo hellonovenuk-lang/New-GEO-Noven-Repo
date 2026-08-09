@@ -133,27 +133,65 @@ Ordered by what it stops.
 
 The order below is by dependency and by irreversibility, not by importance.
 
-### Immediately — this one has a deadline and no undo
+### Immediately — but not for the reason this section used to give
 
 **1. Ring the ICO fees helpline: 0303 123 1113.**
 
 The ICO publishes each registered organisation's name and address on a public
 register that anyone can download in bulk, within seven working days of payment.
 Registration was paid on Thursday 30 July with the **owner's home address** on
-it. Treat **Monday 10 August 2026** as the deadline.
+it. **Monday 10 August 2026** is when that publishes.
 
-Ask them to hold or suppress publication pending a change of address. This costs
-nothing, takes fifteen minutes, and needs no other item to exist first. Once the
-address is on a bulk-downloadable register it gets mirrored and copied, and
-amending the ICO's own record does nothing about the copies.
+**Reassessed 2026-08-09, and the address is the least of it.** This section used
+to treat the publication as close to an emergency. The owner challenged that and
+the challenge holds up: **the address sits in a Birkenhead square with 281 active
+companies registered at it** (Companies House advanced search, checked
+2026-08-09). It does not read as residential to a human or to a scraper, and
+using a home address is ordinary for a sole trader. **The exposure is real and
+permanent — bulk-downloadable data gets mirrored and the ICO amending its own
+record does nothing about copies — but it is low-impact, and it is not worth
+treating as the thing that stops everything else.**
+
+**Settled 2026-08-09: this is two calls, not one.** Tomorrow's call is about the
+trading name. **A second call goes in once the service address lands**, to change
+the registered address — there is no point asking them to change it to an address
+that does not exist yet, and the runbook's step 8 assumes the address is in hand.
+
+**The call is still worth making tomorrow, for two better reasons:**
+
+- **The trading name on the record.** The owner is not certain whether the
+  registration was filed as "Noven". If it was, that is not a privacy problem, it
+  is a **published-fact problem**: `/privacy/` prints registration **C1995412**
+  and invites the reader to check it against the ICO's own register, because a
+  business selling verifiable facts should hand them over. A reader who checks
+  and finds a different name than the site claims has found exactly the fault
+  this business is sold to detect in other people's businesses. **Ask, and get it
+  corrected if it is wrong.**
+- **The address has to change anyway** once the service address lands — it is
+  step 8 of the `ops/third-party-services.md` B1c runbook. Asking about the
+  process on the same call costs nothing.
+
+**Suppression is still worth asking for while on the phone**, but as the third
+item rather than the first, and it is not a reason to delay anything if the
+answer is no.
+
+**Not verified from a session:** the ICO's register returns HTTP 403 to automated
+fetches, so whether the record still carries the pre-rename trading name could
+not be checked here. Ask on the call, or look it up in a browser.
 
 ### Then, roughly a day and a half of desk work
 
-**2. Order the service address — UK Postbox Business Street Address, Poole,
-£12/month inc VAT.** Settled 2026-08-07; the provider comparison is closed in
-`ops/third-party-services.md` B1a–B1b and should not be reopened. **Order it
-first because it has a lead time** — ID verification usually clears within 24
-hours, then post has to travel — and do the desk work while it travels.
+**2. The service address — ordered Friday 7 August 2026, pending approval.** UK
+Postbox Business Street Address, Poole, £12/month inc VAT. Identity verification
+is with the provider and the confirmed address is expected **Monday 10 August**.
+The provider comparison is closed in `ops/third-party-services.md` B1a–B1b and
+should not be reopened.
+
+**This is the item most other things are waiting behind**, so it is worth being
+precise about what "pending" means: **nothing that publishes the address moves
+until it is confirmed in writing.** That is the footer, the Organization
+structured data, the terms, the privacy notice and every cold email. The desk
+work below does not wait on it.
 
 **Follow the runbook at `ops/third-party-services.md` B1c rather than working it
 out at the checkout.** The two traps it exists to prevent: **buy the Business
@@ -205,8 +243,18 @@ still off — it also waits on the terms, the privacy notice and the address, th
 three items in step 3 and above. That is deliberate. Nothing in step 5 depends
 on it.
 
-**6. Take the sample audit to three warm contacts.** Warm rather than cold, for
-the reason in section 7.
+**6. Send the first cold batch. Rewritten 2026-08-09 — this used to say "take
+the sample audit to three warm contacts", and there are no warm contacts.** The
+owner has no business network, so the first clients are cold, and the whole
+method is `ops/outreach.md`: private clinics on the Wirral, limited companies
+only, one assistant run per trade rather than per business, ten to twenty emails
+at a time.
+
+**The thing to know before reading it:** cold email is lawful to companies and
+unlawful to sole traders, so steps 2 and 3 above stop being tidiness. Every
+email has to carry the address for service, and there has to be somewhere to
+keep a permanent do-not-contact record. **A warm route would have let us start
+without either.**
 
 ### Not on the critical path, despite appearances
 
@@ -226,7 +274,7 @@ highest return on time in this document.
 
 | What | When | If missed |
 |---|---|---|
-| ICO home address publishes | **~10 August 2026** | Home address on a bulk-downloadable public register, permanently |
+| ICO home address publishes | **~10 August 2026** | Permanent, mirrored, and **low-impact** — the address sits among 281 registered companies and does not read as residential (reassessed 2026-08-09, §4). The live question on that record is whether it carries the old trading name |
 | ICO annual renewal | ~30 July 2027 | Penalty of up to £4,000 against a £47 fee. Note the real risk is a **silent Direct Debit failure**, so the check is "did it collect", not "did a reminder fire" |
 | Domain renewal | **[PLACEHOLDER: registrar, renewal date and auto-renew status are recorded nowhere in this repo]** | Total outage — site, email, structured data, every published link |
 | Zoho Mail renewal | ~29 July 2027 (inferred from purchase date) | The only contact channel on the site dies |
@@ -272,16 +320,25 @@ written account register. That is an afternoon.
 
 Nobody else can settle these, and several are currently blocking work.
 
-1. **Which trade and which area to go after first.** Being in the Wirral gives a
-   credible local answer.
-2. **How much time per week there is for delivery.** This caps everything.
-3. **Whether any existing contact could be client number one.**
-4. **Cold outreach is a legal question, not just a marketing one.** Under PECR,
-   sole traders and unincorporated partnerships are treated like individuals for
-   marketing email, so unsolicited approaches to them generally need consent —
-   and this repo's own ICO notes say the target buyers are mostly sole traders.
-   Warm introductions sidestep this entirely. Confirm the position before
-   building any cold list. *Not legal advice — check it.*
+1. ~~**Which trade and which area to go after first.**~~ **Answered 2026-08-09:
+   private clinics on the Wirral.** `ops/outreach.md` §1 has the reasoning.
+2. ~~**How much time per week there is for delivery.**~~ **Answered 2026-08-09:
+   three hours a day comfortably, and more for a paid audit — one £250 audit
+   offsets a whole day of the owner's other earnings.** That is six audits a
+   week, four without stretching, so outreach goes out in batches of twenty.
+   `ops/outreach.md` §7. **It also reframes the business:** at 2h40–3h30 an
+   audit, delivery pays about two and a half times the owner's alternative hourly
+   work, so the constraint is finding buyers, not serving them.
+3. ~~**Whether any existing contact could be client number one.**~~ **Answered
+   2026-08-09: there is no network. The first client is cold.**
+4. **Cold outreach is a legal question, not just a marketing one — and it is now
+   the live route rather than the fallback.** Under PECR, limited companies and
+   LLPs may be emailed without prior consent; sole traders and unincorporated
+   partnerships are treated as individuals and may not. **So the target list is
+   filtered on Companies House before anyone is contacted**, and the sole-trader
+   buyers this document elsewhere assumes are the market are out of scope for
+   cold email. The position, and the two things it puts on the critical path,
+   are in `ops/outreach.md` §2. *Not legal advice — check it.*
 5. **Whether the new prices survive contact.** They were set from estimated
    effort, not measured effort. If the self-audit shows Maintain takes three
    hours rather than one, `ops/service-tiers.md` section 11 gets rewritten, not
