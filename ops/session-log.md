@@ -209,6 +209,20 @@ document had its argument stripped and sends the reader here.
   A place name in the question does what the missing parameter cannot, which
   means Gemini's answers are usable in a trade run rather than discounted. First
   evidence either way since the limitation was found.
+- **The owner held the analysis at the smoke test, and was right to.** The setup
+  checks are conclusive from three rows — a search either fired or it did not.
+  **The market claims are not**, and they were written up in language that
+  outran the sample: the national version of "no incumbent" rests on 165 rows and
+  this rests on three. Both documents now carry the sample size in the first
+  line of the section rather than in a footnote, and neither claim goes into an
+  email or a client report before the full run.
+- **A live gotcha found while re-reading the script for this: the smoke rows
+  will be skipped rather than replaced.** `load_done` keys on assistant plus
+  question plus run number and skips anything that succeeded — and the smoke rows
+  *are* q01 run 1 on each assistant, with no error. A full run against the same
+  file leaves three rows tagged "delete this row" standing in for real data, and
+  the mention table would count them. **Delete them first.** In the README now,
+  with the reason rather than as housekeeping.
 - **The finding that changes the product pitch: the three assistants barely
   agree.** One question, one run each, **roughly a dozen distinct practices named
   across the three answers and not one named by all three.** Two appeared twice,

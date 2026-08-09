@@ -268,12 +268,18 @@ competitors, is a fact nobody else in their inbox has.
 Wirral practices listed in the cited directories and named by no assistant.
 `ops/trade-run/README.md` has the detail.
 
-### The finding the smoke test changed, and the email should carry it
+### The finding the smoke test pointed at — unconfirmed, and the email may need it
 
-**The three assistants barely agree with each other.** One question, one run
+**Three rows. One question, one run per assistant.** Held as a signal rather
+than a finding, on the owner's call, 2026-08-09: the national version of this
+claim rests on 165 rows. **Nothing here goes into an email or a client report
+before the full run confirms it.**
+
+**The three assistants barely agreed with each other.** One question, one run
 each, roughly a dozen practices named across the three answers, **and not one
-named by all three.** No incumbent, even in a field this small — the same shape
-`ops/competitor-analysis.md` Finding A found nationally.
+named by all three.** If it holds at 90 rows it is the same shape
+`ops/competitor-analysis.md` Finding A found nationally — no incumbent, even in a
+field this small.
 
 **So "you are not mentioned" is the weaker version of the finding we can
 actually make.** The stronger one is specific and checkable:
@@ -282,9 +288,11 @@ actually make.** The stronger one is specific and checkable:
 > and here is which — or: these three practices come up on ChatGPT, a completely
 > different three come up on Gemini, and you are on neither list.
 
-Nobody in that trade knows this, because nobody checks all three. **When the full
-run is in, rewrite the §5 draft around it** — the draft currently makes the
-weaker claim, and it was written before there was evidence for the better one.
+Nobody in that trade knows this, because nobody checks all three. **If the full
+run confirms it, rewrite the §5 draft around it.** The draft currently makes the
+weaker claim, which is the right thing for it to do until the stronger one is
+evidenced — a cold email whose central fact does not survive being checked is
+worse than a dull one.
 
 **Two rules that keep this honest:**
 

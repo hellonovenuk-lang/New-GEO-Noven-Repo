@@ -237,6 +237,14 @@ are usable in a trade run rather than discounted.
 
 ## What the smoke test found — 2026-08-09
 
+> **Sample size: three rows. One question, one run per assistant.** Everything
+> below is a signal to check against the full run, not a finding. The setup
+> checks are conclusive — a search either fired or it did not. **The claims about
+> the market are not**, and the owner was right to say so on the day: the
+> national version of the same claim rests on 165 rows, and this rests on three.
+> Re-read this section against the full run before any of it reaches a client or
+> an email.
+
 **Three queries, q01 only, one run per assistant. All five checks passed:** the
 search fired on all three, the model strings came back as the tiers intended
 (`gpt-5.5-2026-04-23`, `gemini-3.6-flash`, `perplexity/sonar`), every answer was
@@ -284,6 +292,14 @@ the first evidence that the tier is populated rather than theoretical.
 **What is still outstanding from the smoke test:** check 5, the cost. Reading
 the three dashboards and dividing is the only way to get the per-query rates, and
 it is the number that decides whether Perplexity's balance covers a full run.
+
+**Delete the three smoke rows before the real run, and do it for a reason that
+is not tidiness.** The script skips any row that already succeeded, keyed on
+assistant plus question plus run number. The smoke rows *are* q01 run 1 on each
+assistant and they carry no error — **so a full run started on the same file
+will skip those three and leave the smoke answers standing in for real data.**
+Not wrong, exactly, but the file then contains rows tagged "delete this row"
+that the mention table is counting. Delete them and the run redoes them properly.
 
 **Then the real run — 6 questions × 3 assistants × 5 runs = 90 queries:**
 
