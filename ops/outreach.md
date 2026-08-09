@@ -97,10 +97,49 @@ operation.** Search by SIC code, then by registered-office postcode.
 | Other human health activities — physio, chiropractic, podiatry | 86900 | Yes |
 | Veterinary | 75000 | Yes |
 
-**The codes above are from memory and must be checked against Companies House's
-own list on the day.** A wrong code produces a list that looks right and is not,
-which is exactly the failure this business is sold to find in other people's
-data.
+**86230 is confirmed by evidence rather than memory as of 2026-08-09** — the
+sweep below returned dental businesses in every one of the thirteen districts.
+**The other four codes are still from memory and must be checked** against
+Companies House's own list before they are used. A wrong code produces a list
+that looks right and is not, which is exactly the failure this business is sold
+to find in other people's data.
+
+### The sweep, and what it returned — 2026-08-09
+
+**Companies House advanced search does this in one URL per district**, no account
+and no API key:
+
+```
+https://find-and-update.company-information.service.gov.uk/advanced-search/get-results
+  ?sicCodes=86230&registeredOfficeAddress=CH41&status=active
+```
+
+Change the postcode district, repeat. Thirteen fetches covers the Wirral.
+
+**Result: 67 active limited companies** on SIC 86230 with a Wirral registered
+office. By district: CH41 4, CH42 2, CH43 4, CH44 2, CH45 4, CH46 6, CH47 2,
+CH48 4, CH49 9, CH60 4, CH61 8, CH62 12, CH63 6.
+
+**67 companies is not 67 prospects, and the gap is the whole job.** The list is
+handed to the owner as a CSV with a `triage` column and is **not committed** —
+see §6. Three things have to be stripped out before it is a prospect list, and
+they are visible in the raw data:
+
+- **Personal service companies.** A dentist who works at somebody else's practice
+  and invoices through their own limited company is on this list and is not a
+  prospect — there is no practice to make visible. **17 rows are flagged as
+  likely, mostly on the name being a person's.**
+- **Suppliers, labs, training providers and referral services.** Also SIC 86230,
+  also not patient-facing, also not prospects.
+- **Shared registered offices.** **22 of the 67 sit at an address shared with at
+  least one other company on the list** — four at one postcode in three separate
+  cases. That is an accountant's office, not a clinic, and it is the trap §3
+  already warned about. **Match the trading address from the practice's own
+  website, and use Companies House only to answer "is this a company".**
+
+**The sweep also under-counts in one direction that matters.** A practice trading
+on the Wirral but registered at an accountant's office in Liverpool does not
+appear here at all. The list is a floor, not a census.
 
 **Wirral postcodes: CH41–CH49, CH60–CH63.** CH64 is Neston, on the peninsula but
 in Cheshire West, so it is a judgement call rather than an obvious yes. **Check
@@ -114,9 +153,13 @@ Companies House only to answer "is this a company".
 **What we record per prospect** is in `ops/client-record.md` — the prospect
 fields are already decided there. Do not invent a second schema.
 
-**Size of the first batch: [PLACEHOLDER: how many Wirral clinics exist per
-trade].** Unknown until the search is run, and it decides whether one trade is
-enough or whether the first batch spans all four.
+**Size of the first batch: dental is answered, the other three are not.**
+67 limited companies before triage (above), of which some meaningful fraction are
+real patient-facing practices. `[PLACEHOLDER: the triaged figure, once the CSV
+has been worked through.]` `[PLACEHOLDER: the same sweep for cosmetic,
+physiotherapy and veterinary.]` **On the dental number alone, one trade does not
+fill a twenty-a-week batch for long** — which is the §7 point about the list
+being the binding constraint, arriving earlier than expected.
 
 ### What makes a good first client
 

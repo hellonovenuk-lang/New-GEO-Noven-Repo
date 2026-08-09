@@ -196,6 +196,29 @@ document had its argument stripped and sends the reader here.
   stops mattering — running dry silently charges the card, which during a
   spending freeze is the exact event the freeze exists to prevent. Flagged in
   `ops/accounts.md` and in the trade-run README rather than only here.
+- **The Companies House sweep is done for dental, and it can be done from a
+  session rather than by hand.** Advanced search takes a SIC code and a postcode
+  district in a plain URL — no account, no API key, thirteen fetches for the
+  whole Wirral. **67 active limited companies on SIC 86230.** Method and the
+  per-district counts are in `ops/outreach.md` §3; **the names are not in the
+  repo**, same rule as the run data, and the CSV went to the owner directly.
+- **86230 is now confirmed by evidence rather than memory** — every district
+  returned dental businesses. The other four SIC codes are still unchecked and
+  the doc says so.
+- **67 companies is not 67 prospects, and the gap is the work.** Three things
+  have to come out, all visible in the raw data: **personal service companies**
+  (a dentist invoicing through their own limited company from somebody else's
+  chair — 17 rows flagged, no practice to make visible, not a prospect);
+  **suppliers, labs, training providers and referral services**, which share the
+  SIC code and are not patient-facing; and **shared registered offices — 22 of
+  the 67**, four companies at one postcode in three separate cases. That last one
+  is the accountant's-address trap the doc already warned about, now measured.
+- **The list is a floor, not a census.** A practice trading on the Wirral but
+  registered at an accountant's office in Liverpool does not appear at all.
+- **The binding constraint arrived earlier than expected.** §7 predicted the list
+  would run out before the diary did. On the dental number, **one trade does not
+  sustain a twenty-a-week batch for long** — so the other three trades' sweeps
+  are not optional extras, they are what keeps the batch fed.
 - **The smoke test ran at 17:08 UTC and passed all five checks.** Three queries,
   q01, one per assistant. Search fired on all three; model strings came back as
   the intended tiers; every answer was UK-shaped; the CSV survived with its
