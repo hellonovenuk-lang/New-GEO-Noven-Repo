@@ -39,7 +39,30 @@ export function organizationSchema(site: URL | undefined) {
       ...(business.founderPhoto ? { image: at(business.founderPhoto) } : {}),
       ...(business.founderLinkedIn ? { sameAs: [business.founderLinkedIn] } : {}),
     },
-    /* **There is deliberately no `address` here, and it is not an oversight.**
+    /* **The address appears here the moment there is one, and not before.**
+     * Built from `business.addressForService` — the same single value that
+     * fills the footer and publishes the two legal pages — so the visible
+     * address and the machine-readable one cannot drift apart, and so an
+     * assistant is never told something the page doesn't say. The long note
+     * below is why it works this way. */
+    ...(business.addressForService
+      ? {
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: [business.addressForService.line1, business.addressForService.line2]
+              .filter(Boolean)
+              .join(', '),
+            addressLocality: business.addressForService.locality,
+            ...(business.addressForService.region
+              ? { addressRegion: business.addressForService.region }
+              : {}),
+            postalCode: business.addressForService.postcode,
+            addressCountry: business.addressForService.country,
+          },
+        }
+      : {}),
+    /* **There was deliberately no `address` here for three days, and it was not
+     * an oversight.**
      * Added 2026-08-06 to close finding 3 of the self-audit — a `PostalAddress`
      * of locality "Wirral", region "Merseyside" — and taken straight back out
      * the same day, because the footer of every page carries a visible

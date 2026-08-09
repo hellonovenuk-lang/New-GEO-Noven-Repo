@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { business, plan, money } from '../data/business';
+import { orderPageLive } from '../data/order';
 
 const title = 'Contact — Wardith';
 const description =
@@ -13,10 +14,28 @@ const audit = plan('audit');
   <section class="hero hero--rules">
     <div class="wrap">
       <h1>Order the audit, or just ask</h1>
-      <p class="lede" data-reveal>
-        The simplest way to reach us is email. No forms, no call-booking software, no follow-up
-        sequence — you'll get a reply from a person.
-      </p>
+      {/*
+        Two versions of one line, and the difference is deliberate. The "no
+        forms" claim is true today and does real work — it is a promise about
+        what happens after you write to us, not a boast about the markup. Once
+        the order page is live there is exactly one form on the site and it
+        exists to take money, so the line is narrowed rather than deleted:
+        asking is still email, buying is the form. ROADMAP.md 1c.
+      */}
+      {
+        orderPageLive ? (
+          <p class="lede" data-reveal>
+            To ask something, email us. No call-booking software, no follow-up sequence — you'll
+            get a reply from a person. To buy the audit there's a short form, because we need a few
+            facts about the business before we can start.
+          </p>
+        ) : (
+          <p class="lede" data-reveal>
+            The simplest way to reach us is email. No forms, no call-booking software, no follow-up
+            sequence — you'll get a reply from a person.
+          </p>
+        )
+      }
     </div>
   </section>
 
@@ -26,6 +45,15 @@ const audit = plan('audit');
         <h2>How do I order the {money(audit.price)} audit?</h2>
       </div>
       <div data-reveal>
+        {
+          orderPageLive && (
+            <p>
+              The quickest way is the <a href="/order/">order form</a>, which asks for what's below
+              and then takes the payment. Everything on this page still works if you'd rather write
+              to us instead.
+            </p>
+          )
+        }
         <p>Email us with four things:</p>
         <ul class="ticks">
           <li>Your business name</li>

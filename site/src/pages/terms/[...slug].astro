@@ -1,0 +1,274 @@
+---
+/* `/terms/` — the terms of service.
+ *
+ * Dynamic filename for a fixed address, for the same reason as the order page:
+ * `getStaticPaths()` returning an empty array is the only way to make a page
+ * not exist. The condition is in `src/data/legal.ts` — these terms name an
+ * address for service, and there isn't one yet.
+ *
+ * **Written to be read, not to be survived.** The house style applies here as
+ * much as anywhere: a business that sells clear, checkable information about
+ * itself cannot publish two thousand words of boilerplate nobody can parse. The
+ * legal work is in being specific and in not over-promising, which is also what
+ * makes it readable.
+ */
+import Base from '../../layouts/Base.astro';
+import { business, plan, money, addressLines } from '../../data/business';
+import { termsLive } from '../../data/legal';
+import { assistants } from '../../data/business';
+
+export function getStaticPaths() {
+  if (!termsLive) return [];
+  return [{ params: { slug: undefined } }];
+}
+
+const title = 'Terms of service — Wardith';
+const description =
+  'The terms you buy Wardith’s audit, Foundation and monthly plans on: what is promised, what is not, how to cancel, and when we refund.';
+
+const audit = plan('audit');
+const foundation = plan('foundation');
+const address = addressLines(business.addressForService);
+
+/* Stated once, here, and dated. Terms that change silently are terms nobody can
+ * rely on, and a customer who wants to check what they agreed to needs a date
+ * to compare against. */
+const lastUpdated = '9 August 2026';
+---
+
+<Base title={title} description={description}>
+  <section class="hero hero--rules">
+    <div class="wrap">
+      <h1>Terms of service</h1>
+      <p class="lede" data-reveal>
+        What you're buying, what we promise, what we don't, and how to stop. In plain English,
+        because terms you can't read aren't terms you've agreed to.
+      </p>
+      <p class="cta-note" data-reveal>Last updated {lastUpdated}.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap wrap--narrow">
+      <div class="doc" data-reveal>
+        <h2>Who you're dealing with</h2>
+        <p>
+          {business.name} is a trading name of {business.founder}, a sole trader. Not a limited
+          company, so there's no company number to give you. {business.name} isn't VAT registered,
+          so the prices on this site are the prices you pay and there's no VAT to add.
+        </p>
+        <ul class="rows">
+          <li>
+            <strong>Email</strong>
+            <a href={`mailto:${business.email}`}>{business.email}</a>
+          </li>
+          <li>
+            <strong>Address</strong>
+            <span>
+              {address.map((line, i) => (
+                <>
+                  {i > 0 && <br />}
+                  {line}
+                </>
+              ))}
+            </span>
+          </li>
+        </ul>
+        <p>
+          That address is for serving documents and for the record. There's nobody sitting behind
+          it — everything real happens by email, and you'll get a reply from a person within two
+          working days.
+        </p>
+
+        <h2>What these terms cover</h2>
+        <p>
+          They apply when you buy anything from us: the {money(audit.price)} audit, the {
+            money(foundation.price)
+          } Foundation, or any of the monthly plans. Buying means you accept them. If we've signed
+          something separate with you, that document wins wherever the two disagree.
+        </p>
+        <p>
+          We can change these terms, and the date at the top is how you tell. A change never
+          applies backwards to work you've already paid for. If you're on a monthly plan and we
+          change something that matters to you, cancelling is the remedy, and it takes one email.
+        </p>
+
+        <h2>What you're buying</h2>
+        <p>
+          The <a href="/pricing/">pricing page</a> is the definitive description of each service
+          and what's in it, and the <a href="/how-it-works/">how it works page</a> describes the
+          method. In short:
+        </p>
+        <ul class="ticks">
+          <li>
+            <strong>The audit</strong> is a written report on how AI assistants answer questions
+            about your business today, what's blocking you, and what we'd recommend — including
+            "you don't need us", if that's the answer.
+          </li>
+          <li>
+            <strong>The Foundation</strong> is a fixed scope of setup work on your existing
+            website. We don't build websites, and this isn't a redesign.
+          </li>
+          <li>
+            <strong>The monthly plans</strong> track how those answers change over time and keep
+            your business facts current. Maintain reports gaps; Grow and Lead also close them.
+          </li>
+        </ul>
+
+        <h2>The one promise nobody can honestly make</h2>
+        <div class="doc-note">
+          <p>
+            <strong>
+              We cannot guarantee that any AI assistant will recommend your business, and we don't.
+            </strong>
+            {' '}{assistants.join(', ')} and the rest are run by other companies. Their answers vary
+            between runs, change without notice when a model is updated, and are not something
+            anybody can buy a place in.
+          </p>
+        </div>
+        <p>
+          What we promise is the work: the checks are run as described, the report says what we
+          actually found, and the recommendations are the ones we'd act on ourselves. Where the
+          news is bad or the finding is "this isn't worth spending money on", the report says so.
+          A measurement can come back saying you're already fine — that is a successful audit and
+          it is not refundable on the grounds that you hoped for worse.
+        </p>
+
+        <h2>Timescales</h2>
+        <p>
+          We reply to anything you send within two working days. Your audit report follows within
+          two working days of us confirming the scope and your payment. A Foundation starts within
+          two working days of payment clearing.
+        </p>
+        <p>
+          Working days are Monday to Friday, excluding England and Wales bank holidays. Where we
+          need something from you — access, an answer, a decision — the clock pauses until it
+          arrives. If we're going to miss a date, you'll hear it from us before the date, not
+          after.
+        </p>
+
+        <h2>Paying</h2>
+        <p>
+          The audit is paid upfront, by card. The Foundation and the monthly plans are invoiced,
+          payable by bank transfer within 14 days of the invoice date, and the work starts when the
+          payment clears rather than when the invoice is sent.
+        </p>
+        <p>
+          Card payments are handled by Revolut. We never see or hold your card details. Prices can
+          change, but not on work you've already paid for, and not on a monthly plan without a
+          month's notice by email.
+        </p>
+
+        <h2>Refunds</h2>
+        <p>
+          Written down in advance rather than decided case by case, because you should be able to
+          see the answer before you pay rather than find out afterwards. <strong>
+            We refund the audit in full
+          </strong> if:
+        </p>
+        <ul class="ticks">
+          <li>the website address you gave us is dead, mistyped, or isn't a website;</li>
+          <li>you gave us a social media profile where the audit needs a website;</li>
+          <li>your business is outside the area we cover;</li>
+          <li>you paid twice, or paid by accident;</li>
+          <li>you change your mind and tell us before we start the work; or</li>
+          <li>
+            we look at your business and genuinely can't help it — which happens, and is our
+            problem rather than yours.
+          </li>
+        </ul>
+        <p>
+          Once the report is written and sent, the work has been done and it isn't refundable. If
+          you think it's wrong, say so and we'll look again — we'd rather correct a report than
+          argue about one.
+        </p>
+        <p>
+          <strong>The Foundation</strong> is refundable in full before work starts. Once it has
+          started, we'll refund the part we haven't done. <strong>Monthly plans</strong> aren't
+          refunded for part-months; see below.
+        </p>
+
+        <h2>Cancelling a monthly plan</h2>
+        <p>
+          Monthly plans roll month to month with no minimum term. Tell us before your next payment
+          date and there won't be one. The month you've paid for runs to the end, and we don't
+          refund part-months. Moving up or down a level works the same way. One email does it —
+          there's nothing to navigate and nobody will ring you to ask why.
+        </p>
+        <p>
+          We can cancel too, with a month's notice, and we'll refund anything you've paid for time
+          we won't be covering. If a payment fails and stays unpaid after we've asked, the plan
+          stops.
+        </p>
+
+        <h2>What we need from you</h2>
+        <ul class="ticks">
+          <li>
+            <strong>Accurate information.</strong> The audit is built out of what you tell us about
+            your business. Wrong inputs produce a confident report about the wrong thing, and
+            that's not something a refund fixes.
+          </li>
+          <li>
+            <strong>Access, for the Foundation.</strong> The work changes your live website, so we
+            need whatever gets us in, and we need you to have a backup you could actually restore.
+            We'll take our own copy of anything we change before we change it.
+          </li>
+          <li>
+            <strong>The right to ask.</strong> That the website is yours, or that you're authorised
+            to have us work on it.
+          </li>
+        </ul>
+        <p>
+          Any access you give us is used for the agreed work and nothing else, and we tell you what
+          we hold so you can revoke it. When a piece of work ends, ask and we'll confirm what's
+          been handed back.
+        </p>
+
+        <h2>Who owns what</h2>
+        <p>
+          Your report and anything we write onto your website is yours, outright, once it's paid
+          for. You can share it, publish it, or hand it to another supplier.
+        </p>
+        <p>
+          Our methods, templates and the question sets behind them stay ours. We may describe work
+          in general terms — "an accountancy firm in the north west" — but we won't name you or
+          publish anything identifiable as a case study, a testimonial or an example without asking
+          you first and getting a yes.
+        </p>
+
+        <h2>Where the liability sits</h2>
+        <p>
+          We take responsibility for our own work, and we don't take responsibility for what other
+          companies' systems decide to say about you.
+        </p>
+        <p>
+          If we get something wrong, what you can recover is limited to what you paid us for the
+          piece of work it relates to, over the twelve months before the problem. We aren't liable
+          for lost profits, lost business, or revenue you believe you would have had.
+        </p>
+        <p>
+          Nothing here limits liability for death or personal injury caused by negligence, for
+          fraud, or for anything else the law doesn't allow to be limited — and if you're buying as
+          a consumer rather than for a business, your statutory rights are unaffected by any of
+          this.
+        </p>
+
+        <h2>Your information</h2>
+        <p>
+          What we collect, why, who sees it and how long we keep it is in the
+          <a href="/privacy/">privacy notice</a>. The short version: what you send us is used to do
+          the work you asked for, it isn't sold, and it isn't shared with anyone who isn't part of
+          delivering it.
+        </p>
+
+        <h2>If something goes wrong</h2>
+        <p>
+          Email us first. Most things that look like disputes are a misunderstanding about scope,
+          and one honest exchange settles them. If it can't be settled that way, these terms are
+          governed by the law of England and Wales, and the courts of England and Wales have
+          jurisdiction.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

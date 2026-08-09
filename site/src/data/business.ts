@@ -6,6 +6,23 @@
  * on the homepage, so it has to stay true — change a fact here, not in a page.
  */
 
+/** A UK postal address, in the parts `schema.org/PostalAddress` asks for, so
+ *  the visible address and the machine-readable one are built from one value
+ *  rather than typed twice. */
+export type PostalAddress = {
+  /** Building and street, e.g. "Unit 4, 12 Example Street". */
+  line1: string;
+  /** Second street line, where the address genuinely has one. */
+  line2?: string;
+  /** Town or city. */
+  locality: string;
+  /** County, where the address carries one. */
+  region?: string;
+  postcode: string;
+  /** ISO country code. Always 'GB' — an address for service has to be UK. */
+  country: 'GB';
+};
+
 export const business = {
   name: 'Wardith',
   legalNote: 'Wardith is a trading name of Kieran Smith, a sole trader.',
@@ -43,10 +60,60 @@ export const business = {
   basedInShort: 'Wirral, UK',
   /* Both of the above are prose, read by people, and say only what is true
    * today: the founder works from the Wirral. **Neither is a postal address and
-   * neither should be turned into one** until the address for service exists —
-   * see the long note in `schema.ts` where an `address` block was added and
-   * removed on 2026-08-06. Whatever fills the footer placeholder is the value
-   * that belongs in the structured data, and it may not be in Merseyside. */
+   * neither should be turned into one.** The postal address is the separate
+   * value below, and it may not be in Merseyside. */
+
+  /**
+   * **The address for service of documents. Null until it exists.**
+   *
+   * Trading under a name that is not the founder's surname carries a duty to
+   * show a name and a UK address where documents can be served, and selling
+   * online adds the same requirement again. The provider is decided —
+   * UK Postbox, Business Street Address, Poole — and not yet ordered. See
+   * `ops/third-party-services.md` B1c for the runbook, including the two traps
+   * (buy the Street Address, not the PO Box; register "Wardith" as its own
+   * verified step).
+   *
+   * **Never the founder's home address.** The footer can be edited; indexes,
+   * archives and assistants' caches cannot.
+   *
+   * **Setting this one value does five things at once**, which is the whole
+   * reason it lives here rather than being typed into five files: it fills the
+   * footer on every page, it adds `address` to the Organization structured data,
+   * it publishes `/terms/`, it publishes `/privacy/`, and — with the Revolut
+   * link set — it opens the order page. That is deliberate. Each of those is a
+   * statement about where this business can be reached, and they must appear
+   * together or not at all. See `src/data/legal.ts`.
+   */
+  addressForService: null as PostalAddress | null,
+
+  /**
+   * The ICO data protection registration, taken out 2026-07-30. Published in
+   * the privacy notice because a reader can check it against the ICO's own
+   * public register in about fifteen seconds, and a business that sells
+   * verifiable facts should hand them the reference rather than make them
+   * search.
+   */
+  icoRegistration: 'C1995412',
+
+  /**
+   * **Where client and prospect records are kept. Null until it is decided.**
+   *
+   * Not a technical detail: whoever holds the files is a recipient of personal
+   * data and has to be named in the privacy notice, along with where they hold
+   * it. `ops/client-record.md` has the constraint that rules out the obvious
+   * wrong answer — **it cannot be this repository**, which is written as though
+   * it were public — and `ROADMAP.md` 3d carries the decision itself. What is
+   * needed is one named provider, encryption at rest, and a backup that has
+   * been restored once.
+   *
+   * `/privacy/` does not publish until this is set, for the same reason it does
+   * not publish without the address: a notice that is vague about where the
+   * data goes is worse than no notice, because it is a published claim to have
+   * thought about it.
+   */
+  clientDataStorage: null as { name: string; where: string } | null,
+
   areaServed: 'GB',
   areaServedLabel: 'United Kingdom',
   vatRegistered: false,
@@ -207,6 +274,16 @@ export function plan(id: string): Plan {
   const found = plans.find((p) => p.id === id);
   if (!found) throw new Error(`Unknown plan: ${id}`);
   return found;
+}
+
+/** The address as a person reads it, one element per line. Empty when there is
+ *  no address yet, so a caller that forgets to check renders nothing rather
+ *  than the word "null". */
+export function addressLines(address: PostalAddress | null): string[] {
+  if (!address) return [];
+  return [address.line1, address.line2, address.locality, address.region, address.postcode].filter(
+    (line): line is string => Boolean(line),
+  );
 }
 
 /** "£250", "£1,250" — prices on this site are always whole pounds. */

@@ -42,7 +42,7 @@ on them rather than replacing them.
 | Assistant answer checking | Do it ourselves via the APIs | Under £2 per audit | Now — it's the product |
 | Client tracking | Zoho Bigin free tier | Free (1 user) | At client 2 or 3 |
 | Password manager | Bitwarden | Free | Now |
-| Payment collection — £250 audit | Own order page → Revolut Pro payment link | ~£1.45–£3.70 per sale | Blocked on terms + privacy + address |
+| Payment collection — £250 audit | Own order page → Revolut Pro payment link. **Built 2026-08-09, switched off** — C2 | ~£1.45–£3.70 per sale | Blocked on terms + privacy + address |
 | Payment collection — £800 Foundation and monthly | Invoice + bank transfer | Free | Revisit monthly at client 5 |
 
 **Total committed spend before the first client pays: about £0–5 a month**, and
@@ -376,14 +376,27 @@ checkout still leaves a lead, and we control the validation (a required, checked
 website field).
 
 So: **our order page collects and validates → hands off to a Revolut Pro payment
-link for the money only.** The site stays static; the form can go to Netlify
+link for the money only.** The site stays static; the form goes to Netlify
 Forms, whose free tier covers 100 submissions a month. Carry the email address
 across so payments can be matched to submissions — a manual, by-eye job at our
 volume, and it should stay one.
 
-**Still to verify before building against it:** Revolut's payment-link
-documentation is written against Revolut *Business*, and Pro is the retail-app
-product. The link itself still has to exist.
+**Built 2026-08-09, and switched off.** `/order/` and `/order/pay/` exist in the
+repo behind the switch in `site/src/data/order.ts`: with it off the two pages
+are not built at all, are in no sitemap, and every "order the audit" button on
+the site still points at the contact page. What turns it on is the payment link
+existing, `/terms/` and `/privacy/` existing — those two check themselves — and
+one line confirming the footer carries the address for service.
+
+**Netlify Forms makes Netlify a processor of customer data**, because
+submissions are stored and shown in their dashboard before they reach the inbox.
+That is a sentence the privacy notice has to carry, and it is the only thing
+about how the page was built that changes what that document says.
+
+**Still to verify:** Revolut's payment-link documentation is written against
+Revolut *Business*, and Pro is the retail-app product. The link itself still has
+to exist, and it has to be fixed-amount — an open "enter any amount" link
+contradicts the price printed next to the button.
 
 **What starts the Foundation's delivery clock is settled:** the pricing page
 reads *within two working days of your payment clearing*, so it cannot be
@@ -445,6 +458,20 @@ goes on the website, and one for staff, which we don't need yet.
 **Where it goes:** a new page on the site, linked from the footer. Roadmap 1c
 already has this scheduled correctly — due before the first client sends us
 anything, not before launch, since the site itself collects nothing.
+
+**Written 2026-08-09, by hand rather than generated, and the generator is still
+worth running.** Two disclosures decide this. An audit works by typing a client's
+business name into systems run by OpenAI, Google, Perplexity and Microsoft, and
+this site loads its typefaces from Google, which hands them every reader's IP
+address. No generator can know either, and a notice that omits them is wrong in
+the two places that are specific to this business. **Use the ICO's generator as a
+checklist against the finished page** — it is the regulator's own view of what a
+notice must cover, and it costs twenty minutes to read the output beside ours.
+
+**The Google Fonts line is a disclosure standing in for a fix.** Self-hosting the
+two typefaces would remove the third-party request entirely, take about an hour,
+and make the page slightly faster as a side effect. Until that happens the notice
+tells the truth about it.
 
 ### D3. Terms of service — nothing to buy
 

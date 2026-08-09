@@ -1,7 +1,9 @@
 ---
 import '../styles/global.css';
-import { business, plan, money } from '../data/business';
+import { business, plan, money, addressLines } from '../data/business';
 import { organizationSchema } from '../data/schema';
+import { orderHref } from '../data/order';
+import { legalNavItems } from '../data/legal';
 import { toSource } from '../lib/json-code';
 
 interface Props {
@@ -9,9 +11,17 @@ interface Props {
   description: string;
   /** Optional extra JSON-LD objects, serialised into their own script tags. */
   schema?: object[];
+  /**
+   * Keep this page out of search results. Used by the payment page and nothing
+   * else — it is the second half of a transaction, not an entry point. A page
+   * that sets this should also be excluded from the sitemap in
+   * `astro.config.mjs`: telling a crawler to index a page and then telling it
+   * not to is the kind of contradiction this site is sold to find.
+   */
+  noindex?: boolean;
 }
 
-const { title, description, schema = [] } = Astro.props;
+const { title, description, schema = [], noindex = false } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
@@ -32,6 +42,15 @@ const isCurrent = (href: string) =>
 
 const audit = plan('audit');
 
+/* The footer asks for the sale once, at the end of every page. It should not
+   ask on the two pages where the reader is already doing it: a button back to
+   the order form, shown to somebody halfway through paying, is a repeated
+   call-to-action in the exact place the design rules exist to prevent. The
+   footer's navigation stays — only the ask goes. */
+const isOrderRoute = currentPath.startsWith('/order');
+
+const footerAddress = addressLines(business.addressForService);
+
 // The same object the homepage renders as a visible code block. Pretty-printed
 // rather than minified so that "view source and compare" is a real invitation
 // — the bytes in the head match the bytes on the page.
@@ -48,6 +67,7 @@ const ogImage = new URL('/og.png', Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonical.href} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -111,11 +131,10 @@ const ogImage = new URL('/og.png', Astro.site);
               </a>
             ))
           }
-          <a
-            class="nav-cta"
-            href="/contact/"
-            aria-current={isCurrent('/contact/') ? 'page' : undefined}
-          >
+          {/* Points at the order page once it is live, and at the contact page
+              until then — one value, in `data/order.ts`, so the two buttons on
+              every page can never disagree about where ordering happens. */}
+          <a class="nav-cta" href={orderHref} aria-current={isCurrent(orderHref) ? 'page' : undefined}>
             Order the {money(audit.price)} audit
           </a>
         </nav>
@@ -130,26 +149,31 @@ const ogImage = new URL('/og.png', Astro.site);
     <footer class="site-footer">
       <div class="wrap">
         {/* The site asks once, here, at the end of every page. */}
-        <div class="footer-top">
-          <div data-reveal>
-            <h2>Find out where your business stands.</h2>
-            <p class="cta-note" style="margin-top: 0;">
-              The {money(audit.price)} audit is a written report on where you show up today and what's
-              in the way. If you're already in good shape, it says so.
-            </p>
-            <div class="cta-row">
-              <a class="btn" href="/contact/">
-                Order the {money(audit.price)} audit
-                <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
-                  <path
-                    d="M9 1l4 4-4 4M13 5H1"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="square"></path>
-                </svg>
-              </a>
-            </div>
-          </div>
+        <div class:list={['footer-top', isOrderRoute && 'footer-top--quiet']}>
+          {
+            !isOrderRoute && (
+              <div data-reveal>
+                <h2>Find out where your business stands.</h2>
+                <p class="cta-note" style="margin-top: 0;">
+                  The {money(audit.price)} audit is a written report on where you show up today and
+                  what's in the way. If you're already in good shape, it says so.
+                </p>
+                <div class="cta-row">
+                  <a class="btn" href={orderHref}>
+                    Order the {money(audit.price)} audit
+                    <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+                      <path
+                        d="M9 1l4 4-4 4M13 5H1"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="square"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            )
+          }
           <div data-reveal>
             <ul class="footer-nav">
               {navItems.map((item) => (
@@ -158,6 +182,11 @@ const ogImage = new URL('/og.png', Astro.site);
                 </li>
               ))}
               <li><a href="/contact/">Contact</a></li>
+              {legalNavItems.map((item) => (
+                <li>
+                  <a href={item.href}>{item.label}</a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -173,10 +202,26 @@ const ogImage = new URL('/og.png', Astro.site);
               business.basedIn
             }, available to clients across the {business.areaServedLabel}. Not VAT registered, so
             the prices shown are the prices you pay.
+            {
+              footerAddress.length > 0 && (
+                <>
+                  {' '}
+                  Documents may be served at {footerAddress.join(', ')}.
+                </>
+              )
+            }
           </p>
         </div>
         {/*
-          **The address for service of documents goes here, and it is still owed.**
+          **The address for service of documents renders in the line above, and
+          it is still owed.** Since 2026-08-09 there is nothing left to build for
+          it: set `addressForService` in `data/business.ts` and the sentence
+          appears here, the `PostalAddress` appears in the structured data, and
+          `/terms/` and `/privacy/` start being published. Until then the value
+          is null and every one of those stays silent rather than approximate.
+          The history below is kept because it is the reason for that design.
+
+          ---
           Removed from the rendered page 2026-08-06, by the owner's decision, on the
           eve of submitting the domain to Search Console and Bing. The placeholder
           that stood here published three things to every crawler: the literal token

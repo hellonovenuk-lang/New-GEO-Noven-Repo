@@ -1,0 +1,212 @@
+---
+/* `/order/` — the audit order form.
+ *
+ * **Why this file has a dynamic filename for a fixed address.** A page under
+ * `src/pages/` is always built. This one must not exist at all until the terms,
+ * the privacy notice, the address for service and the payment link are all in
+ * place — an unlinked page still gets crawled, guessed and shared. A rest
+ * parameter is the one route form Astro lets us return *no* paths from, so
+ * `getStaticPaths()` below is the switch: an empty array builds nothing, and
+ * `{ slug: undefined }` builds exactly `/order/` and nothing else.
+ *
+ * The switch itself is `src/data/order.ts`. Read that file first.
+ */
+import Base from '../../layouts/Base.astro';
+import { business, plan, money } from '../../data/business';
+import { orderPageLive, formName, honeypotName } from '../../data/order';
+
+export function getStaticPaths() {
+  if (!orderPageLive) return [];
+  return [{ params: { slug: undefined } }];
+}
+
+const title = 'Order the audit — Wardith';
+const description =
+  'Order Wardith’s £250 audit. Tell us your business name, website, services and area, then pay by card. Your written report follows within two working days of scope and payment being confirmed.';
+
+const audit = plan('audit');
+---
+
+<Base title={title} description={description}>
+  <section class="hero hero--rules">
+    <div class="wrap">
+      <h1>Order the audit</h1>
+      <p class="lede" data-reveal>
+        Two steps, about three minutes. Tell us about the business, then pay {money(audit.price)} by
+        card. Your written report follows within two working days of us confirming scope and
+        payment.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split split--sticky">
+      <div data-reveal>
+        <h2>About your business</h2>
+        <p class="cta-note" style="margin-top: var(--s3);">
+          Four things we need to start, and two that are optional. The optional pair are the ones
+          that make the report worth reading twice, so they're worth the extra minute.
+        </p>
+      </div>
+
+      <div data-reveal>
+        {/*
+          A Netlify form: `data-netlify` is read out of the built HTML at deploy
+          time, so the page ships no JavaScript and works with scripting off.
+          The submission is stored and emailed before the payer ever reaches the
+          card screen, which is the point — an abandoned checkout still leaves us
+          someone to follow up. See `src/data/order.ts`.
+        */}
+        <form
+          class="form"
+          name={formName}
+          method="POST"
+          action="/order/pay/"
+          data-netlify="true"
+          netlify-honeypot={honeypotName}
+        >
+          <input type="hidden" name="form-name" value={formName} />
+
+          <p hidden>
+            <label>Leave this field empty <input name={honeypotName} tabindex="-1" autocomplete="off" /></label>
+          </p>
+
+          <div class="field">
+            <label for="business-name">Business name</label>
+            <input
+              id="business-name"
+              name="business-name"
+              type="text"
+              required
+              autocomplete="organization"
+            />
+          </div>
+
+          <div class="field">
+            <label for="email">Your email address</label>
+            <input id="email" name="email" type="email" required autocomplete="email" />
+            <p class="field-hint">Where the report and everything before it goes.</p>
+          </div>
+
+          <div class="field">
+            <label for="website">Your website address</label>
+            <input
+              id="website"
+              name="website"
+              type="url"
+              required
+              autocomplete="url"
+              placeholder="https://"
+              aria-describedby="website-hint"
+            />
+            <p class="field-hint" id="website-hint">
+              Starting with <code>https://</code>. If the business has no website, email us instead
+              — the audit still works, but it needs a conversation first.
+            </p>
+          </div>
+
+          <div class="field">
+            <label for="services">The services you most want to be found for</label>
+            <textarea id="services" name="services" rows="3" required></textarea>
+            <p class="field-hint">
+              In the words a customer would use, not the words on your brochure.
+            </p>
+          </div>
+
+          <div class="field">
+            <label for="area">The area you serve</label>
+            <input id="area" name="area" type="text" required />
+            <p class="field-hint">A town, a county, a radius, or the whole country.</p>
+          </div>
+
+          <h3 class="form-subhead">Optional</h3>
+
+          <div class="field">
+            <label for="common-questions">
+              What do people usually ask when they first get in touch?
+            </label>
+            <textarea id="common-questions" name="common-questions" rows="3"></textarea>
+            <p class="field-hint">
+              The only thing in this form we can't work out for ourselves, and the questions we put
+              to the assistants come from it.
+            </p>
+          </div>
+
+          <div class="field">
+            <label for="customer-value">Roughly what is a new customer worth to you?</label>
+            <input id="customer-value" name="customer-value" type="text" />
+            <p class="field-hint">
+              A rough figure is fine. It's what lets the report say what being missing costs you,
+              rather than just that you're missing.
+            </p>
+          </div>
+
+          <div class="field field--consent">
+            <label class="consent">
+              <input id="terms" name="terms" type="checkbox" required value="accepted" />
+              <span>
+                I've read the <a href="/terms/">terms</a>, including the refund position. Your
+                details are handled as set out in the <a href="/privacy/">privacy notice</a>.
+              </span>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn" type="submit">
+              Continue to payment
+              <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+                <path
+                  d="M9 1l4 4-4 4M13 5H1"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="square"></path>
+              </svg>
+            </button>
+            <p class="cta-note">
+              Nothing is charged by this button. It sends us your answers and takes you to the
+              payment page.
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="wrap split">
+      <div data-reveal>
+        <h2>What happens after that</h2>
+      </div>
+      <div data-reveal>
+        <ul class="rows">
+          <li>
+            <strong>Payment</strong>
+            <span>
+              {money(audit.price)} by card, taken by Revolut. We never see your card details.
+            </span>
+          </li>
+          <li>
+            <strong>Confirmation</strong>
+            <span>An email from a person within two working days, confirming the scope.</span>
+          </li>
+          <li>
+            <strong>Your report</strong>
+            <span>Written, and with you within two working days of that confirmation.</span>
+          </li>
+          <li>
+            <strong>If it's wrong</strong>
+            <span>
+              The <a href="/terms/">refund position</a> is written down rather than decided case by
+              case.
+            </span>
+          </li>
+        </ul>
+        <p>
+          Would rather do this by email? Send the same answers to
+          <a href={`mailto:${business.email}`}>{business.email}</a> and we'll reply with the payment
+          link. It reaches the same place.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
