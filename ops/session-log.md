@@ -303,11 +303,25 @@ document had its argument stripped and sends the reader here.
     looks like first" — and the close is a single question. The verbatim answers
     are kept, but as the *reply* to somebody who bites rather than as the ask.
     That is the strongest possible second touch and it costs a copy-paste.
-- **One line is doing more work than it looks and should not be edited out.**
-  "You can check that yourself in about two minutes, which is the main reason I'm
-  writing rather than guessing." It answers the question a cold recipient
-  actually has — *why is this stranger emailing me* — and makes the claim
-  falsifiable in the same breath.
+- **Then the owner replaced the argument I had defended.** I had argued to keep
+  "you can check that yourself in about two minutes" as the credibility line. His
+  point: **showing beats telling them to go and look.** Quoting three of the six
+  questions verbatim, with who came back and how many times out of five, delivers
+  the fact instead of promising it, and does not ask a busy practice owner to do
+  our work. He was right, and the falsifiability survives as a short clause —
+  "those are the exact words I used, if you want to try them yourself" — which is
+  **stronger than the paragraph it replaced**, because the reader can now copy the
+  question straight out of the email.
+- **A trap that surfaced while building the lists: the six questions are not
+  interchangeable.** Two of them name a specific town. **Quoting the Birkenhead
+  question at a practice in Upton hands the reader a fair objection** and wastes
+  the email. q01, q04 and q06 are Wirral-wide and safe for anyone on the
+  peninsula. Written into §5 as a rule.
+- **Quoting questions leaks a little of the question library**, which
+  `ops/audit-questions.md` calls the asset that compounds. Judged worth it and
+  recorded so it is a decision rather than an oversight: three generic discovery
+  questions for one trade are not the asset, the library across trades and areas
+  is, and a client is shown all ten before their own audit runs anyway.
 - **`ops/voice.md` added, from `github.com/blader/humanizer`, on the owner's
   instruction and explicitly as a general framework rather than a checklist.**
   It applies to everything a customer reads and to nothing in `ops/` —

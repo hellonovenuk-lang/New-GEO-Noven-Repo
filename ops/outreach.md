@@ -401,14 +401,21 @@ rest.** Eighteen of the thirty-nine named practices are in this position.
 > assistants say when somebody asks them to recommend a local business.
 >
 > Last week I asked ChatGPT, Google's Gemini and Perplexity for a dentist on the
-> Wirral. Six ways of asking, five times each, ninety answers in total.
+> Wirral. Six different ways of asking, five times each.
 >
-> [Practice] came up [N] times: [N] on [assistant], [N] on [assistant]. On
-> [missing assistant], not once. The names that came back there were [A], [B]
-> and [C].
+> Here is what ChatGPT gave back to three of them:
 >
-> You can check that yourself in about two minutes, which is the main reason I'm
-> writing rather than guessing.
+> "Who is the best dentist on the Wirral?" — [A], four times out of five.
+>
+> "Which dental practices on the Wirral do Invisalign?" — [B], [C], [D] and [E].
+> All of them five times out of five.
+>
+> "What are the highest rated private dentists on the Wirral?" — [B], [F] and
+> [E], again all five.
+>
+> [Practice] wasn't named once, on any of the six. It does come up on Gemini and
+> on Perplexity, so this is specific to ChatGPT. Those are the exact words I
+> used, if you want to try them yourself.
 >
 > One thing worth saying, because it's the first thing I'd want to test. I didn't
 > ask about [practice] by name. If you type the name in, all three will probably
@@ -444,13 +451,22 @@ rest.** Eighteen of the thirty-nine named practices are in this position.
 > assistants say when somebody asks them to recommend a local business.
 >
 > Last week I asked ChatGPT, Google's Gemini and Perplexity for a dentist on the
-> Wirral. Six ways of asking, five times each, so ninety answers. Thirty-nine
-> practices got named somewhere in them.
+> Wirral. Six different ways of asking, five times each, so ninety answers.
 >
-> [Practice] wasn't in any of them.
+> Three of the questions, and what came back:
 >
-> That's checkable in about two minutes, which is why I'm writing rather than
-> guessing at it.
+> "Who is the best dentist on the Wirral?" — [A] in thirteen of the fifteen
+> answers, [B] in nine.
+>
+> "Which dental practices on the Wirral do Invisalign?" — [C] and [D] in all
+> fifteen, [E] in fourteen.
+>
+> "What are the highest rated private dentists on the Wirral?" — [E] in all
+> fifteen, [B] in thirteen.
+>
+> Thirty-nine practices got named somewhere across the ninety answers.
+> [Practice] wasn't one of them. Those are the exact words I used, if you want to
+> try them yourself.
 >
 > One thing worth saying, because it's the first thing I'd want to test. I didn't
 > ask about [practice] by name. If you type the name in, all three will probably
@@ -546,10 +562,25 @@ cold emails and not on the site.
 - **The self-audit link is proof, not a second destination.** It is framed as
   "if you want to see what one looks like first", subordinate to the ask. Do not
   let it drift back into being an alternative to replying.
-- **"You can check that yourself in about two minutes" is doing more work than
-  it looks.** It answers the question a cold recipient is actually asking, which
-  is *why is this stranger emailing me*, and it makes the claim falsifiable in
-  the same breath. Keep it.
+- **Show the questions and the names. Do not tell them to go and check.**
+  Changed on the owner's instruction, 2026-08-09. An earlier version made the
+  count the finding and invited the reader to verify it, which asks a busy person
+  to do our work. **Quoting three questions verbatim with who came back, and how
+  many times out of five, is the same fact delivered instead of promised.** The
+  falsifiability survives as one short clause at the end — "those are the exact
+  words I used, if you want to try them yourself" — which is stronger than the
+  paragraph it replaced, because they can now copy the question straight out of
+  the email.
+- **Only quote questions the practice is geographically eligible for.** The six
+  are not interchangeable: two name a specific town. Citing the Birkenhead
+  question at a practice in Upton hands them a fair objection and wastes the
+  email. **q01, q04 and q06 are Wirral-wide and safe for anyone on the
+  peninsula.**
+- **Quoting the questions gives away a little of the question library**, which
+  `ops/audit-questions.md` calls the thing that compounds. Judged worth it: three
+  generic discovery questions for one trade are not the asset, the library across
+  trades and areas is, and a client is shown the full ten before their audit runs
+  anyway.
 - **The verbatim answers are still worth sending — as the reply, not as the
   ask.** Somebody who answers is a warm lead, and a copy-paste of the paragraph
   naming their competitors is the strongest possible second touch. **Strip the
