@@ -35,50 +35,35 @@ const recordNotes = {
 ---
 
 <Base title={title} description={description}>
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <h1>When your customers ask an AI who to use, the answer should include you.</h1>
-        <p class="lede" data-reveal>
-          People increasingly ask ChatGPT, Google, Copilot and Perplexity to recommend an
-          accountant, a solicitor, a clinic or a consultancy — instead of scrolling through search
-          results. Wardith does the work that gets your business into those answers.
-        </p>
-        <div data-reveal>
-          <div class="cta-row">
-            <a class="btn" href="/contact/">
-              Order the {money(audit.price)} audit
-              <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
-                <path
-                  d="M9 1l4 4-4 4M13 5H1"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="square"></path>
-              </svg>
-            </a>
-            <a href="/how-it-works/">See how it works</a>
-          </div>
-          <p class="cta-note">
-            A written report on where you currently show up, and what's in the way. No obligation
-            beyond the {money(audit.price)}.
-          </p>
-        </div>
-      </div>
-
-      {/* The record, written out as the page loads. The same block at every
-          width — it reads at any size, and it is the one thing on the page
-          that is the product rather than a description of it. */}
+  <section class="hero hero--rules">
+    <div class="wrap">
+      <h1>When your customers ask an AI who to use, the answer should include you.</h1>
+      <p class="lede" data-reveal>
+        People increasingly ask ChatGPT, Google, Copilot and Perplexity to recommend an
+        accountant, a solicitor, a clinic or a consultancy — instead of scrolling through search
+        results. Wardith finds out whether those systems can find you, understand you and
+        recommend you, and fixes what's in the way.
+      </p>
       <div data-reveal>
-        <Code
-          caption="What an AI assistant reads on this page"
-          label="Wardith's structured data, as JSON-LD"
-          data={orgSchema}
-          typing
-          notes={recordNotes}
-          notesHint="The marked lines are the facts an assistant repeats back about a business. Point at one — or tap it — to see what it does."
-          intro="You're reading this page. An AI assistant reads the block below instead — the same facts about the business, written so a machine can't mistake them. It's the part no visitor ever sees, and on most business websites there's nothing there at all."
-          note="This is the real thing, not an example: the same block sits in this page's source. View source and you'll find it."
-        />
+        <div class="cta-row">
+          <a class="btn" href="/contact/">
+            Order the {money(audit.price)} audit
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+              <path
+                d="M9 1l4 4-4 4M13 5H1"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="square"></path>
+            </svg>
+          </a>
+          <a href="/ask-your-ai/">Or check us yourself, first</a>
+        </div>
+        <p class="cta-note">
+          The audit is a written report on where you show up today and what's in the way — no
+          obligation beyond the {money(audit.price)}. The second link is the same audit run on
+          ourselves and published in full, including the finding that made us change the name of
+          the company.
+        </p>
       </div>
     </div>
   </section>
@@ -101,8 +86,32 @@ const recordNotes = {
           no results page to check.
         </p>
         <p>
-          The businesses that do appear are the ones whose information the AI systems can find,
-          read and trust. That is fixable, and it's what Wardith does.
+          The businesses that do appear tend to be the ones whose information these systems can
+          find, read and corroborate. Most of that is fixable, and it's what Wardith works on.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Diagnosis before intervention, said early and plainly. It sits this high
+      because it is the fastest way to separate an audit from a sales funnel,
+      and a cold reader decides which one this is within a screen or two. */}
+  <section class="section">
+    <div class="wrap split split--sticky">
+      <div data-reveal>
+        <h2>What if there's nothing wrong?</h2>
+      </div>
+      <div data-reveal>
+        <p>
+          Then the report says so and that's the end of it. The {money(audit.price)} audit is a
+          diagnosis rather than a sales call with a document attached: it stands on its own, it's
+          yours to keep, and you could act on it yourself or hand it to somebody else entirely.
+        </p>
+        <p>
+          Sometimes the biggest thing in the way isn't something we sell. When we ran this audit on
+          our own business, the finding was that the company had picked the wrong name — so that is
+          what the report said, ahead of any of the work we'd have been paid for.
+          <a href="/ask-your-ai/self-audit/">Read it</a>.
         </p>
       </div>
     </div>
@@ -140,9 +149,10 @@ const recordNotes = {
           </div>
           <div class="stage-body">
             <p>
-              Most businesses are invisible to these systems for mundane, correctable reasons:
-              information the crawlers can't read, inconsistent facts across the web, or pages that
-              never answer the questions customers actually ask.
+              When a business is missing, the reason is usually mundane and correctable:
+              information the crawlers can't read, facts about the business that disagree with each
+              other across the web, or pages that never answer the questions customers actually
+              ask.
             </p>
           </div>
         </div>
@@ -165,7 +175,7 @@ const recordNotes = {
   <section class="section">
     <div class="wrap">
       <Statement
-        cite="There is no button we press that makes an AI recommend you. There is a set of things these systems demonstrably rely on, and we make sure you have them."
+        cite="There is no button we press that makes an AI recommend you. There are identifiable things that make a business easier to find, understand and corroborate — we work out which of yours are weak, and fix the ones we can influence."
       >
         It's methodical work, <em>not a trick.</em>
       </Statement>
@@ -205,20 +215,51 @@ const recordNotes = {
             you numbers that can't be checked.
           </p>
           <p>
-            What we can show you is this website. It's built exactly the way we build for clients —
-            plain, fast pages that assistants can read, structured information about the business,
-            and a <a href="/faq/">real FAQ</a> that answers the questions people actually ask. Check
-            it yourself: view this page's source and compare it with the record at the top of this
-            page. Those are the same bytes, not a picture of them.
+            What we can show you is the method, run on ourselves before we sold it to anybody: ten
+            questions, four assistants, 228 recorded answers — and we failed. The report is
+            <a href="/ask-your-ai/self-audit/">published in full</a>, including the finding that
+            made us change the name of the business. Read it, or hand it to whichever assistant you
+            already use and ask what it makes of the work — <a href="/ask-your-ai/">the prompt is
+            written for you</a>, alongside the ones for testing your own business and for checking
+            any provider you're considering, us included.
           </p>
           <p>
-            And there is one thing we can show you that isn't this website. We ran our own audit on
-            ourselves before we sold one to anybody — the full method, ten questions, four
-            assistants — and we failed it. It is <a href="/ask-your-ai/">published here in full</a>,
-            including the finding that made us change the name of the business. Read it, or hand it
-            to your own assistant and ask what it makes of the work.
+            Then there's this website. It's built exactly the way we build for clients — plain, fast
+            pages that assistants can read, structured information about the business, and a
+            <a href="/faq/">real FAQ</a> that answers the questions people actually ask. Check it
+            yourself: view this page's source and compare it with the record below. Those are the
+            same bytes, not a picture of them.
           </p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  {/* The record. It sits below the proof section rather than beside the hero,
+      where it used to be: it is the strongest thing on the page for a reader
+      who already believes there is a problem, and the weakest for one who
+      doesn't. Cold traffic meets the argument first and the JSON afterwards. */}
+  <section class="section">
+    <div class="wrap split split--sticky">
+      <div data-reveal>
+        <h2>What an assistant reads on this page</h2>
+      </div>
+      <div data-reveal>
+        <p>
+          You're reading this page. An AI assistant reads the block below instead — the same facts
+          about the business, written so a machine doesn't have to infer them from the layout. It's
+          the part no visitor ever sees, and on most business websites there's nothing there at all.
+        </p>
+        <Code
+          class="record-panel"
+          caption="What an AI assistant reads on this page"
+          label="Wardith's structured data, as JSON-LD"
+          data={orgSchema}
+          typing
+          notes={recordNotes}
+          notesHint="The marked lines are the facts an assistant repeats back about a business. Point at one — or tap it — to see what it does."
+          note="This is the real thing, not an example: the same block sits in this page's source. View source and you'll find it."
+        />
       </div>
     </div>
   </section>
@@ -230,16 +271,16 @@ const recordNotes = {
       </div>
       <div data-reveal>
         <p>
-          One service, priced in plain numbers. It starts with a
-          <strong>{money(audit.price)} audit</strong> of where you currently show up. If there's
-          work worth doing, the <strong>{money(foundation.price)} Foundation</strong> setup gets you
-          visible, and a monthly plan from <strong>{money(maintain.price)}</strong> keeps you that
-          way. Full details, including what's in each part, are on the
-          <a href="/pricing/">pricing page</a>.
+          One service in three stages, priced in plain numbers. Diagnose: a
+          <strong>{money(audit.price)} audit</strong> of where you currently show up. Fix: if
+          there's work worth doing, the <strong>{money(foundation.price)} Foundation</strong> setup
+          addresses what the audit found. Keep checking: a monthly plan from
+          <strong>{money(maintain.price)}</strong>. Full details, including what's in each part, are
+          on the <a href="/pricing/">pricing page</a>.
         </p>
         <p>
-          The audit is deliberately cheap so that finding out where you stand is an easy decision.
-          If the audit shows you're already in good shape, we'll say so, and that's the end of it.
+          Every stage has to earn the next one. The audit is priced so that finding out where you
+          stand is an easy decision, and nothing obliges you to buy what comes after it.
         </p>
       </div>
     </div>

@@ -27,6 +27,92 @@ document had its argument stripped and sends the reader here.
 
 ---
 
+### 2026-08-09 (the copy and conversion review, applied across all six selling pages)
+
+**The owner supplied a page-by-page review of the live site and asked for
+surgical changes, not a rewrite.** Its two organising principles — *diagnosis
+before intervention, evidence before recommendation*, and *we do not ask for
+trust where verification is possible* — were treated as internal copy standards
+rather than headlines, which is how the review framed them. Priorities 1 and 2
+were implemented in full. Priority 3 is explicitly gated on outreach evidence
+and was left alone.
+
+**The homepage was restructured, and it is the only structural change.** The
+hero was a two-column grid with the JSON-LD record panel beside the headline.
+That put the strongest proof for a reader who *already believes there is a
+problem* in front of the reader who doesn't, which is the wrong way round for
+cold traffic. The hero is now the same single-column `hero--rules` every other
+page uses; the record moved to its own section below the proof section. The
+`.hero-grid` rule in `global.css` had no remaining user and was deleted (a
+comment marks where it was and why). A `.record-panel` rule replaces it — the
+panel now sits in the body column of a split, under the paragraph introducing
+it, and needed the top margin a paragraph would have had.
+
+**Two new homepage sections, both arguing the same thing from different ends.**
+"What if there's nothing wrong?" sits third, directly after the problem
+statement, because a cold reader decides within two screens whether this is an
+audit or a sales funnel. "Where's the proof?" was reordered to lead with the
+self-audit rather than the website — the self-audit is the stronger proof and
+was buried third in its own section. The hero's secondary call to action is now
+`/ask-your-ai/` rather than `/how-it-works/`: outreach traffic is not ready to
+spend £250, and "check us yourself" is a route that costs them nothing.
+
+**The absolute technical claims were tightened everywhere they appeared, and
+this is the change most worth not undoing.** The pattern was the same in six
+places: *everything these systems demonstrably rely on*, *gets you visible*,
+*the format these systems are built to consume*, *this is what an assistant
+reads*, *re-crawl and re-rank*. Each now says what is observable and influenced
+rather than what is guaranteed or known. The site sells an audit that separates
+observation from assumption; copy that overclaims is the one thing that makes
+that unsellable. Nothing was softened into vagueness — "we work on the inputs we
+can observe and influence" is a narrower claim than the one it replaced, not a
+woollier one.
+
+**Foundation was rewritten outcome-first on `how-it-works.astro`.** Four bullets
+that opened with a technical task now open with what changes for the client and
+name the mechanism second. Same four pieces of work, same fixed scope.
+
+**Ongoing was simplified on `how-it-works.astro` and given buyer-fit lines on
+`pricing.astro`.** How It Works now describes the operating model and points at
+pricing for the plan detail, rather than explaining three plans twice. Each plan
+opens with who it is best for. **Lead stopped promising to make you the first
+name mentioned** — in the page copy and in its `schemaDescription`, which is
+published and cached, so the overclaim was in the machine-readable version too.
+
+**The self-audit page got an executive summary and nothing else.** The report
+below it is untouched and should stay untouched: it is evidence, and an edited
+piece of evidence is not one. The summary exists because the report earns its
+conclusion over several thousand words and a busy owner needs the finding in
+twenty seconds. Every number in it is lifted from the report underneath. It also
+carries the Audit → Foundation bridge, because this page is the cleanest
+illustration the business has of a finding that did *not* belong in Foundation.
+
+**The `ask-your-ai` sections were deliberately not reordered, and the reason is
+recorded in the page's own header comment.** The review asked for the free
+self-test to appear earlier. Its own recommended sequence is check-us → check
+yourself → what the paid version adds, which is what the existing order already
+does — moving the self-test above the report would have inverted it. A skip link
+under the hero gives a reader the test in one click instead. The competitor
+due-diligence commentary was compressed from four paragraphs to two: the
+argument is stronger as a structural observation about a young field than as a
+list of things other people do.
+
+**One item was not actioned and needs the owner, not a session.** Review §3F
+asks whether the current £250 audit covers the external corroborating sources
+the site tells clients matter — directories, review ecosystems, company records.
+That is a question about what the audit actually does, not about how it is
+described, and answering it in copy without changing `ops/audit-method.md` would
+be inventing scope. **Decide the scope first; the copy follows.**
+
+**Checked:** `npm run build` clean, `repo-consistency` clean (zero errors
+outside `node_modules`), homepage screenshotted at 1440 and 390 with JavaScript
+off, which is how the reveal animations are bypassed — with JS on, every
+`data-reveal` block is `opacity: 0` until scrolled to, and a full-page
+screenshot captures a blank page. Worth knowing before the next session wastes a
+screenshot on it.
+
+---
+
 ### 2026-08-08 (the condensing pass, run on the files a session actually opens)
 
 **The owner's reason: usage limits are arriving faster.** So the target was

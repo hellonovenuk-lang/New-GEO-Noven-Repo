@@ -28,16 +28,24 @@ const faqs: { q: string; a: string[] }[] = [
     ],
   },
   {
+    q: 'What happens after the audit?',
+    a: [
+      'That depends entirely on what the audit found, which is the point of doing it first. If there is nothing meaningful to fix, the process ends there and you have spent £250 finding that out.',
+      'If there is something to fix, the report says what it is and what we would recommend. Where the work falls inside what Wardith does, that is the Foundation — the fixed-scope setup described on the how it works page. Where it does not, the report says so and explains what should be handled elsewhere, by you or by somebody else. When we ran this audit on our own business, the biggest recommendation was a name change, which is not something we sell.',
+      'Either way, you decide whether anything happens next. Buying the audit does not commit you to the stage after it.',
+    ],
+  },
+  {
     q: 'Can you guarantee that AI assistants will recommend my business?',
     a: [
       'No — and nobody honestly can. These systems are controlled by OpenAI, Google, Microsoft and Perplexity, not by us, and their answers vary and change. Treat anyone who guarantees you a spot in AI recommendations the way you would treat someone guaranteeing you a court win.',
-      'What we can do is make sure everything these systems demonstrably rely on is in place for your business, and then show you plainly how you are showing up over time. The work is real and checkable; the outcome is strongly influenced, not guaranteed.',
+      'What we can do is put the important factors we can actually observe and influence in place for your business, and then show you plainly how you are showing up over time. The work is real and checkable; the outcome is influenced, not controlled.',
     ],
   },
   {
     q: 'How long does it take to see results?',
     a: [
-      'Some changes take effect within weeks — assistants that browse the live web, like Perplexity and the search modes of ChatGPT and Copilot, pick up improved pages as soon as they recrawl them. Other changes take months, because some systems update their underlying knowledge slowly.',
+      'Some changes take effect within weeks — assistants that browse the live web, like Perplexity and the search modes of ChatGPT and Copilot, can begin picking up improved pages once those pages have been recrawled and reprocessed. That is a step towards being recommended rather than the same thing as it. Other changes take months, because some systems update their underlying knowledge slowly.',
       'The honest answer is that timescales vary by business and by assistant, and we will not pretend otherwise. This is why we monitor and report how you are actually showing up, rather than asking you to take progress on faith.',
     ],
   },
@@ -74,7 +82,7 @@ const faqs: { q: string; a: string[] }[] = [
   {
     q: 'Which AI assistants does this cover?',
     a: [
-      'The ones your customers actually use: ChatGPT, Google’s AI-generated results and Gemini, Microsoft Copilot, and Perplexity. The same groundwork also serves newer assistants as they appear, because they draw on the same kinds of sources.',
+      'The ones your customers actually use: ChatGPT, Google’s AI-generated results and Gemini, Microsoft Copilot, and Perplexity. The same groundwork should also serve newer assistants as they appear, because they draw on many of the same kinds of public sources — though that is a reasonable expectation rather than something anyone can promise about a system that does not exist yet.',
     ],
   },
   {
@@ -101,7 +109,7 @@ const faqs: { q: string; a: string[] }[] = [
     q: 'Why should I trust a company with no case studies?',
     a: [
       'You should be sceptical — that is the right instinct, and we would rather meet it head-on than dodge it. Wardith is new, and we do not yet have client results to show. We refuse to invent any.',
-      'Two things stand in the meantime. First, this website is itself built the way we build for clients, and you can check it without taking anything on trust: every answer on this page is also published in the code an assistant reads, so view the source and see that the two say the same thing. Second, the audit exists so you can judge us on a piece of finished work before committing to anything larger — it is the smallest thing we sell, it stands on its own, and nothing obliges you to buy the next stage.',
+      'Three things stand in the meantime. First, we ran the audit on our own business before selling one to anybody, failed it, and published the report in full — including the finding that made us change the company name, which was a recommendation to do something we do not sell. Second, this website is itself built the way we build for clients, and you can check it without taking anything on trust: every answer on this page is also published in machine-readable form in the page’s source, so view the source and see that the two say the same thing. Third, the audit exists so you can judge us on a piece of finished work before committing to anything larger — it is the smallest thing we sell, it stands on its own, and nothing obliges you to buy the next stage.',
     ],
   },
 ];
@@ -158,10 +166,11 @@ const isFlag = (text: string) => text.trim().startsWith('[PLACEHOLDER');
       </div>
       <div data-reveal>
         <p>
-          Every answer above is also published as structured data on this page, which is what an
-          assistant reads when someone asks it about us. View the source and read it: the
-          {money(audit.price)} audit is described there in the same words it is described in here,
-          because both are built from one file. That is the whole method, run on ourselves.
+          Every answer above is also published as structured data on this page, giving machines an
+          explicit version of the same information rather than forcing them to infer it from the
+          visual layout. View the source and read it: the {money(audit.price)} audit is described
+          there in the same words it is described in here, because both are built from one file.
+          That is the whole method, run on ourselves.
         </p>
       </div>
     </div>
