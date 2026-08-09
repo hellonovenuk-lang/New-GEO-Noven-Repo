@@ -282,13 +282,25 @@ place, not on every page.
       submitting any official form. The service address is not a footer field —
       it's a prerequisite for the next registration we fill in.
 - [ ] **Privacy notice page.** Due before the first client sends us anything.
-      Use the ICO's own free generator (`ico.org.uk/create-your-own-privacy-notice`)
-      — written by the regulator, built for sole traders, updated for the Data
-      (Use and Access) Act 2025. It also needs the audit-record retention period
-      from 3d.
+      - [x] **Written 2026-08-09** at `site/src/pages/privacy/`. Not generated:
+            the ICO's generator is still the right cross-check and D2 keeps it,
+            but no generator knows that running an audit types a client's
+            business name into four other companies' AI assistants, or that this
+            site loads its fonts from Google and hands them the reader's IP. Both
+            are disclosed. The retention period from 3d is written in.
+      - [ ] **Blocked on two facts, and it does not publish without them:** the
+            address for service, and where client records live. Both are values
+            in `site/src/data/business.ts`; the page builds when they are set.
 - [ ] **Terms of service.** Mostly a job of collecting what the site already
       commits to — cancellation terms, no guaranteed outcomes, we don't build
       websites — plus the refund position above.
+      - [x] **Written 2026-08-09** at `site/src/pages/terms/`. Carries the refund
+            position in full, the liability cap at fees paid, and the promise
+            nobody can honestly make, stated as plainly as the FAQ already states
+            it. Nothing in it contradicts the pricing page, the FAQ or
+            how-it-works — that was checked line by line, and it is the risk D3
+            warns about with templates.
+      - [ ] **Blocked on the address for service**, same mechanism as above.
 
 #### Has its own legal clock
 
@@ -733,9 +745,13 @@ trigger to move to something else (Zoho Bigin free tier) is when you can't answe
       constraint is that **it is not this repo**, which holds no personal data
       and is written as if public. One named provider, encryption at rest, and a
       backup that has been restored once.
-- [ ] **Decide a retention period and write it into the privacy notice** rather
-      than deciding it twice. Recommendation: life of the relationship plus
-      twelve months, then delete.
+- [x] **Retention decided 2026-08-09 and written into the privacy notice**, so
+      it is now settled in one place rather than recommended in three. Enquiries
+      twelve months; client records the life of the relationship plus twelve
+      months; do-not-contact requests permanently. **Invoices and payments are
+      not ours to choose** — tax law requires at least five years after the
+      31 January deadline for the relevant year, and the notice says so rather
+      than implying we could delete them on request.
 
 ---
 

@@ -1,13 +1,11 @@
 /* The order page, and the hand-off to the Revolut payment link.
  *
  * **This file is a switch, and it is off.** Everything the order route needs is
- * built and merged; none of it reaches the internet until all four conditions
- * below hold. Two of them check themselves — `/terms/` and `/privacy/` are true
- * when those pages exist — so what the owner actually sets by hand is the
- * payment link and one line about the footer. `orderPageLive` is read by the
- * two route files, by the sitemap filter in `astro.config.mjs`, by the header
- * and footer buttons and by the contact page, so nothing can end up half
- * published.
+ * built and merged; none of it reaches the internet until the payment link
+ * below is set *and* the terms and privacy notice are published, which in turn
+ * waits on the address for service. `orderPageLive` is read by the two route
+ * files, by the sitemap filter in `astro.config.mjs`, by the header and footer
+ * buttons and by the contact page, so nothing can end up half published.
  *
  * **Why a switch instead of just building it later.** Taking money on the site
  * moves four items from "deferred" to "legally required" — the terms of
@@ -18,24 +16,10 @@
  *
  * **Business facts do not live here — they live in `business.ts`.** The audit's
  * price is read from there, so this file never restates it. What is here is
- * operational: one URL, two pages that either exist or don't, and one statement
- * about the footer.
+ * operational: one URL and the rules about it.
  */
 
-/* Every page file in the project, listed at build time. `import.meta.glob` is
- * resolved by the bundler from the source tree rather than by reading the disk
- * at run time, so this is a list of what will actually be built. Lazy: nothing
- * here is imported or executed, only counted. */
-const pageFiles = Object.keys(import.meta.glob('/src/pages/**/*.{astro,md}'));
-
-/** Whether a page is actually going to be built at `/<route>/`. Covers both
- *  shapes a page takes in this project, so moving `terms.astro` to
- *  `terms/index.astro` doesn't silently turn the gate off. */
-function pagePublished(route: string): boolean {
-  return pageFiles.some(
-    (file) => file === `/src/pages/${route}.astro` || file.startsWith(`/src/pages/${route}/index.`),
-  );
-}
+import { termsLive, privacyLive } from './legal';
 
 /**
  * **The Revolut Pro payment link for the £250 audit.** Null until the owner
@@ -63,55 +47,21 @@ function pagePublished(route: string): boolean {
 export const paymentLink: string | null = null;
 
 /**
- * **The terms of service, at `/terms/`.** Not a boolean somebody has to
- * remember to flip: it is true when the page exists and false when it doesn't,
- * so it cannot claim a document the site hasn't got. The order form links to it
- * and makes the reader tick it, and a payment form linking to a 404 is the
- * worst possible place for a broken link.
- *
- * What the page has to carry, over and above the ordinary terms, is the refund
- * position: dead or typo'd URLs, a social profile where a website was needed, a
- * business outside our area, duplicate or accidental payments, a change of mind
- * before work starts, and a business we look at and genuinely cannot help.
- * ROADMAP.md 1c has the reasoning — a chargeback costs more than a refund we
- * control, and a plain refund line sells.
- */
-export const termsPublished = pagePublished('terms');
-
-/**
- * **The privacy notice, at `/privacy/`.** Derived the same way, for the same
- * reason.
- *
- * One thing about this build changes what the notice has to say: the order form
- * is a **Netlify** form. Submissions are stored on Netlify's infrastructure and
- * shown in their dashboard before they ever reach the inbox, which makes
- * Netlify a processor of customer data and a disclosable fact about where that
- * data goes. Whoever writes the notice needs that sentence in it.
- */
-export const privacyPublished = pagePublished('privacy');
-
-/**
- * **The address for service of documents is in the site footer.** This one is
- * asserted by hand, because unlike the two above it is not a file that either
- * exists or doesn't — it is a fact about the rendered footer, and it lands with
- * whatever fills the placeholder described in the long comment at the bottom of
- * `Base.astro`.
- *
- * It gates the pay button because taking payment on the site is visibly
- * trading, and trading under a name that is not the founder's surname carries a
- * duty to show a name and a UK address where documents can be served. Set this
- * to `true` in the same commit that fills the footer, not before.
- */
-export const addressPublished = false;
-
-/**
  * True only when every prerequisite is met. When false the two order routes
  * build no HTML at all — they are not unlinked pages or `noindex` pages, they
  * do not exist in `dist` — and every "order the audit" button on the site keeps
  * pointing at the contact page, which sells the same thing by email.
+ *
+ * **The other three conditions are not booleans anybody has to remember to
+ * flip.** `termsLive` and `privacyLive` are true when those pages will actually
+ * be built, which in turn depends on the address for service and on the storage
+ * decision — see `legal.ts`. So the form cannot ship linking to a document the
+ * site hasn't got, and the address requirement is met by the same one value
+ * that fills the footer rather than by somebody asserting it separately.
+ *
+ * Which leaves exactly one thing for a person to set: the payment link above.
  */
-export const orderPageLive =
-  paymentLink !== null && termsPublished && privacyPublished && addressPublished;
+export const orderPageLive = paymentLink !== null && termsLive && privacyLive;
 
 /**
  * Where every "order the audit" control on the site points. One import, so the

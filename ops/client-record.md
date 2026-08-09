@@ -5,9 +5,14 @@ lives. Renamed from `spine.md` on 2026-07-31 — "the spine" was a word used in
 three places and defined in none, and a stranger could not guess what the file
 was for from its name.
 
-**Status: the fields are decided, the storage is not.** Nothing is being kept
-yet, because there is no client. This exists so that the first one doesn't start
-a spreadsheet from scratch, in the wrong place.
+**Status: the fields are decided, the retention is decided, the storage is
+not.** Nothing is being kept yet, because there is no client. This exists so that
+the first one doesn't start a spreadsheet from scratch, in the wrong place.
+
+**The storage decision now blocks something visible.** `/privacy/` has to name
+who holds client records and where, so the notice does not publish until
+`clientDataStorage` is set in `site/src/data/business.ts`. It is no longer only
+an internal tidiness question.
 
 ---
 
@@ -80,10 +85,17 @@ outreach; warm introductions sidestep it entirely.
 
 ## Retention
 
-**Recommendation, not yet decided: life of the relationship plus twelve months,
-then delete.** It has to be decided once and written into the privacy notice
-rather than settled twice in two places — `ROADMAP.md` 3d and 1c both point at
-this, and the privacy notice needs the number before it can be published.
+**Decided 2026-08-09: life of the relationship plus twelve months, then
+delete.** The recommendation was taken as it stood, and it is now published
+wording in `/privacy/` rather than a suggestion in three documents. Alongside it:
+enquiries that go nowhere are kept twelve months, and do-not-contact requests are
+kept permanently, because deleting one defeats its purpose.
+
+**One part of this was never ours to decide.** Invoices and payment records have
+to be kept for as long as tax law requires — at least five years after the
+31 January submission deadline for the relevant tax year — so they outlive the
+retention date in the row above. The notice says so plainly rather than promising
+a deletion we could not perform.
 
 Whatever is chosen, the retention date goes in the row above, so deletion is a
 thing you can do by looking rather than by remembering.

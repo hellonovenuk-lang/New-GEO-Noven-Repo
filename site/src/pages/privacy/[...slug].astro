@@ -1,0 +1,238 @@
+---
+/* `/privacy/` — the privacy notice.
+ *
+ * Same gating pattern and the same reason as `/terms/`. This one needs one
+ * extra fact before it can be true: where client records are kept. See
+ * `src/data/legal.ts`.
+ *
+ * **Two things in here are easy to get wrong by copying a template.** First,
+ * running an audit means typing a client's business name into other companies'
+ * AI assistants — that is a disclosure, and no generated privacy notice would
+ * ever contain it. Second, the site loads its fonts from Google, which sends
+ * the reader's IP address to a third party before they have done anything. Both
+ * are stated plainly rather than left out.
+ */
+import Base from '../../layouts/Base.astro';
+import { business, addressLines } from '../../data/business';
+import { privacyLive } from '../../data/legal';
+
+export function getStaticPaths() {
+  if (!privacyLive) return [];
+  return [{ params: { slug: undefined } }];
+}
+
+const title = 'Privacy notice — Wardith';
+const description =
+  'What Wardith collects about you, why, who else sees it, how long it is kept, and how to have it deleted. No cookies, no analytics, no tracking.';
+
+const address = addressLines(business.addressForService);
+const storage = business.clientDataStorage!;
+
+const lastUpdated = '9 August 2026';
+---
+
+<Base title={title} description={description}>
+  <section class="hero hero--rules">
+    <div class="wrap">
+      <h1>Privacy notice</h1>
+      <p class="lede" data-reveal>
+        What we collect, why we have it, who else sees it, and how to make us delete it. This site
+        sets no cookies, runs no analytics and tracks nobody — so most of what a notice like this
+        usually covers doesn't apply here.
+      </p>
+      <p class="cta-note" data-reveal>Last updated {lastUpdated}.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap wrap--narrow">
+      <div class="doc" data-reveal>
+        <h2>Who is responsible for your information</h2>
+        <p>
+          {business.founder}, trading as {business.name}, is the data controller. That means the
+          decisions about your information are one person's, and the person is named.
+        </p>
+        <ul class="rows">
+          <li>
+            <strong>Email</strong>
+            <a href={`mailto:${business.email}`}>{business.email}</a>
+          </li>
+          <li>
+            <strong>Address</strong>
+            <span>
+              {address.map((line, i) => (
+                <>
+                  {i > 0 && <br />}
+                  {line}
+                </>
+              ))}
+            </span>
+          </li>
+          <li>
+            <strong>ICO registration</strong>
+            <span>
+              {business.icoRegistration} — checkable on the Information Commissioner's public
+              register
+            </span>
+          </li>
+        </ul>
+
+        <h2>Visiting this website</h2>
+        <p>
+          <strong>No cookies. No analytics. No tracking pixels.</strong> Nothing on these pages
+          watches what you read, and nothing follows you to another site. We couldn't tell you how
+          many people visited this page today, and we've decided we'd rather not know than build
+          the thing that would tell us.
+        </p>
+        <p>
+          Two ordinary exceptions, both worth naming rather than glossing over. Our host,
+          <strong>Netlify</strong>, keeps short-lived server logs including IP addresses, as every
+          web host does — that's what serving a page involves. And the site loads its typefaces
+          from <strong>Google Fonts</strong>, which means your browser asks Google for them and
+          Google sees your IP address in the process. Neither is used to identify or profile you by
+          us, and we'd rather you knew about the second one than found it in the page source.
+        </p>
+
+        <h2>Getting in touch, or ordering</h2>
+        <p>
+          If you email us, we have your email address and whatever you wrote. If you order the
+          audit, the form asks for your business name, your email address, your website, the
+          services you want to be found for, the area you serve, and — optionally — what people
+          usually ask you and what a new customer is worth. That's the whole list, and every field
+          on it is there because the report needs it.
+        </p>
+        <p>
+          <strong>Why we're allowed to hold it:</strong> because you asked us to do something. For
+          an enquiry that's our legitimate interest in replying to people who write to us; for an
+          order it's performing the contract you've entered into.
+        </p>
+        <p>
+          Order form submissions go through <strong>Netlify Forms</strong>, so they sit in
+          Netlify's system before they reach our inbox. Payments are taken by <strong>Revolut</strong>,
+          who handle your card details — we never see or hold them.
+        </p>
+
+        <h2>If you become a client</h2>
+        <p>
+          We keep a record of the work: your business name, contact name and email, website, what
+          you want to be found for, the area you serve, which plan you're on and what you've paid,
+          what we did and when, the results of each check, and any access you've given us. It is
+          held with {storage.name} ({storage.where}).
+        </p>
+        <p>
+          Invoices and payment records go through <strong>Zoho Books</strong> and our bank,
+          <strong>Revolut</strong>. Email is <strong>Zoho Mail</strong>, on their European servers.
+        </p>
+
+        <h2>The part that is specific to what we do</h2>
+        <div class="doc-note">
+          <p>
+            <strong>An audit works by asking other companies' AI assistants about you.</strong> To
+            find out how they answer, we have to ask them — so your business name, your website and
+            questions about what you do are typed into systems run by <strong>OpenAI</strong>,
+            <strong>Google</strong>, <strong>Perplexity</strong> and <strong>Microsoft</strong>,
+            and those companies process them under their own terms. We use business API accounts
+            where the provider offers one, which by default keeps the queries out of model
+            training, and for the two assistants that have to be checked by hand we use the
+            ordinary consumer apps.
+          </p>
+          <p>
+            For most clients this is information about a company and not about a person at all. For
+            a sole trader whose business carries their own name, it is both. Either way, we would
+            rather write this paragraph than leave you to work it out.
+          </p>
+        </div>
+        <p>
+          We never send these providers your customers' details, your files, or anything from your
+          website beyond what is already published on it.
+        </p>
+
+        <h2>If we contact you first</h2>
+        <p>
+          We sometimes approach businesses that look like a good fit. Where we do, we hold the
+          business name, a contact, where we found you, what we said and what came back — on the
+          basis of our legitimate interest in finding customers. Say "don't contact me again" and
+          we record that permanently, which is the only way to be sure it's honoured.
+        </p>
+
+        <h2>Who else sees your information</h2>
+        <p>
+          Only the companies above, and only for the job each one does. <strong>
+            We do not sell your information, rent it, or share it for anyone else's marketing.
+          </strong> Nobody makes automated decisions about you.
+        </p>
+        <p>
+          We'd disclose information if the law required it — a court order, a tax investigation —
+          and not otherwise.
+        </p>
+        <p>
+          Some of these companies are based outside the UK, mostly in the United States. Where
+          information goes overseas it is covered by the safeguards UK data protection law
+          requires, which in practice means the UK extension to the EU–US Data Privacy Framework or
+          the standard contractual clauses.
+        </p>
+
+        <h2>How long we keep it</h2>
+        <ul class="rows">
+          <li>
+            <strong>Enquiries</strong>
+            <span>Twelve months, if they don't turn into work.</span>
+          </li>
+          <li>
+            <strong>Client records</strong>
+            <span>
+              For as long as we're working together, and twelve months after that. A client who
+              comes back inside a year is much better served by us still having their baseline;
+              past that it's stale data held for no reason.
+            </span>
+          </li>
+          <li>
+            <strong>Invoices and payments</strong>
+            <span>
+              As long as tax law requires — currently at least five years after the 31 January
+              submission deadline for the relevant tax year. This one isn't our choice.
+            </span>
+          </li>
+          <li>
+            <strong>Do-not-contact requests</strong>
+            <span>Permanently. Deleting the request would defeat its purpose.</span>
+          </li>
+        </ul>
+
+        <h2>Keeping it safe</h2>
+        <p>
+          Accounts carry two-factor authentication where the provider offers it, records are
+          encrypted at rest, and access is limited to one person because there is only one person.
+          Client records are never put in our public code repository — a rule written down
+          precisely so that nobody has to remember it. No system is perfect; if something went
+          wrong that affected you, we'd tell you, and we'd tell the ICO where the law requires it.
+        </p>
+
+        <h2>What you can ask for</h2>
+        <p>
+          You can ask for a copy of what we hold about you, ask us to correct it, ask us to delete
+          it, ask us to restrict what we do with it, ask for it in a portable format, or object to
+          us holding it at all. Email <a href={`mailto:${business.email}`}>{business.email}</a> and
+          we'll answer within one month. It's free, and you don't have to give a reason.
+        </p>
+        <p>
+          In practice this is one person opening a spreadsheet, so a deletion request usually takes
+          minutes rather than the month the law allows.
+        </p>
+        <p>
+          If we get it wrong, you can complain to the Information Commissioner's Office at
+          <a href="https://ico.org.uk/make-a-complaint/" rel="noopener">ico.org.uk</a> or on 0303
+          123 1113. We'd rather you told us first and gave us the chance to fix it, but it's your
+          right either way and you don't need our permission to use it.
+        </p>
+
+        <h2>Changes to this notice</h2>
+        <p>
+          The date at the top is when this was last changed. If something material changes — a new
+          company handling your information, a longer retention period — we'll say so here rather
+          than quietly amend it, and we'll email current clients.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,8 +1,9 @@
 ---
 import '../styles/global.css';
-import { business, plan, money } from '../data/business';
+import { business, plan, money, addressLines } from '../data/business';
 import { organizationSchema } from '../data/schema';
 import { orderHref } from '../data/order';
+import { legalNavItems } from '../data/legal';
 import { toSource } from '../lib/json-code';
 
 interface Props {
@@ -47,6 +48,8 @@ const audit = plan('audit');
    call-to-action in the exact place the design rules exist to prevent. The
    footer's navigation stays — only the ask goes. */
 const isOrderRoute = currentPath.startsWith('/order');
+
+const footerAddress = addressLines(business.addressForService);
 
 // The same object the homepage renders as a visible code block. Pretty-printed
 // rather than minified so that "view source and compare" is a real invitation
@@ -179,6 +182,11 @@ const ogImage = new URL('/og.png', Astro.site);
                 </li>
               ))}
               <li><a href="/contact/">Contact</a></li>
+              {legalNavItems.map((item) => (
+                <li>
+                  <a href={item.href}>{item.label}</a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -194,10 +202,26 @@ const ogImage = new URL('/og.png', Astro.site);
               business.basedIn
             }, available to clients across the {business.areaServedLabel}. Not VAT registered, so
             the prices shown are the prices you pay.
+            {
+              footerAddress.length > 0 && (
+                <>
+                  {' '}
+                  Documents may be served at {footerAddress.join(', ')}.
+                </>
+              )
+            }
           </p>
         </div>
         {/*
-          **The address for service of documents goes here, and it is still owed.**
+          **The address for service of documents renders in the line above, and
+          it is still owed.** Since 2026-08-09 there is nothing left to build for
+          it: set `addressForService` in `data/business.ts` and the sentence
+          appears here, the `PostalAddress` appears in the structured data, and
+          `/terms/` and `/privacy/` start being published. Until then the value
+          is null and every one of those stays silent rather than approximate.
+          The history below is kept because it is the reason for that design.
+
+          ---
           Removed from the rendered page 2026-08-06, by the owner's decision, on the
           eve of submitting the domain to Search Console and Bing. The placeholder
           that stood here published three things to every crawler: the literal token

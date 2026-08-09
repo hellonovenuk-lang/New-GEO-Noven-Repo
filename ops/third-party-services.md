@@ -459,6 +459,20 @@ goes on the website, and one for staff, which we don't need yet.
 already has this scheduled correctly — due before the first client sends us
 anything, not before launch, since the site itself collects nothing.
 
+**Written 2026-08-09, by hand rather than generated, and the generator is still
+worth running.** Two disclosures decide this. An audit works by typing a client's
+business name into systems run by OpenAI, Google, Perplexity and Microsoft, and
+this site loads its typefaces from Google, which hands them every reader's IP
+address. No generator can know either, and a notice that omits them is wrong in
+the two places that are specific to this business. **Use the ICO's generator as a
+checklist against the finished page** — it is the regulator's own view of what a
+notice must cover, and it costs twenty minutes to read the output beside ours.
+
+**The Google Fonts line is a disclosure standing in for a fix.** Self-hosting the
+two typefaces would remove the third-party request entirely, take about an hour,
+and make the page slightly faster as a side effect. Until that happens the notice
+tells the truth about it.
+
 ### D3. Terms of service — nothing to buy
 
 The roadmap's framing here is right and no supplier is needed: most of what we

@@ -119,9 +119,9 @@ Ordered by what it stops.
 | Missing | What it blocks |
 |---|---|
 | **Address for service of documents** | A legal disclosure already owed; the ICO record fix; the site footer; every future official form |
-| **Terms of service** | Taking money under a contract; the refund position that prevents chargebacks |
-| **Privacy notice** | Lawfully holding any customer or prospect information — including an outreach list |
-| **A decision on where client data lives** | The privacy notice, and delivering the first audit lawfully. Constraint: **it cannot be this repo**, which is public |
+| **Terms of service** — written 2026-08-09, unpublished | Taking money under a contract; the refund position that prevents chargebacks. Waiting only on the address for service |
+| **Privacy notice** — written 2026-08-09, unpublished | Lawfully holding any customer or prospect information — including an outreach list. Waiting on the address and on the row below |
+| **A decision on where client data lives** | The privacy notice, and delivering the first audit lawfully. Constraint: **it cannot be this repo**, which is public. It now blocks a page rather than only a habit |
 | **API accounts, keys and spend caps** | Running any audit at all |
 | **A working payment route** | Revenue |
 | **A Foundation method and time budget** | The £800 product, and knowing whether it makes money |
@@ -164,10 +164,21 @@ or destroyed. It also covers the ID check — which leaves a soft footprint on
 the owner's personal credit file — and the order the footer, the ICO address
 change and the structured-data locality decision have to happen in.
 
-**3. Write the terms of service and the privacy notice, and publish both.**
-Nothing external blocks these. Use the ICO's own free privacy notice generator.
-Decide the client-data retention period inside this step rather than twice
-(the standing recommendation is life of the relationship plus twelve months).
+**3. Publish the terms of service and the privacy notice.** ~~Write~~ — **both
+were written on 2026-08-09** and are in the repo at `site/src/pages/terms/` and
+`site/src/pages/privacy/`. The retention period was decided inside that step
+rather than twice: life of the relationship plus twelve months, with tax records
+outliving it because the law says so.
+
+Neither page publishes yet, and neither is waiting on more writing. They are
+waiting on two facts, because both documents state them: **the address for
+service** (step 2), and **where client records live** — the open decision in
+`ops/client-record.md`, which needs one named provider with encryption at rest
+and a backup that has been restored once. Set those two values in
+`site/src/data/business.ts` and both pages go live, the footer fills in, and the
+structured data gains a postal address, all from the same edit.
+
+Read them before they publish. They are terms this business will be held to.
 
 **4. Run one audit end to end, on Wardith itself, and time it.** This is the first
 step that creates an asset instead of removing a risk. It needs no client and no
