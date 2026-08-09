@@ -27,6 +27,64 @@ document had its argument stripped and sends the reader here.
 
 ---
 
+### 2026-08-09 (the humanisation and voice pass — the final copy edit before launch)
+
+- **The brief:** the structural and visual passes were settled and out of scope.
+  This one asked a single question of the existing copy — what still reads as
+  machine-written? — with an explicit standard of restraint: a sentence that
+  already sounds natural, precise and like Wardith gets left alone.
+- **No Humanizer skill exists in this environment or on the account.** The brief
+  named one as the diagnostic framework. It was searched for and is not
+  installed. The brief's own section 3 enumerates the pattern list in full, so
+  that list was used instead. **If a future session is told to "use the
+  Humanizer skill", it will not find one — do not spend the budget looking.**
+- **The finding was one dominant tell, and it was measurable.** Em dashes ran at
+  12.8 per 1,000 words across the site. Edited human prose runs about 2–5. The
+  specific construction was `— and` (20 instances site-wide) and `— so` (6): a
+  clause tacked on after a pause, which is the "claim — qualification —
+  conclusion" rhythm. The site is now at 8.3 per 1,000, and the pages still
+  above that are the ones that should be — the reproduced self-audit report,
+  which is a record and was not touched, and the pasteable prompts on
+  `/ask-your-ai/`, which are an instrument rather than prose.
+- **Em dashes were assessed individually, not banned.** The ones carrying a real
+  beat were kept, deliberately: "228 recorded answers — and we failed", "No —
+  and nobody honestly can", "The rest aren't ranked lower — they're not in the
+  answer."
+- **How it works was over-corrected and then partly put back.** Cutting every
+  flagged dash took it to 1.2 per 1,000, which made it read noticeably drier
+  than the pages either side of it. One was restored. **Uniform absence is its
+  own tell** — the target was natural frequency, never zero.
+- **Three consecutive `X, not Y` list headings on `/ask-your-ai/` were the
+  clearest house pattern after the dashes.** "A range instead of a roll of the
+  dice" / "A stranger's view rather than your own" / "The reason, not just the
+  result". The strongest was kept and the other two flattened to plain noun
+  phrases. The technique survives; the pattern doesn't.
+- **Two manufactured slogans went.** Pricing's "staying visible is maintenance,
+  not magic" (alliterative, advert-shaped) became "ongoing work". The About
+  statement's "One person, one focus, and a written record of everything
+  promised" was a forced rule of three whose middle beat meant nothing.
+- **Deliberate duplicates were broken up.** "Every stage has to earn the next
+  one" appeared verbatim on the homepage and as the how-it-works statement; the
+  homepage copy was cut so the statement keeps it. "A sales call with a document
+  attached" appeared on both the homepage and pricing; pricing keeps it, where
+  it answers the "why does it cost £250" question.
+- **What was protected, and checked afterwards:** every price, the two-working-day
+  turnaround, the no-minimum-term structure, the published self-audit numbers
+  (228 / 168 / 30), the scope language, and all of the transparency copy — the
+  audit that concludes you don't need us, the refusal to guarantee, the absent
+  case studies, the failed self-audit, the promise to publish future audits
+  whatever they say.
+- **Structured data was diffed before and after and is byte-identical**, with one
+  intended exception: a single FAQ answer, because the visible copy and the
+  `FAQPage` JSON-LD are built from the same array and are supposed to move
+  together. Titles and meta descriptions are unchanged.
+- **The specificity rule held.** "Google Business Profile, Bing Places, Companies
+  House…" appears near-verbatim on three pages and reads as templated, but the
+  detail is the value and each instance sits in a different context. Flagged to
+  the owner rather than thinned.
+
+---
+
 ### 2026-08-09 (the visual communication pass — three diagrams, and the rejections)
 
 - **The brief:** the structural and copy review was already done and the site's
