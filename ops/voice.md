@@ -28,9 +28,9 @@ fault in the first version of both cold emails: they opened "I asked ChatGPT..."
 and read as software.
 
 **The same applies to subject lines.** A subject that makes a claim reads as a
-campaign. A subject that names the thing reads as a person. "Upton Dental and
-ChatGPT" is written by someone. "Upton Dental Practice doesn't come up on
-ChatGPT" is written by a growth team.
+campaign. A subject that names the thing reads as a person. "[Practice] and
+ChatGPT" is written by someone. "[Practice] doesn't come up on ChatGPT" is
+written by a growth team.
 
 ---
 
