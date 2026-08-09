@@ -383,11 +383,12 @@ cold.
 cannot address both honestly. Which one a practice gets is decided by the
 mention table.
 
-**Rewritten 2026-08-09 against `ops/voice.md`.** The first versions opened with
-the finding, which is how automated outreach is built, and the subject lines made
-a claim, which is how a campaign is written. **Both now introduce the sender
-first and use a subject that names the thing rather than asserting something
-about it.** That change did more than every word-level edit put together.
+**Rewritten twice on 2026-08-09.** First against `ops/voice.md`, which fixed the
+structure: they had opened with the finding, which is how automated outreach is
+built, and the subjects made a claim, which is how a campaign is written. Then
+again, because the owner read them back and found **two competing invitations** —
+a link to our own audit and a separate offer to send the answers, with nothing
+telling the reader which one to act on. **Both now go one place: the audit.**
 
 **Draft A — for a practice named by one or two assistants and missing from the
 rest.** Eighteen of the thirty-nine named practices are in this position.
@@ -396,33 +397,29 @@ rest.** Eighteen of the thirty-nine named practices are in this position.
 >
 > Hello [name],
 >
-> I'm [owner], I run a small business on the Wirral doing one fairly narrow
-> thing. I check what the AI assistants say when somebody asks them to recommend
-> a local business.
+> I'm [owner]. I run a small business on the Wirral that checks what the AI
+> assistants say when somebody asks them to recommend a local business.
 >
-> I ran the Wirral dentists last week, mostly to see what came back. ChatGPT,
-> Google's Gemini and Perplexity, six ways of asking, five times each. Ninety
-> answers.
+> Last week I asked ChatGPT, Google's Gemini and Perplexity for a dentist on the
+> Wirral. Six ways of asking, five times each, ninety answers in total.
 >
-> [Practice] came up [N] times, [N] on [assistant] and [N] on [assistant]. On
-> [missing assistant] it didn't come up at all. The names that kept coming back
-> there were [A], [B] and [C].
+> [Practice] came up [N] times: [N] on [assistant], [N] on [assistant]. On
+> [missing assistant], not once. The names that came back there were [A], [B]
+> and [C].
 >
-> I don't know how much that matters to you. It's becoming a normal way for
-> people to pick a dentist, and it isn't something an SEO agency would be
-> watching. There are a few reasons a practice gets left out of one assistant
-> and not the others. Which one it is decides whether it's a quick fix or a slow
-> one, and I'd have to look properly to tell you.
+> You can check that yourself in about two minutes, which is the main reason I'm
+> writing rather than guessing.
 >
-> That's what I do, if you want to know. It's £250 and that's the whole cost.
-> You get a written report, it's yours, and you can hand it to whoever looks
-> after your website. There's no monthly plan attached.
+> What I sell is the reason behind it. Ten questions on [practice] across all
+> three assistants, where their answers are actually coming from, and a written
+> report on what's making them pick somebody else. It's £250, that's the entire
+> cost, and the report is yours to act on with me or without me.
 >
-> I've put one of these online in full, run on my own business, including the
-> parts that came back badly: wardith.co.uk/ask-your-ai/self-audit/
+> If you want to see what one looks like first, I ran the same thing on my own
+> business and published all of it, including what came back badly:
+> wardith.co.uk/ask-your-ai/self-audit/
 >
-> If you'd like to see them, reply and I'll send you what the three of them
-> actually said, word for word. If not, say so and I won't email you again.
+> Worth a look at [practice]?
 >
 > [Owner name]
 > Wardith, [address for service]
@@ -437,21 +434,36 @@ rest.** Eighteen of the thirty-nine named practices are in this position.
 >
 > Hello [name],
 >
-> I'm [owner], I run a small business on the Wirral doing one fairly narrow
-> thing. I check what the AI assistants say when somebody asks them to recommend
-> a local business.
+> I'm [owner]. I run a small business on the Wirral that checks what the AI
+> assistants say when somebody asks them to recommend a local business.
 >
-> I ran the Wirral dentists last week. ChatGPT, Google's Gemini and Perplexity,
-> six ways of asking, five times each, so ninety answers altogether.
-> Thirty-nine practices got named somewhere across them.
+> Last week I asked ChatGPT, Google's Gemini and Perplexity for a dentist on the
+> Wirral. Six ways of asking, five times each, so ninety answers. Thirty-nine
+> practices got named somewhere in them.
 >
-> [Practice] wasn't one of them, on any of the three.
+> [Practice] wasn't in any of them.
 >
-> There are a few reasons that happens and they aren't equally serious. Which
-> one it is for [practice] I'd have to look at properly, and it decides whether
-> it's a quick fix or a slow one.
+> That's checkable in about two minutes, which is why I'm writing rather than
+> guessing at it.
 >
-> [Rest as Draft A from "That's what I do" onward.]
+> A practice can be missing for a few different reasons and they aren't equally
+> hard to fix. What I sell is finding out which one applies to you. Ten questions
+> on [practice] across all three assistants, where their answers are actually
+> coming from, and a written report on what to change. It's £250, that's the
+> entire cost, and the report is yours to act on with me or without me.
+>
+> If you want to see what one looks like first, I ran the same thing on my own
+> business and published all of it, including what came back badly:
+> wardith.co.uk/ask-your-ai/self-audit/
+>
+> Worth a look?
+>
+> [Owner name]
+> Wardith, [address for service]
+> hello@wardith.co.uk
+>
+> I found the practice through Companies House and your own website. If you'd
+> rather I didn't keep your details, tell me and I'll delete them.
 
 ### What the email gives away, and what it does not
 
@@ -495,17 +507,26 @@ cold emails and not on the site.
 - **The number is the email.** "[N] times on one, zero on another" is checkable
   in five minutes, which is exactly why it works. **Do not soften it into "you
   may not be appearing".**
-- **The ask is the answers, and it replaced a bad one on 2026-08-09.** The
-  drafts previously ended by offering to send "the six questions I'd ask about
-  [practice]". Wrong twice: nobody wants six questions, it is an artefact from
-  our side of the desk offered as though it were a benefit; and **the audit is a
-  ten-question frame** (`ops/audit-questions.md`), six being the trade run's
-  number, so the line named a thing that does not exist.
-  **Offer the verbatim answers instead.** We already hold ninety of them, a
-  practice owner genuinely wants to read the ones naming their competitors, and
-  it costs nothing to send.
-- **Send the answer text and not the source list.** The sources are the
-  diagnostic clue and they stay in the paid report, per the rule below.
+- **One destination, and it is the audit.** Two earlier versions failed here.
+  The first offered "the six questions I'd ask about [practice]" — nobody wants
+  six questions, it is an artefact from our side of the desk, and it named a
+  thing that does not exist, because **the audit is a ten-question frame**
+  (`ops/audit-questions.md`) and six was the trade run's number. The second
+  offered to send the verbatim answers, which is a good thing to have but sat
+  directly after a link to our own audit, leaving two invitations and no
+  instruction. **A cold email gets one action.**
+- **The self-audit link is proof, not a second destination.** It is framed as
+  "if you want to see what one looks like first", subordinate to the ask. Do not
+  let it drift back into being an alternative to replying.
+- **"You can check that yourself in about two minutes" is doing more work than
+  it looks.** It answers the question a cold recipient is actually asking, which
+  is *why is this stranger emailing me*, and it makes the claim falsifiable in
+  the same breath. Keep it.
+- **The verbatim answers are still worth sending — as the reply, not as the
+  ask.** Somebody who answers is a warm lead, and a copy-paste of the paragraph
+  naming their competitors is the strongest possible second touch. **Strip the
+  source list first:** the sources are the diagnostic clue and they belong in the
+  paid report.
 - **Never claim the assistants disagree in general.** They mostly agree — 21 of
   39 practices are named by all three. A prospect who checks that claim finds it
   false and stops reading. The gap is per practice.

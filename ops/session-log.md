@@ -263,21 +263,31 @@ document had its argument stripped and sends the reader here.
   a supplier and saying `[PLACEHOLDER]` where the country goes. **It now checks
   the string as well as the object.** Site rebuilt: nine pages, `/privacy/`,
   `/terms/` and `/order/` all still correctly absent.
-- **The emails' closing ask was wrong twice, and the owner caught both.** Both
-  drafts ended by offering to send "the six questions I'd ask about [practice]".
-  **Nobody wants six questions** — it is an artefact from our side of the desk,
-  offered as though the recipient would value it. And **it named a thing that
-  does not exist**: the audit is a ten-question frame (`ops/audit-questions.md`);
-  six was the trade run's number. The line survived from a draft written before
-  the run existed, which is how a stale detail gets carried into copy nobody
-  re-reads from the recipient's side.
-- **The replacement is the one thing they would actually want: the answers.** We
-  hold ninety of them. A practice owner reading the verbatim text where three
-  competitors get recommended and they do not is a stronger pull than any offer
-  we could construct, it costs nothing to send, and **it stays inside the
-  give-away rule because it is observation rather than diagnosis.** The source
-  list is stripped before sending — the sources are the diagnostic clue and they
-  belong in the paid report.
+- **The emails took three passes to get a working close, and the owner rejected
+  the first two.** Worth recording as a sequence, because each failure was a
+  different kind.
+  - **"Reply and I'll send the six questions I'd ask about [practice]."** Nobody
+    wants six questions: it is an artefact from our side of the desk offered as
+    though the recipient would value it. **And it named a thing that does not
+    exist** — the audit is a ten-question frame (`ops/audit-questions.md`), six
+    being the trade run's number. It survived from a draft written before the run
+    existed, which is how a stale detail gets carried into copy nobody re-reads
+    from the recipient's side.
+  - **"Reply and I'll send what they actually said."** A better offer, in the
+    wrong place. It sat immediately after the link to our own self-audit, so the
+    email ended with **two invitations and no instruction**, and "see them" had
+    no clear referent after a link had intervened. **A cold email gets one
+    action.**
+  - **What landed: one destination, and it is the audit.** The self-audit link is
+    reframed as proof rather than an alternative — "if you want to see what one
+    looks like first" — and the close is a single question. The verbatim answers
+    are kept, but as the *reply* to somebody who bites rather than as the ask.
+    That is the strongest possible second touch and it costs a copy-paste.
+- **One line is doing more work than it looks and should not be edited out.**
+  "You can check that yourself in about two minutes, which is the main reason I'm
+  writing rather than guessing." It answers the question a cold recipient
+  actually has — *why is this stranger emailing me* — and makes the claim
+  falsifiable in the same breath.
 - **`ops/voice.md` added, from `github.com/blader/humanizer`, on the owner's
   instruction and explicitly as a general framework rather than a checklist.**
   It applies to everything a customer reads and to nothing in `ops/` —
