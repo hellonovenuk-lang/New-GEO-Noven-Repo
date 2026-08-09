@@ -7,4 +7,8 @@
 __pycache__/
 *.pyc
 
+# Per-machine Claude Code tool permissions. Personal to whoever is sitting at
+# the keyboard, not a fact about the business, so it stays out of the record.
+.claude/settings.local.json
+
 .DS_Store
