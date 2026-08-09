@@ -18,8 +18,9 @@ ops/outreach.md section 4 rather than a report.
 
 Stdlib only, no pip install needed. Requires Python 3.9+.
 
-Env vars (source ~/.noven/env first, then set the three model vars from
-what you recorded in audit-setup.md section 2 — do not guess a model name):
+Env vars — six of them, loaded from the keys file before running. On Windows
+that is `. "$HOME\.noven\env.ps1"`; elsewhere `source ~/.noven/env`. See
+"Setting up the machine" in README.md, and do not guess a model name:
   OPENAI_API_KEY       OPENAI_MODEL
   GEMINI_API_KEY        GEMINI_MODEL
   PERPLEXITY_API_KEY    PERPLEXITY_MODEL
@@ -68,9 +69,9 @@ def env(name):
     v = os.environ.get(name)
     if not v:
         sys.exit(
-            f"Missing {name} — source ~/.noven/env first, and make sure the "
-            f"model env vars are set from what you recorded in "
-            f"audit-setup.md section 2."
+            f"Missing {name} — load the keys file first "
+            f"(Windows: . \"$HOME\\.noven\\env.ps1\"), and make sure all six "
+            f"variables are set. See 'Setting up the machine' in README.md."
         )
     return v
 

@@ -196,6 +196,28 @@ document had its argument stripped and sends the reader here.
   stops mattering — running dry silently charges the card, which during a
   spending freeze is the exact event the freeze exists to prevent. Flagged in
   `ops/accounts.md` and in the trade-run README rather than only here.
+- **The owner's local Claude Code terminal had neither git nor the keys, and
+  that is one cause rather than two.** Claude Code on Windows runs its shell
+  through Git Bash, which arrives with Git for Windows — with git missing, the
+  shell is not the one any of these instructions assume, so variables set in a
+  PowerShell window are invisible to it. Written into
+  `ops/trade-run/README.md` as "Setting up the machine", with the three
+  one-line checks that tell you which of git, Python and the keys file is
+  actually absent.
+- **The keys most likely already exist.** `ops/name-check/README.md` loads the
+  same three keys from `$HOME\.noven\env.ps1`, so if the name check was ever run
+  on that machine the file is there and needs dot-sourcing, not recreating.
+  **That file keeps the old name deliberately** — it is private to one machine,
+  nothing published reads it, and renaming it silently breaks the name-check
+  runbook. Same reasoning as `hello.noven.uk@gmail.com` in
+  `ops/rename-to-wardith.md` F10.
+- **The script's own error message was wrong on Windows** — it said
+  `source ~/.noven/env`, which is not how that machine loads it. It now names
+  the PowerShell form and points at the README. A setup instruction that is
+  wrong on the only machine it runs on is worse than no instruction.
+- **Python from `python.org`, not the Microsoft Store**, and tick "Add
+  python.exe to PATH". The Store build sandboxes file access in ways that break
+  a script writing outside the user profile, which is exactly what `--out` does.
 - **A design rule fell out of the smoke-test history, and it is worth more than
   the run it was found for.** `ops/audit-setup.md` §8a records that Gemini's
   grounding tool has no location parameter at this access tier, cannot be fixed,

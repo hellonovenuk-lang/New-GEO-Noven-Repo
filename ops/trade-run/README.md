@@ -30,13 +30,112 @@ the six categories — a set of six discovery questions counts one thing six tim
 
 ---
 
+## Setting up the machine — Windows
+
+*Written 2026-08-09, when the owner's Claude Code terminal reported that it had
+neither git nor the API keys.*
+
+**Those two symptoms usually have one cause.** Claude Code on Windows runs its
+shell through **Git Bash**, which arrives with Git for Windows. With Git missing,
+`git` fails *and* the shell you get is not the one the instructions assume — so
+environment variables set in a PowerShell window are invisible to it.
+
+### First, find out what is actually missing
+
+Run these three, and read the failures rather than guessing:
+
+```powershell
+git --version
+py --version
+Test-Path "$HOME\.noven\env.ps1"
+```
+
+- **`git` fails** → install **Git for Windows** from `git-scm.com`, take the
+  defaults, then **close and reopen the terminal**. `PATH` is only read at
+  startup, so a terminal open during the install will keep saying git is missing
+  and it is not lying, it is stale.
+- **`py` fails** → install Python from **`python.org`**, and tick **"Add
+  python.exe to PATH"** on the first screen of the installer. **Not the Microsoft
+  Store build** — it sandboxes file access in ways that break scripts writing
+  outside the user profile. This closes the open question in "Running it" above.
+- **`Test-Path` returns `False`** → the keys file does not exist on this machine;
+  see below.
+
+### The keys are probably already there
+
+**`$HOME\.noven\env.ps1` is the existing convention** — `ops/name-check/README.md`
+loads the same three keys from it, so if the name check was ever run on this
+machine, the file exists and holds the keys. Load it into the current terminal
+with a dot and a space:
+
+```powershell
+. "$HOME\.noven\env.ps1"
+```
+
+**The path keeps the old name on purpose.** It is a private file on one machine,
+nothing published reads it, and renaming it silently breaks
+`ops/name-check/README.md`. Same reasoning as `hello.noven.uk@gmail.com` in
+`ops/rename-to-wardith.md` F10: an identity that carries the old name is left
+alone.
+
+### If the file does not exist, create it once
+
+```powershell
+mkdir "$HOME\.noven" -Force
+notepad "$HOME\.noven\env.ps1"
+```
+
+Paste this, with the real values, and save:
+
+```powershell
+$env:OPENAI_API_KEY     = "sk-..."
+$env:GEMINI_API_KEY     = "..."
+$env:PERPLEXITY_API_KEY = "pplx-..."
+$env:OPENAI_MODEL       = "gpt-5.5"
+$env:GEMINI_MODEL       = "gemini-3.6-flash"
+$env:PERPLEXITY_MODEL   = "sonar"
+```
+
+The three model strings are what the 2 August run actually used
+(`ops/competitor-analysis.md` Part 2). **Confirm each is still current in its own
+console** — a retired identifier fails loudly, which is fine, but a silently
+substituted one is not.
+
+**The keys also go in Bitwarden**, per `ops/audit-setup.md` §2 step 1. The file
+is the working copy; the vault is the copy of last resort.
+
+**Three rules about this file, all from `ops/audit-setup.md` §2:**
+
+- **It lives outside every git repository.** `$HOME\.noven\` is not inside the
+  repo and must stay that way.
+- **It is loaded deliberately, never from a profile script.** A key that is only
+  in the environment when you meant it to be cannot leak into an unrelated
+  process.
+- **No key string ever appears in a file inside this repo**, and none is ever
+  pasted into a cloud session — including a Claude Code session running on the
+  web, which is a different machine from this one.
+
+### Then
+
+```powershell
+git fetch origin
+git checkout claude/initial-client-outreach-uvo1ow
+cd ops\trade-run
+mkdir "$HOME\wardith-runs" -Force
+. "$HOME\.noven\env.ps1"
+```
+
+and run the smoke test below.
+
+---
+
 ## Running it
 
 **Three things have to be true first, and two of them are not.**
 
-1. **API keys in the environment**, per `ops/audit-setup.md` §2. `~/.noven/env`
-   holds the keys; the three model variables are set from what that section
-   recorded. **Do not guess a model name.**
+1. **API keys in the environment**, per `ops/audit-setup.md` §2, and on Windows
+   see "Setting up the machine" below — the keys most likely already exist at
+   `$HOME\.noven\env.ps1` from the name-check run. **Do not guess a model name.**
 2. **Funded balances on all three. Read the next section — one of them is
    short.**
 3. **Python 3.9 or later.** Stdlib only, nothing to install.
