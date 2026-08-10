@@ -168,6 +168,76 @@ document had its argument stripped and sends the reader here.
   which is personal data about named people before anybody has replied. That
   list was the easy thing to get wrong, because it does not feel like client
   data.
+- **The recommendation above lasted about an hour.** The owner asked whether the
+  records could just live on their own hard drive. They can — entry below.
+
+---
+
+### 2026-08-10, later still (the owner's question beats the researched answer)
+
+- **"Can't I just store the data locally?" is the right answer, and the
+  recommendation is changed to it.** All three failures of the consumer
+  Microsoft account came from putting a third party in the storage. Take the
+  third party out and they do not reappear in another form: **no processor means
+  no Article 28 contract to need**, no supplier's data location to publish
+  — `where` becomes "the United Kingdom" because a laptop in the Wirral is in
+  the UK — and Microsoft's non-commercial clause does not reach a folder on a
+  disk. **£0 a month against £261 a year.**
+- **It also publishes a better sentence.** "Your records are held by us, in the
+  United Kingdom, and are not passed to a cloud storage provider" is shorter,
+  stronger and one fewer recipient a reader has to take on trust than naming a
+  US-headquartered supplier. On a site whose product is verifiable published
+  facts, **the simpler true claim is worth more than the more impressive one** —
+  and that is a reason, not a rationalisation, because it is the same argument
+  the site makes about everybody else's business.
+- **Two conditions, and they are the entire cost.** Full-disk encryption on and
+  verified, recovery key stored off the encrypted disk. And a backup that has
+  been restored once — **an Article 32 requirement rather than prudence**, since
+  the article requires the ability to restore availability after a physical or
+  technical incident. The backup has to be an encrypted drive kept away from the
+  laptop; a cloud backup walks straight back into the processor question. About
+  £40 once, against a subscription forever.
+- **The trap that would have caught this silently.** Windows signed in to a
+  Microsoft account backs up Desktop and Documents to OneDrive by default. **"I
+  store it locally" then becomes "it is in the consumer OneDrive account we just
+  ruled out", with nobody having decided anything.** Turning it off, confirming
+  it is off, and re-checking after Windows feature updates is now written into
+  `ops/client-record.md`. This is the most valuable single line in the section.
+- **A rule that follows, and it is the one to hold to.** **`clientDataStorage`
+  must not be set until encryption is on and a restore has been tested**, because
+  setting it publishes `/privacy/`, and `/privacy/` is a published claim about
+  how this business protects other people's data. Publishing that early would be
+  the footer `[PLACEHOLDER]` fault again, except worse — a reader could not tell.
+  **The value stays unset in this commit deliberately**, which is the difference
+  between recording a decision and pretending it has been performed.
+- **What local storage does *not* fix, and this is the honest half.** Writing a
+  client's `.docx` in a consumer copy of Word is still commercial use under
+  §13.h.i. **But it decouples the Office licence from the data question**, which
+  is the real gain: the licence becomes a contract matter with Microsoft to be
+  settled on its own merits — accept it, use LibreOffice, or buy Business
+  Standard for the apps alone — rather than a regulator-facing problem forcing a
+  £261/year purchase during a spending freeze.
+- **Nor does it empty the privacy notice of processors.** Netlify holds order
+  submissions, Zoho holds mail, and running an audit types a client's business
+  name into four other companies' assistants. All already disclosed. What goes
+  away is a *storage* provider, which is one row of a list, not the list.
+- **A limit on this session's evidence, recorded rather than glossed.**
+  `ico.org.uk` returns HTTP 403 to automated fetching — the same wall that stops
+  the register being checked from here — so the ICO's positions on encryption
+  and on breach reporting are reported from search summaries of their guidance
+  rather than from the pages. **The summaries contradicted each other on one
+  point: whether a lost *encrypted* device must still be reported to the ICO.**
+  That is left open in `ops/client-record.md` rather than resolved by picking
+  the more convenient reading, with the two pages named for a browser. The
+  Article 28, 32, 33 and 34 obligations themselves are statute and are not in
+  doubt.
+- **The pattern worth keeping, since it has now fired twice in one day.**
+  Yesterday's error was treating a supplier's *name* as a specification.
+  Today's near-miss was accepting the first well-researched answer to a question
+  nobody had challenged the framing of. **The £261/year was correct given
+  "which Microsoft product?" and irrelevant given "does a third party need to be
+  involved at all?"** Sourcing an answer thoroughly is not the same as checking
+  the question, and the second is cheaper.
 
 ---
 

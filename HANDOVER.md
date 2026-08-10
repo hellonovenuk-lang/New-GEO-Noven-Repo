@@ -124,7 +124,7 @@ Ordered by what it stops.
 | ~~**Address for service of documents**~~ | **Exists as of 2026-08-10** — UK Postbox, Poole. Published in the footer and the structured data, and the ICO record was changed the same day. Row kept for one session so nobody re-solves it; the account facts are in `ops/accounts.md` |
 | ~~**Terms of service**~~ — **published 2026-08-10** | Nothing. It went live with the address, which is all it was waiting on |
 | **Privacy notice** — written 2026-08-09, unpublished | Lawfully holding any customer or prospect information — including an outreach list. **Now waiting on one value only**: the row below |
-| **A Microsoft 365 Business subscription, tenant country United Kingdom** | The privacy notice, the order page, and delivering the first audit lawfully. **Reopened 2026-08-10.** This row used to read "the country Microsoft holds the OneDrive data in" and call it a two-minute lookup. It isn't: the account opened is a **consumer** one, which has no data-location commitment, no Article 28 processor contract, and terms barring commercial use. The fix is a purchase — Business Basic £5.40/user/month exc VAT, Business Standard £18.10 and the cleaner answer. **The tenant country is set once at creation and cannot be changed: enter United Kingdom.** `ops/client-record.md` |
+| **Full-disk encryption switched on, and a backup restored once** | The privacy notice, the order page, and delivering the first audit lawfully. **Reopened and re-answered 2026-08-10.** This row first read "the country Microsoft holds the OneDrive data in" and called it a two-minute lookup; the account opened turned out to be a **consumer** one, which cannot hold client records at all. **The answer is to hold them locally on the founder's own encrypted machine** — no processor, so no Article 28 contract, no supplier's country to publish, £0 a month. What is missing is the two conditions: **BitLocker on and verified with the recovery key stored off the disk**, and **an encrypted backup drive kept off-site, restored once**. About an afternoon and £40. `ops/client-record.md`, "Storing it locally" |
 | **API accounts, keys and spend caps** | Running any audit at all |
 | **A working payment route** | Revenue |
 | **A Foundation method and time budget** | The £800 product, and knowing whether it makes money |
@@ -227,30 +227,54 @@ outliving it because the law says so.
 with the footer sentence and the `PostalAddress` in the structured data — one
 edit, four effects, which is the whole reason those facts live in one file.
 
-**`/privacy/` is the one still down, and what it is waiting on changed on
+**`/privacy/` is the one still down, and what it is waiting on changed twice on
 2026-08-10.** It needs `clientDataStorage.where` in
-`site/src/data/business.ts` — the country Microsoft states it holds the data in.
-This was recorded as a lookup. It is not one: **the Microsoft account opened is
-a consumer account, and it cannot hold client records.** Research that day, with
-sources, found three independent reasons — Microsoft publishes no data-location
-commitment for consumer services, the Article 28 processor terms UK GDPR
-requires attach to Commercial Licensing rather than consumer subscriptions, and
-Microsoft Services Agreement §13.h.i says the consumer Microsoft 365 plans are
-for personal, non-commercial use.
+`site/src/data/business.ts` — the country the records are held in.
 
-**The fix is a Microsoft 365 Business subscription, and the one irreversible
-step is the tenant country: enter United Kingdom.** It is chosen at creation and
-cannot be changed afterwards. A UK tenant carries a Product Terms data residency
-commitment for OneDrive — data at rest in the UK, Microsoft's UK data centres
-being Cardiff, Durham and London — which makes this value a truthful "the United
-Kingdom" and answers the processor-contract problem at the same time. Business
-Basic is £5.40 per user/month exc VAT; Business Standard £18.10 and it replaces
-the consumer subscription rather than sitting beside it.
-`ops/client-record.md`, "The consumer account problem", has the full argument
-and the sources.
+**First it got worse.** This had been recorded as a lookup, and it is not one:
+the Microsoft account opened is a **consumer** account, which cannot hold client
+records. Three independent reasons, with sources in `ops/client-record.md` —
+Microsoft publishes no data-location commitment for consumer services; the
+Article 28 processor terms UK GDPR requires attach to Commercial Licensing
+rather than consumer subscriptions; and Microsoft Services Agreement §13.h.i
+says the consumer Microsoft 365 plans are for personal, non-commercial use.
 
-**Until that is bought, nothing goes in the account** — not a client record and
-not the outreach list.
+**Then the owner asked whether the records could just live on their own hard
+drive, and that dissolved it.** All three failures came from involving a third
+party in storage. Hold the records locally and there is no processor to contract
+with, no supplier's country to publish, and no consumer-terms problem — and the
+value becomes a truthful "the United Kingdom" for **£0 a month** rather than
+£261 a year. It is also the plainer sentence to publish, which is worth
+something on a site that sells verifiable facts.
+
+**Two conditions come with it and neither is optional:**
+
+1. **Full-disk encryption on and verified** — BitLocker or Device Encryption,
+   actually switched on, with the recovery key stored somewhere that is *not*
+   the encrypted disk.
+2. **A backup that has been restored once.** Article 32 requires the ability to
+   restore availability after a physical or technical incident, so this is a
+   legal requirement rather than prudence. **An encrypted external drive kept
+   away from the laptop** — a cloud backup would walk straight back into the
+   processor question.
+
+**The trap that will catch this if nothing else does:** Windows signed in to a
+Microsoft account backs up Desktop and Documents to OneDrive by default, so
+"stored locally" silently becomes "stored in the consumer account we just ruled
+out". Turn it off, confirm it is off, and re-check after Windows feature
+updates.
+
+**What this does not fix:** writing client `.docx` files in a consumer copy of
+Word is still commercial use under §13.h.i. That is now a contract question with
+Microsoft to be decided on its own merits, not a regulator-facing one forcing a
+purchase.
+
+**Do not set `clientDataStorage` until both conditions are true.** Setting it
+publishes `/privacy/`, which is a published claim about how this business
+protects other people's data.
+
+**In the meantime nothing goes in the consumer account** — not a client record
+and not the outreach list.
 
 **One thing changed in the terms to make that gap safe.** The "Your information"
 section links to the privacy notice only while the notice exists; while it
@@ -303,9 +327,9 @@ email has to carry the address for service, and there has to be somewhere to
 keep a permanent do-not-contact record. **A warm route would have let us start
 without either.** **The address half is done from 2026-08-10** — put the mailbox
 line, not the courier line, in the email footer. The do-not-contact record is
-still the storage decision, and as of 2026-08-10 that means buying a Microsoft
-365 Business subscription rather than looking up a setting — same blocker as
-`/privacy/`, larger than it looked.
+still the storage decision, and as of 2026-08-10 that means switching on
+encryption and testing a restore on the owner's own machine — same blocker as
+`/privacy/`, and an afternoon's work rather than a subscription.
 
 ### Not on the critical path, despite appearances
 

@@ -68,13 +68,15 @@ the above rather than good manners:
 - **`/privacy/`** already carries the paragraph this needs — the "If we contact
   you first" section names legitimate interest and permanent opt-out recording.
   It still does not publish. **The address half cleared on 2026-08-10, and the
-  storage half got harder the same day.** The Microsoft account the owner opened
-  is a consumer one, which cannot lawfully hold client or prospect records at
-  all: no data-location commitment, no Article 28 processor contract, and terms
-  barring commercial use. **The fix is a purchase — a Microsoft 365 Business
-  subscription with the tenant country set to United Kingdom** — and it is now
-  the only thing standing between this plan and a lawful first batch.
-  `ops/client-record.md`, "The consumer account problem".
+  storage half broke and was rebuilt the same day.** The Microsoft account the
+  owner opened is a consumer one, which cannot lawfully hold client or prospect
+  records at all: no data-location commitment, no Article 28 processor contract,
+  and terms barring commercial use. **The answer settled the same day is to hold
+  the records locally, on the owner's own encrypted machine**, conditional on
+  full-disk encryption being on and a backup having been restored once. That is
+  now the only thing standing between this plan and a lawful first batch, and it
+  costs an afternoon rather than a subscription. `ops/client-record.md`,
+  "Storing it locally".
 - ~~**The address for service**~~ — **live 2026-08-10.** UK Postbox, Poole,
   £12/month. The line to put in an email is the **mailbox** address:
   `Lytchett House, 13 Freeland Park, Wareham Road, Poole, Dorset, BH16 6FA`.
@@ -85,11 +87,13 @@ the above rather than good manners:
 biggest cost of the change of plan, and half of it is now paid: the first cold
 email needed `business.addressForService` and `business.clientDataStorage` both
 set in `site/src/data/business.ts`, and as of 2026-08-10 the address is in.
-**The storage half is the whole of what is left**, and it is a purchase rather
-than an edit. Until it is made, **the prospect list itself may not be stored in
-the consumer Microsoft account** — a list of named people at named practices is
-personal data before anybody has replied, which is the trap in believing this is
-only about clients.
+**The storage half is the whole of what is left.** Until it is done, **the
+prospect list itself may not be stored in the consumer Microsoft account** — a
+list of named people at named practices is personal data before anybody has
+replied, which is the trap in believing this is only about clients. **The
+67-row Companies House sweep from §3 is already that list**, so this is not
+hypothetical: it needs an encrypted machine to sit on before it is built out
+with contact names.
 
 ---
 

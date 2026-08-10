@@ -6,13 +6,12 @@ three places and defined in none, and a stranger could not guess what the file
 was for from its name.
 
 **Status: the fields are decided, the retention is decided, and the storage
-provider was decided on 2026-08-09 — but two steps remain before `/privacy/` can
-publish.** Nothing is being kept yet, because there is no client. This exists so
-that the first one doesn't start a spreadsheet from scratch, in the wrong place.
+question was reopened on 2026-08-10 and re-answered the same day.** Nothing is
+being kept yet, because there is no client. This exists so that the first one
+doesn't start a spreadsheet from scratch, in the wrong place.
 
-**The storage decision blocks something visible.** `/privacy/` has to name who
-holds client records and where. Naming the provider was half of it; **the
-country and the tested restore are the other half**, and both are below.
+**The storage decision blocks something visible.** `/privacy/` has to say who
+holds client records and where.
 
 **As of 2026-08-10 this is the only thing `/privacy/` is waiting on.** The
 address for service — the other half of that gate since it was written — went
@@ -24,8 +23,17 @@ both a live order page and a lawful first cold email.
 decision". That was wrong, and the research on 2026-08-10 is why.** The owner
 opened a **consumer** Microsoft account, and a consumer account has no data
 location to look up, no contract that would let us process client data through
-it, and terms that bar the use outright. Section "The consumer account problem"
-below has the sourced detail. **It is a decision after all, and it costs money.**
+it, and terms that bar the use outright — "The consumer account problem" below
+has the sourced detail.
+
+**Then the owner asked whether the records could just live on their own hard
+drive, and that is the answer.** It is lawful, it costs nothing, and it makes
+the published sentence shorter and more credible. **"Storing it locally" below is
+the recommended route and carries the two conditions it depends on** — full-disk
+encryption, and a backup that has been restored once. Neither is optional and
+both are cheap. **`clientDataStorage` stays unset until both are done**, because
+setting it publishes a claim about how this business protects other people's
+data.
 
 ---
 
@@ -40,21 +48,31 @@ personal data under UK GDPR. That is what the ICO registration was taken out for
 for, so it adds no supplier and no cost; the `.docx` audit masters live there
 natively instead of being moved by hand; and version history gives a restore that
 can actually be tested, which a brand-new account could not have offered for
-weeks. `business.clientDataStorage` is set.
+weeks.
 
-**Two things are still owed before this counts as done, and they are not
+**That decision did not survive 2026-08-10 and the two sections below are why.**
+The account opened was a consumer one, which fails on three counts; the answer
+that replaced it is to hold the records locally on an encrypted machine. **The
+2026-08-09 reasoning is kept above rather than deleted**, because two of its
+three arguments were sound and still are — no new supplier, no new cost, and a
+restore that can be tested — and the local route satisfies all three better than
+a Microsoft Business subscription would. What was wrong was the assumption that
+"we already have Microsoft" identified a product.
+
+**Two things are still owed before any of this counts as done, and they are not
 paperwork:**
 
-- **The country Microsoft holds the data in.** `business.clientDataStorage.where`
-  is deliberately a `[PLACEHOLDER]`, because the privacy notice states it in
-  published wording and the answer depends on the account rather than on
-  Microsoft in general. `/privacy/` will not build while the placeholder is
-  there — the gate in `site/src/data/legal.ts` checks the string, not just the
-  object. **The answer depends on which kind of Microsoft account this is, and
-  the next section is the whole of that problem.**
-- **A backup that has actually been restored once.** Naming a provider is a
-  decision; restoring a file is the proof, and the proof is the part that was
-  always the point.
+- **Full-disk encryption, on and verified**, with the recovery key stored
+  somewhere that is not the encrypted disk.
+- **A backup that has actually been restored once.** Choosing where data lives
+  is a decision; restoring a file is the proof, and the proof is the part that
+  was always the point. On the local route this is an Article 32 requirement in
+  its own right, not just good practice — see "Storing it locally".
+
+**`business.clientDataStorage.where` stays a `[PLACEHOLDER]` until both are
+true.** `/privacy/` will not build while it is there — the gate in
+`site/src/data/legal.ts` checks the string, not just the object — and that is the
+correct behaviour, because the notice makes a published claim about security.
 
 ---
 
@@ -137,13 +155,11 @@ adds the desktop apps.
   rather than sitting beside it, so the true cost is the difference between the
   two, not £261 on top. It is the clean answer and it is roughly £16 a month.
 
-**A recommendation, since this file exists so decisions are not re-argued:
-Business Standard, tenant country United Kingdom.** The £12/month address, the
-£47 ICO fee and a £22/month Microsoft bill are the running cost of being a
-business that holds other people's data lawfully, and the alternative on offer
-is a setup that fails on three grounds at once. **But this is a real recurring
-cost during a spending freeze, and it is the owner's call**, so the decision is
-put here rather than taken.
+**A recommendation was made here for Business Standard on a UK tenant. It was
+superseded within the hour by the owner asking a better question — see "Storing
+it locally" below, which is now the recommended answer.** The Microsoft Business
+route remains valid and is kept above, because it is the right fallback if the
+local route's two conditions cannot be met.
 
 **What must not happen in the meantime:** no client or prospect record goes into
 the consumer account. That includes the outreach list — a list of named people
@@ -162,6 +178,123 @@ of a commitment and of a contract, not evidence of a bad location.
 [Microsoft 365 Business plan comparison and UK pricing](https://www.microsoft.com/en-gb/microsoft-365/business/compare-all-microsoft-365-business-products) ·
 [ICO: contracts between controllers and processors](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/contracts-and-liabilities-between-controllers-and-processors-multi/when-is-a-contract-needed-and-why-is-it-important/) ·
 [Microsoft GDPR compliance and the DPA](https://learn.microsoft.com/en-us/legal/gdpr)
+
+---
+
+## Storing it locally — the recommended answer
+
+*Added 2026-08-10, when the owner asked whether the records could simply live on
+their own hard drive. **They can, it is lawful, it costs nothing, and it makes
+the privacy notice shorter and stronger.** It also moves work rather than
+removing it, and the two things it moves are conditions, not suggestions.*
+
+**Why it dissolves the problem rather than dodging it.** All three failures of
+the consumer Microsoft account came from involving a third party in storage:
+
+- **No processor, so no Article 28 contract is needed.** The contract duty
+  exists because someone else processes data on our behalf. Holding it
+  ourselves means there is nobody to contract with. The obligation does not
+  reappear in another form; it simply does not arise.
+- **The country stops being Microsoft's answer to give.** `where` becomes **the
+  United Kingdom** — a laptop in the Wirral is in the UK — and it is true,
+  checkable, and cannot be changed without our knowing.
+- **Microsoft's non-commercial clause does not reach a folder on a disk.**
+
+**And it is a better sentence to publish.** "Your records are held by us, in the
+United Kingdom, and are not passed to a cloud storage provider" is stronger than
+naming a US-headquartered supplier, and it is one fewer recipient a reader has to
+take on trust. **For a business whose product is verifiable published facts, the
+simpler true claim is worth more than the more impressive one.**
+
+**Two conditions, and they are the whole of the cost.**
+
+**1. Full-disk encryption, on and verified.** Article 32 requires security
+appropriate to the risk, and the ICO treats encryption as an appropriate
+technical measure — with its published position being that where data is lost
+and encryption was *not* used, it may consider regulatory action. On Windows
+that means BitLocker or Device Encryption, actually switched on rather than
+assumed. **Store the recovery key somewhere that is not the encrypted disk** —
+the vault, or printed — because a recovery key kept only on the machine it
+unlocks protects nothing.
+
+The practical difference this makes: a stolen laptop with the records on it is a
+personal data breach either way, but with strong encryption and an uncompromised
+key, the data is unintelligible to whoever has it. **That is the ICO's own
+example of a breach unlikely to result in a risk to individuals**, and Article 34
+is explicit that appropriate protection such as encryption removes the duty to
+tell the affected people. **Whether it also removes the duty to report to the ICO
+within 72 hours is a judgement to be made and documented at the time, and this
+file is not going to assert an answer to it** — see the note on sources below.
+Unencrypted, there is no judgement to make: it is a reportable breach, of a list
+of named people at named businesses, by a firm registered with the ICO for
+exactly this.
+
+**2. A backup that has been restored once — and it is a legal requirement, not
+prudence.** Article 32 requires "the ability to restore the availability and
+access to personal data in a timely manner in the event of a physical or
+technical incident". One hard drive is one failure away from having no client
+records at all, which is a breach of availability as much as losing them to an
+attacker would be.
+
+**The backup must not quietly undo condition 1 or the whole decision.** A cloud
+backup puts us straight back into the processor question. The answer that keeps
+the decision intact is **a second encrypted external drive, kept somewhere other
+than beside the laptop** — a fire or a burglary that takes one should not take
+both. Roughly £30–60 once, against £261 a year for Business Standard.
+
+**This file already demanded a tested restore and that has not changed.** It was
+always the part that mattered: naming a provider is a decision, restoring a file
+is the proof.
+
+**The sharp edge, and the most likely way this goes wrong.** Windows signed in
+to a Microsoft account will, by default, back up Desktop, Documents and Pictures
+to OneDrive. **"Stored locally" then silently becomes "stored in the consumer
+OneDrive account we just ruled out", with nobody having decided anything.**
+Before any client record exists: turn OneDrive folder backup off, confirm it is
+off, and keep client folders out of any synced location. **Check this again after
+any Windows feature update**, which is exactly the kind of setting that gets
+re-offered and accepted by reflex.
+
+**What this does *not* fix, stated plainly.** Writing a client's `.docx` in a
+consumer Microsoft 365 copy of Word is still commercial use, which Services
+Agreement §13.h.i bars. Local storage does not touch that. **But it decouples
+the two questions**, which is the real gain: the Office licence becomes a
+contract matter with Microsoft to be decided on its own merits — accept it, use
+LibreOffice, or buy Business Standard for the apps alone — instead of a
+regulator-facing problem forcing a £261/year purchase during a spending freeze.
+
+**Nor does it empty the privacy notice of processors.** Netlify holds order-form
+submissions, Zoho holds email, and running an audit types a client's business
+name into four other companies' assistants. Those are all still recipients and
+are all already disclosed. What goes away is a *storage* provider.
+
+**The rule this creates, and it is the one to hold to.** **`clientDataStorage`
+must not be set until BitLocker is on and a restore has been tested.** Setting
+it publishes `/privacy/`, and `/privacy/` is a published claim about how this
+business protects other people's data. Publishing that claim before it is true
+would be the same fault as the `[PLACEHOLDER]` in the footer, except worse,
+because nobody reading it could tell.
+
+**Recommendation, revised from the one above: store it locally, encrypted, with
+an encrypted off-site backup drive.** It is lawful, it is £0 a month against
+£261 a year, and it publishes a plainer and more credible sentence. The
+Microsoft 365 Business route stays on the table as the fallback if the
+encryption or the backup cannot be done — but they are an afternoon and about
+£40, not a subscription.
+
+**On sources for this section.** The Article 28, 32, 33 and 34 obligations
+described here are the text of UK GDPR and are not in dispute. **The ICO's own
+guidance pages could not be read from this session — `ico.org.uk` returns HTTP
+403 to automated fetching**, the same wall that stops the register being checked
+here. So the ICO's positions above are reported from search summaries of their
+guidance rather than from the pages themselves, and the one point where those
+summaries contradicted each other — whether an encrypted lost device must still
+be reported to the ICO — is deliberately left open rather than resolved by
+picking the more convenient reading. **Two pages to read in a browser before
+relying on this:** the ICO's *Encryption and data storage* guidance, and
+*Personal data breaches: a guide*. *Not legal advice.*
+
+---
 
 **The trigger to move to something else** (Zoho Bigin's free tier is the
 researched option) is when you can't answer *"who's due a check this week"* by

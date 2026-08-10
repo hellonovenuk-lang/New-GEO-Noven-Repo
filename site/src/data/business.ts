@@ -166,18 +166,35 @@ export const business = {
    * non-commercial use. **Three independent failures, so no setting inside the
    * account can fix it.**
    *
-   * **The fix is a Microsoft 365 Business subscription with the tenant created
+   * **One fix is a Microsoft 365 Business subscription with the tenant created
    * as United Kingdom**, which yields a Product Terms data residency commitment
-   * for OneDrive and makes this value a truthful `'the United Kingdom'`. The
-   * tenant country is chosen once at creation and cannot be changed afterwards.
-   * Full reasoning, costs and sources: `ops/client-record.md`, "The consumer
-   * account problem".
+   * for OneDrive. It costs £261/year for the tier that also covers the Office
+   * apps.
    *
-   * **`name` is left as it is on purpose.** It still records the owner's
-   * 2026-08-09 decision to use Microsoft rather than add a supplier, which the
-   * research does not overturn — what changed is which Microsoft product. It is
-   * not a claim that anything is currently stored anywhere, because nothing is:
-   * there is no client yet, and no record may go into the consumer account.
+   * **The better fix, recommended the same day: hold the records locally, on
+   * the founder's own encrypted machine.** With no third party in the storage,
+   * there is no Article 28 contract to need, no supplier's data location to
+   * publish, and no consumer-terms problem — and `where` becomes a truthful
+   * `'the United Kingdom'` for £0 a month. It is also the plainer sentence to
+   * publish, which is worth something on this site in particular.
+   *
+   * **Two conditions come with it and neither is optional**: full-disk
+   * encryption switched on and verified, and a backup — an encrypted drive kept
+   * off-site, not a cloud sync — that has been restored once. Article 32 asks
+   * for both, the second as an availability requirement rather than as
+   * prudence. Full reasoning, the OneDrive-autosync trap, and sources:
+   * `ops/client-record.md`.
+   *
+   * **Do not set this value until those two conditions are met.** Setting it
+   * publishes `/privacy/`, and `/privacy/` is a published claim about how this
+   * business protects other people's data. Publishing it early would be the
+   * footer `[PLACEHOLDER]` fault again, except undetectable by a reader.
+   *
+   * **`name` is left as it is on purpose.** It records the owner's 2026-08-09
+   * decision and is not a claim that anything is stored anywhere — nothing is.
+   * There is no client yet, and no record may go into the consumer account.
+   * **It is the value most likely to be wrong once this is settled**: on the
+   * local route the holder is Wardith itself, not Microsoft.
    */
   clientDataStorage: {
     name: 'Microsoft OneDrive',
