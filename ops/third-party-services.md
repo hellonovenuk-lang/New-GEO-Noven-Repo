@@ -180,15 +180,25 @@ across this market and each has a failure mode that matters here:
 
 #### B1b. UK Postbox — chosen by the owner, 7 August 2026
 
-**Status: ordered Friday 7 August 2026, pending approval.** Identity
-verification is with UK Postbox and the owner is waiting on the outcome and on
-the confirmed address — expected Monday 10 August. **Nothing downstream moves
-until the address is confirmed in writing**, because it is published in the
-footer, in the Organization structured data, in the terms, in the privacy notice
-and in every cold email. Runbook is **B1c** below. Steps 1 to 4 are in flight;
-**steps 5 to 9 are the ones still owed**, and step 5 — registering the trading
-name "Wardith" on the account as its own verified step — is the one worth a
-wasted month if it is skipped.
+**Status: live. Approved and the addresses confirmed Monday 10 August 2026, on
+the day predicted.** The address is published — site footer, Organization
+structured data, `/terms/` — and the ICO record was changed the same day. The
+runbook below is kept as the record of what was done, not as a list of things
+to do; what is left of it is in the "still owed" note at the end of B1c.
+
+**The two addresses issued, because they are not interchangeable:**
+
+- **Mailbox — `Lytchett House, 13 Freeland Park, Wareham Road, Poole, Dorset,
+  BH16 6FA`.** Letters and small packets. **This is the address for service**
+  and the only one that is published anywhere.
+- **Courier point — `Unit 171036, Courier Point, 13 Freeland Park, Wareham
+  Road, Poole, Dorset, BH16 6FH, UK`.** Parcels and couriers only. A routing
+  instruction for carriers, not a legal address. Give it to suppliers who ship
+  goods; **never publish it**, and never let it reach a form that asks for an
+  address for service.
+
+Both name lines are **"Kieran Smith / Wardith"**. `ops/accounts.md` holds the
+same table, and is the copy to reach for when filling in a form.
 
 **Product:** Business Street Address, **Lytchett House, Poole, Dorset, BH16**.
 **£10/month exc VAT, £12/month inc VAT (£144/yr), billed monthly, cancel any
@@ -224,13 +234,15 @@ annual providers; that is the price of not paying £115 up front, and it is
 reasonable. But once the address is in the footer and the JSON-LD, changing it
 is a change of address. **Prefer to make this choice once.**
 
-**The locality question this does not solve.** `ROADMAP.md` records that a
-`PostalAddress` in the structured data was tried on 2026-08-06 and reverted,
-partly because it would commit us to "Merseyside" before the address existed.
-It still would: **none of the credible providers is in the north-west**, and the
-address that lands says Dorset. Decide deliberately when it arrives — publish
-the real locality, or publish none — and do not pick a worse provider for
-geography.
+**The locality question — decided 2026-08-10: publish the real locality.**
+`ROADMAP.md` recorded that a `PostalAddress` in the structured data was tried on
+2026-08-06 and reverted, partly because it would commit us to "Merseyside"
+before the address existed. The address that landed says Dorset, as expected,
+and the site now says both things separately: the founder works from the Wirral
+(prose, in `basedIn`), and post reaches the business in Poole (a
+`PostalAddress`, in the structured data). Two true statements about different
+facts beat one tidy-looking statement that is false. Reasoning is in the comment
+on `addressForService` in `site/src/data/business.ts`.
 
 #### B1c. Buying it — the runbook
 
@@ -280,6 +292,28 @@ documents that route needs, which is faster than uploading and being rejected.
    bulk-downloadable public register.
 9. **Decide the `PostalAddress` / locality question deliberately** — see the
    note above. The honest answer is now "Poole, Dorset", not "Merseyside".
+
+**Where this got to, 2026-08-10.** Steps 1–4 were done on the 7th and approval
+came back on the 10th. Steps 7 and 9 are done in the same commit as this note:
+one value, `addressForService` in `site/src/data/business.ts`, fills the footer,
+adds the `PostalAddress` and publishes `/terms/`. Step 8 is done — the owner
+notified the ICO of the address change and the trading-name change to Wardith
+together, which was always meant to be one call rather than two.
+
+**Four things are still owed, and none of them is large:**
+
+1. **Confirm the trading name is registered with UK Postbox** (step 5). The
+   addresses came back with "Kieran Smith / Wardith" on the name line, which is
+   good evidence it was done, but it is not the same as seeing it on the
+   account. This is the item worth a wasted month if it was skipped.
+2. **Fill the two `[PLACEHOLDER]`s in `ops/accounts.md`** — the setup fee, if
+   any, and the billing date. Both are readable off the first statement.
+3. **Confirm post actually arrives.** The roadmap's own condition for ticking
+   this off is post through the address working, and nothing has been sent
+   through it yet. The ICO amendment will produce a letter on its own; that is
+   the cheapest possible test and it is already in flight.
+4. **Check the ICO's public register shows the change.** One page,
+   `C1995412`, and it settles both the address and the trading name.
 
 **Five terms worth knowing, all from their user agreement:**
 

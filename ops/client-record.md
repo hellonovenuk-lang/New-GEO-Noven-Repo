@@ -14,6 +14,15 @@ that the first one doesn't start a spreadsheet from scratch, in the wrong place.
 holds client records and where. Naming the provider was half of it; **the
 country and the tested restore are the other half**, and both are below.
 
+**As of 2026-08-10 this is the only thing `/privacy/` is waiting on.** The
+address for service — the other half of that gate since it was written — went
+live that day. So one field, `clientDataStorage.where`, now stands between the
+site and a published privacy notice, and through it between the business and
+both a live order page and a lawful first cold email. **It is a two-minute look
+inside the OneDrive account, not a decision**, which makes it the cheapest
+high-value item anywhere in this repo. The tested restore is separate and does
+not gate the page.
+
 ---
 
 ## The hard constraint, first

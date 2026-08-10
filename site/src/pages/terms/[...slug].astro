@@ -14,7 +14,7 @@
  */
 import Base from '../../layouts/Base.astro';
 import { business, plan, money, addressLines } from '../../data/business';
-import { termsLive } from '../../data/legal';
+import { termsLive, privacyLive } from '../../data/legal';
 import { assistants } from '../../data/business';
 
 export function getStaticPaths() {
@@ -254,12 +254,33 @@ const lastUpdated = '9 August 2026';
         </p>
 
         <h2>Your information</h2>
-        <p>
-          What we collect, why, who sees it and how long we keep it is in the
-          <a href="/privacy/">privacy notice</a>. The short version: what you send us is used to do
-          the work you asked for, it isn't sold, and it isn't shared with anyone who isn't part of
-          delivering it.
-        </p>
+        {/*
+          **The link to the notice appears only when the notice does.** These
+          two pages were built to publish together, and from 2026-08-10 they
+          don't: the address for service landed, which is all `/terms/` needed,
+          while `/privacy/` still waits on one checkable fact about where client
+          records are held. A contract that cites a document and links to a 404
+          is worse than one that states its position and gives you a person to
+          ask — and the branch disappears on its own the day the notice goes up.
+        */}
+        {
+          privacyLive ? (
+            <p>
+              What we collect, why, who sees it and how long we keep it is in the
+              <a href="/privacy/">privacy notice</a>. The short version: what you send us is used to
+              do the work you asked for, it isn't sold, and it isn't shared with anyone who isn't
+              part of delivering it.
+            </p>
+          ) : (
+            <p>
+              What you send us is used to do the work you asked for. It isn't sold, and it isn't
+              shared with anyone who isn't part of delivering it. The full notice — what we collect,
+              who sees it, and how long we keep it — is being finished; until it is published here,
+              email <a href={`mailto:${business.email}`}>{business.email}</a> and we'll send you the
+              position in writing.
+            </p>
+          )
+        }
 
         <h2>If something goes wrong</h2>
         <p>

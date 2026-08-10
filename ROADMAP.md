@@ -70,26 +70,34 @@ three findings still order this file.
    `site:wardith.co.uk` on Bing returns the eight pages.**
 3. **Nothing tells a machine where the business works.** The pages say "the
    Wirral"; the structured data says only `GB`. Cost all 15 checks that asked
-   for someone on the Wirral. **Blocked on the address for service and closes
-   with it.** A locality-only `PostalAddress` was tried on 2026-08-06 and
-   reverted within the hour — it would have committed us to "Merseyside" before
-   the real address existed. Whatever lands is a real postal address, is not the
-   founder's home, and has to be published by law anyway, so it fills the footer
-   and the structured data from one fact. The note in `schema.ts` marks the spot.
+   for someone on the Wirral. **Acted on 2026-08-10**, when the address for
+   service landed: the structured data now carries a real `PostalAddress` —
+   Poole, Dorset — alongside the prose that says the founder works from the
+   Wirral. **This does not recover the 15 checks and should not be recorded as
+   if it did.** They asked for someone *on the Wirral*, and the honest machine-
+   readable answer is Dorset. What is closed is the silence; whether a stated
+   Dorset address helps or hurts a Wirral query is a question for the next
+   audit, not something to assert here.
 
 **Three method faults the audit surfaced, none fixed — they are itemised in 3a.**
 
-**Two things blocking a live pay button, both about an address:**
+**What was blocking a live pay button, and what is left of it:**
 
-1. **The ICO published, or is about to publish, the owner's home address** on a
-   bulk-downloadable public register. Deadline **Monday 10 August 2026** — 1c.
-2. **The service address is decided but not bought.** UK Postbox Business Street
-   Address, Poole, £12/month inc VAT, settled 2026-08-07. Runbook in
-   `ops/third-party-services.md` B1c. It blocks the ICO fix, the footer, the pay
-   button and finding 3.
+1. ~~**The ICO published, or is about to publish, the owner's home address**~~ —
+   **acted on 2026-08-10**, the deadline day. The ICO was notified of the
+   address change and the trading-name change to Wardith together. What remains
+   is one check: that `C1995412` on the public register now shows it.
+2. ~~**The service address is decided but not bought.**~~ **Live 2026-08-10.**
+   UK Postbox, Poole, £12/month inc VAT. It has released the footer, the
+   structured data and `/terms/`.
+3. **What still blocks the pay button is no longer an address.** It is the
+   Revolut payment link, and `clientDataStorage.where` — one checkable fact
+   about where Microsoft holds the OneDrive data, which is all `/privacy/` is
+   waiting on. See 3d.
 
-**The critical path:** ICO helpline call (deadline Mon 10 Aug) → service address
-ordered → terms and privacy notice written → one payment possible end to end.
+**The critical path:** ~~ICO helpline call → service address ordered →~~ both
+done 2026-08-10. What is left: **`/privacy/` published** (needs the OneDrive
+data location) **→ Revolut link pasted in → one payment possible end to end.**
 The order page is not on it — a payment link in an email takes the first payment.
 
 **`HANDOVER.md` has the longer version of all of this.**
@@ -158,26 +166,31 @@ committing.
       Revolut became a UK bank in March 2026. One caveat: FSCS cover is shared
       across Pro and personal under one £120,000 cap, not doubled.
       `ops/third-party-services.md` C1.
-- [ ] **Address for service of documents — not bought. Buy UK Postbox's
-      Business Street Address, Poole, £12/month inc VAT.** Trading under a
-      business name as a sole trader carries a legal duty to show a name and an
-      address where documents can be served, including on the website. A
-      virtual office satisfies it. **Buy the *Street* address, not their
-      cheaper Business PO Box — a PO Box is not a valid address for this.**
-      Don't tick this off until post through the address is confirmed working.
-      Runbook — both traps, the ID check, the order the downstream work happens
-      in — is `ops/third-party-services.md` B1c. The provider comparison is
-      closed in B1a–B1b, along with the V LOT refund still outstanding; don't
-      reopen it.
+- [ ] **Address for service of documents — bought, live and published
+      2026-08-10.** UK Postbox Business Street Address, Poole, £12/month inc
+      VAT. Ordered 7 August, approved on the 10th. The mailbox line —
+      `Lytchett House, 13 Freeland Park, Wareham Road, Poole, Dorset, BH16 6FA`
+      — is set as `addressForService` in `site/src/data/business.ts`, which
+      fills the footer on every page, puts a `PostalAddress` in the Organization
+      structured data and publishes `/terms/`. A second, courier-only address
+      was issued and is deliberately published nowhere; both are in
+      `ops/accounts.md`.
 
-      **The footer carries no address, and what stands in its place is a
-      commitment: it is published before the first customer is onboarded.**
-      Defensible only while nothing on the site takes a payment. The reminder
-      is a comment in `Base.astro`.
+      **Still `[ ]` on purpose: the condition for ticking this off was "post
+      through the address is confirmed working", and nothing has been through
+      it yet.** The ICO amendment should produce a letter without anyone doing
+      anything, which is the cheapest available test. The other loose ends —
+      confirming the trading name is registered on the account, the setup fee
+      and billing date — are listed at the end of
+      `ops/third-party-services.md` B1c.
+
+      **The commitment that stood in the footer's place is met**, ahead of the
+      first customer rather than at it.
 
       **Never the home address.** The footer can be edited; indexes and archives
       cannot, and this site is built so crawlers repeat its business facts
-      confidently.
+      confidently. That rule now has teeth in the other direction too: the
+      address is in published JSON-LD, so changing it is a change of address.
 
 #### Before money changes hands
 
@@ -197,12 +210,13 @@ committing.
             the email-versus-form distinction on `contact.astro`. With the switch
             in `site/src/data/order.ts` off, neither page is built, neither is in
             the sitemap, and every order button still points at `/contact/`.
-      - [ ] **Four things turn it on**, and three of them are the prerequisites
-            below rather than anything to do with the page: the Revolut link
-            pasted into `order.ts`, `/terms/` published, `/privacy/` published
-            (naming Netlify as a processor — the form is a Netlify form), and one
-            line set once the footer carries the address. The terms and privacy
-            conditions check themselves against the pages existing.
+      - [ ] **Four things turn it on, and two are now done.** `/terms/` is
+            published and the footer carries the address, both from 2026-08-10.
+            The two left are the Revolut link pasted into `order.ts` and
+            `/privacy/` published (naming Netlify as a processor — the form is a
+            Netlify form), which is itself waiting on one value. The terms and
+            privacy conditions check themselves against the pages existing, so
+            nothing here needs a manual switch.
       - [ ] **On the day it goes live**, the page count in `HANDOVER.md`,
             `ops/own-facts-check.md` and `ops/search-console-and-bing.md` moves
             from nine to ten, and `/order/` gets submitted to Search Console and
@@ -257,27 +271,29 @@ place, not on every page.
       service** — our product is called an audit but is not an audit in the ICO's
       sense, and answering yes would file us under regulated services we have no
       business being in.
-- [ ] **URGENT — the home address is on the ICO registration and will publish.**
-      The ICO publishes the registered controller's name and address on a public
-      register anyone can download in bulk, **within seven working days of
-      payment**. Registration went in Thursday 30 July, so treat **Monday 10
-      August** as the deadline. Once it is on a bulk-downloadable register it
-      gets copied and mirrored, and amending the ICO's own entry does nothing
-      about the copies. In this order:
-      - [ ] **Ring the ICO fees helpline first thing: 0303 123 1113.** Ask them
-            to hold or suppress publication of the address pending a change.
-            This doesn't need a new address and buys time for the rest. The
-            ICO's own guidance tells home-based sole traders to use an
-            alternative address, so it's a request they'll have heard often.
-      - [ ] **Get a service address that actually works** — see 1c above. This
-            now blocks two things, not one.
-      - [ ] **Update the ICO record** at
-            `ico.org.uk/for-organisations/data-protection-fee/change/`. Needs the
-            registration reference and security number from the confirmation —
-            another reason to phone rather than wait.
+- [ ] **The home address on the ICO registration — changed 2026-08-10, one
+      check left.** The ICO publishes the registered controller's name and
+      address on a public register anyone can download in bulk, **within seven
+      working days of payment**. Registration went in Thursday 30 July, making
+      **Monday 10 August** the deadline — which is the day the service address
+      landed and the day the record was changed. Once something is on a
+      bulk-downloadable register it gets copied and mirrored, and amending the
+      ICO's own entry does nothing about the copies, so this is "acted on in
+      time", not "certain nothing published".
+      - [x] **Ring the ICO fees helpline: 0303 123 1113.** Was to be a holding
+            call while the address was procured; overtaken by the address
+            arriving on the deadline day itself.
+      - [x] **Get a service address that actually works** — 1c above. Live
+            2026-08-10.
+      - [x] **Update the ICO record.** Done 2026-08-10, and it carried the
+            trading-name change to Wardith at the same time — the two problems
+            `HANDOVER.md` §4 wanted settled in one contact.
       - [ ] **Check the public register** at
             `ico.org.uk/about-the-ico/what-we-do/register-of-fee-payers/` to
-            confirm what actually published.
+            confirm what actually published — the address *and* the name. This
+            is the whole of what is left, and it is one page. Note the register
+            returns HTTP 403 to automated fetching, so it needs a person with a
+            browser.
       **The standing lesson:** ask "does this get published, and where?" *before*
       submitting any official form. The service address is not a footer field —
       it's a prerequisite for the next registration we fill in.
@@ -288,9 +304,14 @@ place, not on every page.
             business name into four other companies' AI assistants, or that this
             site loads its fonts from Google and hands them the reader's IP. Both
             are disclosed. The retention period from 3d is written in.
-      - [ ] **Blocked on two facts, and it does not publish without them:** the
-            address for service, and where client records live. Both are values
-            in `site/src/data/business.ts`; the page builds when they are set.
+      - [ ] **Was blocked on two facts; one is left.** The address for service
+            is set as of 2026-08-10. The remaining value is
+            `clientDataStorage.where` in `site/src/data/business.ts` — the
+            country Microsoft states it holds this OneDrive account's data in.
+            It is a two-minute look inside the account, not a judgement call,
+            and it is now **the single value standing between the site and a
+            published privacy notice**, which in turn is the last non-payment
+            blocker on the order page. Set it and the page builds itself.
 - [ ] **Terms of service.** Mostly a job of collecting what the site already
       commits to — cancellation terms, no guaranteed outcomes, we don't build
       websites — plus the refund position above.
@@ -300,7 +321,12 @@ place, not on every page.
             it. Nothing in it contradicts the pricing page, the FAQ or
             how-it-works — that was checked line by line, and it is the risk D3
             warns about with templates.
-      - [ ] **Blocked on the address for service**, same mechanism as above.
+      - [x] **Published 2026-08-10**, when the address for service was set. One
+            change went with it: the "Your information" section links to the
+            privacy notice only while that notice exists, and states the
+            position plainly with an email address while it doesn't. A published
+            contract citing a page that 404s is worse than one that doesn't cite
+            it. The branch disappears on its own when `/privacy/` goes up.
 
 #### Has its own legal clock
 
@@ -479,17 +505,18 @@ business network, so the warm route below is closed rather than deferred.
       contacted unless Companies House shows a live company.** This also settles
       `HANDOVER.md` §7 item 4 — and it rules out the sole-trader buyers that same
       document assumed were the market.
-- [ ] **Two blockers moved onto the critical path by this.** The first cold
-      email cannot be sent until `addressForService` and `clientDataStorage` are
-      set in `site/src/data/business.ts`: the address because every email must
-      carry it, the storage because there must be somewhere to keep the
-      do-not-contact record. Both are already open elsewhere (`HANDOVER.md`
-      steps 2 and 5) — cold outreach is what makes them urgent.
-      **The address is ordered as of Friday 7 August and pending approval**;
-      identity verification is with UK Postbox and the confirmed address is
-      expected Monday 10 August. Steps 5 to 9 of the runbook
-      (`ops/third-party-services.md` B1c) are owed after it lands, and the
-      storage decision is untouched.
+- [ ] **Two blockers moved onto the critical path by this; one is cleared.**
+      The first cold email cannot be sent until `addressForService` and
+      `clientDataStorage` are set in `site/src/data/business.ts`: the address
+      because every email must carry it, the storage because there must be
+      somewhere to keep the do-not-contact record.
+      **The address landed 2026-08-10** — the line for an email footer is
+      `Lytchett House, 13 Freeland Park, Wareham Road, Poole, Dorset, BH16 6FA`,
+      and `ops/outreach.md` §2 and both draft emails already carry it.
+      **What is left is the storage half, and only one field of it**:
+      `clientDataStorage.where`. The provider is named; the country is not. It
+      is a look inside the OneDrive account, and it is the last thing between
+      here and a lawful first batch.
 - [ ] Build the list from Companies House by SIC code and postcode.
       `[PLACEHOLDER: how many Wirral clinics exist per trade]`.
 - [ ] **Run the discovery questions once for the trade, not once per business.**

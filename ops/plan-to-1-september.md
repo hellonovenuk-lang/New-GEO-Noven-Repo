@@ -51,9 +51,12 @@ their own report. That is cost of sale, not a breach of the freeze.
    audit that was just bought. No approval needed — it is the cost of the
    thing.
 2. **Then it sits.** Anything not required to deliver a sale already made —
-   the address for service, insurance, tooling, a domain extension — waits
-   for the 26th, even if there is money in the account. Otherwise "no spend
-   without revenue" quietly becomes "no spend without an excuse".
+   insurance, tooling, a domain extension — waits for the 26th, even if there
+   is money in the account. Otherwise "no spend without revenue" quietly
+   becomes "no spend without an excuse". *(The address for service was on this
+   list and came off it: at £12/month it was bought on 7 August and went live
+   on the 10th. A legal disclosure requirement is not discretionary spend, and
+   treating it as such was the error the £12 price corrected.)*
 3. **Not all of a payment is spendable.** Income received now is taxable
    later, and `ops/accounts.md` already carries the HMRC registration
    deadline. Set a share of every payment aside before treating the rest as
@@ -77,11 +80,12 @@ are free:
   payment link already exists. Test it with a real transaction before it is
   sent to anybody.
 
-**And one thing is genuinely awkward.** The address for service is still
-`[PLACEHOLDER]` in the footer of all seven pages, and it is a legal
-disclosure requirement for trading under a name that is not the owner's own.
-Taking money before that is resolved is the owner's call to make knowingly,
-not something to discover afterwards.
+**And one thing was genuinely awkward, and is now closed.** The address for
+service — a legal disclosure requirement for trading under a name that is not
+the owner's own — went live on **2026-08-10**, ahead of any money changing
+hands. The footer of every page carries it, `/terms/` published with it, and
+the ICO record moved off the home address the same day. Taking money is no
+longer a decision made with that gap open.
 
 **Updated 2026-08-07, twice.** First: there is no longer a free route to
 closing this — V LOT was written off and a refund requested, and Icon Offices
@@ -210,13 +214,14 @@ It also puts a question against the £150 Maintain price, which was set against
 the wrong estimate. **Not a decision for this window** — do not reprice while
 launching — but it needs answering before the first monthly client renews.
 
-**2. The address for service. Certain, not conditional — and now £12/month.**
+**2. The address for service. Bought early and done — 2026-08-10.**
 
 **UK Postbox, Business Street Address, Poole: £12/month inc VAT**, monthly,
-cancel any time. This is a legal disclosure requirement for trading under a
-name that is not the owner's own, and the rename does not change that —
-"Wardith" is a trading name exactly as "Noven" was. It is the `[PLACEHOLDER]`
-in the footer of all seven pages.
+cancel any time. Ordered on the 7th rather than waiting for the 26th, exactly
+as the note below anticipated, and approved on the 10th. It is live in the
+footer, in the structured data and on the ICO record. **The £12 is now a
+running cost from this month, not a purchase pending on the 26th** — take it
+out of the 26 August list and put it in the monthly figure.
 
 **This heading used to read "if V LOT has not delivered", and then "a firm ~£115
 on the 26th". Both are superseded as of 2026-08-07.** V LOT is written off with
@@ -321,13 +326,12 @@ once on a real customer.
    and satisfying and writing a target list is neither. The site being live is
    not the same as the business being operational, and only one of those is on
    the 1 September promise.
-2. **The address for service is bought on the 26th and does not arrive in
-   time** — six days from purchase to launch, with UK Postbox having to verify
-   identity and issue the address inside it. **This risk is now largely under
-   the owner's control**, because at £12/month the purchase no longer has to
-   wait for the 26th at all. If it does wait, **check UK Postbox's verification
-   turnaround before then** and have ID documents ready on the day, so the date
-   is known rather than hoped for.
+2. ~~**The address for service is bought on the 26th and does not arrive in
+   time.**~~ **Retired 2026-08-10 — the risk did not happen because the advice
+   in it was taken.** Buying early rather than waiting for the 26th turned a
+   six-day scramble into three days with three weeks of slack. Worth keeping as
+   a pattern: when a risk is "a lead time might not fit", the cheap fix is
+   usually to start the clock earlier, not to plan the scramble better.
 3. **`novenstudio.co.uk` expires in the freeze window.** Low probability,
    total impact, and currently unknown. See above.
 
@@ -342,9 +346,9 @@ plan.
 | When | What |
 |---|---|
 | **Today, 4 Aug** | Look up `novenstudio.co.uk` expiry and registrar. Confirm GoDaddy auto-renew. Find the Canva billing date |
-| **Mon 10 Aug** | ICO call — address and trading name. Deadline, no undo |
+| ~~**Mon 10 Aug**~~ | **Done.** Service address approved and both ICO changes — address and trading name — notified the same day. One check left: the public register entry |
 | ~~**Mon 24 Aug**~~ | ~~V LOT decision point~~ — **decided early on 7 Aug: written off, UK Postbox chosen.** Before this date instead: check UK Postbox's ID verification turnaround |
-| **Wed 26 Aug** | Spending capacity returns. API balances first, address for service second — **£12/month, not ~£115. Owner's call whether it waits this long at all** |
+| **Wed 26 Aug** | Spending capacity returns. **API balances are now first and alone** — the address was bought early on 7 Aug and is live, so it is a £12 running cost rather than something waiting on this date |
 | **Tue 1 Sept** | **Hard launch.** Operational, outreach active |
 
 **No date for the first sale, on purpose.** Under the revenue exception it can

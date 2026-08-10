@@ -29,6 +29,14 @@ more often than this file gets read.
 which answers out of Bing's index and was the one assistant of four with no
 direct route to the site.
 
+**The count moved on 2026-08-10: there are now nine indexable pages, not
+eight.** The address for service landed, which published `/terms/`. The two
+rows above are left as written because they are a record of what was submitted
+on the day, and both are true about that day. The live number is nine, and the
+sitemap already carries the ninth automatically. **`https://wardith.co.uk/terms/`
+needs submitting to both consoles** — see the checklist below. When `/privacy/`
+and `/order/` follow, the same applies and the number becomes ten, then eleven.
+
 ---
 
 ## Do not undo these
@@ -62,9 +70,17 @@ direct route to the site.
       silently. Open **Sitemaps** in Bing once and either see
       `sitemap-index.xml` listed or submit it. Thirty seconds.
       `ops/own-facts-check.md` row 8.
+- [ ] **Submit `https://wardith.co.uk/terms/` to both consoles.** New page as of
+      2026-08-10 and the first one added since the site went live. Request
+      indexing in Google Search Console and submit the URL in Bing; the sitemap
+      picks it up on its own but a submission is the stronger signal, which is
+      the reasoning already applied to the original eight.
 - [ ] **`site:wardith.co.uk` on each of Google and Bing, weekly.** Returning the
-      eight pages is the measurement that says this worked, and **self-audit
-      finding 2 does not close until it does.** Submission is not indexation.
+      pages is the measurement that says this worked, and **self-audit
+      finding 2 does not close until it does.** The target was eight and is nine
+      from 2026-08-10; judge it as "all of them", not as a fixed number, because
+      `/privacy/` and `/order/` will both move it again. Submission is not
+      indexation.
       The Search Console graphs will be empty and discouraging for a while for
       reasons that are not faults.
 - [ ] **Re-run `site:novenstudio.co.uk` at one month and at six months.**

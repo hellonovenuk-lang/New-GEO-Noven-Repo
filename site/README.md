@@ -27,14 +27,23 @@ npm run preview # preview the built site
 
 ## Placeholders still rendering on the live site
 
-Two, both deliberate, both visible to visitors and to the AI crawlers `robots.txt`
-invites in. Everything else on the original pre-launch list is done.
+One. Everything else on the original pre-launch list is done.
 
-- **Address for service of documents** — `src/layouts/Base.astro`, footer, therefore
-  on **every page**. Blocked on the service address landing; see `ROADMAP.md` 1c.
-  This one is a legal disclosure that is already owed, not a cosmetic gap, and the
-  placeholder text currently published names an internal file.
 - **Case studies** — `src/pages/index.astro`, home page. Blocked on the first client.
+
+**The address for service came off this list twice.** It was removed from the
+rendered page on 2026-08-06 — a visible `[PLACEHOLDER]` in the footer of nine
+pages was publishing the name of an internal file to every crawler — and the
+real address replaced it on **2026-08-10**. This section was stale for four days
+in between, which is worth knowing about a file that describes the live site: it
+does not update itself.
+
+**One value in `src/data/business.ts` is still unset and it is not a rendered
+placeholder — it is a page that does not exist.** `clientDataStorage.where` gates
+`/privacy/`, which is deliberately not built rather than built with a gap in it.
+`src/data/legal.ts` explains the reasoning; the practical effect is that
+`getStaticPaths()` returns nothing and the route is absent from the site and the
+sitemap.
 
 Two other `[PLACEHOLDER` strings appear in `src/pages/about.astro`, in branches that
 can no longer be reached now that `founderLinkedIn` and `founderPhoto` are set, and

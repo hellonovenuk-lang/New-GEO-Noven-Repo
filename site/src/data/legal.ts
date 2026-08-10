@@ -12,6 +12,15 @@
  * admission that a legal disclosure was outstanding. A placeholder in a
  * *contract* would be worse again. So these pages are not built at all until
  * they are true, on the same principle as the order page.
+ *
+ * **Since 2026-08-10 the two gates are genuinely open at different times**, and
+ * that had never happened before. The address for service landed, which is all
+ * `/terms/` needed; `/privacy/` still waits on where client records are held.
+ * The design always allowed this — two constants, not one — but the *copy* did
+ * not: the terms' "Your information" section linked straight to `/privacy/`,
+ * which would have published a contract citing a 404. It now branches on
+ * `privacyLive`. **The lesson for anything added here later: a gate that can
+ * open on its own needs page copy that can too.**
  */
 
 import { business } from './business';

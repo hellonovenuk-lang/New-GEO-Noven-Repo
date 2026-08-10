@@ -64,28 +64,52 @@ export const business = {
    * value below, and it may not be in Merseyside. */
 
   /**
-   * **The address for service of documents. Null until it exists.**
+   * **The address for service of documents. Live from 2026-08-10.**
    *
    * Trading under a name that is not the founder's surname carries a duty to
    * show a name and a UK address where documents can be served, and selling
-   * online adds the same requirement again. The provider is decided —
-   * UK Postbox, Business Street Address, Poole — and not yet ordered. See
-   * `ops/third-party-services.md` B1c for the runbook, including the two traps
-   * (buy the Street Address, not the PO Box; register "Wardith" as its own
-   * verified step).
+   * online adds the same requirement again. UK Postbox's Business Street
+   * Address, Poole — ordered 7 August, confirmed by the owner on the 10th.
+   * `ops/third-party-services.md` B1b holds the account facts and the terms
+   * worth knowing; B1c holds what was done to get here.
    *
    * **Never the founder's home address.** The footer can be edited; indexes,
-   * archives and assistants' caches cannot.
+   * archives and assistants' caches cannot. That is also why this is the
+   * mailbox line and not the courier line: UK Postbox issues a second address
+   * for parcels (`Unit 171036, Courier Point`, `BH16 6FH`), which is a
+   * delivery instruction for carriers, not a place documents are served. It is
+   * recorded in `ops/accounts.md` and is deliberately published nowhere.
    *
-   * **Setting this one value does five things at once**, which is the whole
-   * reason it lives here rather than being typed into five files: it fills the
-   * footer on every page, it adds `address` to the Organization structured data,
-   * it publishes `/terms/`, it publishes `/privacy/`, and — with the Revolut
-   * link set — it opens the order page. That is deliberate. Each of those is a
-   * statement about where this business can be reached, and they must appear
-   * together or not at all. See `src/data/legal.ts`.
+   * **Setting this one value does four things at once**, which is the whole
+   * reason it lives here rather than being typed into four files: it fills the
+   * footer on every page, it adds `address` to the Organization structured
+   * data, it publishes `/terms/`, and it satisfies half of what `/privacy/`
+   * and the order page need. Each of those is a statement about where this
+   * business can be reached. See `src/data/legal.ts`.
+   *
+   * **What it does not do is publish `/privacy/`.** That still waits on
+   * `clientDataStorage.where` below, which is a `[PLACEHOLDER]`. The gap is
+   * handled rather than ignored: the "Your information" section of `/terms/`
+   * drops its link to the notice while the notice does not exist, because a
+   * published contract pointing at a 404 is worse than one that doesn't.
+   *
+   * **The locality question is answered here, deliberately.** `ROADMAP.md` and
+   * `ops/third-party-services.md` both flagged that a real address would say
+   * Dorset while the founder works from the Wirral, and asked for a decision
+   * rather than a default. The decision: publish the real locality. `basedIn`
+   * above stays "the Wirral" because it is true and is prose about a person;
+   * this is where post arrives. Two different facts, both stated plainly, is
+   * the honest shape — inventing a Merseyside postal address to make them
+   * match would be the exact fault this business is paid to find.
    */
-  addressForService: null as PostalAddress | null,
+  addressForService: {
+    line1: 'Lytchett House, 13 Freeland Park',
+    line2: 'Wareham Road',
+    locality: 'Poole',
+    region: 'Dorset',
+    postcode: 'BH16 6FA',
+    country: 'GB',
+  } as PostalAddress | null,
 
   /**
    * The ICO data protection registration, taken out 2026-07-30. Published in

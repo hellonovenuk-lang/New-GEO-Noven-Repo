@@ -90,7 +90,10 @@ Wirral, working remotely across the UK. One person, no employees.
   structured data.
 - **Business bank account** — Revolut Pro.
 - **ICO registration** — `C1995412`, £47/yr by Direct Debit, registered
-  2026-07-30.
+  2026-07-30. Address and trading name both amended 2026-08-10.
+- **Address for service of documents** — UK Postbox, Poole, live 2026-08-10,
+  £12/month. Published in the footer and the structured data.
+- **Terms of service** — published 2026-08-10 at `/terms/`.
 
 **Decided in writing, but never once performed**
 
@@ -118,10 +121,10 @@ Ordered by what it stops.
 
 | Missing | What it blocks |
 |---|---|
-| **Address for service of documents** | A legal disclosure already owed; the ICO record fix; the site footer; every future official form |
-| **Terms of service** — written 2026-08-09, unpublished | Taking money under a contract; the refund position that prevents chargebacks. Waiting only on the address for service |
-| **Privacy notice** — written 2026-08-09, unpublished | Lawfully holding any customer or prospect information — including an outreach list. Waiting on the address and on the row below |
-| **A decision on where client data lives** | The privacy notice, and delivering the first audit lawfully. Constraint: **it cannot be this repo**, which is public. It now blocks a page rather than only a habit |
+| ~~**Address for service of documents**~~ | **Exists as of 2026-08-10** — UK Postbox, Poole. Published in the footer and the structured data, and the ICO record was changed the same day. Row kept for one session so nobody re-solves it; the account facts are in `ops/accounts.md` |
+| ~~**Terms of service**~~ — **published 2026-08-10** | Nothing. It went live with the address, which is all it was waiting on |
+| **Privacy notice** — written 2026-08-09, unpublished | Lawfully holding any customer or prospect information — including an outreach list. **Now waiting on one value only**: the row below |
+| **The country Microsoft holds the OneDrive data in** | The privacy notice, the order page, and delivering the first audit lawfully. The provider was decided 2026-08-09 (OneDrive); what is missing is the data location, which is **a two-minute look inside the account, not a decision**. It is the single highest-leverage unknown left in this file |
 | **API accounts, keys and spend caps** | Running any audit at all |
 | **A working payment route** | Revenue |
 | **A Foundation method and time budget** | The £800 product, and knowing whether it makes money |
@@ -152,12 +155,17 @@ permanent — bulk-downloadable data gets mirrored and the ICO amending its own
 record does nothing about copies — but it is low-impact, and it is not worth
 treating as the thing that stops everything else.**
 
-**Settled 2026-08-09: this is two calls, not one.** Tomorrow's call is about the
-trading name. **A second call goes in once the service address lands**, to change
-the registered address — there is no point asking them to change it to an address
-that does not exist yet, and the runbook's step 8 assumes the address is in hand.
+**Closed 2026-08-10.** It turned out to be one contact, not two: the service
+address was approved on the same day, so the address change and the trading-name
+change to Wardith went to the ICO together — which is what the two bullets below
+were asking for. **One check survives this section**: look up `C1995412` on the
+public register in a browser and confirm it now shows **Wardith** at **Lytchett
+House**. Both halves, not just the address.
 
-**The call is still worth making tomorrow, for two better reasons:**
+**The reasoning is kept below** because it is why the call was worth making at
+all, and because the standing lesson generalises to the next official form.
+
+**The call was worth making for two reasons:**
 
 - **The trading name on the record.** The owner is not certain whether the
   registration was filed as "Noven". If it was, that is not a privacy problem, it
@@ -181,26 +189,33 @@ not be checked here. Ask on the call, or look it up in a browser.
 
 ### Then, roughly a day and a half of desk work
 
-**2. The service address — ordered Friday 7 August 2026, pending approval.** UK
-Postbox Business Street Address, Poole, £12/month inc VAT. Identity verification
-is with the provider and the confirmed address is expected **Monday 10 August**.
+**2. The service address — done. Approved Monday 10 August 2026, on the day it
+was expected.** UK Postbox Business Street Address, Poole, £12/month inc VAT.
 The provider comparison is closed in `ops/third-party-services.md` B1a–B1b and
 should not be reopened.
 
-**This is the item most other things are waiting behind**, so it is worth being
-precise about what "pending" means: **nothing that publishes the address moves
-until it is confirmed in writing.** That is the footer, the Organization
-structured data, the terms, the privacy notice and every cold email. The desk
-work below does not wait on it.
+**Two addresses were issued and they do different jobs.** Getting this wrong
+does not fail loudly — it fails as a parcel that never arrives.
 
-**Follow the runbook at `ops/third-party-services.md` B1c rather than working it
-out at the checkout.** The two traps it exists to prevent: **buy the Business
-*Street* Address, not the cheaper Business PO Box**, which is invalid for this;
-and **register the trading name "Wardith" as its own verified step**, because
-post addressed to a name the provider holds no record of is typically returned
-or destroyed. It also covers the ID check — which leaves a soft footprint on
-the owner's personal credit file — and the order the footer, the ICO address
-change and the structured-data locality decision have to happen in.
+- **Mailbox, `BH16 6FA`** — `Kieran Smith / Wardith, Lytchett House, 13 Freeland
+  Park, Wareham Road, Poole, Dorset`. Letters and small packets. **This is the
+  address for service**, and the only one that is ever published: footer,
+  structured data, ICO record, terms, official forms, cold email.
+- **Courier point, `BH16 6FH`** — `Kieran Smith / Wardith, Unit 171036, Courier
+  Point, 13 Freeland Park, Wareham Road, Poole, Dorset, UK`. Parcels and
+  couriers only. Give it to suppliers who ship goods. **Never publish it.**
+
+**Everything that was waiting behind this has moved**: the footer carries the
+address on every page, the Organization structured data carries a real
+`PostalAddress`, `/terms/` is published, and the ICO record is changed. It is
+set in exactly one place — `addressForService` in `site/src/data/business.ts` —
+and never typed into a page.
+
+**Two things are still owed on the account itself**, both small and both in
+`ops/third-party-services.md` B1c: confirm the trading name "Wardith" is
+registered on the account rather than only appearing on the addresses supplied,
+and confirm post actually arrives. The ICO amendment should generate a letter
+without anyone doing anything, which is the free version of that test.
 
 **3. Publish the terms of service and the privacy notice.** ~~Write~~ — **both
 were written on 2026-08-09** and are in the repo at `site/src/pages/terms/` and
@@ -208,13 +223,26 @@ were written on 2026-08-09** and are in the repo at `site/src/pages/terms/` and
 rather than twice: life of the relationship plus twelve months, with tax records
 outliving it because the law says so.
 
-Neither page publishes yet, and neither is waiting on more writing. They are
-waiting on two facts, because both documents state them: **the address for
-service** (step 2), and **where client records live** — the open decision in
-`ops/client-record.md`, which needs one named provider with encryption at rest
-and a backup that has been restored once. Set those two values in
-`site/src/data/business.ts` and both pages go live, the footer fills in, and the
-structured data gains a postal address, all from the same edit.
+**`/terms/` published on 2026-08-10** when the address for service was set, along
+with the footer sentence and the `PostalAddress` in the structured data — one
+edit, four effects, which is the whole reason those facts live in one file.
+
+**`/privacy/` is the one still down, and it is now waiting on a single value:**
+`clientDataStorage.where` in `site/src/data/business.ts` — the country Microsoft
+states it holds this OneDrive account's data in. The provider half was decided
+on 2026-08-09; this half is a `[PLACEHOLDER]` on purpose, because it is
+checkable inside the account and must not be asserted from general knowledge.
+Set it and the page builds itself.
+
+**One thing changed in the terms to make that gap safe.** The "Your information"
+section links to the privacy notice only while the notice exists; while it
+doesn't, it states the position plainly and gives an email address. A published
+contract citing a page that 404s is worse than one that doesn't cite it, and the
+branch disappears on its own the day `/privacy/` goes up.
+
+**`/terms/` also needs submitting to Google Search Console and Bing** — it is
+the first new page since the site went live, and the indexable count is nine
+now rather than eight. `ops/search-console-and-bing.md`.
 
 Read them before they publish. They are terms this business will be held to.
 
@@ -238,10 +266,11 @@ gate.**
 
 The order page itself was built on 2026-08-09 and is **switched off**: `/order/`
 and `/order/pay/` are in the repo but are not built into the site, so nothing
-about them is public. Paste the link into `site/src/data/order.ts` and it is
-still off — it also waits on the terms, the privacy notice and the address, the
-three items in step 3 and above. That is deliberate. Nothing in step 5 depends
-on it.
+about them is public. **Two of its three non-payment conditions are met as of
+2026-08-10** — the address is live and `/terms/` is published. Paste the link
+into `site/src/data/order.ts` and it is *still* off, because `/privacy/` has to
+publish too, and that is the one value in step 3. So the order page is now two
+facts away, not four. That is deliberate. Nothing in step 5 depends on it.
 
 **6. Send the first cold batch. Rewritten 2026-08-09 — this used to say "take
 the sample audit to three warm contacts", and there are no warm contacts.** The
@@ -254,7 +283,9 @@ at a time.
 unlawful to sole traders, so steps 2 and 3 above stop being tidiness. Every
 email has to carry the address for service, and there has to be somewhere to
 keep a permanent do-not-contact record. **A warm route would have let us start
-without either.**
+without either.** **The address half is done from 2026-08-10** — put the mailbox
+line, not the courier line, in the email footer. The do-not-contact record is
+still the OneDrive decision, waiting on the same value `/privacy/` is.
 
 ### Not on the critical path, despite appearances
 
@@ -274,7 +305,7 @@ highest return on time in this document.
 
 | What | When | If missed |
 |---|---|---|
-| ICO home address publishes | **~10 August 2026** | Permanent, mirrored, and **low-impact** — the address sits among 281 registered companies and does not read as residential (reassessed 2026-08-09, §4). The live question on that record is whether it carries the old trading name |
+| ICO home address publishes | ~~**~10 August 2026**~~ — **the record was changed on the day, address and trading name together** | Whatever published before the amendment is permanent and mirrored, and that cannot be checked retrospectively — but it was already assessed as **low-impact**: the address sits among 281 registered companies and does not read as residential (2026-08-09, §4). **What is left is one browser lookup** of `C1995412` confirming the register now shows Wardith at Lytchett House |
 | ICO annual renewal | ~30 July 2027 | Penalty of up to £4,000 against a £47 fee. Note the real risk is a **silent Direct Debit failure**, so the check is "did it collect", not "did a reminder fire" |
 | Domain renewal | **[PLACEHOLDER: registrar, renewal date and auto-renew status are recorded nowhere in this repo]** | Total outage — site, email, structured data, every published link |
 | Zoho Mail renewal | ~29 July 2027 (inferred from purchase date) | The only contact channel on the site dies |
@@ -415,7 +446,10 @@ Terms used throughout as though the reader already knows them:
 - **The order page** — does not exist yet. Referenced in several places as
   though it does.
 - **One-way door** — this repo's term for anything that, once published, cannot
-  be recalled. The home address is the live example.
+  be recalled. The home address on the ICO register was the live example until
+  2026-08-10; the service address is the live example now, because it is in
+  JSON-LD that assistants cache and third parties copy. Changing it later is a
+  change of address, not an edit.
 - **A flag** — a `[PLACEHOLDER]` block that renders *visibly on the live site*.
   Not the same as a placeholder in a document.
 

@@ -27,6 +27,86 @@ document had its argument stripped and sends the reader here.
 
 ---
 
+### 2026-08-10 (the address for service lands, and four things unlock at once)
+
+- **The address arrived on the day it was predicted to.** UK Postbox approved
+  the account, ordered on the 7th and confirmed on the 10th — the same Monday
+  the ICO publication deadline fell on. The whole of `ops/third-party-services.md`
+  B1c is now history rather than instruction.
+- **Two addresses were issued, not one, and they are not interchangeable.** A
+  mailbox line at `BH16 6FA` for letters and small packets, and a courier point
+  at `BH16 6FH` — a different postcode, a different building entrance — for
+  parcels. **Only the mailbox line is the address for service and only it is
+  published.** The courier line is a routing instruction for carriers; it is
+  recorded in `ops/accounts.md` and appears nowhere public. Nothing in the repo
+  had anticipated two addresses, which is worth noting on its own: the runbook
+  was thorough about the traps it knew and silent about this one.
+- **Setting one value did four things.** `addressForService` in
+  `site/src/data/business.ts` filled the footer sentence on every page, put a
+  real `PostalAddress` into the Organization JSON-LD, published `/terms/`, and
+  satisfied half of what `/privacy/` and the order page need. That design was
+  written down in August and had never once been exercised; it worked exactly as
+  described, and the build is the evidence — nine indexable pages where there
+  were eight, `/privacy/` and `/order/` still correctly absent.
+- **The locality question, open since 2026-08-06, is answered: publish the real
+  one.** `ROADMAP.md` and `ops/third-party-services.md` both flagged that a real
+  address would say Dorset while the founder works from the Wirral, and both
+  asked for a deliberate decision rather than a default. The decision is to state
+  two true things separately — `basedIn` stays "the Wirral" because it is prose
+  about a person, and the `PostalAddress` says Poole because that is where post
+  arrives. **The tempting alternative was to invent a Merseyside postal address
+  so the two would agree**, which is precisely the fault this business is paid to
+  find in other people's data.
+- **Self-audit finding 3 is acted on but not recovered, and the roadmap now says
+  so.** The finding cost 15 checks that asked for someone *on the Wirral*. The
+  structured data no longer says nothing; it says Dorset. Whether that helps a
+  Wirral query is an open question for the next audit. Recording it as "closed"
+  would have been the easy and wrong entry.
+- **`/terms/` published without `/privacy/`, which the code allowed and the copy
+  did not.** The two pages were built as independent gates and were always
+  expected to go live together; they didn't, because `/privacy/` still waits on
+  `clientDataStorage.where`. The terms' "Your information" section linked
+  straight to `/privacy/` — a published contract citing a 404. It is now
+  conditional: the link when the notice exists, a plain statement of the position
+  and an email address when it doesn't. **The general lesson: a gate that can
+  open independently needs copy that can too**, and the only reason this was
+  caught is that the build output was read rather than assumed.
+- **The ICO was told about the address and the trading name in one contact.**
+  `HANDOVER.md` §4 had reasoned this out as two separate calls — the name now,
+  the address once it existed — on the grounds that there was no point asking
+  for a change to an address that did not yet exist. The address existing on the
+  deadline day collapsed that into one. **What is not established is what
+  published before the amendment**, and it cannot be: bulk-downloadable data
+  that has been downloaded is not recalled. The remaining check is one browser
+  lookup of `C1995412`, and the register 403s automated fetches, so it needs a
+  person.
+- **The email signature's `[PLACEHOLDER: address for service]` is closed**, which
+  retrospectively settles an argument from 2026-08-07. The signature was rebuilt
+  as live HTML rather than outlined Canva paths specifically so that adding the
+  address later would be an edit instead of a re-export. It was a one-line edit.
+  **But the signature is a copy, not a reference** — it lives in Zoho and in
+  every message already sent, and does not update when `business.ts` does. It is
+  now row 15 of `ops/own-facts-check.md` alongside the ICO entry and the outreach
+  drafts, because those three are the surfaces that can drift.
+- **The risk that didn't happen, and why it's worth recording.**
+  `ops/plan-to-1-september.md` carried "the address is bought on the 26th and
+  does not arrive in time" as a live risk, with a note that at £12/month it no
+  longer had to wait for the 26th at all. It was bought on the 7th and arrived on
+  the 10th — three weeks of slack instead of a six-day scramble. The pattern:
+  **when a risk is "a lead time might not fit", the cheap fix is to start the
+  clock earlier, not to plan the scramble better.**
+- **What is left, in order of leverage.** One value — the country Microsoft holds
+  this OneDrive account's data in — publishes `/privacy/`, which is the last
+  non-payment blocker on the order page *and* the last blocker on the first cold
+  email. It is a two-minute look inside an account rather than a decision, and it
+  is now the single highest-value unknown in the repo. After that: submit
+  `/terms/` to both search consoles, confirm the trading name is registered on
+  the UK Postbox account, record the setup fee and billing date, and confirm post
+  actually arrives — the ICO amendment should generate a letter on its own, which
+  is the free version of that test.
+
+---
+
 ### 2026-08-09 (outreach goes cold, and the target is decided)
 
 - **The owner has no business network. Warm-first is closed, not deferred.**

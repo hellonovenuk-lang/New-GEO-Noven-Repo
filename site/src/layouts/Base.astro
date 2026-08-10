@@ -214,11 +214,18 @@ const ogImage = new URL('/og.png', Astro.site);
         </div>
         {/*
           **The address for service of documents renders in the line above, and
-          it is still owed.** Since 2026-08-09 there is nothing left to build for
-          it: set `addressForService` in `data/business.ts` and the sentence
-          appears here, the `PostalAddress` appears in the structured data, and
-          `/terms/` and `/privacy/` start being published. Until then the value
-          is null and every one of those stays silent rather than approximate.
+          as of 2026-08-10 it is a real one** — UK Postbox, Poole. It is set in
+          one place, `addressForService` in `data/business.ts`, which is also
+          what put the `PostalAddress` into the structured data and published
+          `/terms/`. Nothing about the address is typed into this file.
+
+          **Two things follow from it being published rather than pending.**
+          First, changing it is now a change of address, not an edit: it is in
+          the JSON-LD that assistants read, and their caches and any third-party
+          copy outlive a commit. Second, the £12/month subscription behind it is
+          load-bearing — a failed card payment eventually returns post to sender
+          and quietly breaks a legal disclosure. `ops/accounts.md` carries both.
+
           The history below is kept because it is the reason for that design.
 
           ---
