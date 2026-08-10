@@ -98,6 +98,64 @@ both are in `ops/client-record.md`.
 
 ## 3. Building the list
 
+**The order below is wrong, and 2026-08-10 proved it. Start with the regulator,
+then use Companies House to answer one question about each name it gives you.**
+The Companies-House-first method described in the rest of this section was run
+again and reproduced its 67 rows exactly, district for district — and then a
+CQC-first sweep of the same peninsula found **twelve real, trading, limited-company
+dental practices it had missed entirely.** Their companies are registered in
+Cheltenham, Exeter, Northampton, Bolton, Richmond, Maghull, Liverpool, Cheadle,
+Ellesmere Port and Portchester. Nothing about them is unusual; they simply use
+an accountant who is not on the Wirral. §3 predicted this failure in one
+sentence — "the list is a floor, not a census" — and then built the list on the
+floor anyway.
+
+**The method that replaces it, for any regulated trade:**
+
+1. **Take the census from the regulator.** For dental that is the CQC directory,
+   a free national CSV of every registered location — name, address, postcode,
+   phone, sometimes a website, and the registered provider. Filter to the
+   postcode districts. It is the *trading* list, which is the thing we actually
+   want, and no accountant's address can hide a clinic from it.
+2. **Read the provider column, because it is the PECR test in disguise.** CQC
+   records who is registered to run each location. "Something Limited" is a
+   company and may be cold-emailed. "Dr So-and-so" or "Such-and-such Partnership"
+   is a sole trader or an unincorporated partnership and may not be. **On the
+   Wirral that single column removed 21 practices from the pool** — about a third
+   of the market, closed by §2 rather than by judgement.
+3. **Then use Companies House, by name, to confirm the provider is live.** One
+   search per provider. This is where the "is this a company" question belongs,
+   and it is a much smaller job than sweeping thirteen districts. One Wirral
+   provider whose name ends in "Ltd" turned out to have **no live company at
+   all**, which no amount of reading the name would have caught.
+4. **Keep the postcode sweep only as a cross-check.** It still finds the
+   personal service companies and the shared offices described below, and those
+   are worth seeing. It is not the list.
+
+**The trades that are not regulated do not get step 1**, and for those the
+Companies House sweep is still the only free route. Check whether a regulator
+publishes a directory before assuming it.
+
+**It is built — `ops/prospect-list/`.** Three scripts, the runbook, and what the
+triage removes and in what order. Run it before the trade run, not after: the
+trade run's mention table is the last cut, and there is no point paying for
+ninety queries about a market you have not counted.
+
+**One correction to the shared-office finding below, because acting on it as
+written would delete real prospects.** A registered office hosting several
+companies on the list is not automatically an accountant. It splits two ways,
+and only one of them is the trap:
+
+- **An accountant or a serviced office.** The registered office is not a clinic
+  and the trading address has to come from the practice's own website. This is
+  the case §3 warned about and it is real — one Wirral accountant's address
+  carried four of the 67.
+- **A clinic where the associates also register.** The practice company and two
+  or three dentists' personal service companies all sit at the practice's own
+  address, because that is where they work. **The address is a clinic, and
+  exactly one of those companies is the prospect.** Two of the four-company
+  addresses on the Wirral are this, not an accountant.
+
 **Source: Companies House, free, and the filter and the list are the same
 operation.** Search by SIC code, then by registered-office postcode.
 
@@ -165,13 +223,43 @@ Companies House only to answer "is this a company".
 **What we record per prospect** is in `ops/client-record.md` — the prospect
 fields are already decided there. Do not invent a second schema.
 
-**Size of the first batch: dental is answered, the other three are not.**
-67 limited companies before triage (above), of which some meaningful fraction are
-real patient-facing practices. `[PLACEHOLDER: the triaged figure, once the CSV
-has been worked through.]` `[PLACEHOLDER: the same sweep for cosmetic,
-physiotherapy and veterinary.]` **On the dental number alone, one trade does not
-fill a twenty-a-week batch for long** — which is the §7 point about the list
-being the binding constraint, arriving earlier than expected.
+### The triaged figure — 2026-08-10
+
+**The dental list is built and it is smaller than anyone expected.** From 73 CQC
+dental locations in CH41–CH49, CH60–CH63 and CH64:
+
+| Cut | Left |
+|---|---|
+| All CQC dental locations in the postcode range | 73 |
+| Minus duplicate registrations of the same site | 69 |
+| Minus national and regional groups, and the NHS trust | 55 |
+| Minus providers who are a person or an unincorporated partnership — §2 closes these | 34 |
+| Minus Neston, which is Cheshire West rather than the Wirral | 31 |
+| Minus a referral service, a hygiene-only studio, and one provider with no live company | 28 |
+| **Approachable, and the company confirmed live on Companies House** | **28** |
+| Of those, with a website and a contact address already in hand | **9** |
+
+**Nine is most of a first batch and it is the whole of what is ready.** Five more
+have a live company and a working website and need one look in a browser for an
+address. The rest need a website found, or have none.
+
+**Two things follow, and the second one is uncomfortable.** The list is the
+binding constraint exactly as §7 predicted, and it binds harder than the
+arithmetic there assumed: **twenty emails a week does not survive contact with a
+single trade in a single area.** Dental on the Wirral is roughly a fortnight of
+sending, not a quarter of it. Either the area widens, the trades widen, or the
+batch size comes down — and that is a decision, not a detail.
+
+`[PLACEHOLDER: the same census for cosmetic, physiotherapy and veterinary. The
+CQC route covers cosmetic and some physiotherapy; veterinary has its own
+regulator, the RCVS, and its register needs checking before it is relied on.]`
+
+**Do not contact the practices the assistants already name.** The list is built
+and it includes them; the visibility ladder's bottom rung says they are not
+prospects, and §3's definition of a good first client says the same. On the
+Wirral this is a live case rather than a hypothetical: **two of the three
+practices on the directory cited in 20 of 90 answers share one owner**, and both
+are named. That owner gets nothing from us and should not be emailed.
 
 ### What makes a good first client
 

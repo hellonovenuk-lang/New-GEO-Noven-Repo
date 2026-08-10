@@ -27,6 +27,72 @@ document had its argument stripped and sends the reader here.
 
 ---
 
+### 2026-08-10 (the dental list gets built, and the method for building it turns out to be wrong)
+
+- **The task was "begin outreach, get the info on the dentists, give me the
+  emails". Two of the three are done and the third is blocked on a file that
+  isn't here.** The list is built and the email copy is written; what cannot be
+  finished is the per-practice personalisation, because the 90-row run from
+  9 August lives at `~/wardith-runs/wirral-dentists.csv` on the owner's machine
+  and by design never entered this repository. **That is the rule working, not a
+  failure** — but it means the brass-coloured gaps in the email document can only
+  be filled by someone holding that file.
+- **The Companies House sweep reproduced exactly, and that is what made the
+  failure visible.** Re-run from scratch it returned 67 active companies on SIC
+  86230 across the thirteen districts, district for district identical to the
+  9 August figures. **A CQC-first sweep of the same peninsula then found twelve
+  real, trading, limited-company dental practices the postcode sweep had never
+  seen**, because their companies are registered in Cheltenham, Exeter,
+  Northampton, Bolton, Richmond, Maghull, Liverpool, Cheadle, Ellesmere Port and
+  Portchester. Nothing exotic: they use an accountant who is not on the Wirral.
+- **`ops/outreach.md` §3 predicted this in one sentence — "the list is a floor,
+  not a census" — and then built the list on the floor anyway.** Worth naming as
+  a pattern, because it is not a research failure. The limitation was known,
+  written down, and then not acted on, because the sweep produced a number and a
+  number feels like an answer. **A caveat recorded next to a method does not
+  change the method. Somebody has to.**
+- **The replacement is strictly better and cheaper.** Regulator first: the CQC
+  publishes a free national CSV of every registered location with address, phone,
+  provider and sometimes a website. Filter by postcode and it is the *trading*
+  list, which is what we always wanted. Companies House then answers one question
+  per name — is this provider a live company — which is both the PECR test and a
+  smaller job than thirteen district sweeps.
+- **The provider column turned out to be the legal filter in disguise, and it
+  removed a third of the market.** CQC records who is registered to run each
+  location. "Something Limited" may be cold-emailed; "Dr So-and-so" or "Such-and-
+  such Partnership" may not, under §2. **21 of the Wirral's dental practices are
+  closed to us on that basis alone.** One provider whose name ends in "Ltd" has
+  no live company at all, which reading the name would never have caught.
+- **The funnel, end to end: 73 CQC locations in range, 28 lawfully approachable,
+  9 ready to send today.** Five more need one browser lookup for a contact
+  address; the rest need a website found or have none.
+- **The number that changes a plan: one trade in one area is a fortnight of
+  sending, not a quarter of it.** `ROADMAP.md` 2a settled twenty emails a week
+  from a capacity argument, and §7 flagged the list as the binding constraint.
+  It binds harder than that arithmetic assumed. Widen the area, add the next
+  trade, or cut the batch — put to the owner rather than decided here, because
+  all three cost something different.
+- **Two of the three practices on ThreeBestRated share one owner, and both are
+  named by the assistants.** ThreeBestRated is cited in 20 of 90 answers and
+  `ops/trade-run/README.md` calls it the single most evidenced action in the
+  business. The visibility ladder's bottom rung says the named are not prospects;
+  this is the first time that rule has deleted a real name from a real list, and
+  it deleted two.
+- **A shared registered office is not automatically an accountant, and §3 was
+  about to lose good prospects to that assumption.** It splits two ways: an
+  accountant or serviced office, where the registered address is not a clinic;
+  and a clinic where the associates' personal service companies also register,
+  where the address *is* the clinic and exactly one of the companies is the
+  prospect. Two of the Wirral's four-company addresses are the second kind.
+- **Found while checking, and fixed: `ROADMAP.md` still called client storage the
+  last blocker on the first cold email.** The privacy commit earlier the same day
+  rewrote four files to say the opposite and this block survived it. Both values
+  are set, `/privacy/` is published, and nothing legal or technical now stands
+  between here and the first batch.
+- **Next, and it is the owner's to do:** open the run file, mark each of the nine
+  as Draft A or Draft B from the mention table, and fill the numbers. Then send
+  ten and stop.
+
 ### 2026-08-10 (the address for service lands, and four things unlock at once)
 
 - **The address arrived on the day it was predicted to.** UK Postbox approved

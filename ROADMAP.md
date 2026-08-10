@@ -531,24 +531,34 @@ business network, so the warm route below is closed rather than deferred.
       contacted unless Companies House shows a live company.** This also settles
       `HANDOVER.md` §7 item 4 — and it rules out the sole-trader buyers that same
       document assumed were the market.
-- [ ] **Two blockers moved onto the critical path by this; one is cleared.**
-      The first cold email cannot be sent until `addressForService` and
-      `clientDataStorage` are set in `site/src/data/business.ts`: the address
-      because every email must carry it, the storage because there must be
-      somewhere to keep the do-not-contact record.
-      **The address landed 2026-08-10** — the line for an email footer is
-      `Lytchett House, 13 Freeland Park, Wareham Road, Poole, Dorset, BH16 6FA`,
-      and `ops/outreach.md` §2 and both draft emails already carry it.
-      **What is left is the storage half, and only one field of it**:
-      `clientDataStorage.where`. The provider is named; the country is not. It
-      is **not** a look inside the account — the research on 2026-08-10 found
-      the consumer Microsoft account cannot hold this data at all. **The answer
-      settled the same day is local, encrypted storage on the founder's own
-      machine**, conditional on encryption being on and a restore tested. It is
-      the last thing between here and a lawful first batch.
+- [x] **Both blockers cleared, 2026-08-10.** The first cold email needed
+      `addressForService` and `clientDataStorage` set in
+      `site/src/data/business.ts` — the address because every email must carry
+      it, the storage because there must be somewhere to keep the
+      do-not-contact record. The address landed that morning and the line for an
+      email footer is
+      `Lytchett House, 13 Freeland Park, Wareham Road, Poole, Dorset, BH16 6FA`.
+      The storage half was answered the same day as local encrypted storage on
+      the founder's own machine, `/privacy/` is published, and the owner's
+      correction stands on the record: **storage was never really the blocker,
+      because there is no client and no client record yet.**
       `ops/client-record.md`, "Storing it locally".
-- [ ] Build the list from Companies House by SIC code and postcode.
-      `[PLACEHOLDER: how many Wirral clinics exist per trade]`.
+      **Nothing legal or technical now stands between here and the first batch.**
+- [x] **The dental list is built — 2026-08-10, and the method changed while
+      building it.** Companies House by SIC code and postcode is the wrong first
+      step: run again it reproduced its 67 rows exactly and still missed twelve
+      real practices whose companies are registered off the peninsula. **The
+      census comes from the regulator — the CQC's free national directory — and
+      Companies House then answers one question per name.** Method rewritten in
+      `ops/outreach.md` §3.
+      **73 CQC dental locations in range, 28 lawfully approachable, 9 ready to
+      send today.** The rest of the funnel is in §3, "The triaged figure".
+      The named list is personal data and is not in this repository; it went to
+      the owner as a workbook.
+- [ ] **Decide what happens when one trade in one area runs out, because dental
+      already has.** Twenty emails a week against 28 approachable practices is a
+      fortnight of sending. Widen the area, add the next trade, or cut the batch.
+      `ops/outreach.md` §3 sets out the three options and does not pick one.
 - [ ] **Run the discovery questions once for the trade, not once per business.**
       The plan used to say a mini audit per prospect; at cold volume that costs
       real money for no extra insight. One run per trade and area names the
