@@ -194,6 +194,27 @@ sites have four or five things right and two badly wrong. That is the correct
 shape. It is also, group by group, the Foundation scope — so a client who reads
 this section and then reads the quote should recognise the same list.*
 
+**But "in the Foundation scope" is not the same as "worth one of the three
+findings", and structured data is the case that proves it.** Added 2026-08-10.
+Group 3 turns up missing JSON-LD on most small sites, and it is genuinely worth
+a developer's hour — **it is also the thing we measured and found does not
+predict whether the assistants name you** (`ops/audit-site-checklist.md`, "What
+structured data is worth"). So it belongs here, described plainly, and it
+belongs in the quote as housekeeping. **It should almost never be finding 1, 2
+or 3**, because with only three slots it has to beat things the run actually
+evidenced — directory presence, and whether their own domain gets cited.
+
+**The reason to be strict about this is that markup is the perfect thing to pad
+a quote with.** It is technical, the client cannot evaluate it, and it demos
+beautifully in a validator. A £800 Foundation whose visible bulk is schema the
+audit itself called low-impact is the mirror image of the failure
+`ops/outreach.md` §5 warns about, and it is worse, because here we would be the
+ones who knew.
+
+**So the quote says which items are evidenced and which are housekeeping**, and
+prices accordingly. If housekeeping is all there is, the honest branch below is
+"you don't need us" — not a Foundation with the schema written large.
+
 ## What's holding you back
 
 *Three, ranked. Each one: what it is in plain words, what it costs them, what
