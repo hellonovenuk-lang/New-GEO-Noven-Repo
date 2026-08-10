@@ -572,8 +572,7 @@ is the first batch.
 > the rest from your own website. If you'd rather I didn't keep your details,
 > tell me and I'll delete them.
 >
-> Postal address: Lytchett House, 13 Freeland Park, Wareham Road, Poole,
-> Dorset, BH16 6FA
+> *[the normal Wardith signature follows, and it carries the postal address]*
 
 **For a practice named once or twice, change one sentence and send the same
 letter.** "It isn't in any of them" becomes "It came up once, in ninety
@@ -761,12 +760,24 @@ confirmed passing in a real delivered message during the rename
 addresses visible to each other is a personal data breach and the end of the
 pitch in the same moment.
 
-**Typed or pasted into an ordinary compose window, in plain text.** No
-mail-merge tool, no tracking pixel, no read receipt, no shortened links, no HTML
-signature or logo image. Each of those is a thing a person writing to one
-business would not do, and each of them is a thing a spam filter scores. The
-email's whole claim is that it came from someone down the road who ran the
-questions himself.
+**Typed or pasted into an ordinary compose window.** No mail-merge tool, no
+tracking pixel, no read receipt. The email's whole claim is that it came from
+someone down the road who ran the questions himself, and those three are the
+ones that contradict it.
+
+**The normal Wardith signature goes on, image and all**
+(`assets/brand/email-signature.html`). *Corrected by the owner 2026-08-10.* This
+section first said plain text with no HTML signature and no logo. **That was
+written here without evidence and it was wrong**: a logo served from our own
+domain is not a tracking pixel, signature images are ordinary in business email,
+and deliverability turns on authentication, volume and complaints — all of which
+we are fine on. The LinkedIn link is not a competing call to action either; the
+one-action rule in §5 is about the *body* offering two invitations, which is a
+different thing.
+
+**The one real consequence: do not print the address twice.** The signature
+carries the Poole address, so the letter's own postal line comes out. The
+"Birkenhead, Wirral" line under the name stays — that is the point of it.
 
 **Spread twenty across the week — four or five a day, weekday mornings.** A
 domain two months old that has sent almost nothing, suddenly sending twenty
