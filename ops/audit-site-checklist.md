@@ -264,31 +264,52 @@ disagrees with the page it sits on is worse than none — it is a machine-readab
 statement of something untrue, and it is exactly the mechanism that produces the
 "named wrongly" outcomes in `ops/audit-method.md` section 4.
 
-**The specific case that will keep turning up: the markup describes the web
-designer.** Found on a real Wirral practice 2026-08-10. Every node in the graph
-— `Organization`, `WebSite`, `WebPage` — carried the agency's name, logo, phone,
-email, price range and registered address, with all three `@id` values anchored
-to the agency's domain rather than the client's. The only machine-readable
-statement of what the page was about named a web design company. **No `Dentist`
-type, no practice address, no practice phone.**
+**The case worth checking for: markup that describes the web designer.** A
+site's whole graph — `Organization`, `WebSite`, `WebPage` — can carry the
+agency's name, logo, phone and registered address, with every `@id` anchored to
+the agency's domain rather than the client's, leaving no `LocalBusiness` for the
+client at all. It is a template default rather than anything deliberate, an
+agency that ships it once ships it on every site it builds, and **a one-line
+`@id` host check catches it.**
 
-It is a template default rather than anything deliberate, which is why it is
-worth checking every time: an agency that ships it once ships it on every site
-it builds. **A one-line `@id` host check catches it**, and it is the cleanest
-example we have of the "worse than none" rule above.
+**Not yet observed on a client or a prospect.** Written 2026-08-10 after a
+near-miss: the owner read a block of exactly this shape while checking a
+prospect and it turned out to be the web designer's *own* site, viewed by
+mistake. The check is worth keeping and the failure mode is real; **what does
+not exist is a case of it. Do not cite one until we have found one.**
 
-**Two rules for reporting it.** State it as a fact about the client's own page —
-*the structured data on your site describes a web design company, not your
-practice* — which is checkable in thirty seconds and accuses nobody. **Do not
-name the agency.** They are frequently a local business themselves, the client
-may still be paying them, and a written assertion to a third party about a named
-company's work is a different kind of risk from reporting what an assistant
-said. The finding does not need the name to land.
+**If it is ever found, two rules for reporting it.** State it as a fact about
+the client's own page — *the structured data on your site describes a web design
+company, not your practice* — which is checkable in thirty seconds and accuses
+nobody. **Do not name the agency.** They are frequently a local business
+themselves, the client may still be paying them, and a written assertion to a
+third party about a named company's work is a different kind of risk from
+reporting what an assistant said.
 
-**And do not claim it explains an absence.** It is a defect, not a proven cause.
-`ops/outreach.md` §4 found that being named tracks with directory presence and
-with the practice's own domain being cited; a site can carry perfect markup and
-still go unnamed. Report it as what it is.
+### What structured data is worth, measured rather than assumed — 2026-08-10
+
+**Missing JSON-LD is a weak finding and the report should not inflate it.**
+Checked against the Wirral trade run, comparing the practices the assistants
+named most against the ones they never named:
+
+| | Rich `Dentist` or `LocalBusiness` markup | Generic page boilerplate only | None at all |
+|---|---|---|---|
+| **Top-named** | 2 | 2 | — |
+| **Never named** | 2 | 1 | 3 |
+
+**Markup does not separate the two groups.** One of the most-named practices has
+the best structured data in the sample; another equally-named one has nothing
+but `WebPage`/`WebSite` boilerplate. One practice named in **none** of the
+ninety answers carries a correct self-describing `Organization` block.
+
+**So the honest framing in a report is that absent structured data is a missed
+opportunity rather than a cause of absence** — facts a machine could have read
+cleanly that it now has to infer from prose. **Wrong structured data is
+different and is a real defect**, per the rule above. Sample is small and two
+sites failed to resolve, so this is directional. **It is enough to stop us
+selling markup as the answer**, which is what the whole industry does and what
+`ops/outreach.md` §4's evidence already argued against: naming tracks with
+directory presence and with the practice's own domain being cited.
 
 ---
 
