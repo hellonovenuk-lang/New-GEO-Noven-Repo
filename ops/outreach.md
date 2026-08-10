@@ -564,12 +564,16 @@ is the first batch.
 > Worth a look?
 >
 > [Owner name]
-> Wardith, Lytchett House, 13 Freeland Park, Wareham Road, Poole, Dorset, BH16 6FA
+> Wardith
+> Birkenhead, Wirral
 > hello@wardith.co.uk
 >
 > I found [practice] on the NHS list of Wirral dentists and on [directory], and
 > the rest from your own website. If you'd rather I didn't keep your details,
 > tell me and I'll delete them.
+>
+> Postal address: Lytchett House, 13 Freeland Park, Wareham Road, Poole,
+> Dorset, BH16 6FA
 
 **For a practice named once or twice, change one sentence and send the same
 letter.** "It isn't in any of them" becomes "It came up once, in ninety
@@ -623,11 +627,15 @@ on Perplexity alone does not earn a letter.
 > Worth a look at [practice]?
 >
 > [Owner name]
-> Wardith, Lytchett House, 13 Freeland Park, Wareham Road, Poole, Dorset, BH16 6FA
+> Wardith
+> Birkenhead, Wirral
 > hello@wardith.co.uk
 >
 > I found [practice] on [where], and the rest from your own website. If you'd
 > rather I didn't keep your details, tell me and I'll delete them.
+>
+> Postal address: Lytchett House, 13 Freeland Park, Wareham Road, Poole,
+> Dorset, BH16 6FA
 
 ### What the email gives away, and what it does not
 
