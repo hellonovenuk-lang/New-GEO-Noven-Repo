@@ -613,6 +613,42 @@ audits, no introductory rate, no "first five clients" discount, no bundling the
 audit with a monthly plan. Settled 2026-07-31, `ops/service-tiers.md` section 9.
 A free audit is an introductory rate wearing a different hat.
 
+### Sending it — the mechanics
+
+*Written 2026-08-10, when the owner asked what actually has to happen to start.
+Everything above is what the email says; this is how it physically goes out.*
+
+**From `hello@wardith.co.uk`, the Zoho mailbox, and nothing else.** Not the
+Gmail account — that is an identity that owns logins, not a mailbox
+(`ops/accounts.md`). Authentication is already good: SPF, DKIM and DMARC were
+confirmed passing in a real delivered message during the rename
+(`ops/rename-to-wardith.md`). **DMARC is still `p=none`**; raise it to
+`p=quarantine` once a batch has gone out clean, not before.
+
+**One recipient per email. Never a CC, never a BCC list.** Twenty clinic
+addresses visible to each other is a personal data breach and the end of the
+pitch in the same moment.
+
+**Typed or pasted into an ordinary compose window, in plain text.** No
+mail-merge tool, no tracking pixel, no read receipt, no shortened links, no HTML
+signature or logo image. Each of those is a thing a person writing to one
+business would not do, and each of them is a thing a spam filter scores. The
+email's whole claim is that it came from someone down the road who ran the
+questions himself.
+
+**Spread twenty across the week — four or five a day, weekday mornings.** A
+domain two months old that has sent almost nothing, suddenly sending twenty
+near-identical messages inside an hour, is the shape of the rule rather than the
+exception. The batch is weekly anyway (§7); there is no reason to send it in one
+sitting.
+
+**To a named person wherever the practice's own site gives one.** `info@` is the
+fallback, not the default — the drafts open "Hello [name]" because a letter to
+nobody reads as a circular.
+
+**Paste the sent email into the record as it goes** (§6), not at the end of the
+day. The record is what makes a second approach impossible and an opt-out
+permanent, and it is worthless if it is reconstructed from memory.
 
 ---
 
