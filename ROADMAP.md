@@ -531,29 +531,37 @@ business network, so the warm route below is closed rather than deferred.
       contacted unless Companies House shows a live company.** This also settles
       `HANDOVER.md` §7 item 4 — and it rules out the sole-trader buyers that same
       document assumed were the market.
-- [ ] **Two blockers moved onto the critical path by this; one is cleared.**
-      The first cold email cannot be sent until `addressForService` and
-      `clientDataStorage` are set in `site/src/data/business.ts`: the address
-      because every email must carry it, the storage because there must be
-      somewhere to keep the do-not-contact record.
-      **The address landed 2026-08-10** — the line for an email footer is
-      `Lytchett House, 13 Freeland Park, Wareham Road, Poole, Dorset, BH16 6FA`,
-      and `ops/outreach.md` §2 and both draft emails already carry it.
-      **What is left is the storage half, and only one field of it**:
-      `clientDataStorage.where`. The provider is named; the country is not. It
-      is **not** a look inside the account — the research on 2026-08-10 found
-      the consumer Microsoft account cannot hold this data at all. **The answer
-      settled the same day is local, encrypted storage on the founder's own
-      machine**, conditional on encryption being on and a restore tested. It is
-      the last thing between here and a lawful first batch.
-      `ops/client-record.md`, "Storing it locally".
+- [x] **Both blockers cleared, 2026-08-10.** The first cold email could not be
+      sent until `addressForService` and `clientDataStorage` were set in
+      `site/src/data/business.ts`: the address because every email must carry
+      it, the storage because there must be somewhere to keep the
+      do-not-contact record. **Both are now set and published.** The line for
+      an email footer is `Lytchett House, 13 Freeland Park, Wareham Road,
+      Poole, Dorset, BH16 6FA`; the storage answer is local, encrypted storage
+      on the founder's own machine, in the United Kingdom, after the research
+      that day found the consumer Microsoft account cannot hold this data at
+      all. `ops/client-record.md`, "Storing it locally".
+      **What the published wording now depends on is a fact about the machine,
+      not a field in a file**: `/privacy/` claims records are encrypted at
+      rest, so full-disk encryption has to be switched on before the first
+      reply arrives. That is the condition, and it is checked on the laptop.
 - [ ] Build the list from Companies House by SIC code and postcode.
-      `[PLACEHOLDER: how many Wirral clinics exist per trade]`.
-- [ ] **Run the discovery questions once for the trade, not once per business.**
-      The plan used to say a mini audit per prospect; at cold volume that costs
-      real money for no extra insight. One run per trade and area names the
-      competitors ranked ahead of every clinic on the list at once, for about
-      $15 a batch. `ops/outreach.md` §4.
+      **Dental is swept: 67 active limited companies across CH41–CH49 and
+      CH60–CH63, 2026-08-09** (`ops/outreach.md` §3). Untriaged — 17 look like
+      personal service companies and 22 share a registered office with another
+      row on the list, and neither group is a prospect. **The triage, and the
+      contact name and email that Companies House does not hold, is the work
+      that stands between the run and the first batch.**
+      `[PLACEHOLDER: the triaged figure, and the same sweep for cosmetic,
+      physiotherapy and veterinary.]`
+- [x] **Run the discovery questions once for the trade, not once per business
+      — run 2026-08-09.** The plan used to say a mini audit per prospect; at
+      cold volume that costs real money for no extra insight. One run per trade
+      and area names the competitors ranked ahead of every clinic on the list
+      at once, for about $15 a batch. **90 rows, zero errors, 39 practices
+      named, and the finding the email is built on: 18 of the 39 are missing
+      entirely from at least one assistant.** `ops/outreach.md` §4,
+      `ops/trade-run/README.md`, "What the full run found".
 - [ ] Send the email in batches of ten to twenty, so the wording can change on
       what comes back. Draft in `ops/outreach.md` §5. One finding, the price in
       the second paragraph, a link to the published self-audit, no chasing

@@ -153,6 +153,29 @@ they are visible in the raw data:
 on the Wirral but registered at an accountant's office in Liverpool does not
 appear here at all. The list is a floor, not a census.
 
+### The sweep is the filter, never the source — measured 2026-08-10
+
+**This section used to read as though the 67 were the prospect list. They are
+not, and the gap is now a number rather than a worry.** Of the twelve practices
+that survived every test and made the first batch, **two appear anywhere in the
+67.** The rest are registered under a company name that looks nothing like the
+practice, or outside the peninsula entirely.
+
+**What the 67 actually contains is dentists' personal service companies**, named
+after people or after nothing — the flagged 17 was an undercount. As a list of
+businesses to write to it is close to useless.
+
+**So run it the other way round.** Build the candidate list from the trade run
+and the directory census below, then use Companies House **by name** to answer
+"is this a live company" for each one. That is what §2 asks for and it is all
+the sweep was ever good for. **One caution: Companies House free-text search
+matches any word in the query and returns thousands of rows**, so the check is
+per-practice against the company's own registered name, not a keyword hunt.
+
+**The sweep does keep one job.** It surfaces practices that appear in no
+assistant answer at all — three of the first batch came from it and from nowhere
+else — so it stays, as a source of *candidates to check*, not of prospects.
+
 **Wirral postcodes: CH41–CH49, CH60–CH63.** CH64 is Neston, on the peninsula but
 in Cheshire West, so it is a judgement call rather than an obvious yes. **Check
 this list too** — a postcode district that turns out to be Chester puts the
@@ -323,6 +346,30 @@ competitors, is a fact nobody else in their inbox has.
 Wirral practices listed in the cited directories and named by no assistant.
 `ops/trade-run/README.md` has the detail.
 
+### How the tier was actually built — 2026-08-10, and this is the repeatable method
+
+**Take the five directory pages the run's own `sources_cited` column shows the
+assistants reading**, fetch each one, and list every practice on it. Add the NHS
+practice list for the area and the Companies House sweep. That union is the
+census. **Subtract every business the mention table names, then verify each
+survivor by searching all ninety answer texts for its name** — absence from a
+summary is not absence from the data, and two candidates failed exactly there,
+turning out to be named once.
+
+**It works, and it is cheap.** Nine practices at a verified zero across all
+ninety answers, plus two named exactly once. Every one of them sits on a page
+the assistants demonstrably read.
+
+**Two things it caught that a name list alone would not have.** Two of the
+zero-mention practices are **corporate chains trading under a local name** — one
+Bupa, one Rodericks — which fail the good-first-client test and would have been
+wasted letters. And one has **let its website domain lapse**, which is a fact
+about why it is invisible and a delicate thing to raise.
+
+**The census is a floor.** Two of the cited directories refuse automated access,
+so more prospects exist than this method returns. That is the right direction to
+be wrong in.
+
 ### What the email should actually claim — settled by the full run, 2026-08-09
 
 **The general claim is dead and the specific one is strong.** The smoke test
@@ -354,8 +401,49 @@ actually make.** The stronger one is specific and checkable:
 thirty-nine, and known to none of them.** It is also the version that survives a
 sceptical reader, which the general claim would not have.
 
+**Every "of thirty-nine" in this section is provisional.** A recount on
+2026-08-10 over the same 90 rows, using the Companies House and directory names
+as the candidate list, returned **fifty-four**. The two methods disagree, the
+ratios above are built on the smaller one, and **no total goes in a letter until
+they are reconciled** — §5 has taken the number out of both drafts. The
+per-practice counts are unaffected: those are matched directly against the
+answer text and were re-verified name by name.
+
 **Rewrite the §5 draft around it.** The draft was written before the run and
-makes the weaker "you are not mentioned" claim.
+makes the weaker "you are not mentioned" claim. **Done 2026-08-10** — see the
+reordering note at the head of the drafts.
+
+**Amended 2026-08-10 by the owner, and it cuts the Draft A pool by two thirds.**
+The per-assistant gap is only worth a letter **when the missing assistant is
+ChatGPT**. The finding as stated above treats the three as interchangeable, and
+they are not: a practice told it is invisible on Perplexity will ask what that
+costs them, and **we cannot answer** — the run measured what the assistants say,
+not what they refer. Leading with a gap we cannot price is a bad opening for a
+£250 sale.
+
+**Worse, the ranking it produced was upside down.** Sorting by size of contrast
+put a practice named twelve times out of fifteen by ChatGPT at the top of the
+batch. That practice does not have a problem, and a well-written letter telling
+them so buys a shrug and costs one of the twenty.
+
+**So: absent from ChatGPT is a finding. Absent from Perplexity alone is not.**
+Of eleven candidates ranked this way on 2026-08-10, three survived.
+
+**And the deeper correction, which is the one that will drift back.** §4 above
+rejects "you are not mentioned" because it is not *distinguishing* — if 90% of
+the peninsula is unnamed, the fact cannot tell you who to write to. **True, and
+it is an argument about targeting.** It was then used to reject the claim as an
+*email*, which does not follow. A letter does not need its finding to be rare,
+only true, checkable and worth acting on. **Two different tests, collapsed into
+one.** The never-named are the first batch; the census method above is how they
+are found.
+
+**One risk comes with that, and it is delivery, not targeting.** For a
+never-named practice the honest diagnosis is often "you are not on the pages the
+assistants read", and the most evidenced fix is a free directory listing. If a
+£250 report comes down to that, the price looks wrong — which the rule in §5
+already answers: **that means the audit has to do more, not that the customer
+was the wrong pick.**
 
 **And for the practices nobody names at all**, the honest line is different
 again, because their problem is bigger: they are absent from the directories the
@@ -402,8 +490,99 @@ again, because the owner read them back and found **two competing invitations** 
 a link to our own audit and a separate offer to send the answers, with nothing
 telling the reader which one to act on. **Both now go one place: the audit.**
 
-**Draft A — for a practice named by one or two assistants and missing from the
-rest.** Eighteen of the thirty-nine named practices are in this position.
+**Reordered 2026-08-10, and the labels are now the job rather than a letter.**
+The two drafts used to be presented A-then-B, which put the per-assistant letter
+first and read as the default. It is not the default any more — §4's amendment
+made the never-named the first batch. **"The absent letter" below was Draft B
+and "the ChatGPT-gap letter" was Draft A**, so the references further down this
+section still resolve.
+
+**Three fixes applied at the same time, all of them consequences of the change
+of target:**
+
+- **The count of named practices comes out of both letters.** They said "thirty
+  nine practices got named". A recount on 2026-08-10 from the same 90 rows,
+  using the Companies House and directory names as the candidate list, returned
+  **fifty-four**. Two methods, two answers, and **neither is safe to state in a
+  cold email until they are reconciled.** What is not in doubt is the bit that
+  matters — that a named practice was searched for across all ninety answer
+  texts and is not there — so the letters now make that claim and drop the
+  total. `[PLACEHOLDER: the reconciled count of practices named.]`
+- **The source line has to say where we actually found them.** Both letters
+  said "I found the practice through Companies House". That was true when the
+  list was built from the SIC sweep. **It is now false for most of them** — the
+  never-named are found on the NHS practice list and the directories, and
+  Companies House is only used afterwards to check the company is live. Under
+  UK GDPR this line is the Article 14 disclosure, so it has to be accurate
+  rather than approximately right.
+- **A practice named once needs one word changed**, not a different letter. See
+  the note after the absent letter.
+
+**The absent letter — for a practice named in none of the ninety answers.** This
+is the first batch.
+
+> Subject: [Practice] and AI search
+>
+> Hello [name],
+>
+> I'm [owner]. I run a small business on the Wirral that checks what the AI
+> assistants say when somebody asks them to recommend a local business.
+>
+> Last week I asked ChatGPT, Google's Gemini and Perplexity for a dentist on the
+> Wirral. Six different ways of asking, five times each, so ninety answers.
+>
+> Three of the questions, and what came back:
+>
+> "Who is the best dentist on the Wirral?" — [A] in thirteen of the fifteen
+> answers, [B] in nine.
+>
+> "Which dental practices on the Wirral do Invisalign?" — [C] and [D] in all
+> fifteen, [E] in fourteen.
+>
+> "What are the highest rated private dentists on the Wirral?" — [E] in all
+> fifteen, [B] in thirteen.
+>
+> I went through all ninety answers looking for [practice]. It isn't in any of
+> them. Those are the exact words I used, if you want to try them yourself.
+>
+> One thing worth saying, because it's the first thing I'd want to test. I didn't
+> ask about [practice] by name. If you type the name in, all three will probably
+> tell you plenty, and accurately. I asked the way somebody looks for a dentist
+> when they don't have one yet and don't know who you are. That's the question
+> that brings in new patients, and it's a different question.
+>
+> A practice can be missing for a few different reasons and they aren't equally
+> hard to fix. What I sell is finding out which one applies to you. Ten questions
+> on [practice] across all three assistants, where their answers are actually
+> coming from, and a written report on what to change. It's £250, that's the
+> entire cost, and the report is yours to act on with me or without me.
+>
+> If you want to see what one looks like first, I ran the same thing on my own
+> business and published all of it, including what came back badly:
+> wardith.co.uk/ask-your-ai/self-audit/
+>
+> Worth a look?
+>
+> [Owner name]
+> Wardith
+> Birkenhead, Wirral
+> hello@wardith.co.uk
+>
+> I found [practice] on the NHS list of Wirral dentists and on [directory], and
+> the rest from your own website. If you'd rather I didn't keep your details,
+> tell me and I'll delete them.
+>
+> *[the normal Wardith signature follows, and it carries the postal address]*
+
+**For a practice named once or twice, change one sentence and send the same
+letter.** "It isn't in any of them" becomes "It came up once, in ninety
+answers" — everything else holds, and it is a stronger opening than the absent
+version because it is more obviously a real count rather than a failure to
+look.
+
+**The ChatGPT-gap letter — for a practice named by Perplexity or Gemini and
+absent from ChatGPT.** Only when the missing assistant is ChatGPT, per §4. A gap
+on Perplexity alone does not earn a letter.
 
 > Subject: [Practice] and ChatGPT
 >
@@ -447,63 +626,14 @@ rest.** Eighteen of the thirty-nine named practices are in this position.
 > Worth a look at [practice]?
 >
 > [Owner name]
-> Wardith, Lytchett House, 13 Freeland Park, Wareham Road, Poole, Dorset, BH16 6FA
+> Wardith
+> Birkenhead, Wirral
 > hello@wardith.co.uk
 >
-> I found the practice through Companies House and your own website. If you'd
+> I found [practice] on [where], and the rest from your own website. If you'd
 > rather I didn't keep your details, tell me and I'll delete them.
-
-**Draft B — for a practice named by none of them.**
-
-> Subject: [Practice] and AI search
 >
-> Hello [name],
->
-> I'm [owner]. I run a small business on the Wirral that checks what the AI
-> assistants say when somebody asks them to recommend a local business.
->
-> Last week I asked ChatGPT, Google's Gemini and Perplexity for a dentist on the
-> Wirral. Six different ways of asking, five times each, so ninety answers.
->
-> Three of the questions, and what came back:
->
-> "Who is the best dentist on the Wirral?" — [A] in thirteen of the fifteen
-> answers, [B] in nine.
->
-> "Which dental practices on the Wirral do Invisalign?" — [C] and [D] in all
-> fifteen, [E] in fourteen.
->
-> "What are the highest rated private dentists on the Wirral?" — [E] in all
-> fifteen, [B] in thirteen.
->
-> Thirty-nine practices got named somewhere across the ninety answers.
-> [Practice] wasn't one of them. Those are the exact words I used, if you want to
-> try them yourself.
->
-> One thing worth saying, because it's the first thing I'd want to test. I didn't
-> ask about [practice] by name. If you type the name in, all three will probably
-> tell you plenty, and accurately. I asked the way somebody looks for a dentist
-> when they don't have one yet and don't know who you are. That's the question
-> that brings in new patients, and it's a different question.
->
-> A practice can be missing for a few different reasons and they aren't equally
-> hard to fix. What I sell is finding out which one applies to you. Ten questions
-> on [practice] across all three assistants, where their answers are actually
-> coming from, and a written report on what to change. It's £250, that's the
-> entire cost, and the report is yours to act on with me or without me.
->
-> If you want to see what one looks like first, I ran the same thing on my own
-> business and published all of it, including what came back badly:
-> wardith.co.uk/ask-your-ai/self-audit/
->
-> Worth a look?
->
-> [Owner name]
-> Wardith, Lytchett House, 13 Freeland Park, Wareham Road, Poole, Dorset, BH16 6FA
-> hello@wardith.co.uk
->
-> I found the practice through Companies House and your own website. If you'd
-> rather I didn't keep your details, tell me and I'll delete them.
+> *[the normal Wardith signature follows, and it carries the postal address]*
 
 ### What the email gives away, and what it does not
 
@@ -613,6 +743,54 @@ audits, no introductory rate, no "first five clients" discount, no bundling the
 audit with a monthly plan. Settled 2026-07-31, `ops/service-tiers.md` section 9.
 A free audit is an introductory rate wearing a different hat.
 
+### Sending it — the mechanics
+
+*Written 2026-08-10, when the owner asked what actually has to happen to start.
+Everything above is what the email says; this is how it physically goes out.*
+
+**From `hello@wardith.co.uk`, the Zoho mailbox, and nothing else.** Not the
+Gmail account — that is an identity that owns logins, not a mailbox
+(`ops/accounts.md`). Authentication is already good: SPF, DKIM and DMARC were
+confirmed passing in a real delivered message during the rename
+(`ops/rename-to-wardith.md`). **DMARC is still `p=none`**; raise it to
+`p=quarantine` once a batch has gone out clean, not before.
+
+**One recipient per email. Never a CC, never a BCC list.** Twenty clinic
+addresses visible to each other is a personal data breach and the end of the
+pitch in the same moment.
+
+**Typed or pasted into an ordinary compose window.** No mail-merge tool, no
+tracking pixel, no read receipt. The email's whole claim is that it came from
+someone down the road who ran the questions himself, and those three are the
+ones that contradict it.
+
+**The normal Wardith signature goes on, image and all**
+(`assets/brand/email-signature.html`). *Corrected by the owner 2026-08-10.* This
+section first said plain text with no HTML signature and no logo. **That was
+written here without evidence and it was wrong**: a logo served from our own
+domain is not a tracking pixel, signature images are ordinary in business email,
+and deliverability turns on authentication, volume and complaints — all of which
+we are fine on. The LinkedIn link is not a competing call to action either; the
+one-action rule in §5 is about the *body* offering two invitations, which is a
+different thing.
+
+**The one real consequence: do not print the address twice.** The signature
+carries the Poole address, so the letter's own postal line comes out. The
+"Birkenhead, Wirral" line under the name stays — that is the point of it.
+
+**Spread twenty across the week — four or five a day, weekday mornings.** A
+domain two months old that has sent almost nothing, suddenly sending twenty
+near-identical messages inside an hour, is the shape of the rule rather than the
+exception. The batch is weekly anyway (§7); there is no reason to send it in one
+sitting.
+
+**To a named person wherever the practice's own site gives one.** `info@` is the
+fallback, not the default — the drafts open "Hello [name]" because a letter to
+nobody reads as a circular.
+
+**Paste the sent email into the record as it goes** (§6), not at the end of the
+day. The record is what makes a second approach impossible and an opt-out
+permanent, and it is worthless if it is reconstructed from memory.
 
 ---
 
