@@ -153,6 +153,29 @@ they are visible in the raw data:
 on the Wirral but registered at an accountant's office in Liverpool does not
 appear here at all. The list is a floor, not a census.
 
+### The sweep is the filter, never the source — measured 2026-08-10
+
+**This section used to read as though the 67 were the prospect list. They are
+not, and the gap is now a number rather than a worry.** Of the twelve practices
+that survived every test and made the first batch, **two appear anywhere in the
+67.** The rest are registered under a company name that looks nothing like the
+practice, or outside the peninsula entirely.
+
+**What the 67 actually contains is dentists' personal service companies**, named
+after people or after nothing — the flagged 17 was an undercount. As a list of
+businesses to write to it is close to useless.
+
+**So run it the other way round.** Build the candidate list from the trade run
+and the directory census below, then use Companies House **by name** to answer
+"is this a live company" for each one. That is what §2 asks for and it is all
+the sweep was ever good for. **One caution: Companies House free-text search
+matches any word in the query and returns thousands of rows**, so the check is
+per-practice against the company's own registered name, not a keyword hunt.
+
+**The sweep does keep one job.** It surfaces practices that appear in no
+assistant answer at all — three of the first batch came from it and from nowhere
+else — so it stays, as a source of *candidates to check*, not of prospects.
+
 **Wirral postcodes: CH41–CH49, CH60–CH63.** CH64 is Neston, on the peninsula but
 in Cheshire West, so it is a judgement call rather than an obvious yes. **Check
 this list too** — a postcode district that turns out to be Chester puts the
@@ -323,6 +346,30 @@ competitors, is a fact nobody else in their inbox has.
 Wirral practices listed in the cited directories and named by no assistant.
 `ops/trade-run/README.md` has the detail.
 
+### How the tier was actually built — 2026-08-10, and this is the repeatable method
+
+**Take the five directory pages the run's own `sources_cited` column shows the
+assistants reading**, fetch each one, and list every practice on it. Add the NHS
+practice list for the area and the Companies House sweep. That union is the
+census. **Subtract every business the mention table names, then verify each
+survivor by searching all ninety answer texts for its name** — absence from a
+summary is not absence from the data, and two candidates failed exactly there,
+turning out to be named once.
+
+**It works, and it is cheap.** Nine practices at a verified zero across all
+ninety answers, plus two named exactly once. Every one of them sits on a page
+the assistants demonstrably read.
+
+**Two things it caught that a name list alone would not have.** Two of the
+zero-mention practices are **corporate chains trading under a local name** — one
+Bupa, one Rodericks — which fail the good-first-client test and would have been
+wasted letters. And one has **let its website domain lapse**, which is a fact
+about why it is invisible and a delicate thing to raise.
+
+**The census is a floor.** Two of the cited directories refuse automated access,
+so more prospects exist than this method returns. That is the right direction to
+be wrong in.
+
 ### What the email should actually claim — settled by the full run, 2026-08-09
 
 **The general claim is dead and the specific one is strong.** The smoke test
@@ -356,6 +403,38 @@ sceptical reader, which the general claim would not have.
 
 **Rewrite the §5 draft around it.** The draft was written before the run and
 makes the weaker "you are not mentioned" claim.
+
+**Amended 2026-08-10 by the owner, and it cuts the Draft A pool by two thirds.**
+The per-assistant gap is only worth a letter **when the missing assistant is
+ChatGPT**. The finding as stated above treats the three as interchangeable, and
+they are not: a practice told it is invisible on Perplexity will ask what that
+costs them, and **we cannot answer** — the run measured what the assistants say,
+not what they refer. Leading with a gap we cannot price is a bad opening for a
+£250 sale.
+
+**Worse, the ranking it produced was upside down.** Sorting by size of contrast
+put a practice named twelve times out of fifteen by ChatGPT at the top of the
+batch. That practice does not have a problem, and a well-written letter telling
+them so buys a shrug and costs one of the twenty.
+
+**So: absent from ChatGPT is a finding. Absent from Perplexity alone is not.**
+Of eleven candidates ranked this way on 2026-08-10, three survived.
+
+**And the deeper correction, which is the one that will drift back.** §4 above
+rejects "you are not mentioned" because it is not *distinguishing* — if 90% of
+the peninsula is unnamed, the fact cannot tell you who to write to. **True, and
+it is an argument about targeting.** It was then used to reject the claim as an
+*email*, which does not follow. A letter does not need its finding to be rare,
+only true, checkable and worth acting on. **Two different tests, collapsed into
+one.** The never-named are the first batch; the census method above is how they
+are found.
+
+**One risk comes with that, and it is delivery, not targeting.** For a
+never-named practice the honest diagnosis is often "you are not on the pages the
+assistants read", and the most evidenced fix is a free directory listing. If a
+£250 report comes down to that, the price looks wrong — which the rule in §5
+already answers: **that means the audit has to do more, not that the customer
+was the wrong pick.**
 
 **And for the practices nobody names at all**, the honest line is different
 again, because their problem is bigger: they are absent from the directories the
