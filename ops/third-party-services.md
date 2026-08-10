@@ -302,10 +302,11 @@ together, which was always meant to be one call rather than two.
 
 **Four things are still owed, and none of them is large:**
 
-1. **Confirm the trading name is registered with UK Postbox** (step 5). The
-   addresses came back with "Kieran Smith / Wardith" on the name line, which is
-   good evidence it was done, but it is not the same as seeing it on the
-   account. This is the item worth a wasted month if it was skipped.
+1. ~~**Confirm the trading name is registered with UK Postbox**~~ (step 5).
+   **Confirmed by the owner 2026-08-10: the box is registered with Wardith.**
+   This was the item worth a wasted month if it had been skipped — post
+   addressed to a name the provider holds no record of is the standard way mail
+   is returned in this industry. It was not skipped.
 2. **Fill the two `[PLACEHOLDER]`s in `ops/accounts.md`** — the setup fee, if
    any, and the billing date. Both are readable off the first statement.
 3. **Confirm post actually arrives.** The roadmap's own condition for ticking

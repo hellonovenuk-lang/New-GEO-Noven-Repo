@@ -67,11 +67,14 @@ the above rather than good manners:
 
 - **`/privacy/`** already carries the paragraph this needs — the "If we contact
   you first" section names legitimate interest and permanent opt-out recording.
-  It still does not publish. **The address half cleared on 2026-08-10; what is
-  left is one value** — `clientDataStorage.where`, the country Microsoft holds
-  the OneDrive data in (`ops/client-record.md`). **This is now the only thing
-  standing between the plan and the first cold email**, which makes a
-  two-minute look inside an account the most valuable two minutes on the list.
+  It still does not publish. **The address half cleared on 2026-08-10, and the
+  storage half got harder the same day.** The Microsoft account the owner opened
+  is a consumer one, which cannot lawfully hold client or prospect records at
+  all: no data-location commitment, no Article 28 processor contract, and terms
+  barring commercial use. **The fix is a purchase — a Microsoft 365 Business
+  subscription with the tenant country set to United Kingdom** — and it is now
+  the only thing standing between this plan and a lawful first batch.
+  `ops/client-record.md`, "The consumer account problem".
 - ~~**The address for service**~~ — **live 2026-08-10.** UK Postbox, Poole,
   £12/month. The line to put in an email is the **mailbox** address:
   `Lytchett House, 13 Freeland Park, Wareham Road, Poole, Dorset, BH16 6FA`.
@@ -81,10 +84,12 @@ the above rather than good manners:
 **A warm route would have sidestepped both. Cold cannot.** This was the single
 biggest cost of the change of plan, and half of it is now paid: the first cold
 email needed `business.addressForService` and `business.clientDataStorage` both
-set in `site/src/data/business.ts`, and as of 2026-08-10 the address is in and
-the storage provider is named. **The one remaining gap is the data location
-inside `clientDataStorage`.** Fill it and `/privacy/` publishes, which is the
-last thing the first email is waiting on.
+set in `site/src/data/business.ts`, and as of 2026-08-10 the address is in.
+**The storage half is the whole of what is left**, and it is a purchase rather
+than an edit. Until it is made, **the prospect list itself may not be stored in
+the consumer Microsoft account** — a list of named people at named practices is
+personal data before anybody has replied, which is the trap in believing this is
+only about clients.
 
 ---
 

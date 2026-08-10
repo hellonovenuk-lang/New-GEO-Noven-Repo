@@ -124,7 +124,7 @@ Ordered by what it stops.
 | ~~**Address for service of documents**~~ | **Exists as of 2026-08-10** — UK Postbox, Poole. Published in the footer and the structured data, and the ICO record was changed the same day. Row kept for one session so nobody re-solves it; the account facts are in `ops/accounts.md` |
 | ~~**Terms of service**~~ — **published 2026-08-10** | Nothing. It went live with the address, which is all it was waiting on |
 | **Privacy notice** — written 2026-08-09, unpublished | Lawfully holding any customer or prospect information — including an outreach list. **Now waiting on one value only**: the row below |
-| **The country Microsoft holds the OneDrive data in** | The privacy notice, the order page, and delivering the first audit lawfully. The provider was decided 2026-08-09 (OneDrive); what is missing is the data location, which is **a two-minute look inside the account, not a decision**. It is the single highest-leverage unknown left in this file |
+| **A Microsoft 365 Business subscription, tenant country United Kingdom** | The privacy notice, the order page, and delivering the first audit lawfully. **Reopened 2026-08-10.** This row used to read "the country Microsoft holds the OneDrive data in" and call it a two-minute lookup. It isn't: the account opened is a **consumer** one, which has no data-location commitment, no Article 28 processor contract, and terms barring commercial use. The fix is a purchase — Business Basic £5.40/user/month exc VAT, Business Standard £18.10 and the cleaner answer. **The tenant country is set once at creation and cannot be changed: enter United Kingdom.** `ops/client-record.md` |
 | **API accounts, keys and spend caps** | Running any audit at all |
 | **A working payment route** | Revenue |
 | **A Foundation method and time budget** | The £800 product, and knowing whether it makes money |
@@ -227,12 +227,30 @@ outliving it because the law says so.
 with the footer sentence and the `PostalAddress` in the structured data — one
 edit, four effects, which is the whole reason those facts live in one file.
 
-**`/privacy/` is the one still down, and it is now waiting on a single value:**
-`clientDataStorage.where` in `site/src/data/business.ts` — the country Microsoft
-states it holds this OneDrive account's data in. The provider half was decided
-on 2026-08-09; this half is a `[PLACEHOLDER]` on purpose, because it is
-checkable inside the account and must not be asserted from general knowledge.
-Set it and the page builds itself.
+**`/privacy/` is the one still down, and what it is waiting on changed on
+2026-08-10.** It needs `clientDataStorage.where` in
+`site/src/data/business.ts` — the country Microsoft states it holds the data in.
+This was recorded as a lookup. It is not one: **the Microsoft account opened is
+a consumer account, and it cannot hold client records.** Research that day, with
+sources, found three independent reasons — Microsoft publishes no data-location
+commitment for consumer services, the Article 28 processor terms UK GDPR
+requires attach to Commercial Licensing rather than consumer subscriptions, and
+Microsoft Services Agreement §13.h.i says the consumer Microsoft 365 plans are
+for personal, non-commercial use.
+
+**The fix is a Microsoft 365 Business subscription, and the one irreversible
+step is the tenant country: enter United Kingdom.** It is chosen at creation and
+cannot be changed afterwards. A UK tenant carries a Product Terms data residency
+commitment for OneDrive — data at rest in the UK, Microsoft's UK data centres
+being Cardiff, Durham and London — which makes this value a truthful "the United
+Kingdom" and answers the processor-contract problem at the same time. Business
+Basic is £5.40 per user/month exc VAT; Business Standard £18.10 and it replaces
+the consumer subscription rather than sitting beside it.
+`ops/client-record.md`, "The consumer account problem", has the full argument
+and the sources.
+
+**Until that is bought, nothing goes in the account** — not a client record and
+not the outreach list.
 
 **One thing changed in the terms to make that gap safe.** The "Your information"
 section links to the privacy notice only while the notice exists; while it
@@ -285,7 +303,9 @@ email has to carry the address for service, and there has to be somewhere to
 keep a permanent do-not-contact record. **A warm route would have let us start
 without either.** **The address half is done from 2026-08-10** — put the mailbox
 line, not the courier line, in the email footer. The do-not-contact record is
-still the OneDrive decision, waiting on the same value `/privacy/` is.
+still the storage decision, and as of 2026-08-10 that means buying a Microsoft
+365 Business subscription rather than looking up a setting — same blocker as
+`/privacy/`, larger than it looked.
 
 ### Not on the critical path, despite appearances
 

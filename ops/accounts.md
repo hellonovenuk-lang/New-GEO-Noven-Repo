@@ -47,10 +47,12 @@ letter that goes to a loading bay.
 | **Mailbox** | Kieran Smith / Wardith, Lytchett House, 13 Freeland Park, Wareham Road, Poole, Dorset, **BH16 6FA** | Letters and small packets. **This is the address for service of documents** and the only one that is published — site footer, structured data, ICO record, terms, and every official form |
 | **Courier point** | Kieran Smith / Wardith, Unit 171036, Courier Point, 13 Freeland Park, Wareham Road, Poole, Dorset, **BH16 6FH**, UK | Parcels and courier deliveries only. A delivery instruction for carriers, not a legal address. **Give it to suppliers; never publish it** |
 
-**Both name lines must read "Kieran Smith / Wardith".** Post addressed to a name
-the provider holds no record of is the standard way mail is returned in this
-industry, and the trading name is the half more likely to be dropped by whoever
-is filling in a form.
+**Both name lines must read "Kieran Smith / Wardith", and the trading name is
+registered with UK Postbox** — confirmed by the owner 2026-08-10. Post addressed
+to a name the provider holds no record of is the standard way mail is returned in
+this industry, and the trading name is the half most likely to be dropped by
+whoever is filling in a form. It is registered; keep it that way if the plan or
+the account ever changes.
 
 ### Ordered, decided or needed but not yet in place
 
@@ -60,7 +62,7 @@ is filling in a form.
 | **Professional indemnity insurance** | Not bought. Should precede the first Foundation, which is where a live client site gets changed. Absent from `ROADMAP.md` entirely; researched in `ops/third-party-services.md` |
 | **API accounts** — OpenAI, Google AI Studio, Perplexity | **This row was stale and is corrected 2026-08-04.** All three were opened and used for the self-audit on 2 August — 210 runs. What is *not* known is the true cost: `ops/audits/noven-2026-08-02/README.md` records **OpenAI alone at $12.63 for ~75 queries** against `ops/audit-setup.md` §6's estimate of ~£1.20 per 150, and the Gemini and Perplexity totals were never recorded. Every audit delivered spends real money on the day. Get the three real totals before the 26 August unfreeze — see `ops/plan-to-1-september.md`. **Balances as at 2026-08-09, from the owner: OpenAI $16.00, Gemini £8.95, Perplexity $4.49.** A 90-query trade run is 30 queries each; at the one measured rate that is ~$5 a provider, so **Perplexity is the one that may not finish** — arithmetic in `ops/trade-run/README.md`. **Two things still unconfirmed and both matter more than the balances: the £10 caps from `ops/audit-setup.md` §4, and whether Perplexity's auto top-up is off.** With auto top-up on, running dry charges the card during a spending freeze |
 | **Password vault** | Recommended as step one of nine and there is no evidence it exists. See below |
-| **Client data storage** | Undecided. `ops/client-record.md` |
+| **Client data storage** | **Reopened 2026-08-10 and it is the top item in the repo.** Microsoft was decided on 2026-08-09, but the account opened is a **consumer** one, which cannot lawfully hold client records: no data-location commitment, no Article 28 processor contract, and Microsoft's own terms bar commercial use. The fix is a **Microsoft 365 Business subscription with the tenant country set to United Kingdom** — Business Basic £5.40/user/month exc VAT, Business Standard £18.10 exc VAT and the cleaner answer. **The tenant country is set once at creation and cannot be changed.** Sourced reasoning in `ops/client-record.md`, "The consumer account problem". **Until it is bought, no client or prospect record — including the outreach list — goes into the consumer account** |
 
 ---
 

@@ -151,10 +151,33 @@ export const business = {
    * **`where` is deliberately a `[PLACEHOLDER]` and must not be guessed.** The
    * privacy notice states, in published wording, which country holds the data.
    * Microsoft's answer depends on the account type and the tenant's configured
-   * data residency, and it is not something to assert from general knowledge —
-   * it is checkable in the account itself in about two minutes. `/privacy/`
-   * will not publish while this string is a placeholder, which is the correct
-   * behaviour rather than a bug.
+   * data residency, and it is not something to assert from general knowledge.
+   * `/privacy/` will not publish while this string is a placeholder, which is
+   * the correct behaviour rather than a bug.
+   *
+   * **That instinct was right for a reason nobody had yet found. Researched
+   * 2026-08-10: the account opened is a *consumer* Microsoft account, and it
+   * cannot hold client records at all.** There is no country to look up —
+   * Microsoft commits to none for consumer services and says so in its privacy
+   * statement. There is no Article 28 processor contract — Microsoft's Data
+   * Protection Addendum attaches to Commercial Licensing, and UK GDPR requires
+   * that contract before any processing starts. And Microsoft Services
+   * Agreement §13.h.i says the consumer Microsoft 365 plans are for personal,
+   * non-commercial use. **Three independent failures, so no setting inside the
+   * account can fix it.**
+   *
+   * **The fix is a Microsoft 365 Business subscription with the tenant created
+   * as United Kingdom**, which yields a Product Terms data residency commitment
+   * for OneDrive and makes this value a truthful `'the United Kingdom'`. The
+   * tenant country is chosen once at creation and cannot be changed afterwards.
+   * Full reasoning, costs and sources: `ops/client-record.md`, "The consumer
+   * account problem".
+   *
+   * **`name` is left as it is on purpose.** It still records the owner's
+   * 2026-08-09 decision to use Microsoft rather than add a supplier, which the
+   * research does not overturn — what changed is which Microsoft product. It is
+   * not a claim that anything is currently stored anywhere, because nothing is:
+   * there is no client yet, and no record may go into the consumer account.
    */
   clientDataStorage: {
     name: 'Microsoft OneDrive',

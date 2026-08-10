@@ -90,15 +90,22 @@ three findings still order this file.
 2. ~~**The service address is decided but not bought.**~~ **Live 2026-08-10.**
    UK Postbox, Poole, £12/month inc VAT. It has released the footer, the
    structured data and `/terms/`.
-3. **What still blocks the pay button is no longer an address.** It is the
-   Revolut payment link, and `clientDataStorage.where` — one checkable fact
-   about where Microsoft holds the OneDrive data, which is all `/privacy/` is
-   waiting on. See 3d.
+3. **What still blocks the pay button is no longer an address. It is client
+   data storage, and it got harder rather than easier on 2026-08-10.** The
+   account the owner opened is a **consumer** Microsoft account, and research
+   that day found it cannot hold client records on three independent grounds:
+   no data-location commitment to publish, no Article 28 processor contract,
+   and Microsoft's own terms barring commercial use. **This is a purchase, not
+   a lookup** — a Microsoft 365 Business subscription with the tenant country
+   set to United Kingdom. `ops/client-record.md`, "The consumer account
+   problem", has the sourced argument, the costs and a recommendation. The
+   other blocker is the Revolut payment link.
 
 **The critical path:** ~~ICO helpline call → service address ordered →~~ both
-done 2026-08-10. What is left: **`/privacy/` published** (needs the OneDrive
-data location) **→ Revolut link pasted in → one payment possible end to end.**
-The order page is not on it — a payment link in an email takes the first payment.
+done 2026-08-10. What is left: **buy a Microsoft 365 Business subscription, UK
+tenant → `/privacy/` published → Revolut link pasted in → one payment possible
+end to end.** The order page is not on it — a payment link in an email takes the
+first payment.
 
 **`HANDOVER.md` has the longer version of all of this.**
 
@@ -307,11 +314,16 @@ place, not on every page.
       - [ ] **Was blocked on two facts; one is left.** The address for service
             is set as of 2026-08-10. The remaining value is
             `clientDataStorage.where` in `site/src/data/business.ts` — the
-            country Microsoft states it holds this OneDrive account's data in.
-            It is a two-minute look inside the account, not a judgement call,
-            and it is now **the single value standing between the site and a
-            published privacy notice**, which in turn is the last non-payment
-            blocker on the order page. Set it and the page builds itself.
+            country Microsoft states it holds this account's data in. It is
+            **the single value standing between the site and a published privacy
+            notice**, which in turn is the last non-payment blocker on the order
+            page. Set it and the page builds itself.
+            **It is not a lookup, which is what this entry said until
+            2026-08-10.** The account opened is a consumer one and has no data
+            location to look up, no processor contract, and terms that bar the
+            use. It needs a Microsoft 365 Business subscription bought with the
+            tenant country set to **United Kingdom** — chosen once at creation
+            and unchangeable afterwards. `ops/client-record.md`.
 - [ ] **Terms of service.** Mostly a job of collecting what the site already
       commits to — cancellation terms, no guaranteed outcomes, we don't build
       websites — plus the refund position above.
@@ -515,8 +527,11 @@ business network, so the warm route below is closed rather than deferred.
       and `ops/outreach.md` §2 and both draft emails already carry it.
       **What is left is the storage half, and only one field of it**:
       `clientDataStorage.where`. The provider is named; the country is not. It
-      is a look inside the OneDrive account, and it is the last thing between
-      here and a lawful first batch.
+      is **not** a look inside the account — the research on 2026-08-10 found
+      the consumer account cannot hold this data at all, and the fix is a
+      Microsoft 365 Business subscription on a UK tenant. It is the last thing
+      between here and a lawful first batch, and it now costs money.
+      `ops/client-record.md`.
 - [ ] Build the list from Companies House by SIC code and postcode.
       `[PLACEHOLDER: how many Wirral clinics exist per trade]`.
 - [ ] **Run the discovery questions once for the trade, not once per business.**

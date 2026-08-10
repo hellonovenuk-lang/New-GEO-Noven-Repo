@@ -105,6 +105,70 @@ document had its argument stripped and sends the reader here.
   actually arrives — the ICO amendment should generate a letter on its own, which
   is the free version of that test.
 
+  **The "two-minute look" was wrong, and the correction is the entry below.**
+
+---
+
+### 2026-08-10, later (the OneDrive decision does not survive contact with the account)
+
+- **The trading name is registered with UK Postbox.** Confirmed by the owner.
+  That was the item flagged as worth a wasted month if it had been skipped, and
+  it is now closed. What remains on the address is the setup fee, the billing
+  date, and post having actually been through it once.
+- **The owner opened a *consumer* Microsoft account, and researching it found
+  the 2026-08-09 storage decision cannot stand.** Not because Microsoft was the
+  wrong company — because a consumer subscription is the wrong product, on three
+  independent grounds, any one of which is fatal:
+  1. **There is no country to look up.** Microsoft's privacy statement (July
+     2026) says consumer personal data "may be stored and processed in your
+     region, in the United States, and in any other jurisdiction where Microsoft
+     or its affiliates, subsidiaries, or service providers operate facilities."
+     Every data-residency instrument Microsoft offers — the Data Location card,
+     Product Terms commitments, Advanced Data Residency, Multi-Geo — attaches to
+     a commercial **tenant**. Microsoft's own support answer for OneDrive
+     Personal is that they do not publish the location and a personal user
+     should ring and ask.
+  2. **There is no Article 28 contract.** UK GDPR requires a written processor
+     contract with eight specific terms before processing begins, and the ICO is
+     explicit that this covers cloud storage providers. Microsoft supplies those
+     terms through the Products and Services Data Protection Addendum, which
+     attaches to **Commercial Licensing**. A consumer subscription does not
+     carry it.
+  3. **Microsoft's own terms forbid the use.** Services Agreement §13.h.i:
+     Microsoft 365 Family, Personal and Basic are "for your personal,
+     non-commercial use, unless you have commercial use rights under a separate
+     agreement with Microsoft."
+- **The fix is a purchase, and it contains exactly one irreversible step.** A
+  Microsoft 365 Business subscription with the tenant's country set to **United
+  Kingdom** — chosen at creation and unchangeable afterwards. That yields a
+  Product Terms data residency commitment for OneDrive (UK data centres:
+  Cardiff, Durham, London), which turns `clientDataStorage.where` into a
+  truthful "the United Kingdom", and it is Commercial Licensing, which answers
+  the contract problem in the same stroke. Business Basic £5.40/user/month exc
+  VAT; Business Standard £18.10 exc VAT and it *replaces* the consumer
+  subscription rather than sitting beside it. **Recommended: Standard, UK
+  tenant.** Put to the owner rather than taken — it is a real recurring cost
+  during a spending freeze.
+- **Why this is worth a long entry rather than a line.** The repo had recorded
+  this as "a two-minute look inside the account, not a decision", in three
+  separate files, and that framing was doing real damage: it made the last
+  blocker on revenue look like an errand. **The error was reasoning about
+  "Microsoft OneDrive" as though the name identified the product.** Consumer and
+  commercial OneDrive share a brand and share nothing that matters here. The
+  general form — a supplier's *name* is not a specification, and the tier is
+  where the obligations live — is worth carrying into the insurance decision and
+  anything else bought on "we already have it".
+- **One thing deliberately not claimed.** Whether any file has actually been
+  stored outside the UK is unknown and unknowable from outside, and the argument
+  does not rest on it. The problem is the absence of a commitment and of a
+  contract, not evidence of a bad location. Recording it the other way would
+  have been the more persuasive entry and the less honest one.
+- **The immediate operational rule, in force now:** nothing goes into the
+  consumer account — no client record, and **not the outreach prospect list**,
+  which is personal data about named people before anybody has replied. That
+  list was the easy thing to get wrong, because it does not feel like client
+  data.
+
 ---
 
 ### 2026-08-09 (outreach goes cold, and the target is decided)
