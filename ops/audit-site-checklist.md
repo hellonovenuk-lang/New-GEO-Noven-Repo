@@ -253,10 +253,42 @@ is arguably the more honest test anyway.
 - [ ] Does the site say what it does above the fold, in words, without needing an
       image? `[read]`
 
+- [ ] **Whose business does the structured data describe?** Follow `WebPage`'s
+      `about` and `@id` to the entity they point at, and check the `name`, `url`
+      and `address` on it are **the client's**. `[script can compare the `@id`
+      host against the site's own domain; whether the named business is the
+      right one is a read]`
+
 **Read the structured data against the visible page.** Structured data that
 disagrees with the page it sits on is worse than none — it is a machine-readable
 statement of something untrue, and it is exactly the mechanism that produces the
 "named wrongly" outcomes in `ops/audit-method.md` section 4.
+
+**The specific case that will keep turning up: the markup describes the web
+designer.** Found on a real Wirral practice 2026-08-10. Every node in the graph
+— `Organization`, `WebSite`, `WebPage` — carried the agency's name, logo, phone,
+email, price range and registered address, with all three `@id` values anchored
+to the agency's domain rather than the client's. The only machine-readable
+statement of what the page was about named a web design company. **No `Dentist`
+type, no practice address, no practice phone.**
+
+It is a template default rather than anything deliberate, which is why it is
+worth checking every time: an agency that ships it once ships it on every site
+it builds. **A one-line `@id` host check catches it**, and it is the cleanest
+example we have of the "worse than none" rule above.
+
+**Two rules for reporting it.** State it as a fact about the client's own page —
+*the structured data on your site describes a web design company, not your
+practice* — which is checkable in thirty seconds and accuses nobody. **Do not
+name the agency.** They are frequently a local business themselves, the client
+may still be paying them, and a written assertion to a third party about a named
+company's work is a different kind of risk from reporting what an assistant
+said. The finding does not need the name to land.
+
+**And do not claim it explains an absence.** It is a defect, not a proven cause.
+`ops/outreach.md` §4 found that being named tracks with directory presence and
+with the practice's own domain being cited; a site can carry perfect markup and
+still go unnamed. Report it as what it is.
 
 ---
 
