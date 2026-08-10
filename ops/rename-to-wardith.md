@@ -169,8 +169,9 @@ Two reasons the format was the real fault, not the wording:
 2. **Its text is outlined paths, not type.** Fixing two words meant a Canva
    round trip. **That friction is what produced the fault**: an asset whose
    facts can only be changed by re-exporting is an asset whose facts go stale.
-   The address for service still has to be added on 26 August, which would have
-   been a second round trip. Live text makes both an edit.
+   The address for service had to be added later, which would have been a
+   second round trip — **and on 2026-08-10 it was, as a one-line edit to the
+   HTML.** The argument was tested and held. Live text makes both an edit.
 
 The replacement carries the wordmark as a PNG rasterised from the committed
 `site/public/logo.svg` — no path data altered, same rule `trim.mjs` works

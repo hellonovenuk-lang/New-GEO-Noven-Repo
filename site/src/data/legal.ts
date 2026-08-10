@@ -12,6 +12,27 @@
  * admission that a legal disclosure was outstanding. A placeholder in a
  * *contract* would be worse again. So these pages are not built at all until
  * they are true, on the same principle as the order page.
+ *
+ * **On 2026-08-10 the two gates were genuinely open at different times for the
+ * first time**, and by the end of the day both were shut again — `/terms/`
+ * published when the address for service landed, `/privacy/` a few hours later
+ * when client storage was settled. The design always allowed the split — two
+ * constants, not one — but the *copy* did not: the terms' "Your information"
+ * section linked straight to `/privacy/`, which would have published a contract
+ * citing a 404. It now branches on `privacyLive`.
+ *
+ * **That branch is currently dormant and should be left in place.** It costs
+ * nothing while both pages are live and it is the only thing standing between a
+ * future gap and a published contract pointing at nothing. **The lesson for
+ * anything added here later: a gate that can open on its own needs page copy
+ * that can too.**
+ *
+ * **And a second lesson, from the same day, about these gates specifically: a
+ * gate should check what its page claims and nothing more.** `privacyLive` was
+ * briefly treated as also requiring a tested backup, which `/privacy/` does not
+ * mention anywhere — it claims encryption at rest, and that is the whole of what
+ * has to be true for it to publish honestly. See the comment on
+ * `clientDataStorage` in `./business`.
  */
 
 import { business } from './business';

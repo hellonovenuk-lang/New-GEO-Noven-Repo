@@ -67,7 +67,8 @@ Wirral, working remotely across the UK. One person, no employees.
 
 **Live and working**
 
-- **The website** — `wardith.co.uk`, nine static pages on Astro, deployed
+- **The website** — `wardith.co.uk`, **ten** static pages on Astro (nine until
+  2026-08-10, when `/terms/` and `/privacy/` published), deployed
   from `main` by Netlify, HTTPS confirmed. It is deliberately built as a
   demonstration of the product: no client-side JavaScript, AI crawlers
   explicitly allowed in `robots.txt`, an XML sitemap, and JSON-LD structured
@@ -90,7 +91,10 @@ Wirral, working remotely across the UK. One person, no employees.
   structured data.
 - **Business bank account** — Revolut Pro.
 - **ICO registration** — `C1995412`, £47/yr by Direct Debit, registered
-  2026-07-30.
+  2026-07-30. Address and trading name both amended 2026-08-10.
+- **Address for service of documents** — UK Postbox, Poole, live 2026-08-10,
+  £12/month. Published in the footer and the structured data.
+- **Terms of service** — published 2026-08-10 at `/terms/`.
 
 **Decided in writing, but never once performed**
 
@@ -118,10 +122,11 @@ Ordered by what it stops.
 
 | Missing | What it blocks |
 |---|---|
-| **Address for service of documents** | A legal disclosure already owed; the ICO record fix; the site footer; every future official form |
-| **Terms of service** — written 2026-08-09, unpublished | Taking money under a contract; the refund position that prevents chargebacks. Waiting only on the address for service |
-| **Privacy notice** — written 2026-08-09, unpublished | Lawfully holding any customer or prospect information — including an outreach list. Waiting on the address and on the row below |
-| **A decision on where client data lives** | The privacy notice, and delivering the first audit lawfully. Constraint: **it cannot be this repo**, which is public. It now blocks a page rather than only a habit |
+| ~~**Address for service of documents**~~ | **Exists as of 2026-08-10** — UK Postbox, Poole. Published in the footer and the structured data, and the ICO record was changed the same day. Row kept for one session so nobody re-solves it; the account facts are in `ops/accounts.md` |
+| ~~**Terms of service**~~ — **published 2026-08-10** | Nothing. It went live with the address, which is all it was waiting on |
+| ~~**Privacy notice**~~ — **published 2026-08-10** at `/privacy/` | Nothing. It states that client records are held by us, on our own encrypted computer, in the United Kingdom |
+| **Full-disk encryption switched on** | **The truth of a sentence already published.** `/privacy/` says "records are encrypted at rest", so BitLocker or Device Encryption must actually be on, verified, with the recovery key stored somewhere that is not the encrypted disk. Nothing is stored yet, so nothing is at risk today — but the claim is live the moment the branch merges. Minutes, free |
+| **An encrypted backup drive, restored once** | **Taking on the first client**, not launching. Article 32 requires the ability to restore availability after a physical or technical incident. It gates having data, not publishing a page — `/privacy/` makes no backup claim. An encrypted external drive kept away from the laptop, ~£30–60 once. `ops/client-record.md` |
 | **API accounts, keys and spend caps** | Running any audit at all |
 | **A working payment route** | Revenue |
 | **A Foundation method and time budget** | The £800 product, and knowing whether it makes money |
@@ -152,12 +157,17 @@ permanent — bulk-downloadable data gets mirrored and the ICO amending its own
 record does nothing about copies — but it is low-impact, and it is not worth
 treating as the thing that stops everything else.**
 
-**Settled 2026-08-09: this is two calls, not one.** Tomorrow's call is about the
-trading name. **A second call goes in once the service address lands**, to change
-the registered address — there is no point asking them to change it to an address
-that does not exist yet, and the runbook's step 8 assumes the address is in hand.
+**Closed 2026-08-10.** It turned out to be one contact, not two: the service
+address was approved on the same day, so the address change and the trading-name
+change to Wardith went to the ICO together — which is what the two bullets below
+were asking for. **One check survives this section**: look up `C1995412` on the
+public register in a browser and confirm it now shows **Wardith** at **Lytchett
+House**. Both halves, not just the address.
 
-**The call is still worth making tomorrow, for two better reasons:**
+**The reasoning is kept below** because it is why the call was worth making at
+all, and because the standing lesson generalises to the next official form.
+
+**The call was worth making for two reasons:**
 
 - **The trading name on the record.** The owner is not certain whether the
   registration was filed as "Noven". If it was, that is not a privacy problem, it
@@ -181,26 +191,33 @@ not be checked here. Ask on the call, or look it up in a browser.
 
 ### Then, roughly a day and a half of desk work
 
-**2. The service address — ordered Friday 7 August 2026, pending approval.** UK
-Postbox Business Street Address, Poole, £12/month inc VAT. Identity verification
-is with the provider and the confirmed address is expected **Monday 10 August**.
+**2. The service address — done. Approved Monday 10 August 2026, on the day it
+was expected.** UK Postbox Business Street Address, Poole, £12/month inc VAT.
 The provider comparison is closed in `ops/third-party-services.md` B1a–B1b and
 should not be reopened.
 
-**This is the item most other things are waiting behind**, so it is worth being
-precise about what "pending" means: **nothing that publishes the address moves
-until it is confirmed in writing.** That is the footer, the Organization
-structured data, the terms, the privacy notice and every cold email. The desk
-work below does not wait on it.
+**Two addresses were issued and they do different jobs.** Getting this wrong
+does not fail loudly — it fails as a parcel that never arrives.
 
-**Follow the runbook at `ops/third-party-services.md` B1c rather than working it
-out at the checkout.** The two traps it exists to prevent: **buy the Business
-*Street* Address, not the cheaper Business PO Box**, which is invalid for this;
-and **register the trading name "Wardith" as its own verified step**, because
-post addressed to a name the provider holds no record of is typically returned
-or destroyed. It also covers the ID check — which leaves a soft footprint on
-the owner's personal credit file — and the order the footer, the ICO address
-change and the structured-data locality decision have to happen in.
+- **Mailbox, `BH16 6FA`** — `Kieran Smith / Wardith, Lytchett House, 13 Freeland
+  Park, Wareham Road, Poole, Dorset`. Letters and small packets. **This is the
+  address for service**, and the only one that is ever published: footer,
+  structured data, ICO record, terms, official forms, cold email.
+- **Courier point, `BH16 6FH`** — `Kieran Smith / Wardith, Unit 171036, Courier
+  Point, 13 Freeland Park, Wareham Road, Poole, Dorset, UK`. Parcels and
+  couriers only. Give it to suppliers who ship goods. **Never publish it.**
+
+**Everything that was waiting behind this has moved**: the footer carries the
+address on every page, the Organization structured data carries a real
+`PostalAddress`, `/terms/` is published, and the ICO record is changed. It is
+set in exactly one place — `addressForService` in `site/src/data/business.ts` —
+and never typed into a page.
+
+**Two things are still owed on the account itself**, both small and both in
+`ops/third-party-services.md` B1c: confirm the trading name "Wardith" is
+registered on the account rather than only appearing on the addresses supplied,
+and confirm post actually arrives. The ICO amendment should generate a letter
+without anyone doing anything, which is the free version of that test.
 
 **3. Publish the terms of service and the privacy notice.** ~~Write~~ — **both
 were written on 2026-08-09** and are in the repo at `site/src/pages/terms/` and
@@ -208,13 +225,83 @@ were written on 2026-08-09** and are in the repo at `site/src/pages/terms/` and
 rather than twice: life of the relationship plus twelve months, with tax records
 outliving it because the law says so.
 
-Neither page publishes yet, and neither is waiting on more writing. They are
-waiting on two facts, because both documents state them: **the address for
-service** (step 2), and **where client records live** — the open decision in
-`ops/client-record.md`, which needs one named provider with encryption at rest
-and a backup that has been restored once. Set those two values in
-`site/src/data/business.ts` and both pages go live, the footer fills in, and the
-structured data gains a postal address, all from the same edit.
+**`/terms/` published on 2026-08-10** when the address for service was set, along
+with the footer sentence and the `PostalAddress` in the structured data — one
+edit, four effects, which is the whole reason those facts live in one file.
+
+**Both pages are published as of 2026-08-10**, and the paragraphs below are the
+record of how the second one got there — three answers in one day, on a question
+that had been mis-framed from the start.
+
+**First it got worse.** This had been recorded as a lookup, and it is not one:
+the Microsoft account opened is a **consumer** account, which cannot hold client
+records. Three independent reasons, with sources in `ops/client-record.md` —
+Microsoft publishes no data-location commitment for consumer services; the
+Article 28 processor terms UK GDPR requires attach to Commercial Licensing
+rather than consumer subscriptions; and Microsoft Services Agreement §13.h.i
+says the consumer Microsoft 365 plans are for personal, non-commercial use.
+
+**Then the owner asked whether the records could just live on their own hard
+drive, and that dissolved it.** All three failures came from involving a third
+party in storage. Hold the records locally and there is no processor to contract
+with, no supplier's country to publish, and no consumer-terms problem — and the
+value becomes a truthful "the United Kingdom" for **£0 a month** rather than
+£261 a year. It is also the plainer sentence to publish, which is worth
+something on a site that sells verifiable facts.
+
+**Two conditions come with it and neither is optional:**
+
+1. **Full-disk encryption on and verified** — BitLocker or Device Encryption,
+   actually switched on, with the recovery key stored somewhere that is *not*
+   the encrypted disk.
+2. **A backup that has been restored once.** Article 32 requires the ability to
+   restore availability after a physical or technical incident, so this is a
+   legal requirement rather than prudence. **An encrypted external drive kept
+   away from the laptop** — a cloud backup would walk straight back into the
+   processor question.
+
+**The trap that will catch this if nothing else does:** Windows signed in to a
+Microsoft account backs up Desktop and Documents to OneDrive by default, so
+"stored locally" silently becomes "stored in the consumer account we just ruled
+out". Turn it off, confirm it is off, and re-check after Windows feature
+updates.
+
+**What this does not fix:** writing client `.docx` files in a consumer copy of
+Word is still commercial use under §13.h.i. That is now a contract question with
+Microsoft to be decided on its own merits, not a regulator-facing one forcing a
+purchase.
+
+**Then the owner pointed out that the business holds zero customer data and
+needs to launch now, and that broke the last knot.** The rule written an hour
+earlier — do not publish until encryption is on *and* a restore is tested — was
+half wrong, and reading the page settles it rather than reasoning about it:
+`/privacy/` claims "records are encrypted at rest" and **makes no claim about
+backups at all**. So encryption gates publishing; **the tested backup gates
+taking on a client**, which is a different and later moment.
+
+**`clientDataStorage` is therefore set and `/privacy/` publishes.** It reads
+"held by us, on our own encrypted computer, in the United Kingdom". The single
+thing that must be true before this merges is **full-disk encryption actually
+switched on**.
+
+**Two things to check while you are in there**, because the page asserts them
+too: that the accounts named carry two-factor authentication, and — the easy
+one to miss — that Windows is not syncing Documents and Desktop into the
+consumer OneDrive account, which would put client files there without a decision
+ever being made.
+
+**Nothing goes in the consumer account** — not a client record and not the
+outreach list.
+
+**One thing changed in the terms to make that gap safe.** The "Your information"
+section links to the privacy notice only while the notice exists; while it
+doesn't, it states the position plainly and gives an email address. A published
+contract citing a page that 404s is worse than one that doesn't cite it, and the
+branch disappears on its own the day `/privacy/` goes up.
+
+**`/terms/` also needs submitting to Google Search Console and Bing** — it is
+the first new page since the site went live, and the indexable count is nine
+now rather than eight. `ops/search-console-and-bing.md`.
 
 Read them before they publish. They are terms this business will be held to.
 
@@ -238,10 +325,11 @@ gate.**
 
 The order page itself was built on 2026-08-09 and is **switched off**: `/order/`
 and `/order/pay/` are in the repo but are not built into the site, so nothing
-about them is public. Paste the link into `site/src/data/order.ts` and it is
-still off — it also waits on the terms, the privacy notice and the address, the
-three items in step 3 and above. That is deliberate. Nothing in step 5 depends
-on it.
+about them is public. **Two of its three non-payment conditions are met as of
+2026-08-10** — the address is live and `/terms/` is published. Paste the link
+into `site/src/data/order.ts` and it is *still* off, because `/privacy/` has to
+publish too, and that is the one value in step 3. So the order page is now two
+facts away, not four. That is deliberate. Nothing in step 5 depends on it.
 
 **6. Send the first cold batch. Rewritten 2026-08-09 — this used to say "take
 the sample audit to three warm contacts", and there are no warm contacts.** The
@@ -254,7 +342,11 @@ at a time.
 unlawful to sole traders, so steps 2 and 3 above stop being tidiness. Every
 email has to carry the address for service, and there has to be somewhere to
 keep a permanent do-not-contact record. **A warm route would have let us start
-without either.**
+without either.** **The address half is done from 2026-08-10** — put the mailbox
+line, not the courier line, in the email footer. The do-not-contact record is
+still the storage decision, and as of 2026-08-10 that means switching on
+encryption and testing a restore on the owner's own machine — same blocker as
+`/privacy/`, and an afternoon's work rather than a subscription.
 
 ### Not on the critical path, despite appearances
 
@@ -274,7 +366,7 @@ highest return on time in this document.
 
 | What | When | If missed |
 |---|---|---|
-| ICO home address publishes | **~10 August 2026** | Permanent, mirrored, and **low-impact** — the address sits among 281 registered companies and does not read as residential (reassessed 2026-08-09, §4). The live question on that record is whether it carries the old trading name |
+| ICO home address publishes | ~~**~10 August 2026**~~ — **the record was changed on the day, address and trading name together** | Whatever published before the amendment is permanent and mirrored, and that cannot be checked retrospectively — but it was already assessed as **low-impact**: the address sits among 281 registered companies and does not read as residential (2026-08-09, §4). **What is left is one browser lookup** of `C1995412` confirming the register now shows Wardith at Lytchett House |
 | ICO annual renewal | ~30 July 2027 | Penalty of up to £4,000 against a £47 fee. Note the real risk is a **silent Direct Debit failure**, so the check is "did it collect", not "did a reminder fire" |
 | Domain renewal | **[PLACEHOLDER: registrar, renewal date and auto-renew status are recorded nowhere in this repo]** | Total outage — site, email, structured data, every published link |
 | Zoho Mail renewal | ~29 July 2027 (inferred from purchase date) | The only contact channel on the site dies |
@@ -415,7 +507,10 @@ Terms used throughout as though the reader already knows them:
 - **The order page** — does not exist yet. Referenced in several places as
   though it does.
 - **One-way door** — this repo's term for anything that, once published, cannot
-  be recalled. The home address is the live example.
+  be recalled. The home address on the ICO register was the live example until
+  2026-08-10; the service address is the live example now, because it is in
+  JSON-LD that assistants cache and third parties copy. Changing it later is a
+  change of address, not an edit.
 - **A flag** — a `[PLACEHOLDER]` block that renders *visibly on the live site*.
   Not the same as a placeholder in a document.
 

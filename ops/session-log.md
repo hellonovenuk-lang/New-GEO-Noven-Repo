@@ -27,6 +27,276 @@ document had its argument stripped and sends the reader here.
 
 ---
 
+### 2026-08-10 (the address for service lands, and four things unlock at once)
+
+- **The address arrived on the day it was predicted to.** UK Postbox approved
+  the account, ordered on the 7th and confirmed on the 10th — the same Monday
+  the ICO publication deadline fell on. The whole of `ops/third-party-services.md`
+  B1c is now history rather than instruction.
+- **Two addresses were issued, not one, and they are not interchangeable.** A
+  mailbox line at `BH16 6FA` for letters and small packets, and a courier point
+  at `BH16 6FH` — a different postcode, a different building entrance — for
+  parcels. **Only the mailbox line is the address for service and only it is
+  published.** The courier line is a routing instruction for carriers; it is
+  recorded in `ops/accounts.md` and appears nowhere public. Nothing in the repo
+  had anticipated two addresses, which is worth noting on its own: the runbook
+  was thorough about the traps it knew and silent about this one.
+- **Setting one value did four things.** `addressForService` in
+  `site/src/data/business.ts` filled the footer sentence on every page, put a
+  real `PostalAddress` into the Organization JSON-LD, published `/terms/`, and
+  satisfied half of what `/privacy/` and the order page need. That design was
+  written down in August and had never once been exercised; it worked exactly as
+  described, and the build is the evidence — nine indexable pages where there
+  were eight, `/privacy/` and `/order/` still correctly absent.
+- **The locality question, open since 2026-08-06, is answered: publish the real
+  one.** `ROADMAP.md` and `ops/third-party-services.md` both flagged that a real
+  address would say Dorset while the founder works from the Wirral, and both
+  asked for a deliberate decision rather than a default. The decision is to state
+  two true things separately — `basedIn` stays "the Wirral" because it is prose
+  about a person, and the `PostalAddress` says Poole because that is where post
+  arrives. **The tempting alternative was to invent a Merseyside postal address
+  so the two would agree**, which is precisely the fault this business is paid to
+  find in other people's data.
+- **Self-audit finding 3 is acted on but not recovered, and the roadmap now says
+  so.** The finding cost 15 checks that asked for someone *on the Wirral*. The
+  structured data no longer says nothing; it says Dorset. Whether that helps a
+  Wirral query is an open question for the next audit. Recording it as "closed"
+  would have been the easy and wrong entry.
+- **`/terms/` published without `/privacy/`, which the code allowed and the copy
+  did not.** The two pages were built as independent gates and were always
+  expected to go live together; they didn't, because `/privacy/` still waits on
+  `clientDataStorage.where`. The terms' "Your information" section linked
+  straight to `/privacy/` — a published contract citing a 404. It is now
+  conditional: the link when the notice exists, a plain statement of the position
+  and an email address when it doesn't. **The general lesson: a gate that can
+  open independently needs copy that can too**, and the only reason this was
+  caught is that the build output was read rather than assumed.
+- **The ICO was told about the address and the trading name in one contact.**
+  `HANDOVER.md` §4 had reasoned this out as two separate calls — the name now,
+  the address once it existed — on the grounds that there was no point asking
+  for a change to an address that did not yet exist. The address existing on the
+  deadline day collapsed that into one. **What is not established is what
+  published before the amendment**, and it cannot be: bulk-downloadable data
+  that has been downloaded is not recalled. The remaining check is one browser
+  lookup of `C1995412`, and the register 403s automated fetches, so it needs a
+  person.
+- **The email signature's `[PLACEHOLDER: address for service]` is closed**, which
+  retrospectively settles an argument from 2026-08-07. The signature was rebuilt
+  as live HTML rather than outlined Canva paths specifically so that adding the
+  address later would be an edit instead of a re-export. It was a one-line edit.
+  **But the signature is a copy, not a reference** — it lives in Zoho and in
+  every message already sent, and does not update when `business.ts` does. It is
+  now row 15 of `ops/own-facts-check.md` alongside the ICO entry and the outreach
+  drafts, because those three are the surfaces that can drift.
+- **The risk that didn't happen, and why it's worth recording.**
+  `ops/plan-to-1-september.md` carried "the address is bought on the 26th and
+  does not arrive in time" as a live risk, with a note that at £12/month it no
+  longer had to wait for the 26th at all. It was bought on the 7th and arrived on
+  the 10th — three weeks of slack instead of a six-day scramble. The pattern:
+  **when a risk is "a lead time might not fit", the cheap fix is to start the
+  clock earlier, not to plan the scramble better.**
+- **What is left, in order of leverage.** One value — the country Microsoft holds
+  this OneDrive account's data in — publishes `/privacy/`, which is the last
+  non-payment blocker on the order page *and* the last blocker on the first cold
+  email. It is a two-minute look inside an account rather than a decision, and it
+  is now the single highest-value unknown in the repo. After that: submit
+  `/terms/` to both search consoles, confirm the trading name is registered on
+  the UK Postbox account, record the setup fee and billing date, and confirm post
+  actually arrives — the ICO amendment should generate a letter on its own, which
+  is the free version of that test.
+
+  **The "two-minute look" was wrong, and the correction is the entry below.**
+
+---
+
+### 2026-08-10, later (the OneDrive decision does not survive contact with the account)
+
+- **The trading name is registered with UK Postbox.** Confirmed by the owner.
+  That was the item flagged as worth a wasted month if it had been skipped, and
+  it is now closed. What remains on the address is the setup fee, the billing
+  date, and post having actually been through it once.
+- **The owner opened a *consumer* Microsoft account, and researching it found
+  the 2026-08-09 storage decision cannot stand.** Not because Microsoft was the
+  wrong company — because a consumer subscription is the wrong product, on three
+  independent grounds, any one of which is fatal:
+  1. **There is no country to look up.** Microsoft's privacy statement (July
+     2026) says consumer personal data "may be stored and processed in your
+     region, in the United States, and in any other jurisdiction where Microsoft
+     or its affiliates, subsidiaries, or service providers operate facilities."
+     Every data-residency instrument Microsoft offers — the Data Location card,
+     Product Terms commitments, Advanced Data Residency, Multi-Geo — attaches to
+     a commercial **tenant**. Microsoft's own support answer for OneDrive
+     Personal is that they do not publish the location and a personal user
+     should ring and ask.
+  2. **There is no Article 28 contract.** UK GDPR requires a written processor
+     contract with eight specific terms before processing begins, and the ICO is
+     explicit that this covers cloud storage providers. Microsoft supplies those
+     terms through the Products and Services Data Protection Addendum, which
+     attaches to **Commercial Licensing**. A consumer subscription does not
+     carry it.
+  3. **Microsoft's own terms forbid the use.** Services Agreement §13.h.i:
+     Microsoft 365 Family, Personal and Basic are "for your personal,
+     non-commercial use, unless you have commercial use rights under a separate
+     agreement with Microsoft."
+- **The fix is a purchase, and it contains exactly one irreversible step.** A
+  Microsoft 365 Business subscription with the tenant's country set to **United
+  Kingdom** — chosen at creation and unchangeable afterwards. That yields a
+  Product Terms data residency commitment for OneDrive (UK data centres:
+  Cardiff, Durham, London), which turns `clientDataStorage.where` into a
+  truthful "the United Kingdom", and it is Commercial Licensing, which answers
+  the contract problem in the same stroke. Business Basic £5.40/user/month exc
+  VAT; Business Standard £18.10 exc VAT and it *replaces* the consumer
+  subscription rather than sitting beside it. **Recommended: Standard, UK
+  tenant.** Put to the owner rather than taken — it is a real recurring cost
+  during a spending freeze.
+- **Why this is worth a long entry rather than a line.** The repo had recorded
+  this as "a two-minute look inside the account, not a decision", in three
+  separate files, and that framing was doing real damage: it made the last
+  blocker on revenue look like an errand. **The error was reasoning about
+  "Microsoft OneDrive" as though the name identified the product.** Consumer and
+  commercial OneDrive share a brand and share nothing that matters here. The
+  general form — a supplier's *name* is not a specification, and the tier is
+  where the obligations live — is worth carrying into the insurance decision and
+  anything else bought on "we already have it".
+- **One thing deliberately not claimed.** Whether any file has actually been
+  stored outside the UK is unknown and unknowable from outside, and the argument
+  does not rest on it. The problem is the absence of a commitment and of a
+  contract, not evidence of a bad location. Recording it the other way would
+  have been the more persuasive entry and the less honest one.
+- **The immediate operational rule, in force now:** nothing goes into the
+  consumer account — no client record, and **not the outreach prospect list**,
+  which is personal data about named people before anybody has replied. That
+  list was the easy thing to get wrong, because it does not feel like client
+  data.
+- **The recommendation above lasted about an hour.** The owner asked whether the
+  records could just live on their own hard drive. They can — entry below.
+
+---
+
+### 2026-08-10, later still (the owner's question beats the researched answer)
+
+- **"Can't I just store the data locally?" is the right answer, and the
+  recommendation is changed to it.** All three failures of the consumer
+  Microsoft account came from putting a third party in the storage. Take the
+  third party out and they do not reappear in another form: **no processor means
+  no Article 28 contract to need**, no supplier's data location to publish
+  — `where` becomes "the United Kingdom" because a laptop in the Wirral is in
+  the UK — and Microsoft's non-commercial clause does not reach a folder on a
+  disk. **£0 a month against £261 a year.**
+- **It also publishes a better sentence.** "Your records are held by us, in the
+  United Kingdom, and are not passed to a cloud storage provider" is shorter,
+  stronger and one fewer recipient a reader has to take on trust than naming a
+  US-headquartered supplier. On a site whose product is verifiable published
+  facts, **the simpler true claim is worth more than the more impressive one** —
+  and that is a reason, not a rationalisation, because it is the same argument
+  the site makes about everybody else's business.
+- **Two conditions, and they are the entire cost.** Full-disk encryption on and
+  verified, recovery key stored off the encrypted disk. And a backup that has
+  been restored once — **an Article 32 requirement rather than prudence**, since
+  the article requires the ability to restore availability after a physical or
+  technical incident. The backup has to be an encrypted drive kept away from the
+  laptop; a cloud backup walks straight back into the processor question. About
+  £40 once, against a subscription forever.
+- **The trap that would have caught this silently.** Windows signed in to a
+  Microsoft account backs up Desktop and Documents to OneDrive by default. **"I
+  store it locally" then becomes "it is in the consumer OneDrive account we just
+  ruled out", with nobody having decided anything.** Turning it off, confirming
+  it is off, and re-checking after Windows feature updates is now written into
+  `ops/client-record.md`. This is the most valuable single line in the section.
+- **A rule that follows, and it is the one to hold to.** **`clientDataStorage`
+  must not be set until encryption is on and a restore has been tested**, because
+  setting it publishes `/privacy/`, and `/privacy/` is a published claim about
+  how this business protects other people's data. Publishing that early would be
+  the footer `[PLACEHOLDER]` fault again, except worse — a reader could not tell.
+  **The value stays unset in this commit deliberately**, which is the difference
+  between recording a decision and pretending it has been performed.
+- **What local storage does *not* fix, and this is the honest half.** Writing a
+  client's `.docx` in a consumer copy of Word is still commercial use under
+  §13.h.i. **But it decouples the Office licence from the data question**, which
+  is the real gain: the licence becomes a contract matter with Microsoft to be
+  settled on its own merits — accept it, use LibreOffice, or buy Business
+  Standard for the apps alone — rather than a regulator-facing problem forcing a
+  £261/year purchase during a spending freeze.
+- **Nor does it empty the privacy notice of processors.** Netlify holds order
+  submissions, Zoho holds mail, and running an audit types a client's business
+  name into four other companies' assistants. All already disclosed. What goes
+  away is a *storage* provider, which is one row of a list, not the list.
+- **A limit on this session's evidence, recorded rather than glossed.**
+  `ico.org.uk` returns HTTP 403 to automated fetching — the same wall that stops
+  the register being checked from here — so the ICO's positions on encryption
+  and on breach reporting are reported from search summaries of their guidance
+  rather than from the pages. **The summaries contradicted each other on one
+  point: whether a lost *encrypted* device must still be reported to the ICO.**
+  That is left open in `ops/client-record.md` rather than resolved by picking
+  the more convenient reading, with the two pages named for a browser. The
+  Article 28, 32, 33 and 34 obligations themselves are statute and are not in
+  doubt.
+- **The pattern worth keeping, since it has now fired twice in one day.**
+  Yesterday's error was treating a supplier's *name* as a specification.
+  Today's near-miss was accepting the first well-researched answer to a question
+  nobody had challenged the framing of. **The £261/year was correct given
+  "which Microsoft product?" and irrelevant given "does a third party need to be
+  involved at all?"** Sourcing an answer thoroughly is not the same as checking
+  the question, and the second is cheaper.
+- **And it fired a third time an hour later. See below.**
+
+---
+
+### 2026-08-10, fourth pass (launch, and a gate that was gating the wrong thing)
+
+- **The owner's correction: this business holds zero customer data, storage is
+  not an outreach blocker, and launch is now.** All three parts are right, and
+  the repo had been describing the storage question as "the last blocker on the
+  first cold email" in four separate files. **It never was.** There is no client,
+  no client record, and no arrangement about where files live is a precondition
+  of sending an email.
+- **The gate was checking more than the page claims, and reading the page
+  settled it in thirty seconds.** The rule written an hour earlier was: do not
+  set `clientDataStorage` until encryption is on **and** a restore has been
+  tested. `/privacy/` says "records are encrypted at rest". **It says nothing
+  about backups anywhere.** So:
+  - **Encryption gates publishing**, because the page asserts it.
+  - **The tested backup gates taking on a client**, because that is when there
+    is data whose availability Article 32 protects.
+  Bundling them turned a same-day launch into a shopping trip. **The general
+  form is worth more than the hour: a page gates on what the page claims, not on
+  everything that is owed.** Reasoning about what *ought* to be true before
+  publishing produced the wrong answer; opening the file produced the right one
+  — which is the same lesson as 2026-08-06, arrived at from a new direction.
+- **`clientDataStorage` is set and `/privacy/` publishes.** It reads
+  `{ name: 'us, on our own encrypted computer', where: 'the United Kingdom' }`,
+  and the notice renders "It is held by us, on our own encrypted computer, in
+  the United Kingdom."
+- **One copy fix went with it.** The sentence was built as "held **with**
+  {name}", which silently assumed the holder was a supplier — "held with us" is
+  not English. It is now "held **by** {name}, in {where}", which works either
+  way. **A template's grammar can encode an assumption**, and this one had
+  encoded "there is always a third party" since the page was written.
+- **The site is ten indexable pages, up from eight this morning.** `/terms/` and
+  `/privacy/` both published today, the sitemap carries both, and the footer
+  links both. Page counts corrected in `ROADMAP.md`, `HANDOVER.md`,
+  `ops/own-facts-check.md` and `ops/search-console-and-bing.md`, where submitting
+  the two new URLs is now the open item — five minutes across both consoles.
+- **What is actually left before money can move: the Revolut payment link.** That
+  is the whole of the critical path now. And it is the order *page* rather than
+  the first sale, because a payment link in an email has always been the route to
+  that.
+- **What outreach still needs, and it is a rule rather than a blocker.** The
+  moment somebody replies, we hold their name and email; the permanent opt-out
+  record names them too. That is personal data from the first reply, not from the
+  first client — the trap in thinking this is only about clients. So the machine
+  needs encryption on, and client folders must stay out of anything Windows syncs
+  to the consumer OneDrive account. Neither costs anything and neither delays a
+  send.
+- **The honest shape of what was published today.** The privacy notice describes
+  where records will be held before a single one exists. That is the right way
+  round — a notice arriving after the data is the failure it exists to prevent —
+  but it is worth writing down that **the sentence is a commitment, not a
+  description**, and the commitment is only as good as BitLocker being switched
+  on before the branch merges.
+
+---
+
 ### 2026-08-09 (outreach goes cold, and the target is decided)
 
 - **The owner has no business network. Warm-first is closed, not deferred.**

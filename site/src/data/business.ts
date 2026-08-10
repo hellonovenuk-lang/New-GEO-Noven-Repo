@@ -64,28 +64,52 @@ export const business = {
    * value below, and it may not be in Merseyside. */
 
   /**
-   * **The address for service of documents. Null until it exists.**
+   * **The address for service of documents. Live from 2026-08-10.**
    *
    * Trading under a name that is not the founder's surname carries a duty to
    * show a name and a UK address where documents can be served, and selling
-   * online adds the same requirement again. The provider is decided —
-   * UK Postbox, Business Street Address, Poole — and not yet ordered. See
-   * `ops/third-party-services.md` B1c for the runbook, including the two traps
-   * (buy the Street Address, not the PO Box; register "Wardith" as its own
-   * verified step).
+   * online adds the same requirement again. UK Postbox's Business Street
+   * Address, Poole — ordered 7 August, confirmed by the owner on the 10th.
+   * `ops/third-party-services.md` B1b holds the account facts and the terms
+   * worth knowing; B1c holds what was done to get here.
    *
    * **Never the founder's home address.** The footer can be edited; indexes,
-   * archives and assistants' caches cannot.
+   * archives and assistants' caches cannot. That is also why this is the
+   * mailbox line and not the courier line: UK Postbox issues a second address
+   * for parcels (`Unit 171036, Courier Point`, `BH16 6FH`), which is a
+   * delivery instruction for carriers, not a place documents are served. It is
+   * recorded in `ops/accounts.md` and is deliberately published nowhere.
    *
-   * **Setting this one value does five things at once**, which is the whole
-   * reason it lives here rather than being typed into five files: it fills the
-   * footer on every page, it adds `address` to the Organization structured data,
-   * it publishes `/terms/`, it publishes `/privacy/`, and — with the Revolut
-   * link set — it opens the order page. That is deliberate. Each of those is a
-   * statement about where this business can be reached, and they must appear
-   * together or not at all. See `src/data/legal.ts`.
+   * **Setting this one value does four things at once**, which is the whole
+   * reason it lives here rather than being typed into four files: it fills the
+   * footer on every page, it adds `address` to the Organization structured
+   * data, it publishes `/terms/`, and it satisfies half of what `/privacy/`
+   * and the order page need. Each of those is a statement about where this
+   * business can be reached. See `src/data/legal.ts`.
+   *
+   * **What it does not do is publish `/privacy/`.** That still waits on
+   * `clientDataStorage.where` below, which is a `[PLACEHOLDER]`. The gap is
+   * handled rather than ignored: the "Your information" section of `/terms/`
+   * drops its link to the notice while the notice does not exist, because a
+   * published contract pointing at a 404 is worse than one that doesn't.
+   *
+   * **The locality question is answered here, deliberately.** `ROADMAP.md` and
+   * `ops/third-party-services.md` both flagged that a real address would say
+   * Dorset while the founder works from the Wirral, and asked for a decision
+   * rather than a default. The decision: publish the real locality. `basedIn`
+   * above stays "the Wirral" because it is true and is prose about a person;
+   * this is where post arrives. Two different facts, both stated plainly, is
+   * the honest shape — inventing a Merseyside postal address to make them
+   * match would be the exact fault this business is paid to find.
    */
-  addressForService: null as PostalAddress | null,
+  addressForService: {
+    line1: 'Lytchett House, 13 Freeland Park',
+    line2: 'Wareham Road',
+    locality: 'Poole',
+    region: 'Dorset',
+    postcode: 'BH16 6FA',
+    country: 'GB',
+  } as PostalAddress | null,
 
   /**
    * The ICO data protection registration, taken out 2026-07-30. Published in
@@ -97,7 +121,7 @@ export const business = {
   icoRegistration: 'C1995412',
 
   /**
-   * **Where client and prospect records are kept. Null until it is decided.**
+   * **Where client and prospect records are kept. Set 2026-08-10.**
    *
    * Not a technical detail: whoever holds the files is a recipient of personal
    * data and has to be named in the privacy notice, along with where they hold
@@ -111,6 +135,10 @@ export const business = {
    * not publish without the address: a notice that is vague about where the
    * data goes is worse than no notice, because it is a published claim to have
    * thought about it.
+   *
+   * **The history below runs to four entries in one day and is kept in full**,
+   * because two of the wrong turns are the useful part and a later session that
+   * only sees the answer will take one of them again.
    */
   /**
    * **Decided by the owner 2026-08-09: Microsoft OneDrive.** Chosen because
@@ -120,21 +148,85 @@ export const business = {
    * condition above that a new account would not have met for weeks.
    *
    * **This does not publish `/privacy/` on its own** — the address for service
-   * is the other half, and it is still pending. **Nor is it finished until a
-   * backup has been restored once.** Setting a value here is a decision; the
-   * restore is the proof, and `ops/client-record.md` carries it as the open step.
+   * was the other half, and it landed on 2026-08-10. **Nor is it finished until
+   * a backup has been restored once.** Setting a value here is a decision; the
+   * restore is the proof, and `ops/client-record.md` carries it as the open
+   * step — though see the correction at the end of this comment about *when*
+   * that proof is owed.
    *
    * **`where` is deliberately a `[PLACEHOLDER]` and must not be guessed.** The
    * privacy notice states, in published wording, which country holds the data.
    * Microsoft's answer depends on the account type and the tenant's configured
-   * data residency, and it is not something to assert from general knowledge —
-   * it is checkable in the account itself in about two minutes. `/privacy/`
-   * will not publish while this string is a placeholder, which is the correct
-   * behaviour rather than a bug.
+   * data residency, and it is not something to assert from general knowledge.
+   * `/privacy/` will not publish while this string is a placeholder, which is
+   * the correct behaviour rather than a bug.
+   *
+   * **That instinct was right for a reason nobody had yet found. Researched
+   * 2026-08-10: the account opened is a *consumer* Microsoft account, and it
+   * cannot hold client records at all.** There is no country to look up —
+   * Microsoft commits to none for consumer services and says so in its privacy
+   * statement. There is no Article 28 processor contract — Microsoft's Data
+   * Protection Addendum attaches to Commercial Licensing, and UK GDPR requires
+   * that contract before any processing starts. And Microsoft Services
+   * Agreement §13.h.i says the consumer Microsoft 365 plans are for personal,
+   * non-commercial use. **Three independent failures, so no setting inside the
+   * account can fix it.**
+   *
+   * **One fix is a Microsoft 365 Business subscription with the tenant created
+   * as United Kingdom**, which yields a Product Terms data residency commitment
+   * for OneDrive. It costs £261/year for the tier that also covers the Office
+   * apps.
+   *
+   * **The better fix, recommended the same day: hold the records locally, on
+   * the founder's own encrypted machine.** With no third party in the storage,
+   * there is no Article 28 contract to need, no supplier's data location to
+   * publish, and no consumer-terms problem — and `where` becomes a truthful
+   * `'the United Kingdom'` for £0 a month. It is also the plainer sentence to
+   * publish, which is worth something on this site in particular.
+   *
+   * **Two conditions come with it and neither is optional**: full-disk
+   * encryption switched on and verified, and a backup — an encrypted drive kept
+   * off-site, not a cloud sync — that has been restored once. Article 32 asks
+   * for both, the second as an availability requirement rather than as
+   * prudence. Full reasoning, the OneDrive-autosync trap, and sources:
+   * `ops/client-record.md`.
+   *
+   * **"Do not set this value until those two conditions are met" — corrected
+   * within the hour, and this is the entry worth reading.** The owner pointed
+   * out that the business holds zero customer data and needed to launch. The
+   * gate was checking more than the page claims, and *reading the page* settled
+   * it where reasoning about it had not: `/privacy/` asserts "records are
+   * encrypted at rest" and **says nothing about backups at all**.
+   *
+   * - **Encryption is a precondition of publishing**, because the page claims it.
+   * - **The tested restore is a precondition of taking on a client**, because
+   *   that is when there is data whose availability Article 32 protects.
+   *
+   * **The general rule: a page gates on what the page claims, not on everything
+   * that is owed.** Bundling the two turned a same-day launch into a shopping
+   * trip on a business whose stated constraint is to launch as early as
+   * possible.
+   *
+   * **Set 2026-08-10, and `/privacy/` publishes.** The notice renders "It is
+   * held by us, on our own encrypted computer, in the United Kingdom." **The one
+   * thing that must be true before this merges is full-disk encryption actually
+   * being on** — that is the page's claim, and nothing else here depends on it.
+   *
+   * **`name` is a sentence fragment rather than a supplier, on purpose.** The
+   * privacy page reads "held by {name}, in {where}", which was "held *with*
+   * {name}" until this changed — grammar that had silently assumed the holder
+   * was always a third party. If a provider is ever named here again, keep the
+   * preposition working for both.
+   *
+   * **It is not a claim that anything is stored anywhere today.** Nothing is:
+   * there is no client, and no record goes into the consumer Microsoft account.
+   * The sentence is a commitment about where records *will* live, published
+   * before the first one exists — which is the right way round, since a notice
+   * that arrives after the data is the failure it exists to prevent.
    */
   clientDataStorage: {
-    name: 'Microsoft OneDrive',
-    where: '[PLACEHOLDER: the data location Microsoft states for this account]',
+    name: 'us, on our own encrypted computer',
+    where: 'the United Kingdom',
   } as { name: string; where: string } | null,
 
   areaServed: 'GB',
