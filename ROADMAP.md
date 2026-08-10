@@ -30,7 +30,8 @@ something it has never done once.
 ## Where we are today
 
 **The site is live** at `wardith.co.uk`, on HTTPS, deployed from `main` by
-Netlify: nine static pages, readable by AI crawlers, with machine-readable
+Netlify: **ten** static pages from 2026-08-10, when `/terms/` and `/privacy/`
+both published, readable by AI crawlers, with machine-readable
 business facts and a sitemap. Email is **`hello@wardith.co.uk` on Zoho**,
 receiving since 2026-08-06. **Both search consoles are done** — Google
 2026-08-06, Bing 2026-08-07 (1c-3, items 6a and 6b). Brand assets are in.
@@ -103,12 +104,18 @@ three findings still order this file.
    not a cloud sync — that has been restored once. `ops/client-record.md`,
    "Storing it locally". The other blocker is the Revolut payment link.
 
-**The critical path:** ~~ICO helpline call → service address ordered →~~ both
-done 2026-08-10. What is left: **encryption on and a restore tested → set
-`clientDataStorage` → `/privacy/` publishes itself → Revolut link pasted in →
-one payment possible end to end.** The order page is not on it — a payment link
-in an email takes the first payment. **Note the first step is an afternoon and
-about £40, where a day earlier the same line read £261 a year.**
+**The critical path is down to one item.** ICO call, service address, `/terms/`
+and `/privacy/` are all done as of 2026-08-10. What is left: **the Revolut link
+pasted into `order.ts`**, and that is the order page rather than the first sale —
+a payment link in an email takes that.
+
+**Outreach is not blocked and should not be described as if it were.** The
+owner's point on 2026-08-10 stands: this business holds zero customer data
+today, and a storage arrangement is not a precondition of sending an email. What
+outreach needs is a published privacy notice — now live — and a machine with
+encryption switched on to hold the replies and the opt-out record. That is an
+afternoon, not a purchase, and the backup drive that Article 32 requires is owed
+before the first *client*, not before the first email.
 
 **`HANDOVER.md` has the longer version of all of this.**
 
@@ -229,7 +236,9 @@ committing.
             nothing here needs a manual switch.
       - [ ] **On the day it goes live**, the page count in `HANDOVER.md`,
             `ops/own-facts-check.md` and `ops/search-console-and-bing.md` moves
-            from nine to ten, and `/order/` gets submitted to Search Console and
+            from ten to eleven — it was nine until 2026-08-10, when `/terms/`
+            and `/privacy/` published — and `/order/` gets submitted to Search
+            Console and
             Bing. `/order/pay/` is `noindex` and deliberately out of the sitemap.
 - [D] **The £800 Foundation is invoiced**, with the contract sent alongside once
       both sides agree to start. At £800 the card fee is real money, there's
@@ -317,19 +326,18 @@ place, not on every page.
       - [ ] **Was blocked on two facts; one is left.** The address for service
             is set as of 2026-08-10. The remaining value is
             `clientDataStorage.where` in `site/src/data/business.ts` — the
-            country the records are held in. It is **the single value standing
-            between the site and a published privacy notice**, which in turn is
-            the last non-payment blocker on the order page. Set it and the page
-            builds itself.
-            **It is not a lookup, which is what this entry said until
-            2026-08-10.** The Microsoft account opened is a consumer one and has
-            no data location to look up, no processor contract, and terms that
-            bar the use. **Decided the same day: hold the records locally on an
-            encrypted machine**, which makes the value a truthful "the United
-            Kingdom" for nothing. **Do not set it until full-disk encryption is
-            on and a backup has been restored once** — setting it publishes a
-            claim about how this business protects other people's data.
-            `ops/client-record.md`, "Storing it locally".
+            country the records are held in. **Set 2026-08-10 and `/privacy/`
+            is live.**
+            It went through three answers in one day and the middle one is worth
+            keeping: the Microsoft account opened was a consumer one, with no
+            data location to look up, no Article 28 processor contract, and
+            terms barring the use. **The answer is to hold the records locally
+            on an encrypted machine** — no processor, so a truthful "the United
+            Kingdom" for nothing. `ops/client-record.md`, "Storing it locally".
+            **The page's own claim is "records are encrypted at rest", so
+            full-disk encryption must be on before this merges** — and that is
+            the only precondition. The tested backup is owed before the first
+            client, not before the page.
 - [ ] **Terms of service.** Mostly a job of collecting what the site already
       commits to — cancellation terms, no guaranteed outcomes, we don't build
       websites — plus the refund position above.

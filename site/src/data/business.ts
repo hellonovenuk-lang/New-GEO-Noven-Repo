@@ -121,7 +121,7 @@ export const business = {
   icoRegistration: 'C1995412',
 
   /**
-   * **Where client and prospect records are kept. Null until it is decided.**
+   * **Where client and prospect records are kept. Set 2026-08-10.**
    *
    * Not a technical detail: whoever holds the files is a recipient of personal
    * data and has to be named in the privacy notice, along with where they hold
@@ -135,6 +135,10 @@ export const business = {
    * not publish without the address: a notice that is vague about where the
    * data goes is worse than no notice, because it is a published claim to have
    * thought about it.
+   *
+   * **The history below runs to four entries in one day and is kept in full**,
+   * because two of the wrong turns are the useful part and a later session that
+   * only sees the answer will take one of them again.
    */
   /**
    * **Decided by the owner 2026-08-09: Microsoft OneDrive.** Chosen because
@@ -144,9 +148,11 @@ export const business = {
    * condition above that a new account would not have met for weeks.
    *
    * **This does not publish `/privacy/` on its own** — the address for service
-   * is the other half, and it is still pending. **Nor is it finished until a
-   * backup has been restored once.** Setting a value here is a decision; the
-   * restore is the proof, and `ops/client-record.md` carries it as the open step.
+   * was the other half, and it landed on 2026-08-10. **Nor is it finished until
+   * a backup has been restored once.** Setting a value here is a decision; the
+   * restore is the proof, and `ops/client-record.md` carries it as the open
+   * step — though see the correction at the end of this comment about *when*
+   * that proof is owed.
    *
    * **`where` is deliberately a `[PLACEHOLDER]` and must not be guessed.** The
    * privacy notice states, in published wording, which country holds the data.
@@ -185,20 +191,42 @@ export const business = {
    * prudence. Full reasoning, the OneDrive-autosync trap, and sources:
    * `ops/client-record.md`.
    *
-   * **Do not set this value until those two conditions are met.** Setting it
-   * publishes `/privacy/`, and `/privacy/` is a published claim about how this
-   * business protects other people's data. Publishing it early would be the
-   * footer `[PLACEHOLDER]` fault again, except undetectable by a reader.
+   * **"Do not set this value until those two conditions are met" — corrected
+   * within the hour, and this is the entry worth reading.** The owner pointed
+   * out that the business holds zero customer data and needed to launch. The
+   * gate was checking more than the page claims, and *reading the page* settled
+   * it where reasoning about it had not: `/privacy/` asserts "records are
+   * encrypted at rest" and **says nothing about backups at all**.
    *
-   * **`name` is left as it is on purpose.** It records the owner's 2026-08-09
-   * decision and is not a claim that anything is stored anywhere — nothing is.
-   * There is no client yet, and no record may go into the consumer account.
-   * **It is the value most likely to be wrong once this is settled**: on the
-   * local route the holder is Wardith itself, not Microsoft.
+   * - **Encryption is a precondition of publishing**, because the page claims it.
+   * - **The tested restore is a precondition of taking on a client**, because
+   *   that is when there is data whose availability Article 32 protects.
+   *
+   * **The general rule: a page gates on what the page claims, not on everything
+   * that is owed.** Bundling the two turned a same-day launch into a shopping
+   * trip on a business whose stated constraint is to launch as early as
+   * possible.
+   *
+   * **Set 2026-08-10, and `/privacy/` publishes.** The notice renders "It is
+   * held by us, on our own encrypted computer, in the United Kingdom." **The one
+   * thing that must be true before this merges is full-disk encryption actually
+   * being on** — that is the page's claim, and nothing else here depends on it.
+   *
+   * **`name` is a sentence fragment rather than a supplier, on purpose.** The
+   * privacy page reads "held by {name}, in {where}", which was "held *with*
+   * {name}" until this changed — grammar that had silently assumed the holder
+   * was always a third party. If a provider is ever named here again, keep the
+   * preposition working for both.
+   *
+   * **It is not a claim that anything is stored anywhere today.** Nothing is:
+   * there is no client, and no record goes into the consumer Microsoft account.
+   * The sentence is a commitment about where records *will* live, published
+   * before the first one exists — which is the right way round, since a notice
+   * that arrives after the data is the failure it exists to prevent.
    */
   clientDataStorage: {
-    name: 'Microsoft OneDrive',
-    where: '[PLACEHOLDER: the data location Microsoft states for this account]',
+    name: 'us, on our own encrypted computer',
+    where: 'the United Kingdom',
   } as { name: string; where: string } | null,
 
   areaServed: 'GB',

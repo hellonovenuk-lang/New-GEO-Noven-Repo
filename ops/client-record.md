@@ -268,12 +268,21 @@ submissions, Zoho holds email, and running an audit types a client's business
 name into four other companies' assistants. Those are all still recipients and
 are all already disclosed. What goes away is a *storage* provider.
 
-**The rule this creates, and it is the one to hold to.** **`clientDataStorage`
-must not be set until BitLocker is on and a restore has been tested.** Setting
-it publishes `/privacy/`, and `/privacy/` is a published claim about how this
-business protects other people's data. Publishing that claim before it is true
-would be the same fault as the `[PLACEHOLDER]` in the footer, except worse,
-because nobody reading it could tell.
+**The rule this creates — corrected 2026-08-10, an hour after it was written.**
+The rule was "do not set `clientDataStorage` until encryption is on *and* a
+restore has been tested". **The second half was wrong**, and the way to see it
+is to read the page rather than reason about it: `/privacy/` claims "records are
+encrypted at rest" and **says nothing whatever about backups**.
+
+- **Encryption is a precondition of publishing**, because the page asserts it.
+- **The tested restore is a precondition of taking on a client**, because that
+  is when there is data whose availability Article 32 protects. It is not a
+  precondition of publishing a page that does not mention it.
+
+**That distinction is worth more than the hour it cost**, because the general
+form recurs: *a page gates on what the page claims, not on everything that is
+owed.* Bundling the two turned a same-day launch into a shopping trip, on a
+business whose stated constraint is to launch as early as possible.
 
 **Recommendation, revised from the one above: store it locally, encrypted, with
 an encrypted off-site backup drive.** It is lawful, it is £0 a month against
@@ -281,6 +290,19 @@ an encrypted off-site backup drive.** It is lawful, it is £0 a month against
 Microsoft 365 Business route stays on the table as the fallback if the
 encryption or the backup cannot be done — but they are an afternoon and about
 £40, not a subscription.
+
+**Set 2026-08-10.** `clientDataStorage` now reads
+`{ name: 'us, on our own encrypted computer', where: 'the United Kingdom' }`,
+and `/privacy/` publishes. The notice renders "It is held by us, on our own
+encrypted computer, in the United Kingdom." **The one thing that has to be true
+before that merges is full-disk encryption being on**, which is the page's own
+claim and nobody else's.
+
+**And the honest scope of what it describes: today it describes nothing.**
+There is no client and no client record. The sentence states where records
+*will* be held, published before the first one exists — which is the right way
+round, because a privacy notice that arrives after the data does is the failure
+it exists to prevent.
 
 **On sources for this section.** The Article 28, 32, 33 and 34 obligations
 described here are the text of UK GDPR and are not in dispute. **The ICO's own

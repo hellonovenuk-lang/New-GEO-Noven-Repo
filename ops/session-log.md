@@ -238,6 +238,62 @@ document had its argument stripped and sends the reader here.
   "which Microsoft product?" and irrelevant given "does a third party need to be
   involved at all?"** Sourcing an answer thoroughly is not the same as checking
   the question, and the second is cheaper.
+- **And it fired a third time an hour later. See below.**
+
+---
+
+### 2026-08-10, fourth pass (launch, and a gate that was gating the wrong thing)
+
+- **The owner's correction: this business holds zero customer data, storage is
+  not an outreach blocker, and launch is now.** All three parts are right, and
+  the repo had been describing the storage question as "the last blocker on the
+  first cold email" in four separate files. **It never was.** There is no client,
+  no client record, and no arrangement about where files live is a precondition
+  of sending an email.
+- **The gate was checking more than the page claims, and reading the page
+  settled it in thirty seconds.** The rule written an hour earlier was: do not
+  set `clientDataStorage` until encryption is on **and** a restore has been
+  tested. `/privacy/` says "records are encrypted at rest". **It says nothing
+  about backups anywhere.** So:
+  - **Encryption gates publishing**, because the page asserts it.
+  - **The tested backup gates taking on a client**, because that is when there
+    is data whose availability Article 32 protects.
+  Bundling them turned a same-day launch into a shopping trip. **The general
+  form is worth more than the hour: a page gates on what the page claims, not on
+  everything that is owed.** Reasoning about what *ought* to be true before
+  publishing produced the wrong answer; opening the file produced the right one
+  — which is the same lesson as 2026-08-06, arrived at from a new direction.
+- **`clientDataStorage` is set and `/privacy/` publishes.** It reads
+  `{ name: 'us, on our own encrypted computer', where: 'the United Kingdom' }`,
+  and the notice renders "It is held by us, on our own encrypted computer, in
+  the United Kingdom."
+- **One copy fix went with it.** The sentence was built as "held **with**
+  {name}", which silently assumed the holder was a supplier — "held with us" is
+  not English. It is now "held **by** {name}, in {where}", which works either
+  way. **A template's grammar can encode an assumption**, and this one had
+  encoded "there is always a third party" since the page was written.
+- **The site is ten indexable pages, up from eight this morning.** `/terms/` and
+  `/privacy/` both published today, the sitemap carries both, and the footer
+  links both. Page counts corrected in `ROADMAP.md`, `HANDOVER.md`,
+  `ops/own-facts-check.md` and `ops/search-console-and-bing.md`, where submitting
+  the two new URLs is now the open item — five minutes across both consoles.
+- **What is actually left before money can move: the Revolut payment link.** That
+  is the whole of the critical path now. And it is the order *page* rather than
+  the first sale, because a payment link in an email has always been the route to
+  that.
+- **What outreach still needs, and it is a rule rather than a blocker.** The
+  moment somebody replies, we hold their name and email; the permanent opt-out
+  record names them too. That is personal data from the first reply, not from the
+  first client — the trap in thinking this is only about clients. So the machine
+  needs encryption on, and client folders must stay out of anything Windows syncs
+  to the consumer OneDrive account. Neither costs anything and neither delays a
+  send.
+- **The honest shape of what was published today.** The privacy notice describes
+  where records will be held before a single one exists. That is the right way
+  round — a notice arriving after the data is the failure it exists to prevent —
+  but it is worth writing down that **the sentence is a commitment, not a
+  description**, and the commitment is only as good as BitLocker being switched
+  on before the branch merges.
 
 ---
 

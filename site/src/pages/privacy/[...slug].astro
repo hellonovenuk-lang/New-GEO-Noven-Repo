@@ -5,6 +5,21 @@
  * extra fact before it can be true: where client records are kept. See
  * `src/data/legal.ts`.
  *
+ * **The storage sentence is built from `business.clientDataStorage` and reads
+ * "held by {name}, in {where}".** It was originally "held *with* {name}",
+ * which assumed the holder was a supplier. From 2026-08-10 it isn't — the
+ * records sit on the founder's own encrypted machine — and "held with us" is
+ * not English. **Keep the preposition working for both cases** if a provider is
+ * ever named here again.
+ *
+ * **This page makes one claim about security that has to be true before it
+ * publishes:** "records are encrypted at rest", in *Keeping it safe*. That is
+ * why full-disk encryption is a precondition of setting `clientDataStorage` and
+ * not merely good practice. **The tested backup is not claimed anywhere on this
+ * page**, so it is an Article 32 obligation that gates taking on a client, not
+ * one that gates publishing — a distinction this repo got wrong for about an
+ * hour on 2026-08-10 and which cost nothing only because nobody acted on it.
+ *
  * **Two things in here are easy to get wrong by copying a template.** First,
  * running an audit means typing a client's business name into other companies'
  * AI assistants — that is a disclosure, and no generated privacy notice would
@@ -117,7 +132,7 @@ const lastUpdated = '9 August 2026';
           We keep a record of the work: your business name, contact name and email, website, what
           you want to be found for, the area you serve, which plan you're on and what you've paid,
           what we did and when, the results of each check, and any access you've given us. It is
-          held with {storage.name} ({storage.where}).
+          held by {storage.name}, in {storage.where}.
         </p>
         <p>
           Invoices and payment records go through <strong>Zoho Books</strong> and our bank,

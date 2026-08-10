@@ -67,7 +67,8 @@ Wirral, working remotely across the UK. One person, no employees.
 
 **Live and working**
 
-- **The website** — `wardith.co.uk`, nine static pages on Astro, deployed
+- **The website** — `wardith.co.uk`, **ten** static pages on Astro (nine until
+  2026-08-10, when `/terms/` and `/privacy/` published), deployed
   from `main` by Netlify, HTTPS confirmed. It is deliberately built as a
   demonstration of the product: no client-side JavaScript, AI crawlers
   explicitly allowed in `robots.txt`, an XML sitemap, and JSON-LD structured
@@ -123,8 +124,9 @@ Ordered by what it stops.
 |---|---|
 | ~~**Address for service of documents**~~ | **Exists as of 2026-08-10** — UK Postbox, Poole. Published in the footer and the structured data, and the ICO record was changed the same day. Row kept for one session so nobody re-solves it; the account facts are in `ops/accounts.md` |
 | ~~**Terms of service**~~ — **published 2026-08-10** | Nothing. It went live with the address, which is all it was waiting on |
-| **Privacy notice** — written 2026-08-09, unpublished | Lawfully holding any customer or prospect information — including an outreach list. **Now waiting on one value only**: the row below |
-| **Full-disk encryption switched on, and a backup restored once** | The privacy notice, the order page, and delivering the first audit lawfully. **Reopened and re-answered 2026-08-10.** This row first read "the country Microsoft holds the OneDrive data in" and called it a two-minute lookup; the account opened turned out to be a **consumer** one, which cannot hold client records at all. **The answer is to hold them locally on the founder's own encrypted machine** — no processor, so no Article 28 contract, no supplier's country to publish, £0 a month. What is missing is the two conditions: **BitLocker on and verified with the recovery key stored off the disk**, and **an encrypted backup drive kept off-site, restored once**. About an afternoon and £40. `ops/client-record.md`, "Storing it locally" |
+| ~~**Privacy notice**~~ — **published 2026-08-10** at `/privacy/` | Nothing. It states that client records are held by us, on our own encrypted computer, in the United Kingdom |
+| **Full-disk encryption switched on** | **The truth of a sentence already published.** `/privacy/` says "records are encrypted at rest", so BitLocker or Device Encryption must actually be on, verified, with the recovery key stored somewhere that is not the encrypted disk. Nothing is stored yet, so nothing is at risk today — but the claim is live the moment the branch merges. Minutes, free |
+| **An encrypted backup drive, restored once** | **Taking on the first client**, not launching. Article 32 requires the ability to restore availability after a physical or technical incident. It gates having data, not publishing a page — `/privacy/` makes no backup claim. An encrypted external drive kept away from the laptop, ~£30–60 once. `ops/client-record.md` |
 | **API accounts, keys and spend caps** | Running any audit at all |
 | **A working payment route** | Revenue |
 | **A Foundation method and time budget** | The £800 product, and knowing whether it makes money |
@@ -227,9 +229,9 @@ outliving it because the law says so.
 with the footer sentence and the `PostalAddress` in the structured data — one
 edit, four effects, which is the whole reason those facts live in one file.
 
-**`/privacy/` is the one still down, and what it is waiting on changed twice on
-2026-08-10.** It needs `clientDataStorage.where` in
-`site/src/data/business.ts` — the country the records are held in.
+**Both pages are published as of 2026-08-10**, and the paragraphs below are the
+record of how the second one got there — three answers in one day, on a question
+that had been mis-framed from the start.
 
 **First it got worse.** This had been recorded as a lookup, and it is not one:
 the Microsoft account opened is a **consumer** account, which cannot hold client
@@ -269,12 +271,27 @@ Word is still commercial use under §13.h.i. That is now a contract question wit
 Microsoft to be decided on its own merits, not a regulator-facing one forcing a
 purchase.
 
-**Do not set `clientDataStorage` until both conditions are true.** Setting it
-publishes `/privacy/`, which is a published claim about how this business
-protects other people's data.
+**Then the owner pointed out that the business holds zero customer data and
+needs to launch now, and that broke the last knot.** The rule written an hour
+earlier — do not publish until encryption is on *and* a restore is tested — was
+half wrong, and reading the page settles it rather than reasoning about it:
+`/privacy/` claims "records are encrypted at rest" and **makes no claim about
+backups at all**. So encryption gates publishing; **the tested backup gates
+taking on a client**, which is a different and later moment.
 
-**In the meantime nothing goes in the consumer account** — not a client record
-and not the outreach list.
+**`clientDataStorage` is therefore set and `/privacy/` publishes.** It reads
+"held by us, on our own encrypted computer, in the United Kingdom". The single
+thing that must be true before this merges is **full-disk encryption actually
+switched on**.
+
+**Two things to check while you are in there**, because the page asserts them
+too: that the accounts named carry two-factor authentication, and — the easy
+one to miss — that Windows is not syncing Documents and Desktop into the
+consumer OneDrive account, which would put client files there without a decision
+ever being made.
+
+**Nothing goes in the consumer account** — not a client record and not the
+outreach list.
 
 **One thing changed in the terms to make that gap safe.** The "Your information"
 section links to the privacy notice only while the notice exists; while it
