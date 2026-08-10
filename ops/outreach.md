@@ -401,8 +401,17 @@ actually make.** The stronger one is specific and checkable:
 thirty-nine, and known to none of them.** It is also the version that survives a
 sceptical reader, which the general claim would not have.
 
+**Every "of thirty-nine" in this section is provisional.** A recount on
+2026-08-10 over the same 90 rows, using the Companies House and directory names
+as the candidate list, returned **fifty-four**. The two methods disagree, the
+ratios above are built on the smaller one, and **no total goes in a letter until
+they are reconciled** — §5 has taken the number out of both drafts. The
+per-practice counts are unaffected: those are matched directly against the
+answer text and were re-verified name by name.
+
 **Rewrite the §5 draft around it.** The draft was written before the run and
-makes the weaker "you are not mentioned" claim.
+makes the weaker "you are not mentioned" claim. **Done 2026-08-10** — see the
+reordering note at the head of the drafts.
 
 **Amended 2026-08-10 by the owner, and it cuts the Draft A pool by two thirds.**
 The per-assistant gap is only worth a letter **when the missing assistant is
@@ -481,8 +490,96 @@ again, because the owner read them back and found **two competing invitations** 
 a link to our own audit and a separate offer to send the answers, with nothing
 telling the reader which one to act on. **Both now go one place: the audit.**
 
-**Draft A — for a practice named by one or two assistants and missing from the
-rest.** Eighteen of the thirty-nine named practices are in this position.
+**Reordered 2026-08-10, and the labels are now the job rather than a letter.**
+The two drafts used to be presented A-then-B, which put the per-assistant letter
+first and read as the default. It is not the default any more — §4's amendment
+made the never-named the first batch. **"The absent letter" below was Draft B
+and "the ChatGPT-gap letter" was Draft A**, so the references further down this
+section still resolve.
+
+**Three fixes applied at the same time, all of them consequences of the change
+of target:**
+
+- **The count of named practices comes out of both letters.** They said "thirty
+  nine practices got named". A recount on 2026-08-10 from the same 90 rows,
+  using the Companies House and directory names as the candidate list, returned
+  **fifty-four**. Two methods, two answers, and **neither is safe to state in a
+  cold email until they are reconciled.** What is not in doubt is the bit that
+  matters — that a named practice was searched for across all ninety answer
+  texts and is not there — so the letters now make that claim and drop the
+  total. `[PLACEHOLDER: the reconciled count of practices named.]`
+- **The source line has to say where we actually found them.** Both letters
+  said "I found the practice through Companies House". That was true when the
+  list was built from the SIC sweep. **It is now false for most of them** — the
+  never-named are found on the NHS practice list and the directories, and
+  Companies House is only used afterwards to check the company is live. Under
+  UK GDPR this line is the Article 14 disclosure, so it has to be accurate
+  rather than approximately right.
+- **A practice named once needs one word changed**, not a different letter. See
+  the note after the absent letter.
+
+**The absent letter — for a practice named in none of the ninety answers.** This
+is the first batch.
+
+> Subject: [Practice] and AI search
+>
+> Hello [name],
+>
+> I'm [owner]. I run a small business on the Wirral that checks what the AI
+> assistants say when somebody asks them to recommend a local business.
+>
+> Last week I asked ChatGPT, Google's Gemini and Perplexity for a dentist on the
+> Wirral. Six different ways of asking, five times each, so ninety answers.
+>
+> Three of the questions, and what came back:
+>
+> "Who is the best dentist on the Wirral?" — [A] in thirteen of the fifteen
+> answers, [B] in nine.
+>
+> "Which dental practices on the Wirral do Invisalign?" — [C] and [D] in all
+> fifteen, [E] in fourteen.
+>
+> "What are the highest rated private dentists on the Wirral?" — [E] in all
+> fifteen, [B] in thirteen.
+>
+> I went through all ninety answers looking for [practice]. It isn't in any of
+> them. Those are the exact words I used, if you want to try them yourself.
+>
+> One thing worth saying, because it's the first thing I'd want to test. I didn't
+> ask about [practice] by name. If you type the name in, all three will probably
+> tell you plenty, and accurately. I asked the way somebody looks for a dentist
+> when they don't have one yet and don't know who you are. That's the question
+> that brings in new patients, and it's a different question.
+>
+> A practice can be missing for a few different reasons and they aren't equally
+> hard to fix. What I sell is finding out which one applies to you. Ten questions
+> on [practice] across all three assistants, where their answers are actually
+> coming from, and a written report on what to change. It's £250, that's the
+> entire cost, and the report is yours to act on with me or without me.
+>
+> If you want to see what one looks like first, I ran the same thing on my own
+> business and published all of it, including what came back badly:
+> wardith.co.uk/ask-your-ai/self-audit/
+>
+> Worth a look?
+>
+> [Owner name]
+> Wardith, Lytchett House, 13 Freeland Park, Wareham Road, Poole, Dorset, BH16 6FA
+> hello@wardith.co.uk
+>
+> I found [practice] on the NHS list of Wirral dentists and on [directory], and
+> the rest from your own website. If you'd rather I didn't keep your details,
+> tell me and I'll delete them.
+
+**For a practice named once or twice, change one sentence and send the same
+letter.** "It isn't in any of them" becomes "It came up once, in ninety
+answers" — everything else holds, and it is a stronger opening than the absent
+version because it is more obviously a real count rather than a failure to
+look.
+
+**The ChatGPT-gap letter — for a practice named by Perplexity or Gemini and
+absent from ChatGPT.** Only when the missing assistant is ChatGPT, per §4. A gap
+on Perplexity alone does not earn a letter.
 
 > Subject: [Practice] and ChatGPT
 >
@@ -529,59 +626,7 @@ rest.** Eighteen of the thirty-nine named practices are in this position.
 > Wardith, Lytchett House, 13 Freeland Park, Wareham Road, Poole, Dorset, BH16 6FA
 > hello@wardith.co.uk
 >
-> I found the practice through Companies House and your own website. If you'd
-> rather I didn't keep your details, tell me and I'll delete them.
-
-**Draft B — for a practice named by none of them.**
-
-> Subject: [Practice] and AI search
->
-> Hello [name],
->
-> I'm [owner]. I run a small business on the Wirral that checks what the AI
-> assistants say when somebody asks them to recommend a local business.
->
-> Last week I asked ChatGPT, Google's Gemini and Perplexity for a dentist on the
-> Wirral. Six different ways of asking, five times each, so ninety answers.
->
-> Three of the questions, and what came back:
->
-> "Who is the best dentist on the Wirral?" — [A] in thirteen of the fifteen
-> answers, [B] in nine.
->
-> "Which dental practices on the Wirral do Invisalign?" — [C] and [D] in all
-> fifteen, [E] in fourteen.
->
-> "What are the highest rated private dentists on the Wirral?" — [E] in all
-> fifteen, [B] in thirteen.
->
-> Thirty-nine practices got named somewhere across the ninety answers.
-> [Practice] wasn't one of them. Those are the exact words I used, if you want to
-> try them yourself.
->
-> One thing worth saying, because it's the first thing I'd want to test. I didn't
-> ask about [practice] by name. If you type the name in, all three will probably
-> tell you plenty, and accurately. I asked the way somebody looks for a dentist
-> when they don't have one yet and don't know who you are. That's the question
-> that brings in new patients, and it's a different question.
->
-> A practice can be missing for a few different reasons and they aren't equally
-> hard to fix. What I sell is finding out which one applies to you. Ten questions
-> on [practice] across all three assistants, where their answers are actually
-> coming from, and a written report on what to change. It's £250, that's the
-> entire cost, and the report is yours to act on with me or without me.
->
-> If you want to see what one looks like first, I ran the same thing on my own
-> business and published all of it, including what came back badly:
-> wardith.co.uk/ask-your-ai/self-audit/
->
-> Worth a look?
->
-> [Owner name]
-> Wardith, Lytchett House, 13 Freeland Park, Wareham Road, Poole, Dorset, BH16 6FA
-> hello@wardith.co.uk
->
-> I found the practice through Companies House and your own website. If you'd
+> I found [practice] on [where], and the rest from your own website. If you'd
 > rather I didn't keep your details, tell me and I'll delete them.
 
 ### What the email gives away, and what it does not
