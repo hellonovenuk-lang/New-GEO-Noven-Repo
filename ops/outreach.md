@@ -335,10 +335,16 @@ command.** The runbook is `ops/trade-run/README.md`.
 
 **It stops at the raw answers, deliberately.** The `outcome` and `competitors`
 columns are written empty, because assigning them is the human judgement the
-audit budgets 60 to 110 minutes for. The mention table below is built from the
-answer text by hand — or by a second script written once we have seen what a real
-trade run's answers look like, which is the same reasoning that defers the audit
-runner.
+audit budgets 60 to 110 minutes for.
+
+**The second script now exists — `ops/prospect-list/mention_table.py`, written
+2026-08-10.** It was deferred until a real trade run's answers had been seen, and
+the dental run is that. It counts each candidate name against `answer_text` per
+assistant, sorts the outreach list by the result, assigns Draft A or Draft B from
+the ladder below, and builds the source table for the two assistants whose URLs
+can be read. **What it does not do is decide anything it cannot see:** a name it
+never matched is printed rather than scored zero, because a zero that is really a
+matching failure puts a practice in the wrong draft and makes the email wrong.
 
 ### The mention table — who is named, and how often
 

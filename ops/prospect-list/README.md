@@ -33,6 +33,7 @@ sweep is the only free route and the caveat above applies to the result.
 |---|---|
 | `cqc_filter.py` | Cuts one trade, in one set of postcode districts, out of the CQC national directory |
 | `ch_lookup.py` | Asks Companies House whether each provider is a live company — the PECR test |
+| `mention_table.py` | Counts who the assistants named, per assistant, and sorts the outreach list by it |
 | `ch_sweep.py` | The old postcode sweep, kept as a cross-check rather than as the list |
 
 **No output goes in this repository.** Every file these produce names real
@@ -78,6 +79,29 @@ unmatched provider is not contactable until a person has looked. It is deliberat
 that a near-match is not treated as a match: the question is a legal one.
 
 **4. Triage by hand.** The script cannot do this and should not pretend to.
+
+**5. Sort what is left by who the assistants named.** Needs the trade run
+(`ops/trade-run/`), which is the only step here that costs money.
+
+```
+python3 mention_table.py ~/wardith-runs/wirral-dentists.csv \
+    ~/wardith-lists/wirral-dental.csv \
+    ~/wardith-lists/wirral-dental-sorted.xlsx \
+    ~/wardith-lists/outreach-names.txt
+```
+
+The fourth argument is optional and is the triaged list from step 4, one practice
+name per line as the CQC spells it. Give it one and the workbook opens on a sheet
+holding only those, which is the sheet to send from; the whole market stays on the
+sheet behind it, which is the one to study. **Score the whole market either way** —
+the businesses ranked ahead of a prospect are usually ones we cannot or should not
+sell to, and they are the content of the email.
+
+**Read what it prints, again.** A practice whose name never matched any answer is
+listed rather than scored zero. Left alone, that practice goes out as a Draft B
+saying it was named in none of ninety answers, which would be a false statement in
+a cold email about somebody else's business — the one mistake this business cannot
+make.
 
 ---
 
