@@ -633,8 +633,7 @@ on Perplexity alone does not earn a letter.
 > I found [practice] on [where], and the rest from your own website. If you'd
 > rather I didn't keep your details, tell me and I'll delete them.
 >
-> Postal address: Lytchett House, 13 Freeland Park, Wareham Road, Poole,
-> Dorset, BH16 6FA
+> *[the normal Wardith signature follows, and it carries the postal address]*
 
 ### What the email gives away, and what it does not
 
