@@ -1,48 +1,54 @@
-<p align="center">
-  <img src="assets/logo.svg" alt="Wardith logo" width="400">
-</p>
-
 # Wardith
 
-> **Renamed 2026-08-04: this business was called Noven.** The name collided
-> with at least four other businesses, which the self-audit found the hard way.
-> The live address is `wardith.co.uk`; `wardith.com` and `wardith.uk` are owned
-> and redirect to it. Where a document below still says Noven it is recording
-> something dated — the 2 August self-audit and its frozen question set are the
-> main ones, and they must keep the old name or the baseline is destroyed.
-> `ops/rename-to-wardith.md` is the full changeover; `ops/plan-to-1-september.md`
-> is the timetable.
+Wardith makes a business visible, accurate and recommendable to AI assistants —
+ChatGPT, Google, Copilot and Perplexity — when their customers ask one for a
+recommendation.
 
-Wardith helps businesses get found by AI assistants.
+Sole trader, one person. `wardith.co.uk`.
 
-More and more customers don't search the web any more — they ask ChatGPT,
-Google's AI, Microsoft Copilot or Perplexity to recommend someone. If those
-assistants don't know a business exists, it doesn't get mentioned, and it
-quietly loses work to competitors who do show up.
+## Where to look
 
-Wardith fixes that. We make sure a business is visible, accurate and
-recommendable when AI assistants answer questions like *"who's a good
-[plumber / accountant / clinic] near me?"* — so the customers who ask AI
-get pointed at our clients.
-
-## What's in this repo
-
-The site is live at [wardith.co.uk](https://wardith.co.uk). No customer
-has paid yet.
-
-| Path | What it is |
+| I need to… | Go to |
 |---|---|
-| `HANDOVER.md` | **New here? Start with this.** The whole business on one page: what's sold, what exists, what doesn't, what has to happen next, and what has to happen every week |
-| `site/` | The Wardith marketing website (Astro, fully static) |
-| `ops/` | Internal operating docs, indexed in `ops/README.md` |
-| `ROADMAP.md` | What's true now and what's left — read at the start of every session |
-| `CLAUDE.md` | Standing rules for all future work in this repo |
+| Understand what this business is and where it stands | `playbook/business.md` |
+| Know what we sell and what it costs | `playbook/services.md` |
+| **Find and email prospects** | `playbook/outreach-process.md` |
+| **Deliver an audit** | `playbook/audit-process.md` |
+| Set up models, API keys, and audit data schemas | `playbook/models-and-schemas.md` |
+| Fill in the site checklist during an audit | `playbook/audit-site-checklist.md` |
+| Write the report | `playbook/audit-report-template.md` |
+| Write a monthly record for a client | `playbook/monthly-record-template.md` |
+| Know what we keep, where, and for how long | `playbook/records-and-data.md` |
+| Check an account, a cost or a renewal date | `playbook/accounts-and-dates.md` |
+| Update the website copy or publish an answer page | `playbook/site-code-locations.md` |
+| Keep the site indexed in Google, Bing and Copilot | `playbook/search-indexing.md` |
+| Write anything a customer will read | `playbook/voice.md` |
+| Check whether something is already settled | `playbook/decisions.md` |
+| Run the assistant queries | `tools/trade-run/` |
 
-To work on the website:
+## The repository
 
-```sh
-cd site
-npm install
-npm run dev     # local dev server
-npm run build   # static build to site/dist/
 ```
+playbook/   how the business is run. Start with business.md
+tools/      the scripts: trade-run, site-check, name-check
+site/       the website. Astro, deployed from main by Netlify
+assets/     brand originals and the email signature
+archive/    superseded documents, kept for one review cycle
+```
+
+## Two rules that override everything
+
+**Never invent a business fact.** Results, testimonials, statistics, dates,
+prices. Anything unknown is written `[PLACEHOLDER]` and flagged to the owner.
+The product is verifiable published facts; the moment the repo contains an
+invented one, nothing in it can be trusted.
+
+**No client or prospect names in this repository.** It is written as though
+public. Those records live on the owner's own encrypted machine —
+`playbook/records-and-data.md`.
+
+## Working here
+
+Work on a branch, show it, merge when the owner agrees. **Merging publishes** —
+Netlify deploys `main` — so say what a merge will put in front of the world
+before doing it, including "nothing visible", which is often the honest answer.
