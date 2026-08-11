@@ -47,13 +47,13 @@ export const business = {
    * **`hello@novenstudio.co.uk` must keep receiving for at least twelve
    * months** — it is in the ICO record, on both LinkedIn pages and in whatever
    * is already cached. It is an alias on the same licence, not a second user.
-   * See `ops/rename-to-wardith.md` E3.
+   * See `archive/rename-to-wardith.md` E3.
    *
    * **Still owed, and it is not visible from the site:** nobody has confirmed
    * mail sent *from* this address passes SPF, DKIM and DMARC at the receiving
    * end. DNS being present is not the same as authentication passing, and a new
    * domain that fails it gets quietly filtered — a failure that looks exactly
-   * like nobody replying. `ops/rename-to-wardith.md` D0.4 step 5 is the test.
+   * like nobody replying. `archive/rename-to-wardith.md` D0.4 step 5 is the test.
    */
   email: 'hello@wardith.co.uk',
   basedIn: 'the Wirral, UK',
@@ -70,7 +70,7 @@ export const business = {
    * show a name and a UK address where documents can be served, and selling
    * online adds the same requirement again. UK Postbox's Business Street
    * Address, Poole — ordered 7 August, confirmed by the owner on the 10th.
-   * `ops/third-party-services.md` B1b holds the account facts and the terms
+   * `archive/third-party-services.md` B1b holds the account facts and the terms
    * worth knowing; B1c holds what was done to get here.
    *
    * **Never the founder's home address.** The footer can be edited; indexes,
@@ -78,7 +78,7 @@ export const business = {
    * mailbox line and not the courier line: UK Postbox issues a second address
    * for parcels (`Unit 171036, Courier Point`, `BH16 6FH`), which is a
    * delivery instruction for carriers, not a place documents are served. It is
-   * recorded in `ops/accounts.md` and is deliberately published nowhere.
+   * recorded in `playbook/accounts-and-dates.md` and is deliberately published nowhere.
    *
    * **Setting this one value does four things at once**, which is the whole
    * reason it lives here rather than being typed into four files: it fills the
@@ -94,7 +94,7 @@ export const business = {
    * published contract pointing at a 404 is worse than one that doesn't.
    *
    * **The locality question is answered here, deliberately.** `ROADMAP.md` and
-   * `ops/third-party-services.md` both flagged that a real address would say
+   * `archive/third-party-services.md` both flagged that a real address would say
    * Dorset while the founder works from the Wirral, and asked for a decision
    * rather than a default. The decision: publish the real locality. `basedIn`
    * above stays "the Wirral" because it is true and is prose about a person;
@@ -125,7 +125,7 @@ export const business = {
    *
    * Not a technical detail: whoever holds the files is a recipient of personal
    * data and has to be named in the privacy notice, along with where they hold
-   * it. `ops/client-record.md` has the constraint that rules out the obvious
+   * it. `archive/client-record.md` has the constraint that rules out the obvious
    * wrong answer — **it cannot be this repository**, which is written as though
    * it were public — and `ROADMAP.md` 3d carries the decision itself. What is
    * needed is one named provider, encryption at rest, and a backup that has
@@ -150,7 +150,7 @@ export const business = {
    * **This does not publish `/privacy/` on its own** — the address for service
    * was the other half, and it landed on 2026-08-10. **Nor is it finished until
    * a backup has been restored once.** Setting a value here is a decision; the
-   * restore is the proof, and `ops/client-record.md` carries it as the open
+   * restore is the proof, and `archive/client-record.md` carries it as the open
    * step — though see the correction at the end of this comment about *when*
    * that proof is owed.
    *
@@ -189,7 +189,7 @@ export const business = {
    * off-site, not a cloud sync — that has been restored once. Article 32 asks
    * for both, the second as an availability requirement rather than as
    * prudence. Full reasoning, the OneDrive-autosync trap, and sources:
-   * `ops/client-record.md`.
+   * `archive/client-record.md`.
    *
    * **"Do not set this value until those two conditions are met" — corrected
    * within the hour, and this is the entry worth reading.** The owner pointed
@@ -278,7 +278,7 @@ export const business = {
    * renamed page has been loaded and the URL copied from the address bar —
    * and store it without the `?viewAsMember=true` LinkedIn appends when you
    * preview your own page, which is a view-mode flag rather than the
-   * canonical public URL. See `ops/rename-to-wardith.md` D0.5.
+   * canonical public URL. See `archive/rename-to-wardith.md` D0.5.
    *
    * **Set 2026-08-06**, once the page had been renamed and the URL supplied
    * from the address bar. The slug changed with the name, so the old
@@ -315,7 +315,7 @@ type Plan = {
   schemaDescription: string;
 };
 
-/* Prices, repriced 2026-08-05. The reasoning is in `ops/service-tiers.md`
+/* Prices, repriced 2026-08-05. The reasoning is in `archive/service-tiers.md`
  * section 11. The short version: the 2026-07-31 ladder (125/750/95/250/495)
  * was set against estimated effort, and the self-audit that followed showed
  * the audit was worth materially more than £125 — four assistants, repeated

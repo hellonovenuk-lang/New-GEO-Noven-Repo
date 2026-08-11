@@ -2,7 +2,8 @@
 
 **Status: Live.** Applies to everything a customer or prospect reads — site copy,
 emails, audit reports, quotes, proposals. Not to the operating documents in
-`ops/`, which are read by the assistant far more often than by a person.
+`playbook/` and `archive/`, which are read by the assistant far more often than
+by a person.
 
 **A framework, not a rule set.** Adopted by the owner 2026-08-09 from
 `github.com/blader/humanizer`, explicitly as a general overview rather than a
@@ -100,6 +101,6 @@ everything above.
 list, or the copy comes out stilted in a new way. Two passes: say it plainly,
 then take out what a machine would have put in.
 
-**Where it does not apply.** `ops/`, `ROADMAP.md`, `HANDOVER.md`, source
-comments, commit messages. Those are working documents whose job is to keep the
-reasoning, and the reasoning is worth more than the rhythm.
+**Where it does not apply.** `playbook/`, `archive/`, source comments, commit
+messages. Those are working documents whose job is to keep the reasoning, and
+the reasoning is worth more than the rhythm.

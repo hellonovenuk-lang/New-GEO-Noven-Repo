@@ -45,7 +45,7 @@ try:
 except ImportError:
     sys.exit(
         "Can't find audit_query.py. Expected it at "
-        "ops/audits/noven-2026-08-02/audit_query.py relative to this file."
+        "archive/audits/noven-2026-08-02/audit_query.py relative to this file."
     )
 
 QUESTIONS = [

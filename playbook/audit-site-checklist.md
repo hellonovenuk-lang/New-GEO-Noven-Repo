@@ -7,13 +7,13 @@ look at it. Copy this file into the client's audit folder and fill it in — the
 filled copy is the working note the report is written from, and it is never sent
 to the client.
 
-Written 2026-07-30 as part of roadmap 3a. Companion to `ops/audit-method.md`.
+Written 2026-07-30 as part of roadmap 3a. Companion to `archive/audit-method.md`.
 
 **Every item below is tagged with how it's actually obtained**, added
 2026-08-05 after the Noven self-audit turned out to lean on access that only
 exists for our own site (source repo, the Netlify dashboard, Search Console
 ownership) — none of which a client audit has. `[script]` means
-`ops/site-check/site_check.py` does it from the public URL alone; run that
+`tools/site-check/site_check.py` does it from the public URL alone; run that
 first and use this checklist to read and extend its output, not to redo it by
 hand. `[public]` needs no account, just a browser. `[client access]` needs the
 client to grant something, same two-stage pattern as the Foundation. `[read]`
@@ -60,7 +60,7 @@ decides whether the Foundation is an afternoon or a negotiation with somebody
 else's web person — and on a few platforms it decides whether the Foundation is
 possible at all. See the verdicts at the end.
 
-`ops/site-check/site_check.py` now names the platform from the homepage's own
+`tools/site-check/site_check.py` now names the platform from the homepage's own
 markup — generator tag, asset CDN, vendor headers — so this field is filled
 before the call rather than guessed during it.
 
@@ -83,7 +83,7 @@ access. Ask both.
 | **Webflow** | Often a designer, not the owner | Publish rights on the project | **A or B** — capable platform, but the seat is frequently held by whoever built it |
 | **GoDaddy Website Builder** | Owner | Login, and check what the editor will actually accept | **B, sometimes C.** The restrictive one: limited custom-code and head access. **Establish what can be injected before quoting a Foundation** — this is the platform most likely to make part of the work undeliverable |
 | **Developer-built** (Astro/Hugo/Next/Gatsby on Netlify/Vercel/GitHub Pages) | A developer | A deploy path — repo access or a build hook. Not a CMS login; there isn't one | **A if the developer is still around, B if they've gone** — and if they've gone, work the recovery order below before settling on B |
-| **Franchise / trade-body template** | The franchisor or trade body | Ask whether local changes survive a master redeploy | **B or C** — `ops/service-tiers.md` §3 already names these: a master redeploy silently wipes our page |
+| **Franchise / trade-body template** | The franchisor or trade body | Ask whether local changes survive a master redeploy | **B or C** — `archive/service-tiers.md` §3 already names these: a master redeploy silently wipes our page |
 | **unknown** | — | Ask them who built it and who maintains it | Don't guess. "Unknown" from the script means *not detected*, not *bespoke* |
 
 **The plan-tier caveats are deliberately not pinned to a named plan here.**
@@ -142,7 +142,7 @@ enough for a stranger to work from.
 
 **Do not recommend a developer, arrange one, or offer to manage the work.**
 We have no stake in who fixes it, and that is the point rather than a
-limitation — see `ops/service-tiers.md` §10. If they come back later with a
+limitation — see `archive/service-tiers.md` §10. If they come back later with a
 site we can work on, the Foundation is there at its published price.
 
 ---
@@ -262,7 +262,7 @@ is arguably the more honest test anyway.
 **Read the structured data against the visible page.** Structured data that
 disagrees with the page it sits on is worse than none — it is a machine-readable
 statement of something untrue, and it is exactly the mechanism that produces the
-"named wrongly" outcomes in `ops/audit-method.md` section 4.
+"named wrongly" outcomes in `archive/audit-method.md` section 4.
 
 **The case worth checking for: markup that describes the web designer.** A
 site's whole graph — `Organization`, `WebSite`, `WebPage` — can carry the
@@ -308,7 +308,7 @@ cleanly that it now has to infer from prose. **Wrong structured data is
 different and is a real defect**, per the rule above. Sample is small and two
 sites failed to resolve, so this is directional. **It is enough to stop us
 selling markup as the answer**, which is what the whole industry does and what
-`ops/outreach.md` §4's evidence already argued against: naming tracks with
+`archive/outreach.md` §4's evidence already argued against: naming tracks with
 directory presence and with the practice's own domain being cited.
 
 ---
@@ -343,7 +343,7 @@ Not "matches" — the actual string. Mismatches are only obvious side by side.
       we do — worth saying honestly rather than implying we can fix it.
 - [ ] Is the business in **Bing's index** at all? Default check: a public
       `site:{domain}` search on Bing — no account needed, two minutes.
-      **Wardith's own Bing Webmaster Tools account (`ops/accounts.md`) is for
+      **Wardith's own Bing Webmaster Tools account (`playbook/accounts-and-dates.md`) is for
       `wardith.co.uk`, not the client's domain** — it cannot check a client's
       site unless the client separately adds us to their own Webmaster Tools
       property, which is an optional upgrade, not the default route. `[public,
@@ -380,7 +380,7 @@ answers it?
 - [ ] Is there a page that states, in words: what they do, who for, where, what
       it costs, and what happens next?
 
-**Apply the answer-page test from `ops/service-tiers.md` section 3 as you go:**
+**Apply the answer-page test from `archive/service-tiers.md` section 3 as you go:**
 if there is not around 400 words of genuinely specific content that only this
 business could write, the gap is an FAQ line and not an answer page. Marking that
 here saves an argument later about what a Grow month is buying.
@@ -400,7 +400,7 @@ and the findings are fixable.
 managed by an agency, a franchise template, a trade-body package, or a web person
 who holds the keys. The work is the same; the access is the obstacle. Say so in
 the report, name what access is needed, and let them decide before they spend
-£800. `ops/service-tiers.md` section 3 already decided that access is asked for
+£800. `archive/service-tiers.md` section 3 already decided that access is asked for
 in two stages — this is the first stage, and this is where it gets flagged.
 
 **C. The Foundation would be wasted until something else is fixed.** No website;

@@ -35,11 +35,11 @@ import { termsLive, privacyLive } from './legal';
  *   a *successful* payment, so anything typed there is lost the moment somebody
  *   abandons the card screen. Our own form submits first, which is the entire
  *   reason the order page exists rather than a bare link. Decided 2026-07-30 —
- *   see `ops/session-log.md`.
+ *   see `archive/session-log.md`.
  * - **Check the trading name shown on the link is "Wardith"** before this is
  *   set. It is what the customer reads at the card screen and what appears on
  *   their statement, and a different name there is the single most effective way
- *   to cause a chargeback. `ops/rename-to-wardith.md` F7.
+ *   to cause a chargeback. `archive/rename-to-wardith.md` F7.
  * - It is a public URL that will be published on a public page. It authorises
  *   nobody to do anything except pay us, and it carries no session or account
  *   token. Never put a Revolut login, API key or account number in this file.

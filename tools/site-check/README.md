@@ -1,6 +1,6 @@
 # Site check — the technical/crawlability audit, from a URL alone
 
-**Does what `ops/audit-site-checklist.md` groups 1 and 2 ask for, using only
+**Does what `playbook/audit-site-checklist.md` groups 1 and 2 ask for, using only
 what a real crawler could see.**
 
 The only time that checklist has been run — the Noven self-audit — quietly
@@ -15,13 +15,13 @@ way an outside crawler would, and reports what actually comes back.
 Stdlib only — no `pip install`, no API key.
 
 ```
-cd ops/site-check
+cd tools/site-check
 python site_check.py --url https://client-site.example
 ```
 
 Prints a plain-text summary. To keep the full detail, point `--out` at the
 client's own folder outside the repo — the same place `runs.csv` and the
-filled checklist live (`ops/audit-method.md` §5: client audit data does not go
+filled checklist live (`archive/audit-method.md` §5: client audit data does not go
 in this repository):
 
 ```
@@ -74,7 +74,7 @@ Straight from checklist groups 1 and 2:
   **This fills the checklist's "site platform" field before the call instead
   of guessing during it, and it drives the access ask.** What each platform
   means — who usually holds the keys, what to request, and the likely A/B/C
-  verdict — is the platform table in `ops/audit-site-checklist.md`. It is
+  verdict — is the platform table in `playbook/audit-site-checklist.md`. It is
   deliberately not repeated in the script or here, so the two can't drift
   apart.
 

@@ -14,8 +14,9 @@
     "",
     "historical_paths: files whose job is to record what happened. Old names and",
     "old prices are CORRECT here and must not be 'fixed' — editing them destroys",
-    "the record of why a decision went the way it did. The session log, the",
-    "rename plan and delivered client audits are all in this category.",
+    "the record of why a decision went the way it did. The whole of `archive/`",
+    "is in this category since the 2026-08-10 rewrite — see archive/README.md:",
+    "it is superseded, kept for one review cycle, and also in git log.",
     "",
     "plan_aliases: how a plan gets named in prose, so a price sitting next to it",
     "can be checked against the canonical number for that plan."
@@ -28,9 +29,7 @@
     "Noven"
   ],
   "historical_paths": [
-    "ops/session-log.md",
-    "ops/rename-to-wardith.md",
-    "ops/audits/",
+    "archive/",
     ".claude/skills/",
     "node_modules/",
     ".git/"
@@ -60,13 +59,13 @@
     "Reopened"
   ],
   "status_required_in": [
-    "ops/"
+    "playbook/"
   ],
   "_external_files_note": [
     "Files the documents name on purpose that are not in this repo, so",
     "the refs check does not report them as broken. Client audit data",
-    "lives in the client's own folder outside the repo — ops/audit-",
-    "method.md section 5 — so the per-run timings.md is meant to be absent."
+    "lives in the client's own folder outside the repo — playbook/audit-",
+    "process.md — so the per-run timings.md is meant to be absent."
   ],
   "external_files": [
     "timings.md",
@@ -78,7 +77,7 @@
   "_reviewed_dupes_note": [
     "Passages duplicated on purpose, by file pair, with the reason. checks.md",
     "allows exactly one case: a banner repeated at the top of several entry",
-    "points so that no reader misses it. The rename banner is that case.",
+    "points so that no reader misses it.",
     "",
     "The exemption is conditional on the copies staying identical. While they",
     "are, the finding drops to a note with the reason attached. The moment they",
@@ -86,31 +85,12 @@
     "different things in three places is worse than one written once, and it is",
     "the specific failure this entry exists to catch.",
     "",
-    "Reviewed 2026-08-08."
+    "Emptied 2026-08-11: the rename banner it recorded lived in README.md,",
+    "HANDOVER.md and ROADMAP.md, and the 2026-08-10 rewrite moved HANDOVER.md",
+    "and ROADMAP.md into archive/ (now historical) and dropped the banner from",
+    "README.md entirely. Nothing live currently claims a deliberate duplicate."
   ],
-  "reviewed_dupes": [
-    {
-      "paths": [
-        "README.md",
-        "HANDOVER.md"
-      ],
-      "reason": "the rename banner, repeated at each entry point on purpose"
-    },
-    {
-      "paths": [
-        "README.md",
-        "ROADMAP.md"
-      ],
-      "reason": "the rename banner, repeated at each entry point on purpose"
-    },
-    {
-      "paths": [
-        "HANDOVER.md",
-        "ROADMAP.md"
-      ],
-      "reason": "the rename banner, repeated at each entry point on purpose"
-    }
-  ],
+  "reviewed_dupes": [],
   "_record_section_note": [
     "A heading matching this pattern marks a section whose job is to record a",
     "price change, so the old prices inside it are correct and are skipped by",
@@ -132,103 +112,56 @@
     "printed with the reason attached. Delete an entry to put it back in front of",
     "the reader — and do delete it if the file's purpose changes.",
     "",
-    "Reviewed 2026-08-07. ROADMAP.md added 2026-08-08 — see its entries."
+    "Reviewed 2026-08-11 against the post-rewrite tree. Entries under the old",
+    "`ops/` layout were dropped: their files are either now inside `archive/`",
+    "(historical, skipped wholesale) or renamed, in which case the entry moved",
+    "with them below."
   ],
   "reviewed_names": [
     {
-      "path": "ROADMAP.md",
+      "path": "tools/name-check/README.md",
       "term": "Noven",
-      "reason": "the self-audit findings section: 'Noven' is the name the audit found to be taken, and the assistants' wrong answers are quoted. Renaming it would describe an audit that never happened. Judged 2026-08-08 across all 15 mentions"
+      "reason": "the name collision this tool was built to test, and the 2026-08-02 self-audit that found it"
     },
     {
-      "path": "ROADMAP.md",
-      "term": "novenstudio.co.uk",
-      "reason": "the audit's own findings — no answer cited the old domain, and Bing held no record of it — plus the redirect fault found on it 2026-08-06. All three are dated events. Judged 2026-08-08"
-    },
-    {
-      "path": "ops/audit-method.md",
-      "term": "Noven",
-      "reason": "ICO registration record and self-audit references, both dated events"
-    },
-    {
-      "path": "ops/audit-setup.md",
-      "term": "Noven",
-      "reason": "the document is about the Noven test run; that is what the run was called"
-    },
-    {
-      "path": "ops/audit-site-checklist.md",
-      "term": "Noven",
-      "reason": "names the 2026-08-02 self-audit and the run it was called at the time"
-    },
-    {
-      "path": "ops/competitor-analysis.md",
-      "term": "Noven",
-      "reason": "names the 2026-08-02 self-audit and the run it was called at the time"
-    },
-    {
-      "path": "ops/service-tiers.md",
-      "term": "Noven",
-      "reason": "names the 2026-08-02 self-audit and the run it was called at the time"
-    },
-    {
-      "path": "ops/name-check/README.md",
+      "path": "tools/name-check/name_check.py",
       "term": "Noven",
       "reason": "the name collision this tool was built to test"
     },
     {
-      "path": "ops/name-check/name_check.py",
-      "term": "Noven",
-      "reason": "the name collision this tool was built to test"
-    },
-    {
-      "path": "ops/site-check/README.md",
+      "path": "tools/site-check/README.md",
       "term": "Noven",
       "reason": "names the 2026-08-02 self-audit and the run it was called at the time"
     },
     {
-      "path": "ops/site-check/site_check.py",
+      "path": "tools/site-check/site_check.py",
       "term": "Noven",
       "reason": "names the 2026-08-02 self-audit and the run it was called at the time"
     },
     {
-      "path": "ops/search-console-and-bing.md",
+      "path": "tools/trade-run/README.md",
       "term": "Noven",
-      "reason": "names the 2026-08-02 self-audit and the run it was called at the time"
+      "reason": "describes trade_run.py as a copy of the 2026-08-02 self-audit's script"
     },
     {
-      "path": "ops/search-console-and-bing.md",
+      "path": "tools/trade-run/trade_run.py",
+      "term": "Noven",
+      "reason": "describes itself as a copy of the 2026-08-02 self-audit's script"
+    },
+    {
+      "path": "playbook/audit-site-checklist.md",
+      "term": "Noven",
+      "reason": "names the 2026-08-02 self-audit whose access failure this checklist item exists to catch"
+    },
+    {
+      "path": "playbook/business.md",
       "term": "novenstudio.co.uk",
-      "reason": "the old domain as an owned asset still needing Change of Address"
+      "reason": "the source domain of the live Search Console Change of Address, running to ~Feb 2027"
     },
     {
-      "path": "ops/own-facts-check.md",
-      "term": "Noven",
-      "reason": "names the 2026-08-02 self-audit and the run it was called at the time"
-    },
-    {
-      "path": "ops/own-facts-check.md",
-      "term": "novenstudio.co.uk",
-      "reason": "the old domain as a surface still being checked"
-    },
-    {
-      "path": "ops/plan-to-1-september.md",
-      "term": "novenstudio.co.uk",
-      "reason": "the old domain as an owned asset with unrecorded registrar and expiry"
-    },
-    {
-      "path": "ops/third-party-services.md",
-      "term": "Noven",
-      "reason": "quotes the roadmap as it was written at the time"
-    },
-    {
-      "path": "ops/third-party-services.md",
+      "path": "playbook/decisions.md",
       "term": "hello@novenstudio.co.uk",
-      "reason": "reasoning for rejecting ImprovMX, written against the address of the day"
-    },
-    {
-      "path": "HANDOVER.md",
-      "term": "hello@novenstudio.co.uk",
-      "reason": "records that the alias must keep receiving for twelve months"
+      "reason": "the closed decision that the alias must keep receiving for at least twelve months — matches the comment in site/src/data/business.ts"
     },
     {
       "path": "assets/brand/trim.mjs",
@@ -264,11 +197,6 @@
       "path": "site/src/pages/ask-your-ai/self-audit.astro",
       "term": "hello@novenstudio.co.uk",
       "reason": "the report's original signature; the alias still receives"
-    },
-    {
-      "path": "ops/README.md",
-      "term": "Noven",
-      "reason": "names the rename itself — 'the full Noven → Wardith changeover' is the title of a past event and the file it describes is the record of it. Renaming it would describe a changeover from Wardith to Wardith. Judged 2026-08-08"
     }
   ],
   "_superseded_prices_note": [
@@ -305,58 +233,15 @@
     "price this business does not charge — can never be silenced from here. If a",
     "fact is wrong, fix the fact.",
     "",
-    "Reviewed 2026-08-08."
+    "Emptied 2026-08-11: every prior entry keyed on a file now inside `archive/`",
+    "(historical, skipped wholesale by the facts check). Re-populate against the",
+    "current `playbook/` tree as discursive verifies turn up there."
   ],
   "reviewed_facts": [
     {
-      "path": "ROADMAP.md",
-      "amount": 150,
-      "reason": "'£150-700' is the monthly ladder's own range, in the cancellation reasoning"
-    },
-    {
-      "path": "ROADMAP.md",
-      "amount": 1500,
-      "reason": "the median monthly fee the assistants quote for agencies — competitor evidence, not our price"
-    },
-    {
-      "path": "ops/audit-method.md",
-      "amount": 30,
-      "reason": "'when the audit went from £30 to £125' — a dated statement about a price move"
-    },
-    {
-      "path": "ops/audit-method.md",
-      "amount": 36,
-      "reason": "'£36-50 an hour' is an hourly rate, not a plan price"
-    },
-    {
-      "path": "ops/audit-method.md",
-      "amount": 3,
-      "reason": "the API tool cost of running one audit, not what an audit is sold for"
-    },
-    {
-      "path": "ops/plan-to-1-september.md",
+      "path": "playbook/accounts-and-dates.md",
       "amount": 10,
-      "reason": "the planned API balance top-up per provider"
-    },
-    {
-      "path": "ops/service-tiers.md",
-      "amount": 3000,
-      "reason": "twenty Maintain clients' combined monthly revenue — an outcome, not a price"
-    },
-    {
-      "path": "ops/service-tiers.md",
-      "amount": 750,
-      "reason": "a hypothetical deeper audit tier the assistants' data raises as an open question"
-    },
-    {
-      "path": "ops/service-tiers.md",
-      "amount": 800,
-      "reason": "the Foundation's real price, discussed alongside the audit"
-    },
-    {
-      "path": "ops/third-party-services.md",
-      "amount": 2,
-      "reason": "the per-audit API cost in the supplier table"
+      "reason": "the OpenAI/Perplexity API spend cap per provider, not the audit's price"
     }
   ]
 }

@@ -33,7 +33,7 @@ than converting them into monthlies.**
 
 | | |
 |---|---|
-| Audit | 2h40–3h30. Never actually timed. `audit.md` has the breakdown |
+| Audit | 2h40–3h30. Never actually timed. `archive/audit-method.md` has the breakdown |
 | Foundation | `[PLACEHOLDER: no estimate exists]` |
 | Maintain | ~1 hour a month after setup. **This is the number that decides whether the business works** |
 | Grow | 3–4 hours a month |

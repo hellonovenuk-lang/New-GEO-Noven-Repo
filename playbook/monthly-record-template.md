@@ -4,7 +4,7 @@
 and the rules for writing it. Copy the template below into the client's folder,
 fill it in, export to PDF, attach to a short email. Written 2026-07-31.
 
-Read `ops/audit-method.md` first — it decides the outcomes, the bands and the
+Read `archive/audit-method.md` first — it decides the outcomes, the bands and the
 no-percentages rule, and this file inherits all three. Where the two disagree,
 the method wins.
 
@@ -124,7 +124,7 @@ know. `ROADMAP.md` 3c carries it.
   first three and correct it here.
 - **Month-on-month comparison assumes the questions are frozen.** They are, for
   twelve months from the point the client agrees them
-  (`ops/audit-questions.md`). The first client to want a question changed
+  (`archive/audit-questions.md`). The first client to want a question changed
   mid-year is the test of whether that rule survives contact.
 - **Whether "last month" should be "last month" or "three months ago"** once
   there is enough history. A single month of movement is mostly noise; a

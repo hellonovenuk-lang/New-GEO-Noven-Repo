@@ -43,7 +43,7 @@
  *                    Noven mark never had this problem because it was a
  *                    filled tile carrying its own background. This is a
  *                    stopgap, not the designed answer — see
- *                    ops/rename-to-wardith.md B3. It adds a <style> block and
+ *                    archive/rename-to-wardith.md B3. It adds a <style> block and
  *                    still never touches path data.
  *   --keep-metadata  keep Canva's embedded C2PA manifest. Off by default:
  *                    on the Noven set it was 16.9KB of a 26.6KB file, all of

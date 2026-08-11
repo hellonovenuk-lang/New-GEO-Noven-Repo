@@ -7,7 +7,7 @@ This is the test the 2026-08-02 self-audit ran by accident. It found that "Noven
 resolves to at least four other businesses — a Miami pharmaceutical company, a
 North West builder, an AI product at `noven.studio` and a fourth at `noven.io` —
 which became finding 1 of that audit and the reason the Foundation work was not
-recommended. See `ops/audits/noven-2026-08-02/`.
+recommended. See `archive/audits/noven-2026-08-02/`.
 
 Running it deliberately, on a shortlist, costs a couple of pounds and about ten
 minutes. Discovering the same thing after the domain, the logo, the email and the
@@ -16,12 +16,12 @@ company record exist costs a rebrand.
 ## Use
 
 Needs the three API keys loaded the same way the audit loaded them
-(`. "$HOME\.noven\env.ps1"` on Windows), and `ops/audits/noven-2026-08-02/`
+(`. "$HOME\.noven\env.ps1"` on Windows), and `archive/audits/noven-2026-08-02/`
 present — the provider callers are imported from there rather than duplicated,
 so the UK locale settings are identical to the baseline's.
 
 ```
-cd ops/name-check
+cd tools/name-check
 notepad names.txt          # one candidate per line; # comments out a rejected one
 python name_check.py       # writes names-runs.csv
 ```

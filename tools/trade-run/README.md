@@ -2,17 +2,17 @@
 
 **Status: smoke test run and passed, 2026-08-09 17:08 UTC. The full run is the
 next step.** Three queries, q01, one per assistant. All five checks in
-`ops/audit-setup.md` §8 passed. What it proved is in "What the smoke test
+`archive/audit-setup.md` §8 passed. What it proved is in "What the smoke test
 found" below, and one of those findings is worth more than the run.
 
 **What it does.** Asks the three assistants one trade-and-area question set,
 five times each, and logs every answer with the sources it cited. That produces
-the mention table and the visibility ladder in `ops/outreach.md` §4, which is
+the mention table and the visibility ladder in `archive/outreach.md` §4, which is
 what the cold outreach email is built from.
 
 **What it is not.** Not a client audit — a trade run asks about a trade and an
 area, nobody has paid for it, and it produces a prospect list rather than a
-report. And not "the runner" that `ops/audit-method.md` §7 defers; that decision
+report. And not "the runner" that `archive/audit-method.md` §7 defers; that decision
 is untouched.
 
 ---
@@ -21,12 +21,12 @@ is untouched.
 
 | File | What it is |
 |---|---|
-| `trade_run.py` | A copy of `ops/audits/noven-2026-08-02/audit_query.py`, which was written as a throwaway for the self-audit and turned out to be reusable. Three changes: the client name is a flag, the run count is a flag, and the defaults suit a trade run. **The original is frozen as part of that audit's record — change this one, never that one** |
-| `questions-wirral-dentists.csv` | Six questions: three discovery, one qualified discovery, one buying intent, one comparison. Built on the frame in `ops/audit-questions.md` §1 |
+| `trade_run.py` | A copy of `archive/audits/noven-2026-08-02/audit_query.py`, which was written as a throwaway for the self-audit and turned out to be reusable. Three changes: the client name is a flag, the run count is a flag, and the defaults suit a trade run. **The original is frozen as part of that audit's record — change this one, never that one** |
+| `questions-wirral-dentists.csv` | Six questions: three discovery, one qualified discovery, one buying intent, one comparison. Built on the frame in `archive/audit-questions.md` §1 |
 | `.gitignore` | Stops a run being committed. The second guard, not the first |
 
 **To do another trade, copy the CSV and change the words.** Dental, cosmetic,
-physiotherapy and veterinary are the four in scope (`ops/outreach.md` §1). Keep
+physiotherapy and veterinary are the four in scope (`archive/outreach.md` §1). Keep
 the six categories — a set of six discovery questions counts one thing six times.
 
 ---
@@ -64,7 +64,7 @@ Test-Path "$HOME\.noven\env.ps1"
 
 ### The keys are probably already there
 
-**`$HOME\.noven\env.ps1` is the existing convention** — `ops/name-check/README.md`
+**`$HOME\.noven\env.ps1` is the existing convention** — `tools/name-check/README.md`
 loads the same three keys from it, so if the name check was ever run on this
 machine, the file exists and holds the keys. Load it into the current terminal
 with a dot and a space:
@@ -75,8 +75,8 @@ with a dot and a space:
 
 **The path keeps the old name on purpose.** It is a private file on one machine,
 nothing published reads it, and renaming it silently breaks
-`ops/name-check/README.md`. Same reasoning as `hello.noven.uk@gmail.com` in
-`ops/rename-to-wardith.md` F10: an identity that carries the old name is left
+`tools/name-check/README.md`. Same reasoning as `hello.noven.uk@gmail.com` in
+`archive/rename-to-wardith.md` F10: an identity that carries the old name is left
 alone.
 
 ### If the file does not exist, create it once
@@ -98,14 +98,14 @@ $env:PERPLEXITY_MODEL   = "sonar"
 ```
 
 The three model strings are what the 2 August run actually used
-(`ops/competitor-analysis.md` Part 2). **Confirm each is still current in its own
+(`archive/competitor-analysis.md` Part 2). **Confirm each is still current in its own
 console** — a retired identifier fails loudly, which is fine, but a silently
 substituted one is not.
 
-**The keys also go in Bitwarden**, per `ops/audit-setup.md` §2 step 1. The file
+**The keys also go in Bitwarden**, per `archive/audit-setup.md` §2 step 1. The file
 is the working copy; the vault is the copy of last resort.
 
-**Three rules about this file, all from `ops/audit-setup.md` §2:**
+**Three rules about this file, all from `archive/audit-setup.md` §2:**
 
 - **It lives outside every git repository.** `$HOME\.noven\` is not inside the
   repo and must stay that way.
@@ -134,7 +134,7 @@ and run the smoke test below.
 
 **Three things have to be true first, and two of them are not.**
 
-1. **API keys in the environment**, per `ops/audit-setup.md` §2, and on Windows
+1. **API keys in the environment**, per `archive/audit-setup.md` §2, and on Windows
    see "Setting up the machine" below — the keys most likely already exist at
    `$HOME\.noven\env.ps1` from the name-check run. **Do not guess a model name.**
 2. **Funded balances on all three. Read the next section — one of them is
@@ -172,10 +172,10 @@ Three queries, one per provider, costs pennies. **Then read all three dashboards
 and divide.** That converts every number above from a borrowed estimate into
 three measured per-query rates, which is a fact this business has needed since
 2 August and has never had. It also feeds the £150 Maintain question that
-`ops/plan-to-1-september.md` leaves open, and it costs about fifty cents to
+`archive/plan-to-1-september.md` leaves open, and it costs about fifty cents to
 answer.
 
-Record the three rates in `ops/accounts.md` the same day.
+Record the three rates in `playbook/accounts-and-dates.md` the same day.
 
 ### If Perplexity does run dry, nothing is lost
 
@@ -187,7 +187,7 @@ getting this wrong is a five-dollar top-up and one repeated command.
 
 ### One thing to confirm before firing, and it is not about having enough
 
-**Check Perplexity's auto top-up is off.** `ops/audit-setup.md` §4 says to set
+**Check Perplexity's auto top-up is off.** `archive/audit-setup.md` §4 says to set
 it off and it has never been confirmed. With auto top-up on, "is the balance
 enough" stops mattering — running dry silently charges the card, which during a
 spending freeze is the exact event the freeze exists to prevent. The same
@@ -200,7 +200,7 @@ python3 trade_run.py --questions questions-wirral-dentists.csv \
     --client wirral-dentists --out ~/wardith-runs/wirral-dentists.csv --smoke
 ```
 
-Then check the five things in `ops/audit-setup.md` §8 on those three rows. **The
+Then check the five things in `archive/audit-setup.md` §8 on those three rows. **The
 first one is the one that silently invalidates a whole run:** if there are no
 citations and the answer reads generic, the search tool did not fire and you are
 measuring the model's memory rather than what a customer would be told.
@@ -209,7 +209,7 @@ Delete the smoke rows before the real run; they are tagged in the `notes` column
 
 ### Why the UK-locale problem mostly does not apply to a trade run
 
-`ops/audit-setup.md` §8a records that **Gemini's grounding tool has no
+`archive/audit-setup.md` §8a records that **Gemini's grounding tool has no
 location parameter at this access tier and cannot be fixed** — it is not a setup
 mistake, and the fix does not exist outside Google's enterprise product. The
 practical consequence recorded there is that Gemini skews non-UK **specifically
@@ -254,7 +254,7 @@ UK-shaped, and the CSV survived with its multi-line answer text intact.
 
 **Practice names are deliberately not written down here.** A list of named local
 dental practices, in a repo written as though it were public, is the comparison
-the owner parked on defamation grounds — the rule is in `ops/outreach.md` §4 and
+the owner parked on defamation grounds — the rule is in `archive/outreach.md` §4 and
 it applies to our own working notes, not only to published pages. What follows is
 the shape of the answers, which is what the method needs.
 
@@ -262,7 +262,7 @@ the shape of the answers, which is what the method needs.
 question, one run each, and **roughly a dozen distinct practices were named
 across the three answers. Not one was named by all three.** Two practices
 appeared twice; everything else appeared once. This is
-`ops/competitor-analysis.md` Finding A repeating on an unrelated market: **there
+`archive/competitor-analysis.md` Finding A repeating on an unrelated market: **there
 is no incumbent**, even locally, even in a field this small.
 
 **That is a stronger sales argument than the one the email currently makes.** A
@@ -280,7 +280,7 @@ after a directory had supplied the name.
 
 **Finding 3 — ThreeBestRated was cited again, by two of the three assistants**,
 on a question with nothing to do with our own market. It was already the "one
-open door" in `ops/competitor-analysis.md` Finding F. **Two independent
+open door" in `archive/competitor-analysis.md` Finding F. **Two independent
 questions, two assistants each. That is no longer a curiosity, it is a lever**,
 and it belongs in the audit deliverable as a concrete action rather than only in
 our own to-do list.
@@ -288,7 +288,7 @@ our own to-do list.
 **Finding 4 — Tier A prospects were visible in a single run.** Several practices
 appear in the cited directories and in no assistant's answer: listed on the exact
 pages the assistants read, and still not recommended. That is the ladder's top
-tier (`ops/outreach.md` §4), found in three queries rather than ninety, and it is
+tier (`archive/outreach.md` §4), found in three queries rather than ninety, and it is
 the first evidence that the tier is populated rather than theoretical.
 
 **What is still outstanding from the smoke test:** check 5, the cost. Reading
@@ -323,7 +323,7 @@ counts. The mention table itself went to the owner as a file, with the analysis.
 
 - **There is a top tier, and it is more concentrated than the national market.**
   Four practices sit at 36–43% of all rows. The national field's leader managed
-  28% (`ops/competitor-analysis.md` Finding A). **A local trade question is a
+  28% (`archive/competitor-analysis.md` Finding A). **A local trade question is a
   smaller, more settled field than the national one.**
 - **But nobody owns it.** The leader appears in 43% of rows, so **a majority of
   answers to "who is the best dentist on the Wirral" do not mention the leading
@@ -341,7 +341,7 @@ counts. The mention table itself went to the owner as a file, with the analysis.
 
 **4,902 source URLs across 90 rows.** 345 are Gemini's opaque
 `vertexaisearch` redirects — **7% of the total, but 100% of Gemini's**, so the
-limitation in `ops/competitor-analysis.md` Finding E is unchanged: source
+limitation in `archive/competitor-analysis.md` Finding E is unchanged: source
 analysis is ChatGPT and Perplexity.
 
 **Ranked by how many of the 90 rows cite them**, the readable field is: NHS
@@ -352,7 +352,7 @@ top-named practices' own websites at 19 to 26.
 
 **Three things follow for the audit deliverable:**
 
-- **The directories are the mechanism, again**, and `ops/competitor-analysis.md`
+- **The directories are the mechanism, again**, and `archive/competitor-analysis.md`
   Finding B is confirmed on an unrelated market.
 - **ThreeBestRated is cited in 20 of 90 rows.** Third confirmation. It lists only
   three Wirral practices and **all three are named by the assistants.** It is a
@@ -404,7 +404,7 @@ backtick where the backslash is.
 
 **`--out` goes outside this repository.** Answer text names real businesses and
 sometimes real people, and this repo is written as though it were public
-(`ops/audit-method.md` §5). The `.gitignore` here is a backstop for the day
+(`archive/audit-method.md` §5). The `.gitignore` here is a backstop for the day
 somebody forgets, not the rule.
 
 ---
@@ -414,16 +414,16 @@ somebody forgets, not the rule.
 **It will give you** one CSV row per answer, with the answer text verbatim, the
 model version, and every source URL the assistant cited — except Gemini's, whose
 URLs are all opaque `vertexaisearch` redirects and cannot be resolved
-(`ops/competitor-analysis.md` Finding E). Source analysis is ChatGPT and
+(`archive/competitor-analysis.md` Finding E). Source analysis is ChatGPT and
 Perplexity only, and every conclusion drawn from it has to say so.
 
 **It will not give you the mention table.** The `outcome` and `competitors`
 columns are written empty and stay empty — that classification is human
 judgement and it is the step the self-audit budgeted at 60 to 110 minutes
-(`ops/audit-method.md` §7). For a trade run the counting is easier than it was
+(`archive/audit-method.md` §7). For a trade run the counting is easier than it was
 for the audit, because **the Companies House list is the candidate name list**:
 you are checking which of a known set of practices got named, not discovering
-who exists. `ops/outreach.md` §4 has the method.
+who exists. `archive/outreach.md` §4 has the method.
 
 **Two safety properties worth knowing before you trust it with a card.**
 

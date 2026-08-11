@@ -50,7 +50,7 @@ export const termsLive = business.addressForService !== null;
  * client records to live.**
  *
  * The notice lists who receives personal data and where they hold it. Until the
- * storage decision in `ops/client-record.md` is made, that list has a hole in
+ * storage decision in `archive/client-record.md` is made, that list has a hole in
  * exactly the place a reader would look first — the place their own business's
  * details end up. Everything else in the notice is settled.
  *

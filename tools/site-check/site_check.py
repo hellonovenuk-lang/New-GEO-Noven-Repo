@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Site-check — the technical/crawlability half of the audit
-(ops/audit-site-checklist.md groups 1 and 2), run from nothing but a public
+(playbook/audit-site-checklist.md groups 1 and 2), run from nothing but a public
 URL.
 
 Written because the only time this checklist has been run — the Noven
@@ -14,7 +14,7 @@ back.
 
 Stdlib only, Python 3.9+. No API keys, no per-query cost, so — unlike
 audit_query.py — this is a reusable tool, not a per-audit throwaway. Sits
-beside ops/name-check/ as the second tool in that shape.
+beside tools/name-check/ as the second tool in that shape.
 
 What it deliberately does NOT do, and why, is in README.md — read that before
 treating a clean report as a clean site.
@@ -38,7 +38,7 @@ from xml.etree import ElementTree
 
 USER_AGENT = "Wardith-Audit/1.0 (+https://wardith.co.uk; technical audit check)"
 
-# The crawler names ops/audit-site-checklist.md group 1.1 asks about.
+# The crawler names playbook/audit-site-checklist.md group 1.1 asks about.
 # Keep this list in step with that file — it's the source of truth for which
 # names matter, this just automates checking them.
 CRAWLERS = [

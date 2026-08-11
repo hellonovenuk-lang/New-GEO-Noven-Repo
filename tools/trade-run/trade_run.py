@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 Trade run — asks the three assistants a trade-and-area question set and
-logs every answer. Per ops/outreach.md section 4.
+logs every answer. Per archive/outreach.md section 4.
 
-**This is a copy of ops/audits/noven-2026-08-02/audit_query.py**, which was
+**This is a copy of archive/audits/noven-2026-08-02/audit_query.py**, which was
 written as a throwaway for the 2 August self-audit and turned out to be
 reusable. Three things changed and nothing else: the client name is a flag
 rather than the one slug that audit hardcoded, the run count is a flag
@@ -11,10 +11,10 @@ rather than that audit's five-vs-ten experiment, and the defaults suit a
 trade run. **The original is frozen as part of that audit's record — change this
 file, never that one.**
 
-It is still not "the runner" that ops/audit-method.md section 7 defers.
+It is still not "the runner" that archive/audit-method.md section 7 defers.
 A trade run is prospecting, not a client audit: it asks about a trade and an
 area, nobody has paid for it, and it produces the mention table in
-ops/outreach.md section 4 rather than a report.
+archive/outreach.md section 4 rather than a report.
 
 Stdlib only, no pip install needed. Requires Python 3.9+.
 
@@ -35,7 +35,7 @@ README.md beside this file. Short version, and smoke first, always:
       --client wirral-dentists --out ~/wardith-runs/wirral-dentists.csv --cap 90
 
 **--out must point outside this repository.** Answer text names real
-businesses and sometimes real people; ops/audit-method.md section 5 keeps
+businesses and sometimes real people; archive/audit-method.md section 5 keeps
 that out of a repo written as though it were public.
 """
 

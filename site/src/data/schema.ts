@@ -81,7 +81,7 @@ export function organizationSchema(site: URL | undefined) {
      * anyway. When it lands, it fills the footer placeholder and this block at
      * the same time, from one fact — and if it turns out not to be in
      * Merseyside, nothing has to be retracted. See ROADMAP 1c and
-     * `ops/session-log.md`, 2026-08-06.
+     * `archive/session-log.md`, 2026-08-06.
      *
      * **It landed 2026-08-10 and it is in Poole, Dorset** — the third paragraph
      * above is the reason nothing has to be retracted now that it has. The

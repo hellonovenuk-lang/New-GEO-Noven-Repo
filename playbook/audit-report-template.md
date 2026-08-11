@@ -6,7 +6,7 @@
 it. Copy the template below into the client's audit folder, fill it in, export to
 PDF, attach to a short email.
 
-Written 2026-07-30 as part of roadmap 3a. Companion to `ops/audit-method.md`.
+Written 2026-07-30 as part of roadmap 3a. Companion to `archive/audit-method.md`.
 
 ---
 
@@ -36,7 +36,7 @@ pre-rule-10 report already used.*
 1. **No jargon, at all.** Not softened jargon, not jargon-with-a-definition.
    `CLAUDE.md` bans the industry's vocabulary outright. Write "the code that
    tells a machine what your business is" rather than the name of the format.
-2. **No score, no index, no grade.** Argued in `ops/audit-method.md` section 4.
+2. **No score, no index, no grade.** Argued in `archive/audit-method.md` section 4.
    Every competitor prints one; ours would be an invented statistic.
 3. **Bands with the raw count beside them**, never a percentage.
 4. **Quote the assistants directly.** One or two short verbatim quotes carry
@@ -62,7 +62,7 @@ pre-rule-10 report already used.*
     and those are very different pieces of work. *Accuracy:* on a site that
     passes, the good news is a finding — it is what makes the one real gap read
     as a small fix rather than the tip of something. *And it is where the
-    Foundation quote comes from.* `ops/audit-method.md`'s companion checklist
+    Foundation quote comes from.* `archive/audit-method.md`'s companion checklist
     already says the audit list and the Foundation list are the same list, one
     diagnosing and one fixing, and that the client seeing them line up "is most
     of why they believe the second one". Going group by group through what is
@@ -198,7 +198,7 @@ this section and then reads the quote should recognise the same list.*
 findings", and structured data is the case that proves it.** Added 2026-08-10.
 Group 3 turns up missing JSON-LD on most small sites, and it is genuinely worth
 a developer's hour — **it is also the thing we measured and found does not
-predict whether the assistants name you** (`ops/audit-site-checklist.md`, "What
+predict whether the assistants name you** (`playbook/audit-site-checklist.md`, "What
 structured data is worth"). So it belongs here, described plainly, and it
 belongs in the quote as housekeeping. **It should almost never be finding 1, 2
 or 3**, because with only three slots it has to beat things the run actually
@@ -208,7 +208,7 @@ evidenced — directory presence, and whether their own domain gets cited.
 a quote with.** It is technical, the client cannot evaluate it, and it demos
 beautifully in a validator. A £800 Foundation whose visible bulk is schema the
 audit itself called low-impact is the mirror image of the failure
-`ops/outreach.md` §5 warns about, and it is worse, because here we would be the
+`archive/outreach.md` §5 warns about, and it is worse, because here we would be the
 ones who knew.
 
 **So the quote says which items are evidenced and which are housekeeping**, and
