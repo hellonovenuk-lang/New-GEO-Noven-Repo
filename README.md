@@ -17,7 +17,6 @@ Sole trader, one person. `wardith.co.uk`.
 | Set up models, API keys, and audit data schemas | `playbook/models-and-schemas.md` |
 | Fill in the site checklist during an audit | `playbook/audit-site-checklist.md` |
 | Write the report | `playbook/audit-report-template.md` |
-| Write a monthly record for a client | `playbook/monthly-record-template.md` |
 | Know what we keep, where, and for how long | `playbook/records-and-data.md` |
 | Check an account, a cost or a renewal date | `playbook/accounts-and-dates.md` |
 | Update the website copy or publish an answer page | `playbook/site-code-locations.md` |
@@ -25,6 +24,11 @@ Sole trader, one person. `wardith.co.uk`.
 | Write anything a customer will read | `playbook/voice.md` |
 | Check whether something is already settled | `playbook/decisions.md` |
 | Run the assistant queries | `tools/trade-run/` |
+| Compile a market run into an outreach workbook | `tools/prospect-compiler/` |
+
+**No monthly-plan record template exists yet.** Maintain, Grow and Lead are
+priced and published but never delivered — that format will be built from the
+first actual recurring client, not designed further pre-revenue.
 
 ## The repository
 

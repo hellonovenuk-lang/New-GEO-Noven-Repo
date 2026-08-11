@@ -63,7 +63,3 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
 - **Merging publishes** — Netlify deploys `main`. Say what a merge will publish
   before doing it.
 - **Never invent a business fact.** Unknowns are `[PLACEHOLDER]` and flagged.
-- **The repo-consistency checker's config still pointed at `ops/`** after the
-  2026-08-10 rewrite to `archive/`/`playbook/`/`tools/`, hiding real drift
-  behind ~400 false positives. Fixed 2026-08-11, along with the dangling
-  `ops/` references the rewrite left across `playbook/`, `tools/` and `site/`.

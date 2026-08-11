@@ -1,0 +1,152 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Wardith prospect-compiler campaign input",
+  "description": "A validated, structured market-run dataset, prepared by Claude/human judgement during a Wardith sector × local-market campaign. build_workbook.py renders this deterministically into an .xlsx workbook. It does not do research or judgement.",
+  "type": "object",
+  "required": ["run", "market", "outreach", "excluded", "sources"],
+  "additionalProperties": false,
+  "definitions": {
+    "provider_model": {
+      "type": "object",
+      "required": ["provider", "model"],
+      "additionalProperties": false,
+      "properties": {
+        "provider": { "type": "string", "enum": ["openai", "gemini", "perplexity", "copilot", "ai-overviews"] },
+        "model": { "type": "string", "minLength": 1 }
+      }
+    },
+    "market_entry": {
+      "type": "object",
+      "required": ["business", "area", "disposition", "total_ai_appearances"],
+      "additionalProperties": false,
+      "properties": {
+        "business": { "type": "string", "minLength": 1 },
+        "area": { "type": "string", "minLength": 1 },
+        "disposition": { "type": "string", "enum": ["OUTREACH", "EXCLUDED", "REVIEW"] },
+        "total_ai_appearances": { "type": "integer", "minimum": 0 },
+        "openai_appearances": { "type": "integer", "minimum": 0 },
+        "gemini_appearances": { "type": "integer", "minimum": 0 },
+        "perplexity_appearances": { "type": "integer", "minimum": 0 },
+        "notes": { "type": "string" }
+      }
+    },
+    "outreach_entry": {
+      "type": "object",
+      "required": [
+        "priority", "business", "area", "total_ai_appearances",
+        "strongest_competitor", "competitor_appearances",
+        "competitive_gap_finding", "why_prospect",
+        "legal_entity", "company_number", "company_status",
+        "ready_to_email", "evidence_source_ids"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "priority": { "type": "string", "enum": ["A", "B", "C"] },
+        "business": { "type": "string", "minLength": 1 },
+        "area": { "type": "string", "minLength": 1 },
+        "website": { "type": "string" },
+        "total_ai_appearances": { "type": "integer", "minimum": 0 },
+        "openai_appearances": { "type": "integer", "minimum": 0 },
+        "gemini_appearances": { "type": "integer", "minimum": 0 },
+        "perplexity_appearances": { "type": "integer", "minimum": 0 },
+        "strongest_competitor": { "type": "string", "minLength": 1 },
+        "competitor_appearances": { "type": "integer", "minimum": 0 },
+        "competitive_gap_finding": { "type": "string", "minLength": 1 },
+        "why_prospect": { "type": "string", "minLength": 1 },
+        "legal_entity": { "type": "string", "minLength": 1 },
+        "company_number": { "type": "string", "minLength": 1 },
+        "company_status": { "type": "string", "minLength": 1 },
+        "contact_person": { "type": "string" },
+        "role": { "type": "string" },
+        "contact_email": { "type": "string" },
+        "ready_to_email": { "type": "string", "enum": ["YES", "REVIEW"] },
+        "evidence_source_ids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        }
+      }
+    },
+    "excluded_entry": {
+      "type": "object",
+      "required": ["business", "area", "reason"],
+      "additionalProperties": false,
+      "properties": {
+        "business": { "type": "string", "minLength": 1 },
+        "area": { "type": "string", "minLength": 1 },
+        "reason": {
+          "type": "string",
+          "enum": [
+            "SOLE TRADER",
+            "ORDINARY PARTNERSHIP",
+            "CHAIN / NO LOCAL DECISION-MAKER",
+            "DUPLICATE BRAND",
+            "NOT GENUINELY IN MARKET",
+            "CLOSED / DORMANT",
+            "ALREADY STRONGLY VISIBLE",
+            "NO RELIABLE LEGAL MATCH",
+            "OTHER / REVIEW"
+          ]
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "source_entry": {
+      "type": "object",
+      "required": ["source_id", "business", "publisher", "fact_supported", "url", "access_date"],
+      "additionalProperties": false,
+      "properties": {
+        "source_id": { "type": "string", "pattern": "^S[0-9]{3,}$" },
+        "business": { "type": "string" },
+        "publisher": { "type": "string", "minLength": 1 },
+        "fact_supported": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "minLength": 1 },
+        "access_date": { "type": "string", "format": "date" }
+      }
+    }
+  },
+  "properties": {
+    "run": {
+      "type": "object",
+      "required": ["sector", "geography", "campaign_slug", "date", "questions", "providers"],
+      "additionalProperties": false,
+      "properties": {
+        "sector": { "type": "string", "minLength": 1 },
+        "geography": { "type": "string", "minLength": 1 },
+        "campaign_slug": { "type": "string", "minLength": 1 },
+        "date": { "type": "string", "format": "date" },
+        "questions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "providers": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/provider_model" },
+          "minItems": 1
+        },
+        "expected_responses": { "type": "integer", "minimum": 0 },
+        "successful_responses": { "type": "integer", "minimum": 0 },
+        "raw_data_path": { "type": "string" },
+        "methodology_notes": { "type": "string" }
+      }
+    },
+    "market": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/market_entry" }
+    },
+    "outreach": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/outreach_entry" }
+    },
+    "excluded": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/excluded_entry" }
+    },
+    "sources": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/source_entry" },
+      "minItems": 1
+    }
+  }
+}

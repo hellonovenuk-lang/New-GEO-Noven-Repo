@@ -3,6 +3,10 @@
 *The £250 product, end to end. Run once, on our own business, 2026-08-02.
 Never yet sold.*
 
+**This is Audit v1. Keep the format fixed for the first five paid audits
+unless a material flaw appears. Review it after five paid deliveries using
+actual timings, costs, client reactions and findings.**
+
 **Target: under three hours of owner time. Promise on the site: the report
 within two working days of confirming scope and payment.**
 

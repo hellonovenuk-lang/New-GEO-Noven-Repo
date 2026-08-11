@@ -9,9 +9,14 @@ below is a guess.
 
 ## The five steps
 
-### 1. Pick a business type and an area
+### 1. Pick a sector and a genuine local competitive market
 
-One trade, one area. Small enough that a single run covers the whole market.
+**Wardith operates UK-wide.** Prospecting is organised as **sector × genuine
+local competitive market** — a geography chosen because it's where customers
+actually buy, not because it matches an administrative boundary. Examples:
+estate agents × Wirral, estate agents × Chester — examples, not rules. Each
+run is scoped fresh to the trade and the area its customers actually use.
+
 The trade needs customers who genuinely ask an assistant for a recommendation —
 a trade that runs on referral has nothing for us to find.
 
@@ -28,38 +33,68 @@ python3 trade_run.py --questions questions-{trade}-{area}.csv \
 
 **`--out` goes outside this repository.** Answer text names real businesses.
 
-### 3. Build the candidate list, then filter it
+### 3. Build the market, then filter for outreach eligibility
 
-**Build from the directories the assistants actually cite**, which the run
-records in its `sources_cited` column — plus the NHS or equivalent trade list.
-Fetch those pages, list every business on them. That union is the census.
+**Build the real customer-facing competitive market from the strongest
+appropriate sources for that vertical.** These may include:
 
-**Then filter with Companies House, by name.** Cold email is lawful to limited
-companies and LLPs and unlawful to sole traders and partnerships, so:
+- authoritative or regulated registers;
+- major customer-facing portals/directories;
+- official business websites;
+- other credible sector sources.
 
-> **No live limited company or LLP at that trading name, no email.**
+The assistants' cited sources (the run's `sources_cited` column) may
+contribute to the census but do not define the market. Fetch the strongest
+sources for the trade, list every business that genuinely competes in the
+chosen geography. That union is the market census.
 
-Search by name at Companies House advanced search. **Do not build the list from
-a Companies House postcode sweep** — measured 2026-08-10, a SIC-code sweep of
-the Wirral returned 67 companies of which only two were businesses worth
-writing to. The rest were dentists' personal service companies. The sweep is a
-filter, never a source.
+**Companies House is a legal-entity and outreach filter — never the source of
+the competitive market.** Wardith's operating policy: **only send unsolicited
+email outreach to prospects verified as active Ltd companies or LLPs. Sole
+traders and ordinary partnerships are excluded from this outreach process.**
 
-**Also drop:** corporate chains trading under a local name (check who the
-registered provider is), and anyone already named consistently by the
-assistants — there is nothing to sell them.
+> **No verified active Ltd company or LLP at that trading name, no email.**
 
-### 4. Split named from not named, and email the not-named
+Search by name at Companies House advanced search. **Do not build the market
+census from a Companies House postcode or SIC-code sweep** — measured
+2026-08-10, a SIC-code sweep of the Wirral returned 67 companies of which only
+two were businesses worth writing to. The rest were dentists' personal service
+companies. The sweep is a filter, never a source.
 
-Search the raw answer text for each candidate's name. Absence from a summary is
-not absence from the data.
+**Large or national chains may stay in the market benchmark** — they are real
+competitors — **but normally drop out of local outreach** where there is no
+realistic local purchasing decision-maker (check who the registered provider
+is). Also drop anyone already named as consistently as its direct competitors —
+there is nothing to sell them.
 
-- **Named by nobody** → the absent letter. This is the batch.
-- **Named once or twice** → the same letter, one sentence changed.
+### 4. Find the gap, then qualify
+
+**A strong Wardith prospect is a commercially credible business that is
+materially underrepresented in AI recommendations relative to meaningful
+direct competitors in its actual market.** Businesses named zero times remain
+the highest-interest cases, but zero appearances are not required — a
+credible, established business with several appearances can still be a
+stronger prospect than a never-named one, if its direct competitors appear far
+more often. Use the raw observed counts and judgement. No proprietary score,
+visibility percentage or invented precision.
+
+- **Named by nobody** → the absent letter. Still the strongest case.
+- **Named occasionally, direct competitors named far more** → the same letter,
+  one sentence changed to reflect the count.
 - **Named, but absent from ChatGPT** → the ChatGPT-gap letter. Only when the
   missing assistant is ChatGPT; a gap on Perplexity alone is not worth a letter,
   because we cannot say what it costs them.
-- **Named consistently** → do not email.
+- **Named as often as its direct competitors** → not a prospect.
+
+**Before a prospect is outreach-ready, verify:**
+
+1. it genuinely operates in the selected sector;
+2. it genuinely competes in the selected geography;
+3. it has a defensible active Ltd/LLP legal-entity match;
+4. it has a meaningful competitive AI recommendation gap;
+5. there is a suitable evidenced business contact route.
+
+**Ambiguous prospects are REVIEW, not assumed valid.**
 
 **Batch of ten to twenty, weekly**, four or five a day rather than all at once.
 One stop rule: do not send batch two while batch one has more than four audits

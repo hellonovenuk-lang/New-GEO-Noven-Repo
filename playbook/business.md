@@ -22,7 +22,7 @@ Wirral, working remotely across the UK. One person, no employees.
 | **Search Console / Bing** | `wardith.co.uk` verified, Change of Address running from `novenstudio.co.uk` to ~Feb 2027. Bing matters because Copilot answers out of its index |
 | **Legal** | ICO registration `C1995412`. Address for service: Lytchett House, 13 Freeland Park, Wareham Road, Poole, Dorset, BH16 6FA. `/terms/` and `/privacy/` published 2026-08-10 |
 | **Money** | Revolut Pro business account. No payment has ever been taken |
-| **Outreach** | First three cold emails sent 2026-08-10 to Wirral dental practices. See `outreach.md` |
+| **Outreach** | First three cold emails sent 2026-08-10 to Wirral dental practices. See `outreach-process.md` |
 
 ## Decided and published, but never once performed
 
@@ -53,6 +53,10 @@ sent, no revenue. **The audit is the only thing that has been done end to end**,
 and even that was on our own business rather than a client's. Everything else is
 written down and untested.
 
-**The binding constraint is not delivery capacity. It is the prospect list.**
-About 18 hours a week are available for delivery, which is six audits — far more
-than the reply rate will produce. Getting in front of people is the whole job.
+**The binding constraint is not delivery capacity.** Wardith has access to many
+potential businesses by repeating sector × local-market runs. The constraint is
+consistently producing qualified, evidence-backed prospect opportunities:
+credible incorporated businesses that are materially underrepresented in AI
+recommendations against meaningful direct competitors. About 18 hours a week
+are available for delivery, which is six audits — far more than the reply rate
+will produce.

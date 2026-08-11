@@ -1,0 +1,160 @@
+{
+  "run": {
+    "sector": "plumbers",
+    "geography": "Sampleford",
+    "campaign_slug": "plumbers-sampleford-2026-01",
+    "date": "2026-01-15",
+    "questions": [
+      "Who's a good plumber in Sampleford?",
+      "Can you recommend a plumber near Sampleford?",
+      "Which plumbers in Sampleford deal with emergency callouts?"
+    ],
+    "providers": [
+      { "provider": "openai", "model": "gpt-5.5-2026-04-23" },
+      { "provider": "gemini", "model": "gemini-3.6-flash" },
+      { "provider": "perplexity", "model": "sonar" }
+    ],
+    "expected_responses": 45,
+    "successful_responses": 45,
+    "raw_data_path": "~/wardith-runs/plumbers-sampleford.csv",
+    "methodology_notes": "This is a fictitious sample used only to test the prospect-compiler renderer. No real businesses, no real campaign data."
+  },
+  "market": [
+    {
+      "business": "Fictional Plumbing Ltd",
+      "area": "Sampleford",
+      "disposition": "OUTREACH",
+      "total_ai_appearances": 1,
+      "openai_appearances": 0,
+      "gemini_appearances": 1,
+      "perplexity_appearances": 0,
+      "notes": "Listed on the regional trade register; own site cited once by Gemini."
+    },
+    {
+      "business": "Sampleford Rapid Plumbers Ltd",
+      "area": "Sampleford",
+      "disposition": "OUTREACH",
+      "total_ai_appearances": 5,
+      "openai_appearances": 2,
+      "gemini_appearances": 2,
+      "perplexity_appearances": 1,
+      "notes": "Established firm; named less often than its closest competitor despite comparable trading history."
+    },
+    {
+      "business": "Testville Boiler Services LLP",
+      "area": "Sampleford",
+      "disposition": "REVIEW",
+      "total_ai_appearances": 3,
+      "openai_appearances": 1,
+      "gemini_appearances": 1,
+      "perplexity_appearances": 1,
+      "notes": "Legal entity match ambiguous, two similarly named LLPs on the register."
+    },
+    {
+      "business": "Northgate Pipeworks Ltd",
+      "area": "Sampleford",
+      "disposition": "EXCLUDED",
+      "total_ai_appearances": 14,
+      "openai_appearances": 5,
+      "gemini_appearances": 5,
+      "perplexity_appearances": 4,
+      "notes": "Strongest relevant competitor in this market; already consistently named."
+    },
+    {
+      "business": "Example Pipe & Drain",
+      "area": "Sampleford",
+      "disposition": "EXCLUDED",
+      "total_ai_appearances": 0,
+      "openai_appearances": 0,
+      "gemini_appearances": 0,
+      "perplexity_appearances": 0,
+      "notes": "Sole trader, excluded from outreach on that basis."
+    }
+  ],
+  "outreach": [
+    {
+      "priority": "A",
+      "business": "Fictional Plumbing Ltd",
+      "area": "Sampleford",
+      "website": "https://example.invalid/fictional-plumbing",
+      "total_ai_appearances": 1,
+      "openai_appearances": 0,
+      "gemini_appearances": 1,
+      "perplexity_appearances": 0,
+      "strongest_competitor": "Northgate Pipeworks Ltd",
+      "competitor_appearances": 14,
+      "competitive_gap_finding": "Named once in 15 sample answers against a leading competitor named 14 times in the same set.",
+      "why_prospect": "Credible incorporated business, listed on the regional trade register, materially underrepresented against the market's clear leader.",
+      "legal_entity": "Private limited company",
+      "company_number": "00000001",
+      "company_status": "Active",
+      "contact_person": "[PLACEHOLDER]",
+      "role": "[PLACEHOLDER]",
+      "contact_email": "[PLACEHOLDER]",
+      "ready_to_email": "REVIEW",
+      "evidence_source_ids": ["S001", "S002"]
+    },
+    {
+      "priority": "B",
+      "business": "Sampleford Rapid Plumbers Ltd",
+      "area": "Sampleford",
+      "website": "https://example.invalid/sampleford-rapid",
+      "total_ai_appearances": 5,
+      "openai_appearances": 2,
+      "gemini_appearances": 2,
+      "perplexity_appearances": 1,
+      "strongest_competitor": "Northgate Pipeworks Ltd",
+      "competitor_appearances": 14,
+      "competitive_gap_finding": "Named in a third of sample answers against a competitor named in nearly all of them.",
+      "why_prospect": "Established, credible business with a meaningful gap against the market leader despite several appearances of its own.",
+      "legal_entity": "Private limited company",
+      "company_number": "00000002",
+      "company_status": "Active",
+      "contact_person": "[PLACEHOLDER]",
+      "role": "[PLACEHOLDER]",
+      "contact_email": "[PLACEHOLDER]",
+      "ready_to_email": "YES",
+      "evidence_source_ids": ["S003"]
+    }
+  ],
+  "excluded": [
+    {
+      "business": "Example Pipe & Drain",
+      "area": "Sampleford",
+      "reason": "SOLE TRADER",
+      "notes": "No live Ltd/LLP match at this trading name."
+    },
+    {
+      "business": "Testville Boiler Services LLP",
+      "area": "Sampleford",
+      "reason": "NO RELIABLE LEGAL MATCH",
+      "notes": "Two similarly named LLPs on the register; parked as REVIEW in the market census."
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "S001",
+      "business": "Fictional Plumbing Ltd",
+      "publisher": "Sampleford Trade Register (fictitious)",
+      "fact_supported": "Business listed as a trading plumber in Sampleford",
+      "url": "https://example.invalid/sampleford-trade-register",
+      "access_date": "2026-01-14"
+    },
+    {
+      "source_id": "S002",
+      "business": "Fictional Plumbing Ltd",
+      "publisher": "Gemini run answer, q02, run 3",
+      "fact_supported": "Named once in the sample question set",
+      "url": "https://example.invalid/raw-run-data",
+      "access_date": "2026-01-15"
+    },
+    {
+      "source_id": "S003",
+      "business": "Sampleford Rapid Plumbers Ltd",
+      "publisher": "Companies House (fictitious record)",
+      "fact_supported": "Active private limited company at the trading address",
+      "url": "https://example.invalid/companies-house-record",
+      "access_date": "2026-01-14"
+    }
+  ]
+}

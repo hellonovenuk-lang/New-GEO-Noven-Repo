@@ -1,7 +1,7 @@
 # Never commit a run.
 #
 # Answer text names real businesses and sometimes real people, and this repo
-# is written as though it were public (ops/audit-method.md section 5). The
+# is written as though it were public (archive/audit-method.md section 5). The
 # --out path should be outside the repo entirely; this is the second guard.
 runs*.csv
 *-runs.csv

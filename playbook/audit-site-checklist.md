@@ -7,7 +7,7 @@ look at it. Copy this file into the client's audit folder and fill it in — the
 filled copy is the working note the report is written from, and it is never sent
 to the client.
 
-Written 2026-07-30 as part of roadmap 3a. Companion to `archive/audit-method.md`.
+Companion to `audit-process.md`.
 
 **Every item below is tagged with how it's actually obtained**, added
 2026-08-05 after the Noven self-audit turned out to lean on access that only

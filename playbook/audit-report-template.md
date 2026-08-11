@@ -6,7 +6,7 @@
 it. Copy the template below into the client's audit folder, fill it in, export to
 PDF, attach to a short email.
 
-Written 2026-07-30 as part of roadmap 3a. Companion to `archive/audit-method.md`.
+Companion to `audit-process.md`.
 
 ---
 

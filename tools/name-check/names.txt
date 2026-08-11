@@ -25,5 +25,5 @@
 # already calls the pass. Locito and Tovan were worth the money because both
 # looked plausible AND had a real occupant one keystroke away. This does not.
 # Spending on it would be paying to confirm what a free search already showed.
-# Full reasoning in ops/session-log.md, 2026-08-04.
+# Full reasoning in archive/session-log.md, 2026-08-04.
 # WARDITH

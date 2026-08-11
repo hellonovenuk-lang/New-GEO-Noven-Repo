@@ -6,7 +6,7 @@
 
 ## Which model per provider
 
-**Use each provider's current default consumer-facing tier, not the cheapest model.** Representativeness is the point, not cost. An audit's tool cost is about £1.20; saving £0.30 by measuring a model no customer uses is false economy.
+**Use each provider's current default consumer-facing tier, required by the audit methodology — never a cheaper model chosen to lower audit cost.** Representativeness is the point, not cost. Record the actual provider cost of every run where the provider reports it (`playbook/audit-process.md`, "What it costs us to run") rather than quoting a fixed figure — costs move with usage and provider pricing, and a stale number is worse than none.
 
 **Record the exact model version string on every single run.** When a provider ships a new model, numbers move for reasons unrelated to the client. A month-on-month comparison across a model change is not a comparison, and the record must flag it rather than report progress or decline.
 

@@ -19,6 +19,7 @@ Everything here is also in `git log`, so deleting it loses nothing permanently.
 | `competitor-analysis.md` | Conclusions in `playbook/outreach-process.md`; the analysis itself is history |
 | `rename-to-wardith.md`, `plan-to-1-september.md`, `search-console-and-bing.md` | Completed projects. Live facts moved to `playbook/accounts-and-dates.md` |
 | `audits/` | The Noven self-audit. The published report is on the site; the working files are history |
+| `monthly-record-template.md` | Not superseded — moved 2026-08-11. The monthly plans have never been delivered; writing the format further pre-revenue was speculative. It will be created/refined from the first actual recurring client |
 
 **Before deleting, check:** the V LOT refund write-off, the Bitwarden vault and
 emergency-access grantee, and the professional indemnity insurance decision are
