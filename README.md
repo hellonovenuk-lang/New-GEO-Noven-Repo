@@ -14,11 +14,14 @@ Sole trader, one person. `wardith.co.uk`.
 | Know what we sell and what it costs | `playbook/services.md` |
 | **Find and email prospects** | `playbook/outreach-process.md` |
 | **Deliver an audit** | `playbook/audit-process.md` |
+| Set up models, API keys, and audit data schemas | `playbook/models-and-schemas.md` |
 | Fill in the site checklist during an audit | `playbook/audit-site-checklist.md` |
 | Write the report | `playbook/audit-report-template.md` |
 | Write a monthly record for a client | `playbook/monthly-record-template.md` |
 | Know what we keep, where, and for how long | `playbook/records-and-data.md` |
 | Check an account, a cost or a renewal date | `playbook/accounts-and-dates.md` |
+| Update the website copy or publish an answer page | `playbook/site-code-locations.md` |
+| Keep the site indexed in Google, Bing and Copilot | `playbook/search-indexing.md` |
 | Write anything a customer will read | `playbook/voice.md` |
 | Check whether something is already settled | `playbook/decisions.md` |
 | Run the assistant queries | `tools/trade-run/` |
