@@ -64,27 +64,96 @@ companies. The sweep is a filter, never a source.
 **Large or national chains may stay in the market benchmark** — they are real
 competitors — **but normally drop out of local outreach** where there is no
 realistic local purchasing decision-maker (check who the registered provider
-is). Also drop anyone already named as consistently as its direct competitors —
-there is nothing to sell them.
+is). That is the only reason to drop a highly-visible business by default.
 
-### 4. Find the gap, then qualify
+**Being named as consistently as its direct competitors is not, by itself, a
+reason to drop a business.** It used to be — the rule was "there's nothing to
+sell them." The Chester and Wirral retrospective (2026-08-14) showed that was
+too narrow: a business with a strong existing AI position is a `DEFEND`
+opportunity, not a dead end. See step 4.
 
-**A strong Wardith prospect is a commercially credible business that is
-materially underrepresented in AI recommendations relative to meaningful
-direct competitors in its actual market.** Businesses named zero times remain
-the highest-interest cases, but zero appearances are not required — a
-credible, established business with several appearances can still be a
-stronger prospect than a never-named one, if its direct competitors appear far
-more often. Use the raw observed counts and judgement. No proprietary score,
-visibility percentage or invented precision.
+### 4. Classify the opportunity, then qualify
 
-- **Named by nobody** → the absent letter. Still the strongest case.
-- **Named occasionally, direct competitors named far more** → the same letter,
-  one sentence changed to reflect the count.
-- **Named, but absent from ChatGPT** → the ChatGPT-gap letter. Only when the
-  missing assistant is ChatGPT; a gap on Perplexity alone is not worth a letter,
-  because we cannot say what it costs them.
-- **Named as often as its direct competitors** → not a prospect.
+**Low AI visibility is not the only commercially interesting condition.** A
+business with meaningful existing visibility can be a stronger prospect than
+a zero-mention one. Every credible business's AI recommendation position
+falls into one of three commercially distinct opportunity types — not a
+single "prospect or not" test — plus a fourth non-opportunity bucket
+(calibrated against the completed Chester and Wirral retrospective,
+2026-08-14):
+
+- **GAP** — credible and materially underrepresented relative to genuine
+  direct competitors. Named by nobody is the clearest case and remains the
+  strongest, but zero appearances are not required — low or inconsistent
+  counts against competitors named far more often qualify too, provided the
+  gap is real rather than simply explained by being new, tiny, specialist or
+  outside the actual market.
+- **GROWTH** — already has meaningful AI visibility, but sits materially
+  below the genuine leaders, is inconsistent between models, is absent from
+  one provider despite presence elsewhere, or shows up only for a narrow set
+  of questions. **Never describe a GROWTH business as invisible — it isn't.**
+  Do not reject a business merely because it already appears relatively
+  often.
+- **DEFEND** — already one of the market's AI visibility leaders, credible
+  and commercially capable. The opportunity is to show what's supporting
+  that position, monitor it, and flag if it starts to erode. **Do not
+  manufacture a visibility problem for a business that doesn't have one.**
+- **REVIEW / NO OPPORTUNITY** — market or business fit is unclear, legal or
+  trading status is unresolved, geography is ambiguous, the apparent gap is
+  explained by being new/specialist/out-of-market, local decision-making is
+  unrealistic, or the only available outreach angle would be misleading.
+
+**Use relative market position, not a fixed count.** Where a business sits —
+leader, upper-mid, mid, low, absent — is relative to that market's own
+distribution (89 successful answers means something different from 900), not
+a threshold applied the same everywhere. Do NOT define hard bands like
+"0–5 = GAP, 6–30 = GROWTH, 31+ = DEFEND" — that is exactly the invented
+precision the raw-counts rule below already forbids. Consider total
+appearances, share relative to the leaders, provider split, question/intent
+spread where useful, and consistency across OpenAI, Gemini and Perplexity —
+strong on one provider and absent from another is a different commercial
+story from evenly weak across all three. Use the raw observed counts and
+judgement. No proprietary score, visibility percentage or invented precision.
+
+**The outreach claim must match the opportunity type** (framing principles,
+not fixed copy — write the actual sentence from the real evidence each time):
+
+- GAP: *"You appear materially less often than businesses you directly
+  compete with."*
+- GROWTH: *"You already have meaningful AI visibility, but our research
+  shows clear room to strengthen that position."*
+- DEFEND: *"You currently hold one of the strongest AI recommendation
+  positions in your local market. We can show you what is supporting it and
+  monitor whether that changes."*
+
+The existing letters below are written for GAP-type outreach (the never-named
+and per-assistant-gap cases). GROWTH and DEFEND need different letters, not
+yet drafted — write them from the framing principles above when that
+outreach begins, not by stretching the GAP letters to fit.
+
+**Opportunity type, commercial priority and send-readiness are three
+separate questions — do not conflate them.** Opportunity type
+(GAP/GROWTH/DEFEND/REVIEW) is *why* a business is worth approaching.
+Commercial priority (A/B/C/REVIEW) is how much it's worth pursuing, weighing
+evidence quality, market relevance, credibility, competitive position,
+commercial value and decision-maker accessibility — visibility count alone
+must not set it. A DEFEND business can be Priority A; a zero-visibility GAP
+business can be Priority C. Send-readiness (`ready_to_email`) is whether
+*this* email is ready today: verified contact, correct numbers, a truthful
+angle.
+
+**The Audit is the default entry product for all three opportunity types.**
+GAP, GROWTH and DEFEND all start with the £250 Audit (`playbook/services.md`)
+— the opportunity type changes *why* Wardith approaches a business, never
+the first thing it sells. "Start with the audit. If there is genuinely
+nothing to fix, we will tell you" holds for all three, DEFEND included.
+What follows the audit — no action, Foundation, an ongoing monthly plan
+(Maintain, Grow or Lead), or Foundation then a monthly plan — is decided
+from what the audit actually finds, not predicted at qualification time.
+Foundation does not have to come before a monthly plan: a DEFEND client with
+little to structurally fix may go straight from Audit to ongoing monitoring.
+If a prospect explicitly asks to start directly on ongoing work, Wardith may
+agree to skip the Audit — the exception, not the default sales path.
 
 **Before a prospect is outreach-ready, verify:**
 

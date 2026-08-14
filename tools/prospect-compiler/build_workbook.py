@@ -34,13 +34,15 @@ EXCLUDED_REASONS = {
     "NO RELIABLE LEGAL MATCH",
     "OTHER / REVIEW",
 }
-PRIORITIES = {"A", "B", "C"}
+PRIORITIES = {"A", "B", "C", "REVIEW"}
 READY_VALUES = {"YES", "REVIEW"}
 DISPOSITIONS = {"OUTREACH", "EXCLUDED", "REVIEW"}
+OPPORTUNITY_TYPES = {"GAP", "GROWTH", "DEFEND", "REVIEW", "NO OPPORTUNITY"}
 SOURCE_ID_RE = re.compile(r"^S[0-9]{3,}$")
 
 OUTREACH_COLUMNS = [
     ("priority", "Priority", 10, False),
+    ("opportunity_type", "Opportunity type", 16, False),
     ("business", "Business", 24, False),
     ("area", "Area", 16, False),
     ("website", "Website", 26, False),
@@ -66,6 +68,7 @@ MARKET_COLUMNS = [
     ("business", "Business", 24, False),
     ("area", "Area", 16, False),
     ("disposition", "Disposition", 14, False),
+    ("opportunity_type", "Opportunity type", 16, False),
     ("total_ai_appearances", "Total AI appearances", 12, False),
     ("openai_appearances", "OpenAI appearances", 12, False),
     ("gemini_appearances", "Gemini appearances", 12, False),
@@ -133,6 +136,10 @@ def validate(data):
         require_keys(m, ["business", "area", "disposition", "total_ai_appearances"], f"market[{i}]")
         if m["disposition"] not in DISPOSITIONS:
             fail(f"market[{i}].disposition: '{m['disposition']}' not one of {sorted(DISPOSITIONS)}")
+        # opportunity_type is optional - not every census business gets one -
+        # but if present it must be a real value, not a typo silently ignored
+        if "opportunity_type" in m and m["opportunity_type"] not in OPPORTUNITY_TYPES:
+            fail(f"market[{i}].opportunity_type: '{m['opportunity_type']}' not one of {sorted(OPPORTUNITY_TYPES)}")
 
     if not isinstance(data["outreach"], list):
         fail("outreach: must be a list")
@@ -147,6 +154,8 @@ def validate(data):
         require_keys(o, required_outreach, f"outreach[{i}]")
         if o["priority"] not in PRIORITIES:
             fail(f"outreach[{i}].priority: '{o['priority']}' not one of {sorted(PRIORITIES)}")
+        if "opportunity_type" in o and o["opportunity_type"] not in OPPORTUNITY_TYPES:
+            fail(f"outreach[{i}].opportunity_type: '{o['opportunity_type']}' not one of {sorted(OPPORTUNITY_TYPES)}")
         if o["ready_to_email"] not in READY_VALUES:
             fail(f"outreach[{i}].ready_to_email: '{o['ready_to_email']}' not one of {sorted(READY_VALUES)}")
         if not isinstance(o["evidence_source_ids"], list) or not o["evidence_source_ids"]:
@@ -193,7 +202,9 @@ def write_table(ws, columns, rows):
 
 
 def priority_sort_key(rows):
-    order = {"A": 0, "B": 1, "C": 2}
+    # REVIEW sorts last, deliberately - it means commercial priority hasn't
+    # been settled yet, not that it's a fourth tier below C
+    order = {"A": 0, "B": 1, "C": 2, "REVIEW": 3}
     return sorted(range(len(rows)), key=lambda i: order.get(rows[i]["priority"], 99))
 
 

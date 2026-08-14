@@ -39,7 +39,7 @@ An `.xlsx` workbook with five sheets:
 
 | Sheet | Content |
 |---|---|
-| **OUTREACH** | Outreach-ready prospects only, sorted priority A → B → C, strongest cases first within each band (the order already set in the input) |
+| **OUTREACH** | Outreach-ready prospects only, sorted priority A → B → C → REVIEW, strongest cases first within each band (the order already set in the input) |
 | **MARKET** | The full competitive census, including businesses not eligible for outreach |
 | **EXCLUDED** | Investigated businesses excluded from outreach, with a fixed reason code |
 | **SOURCES** | The source register — stable IDs (`S001`…) that OUTREACH and MARKET reference instead of repeating URLs |
@@ -47,7 +47,11 @@ An `.xlsx` workbook with five sheets:
 
 Every sheet has a frozen header row, an autofilter, sensible column widths,
 and wrapped long-text columns. No numeric prospect score is calculated
-anywhere — priority is A/B/C, set by the judgement that prepared the input.
+anywhere — priority is A/B/C/REVIEW, set by the judgement that prepared the
+input. An optional `opportunity_type` (GAP/GROWTH/DEFEND/REVIEW/NO
+OPPORTUNITY) records *why* a business is being approached; it is a separate
+judgement from priority and from `ready_to_email` — see
+`CAMPAIGN-HANDOFF.md`.
 
 ## Testing the renderer
 

@@ -7,6 +7,9 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
 
 - **The audit is the outreach tool** — the smallest thing we sell and the
   qualifier for the Foundation.
+- **The audit is the default entry product for every opportunity type** —
+  GAP, GROWTH and DEFEND alike. The type changes why we approach a business,
+  never the first thing sold. 2026-08-14.
 - **No free audits, no introductory rate, no first-five discount, no bundling.**
   2026-07-31.
 - **Tiers separate on permanent answer pages, not question volume.** 2026-07-31.
@@ -25,7 +28,15 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
 - **The never-named are the first batch**, not the per-assistant gaps.
   2026-08-10.
 - **A per-assistant gap is only worth a letter when the assistant is ChatGPT.**
-  2026-08-10.
+  2026-08-10. Still true for the GAP letter specifically; a Gemini- or
+  Perplexity-only absence can now be a GROWTH angle instead. 2026-08-14.
+- **High AI visibility is no longer an automatic outreach exclusion.**
+  GAP / GROWTH / DEFEND / REVIEW replaces the old visibility-only filter — a
+  strongly visible business is a DEFEND opportunity, not a dead end.
+  2026-08-14.
+- **Opportunity type, commercial priority and send-readiness are three
+  separate fields, never conflated.** Visibility count alone does not set
+  priority. 2026-08-14.
 - **Companies House is the filter, never the source of the list.** 2026-08-10.
 - **One finding, one offer, no chasing sequence.**
 - **Never publish a ranked table of named local businesses.** Telling a prospect

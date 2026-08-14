@@ -54,11 +54,12 @@
       "business": "Northgate Pipeworks Ltd",
       "area": "Sampleford",
       "disposition": "EXCLUDED",
+      "opportunity_type": "DEFEND",
       "total_ai_appearances": 14,
       "openai_appearances": 5,
       "gemini_appearances": 5,
       "perplexity_appearances": 4,
-      "notes": "Strongest relevant competitor in this market; already consistently named."
+      "notes": "Strongest relevant competitor in this market; already consistently named. Excluded from outreach this campaign, not from commercial consideration - being strongly visible is a DEFEND opportunity, not a reason to discard the business."
     },
     {
       "business": "Example Pipe & Drain",
@@ -74,6 +75,7 @@
   "outreach": [
     {
       "priority": "A",
+      "opportunity_type": "GAP",
       "business": "Fictional Plumbing Ltd",
       "area": "Sampleford",
       "website": "https://example.invalid/fictional-plumbing",
@@ -96,6 +98,7 @@
     },
     {
       "priority": "B",
+      "opportunity_type": "GAP",
       "business": "Sampleford Rapid Plumbers Ltd",
       "area": "Sampleford",
       "website": "https://example.invalid/sampleford-rapid",

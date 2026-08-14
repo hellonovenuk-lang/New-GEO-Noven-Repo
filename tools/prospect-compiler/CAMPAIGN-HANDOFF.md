@@ -27,6 +27,28 @@ Three things do three separate jobs. Do not blur them:
 fit `schema.json`, the data or the process that produced it is wrong, not the
 schema. See §8.
 
+**Three separate questions, never conflated** (calibrated against the
+completed Chester and Wirral retrospective, 2026-08-14):
+
+- **Opportunity type** (`GAP` / `GROWTH` / `DEFEND` / `REVIEW` / `NO
+  OPPORTUNITY`) — *why* a business is worth approaching. Low AI visibility is
+  not the only commercially interesting condition — a business with real
+  existing visibility can be a stronger prospect than a zero-mention one. See
+  §3's opportunity-type subsection.
+- **Commercial priority** (`A` / `B` / `C` / `REVIEW`) — how much a business
+  is worth pursuing. Visibility count alone does not set this — a `DEFEND`
+  business can be Priority A, a zero-visibility `GAP` business can be
+  Priority C.
+- **Send-readiness** (`ready_to_email`: `YES` / `REVIEW`) — whether *this*
+  email is ready to go today: verified contact, correct numbers, a truthful
+  angle.
+
+**The Audit is the default entry product for every opportunity type.** `GAP`,
+`GROWTH` and `DEFEND` all start with the Audit — the type changes *why*
+Wardith approaches a business, never the first thing it sells. "Start with
+the audit. If there is genuinely nothing to fix, we will tell you" holds for
+all three. What happens after the audit is not fixed either — see §3.
+
 ---
 
 ## 2. Input checklist
@@ -76,6 +98,72 @@ populates it:
 - **CLAUDE** — analytical synthesis or judgement, grounded in evidence already gathered
 - **HUMAN** — the owner's explicit approval
 
+### Market position and opportunity type
+
+Every business with a real mention count sits at some **relative market
+position** — Leader / Upper-mid / Mid / Low / Absent, judged against that
+market's own distribution, never a fixed count (89 successful answers means
+something different from 900). Consider total appearances, share relative to
+the leaders, provider split, question/intent spread where useful, and
+consistency across OpenAI, Gemini and Perplexity — a business strong on one
+provider and absent from another is a different story from one evenly weak
+across all three. **No proprietary score, visibility percentage or invented
+precision** — this is a qualitative call, the same as `disposition` always
+has been.
+
+From that position, classify `opportunity_type`:
+
+- **`GAP`** — credible, materially underrepresented relative to genuine
+  competitors. Zero mentions is the clearest case, but low counts alone are
+  not sufficient — the gap has to be real, not just small.
+- **`GROWTH`** — meaningful existing visibility that sits materially below
+  the genuine leaders, is inconsistent between models, absent from one
+  provider despite presence elsewhere, or concentrated on a narrow set of
+  questions. **Never describe a `GROWTH` business as invisible.**
+- **`DEFEND`** — already a strong or leading position. The opportunity is
+  understanding what supports it, where it's weaker, how it differs by
+  model, and whether it holds over time. **Do not manufacture a problem a
+  strongly-visible business doesn't have.**
+- **`REVIEW`** / **`NO OPPORTUNITY`** — market fit unclear, legal/trading
+  status unresolved, geography ambiguous, the gap explained by being
+  new/specialist/out-of-market, local decision-making unrealistic, or the
+  only available angle would be misleading.
+
+**Being strongly visible is no longer, by itself, grounds for `EXCLUDED`.**
+A business named as often as its competitors is very often a `DEFEND`
+candidate, not a dead end — see `sample-campaign.json`'s Northgate Pipeworks
+for the shape. `excluded_entry.reason`'s `ALREADY STRONGLY VISIBLE` value
+stays in the schema (removing it would break every already-completed
+campaign that used it) but should now be the exception, paired with another
+real disqualifying factor, not the default response to high visibility.
+
+**Do not force every census business into an opportunity type.** Most of a
+census will have too little individual research behind it (no legal check,
+no credibility read) to classify responsibly — leave `opportunity_type` off
+entirely rather than guess. It is optional on both `market_entry` and
+`outreach_entry` for exactly this reason.
+
+### Post-audit routing
+
+`opportunity_type` describes why Wardith approaches a business; it does not
+pick the service. Every type starts at the Audit (£250, `playbook/services.md`).
+What follows the audit is a separate, later decision, made from what the
+audit actually finds, not predicted here:
+
+- **No action** — the audit found nothing worth changing. A valid, statable
+  outcome for any type, including `DEFEND`.
+- **Foundation** (£800 one-off) — fixed-scope remediation work.
+- **An ongoing monthly plan** — Maintain, Grow or Lead (`playbook/services.md`);
+  there is no product literally called "Retainer". `[PLACEHOLDER: none of
+  these three has been delivered to a real client yet — playbook/README.md,
+  "no monthly-plan record template exists."]`
+- **Foundation, then a monthly plan.**
+
+**Foundation does not have to precede a monthly plan.** A `DEFEND` client with
+little to structurally fix may go straight from Audit to an ongoing plan. If a
+prospect explicitly asks to start directly on ongoing work, Wardith may agree
+to skip the Audit by agreement — the exception, not the default sales path.
+
 ### `run` (required: `sector`, `geography`, `campaign_slug`, `date`, `questions`, `providers`)
 
 | Field | Required | Source |
@@ -98,6 +186,7 @@ populates it:
 | `business` | yes | RESEARCH — from the market census |
 | `area` | yes | RESEARCH — the specific branch/trading location, from the census |
 | `disposition` | yes | CLAUDE — `OUTREACH` / `EXCLUDED` / `REVIEW`, against the five-point check in `playbook/outreach-process.md` step 4. **The schema has no separate approval field for this** — see §5 for exactly which fields carry the formal human gate |
+| `opportunity_type` | no | CLAUDE — `GAP` / `GROWTH` / `DEFEND` / `REVIEW` / `NO OPPORTUNITY`, per the subsection above. Separate from `disposition`: a business can be `EXCLUDED` from this campaign's outreach and still carry a `DEFEND` opportunity type for later |
 | `total_ai_appearances` | yes | AUTO — once mention counts exist for this run |
 | `openai_appearances` / `gemini_appearances` / `perplexity_appearances` | no | AUTO |
 | `notes` | no | CLAUDE — legal-entity ambiguity, geography ambiguity, anything a later reader needs |
@@ -106,7 +195,8 @@ populates it:
 
 | Field | Required | Source |
 |---|---|---|
-| `priority` | yes | **HUMAN** — Claude recommends `A` / `B` / `C`, the owner approves. The gate — see §5 |
+| `priority` | yes | **HUMAN** — Claude recommends `A` / `B` / `C` / `REVIEW`, the owner approves. Commercial priority, not a visibility-size ranking — weighs evidence quality, market relevance, credibility, competitive position, commercial value and decision-maker accessibility. A `DEFEND` business can be Priority A; a zero-visibility `GAP` business can be Priority C. The gate — see §5 |
+| `opportunity_type` | no | CLAUDE — carried from the `market_entry`, or set here directly if this business wasn't individually classified earlier. Distinct from `priority` and from `ready_to_email` — see §1 |
 | `business` | yes | RESEARCH — carried from the market census entry |
 | `area` | yes | RESEARCH — carried from the market census entry |
 | `website` | no | RESEARCH |
@@ -160,7 +250,10 @@ populates it:
   register and/or the working notes for the run), but the schema neither
   requires nor permits a per-entry link for these two arrays. `schema.json`
   remains the machine contract — a field it doesn't define does not get added
-  to satisfy this rule.
+  to satisfy this rule. `opportunity_type` follows the identical rule — it
+  rests on the same mention-count and competitor evidence that already backs
+  `disposition` and `competitive_gap_finding`; it does not get its own
+  linking field either.
 - **`sources[].url` must point somewhere real.** For a fact from an
   authoritative register or directory, the URL is that page. For a fact whose
   only evidence is that a business was named in a trade-run answer, there is
@@ -185,11 +278,20 @@ populates it:
 
 ## 5. Priority gate
 
-**`outreach_entry.priority` (`A`/`B`/`C`) and `outreach_entry.ready_to_email`
-(`YES`/`REVIEW`) are the two fields the owner must approve before a campaign
-JSON is treated as outreach-ready.** Claude may — should — propose values for
-both, backed by the evidence already gathered, but the file is not final
-until the owner has reviewed and confirmed them.
+**`outreach_entry.priority` (`A`/`B`/`C`/`REVIEW`) and
+`outreach_entry.ready_to_email` (`YES`/`REVIEW`) are the two fields the owner
+must approve before a campaign JSON is treated as outreach-ready.** Claude
+may — should — propose values for both, backed by the evidence already
+gathered, but the file is not final until the owner has reviewed and
+confirmed them.
+
+**`priority` is not `opportunity_type`, and it is not a visibility ranking.**
+A business's opportunity type (§3) says why it's worth approaching; priority
+says how much, weighing evidence quality, market relevance, credibility,
+competitive position, commercial value and decision-maker accessibility. A
+`DEFEND` business with a strong ongoing-monitoring story can outrank a `GAP`
+business with a thin one — raw appearance count does not decide priority by
+itself.
 
 **One accuracy note, since the schema is the source of truth here rather than
 the pipeline audit's phrasing:** `schema.json` has no separate `approved`
@@ -208,22 +310,29 @@ will pass validation.
 
 1. Complete research: market census, mention counts, legal verification,
    competitive-gap analysis (§2).
-2. Produce proposed classifications: `disposition` for every market entry,
+2. Determine AI market position for businesses with enough evidence to
+   support it, and classify `opportunity_type` (`GAP`/`GROWTH`/`DEFEND`/
+   `REVIEW`/`NO OPPORTUNITY`) — §3. Not every census business gets one.
+3. Produce proposed classifications: `disposition` for every market entry,
    `reason` for every exclusion, `priority` and `ready_to_email` for every
    outreach candidate.
-3. Present the HUMAN fields — `priority` and `ready_to_email` — for the
+4. Present the HUMAN fields — `priority` and `ready_to_email` — for the
    owner's approval before treating anything as final.
-4. Populate the final JSON against `schema.json` exactly, using §3 as the
+5. Populate the final JSON against `schema.json` exactly, using §3 as the
    field-by-field checklist.
-5. Save the campaign JSON in the run's canonical location. There is no
+6. Save the campaign JSON in the run's canonical location. There is no
    formal folder rule for prospecting runs yet (only client audits have one,
    in `playbook/records-and-data.md`) — until one exists, follow the pattern
    the Wirral run already used: `~/wardith-runs/<sector>-<geography>/`
    holding the campaign JSON and workbook, next to the raw CSV at
    `~/wardith-runs/<sector>-<geography>.csv`. Never inside this repository.
-6. Run the existing Prospect Compiler (§7).
-7. **If validation fails, fix the data or this handoff, not the tooling.**
+7. Run the existing Prospect Compiler (§7).
+8. **If validation fails, fix the data or this handoff, not the tooling.**
    See §8.
+9. Contact verification and outreach sending happen after this procedure,
+   not as part of it — see `playbook/outreach-process.md`. Every opportunity
+   type routes to the Audit first (§1); what follows the audit is decided
+   from what the audit finds, not predicted at qualification time.
 
 ---
 
