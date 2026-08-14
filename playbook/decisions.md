@@ -31,9 +31,10 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
   2026-08-10. Still true for the GAP letter specifically; a Gemini- or
   Perplexity-only absence can now be a GROWTH angle instead. 2026-08-14.
 - **High AI visibility is no longer an automatic outreach exclusion.**
-  GAP / GROWTH / DEFEND / REVIEW replaces the old visibility-only filter — a
-  strongly visible business is a DEFEND opportunity, not a dead end.
-  2026-08-14.
+  GAP / GROWTH / DEFEND / NO OPPORTUNITY replaces the old visibility-only
+  filter — a strongly visible business is a DEFEND opportunity, not a dead
+  end. REVIEW is not a fifth opportunity type; it stays a state of
+  disposition and priority. 2026-08-14.
 - **Opportunity type, commercial priority and send-readiness are three
   separate fields, never conflated.** Visibility count alone does not set
   priority. 2026-08-14.

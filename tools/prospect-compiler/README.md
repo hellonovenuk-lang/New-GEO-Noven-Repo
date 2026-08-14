@@ -48,10 +48,10 @@ An `.xlsx` workbook with five sheets:
 Every sheet has a frozen header row, an autofilter, sensible column widths,
 and wrapped long-text columns. No numeric prospect score is calculated
 anywhere — priority is A/B/C/REVIEW, set by the judgement that prepared the
-input. An optional `opportunity_type` (GAP/GROWTH/DEFEND/REVIEW/NO
-OPPORTUNITY) records *why* a business is being approached; it is a separate
-judgement from priority and from `ready_to_email` — see
-`CAMPAIGN-HANDOFF.md`.
+input. An optional `opportunity_type` (GAP/GROWTH/DEFEND/NO OPPORTUNITY)
+records *why* a business is being approached; it is a separate judgement
+from priority and from `ready_to_email` — see `CAMPAIGN-HANDOFF.md`. REVIEW
+is not an opportunity type — it belongs to `priority` and `disposition`.
 
 ## Testing the renderer
 

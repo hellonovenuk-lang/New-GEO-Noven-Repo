@@ -30,11 +30,14 @@ schema. See §8.
 **Three separate questions, never conflated** (calibrated against the
 completed Chester and Wirral retrospective, 2026-08-14):
 
-- **Opportunity type** (`GAP` / `GROWTH` / `DEFEND` / `REVIEW` / `NO
-  OPPORTUNITY`) — *why* a business is worth approaching. Low AI visibility is
-  not the only commercially interesting condition — a business with real
-  existing visibility can be a stronger prospect than a zero-mention one. See
-  §3's opportunity-type subsection.
+- **Opportunity type** (`GAP` / `GROWTH` / `DEFEND` / `NO OPPORTUNITY`) —
+  *why* a business is worth approaching. `REVIEW` is not a fifth value here —
+  it belongs to `disposition` and `priority`, which already carry it; an
+  unclassifiable business simply has no `opportunity_type` set, or a
+  `disposition`/`priority` of `REVIEW`. Low AI visibility is not the only
+  commercially interesting condition — a business with real existing
+  visibility can be a stronger prospect than a zero-mention one. See §3's
+  opportunity-type subsection.
 - **Commercial priority** (`A` / `B` / `C` / `REVIEW`) — how much a business
   is worth pursuing. Visibility count alone does not set this — a `DEFEND`
   business can be Priority A, a zero-visibility `GAP` business can be
@@ -124,10 +127,15 @@ From that position, classify `opportunity_type`:
   understanding what supports it, where it's weaker, how it differs by
   model, and whether it holds over time. **Do not manufacture a problem a
   strongly-visible business doesn't have.**
-- **`REVIEW`** / **`NO OPPORTUNITY`** — market fit unclear, legal/trading
-  status unresolved, geography ambiguous, the gap explained by being
+- **`NO OPPORTUNITY`** — market fit unclear, legal/trading status
+  unresolved, geography ambiguous, the gap explained by being
   new/specialist/out-of-market, local decision-making unrealistic, or the
-  only available angle would be misleading.
+  only available angle would be misleading. **This is not `REVIEW`** —
+  `REVIEW` is a state of `disposition` and `priority` (unresolved, needs a
+  human look), not a kind of opportunity. A business can be `NO OPPORTUNITY`
+  and cleanly settled (there is definitely nothing to sell it) or it can
+  simply have no `opportunity_type` at all, with the ambiguity carried by
+  `disposition: REVIEW` instead.
 
 **Being strongly visible is no longer, by itself, grounds for `EXCLUDED`.**
 A business named as often as its competitors is very often a `DEFEND`
@@ -186,7 +194,7 @@ to skip the Audit by agreement — the exception, not the default sales path.
 | `business` | yes | RESEARCH — from the market census |
 | `area` | yes | RESEARCH — the specific branch/trading location, from the census |
 | `disposition` | yes | CLAUDE — `OUTREACH` / `EXCLUDED` / `REVIEW`, against the five-point check in `playbook/outreach-process.md` step 4. **The schema has no separate approval field for this** — see §5 for exactly which fields carry the formal human gate |
-| `opportunity_type` | no | CLAUDE — `GAP` / `GROWTH` / `DEFEND` / `REVIEW` / `NO OPPORTUNITY`, per the subsection above. Separate from `disposition`: a business can be `EXCLUDED` from this campaign's outreach and still carry a `DEFEND` opportunity type for later |
+| `opportunity_type` | no | CLAUDE — `GAP` / `GROWTH` / `DEFEND` / `NO OPPORTUNITY`, per the subsection above — not `REVIEW`, which belongs to `disposition`. Separate from `disposition`: a business can be `EXCLUDED` from this campaign's outreach and still carry a `DEFEND` opportunity type for later |
 | `total_ai_appearances` | yes | AUTO — once mention counts exist for this run |
 | `openai_appearances` / `gemini_appearances` / `perplexity_appearances` | no | AUTO |
 | `notes` | no | CLAUDE — legal-entity ambiguity, geography ambiguity, anything a later reader needs |
@@ -312,7 +320,7 @@ will pass validation.
    competitive-gap analysis (§2).
 2. Determine AI market position for businesses with enough evidence to
    support it, and classify `opportunity_type` (`GAP`/`GROWTH`/`DEFEND`/
-   `REVIEW`/`NO OPPORTUNITY`) — §3. Not every census business gets one.
+   `NO OPPORTUNITY`) — §3. Not every census business gets one.
 3. Produce proposed classifications: `disposition` for every market entry,
    `reason` for every exclusion, `priority` and `ready_to_email` for every
    outreach candidate.

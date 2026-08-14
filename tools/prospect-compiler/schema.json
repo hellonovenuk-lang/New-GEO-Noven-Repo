@@ -23,7 +23,7 @@
         "business": { "type": "string", "minLength": 1 },
         "area": { "type": "string", "minLength": 1 },
         "disposition": { "type": "string", "enum": ["OUTREACH", "EXCLUDED", "REVIEW"] },
-        "opportunity_type": { "type": "string", "enum": ["GAP", "GROWTH", "DEFEND", "REVIEW", "NO OPPORTUNITY"] },
+        "opportunity_type": { "type": "string", "enum": ["GAP", "GROWTH", "DEFEND", "NO OPPORTUNITY"] },
         "total_ai_appearances": { "type": "integer", "minimum": 0 },
         "openai_appearances": { "type": "integer", "minimum": 0 },
         "gemini_appearances": { "type": "integer", "minimum": 0 },
@@ -43,7 +43,7 @@
       "additionalProperties": false,
       "properties": {
         "priority": { "type": "string", "enum": ["A", "B", "C", "REVIEW"] },
-        "opportunity_type": { "type": "string", "enum": ["GAP", "GROWTH", "DEFEND", "REVIEW", "NO OPPORTUNITY"] },
+        "opportunity_type": { "type": "string", "enum": ["GAP", "GROWTH", "DEFEND", "NO OPPORTUNITY"] },
         "business": { "type": "string", "minLength": 1 },
         "area": { "type": "string", "minLength": 1 },
         "website": { "type": "string" },

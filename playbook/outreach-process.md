@@ -24,12 +24,19 @@ a trade that runs on referral has nothing for us to find.
 
 Not once per business. Six questions × three assistants × five runs = **90
 queries, about $15**, and it answers the question for every business in the area
-at once. The runner is `tools/trade-run/`, the runbook is beside it.
+at once. The runner is `tools/trade-run/`, the runbook is beside it. `/90qrun`
+(`.claude/skills/90qrun/`) automates this whole step end to end, from just
+the trade and place name.
 
 ```
 python3 trade_run.py --questions questions-{trade}-{area}.csv \
-    --client {trade}-{area} --out ~/wardith-runs/{trade}-{area}.csv --cap 90
+    --client {trade}-{area} --location {area} \
+    --out ~/wardith-runs/{trade}-{area}.csv --cap 90
 ```
+
+**`--location` is the plain-English place name** (e.g. `Chester`, not the
+slug) — it feeds Perplexity's own search step, the only one of the three
+providers with a geography parameter at this API tier.
 
 **`--out` goes outside this repository.** Answer text names real businesses.
 
@@ -98,10 +105,14 @@ single "prospect or not" test — plus a fourth non-opportunity bucket
   and commercially capable. The opportunity is to show what's supporting
   that position, monitor it, and flag if it starts to erode. **Do not
   manufacture a visibility problem for a business that doesn't have one.**
-- **REVIEW / NO OPPORTUNITY** — market or business fit is unclear, legal or
-  trading status is unresolved, geography is ambiguous, the apparent gap is
+- **NO OPPORTUNITY** — market or business fit is unclear, legal or trading
+  status is unresolved, geography is ambiguous, the apparent gap is
   explained by being new/specialist/out-of-market, local decision-making is
   unrealistic, or the only available outreach angle would be misleading.
+  **This is not `REVIEW`** — REVIEW is a state of disposition and priority
+  (unresolved, needs a human look), not a fourth opportunity type. A business
+  can settle cleanly on NO OPPORTUNITY, or simply carry no opportunity type
+  at all while its disposition stays REVIEW.
 
 **Use relative market position, not a fixed count.** Where a business sits —
 leader, upper-mid, mid, low, absent — is relative to that market's own
@@ -133,7 +144,7 @@ outreach begins, not by stretching the GAP letters to fit.
 
 **Opportunity type, commercial priority and send-readiness are three
 separate questions — do not conflate them.** Opportunity type
-(GAP/GROWTH/DEFEND/REVIEW) is *why* a business is worth approaching.
+(GAP/GROWTH/DEFEND/NO OPPORTUNITY) is *why* a business is worth approaching.
 Commercial priority (A/B/C/REVIEW) is how much it's worth pursuing, weighing
 evidence quality, market relevance, credibility, competitive position,
 commercial value and decision-maker accessibility — visibility count alone
