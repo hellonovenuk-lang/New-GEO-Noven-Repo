@@ -29,10 +29,12 @@ Usage, the checks to run first and what the output is good for are all in
 README.md beside this file. Short version, and smoke first, always:
 
   python3 trade_run.py --questions questions-wirral-dentists.csv \
-      --client wirral-dentists --out ~/wardith-runs/wirral-dentists.csv --smoke
+      --client wirral-dentists --location Wirral \
+      --out ~/wardith-runs/wirral-dentists.csv --smoke
 
   python3 trade_run.py --questions questions-wirral-dentists.csv \
-      --client wirral-dentists --out ~/wardith-runs/wirral-dentists.csv --cap 90
+      --client wirral-dentists --location Wirral \
+      --out ~/wardith-runs/wirral-dentists.csv --cap 90
 
 **--out must point outside this repository.** Answer text names real
 businesses and sometimes real people; archive/audit-method.md section 5 keeps
@@ -93,7 +95,10 @@ def post_json(url, headers, body, timeout=120):
         raise RuntimeError(f"HTTP {e.code} from {url}: {detail[:800]}") from None
 
 
-def call_openai(question):
+def call_openai(question, location):
+    # location is unused here — OpenAI's web_search tool only takes a
+    # country, not a city, and "GB" already covers every trade-run area.
+    del location
     key = env("OPENAI_API_KEY")
     model = env("OPENAI_MODEL")
     body = {
@@ -132,13 +137,16 @@ def call_openai(question):
     return model_version, "".join(text_parts), sources
 
 
-def call_gemini(question):
-    key = env("GEMINI_API_KEY")
-    model = env("GEMINI_MODEL")
+def call_gemini(question, location):
     # NB: no documented UK-locale parameter for the google_search grounding
     # tool as of when this was written — this is exactly what smoke-test
     # check 3 ("does the answer look UK-shaped") exists to catch. Verify
-    # against the current Gemini API docs before the real run.
+    # against the current Gemini API docs before the real run. location is
+    # accepted for signature parity with the other two callers but unused
+    # until Google documents a locale parameter at this API tier.
+    del location
+    key = env("GEMINI_API_KEY")
+    model = env("GEMINI_MODEL")
     body = {
         "contents": [{"parts": [{"text": question}]}],
         "tools": [{"google_search": {}}],
@@ -162,7 +170,7 @@ def call_gemini(question):
     return model_version, "".join(text_parts), sources
 
 
-def call_perplexity(question):
+def call_perplexity(question, location):
     # Corrected 2026-08-13: the previous version of this function called
     # /v1/responses, which is Perplexity's separate Agent API (a multi-
     # provider orchestration endpoint whose model field expects
@@ -177,10 +185,11 @@ def call_perplexity(question):
     # Added 2026-08-14, confirmed against docs.perplexity.ai's API
     # reference: web_search_options.user_location narrows Sonar's own
     # search step by geography — the same job OpenAI's user_location does;
-    # Gemini has no equivalent. country/region/city below are this
-    # campaign's values (estate-agents-chester) — hardcoded because
-    # call_perplexity() takes no location parameter. Update them, or wire
-    # them through properly, before reusing this file for a different area.
+    # Gemini has no equivalent. `location` is the run's own --location value
+    # (wired through from main() 2026-08-14, replacing an earlier version
+    # that hardcoded a single campaign's city here) — only `city` varies per
+    # run; country/region stay GB/England because every trade run so far has
+    # been UK-only.
     key = env("PERPLEXITY_API_KEY")
     model = env("PERPLEXITY_MODEL")
     body = {
@@ -190,7 +199,7 @@ def call_perplexity(question):
             "user_location": {
                 "country": "GB",
                 "region": "England",
-                "city": "Chester",
+                "city": location,
             }
         },
     }
@@ -278,6 +287,7 @@ def main():
     ap.add_argument("--questions", required=True)
     ap.add_argument("--out", required=True, help="Write this OUTSIDE the repo — see the module docstring")
     ap.add_argument("--client", required=True, help="Slug for the trade and area, e.g. wirral-dentists. Goes in the client column")
+    ap.add_argument("--location", required=True, help="The area's plain-English place name, e.g. Chester. Passed to Perplexity's user_location.city — every question should already name this same place")
     ap.add_argument("--audit-id", default=None)
     ap.add_argument("--runs", type=int, default=DEFAULT_RUNS, help=f"Runs per question per assistant (default {DEFAULT_RUNS})")
     ap.add_argument("--cap", type=int, default=100, help="Hard cap on total queries this invocation")
@@ -327,7 +337,7 @@ def main():
                     sys.exit(f"Hard cap {args.cap} reached mid-run — stopping. "
                              f"Delete nothing; re-run this command to resume.")
                 try:
-                    model_version, answer, sources = caller(q["question_text"])
+                    model_version, answer, sources = caller(q["question_text"], args.location)
                     errors = ""
                 except Exception as e:  # noqa: BLE001 — crude script, log and keep going
                     model_version, answer, sources = "", "", []
