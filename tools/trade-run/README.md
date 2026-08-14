@@ -80,8 +80,15 @@ One query per provider, on the first question:
 
 ```
 python3 trade_run.py --questions questions-{trade}-{area}.csv \
-    --client {trade}-{area} --out ~/wardith-runs/{trade}-{area}.csv --smoke
+    --client {trade}-{area} --location {area} \
+    --out ~/wardith-runs/{trade}-{area}.csv --smoke
 ```
+
+**`--location` is the plain-English place name** (e.g. `Chester`, not
+`chester-cheshire`) — it's passed to Perplexity's `user_location.city` to
+narrow its own search step, the same job the area name in each question
+text already does for a human reader. Keep it consistent with the place
+name used in the questions file.
 
 **Check the three smoke rows before trusting a full run:**
 
@@ -105,7 +112,8 @@ smoke rows would silently stand in for real data in the full run's counts.
 
 ```
 python3 trade_run.py --questions questions-{trade}-{area}.csv \
-    --client {trade}-{area} --out ~/wardith-runs/{trade}-{area}.csv --cap 90
+    --client {trade}-{area} --location {area} \
+    --out ~/wardith-runs/{trade}-{area}.csv --cap 90
 ```
 
 Six questions × three assistants × five runs = 90 queries. In PowerShell it's

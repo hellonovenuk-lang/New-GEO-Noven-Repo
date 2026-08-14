@@ -1,0 +1,7 @@
+audit_id,question_id,category,question_text,frozen_from
+estate-agents-chester-2026-08-13,q01,discovery,"Which estate agents would you recommend in Chester?",
+estate-agents-chester-2026-08-13,q02,discovery,"What are the best estate agents in Chester for selling a house?",
+estate-agents-chester-2026-08-13,q03,qualified-discovery,"Which estate agents in Chester have a strong reputation for selling residential property?",
+estate-agents-chester-2026-08-13,q04,qualified-discovery,"I'm looking to sell my home in Chester. Which local estate agents should I consider?",
+estate-agents-chester-2026-08-13,q05,buying-intent,"Who are the best estate agents to contact for a property valuation in Chester?",
+estate-agents-chester-2026-08-13,q06,comparison,"Which estate agents in Chester stand out compared with their local competitors?",

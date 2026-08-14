@@ -29,10 +29,12 @@ Usage, the checks to run first and what the output is good for are all in
 README.md beside this file. Short version, and smoke first, always:
 
   python3 trade_run.py --questions questions-wirral-dentists.csv \
-      --client wirral-dentists --out ~/wardith-runs/wirral-dentists.csv --smoke
+      --client wirral-dentists --location Wirral \
+      --out ~/wardith-runs/wirral-dentists.csv --smoke
 
   python3 trade_run.py --questions questions-wirral-dentists.csv \
-      --client wirral-dentists --out ~/wardith-runs/wirral-dentists.csv --cap 90
+      --client wirral-dentists --location Wirral \
+      --out ~/wardith-runs/wirral-dentists.csv --cap 90
 
 **--out must point outside this repository.** Answer text names real
 businesses and sometimes real people; archive/audit-method.md section 5 keeps
@@ -93,7 +95,10 @@ def post_json(url, headers, body, timeout=120):
         raise RuntimeError(f"HTTP {e.code} from {url}: {detail[:800]}") from None
 
 
-def call_openai(question):
+def call_openai(question, location):
+    # location is unused here — OpenAI's web_search tool only takes a
+    # country, not a city, and "GB" already covers every trade-run area.
+    del location
     key = env("OPENAI_API_KEY")
     model = env("OPENAI_MODEL")
     body = {
@@ -132,13 +137,16 @@ def call_openai(question):
     return model_version, "".join(text_parts), sources
 
 
-def call_gemini(question):
-    key = env("GEMINI_API_KEY")
-    model = env("GEMINI_MODEL")
+def call_gemini(question, location):
     # NB: no documented UK-locale parameter for the google_search grounding
     # tool as of when this was written — this is exactly what smoke-test
     # check 3 ("does the answer look UK-shaped") exists to catch. Verify
-    # against the current Gemini API docs before the real run.
+    # against the current Gemini API docs before the real run. location is
+    # accepted for signature parity with the other two callers but unused
+    # until Google documents a locale parameter at this API tier.
+    del location
+    key = env("GEMINI_API_KEY")
+    model = env("GEMINI_MODEL")
     body = {
         "contents": [{"parts": [{"text": question}]}],
         "tools": [{"google_search": {}}],
@@ -162,47 +170,48 @@ def call_gemini(question):
     return model_version, "".join(text_parts), sources
 
 
-def call_perplexity(question):
-    # Confirmed against the live console 2026-08-02: Perplexity's "Sonar Chat
-    # Completions" API was retired in favour of an "Agent API" that mirrors
-    # OpenAI's Responses shape (same model/input/tools fields, same
-    # response.output[].content[].output_text envelope) — but citations do
-    # NOT show up in per-message annotations the way OpenAI does it. They
-    # arrive as a separate output item, type "search_results", with its own
-    # "results" list of {url, title, ...}. Confirmed via a live query with
-    # tools=[{"type": "web_search"}] returning a populated search_results
-    # item and empty message annotations.
+def call_perplexity(question, location):
+    # Corrected 2026-08-13: the previous version of this function called
+    # /v1/responses, which is Perplexity's separate Agent API (a multi-
+    # provider orchestration endpoint whose model field expects
+    # provider-prefixed names like "openai/gpt-5.6-sol" or a curated preset)
+    # — not a retired Sonar. Sonar Chat Completions is still live, at
+    # /v1/sonar (or the /chat/completions OpenAI-SDK alias), confirmed
+    # against docs.perplexity.ai. It takes a plain chat-completions body —
+    # grounding is built into the model, there is no tools field to set —
+    # and returns the standard choices[].message.content shape plus a
+    # top-level "citations" array of URLs.
+    #
+    # Added 2026-08-14, confirmed against docs.perplexity.ai's API
+    # reference: web_search_options.user_location narrows Sonar's own
+    # search step by geography — the same job OpenAI's user_location does;
+    # Gemini has no equivalent. `location` is the run's own --location value
+    # (wired through from main() 2026-08-14, replacing an earlier version
+    # that hardcoded a single campaign's city here) — only `city` varies per
+    # run; country/region stay GB/England because every trade run so far has
+    # been UK-only.
     key = env("PERPLEXITY_API_KEY")
     model = env("PERPLEXITY_MODEL")
     body = {
         "model": model,
-        "input": question,
-        "tools": [{
-            "type": "web_search",
-            "user_location": {"type": "approximate", "country": "GB"},
-        }],
+        "messages": [{"role": "user", "content": question}],
+        "web_search_options": {
+            "user_location": {
+                "country": "GB",
+                "region": "England",
+                "city": location,
+            }
+        },
     }
     data = post_json(
-        "https://api.perplexity.ai/v1/responses",
+        "https://api.perplexity.ai/v1/sonar",
         {"Authorization": f"Bearer {key}"},
         body,
     )
-    # A streamed call wraps the real object as {"type": "response.completed",
-    # "response": {...}}; a plain call (what this script sends, no "stream"
-    # key) is expected to return the inner object directly. Handle both.
-    resp = data.get("response", data)
-    model_version = resp.get("model", model)
-    text_parts, sources = [], []
-    for item in resp.get("output", []):
-        if item.get("type") == "message":
-            for c in item.get("content", []):
-                if c.get("type") == "output_text":
-                    text_parts.append(c.get("text", ""))
-        elif item.get("type") == "search_results":
-            for r in item.get("results", []):
-                if r.get("url"):
-                    sources.append(r["url"])
-    return model_version, "".join(text_parts), sources
+    model_version = data.get("model", model)
+    answer = data["choices"][0]["message"]["content"]
+    sources = data.get("citations", [])
+    return model_version, answer, sources
 
 
 CALLERS = {"openai": call_openai, "gemini": call_gemini, "perplexity": call_perplexity}
@@ -232,6 +241,33 @@ def load_done(path):
     return done
 
 
+PROVIDER_LABELS = {"openai": "OpenAI", "gemini": "Gemini", "perplexity": "Perplexity"}
+_PROVIDER_WIDTH = max(len(v) for v in PROVIDER_LABELS.values())
+_BAR_WIDTH = 20
+
+
+def format_progress_line(current, total, provider, question_id, run_no, n_runs, status):
+    # `current` is overall position through the plan's own calls — including
+    # ones already satisfied by resume, not just this invocation's new
+    # attempts — so a resumed run reports e.g. [32/90], never a misleading
+    # [1/59]. See the progress_count seeding in main().
+    #
+    # ASCII bar characters, not block-drawing Unicode (#/░): a Git-Bash
+    # console on cp1252 raised UnicodeEncodeError on the block characters
+    # during testing, even though PowerShell (UTF-8) printed them fine —
+    # plain ASCII is the one choice guaranteed not to crash a paid run
+    # partway through on some terminal's codepage.
+    pct = (current / total * 100) if total else 0.0
+    filled = round(_BAR_WIDTH * current / total) if total else 0
+    bar = "#" * filled + "-" * (_BAR_WIDTH - filled)
+    width = len(str(total))
+    label = PROVIDER_LABELS.get(provider, provider).ljust(_PROVIDER_WIDTH)
+    return (
+        f"[{bar}] {str(current).zfill(width)}/{total} {pct:5.1f}% | "
+        f"{label} | {question_id.upper()} | run {run_no}/{n_runs} | {status}"
+    )
+
+
 def ensure_header(path):
     if not os.path.exists(path) or os.path.getsize(path) == 0:
         with open(path, "w", newline="", encoding="utf-8") as f:
@@ -251,6 +287,7 @@ def main():
     ap.add_argument("--questions", required=True)
     ap.add_argument("--out", required=True, help="Write this OUTSIDE the repo — see the module docstring")
     ap.add_argument("--client", required=True, help="Slug for the trade and area, e.g. wirral-dentists. Goes in the client column")
+    ap.add_argument("--location", required=True, help="The area's plain-English place name, e.g. Chester. Passed to Perplexity's user_location.city — every question should already name this same place")
     ap.add_argument("--audit-id", default=None)
     ap.add_argument("--runs", type=int, default=DEFAULT_RUNS, help=f"Runs per question per assistant (default {DEFAULT_RUNS})")
     ap.add_argument("--cap", type=int, default=100, help="Hard cap on total queries this invocation")
@@ -274,6 +311,18 @@ def main():
         sys.exit(f"Planned {total} queries exceeds cap {args.cap} — stopping before the first call.")
 
     print(f"Plan: {total} queries across {len(PROVIDERS)} providers. Cap {args.cap}.")
+    # Resume-aware progress counter: how many of THIS plan's own
+    # (provider, question, run_no) keys are already satisfied in `done` —
+    # the same source of truth and the same key shape the skip check below
+    # uses — so the printed counter reflects overall campaign position
+    # rather than restarting from 1 on a resumed run.
+    plan_keys = [
+        (provider, q["question_id"], str(run_no))
+        for provider in PROVIDERS
+        for q, n_runs in plan
+        for run_no in range(1, n_runs + 1)
+    ]
+    progress_count = sum(1 for k in plan_keys if k in done)
     count = 0
     for provider in PROVIDERS:
         caller = CALLERS[provider]
@@ -287,14 +336,18 @@ def main():
                 if count > args.cap:
                     sys.exit(f"Hard cap {args.cap} reached mid-run — stopping. "
                              f"Delete nothing; re-run this command to resume.")
-                print(f"[{count}/{total}] {provider} {q['question_id']} run {run_no}")
                 try:
-                    model_version, answer, sources = caller(q["question_text"])
+                    model_version, answer, sources = caller(q["question_text"], args.location)
                     errors = ""
                 except Exception as e:  # noqa: BLE001 — crude script, log and keep going
                     model_version, answer, sources = "", "", []
                     errors = repr(e)
                     print(f"  ERROR: {e}", file=sys.stderr)
+                progress_count += 1
+                print(format_progress_line(
+                    progress_count, total, provider, q["question_id"],
+                    run_no, n_runs, "ERROR" if errors else "OK",
+                ))
                 row = {
                     "audit_id": audit_id,
                     "client": args.client,
