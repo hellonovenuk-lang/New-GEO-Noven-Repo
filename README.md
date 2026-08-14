@@ -24,6 +24,8 @@ Sole trader, one person. `wardith.co.uk`.
 | Write anything a customer will read | `playbook/voice.md` |
 | Check whether something is already settled | `playbook/decisions.md` |
 | Run the assistant queries | `tools/trade-run/` |
+| Count AI mentions against a completed run | `tools/mention-count/` |
+| **Qualify a completed run into a campaign** | `/qualify` — `.claude/skills/qualify/` |
 | Compile a market run into an outreach workbook | `tools/prospect-compiler/` |
 
 **No monthly-plan record template exists yet.** Maintain, Grow and Lead are
@@ -34,7 +36,8 @@ first actual recurring client, not designed further pre-revenue.
 
 ```
 playbook/   how the business is run. Start with business.md
-tools/      the scripts: trade-run, site-check, name-check
+tools/      the scripts: trade-run, mention-count, prospect-compiler,
+            site-check, name-check
 site/       the website. Astro, deployed from main by Netlify
 assets/     brand originals and the email signature
 archive/    superseded documents, kept for one review cycle
