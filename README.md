@@ -26,6 +26,7 @@ Sole trader, one person. `wardith.co.uk`.
 | Run the assistant queries | `tools/trade-run/` |
 | Count AI mentions against a completed run | `tools/mention-count/` |
 | **Qualify a completed run into a campaign** | `/qualify` — `.claude/skills/qualify/` |
+| **Prepare outreach for a qualified campaign** | `/outreach` — `.claude/skills/outreach/` |
 | Compile a market run into an outreach workbook | `tools/prospect-compiler/` |
 
 **No monthly-plan record template exists yet.** Maintain, Grow and Lead are

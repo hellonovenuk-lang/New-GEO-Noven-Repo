@@ -303,6 +303,32 @@ Same shape, with the middle replaced:
 
 ...and the offer paragraph becomes "What I sell is the reason behind it."
 
+### The GROWTH letter
+
+Drafted 2026-08-15, the first time GROWTH outreach actually ran
+(`/outreach`, against the Chester dentists campaign). Same shape, with the
+middle replaced — used when a business already has real, checkable
+visibility but sits materially behind the market leader, including on a
+specific question where the leader scores and this business doesn't:
+
+> {Business} came up in {n} of them, which is real and worth having.
+> {Leader}, the {business type} named most often in this research, came up
+> in {m}. And on one question specifically — "{q}" — {Business} wasn't
+> named once, in fifteen answers. {Leader} was, {k} times.
+
+...and the offer paragraph becomes "A gap like this can come from a few
+different places and they aren't equally easy to close. What I sell is
+finding out which one applies to you."
+
+**Never claim the per-question absence is a gap unless the leader actually
+scores on that question** — some question phrasings get no business named
+by any assistant, and citing one of those as a competitive gap is a false
+comparison, not a finding.
+
+DEFEND still has no drafted letter — no DEFEND outreach has run yet. Write
+one from the framing principle above when that day comes, the same way
+this section was written from it.
+
 ---
 
 ## What the email gives away, and what it doesn't
