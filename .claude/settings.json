@@ -5,6 +5,8 @@
       "Bash(python3 .claude/skills/repo-consistency/scripts/check.py *)",
       "Bash(python3 *)",
       "Bash(py *)",
+      "Bash(python *)",
+      "Bash(mkdir -p ~/wardith-runs/*)",
       "Bash(git status)",
       "Bash(git status *)",
       "Bash(git log *)",

@@ -20,7 +20,7 @@ import re
 import sys
 
 from openpyxl import Workbook
-from openpyxl.styles import Alignment, Font
+from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.utils import get_column_letter
 
 EXCLUDED_REASONS = {
@@ -38,11 +38,24 @@ PRIORITIES = {"A", "B", "C", "REVIEW"}
 READY_VALUES = {"YES", "REVIEW"}
 DISPOSITIONS = {"OUTREACH", "EXCLUDED", "REVIEW"}
 OPPORTUNITY_TYPES = {"GAP", "GROWTH", "DEFEND", "NO OPPORTUNITY"}
+ACCESSIBILITY_VALUES = {"DIRECT", "IDENTIFIABLE", "GATEKEPT", "CORPORATE", "REVIEW"}
 SOURCE_ID_RE = re.compile(r"^S[0-9]{3,}$")
+
+# Named decision-maker with an obvious direct professional contact route (DIRECT)
+# down to filtered-through-reception with no clear route (GATEKEPT/REVIEW).
+# Colours are a triage aid only - they never change priority or disposition.
+ACCESSIBILITY_FILLS = {
+    "DIRECT": PatternFill(start_color="C6EFCE", end_color="C6EFCE", fill_type="solid"),
+    "IDENTIFIABLE": PatternFill(start_color="FFEB9C", end_color="FFEB9C", fill_type="solid"),
+    "GATEKEPT": PatternFill(start_color="FCE4D6", end_color="FCE4D6", fill_type="solid"),
+    "CORPORATE": PatternFill(start_color="D9D9D9", end_color="D9D9D9", fill_type="solid"),
+    "REVIEW": PatternFill(start_color="FFC7CE", end_color="FFC7CE", fill_type="solid"),
+}
 
 OUTREACH_COLUMNS = [
     ("priority", "Priority", 10, False),
     ("opportunity_type", "Opportunity type", 16, False),
+    ("accessibility", "Decision-maker accessibility", 18, False),
     ("business", "Business", 24, False),
     ("area", "Area", 16, False),
     ("website", "Website", 26, False),
@@ -60,6 +73,8 @@ OUTREACH_COLUMNS = [
     ("contact_person", "Contact person", 18, False),
     ("role", "Role", 16, False),
     ("contact_email", "Contact email", 26, False),
+    ("decision_maker_linkedin", "Decision-maker LinkedIn", 30, False),
+    ("accessibility_notes", "Accessibility notes", 40, True),
     ("ready_to_email", "Ready to email", 14, False),
     ("evidence_source_ids", "Evidence source IDs", 20, False),
 ]
@@ -69,6 +84,7 @@ MARKET_COLUMNS = [
     ("area", "Area", 16, False),
     ("disposition", "Disposition", 14, False),
     ("opportunity_type", "Opportunity type", 16, False),
+    ("accessibility", "Decision-maker accessibility", 18, False),
     ("total_ai_appearances", "Total AI appearances", 12, False),
     ("openai_appearances", "OpenAI appearances", 12, False),
     ("gemini_appearances", "Gemini appearances", 12, False),
@@ -140,6 +156,10 @@ def validate(data):
         # but if present it must be a real value, not a typo silently ignored
         if "opportunity_type" in m and m["opportunity_type"] not in OPPORTUNITY_TYPES:
             fail(f"market[{i}].opportunity_type: '{m['opportunity_type']}' not one of {sorted(OPPORTUNITY_TYPES)}")
+        # accessibility is optional here too - most of a census never gets
+        # contact-route research; it's required once a business reaches outreach[]
+        if "accessibility" in m and m["accessibility"] not in ACCESSIBILITY_VALUES:
+            fail(f"market[{i}].accessibility: '{m['accessibility']}' not one of {sorted(ACCESSIBILITY_VALUES)}")
 
     if not isinstance(data["outreach"], list):
         fail("outreach: must be a list")
@@ -148,7 +168,7 @@ def validate(data):
         "strongest_competitor", "competitor_appearances",
         "competitive_gap_finding", "why_prospect",
         "legal_entity", "company_number", "company_status",
-        "ready_to_email", "evidence_source_ids",
+        "ready_to_email", "evidence_source_ids", "accessibility",
     ]
     for i, o in enumerate(data["outreach"]):
         require_keys(o, required_outreach, f"outreach[{i}]")
@@ -156,6 +176,8 @@ def validate(data):
             fail(f"outreach[{i}].priority: '{o['priority']}' not one of {sorted(PRIORITIES)}")
         if "opportunity_type" in o and o["opportunity_type"] not in OPPORTUNITY_TYPES:
             fail(f"outreach[{i}].opportunity_type: '{o['opportunity_type']}' not one of {sorted(OPPORTUNITY_TYPES)}")
+        if o["accessibility"] not in ACCESSIBILITY_VALUES:
+            fail(f"outreach[{i}].accessibility: '{o['accessibility']}' not one of {sorted(ACCESSIBILITY_VALUES)}")
         if o["ready_to_email"] not in READY_VALUES:
             fail(f"outreach[{i}].ready_to_email: '{o['ready_to_email']}' not one of {sorted(READY_VALUES)}")
         if not isinstance(o["evidence_source_ids"], list) or not o["evidence_source_ids"]:
@@ -203,20 +225,43 @@ def write_table(ws, columns, rows):
 
 def priority_sort_key(rows):
     # REVIEW sorts last, deliberately - it means commercial priority hasn't
-    # been settled yet, not that it's a fourth tier below C
-    order = {"A": 0, "B": 1, "C": 2, "REVIEW": 3}
-    return sorted(range(len(rows)), key=lambda i: order.get(rows[i]["priority"], 99))
+    # been settled yet, not that it's a fourth tier below C. Accessibility is
+    # a secondary tiebreaker only, within the same priority band - it never
+    # promotes a business past a higher-priority one. A GATEKEPT priority-A
+    # prospect always outranks a DIRECT priority-B one.
+    priority_order = {"A": 0, "B": 1, "C": 2, "REVIEW": 3}
+    accessibility_order = {"DIRECT": 0, "IDENTIFIABLE": 1, "GATEKEPT": 2, "CORPORATE": 3, "REVIEW": 4}
+    return sorted(
+        range(len(rows)),
+        key=lambda i: (
+            priority_order.get(rows[i]["priority"], 99),
+            accessibility_order.get(rows[i].get("accessibility"), 99),
+        ),
+    )
+
+
+def color_accessibility_column(ws, columns):
+    col_idx = next((i for i, (key, *_rest) in enumerate(columns, start=1) if key == "accessibility"), None)
+    if col_idx is None:
+        return
+    for row_cells in ws.iter_rows(min_row=2, min_col=col_idx, max_col=col_idx):
+        for cell in row_cells:
+            fill = ACCESSIBILITY_FILLS.get(cell.value)
+            if fill is not None:
+                cell.fill = fill
 
 
 def build_outreach_sheet(wb, outreach_rows):
     ws = wb.create_sheet("OUTREACH")
     ordered = [outreach_rows[i] for i in priority_sort_key(outreach_rows)]
     write_table(ws, OUTREACH_COLUMNS, ordered)
+    color_accessibility_column(ws, OUTREACH_COLUMNS)
 
 
 def build_market_sheet(wb, market_rows):
     ws = wb.create_sheet("MARKET")
     write_table(ws, MARKET_COLUMNS, market_rows)
+    color_accessibility_column(ws, MARKET_COLUMNS)
 
 
 def build_excluded_sheet(wb, excluded_rows):
