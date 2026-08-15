@@ -55,11 +55,12 @@
       "area": "Sampleford",
       "disposition": "EXCLUDED",
       "opportunity_type": "DEFEND",
+      "accessibility": "CORPORATE",
       "total_ai_appearances": 14,
       "openai_appearances": 5,
       "gemini_appearances": 5,
       "perplexity_appearances": 4,
-      "notes": "Strongest relevant competitor in this market; already consistently named. Excluded from outreach this campaign, not from commercial consideration - being strongly visible is a DEFEND opportunity, not a reason to discard the business."
+      "notes": "Strongest relevant competitor in this market; already consistently named. Excluded from outreach this campaign, not from commercial consideration - being strongly visible is a DEFEND opportunity, not a reason to discard the business. Regional group brand; the local branch has no purchasing authority of its own."
     },
     {
       "business": "Example Pipe & Drain",
@@ -93,6 +94,8 @@
       "contact_person": "[PLACEHOLDER]",
       "role": "[PLACEHOLDER]",
       "contact_email": "[PLACEHOLDER]",
+      "accessibility": "GATEKEPT",
+      "accessibility_notes": "Companies House lists one director (fictitious: J. Sample) but no business email or LinkedIn profile could be confidently matched; the only public contact route is a reception enquiry form.",
       "ready_to_email": "REVIEW",
       "evidence_source_ids": ["S001", "S002"]
     },
@@ -113,9 +116,12 @@
       "legal_entity": "Private limited company",
       "company_number": "00000002",
       "company_status": "Active",
-      "contact_person": "[PLACEHOLDER]",
-      "role": "[PLACEHOLDER]",
-      "contact_email": "[PLACEHOLDER]",
+      "contact_person": "J. Fictional (fictitious)",
+      "role": "Owner-director",
+      "contact_email": "j.fictional@example.invalid",
+      "accessibility": "DIRECT",
+      "decision_maker_linkedin": "https://www.linkedin.com/in/example-invalid-fictional-owner",
+      "accessibility_notes": "Owner-director named on the company's own site and Companies House; LinkedIn profile confidently matched on name, role and location. Direct business email published on the site's contact page.",
       "ready_to_email": "YES",
       "evidence_source_ids": ["S003"]
     }

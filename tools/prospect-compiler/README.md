@@ -53,8 +53,23 @@ records *why* a business is being approached; it is a separate judgement
 from priority and from `ready_to_email` — see `CAMPAIGN-HANDOFF.md`. REVIEW
 is not an opportunity type — it belongs to `priority` and `disposition`.
 
+Every `outreach[]` row also carries `accessibility`
+(DIRECT/IDENTIFIABLE/GATEKEPT/CORPORATE/REVIEW) — the likely route to the
+actual decision-maker, colour-filled in the OUTREACH and MARKET sheets so
+the access problem is visible at a glance. It informs priority as one
+factor among several; it never sets or overrides it on its own — see
+`CAMPAIGN-HANDOFF.md`'s "Decision-maker accessibility" section.
+
 ## Testing the renderer
 
 ```
 python3 build_workbook.py --input sample/sample-campaign.json --output /tmp/sample-workbook.xlsx
+```
+
+Regression tests (`validate()`'s required/enum checks and the rendered
+workbook's shape) live in `test_build_workbook.py`, stdlib `unittest`, no
+extra dependency:
+
+```
+python3 test_build_workbook.py -v
 ```
