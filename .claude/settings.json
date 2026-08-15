@@ -7,11 +7,13 @@
       "Bash(py *)",
       "Bash(python *)",
       "Bash(mkdir -p ~/wardith-runs/*)",
+      "Bash(mkdir -p content/context-watch)",
       "Bash(git status)",
       "Bash(git status *)",
       "Bash(git log *)",
       "PowerShell",
-      "WebFetch"
+      "WebFetch",
+      "WebSearch"
     ]
   }
 }

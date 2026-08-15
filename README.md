@@ -28,6 +28,7 @@ Sole trader, one person. `wardith.co.uk`.
 | **Qualify a completed run into a campaign** | `/qualify` — `.claude/skills/qualify/` |
 | **Prepare outreach for a qualified campaign** | `/outreach` — `.claude/skills/outreach/` |
 | Compile a market run into an outreach workbook | `tools/prospect-compiler/` |
+| Scan for news/research supporting "Why this matters" | `/context-watch` — `.claude/skills/context-watch/` |
 
 **No monthly-plan record template exists yet.** Maintain, Grow and Lead are
 priced and published but never delivered — that format will be built from the
@@ -57,6 +58,8 @@ public. Those records live on the owner's own encrypted machine —
 
 ## Working here
 
-Work on a branch, show it, merge when the owner agrees. **Merging publishes** —
-Netlify deploys `main` — so say what a merge will put in front of the world
-before doing it, including "nothing visible", which is often the honest answer.
+Work directly on `main`; branches are for experimental, high-risk or major
+architectural work, or when explicitly requested. **Pushing to `main`
+publishes** — Netlify deploys it — so say what a push will put in front of the
+world before doing it, including "nothing visible", which is often the honest
+answer.

@@ -14,3 +14,8 @@ __pycache__/
 # is whatever "don't ask again" recorded locally, and it should never arrive in
 # a pull request as though it were a decision.
 .claude/settings.local.json
+
+# /context-watch drafts. Unapproved article finds — review locally, never
+# committed. An approved draft is promoted into `site/src/content/context/`
+# by hand as its own explicit step; that's what enters git.
+content/

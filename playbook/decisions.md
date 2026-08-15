@@ -74,8 +74,15 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
 
 ## Working practice
 
-- **Always work on a branch.** Merging after the owner agrees is normal, not an
-  exception, and agreement is per piece of work.
-- **Merging publishes** — Netlify deploys `main`. Say what a merge will publish
-  before doing it.
+- **Work directly on `main`.** Branches are for experimental, high-risk or
+  major architectural work, or when explicitly requested — not the default.
+  2026-08-16.
+- **Pushing to `main` publishes** — Netlify deploys it. Say what a push will
+  publish before doing it.
 - **Never invent a business fact.** Unknowns are `[PLACEHOLDER]` and flagged.
+
+## Site content
+
+- **`/context-watch` drafts are never committed.** `content/context-watch/`
+  is gitignored; promoting a draft into `site/src/content/context/` is a
+  separate, explicit, later step, never automatic. 2026-08-16.
