@@ -49,12 +49,27 @@ and `robots.txt` stay as they are.
 
 ## Git
 
-**Always work on a branch.** Show the work, merge when the owner agrees.
-Agreement is per piece of work, not standing permission.
+**Work directly on `main`.** Make scoped changes, test them, commit, and push
+— no temporary branch needed. Commits are clear and atomic. Branch only for
+genuinely experimental, high-risk, or major architectural work, or when the
+owner explicitly asks for one.
 
-**Merging publishes.** Netlify deploys `main`. Say what a merge will put in
-front of the world first — including "nothing visible", which is often the
+**Preserve what's already there.** Uncommitted work stays uncommitted unless
+it's yours to finish. Inspect unexpected changes before touching them.
+
+**Some things still need the owner's go-ahead first:** force-pushing,
+rewriting history, destructive resets, deleting substantial existing work,
+major architectural changes, and production or infrastructure changes.
+
+**Review, research, and audit tasks stay read-only** unless implementation is
+explicitly requested.
+
+**Pushing to `main` publishes.** Netlify deploys it. Say what a push will put
+in front of the world first — including "nothing visible", which is often the
 honest answer.
+
+**Report on completion:** what changed, what checks or tests ran, and the
+commit created.
 
 ## Writing in this repo
 
