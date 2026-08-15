@@ -52,11 +52,46 @@ this is the one input this skill genuinely cannot infer.
 2. Confirm all six env vars are set and non-empty. If any are missing, stop
    and quote the exact fix from `tools/trade-run/README.md` ("Setting up the
    keys") — do not guess a model name or proceed with a partial set.
-3. Print one reminder line that provider spend caps
+   **Load them by running `. "$HOME\.noven\env.ps1"` inside an actual
+   PowerShell tool call — never via the `!` user-command prefix.** That
+   prefix runs a different shell, which cannot interpret a PowerShell-syntax
+   file at all, and will silently leave every env var unset rather than
+   error. **Shell state does not carry over between separate tool
+   invocations, either.** Sourcing the file in one call and running
+   `trade_run.py` in a later, separate call means the script runs against an
+   empty environment. Every command in Step 4 and Step 5 must re-source the
+   file in the *same* call as the script invocation — see those steps.
+3. **Confirm the loaded models are the intended prospecting models, not
+   stale or leftover values — before Step 4 spends anything.** Two named
+   failure modes, both observed on a real run, plus a general check:
+   - **`PERPLEXITY_MODEL` must be a bare model name (`sonar`), never a
+     provider-prefixed one (`perplexity/sonar`).** If it has a `perplexity/`
+     prefix, **stop and say so** before Step 4 — the prefixed form is a
+     leftover from the old Agent API convention this script no longer
+     calls — see the comment on `call_perplexity()` in `trade_run.py`
+     (`openai/gpt-5.6-sol`-style names belong to that retired path, not the
+     current `/v1/sonar` endpoint it actually uses). The smoke test would
+     catch this too if missed here, but catching it now costs nothing
+     instead of one wasted smoke attempt.
+   - **`OPENAI_MODEL` should currently be `gpt-5.6-luna`** — the cheaper
+     model designated for prospecting, deliberately different from whatever
+     frontier/audit-default model `env.ps1` may otherwise hold for client
+     audit work. Update this line if that designation ever changes; don't
+     let it drift silently.
+   - **Cross-check all three against the most recently modified prior run.**
+     Find the newest `~/wardith-runs/*.csv` (excluding the file this run is
+     about to create) and read its per-provider `model_version` values. If
+     any of `OPENAI_MODEL`/`GEMINI_MODEL`/`PERPLEXITY_MODEL` differs from
+     what that prior run actually recorded, **stop and print both values**
+     before proceeding — this may be an intentional upgrade, but it must be
+     a deliberate one, confirmed by the owner, not a stale env.ps1 default
+     nobody re-checked. This is exactly the gap that let 19 of 90 queries
+     run on a stale `OPENAI_MODEL` before anyone noticed, purely by chance.
+4. Print one reminder line that provider spend caps
    (`playbook/records-and-data.md`, "Spend caps") should already be
    confirmed set on each provider dashboard. This is not something you can
    check programmatically — say it once, then move on. Do not block on it.
-4. Check the current git branch. If it's the default branch, create and
+5. Check the current git branch. If it's the default branch, create and
    switch to a new branch for this run (e.g. `trade-run/<slug>`) before
    writing the question file in Step 3 — this repo's convention
    (`CLAUDE.md`, "Always work on a branch") applies to the question file
@@ -109,15 +144,15 @@ without having to open the file.
 
 ## Step 4 — Smoke test (automatic, not a manual checkpoint)
 
-Run:
+Run inside a single PowerShell tool call — the env-var sourcing and the
+script invocation are in the *same* call, per Step 2 item 2, never split
+across two:
 
-```
-python3 trade_run.py --questions questions-<slug>.csv --client <slug> \
+```powershell
+. "$HOME\.noven\env.ps1"
+py trade_run.py --questions questions-<slug>.csv --client <slug> `
     --location <geography> --out ~/wardith-runs/<slug>.csv --smoke
 ```
-
-(PowerShell: `py` instead of `python3`, backtick line continuation instead
-of `\`.)
 
 This produces three rows, one per provider, tagged `smoke — delete this
 row` in `notes`. Check all three automatically against the five checks
@@ -143,14 +178,21 @@ outage) — do not proceed to the full run.
   can be a genuine false positive (a model paraphrasing "the area" instead
   of repeating the place name), so it's a note, not a gate.
 
-If smoke passes the blocking checks, delete the three smoke rows from the
-output CSV (filter out rows whose `notes` contains "smoke") and continue
-immediately — no prompt, no pause.
+If smoke passes the blocking checks, delete **every** row tagged smoke from
+the output CSV (filter out rows whose `notes` contains "smoke") — not
+literally three. A provider that errors on its first attempt and succeeds
+on a retry leaves both rows behind, since `trade_run.py` never overwrites a
+failed row, only appends its replacement; count what's actually tagged, not
+what's expected. Continue immediately once cleared — no prompt, no pause.
 
 ## Step 5 — Full run (automatic, this is the real spend)
 
-```
-python3 trade_run.py --questions questions-<slug>.csv --client <slug> \
+Same rule as Step 4 — source the keys file inside this same PowerShell call,
+never a separate one:
+
+```powershell
+. "$HOME\.noven\env.ps1"
+py trade_run.py --questions questions-<slug>.csv --client <slug> `
     --location <geography> --out ~/wardith-runs/<slug>.csv --cap 90
 ```
 
