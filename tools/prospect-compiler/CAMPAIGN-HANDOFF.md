@@ -42,6 +42,12 @@ completed Chester and Wirral retrospective, 2026-08-14):
   is worth pursuing. Visibility count alone does not set this — a `DEFEND`
   business can be Priority A, a zero-visibility `GAP` business can be
   Priority C.
+- **Decision-maker accessibility** (`DIRECT` / `IDENTIFIABLE` / `GATEKEPT` /
+  `CORPORATE` / `REVIEW`) — the likely route to the person who can actually
+  say yes. A research finding, recorded per prospect, distinct from
+  commercial opportunity — see the subsection below. It is one input to
+  priority, never a rule that sets or overrides it by itself: a strong `GAP`
+  or `DEFEND` business stays high priority even when `GATEKEPT`.
 - **Send-readiness** (`ready_to_email`: `YES` / `REVIEW`) — whether *this*
   email is ready to go today: verified contact, correct numbers, a truthful
   angle.
@@ -71,6 +77,10 @@ Before writing a single line of campaign JSON, have all of this in hand:
 - Companies House / legal-entity verification, where a business is a
   candidate for `outreach[]`
 - competitive-gap analysis per `playbook/outreach-process.md` step 4
+- decision-maker / contact-route research for every `outreach[]` candidate,
+  sufficient to place it in one of the accessibility categories below —
+  `REVIEW` is an acceptable outcome of this research, an untouched field is
+  not
 
 **If something on this list is missing, mark it and stop rather than
 fabricate it.** `CLAUDE.md`'s rule is absolute: never invent a business fact.
@@ -151,6 +161,81 @@ no credibility read) to classify responsibly — leave `opportunity_type` off
 entirely rather than guess. It is optional on both `market_entry` and
 `outreach_entry` for exactly this reason.
 
+### Decision-maker accessibility
+
+Commercial attractiveness alone doesn't say how easy a business is to
+actually reach. Some strong prospects are heavily gatekept behind
+reception/admin; some owner-led businesses with a thinner opportunity are
+much easier to sell to. Every business that reaches `outreach[]` gets an
+`accessibility` classification recording which situation it's in:
+
+- **`DIRECT`** — a named decision-maker (owner, director, or the plausible
+  operational/marketing lead) with an obvious direct professional contact
+  route: a personal business email, or a named contact the site itself
+  routes enquiries to.
+- **`IDENTIFIABLE`** — the decision-maker is confidently identified (a
+  Companies House director/PSC record, a LinkedIn profile that matches on
+  name, role and location, a named principal on the business's own site) but
+  the only working contact route is a generic company channel — an
+  `info@`/`enquiries@` inbox, a contact form with no named recipient.
+- **`GATEKEPT`** — the business is a genuine prospect, but contact appears
+  filtered through reception/admin with no clear route to a named
+  decision-maker at all.
+- **`CORPORATE`** — the real purchasing or marketing decision sits above the
+  local business or branch, or inside a larger group (a franchise head
+  office, a national chain's marketing team) — the local contact, even if
+  findable, isn't who decides.
+- **`REVIEW`** — the research is genuinely ambiguous: a candidate LinkedIn
+  match that isn't confident, conflicting signals about who's actively
+  running the business, or not enough public information to place it in any
+  of the four categories above. **This is the required outcome when a match
+  can't be made confidently — never guess to force a cleaner-looking
+  category.**
+
+**What to look for, all from public sources, none of it invented:**
+
+- company directors, owners, or founders (Companies House officers/PSC
+  pages, the business's own "About" or team page);
+- who is the likely operational or marketing decision-maker, where that
+  differs from the registered director (e.g. a practice manager named on
+  the site);
+- whether that person appears **actively associated with the business now**
+  — a director record alone doesn't confirm this; check the business's own
+  site or a recent, dated public mention;
+- a LinkedIn profile, **only where confidently matched** on name, current
+  role, and business/location together — never a same-name profile that
+  doesn't corroborate on role or place;
+- whether a direct, named business email is publicly available, versus only
+  a generic/reception/admin address;
+- any other legitimate public business contact route that materially
+  improves the odds of reaching this person (a named contact on a trade
+  register profile, a direct phone line attributed to them, and similar) —
+  worth recording in `accessibility_notes`, not a reason to invent a new
+  schema field for every possible route.
+
+**Do not invent or infer personal contact details.** A phone number,
+personal email, or home address that isn't published by the business itself
+or a trusted register never goes in `accessibility_notes`,
+`decision_maker_linkedin`, or anywhere else in the record — the same rule
+`legal_entity`/`contact_email` already follow, extended to this field. An
+inferred email pattern (`firstname.lastname@` guessed from a naming
+convention seen elsewhere) is exactly this kind of invention and is
+forbidden here too.
+
+**Decision-maker accessibility informs priority; it does not decide it.** A
+`GATEKEPT` business with a strong `GAP`/`DEFEND` story and real commercial
+weight can and should stay Priority A — the workbook makes the access
+problem visible (see the OUTREACH sheet's colour-filled accessibility
+column) precisely so a different route (LinkedIn, a trade-register listing,
+a second attempt via a different page) can be found later, not so the
+business gets silently deprioritised.
+
+**`decision_maker_linkedin` is a research field, not an outreach channel.**
+`playbook/decisions.md` still holds "LinkedIn outreach is later, not now" —
+that decision is about *sending*, unchanged by this. Recording a confidently
+matched profile here is what makes a future, separately-decided LinkedIn
+approach possible; it is not itself a green light to use it.
+
 ### Post-audit routing
 
 `opportunity_type` describes why Wardith approaches a business; it does not
@@ -195,6 +280,7 @@ to skip the Audit by agreement — the exception, not the default sales path.
 | `area` | yes | RESEARCH — the specific branch/trading location, from the census |
 | `disposition` | yes | CLAUDE — `OUTREACH` / `EXCLUDED` / `REVIEW`, against the five-point check in `playbook/outreach-process.md` step 4. **The schema has no separate approval field for this** — see §5 for exactly which fields carry the formal human gate |
 | `opportunity_type` | no | CLAUDE — `GAP` / `GROWTH` / `DEFEND` / `NO OPPORTUNITY`, per the subsection above — not `REVIEW`, which belongs to `disposition`. Separate from `disposition`: a business can be `EXCLUDED` from this campaign's outreach and still carry a `DEFEND` opportunity type for later |
+| `accessibility` | no | CLAUDE, from RESEARCH — `DIRECT` / `IDENTIFIABLE` / `GATEKEPT` / `CORPORATE` / `REVIEW`, per the "Decision-maker accessibility" subsection. Optional here — most census entries don't get individual contact-route research; it becomes required once a business reaches `outreach[]` |
 | `total_ai_appearances` | yes | AUTO — once mention counts exist for this run |
 | `openai_appearances` / `gemini_appearances` / `perplexity_appearances` | no | AUTO |
 | `notes` | no | CLAUDE — legal-entity ambiguity, geography ambiguity, anything a later reader needs |
@@ -220,6 +306,9 @@ to skip the Audit by agreement — the exception, not the default sales path.
 | `contact_person` | no | RESEARCH — `[PLACEHOLDER]` is permitted here (see `sample-campaign.json`) precisely because this field is optional; never invent a name |
 | `role` | no | RESEARCH — same as above |
 | `contact_email` | no | RESEARCH — same as above |
+| `accessibility` | **yes** | CLAUDE, from RESEARCH — `DIRECT` / `IDENTIFIABLE` / `GATEKEPT` / `CORPORATE` / `REVIEW`, per the "Decision-maker accessibility" subsection. Required once a business is in `outreach[]` — an ambiguous match is `REVIEW`, not an omitted field |
+| `decision_maker_linkedin` | no | RESEARCH — only where confidently matched on name, role and business/location together; omit rather than record an unconfident guess |
+| `accessibility_notes` | no | CLAUDE — one or two sentences: who was found, whether they're actively associated with the business now, and why the classification landed where it did (e.g. "generic inbox only", "regional group, no local purchasing authority") |
 | `ready_to_email` | yes | **HUMAN** — `YES` / `REVIEW`. The other half of the gate — see §5 |
 | `evidence_source_ids` | yes | CLAUDE — at least one `source_id` from `sources[]`, referencing the entries that support this record |
 
@@ -276,6 +365,13 @@ to skip the Audit by agreement — the exception, not the default sales path.
 - **No invented contact names or emails.** `contact_person`, `role` and
   `contact_email` are optional precisely so `[PLACEHOLDER]` can stand in
   honestly instead of a guess — never fill these with anything unverified.
+- **No invented directors, LinkedIn matches, or contact routes.**
+  `decision_maker_linkedin` goes in only where the match is confident on
+  name, role and business/location together — a same-name profile that
+  doesn't corroborate on the other two is not a match, it's a coincidence.
+  An ambiguous person-match is `accessibility: REVIEW`, never a guessed
+  `DIRECT`/`IDENTIFIABLE` to make the record look more complete than the
+  research supports.
 - **Placeholders belong only where the schema makes a field optional.** A
   required field with incomplete research is not a placeholder problem — it
   means the business is not ready for `outreach[]` yet. Leave it in
@@ -321,26 +417,31 @@ will pass validation.
 2. Determine AI market position for businesses with enough evidence to
    support it, and classify `opportunity_type` (`GAP`/`GROWTH`/`DEFEND`/
    `NO OPPORTUNITY`) — §3. Not every census business gets one.
-3. Produce proposed classifications: `disposition` for every market entry,
+3. For every business heading toward `outreach[]`, research and classify
+   `accessibility` (`DIRECT`/`IDENTIFIABLE`/`GATEKEPT`/`CORPORATE`/`REVIEW`)
+   — §3's "Decision-maker accessibility" subsection. Required, not optional,
+   once a business is in `outreach[]`.
+4. Produce proposed classifications: `disposition` for every market entry,
    `reason` for every exclusion, `priority` and `ready_to_email` for every
-   outreach candidate.
-4. Present the HUMAN fields — `priority` and `ready_to_email` — for the
+   outreach candidate — weighing `accessibility` as one factor among several,
+   never as an automatic override of commercial opportunity.
+5. Present the HUMAN fields — `priority` and `ready_to_email` — for the
    owner's approval before treating anything as final.
-5. Populate the final JSON against `schema.json` exactly, using §3 as the
+6. Populate the final JSON against `schema.json` exactly, using §3 as the
    field-by-field checklist.
-6. Save the campaign JSON in the run's canonical location. There is no
+7. Save the campaign JSON in the run's canonical location. There is no
    formal folder rule for prospecting runs yet (only client audits have one,
    in `playbook/records-and-data.md`) — until one exists, follow the pattern
    the Wirral run already used: `~/wardith-runs/<sector>-<geography>/`
    holding the campaign JSON and workbook, next to the raw CSV at
    `~/wardith-runs/<sector>-<geography>.csv`. Never inside this repository.
-7. Run the existing Prospect Compiler (§7).
-8. **If validation fails, fix the data or this handoff, not the tooling.**
+8. Run the existing Prospect Compiler (§7).
+9. **If validation fails, fix the data or this handoff, not the tooling.**
    See §8.
-9. Contact verification and outreach sending happen after this procedure,
-   not as part of it — see `playbook/outreach-process.md`. Every opportunity
-   type routes to the Audit first (§1); what follows the audit is decided
-   from what the audit finds, not predicted at qualification time.
+10. Contact verification and outreach sending happen after this procedure,
+    not as part of it — see `playbook/outreach-process.md`. Every opportunity
+    type routes to the Audit first (§1); what follows the audit is decided
+    from what the audit finds, not predicted at qualification time.
 
 ---
 
