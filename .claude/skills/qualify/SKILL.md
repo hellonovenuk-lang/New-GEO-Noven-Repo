@@ -150,20 +150,45 @@ name (spot-check a sample before assuming this), write a small
 `--variants-file` for it — see `tools/mention-count/README.md`. Don't guess
 variants in advance.
 
-## Stage 4 — Relative market-position analysis
+## Stage 4 — Relative market-position analysis, and the auditable scoring pass
 
-Judgement, not arithmetic. Using the mention counts against *this market's
-own distribution* (not a fixed count — see `CAMPAIGN-HANDOFF.md`'s "Market
-position and opportunity type" subsection), place each credible business:
-Leader / Upper-mid / Mid / Low / Absent. Consider total appearances, share
-relative to the leaders, provider split, question/intent spread where
-useful, and cross-model consistency. No proprietary score, visibility
-percentage, or hard band like "0–5 = GAP" — that is exactly the invented
-precision the methodology forbids.
+**Candidate-pool consistency first.** State this campaign's inclusion
+threshold before researching anyone, and apply the same research depth to
+every business that meets it — never let selection bias (researching
+whoever's easiest first) decide who reaches `outreach[]`. A business that
+meets the threshold but stays under-researched is `REVIEW`, not silently
+dropped or silently promoted.
 
-**Do not force every census business through this.** Most of a census won't
-have enough individual research behind it yet to classify responsibly —
-that's what Stages 5–7 are for, and even then, some will stay unclassified.
+**Auditable scoring (optional per business, `CAMPAIGN-HANDOFF.md` §3a).** A
+business opts in by getting a `service_scope` classified from evidence.
+This requires the campaign's questions to be relevance-classified first
+(`run.question_relevance[]` — §3a) so a specialist is never penalized for
+absence from a question outside its verified scope. Once the 9 evidence-
+backed value fields (§3a) are set for every scored business, run:
+
+```
+python3 tools/prospect-compiler/scoring_engine.py --input <campaign>.json --in-place
+```
+
+This mechanically computes `visibility_score`, `gap_strength`,
+`final_score`, `overall_rank`, `outreach_rank`, every readiness gate, and a
+proposed `opportunity_type` per §3a's general rule — never from an absolute
+visibility band alone, and never letting a business with no real peer
+default into `DEFEND`. These remain *proposals*: the owner still approves
+`priority` and `ready_to_email` exactly as the approval gate below already
+requires.
+
+**A business not opting in** falls back to the pre-existing qualitative
+path: place it Leader / Upper-mid / Mid / Low / Absent by judgement against
+*this market's own distribution* — total appearances, share relative to the
+leaders, provider split, cross-model consistency. No proprietary score for
+this path; that restriction is specifically what opting into `service_scope`
+lifts, since it brings the full documented methodology with it.
+
+**Do not force every census business through either path.** Most of a
+census won't have enough individual research behind it yet to classify
+responsibly — that's what Stages 5–7 are for, and even then, some will stay
+unclassified.
 
 ## Stage 5 — External business verification
 
@@ -206,6 +231,13 @@ research pass itself:
    ambiguous match is `REVIEW`, not a guess** — this is the same discipline
    as an ambiguous legal-entity match staying `REVIEW` rather than being
    silently resolved either way.
+6. **If this business opted into auditable scoring (Stage 4),** also set
+   `direct_dm_route` on the same 6-tier scale used verbatim in
+   `CAMPAIGN-HANDOFF.md` §3a (5=confirmed direct route down to 0=no usable
+   route), plus `contact_route_quality` and `contact_identity_confidence`.
+   A generic inbox is never scored as equivalent to a confirmed direct
+   route just because an email address exists — this is what makes
+   `ready_to_email` a genuine gate rather than "an address was found".
 
 **Never invent or infer personal contact details.** No phone number,
 personal email, or address that isn't published by the business itself or a
@@ -251,6 +283,15 @@ and `CAMPAIGN-HANDOFF.md`. Rules that must hold:
   from this particular campaign.** `opportunity_type` and `disposition` are
   independent — see `sample-campaign.json`'s Northgate Pipeworks for the
   shape: `DEFEND`, `EXCLUDED` from this round, both true at once.
+- **A business scored per Stage 4's auditable model gets its
+  `opportunity_type` from `scoring_engine.py`, not hand judgement** —
+  `CAMPAIGN-HANDOFF.md` §3a's general rule (DEFEND requires a real
+  same-scope peer, meaningful visibility in absolute terms, close relative
+  position, and broad question coverage; GAP requires real credibility;
+  REVIEW covers genuinely insufficient evidence). `REVIEW` is a legitimate
+  `opportunity_type` value for a scored business specifically — unlike the
+  unscored path above, where `REVIEW` still belongs to `disposition`/
+  `priority` only.
 
 ## Stage 9 — Assign disposition, reason, priority, ready_to_email
 
@@ -272,7 +313,13 @@ and `CAMPAIGN-HANDOFF.md`. Rules that must hold:
 - **`ready_to_email`** (`YES`/`REVIEW`) — whether *this* email is
   send-ready today: verified contact, correct numbers, a truthful,
   non-misleading angle for this specific opportunity type (the framing
-  principles in `outreach-process.md` step 4 — not fixed copy).
+  principles in `outreach-process.md` step 4 — not fixed copy). For a
+  business scored per Stage 4, `scoring_engine.py` proposes this value from
+  `CAMPAIGN-HANDOFF.md` §3a's explicit gate (verified business, adequate
+  commercial fit, sufficient evidence confidence, completed research,
+  verified contact route, acceptable identity confidence) — still a
+  proposal for the owner to approve, same as always, but no longer a vibes
+  call: a generic inbox with an unconfirmed name can no longer read `YES`.
 
 Every `outreach[]` entry must also carry `accessibility` by this point —
 it's a required field on the schema, not an optional extra (Stage 6).
@@ -290,7 +337,20 @@ placeholders only where the schema makes a field optional). Save to
 `~/wardith-runs/<slug>/<slug>-campaign.json` — never inside this
 repository.
 
-## Stage 11 — Validate and render
+## Stage 11 — Score, validate, and render
+
+If any business in this campaign has `service_scope` set (Stage 4), run the
+scoring engine first — it must run before the renderer, since
+`build_workbook.py`'s `validate()` requires every scored entry's derived
+fields to already be populated:
+
+```
+python3 tools/prospect-compiler/scoring_engine.py \
+    --input ~/wardith-runs/<slug>/<slug>-campaign.json --in-place
+```
+
+Then render (this step alone, unchanged, for a campaign with no scored
+businesses):
 
 ```
 python3 tools/prospect-compiler/build_workbook.py \
@@ -300,7 +360,11 @@ python3 tools/prospect-compiler/build_workbook.py \
 
 If validation fails: fix the data or this skill's output, per
 `CAMPAIGN-HANDOFF.md` §8's anti-detour rule. Never create a parallel
-renderer or weaken the compiler's validation to make bad data pass.
+renderer or weaken the compiler's validation to make bad data pass. After a
+successful render, confirm the workbook reopens with populated calculated
+values in data-only mode — `CAMPAIGN-HANDOFF.md` §3a's "Portable downstream
+handoff" note explains the one narrow, documented exception (a non-ready
+business's `Outreach rank` cell).
 
 ## Stage 12 — Report
 
@@ -350,10 +414,10 @@ second formal HUMAN-gated field the way `priority`/`ready_to_email` are.
   completed run's output.
 - **Does not send outreach**, draft emails, connect on LinkedIn, or touch
   anything past the rendered workbook and report.
-- **Does not modify `schema.json`, `build_workbook.py`, or the playbook.**
-  If the schema genuinely can't represent something this skill needs to
-  record, that's a real blocker — stop and say so rather than working
-  around it with an invented field or a notes-field workaround.
+- **Does not modify `schema.json`, `build_workbook.py`, `scoring_engine.py`,
+  or the playbook.** If the schema genuinely can't represent something this
+  skill needs to record, that's a real blocker — stop and say so rather than
+  working around it with an invented field or a notes-field workaround.
 - **Does not invent or infer contact details of any kind** — names, emails,
   phone numbers, or LinkedIn matches. An ambiguous person-match is
   `accessibility: REVIEW`, never a guess dressed up as a confident one.

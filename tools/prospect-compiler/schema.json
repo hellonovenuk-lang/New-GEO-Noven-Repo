@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Wardith prospect-compiler campaign input",
-  "description": "A validated, structured market-run dataset, prepared by Claude/human judgement during a Wardith sector × local-market campaign. build_workbook.py renders this deterministically into an .xlsx workbook. It does not do research or judgement.",
+  "description": "A validated, structured market-run dataset, prepared by Claude/human judgement during a Wardith sector x local-market campaign. build_workbook.py renders this deterministically into an .xlsx workbook. It does not do research or judgement. Version 2 (2026-08-16) generalizes the auditable v2.1 scoring methodology (see CAMPAIGN-HANDOFF.md Section 3a) into the canonical schema: service-scope classification, question-relevance classification, a documented 14-field scoring model, structured decision-maker accessibility, and overall/outreach ranking. All v2 fields are additive and optional so pre-v2 campaign JSON files remain valid historical records; a campaign qualified going forward is expected to populate them.",
   "type": "object",
   "required": ["run", "market", "outreach", "excluded", "sources"],
   "additionalProperties": false,
@@ -15,6 +15,98 @@
         "model": { "type": "string", "minLength": 1 }
       }
     },
+    "question_entry": {
+      "type": "object",
+      "description": "One campaign question. question_id matches the question_id used in the raw trade-run CSV and mention-counts.json (e.g. 'q01') - the join key between a question's text and its relevance classification and per-question appearance counts.",
+      "required": ["question_id", "text"],
+      "additionalProperties": false,
+      "properties": {
+        "question_id": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "minLength": 1 }
+      }
+    },
+    "service_scope_def": {
+      "type": "object",
+      "description": "One campaign-defined service-scope label (e.g. 'kitchen_only', 'bathroom_only', 'combined' for a kitchen-and-bathroom campaign; a different vocabulary entirely for a different sector). applicable_services names which of the campaign's real-world services this scope genuinely offers - this is what question-relevance weighting keys off, not the label string itself.",
+      "required": ["label", "applicable_services"],
+      "additionalProperties": false,
+      "properties": {
+        "label": { "type": "string", "minLength": 1 },
+        "applicable_services": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1
+        },
+        "structure": { "type": "string", "enum": ["INDEPENDENT_LOCAL", "LOCALLY_OWNED_FRANCHISE", "CENTRALLY_CONTROLLED_CHAIN"] },
+        "description": { "type": "string" }
+      }
+    },
+    "question_relevance_entry": {
+      "type": "object",
+      "description": "The relevance classification of one campaign question, per CAMPAIGN-HANDOFF.md Section 3a. SERVICE_ONLY requires 'service' (must match a value that appears in at least one service_scope_def's applicable_services). AMBIGUOUS requires 'weight' (0 excludes the question from relevant-question scoring entirely; a fraction applies a documented partial weight; the field must not be silently omitted, defaulting a question to full relevance by accident).",
+      "required": ["question_id", "type", "rationale"],
+      "additionalProperties": false,
+      "properties": {
+        "question_id": { "type": "string", "minLength": 1 },
+        "type": { "type": "string", "enum": ["SERVICE_ONLY", "EXPLICITLY_COMBINED", "SINGLE_SERVICE_INCLUSIVE", "AMBIGUOUS"] },
+        "service": { "type": "string", "minLength": 1 },
+        "weight": { "type": "number", "minimum": 0, "maximum": 1 },
+        "rationale": { "type": "string", "minLength": 1 }
+      }
+    },
+    "scoring_fields": {
+      "type": "object",
+      "description": "The auditable v2.1 scoring model, generalized. Every 0-5 field's scale, every formula, every threshold, and every gate is documented in CAMPAIGN-HANDOFF.md Section 3a - this schema only enforces shape and range, not the reasoning behind a value. VALUE fields (commercial_fit, service_relevance, business_credibility, ability_to_buy, decision_maker_identified, direct_dm_route, contact_route_quality, contact_identity_confidence, research_completeness) are Claude's evidence-backed judgement calls. DERIVED fields (visibility_rate, visibility_score, relative_position, question_coverage, gap_strength, overall_evidence_confidence, final_score, overall_rank, outreach_rank, and the *_verified/*_complete/eligible_for_outreach gates) must be produced by tools/prospect-compiler/scoring_engine.py, never hand-computed or hand-typed - see CAMPAIGN-HANDOFF.md Section 3a's 'formulas, not vibes' rule.",
+      "properties": {
+        "service_scope": { "type": "string", "minLength": 1 },
+        "business_structure": { "type": "string", "enum": ["INDEPENDENT_LOCAL", "LOCALLY_OWNED_FRANCHISE", "CENTRALLY_CONTROLLED_CHAIN"] },
+        "business_type_notes": { "type": "string" },
+        "question_appearances": {
+          "type": "object",
+          "additionalProperties": { "type": "integer", "minimum": 0 }
+        },
+        "relevant_appearances": { "type": "number", "minimum": 0 },
+        "relevant_opportunities": { "type": "number", "minimum": 0 },
+        "visibility_rate": { "type": "number", "minimum": 0, "maximum": 100 },
+        "visibility_score": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "group_top_visibility_rate": { "type": "number", "minimum": 0, "maximum": 100 },
+        "relative_position": { "type": "number", "minimum": 0 },
+        "question_coverage": { "type": "number", "minimum": 0, "maximum": 1 },
+        "commercial_fit": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "service_relevance": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "gap_strength": { "type": "number", "minimum": 0, "maximum": 5 },
+        "business_credibility": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "ability_to_buy": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "decision_maker_identified": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "direct_dm_route": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "contact_route_quality": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "contact_identity_confidence": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "overall_evidence_confidence": { "type": "number", "minimum": 0, "maximum": 5 },
+        "research_completeness": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "final_score": { "type": "number", "minimum": 0, "maximum": 100 },
+        "overall_rank": { "type": "integer", "minimum": 1 },
+        "outreach_rank": { "type": "integer", "minimum": 1 },
+        "business_verified": { "type": "string", "enum": ["YES", "REVIEW"] },
+        "contact_route_verified": { "type": "string", "enum": ["YES", "REVIEW"] },
+        "named_decision_maker_verified": { "type": "string", "enum": ["YES", "PROBABLE", "NO"] },
+        "identity_confidence": { "type": "string", "enum": ["CONFIRMED", "PROBABLE", "POSSIBLE", "UNKNOWN"] },
+        "research_complete": { "type": "string", "enum": ["YES", "NO"] },
+        "eligible_for_outreach": { "type": "string", "enum": ["YES", "REVIEW"] },
+        "accessibility_grade": {
+          "type": "string",
+          "enum": [
+            "CONFIRMED_DIRECT",
+            "CONFIRMED_GENERIC_ROUTE",
+            "PROBABLE_UNCONFIRMED",
+            "GENERIC_INBOX_ONLY",
+            "CONTACT_FORM_OR_PHONE_ONLY",
+            "NO_USABLE_ROUTE"
+          ]
+        },
+        "nearest_competitor": { "type": "string" },
+        "leadership_evidence": { "type": "string" }
+      }
+    },
     "market_entry": {
       "type": "object",
       "required": ["business", "area", "disposition", "total_ai_appearances"],
@@ -23,13 +115,50 @@
         "business": { "type": "string", "minLength": 1 },
         "area": { "type": "string", "minLength": 1 },
         "disposition": { "type": "string", "enum": ["OUTREACH", "EXCLUDED", "REVIEW"] },
-        "opportunity_type": { "type": "string", "enum": ["GAP", "GROWTH", "DEFEND", "NO OPPORTUNITY"] },
+        "opportunity_type": { "type": "string", "enum": ["GAP", "GROWTH", "DEFEND", "NO OPPORTUNITY", "REVIEW"] },
         "accessibility": { "type": "string", "enum": ["DIRECT", "IDENTIFIABLE", "GATEKEPT", "CORPORATE", "REVIEW"] },
         "total_ai_appearances": { "type": "integer", "minimum": 0 },
         "openai_appearances": { "type": "integer", "minimum": 0 },
         "gemini_appearances": { "type": "integer", "minimum": 0 },
         "perplexity_appearances": { "type": "integer", "minimum": 0 },
-        "notes": { "type": "string" }
+        "notes": { "type": "string" },
+        "service_scope": { "type": "string", "minLength": 1 },
+        "business_structure": { "type": "string", "enum": ["INDEPENDENT_LOCAL", "LOCALLY_OWNED_FRANCHISE", "CENTRALLY_CONTROLLED_CHAIN"] },
+        "business_type_notes": { "type": "string" },
+        "question_appearances": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        "relevant_appearances": { "type": "number", "minimum": 0 },
+        "relevant_opportunities": { "type": "number", "minimum": 0 },
+        "visibility_rate": { "type": "number", "minimum": 0, "maximum": 100 },
+        "visibility_score": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "group_top_visibility_rate": { "type": "number", "minimum": 0, "maximum": 100 },
+        "relative_position": { "type": "number", "minimum": 0 },
+        "question_coverage": { "type": "number", "minimum": 0, "maximum": 1 },
+        "commercial_fit": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "service_relevance": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "gap_strength": { "type": "number", "minimum": 0, "maximum": 5 },
+        "business_credibility": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "ability_to_buy": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "decision_maker_identified": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "direct_dm_route": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "contact_route_quality": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "contact_identity_confidence": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "overall_evidence_confidence": { "type": "number", "minimum": 0, "maximum": 5 },
+        "research_completeness": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "final_score": { "type": "number", "minimum": 0, "maximum": 100 },
+        "overall_rank": { "type": "integer", "minimum": 1 },
+        "outreach_rank": { "type": "integer", "minimum": 1 },
+        "business_verified": { "type": "string", "enum": ["YES", "REVIEW"] },
+        "contact_route_verified": { "type": "string", "enum": ["YES", "REVIEW"] },
+        "named_decision_maker_verified": { "type": "string", "enum": ["YES", "PROBABLE", "NO"] },
+        "identity_confidence": { "type": "string", "enum": ["CONFIRMED", "PROBABLE", "POSSIBLE", "UNKNOWN"] },
+        "research_complete": { "type": "string", "enum": ["YES", "NO"] },
+        "eligible_for_outreach": { "type": "string", "enum": ["YES", "REVIEW"] },
+        "accessibility_grade": {
+          "type": "string",
+          "enum": ["CONFIRMED_DIRECT", "CONFIRMED_GENERIC_ROUTE", "PROBABLE_UNCONFIRMED", "GENERIC_INBOX_ONLY", "CONTACT_FORM_OR_PHONE_ONLY", "NO_USABLE_ROUTE"]
+        },
+        "nearest_competitor": { "type": "string" },
+        "leadership_evidence": { "type": "string" }
       }
     },
     "outreach_entry": {
@@ -44,7 +173,7 @@
       "additionalProperties": false,
       "properties": {
         "priority": { "type": "string", "enum": ["A", "B", "C", "REVIEW"] },
-        "opportunity_type": { "type": "string", "enum": ["GAP", "GROWTH", "DEFEND", "NO OPPORTUNITY"] },
+        "opportunity_type": { "type": "string", "enum": ["GAP", "GROWTH", "DEFEND", "NO OPPORTUNITY", "REVIEW"] },
         "business": { "type": "string", "minLength": 1 },
         "area": { "type": "string", "minLength": 1 },
         "website": { "type": "string" },
@@ -62,6 +191,7 @@
         "contact_person": { "type": "string" },
         "role": { "type": "string" },
         "contact_email": { "type": "string" },
+        "contact_phone": { "type": "string" },
         "accessibility": { "type": "string", "enum": ["DIRECT", "IDENTIFIABLE", "GATEKEPT", "CORPORATE", "REVIEW"] },
         "decision_maker_linkedin": { "type": "string", "minLength": 1 },
         "accessibility_notes": { "type": "string" },
@@ -70,7 +200,44 @@
           "type": "array",
           "items": { "type": "string" },
           "minItems": 1
-        }
+        },
+        "service_scope": { "type": "string", "minLength": 1 },
+        "business_structure": { "type": "string", "enum": ["INDEPENDENT_LOCAL", "LOCALLY_OWNED_FRANCHISE", "CENTRALLY_CONTROLLED_CHAIN"] },
+        "business_type_notes": { "type": "string" },
+        "question_appearances": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        "relevant_appearances": { "type": "number", "minimum": 0 },
+        "relevant_opportunities": { "type": "number", "minimum": 0 },
+        "visibility_rate": { "type": "number", "minimum": 0, "maximum": 100 },
+        "visibility_score": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "group_top_visibility_rate": { "type": "number", "minimum": 0, "maximum": 100 },
+        "relative_position": { "type": "number", "minimum": 0 },
+        "question_coverage": { "type": "number", "minimum": 0, "maximum": 1 },
+        "commercial_fit": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "service_relevance": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "gap_strength": { "type": "number", "minimum": 0, "maximum": 5 },
+        "business_credibility": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "ability_to_buy": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "decision_maker_identified": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "direct_dm_route": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "contact_route_quality": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "contact_identity_confidence": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "overall_evidence_confidence": { "type": "number", "minimum": 0, "maximum": 5 },
+        "research_completeness": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "final_score": { "type": "number", "minimum": 0, "maximum": 100 },
+        "overall_rank": { "type": "integer", "minimum": 1 },
+        "outreach_rank": { "type": "integer", "minimum": 1 },
+        "business_verified": { "type": "string", "enum": ["YES", "REVIEW"] },
+        "contact_route_verified": { "type": "string", "enum": ["YES", "REVIEW"] },
+        "named_decision_maker_verified": { "type": "string", "enum": ["YES", "PROBABLE", "NO"] },
+        "identity_confidence": { "type": "string", "enum": ["CONFIRMED", "PROBABLE", "POSSIBLE", "UNKNOWN"] },
+        "research_complete": { "type": "string", "enum": ["YES", "NO"] },
+        "eligible_for_outreach": { "type": "string", "enum": ["YES", "REVIEW"] },
+        "accessibility_grade": {
+          "type": "string",
+          "enum": ["CONFIRMED_DIRECT", "CONFIRMED_GENERIC_ROUTE", "PROBABLE_UNCONFIRMED", "GENERIC_INBOX_ONLY", "CONTACT_FORM_OR_PHONE_ONLY", "NO_USABLE_ROUTE"]
+        },
+        "nearest_competitor": { "type": "string" },
+        "leadership_evidence": { "type": "string" }
       }
     },
     "excluded_entry": {
@@ -106,6 +273,11 @@
         "business": { "type": "string" },
         "publisher": { "type": "string", "minLength": 1 },
         "fact_supported": { "type": "string", "minLength": 1 },
+        "fact_category": {
+          "type": "string",
+          "description": "Optional grouping so evidence for different kinds of claims about the same business can be told apart at a glance - see CAMPAIGN-HANDOFF.md Section 3a's evidence-separation rule.",
+          "enum": ["LEGAL_IDENTITY", "SERVICE_SCOPE", "LOCAL_OWNERSHIP", "DECISION_MAKER_IDENTITY", "CONTACT_ROUTE", "AI_APPEARANCE", "COMPETITOR_COMPARISON", "COMMERCIAL_CLAIM"]
+        },
         "url": { "type": "string", "minLength": 1 },
         "access_date": { "type": "string", "format": "date" }
       }
@@ -123,7 +295,8 @@
         "date": { "type": "string", "format": "date" },
         "questions": {
           "type": "array",
-          "items": { "type": "string" },
+          "description": "As of schema v2, an array of {question_id, text} objects (was an array of plain strings pre-v2) so question_relevance[] and every business's question_appearances can key off a stable, short ID instead of repeating full question text.",
+          "items": { "$ref": "#/definitions/question_entry" },
           "minItems": 1
         },
         "providers": {
@@ -133,8 +306,23 @@
         },
         "expected_responses": { "type": "integer", "minimum": 0 },
         "successful_responses": { "type": "integer", "minimum": 0 },
+        "responses_per_question": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "AUTO: runs x providers for a single question, e.g. 5 runs x 3 providers = 15. Assumes every question in this campaign was run the same number of times across the same providers (true for every trade_run.py campaign to date) - the weighted-denominator formula in scoring_engine.py depends on this being uniform; a campaign that genuinely varies run-count per question is a documented limitation, not yet supported."
+        },
         "raw_data_path": { "type": "string" },
-        "methodology_notes": { "type": "string" }
+        "methodology_notes": { "type": "string" },
+        "service_scopes": {
+          "type": "array",
+          "description": "Every service-scope label used anywhere in this campaign's market[]/outreach[] entries, defined once here per CAMPAIGN-HANDOFF.md Section 3a.",
+          "items": { "$ref": "#/definitions/service_scope_def" }
+        },
+        "question_relevance": {
+          "type": "array",
+          "description": "The relevance classification of every question in 'questions' above, per CAMPAIGN-HANDOFF.md Section 3a. Required for a v2 campaign wherever service_scope/visibility_score fields are populated on any business - scoring_engine.py refuses to compute relevance-normalized visibility without it.",
+          "items": { "$ref": "#/definitions/question_relevance_entry" }
+        }
       }
     },
     "market": {

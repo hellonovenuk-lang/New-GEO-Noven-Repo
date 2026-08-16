@@ -5,9 +5,9 @@
     "campaign_slug": "plumbers-sampleford-2026-01",
     "date": "2026-01-15",
     "questions": [
-      "Who's a good plumber in Sampleford?",
-      "Can you recommend a plumber near Sampleford?",
-      "Which plumbers in Sampleford deal with emergency callouts?"
+      { "question_id": "q01", "text": "Who's a good plumber in Sampleford?" },
+      { "question_id": "q02", "text": "Can you recommend a plumber near Sampleford?" },
+      { "question_id": "q03", "text": "Which plumbers in Sampleford deal with emergency callouts?" }
     ],
     "providers": [
       { "provider": "openai", "model": "gpt-5.5-2026-04-23" },
