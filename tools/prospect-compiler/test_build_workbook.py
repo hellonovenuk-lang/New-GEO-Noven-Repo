@@ -426,5 +426,155 @@ class RequireScoredTests(unittest.TestCase):
             self.assertIn("canonical scoring requirements not met", result.stderr)
 
 
+class NarrativeContradictionDetectionTests(unittest.TestCase):
+    """detect_narrative_contradictions(): the mechanical checks behind both
+    the QC-sheet warning (default render) and the --require-scored reject
+    (a new campaign)."""
+
+    def test_clean_generated_entry_has_no_contradictions(self):
+        # Dogfooding: the generator's own output must never trip its own
+        # detector.
+        data = full_cohort_fixture()
+        for o in data["outreach"]:
+            self.assertEqual(bw.detect_narrative_contradictions(o), [])
+
+    def test_wrong_denominator_in_primary_claim_detected(self):
+        data = full_cohort_fixture()
+        entry = data["outreach"][0]
+        entry["competitive_gap_finding"] = (
+            f"{entry['business']} was named in 13 of the 90 raw answers collected across all six questions."
+        )
+        problems = bw.detect_narrative_contradictions(entry)
+        self.assertTrue(any("primary visibility claim" in p for p in problems))
+
+    def test_why_prospect_equal_to_business_type_notes_detected(self):
+        data = full_cohort_fixture()
+        entry = data["outreach"][0]
+        entry["business_type_notes"] = "Kitchen specialist; independently owned local business"
+        entry["why_prospect"] = "Kitchen specialist; independently owned local business"
+        problems = bw.detect_narrative_contradictions(entry)
+        self.assertTrue(any("business_type_notes" in p for p in problems))
+
+    def test_competitor_and_coverage_figures_are_not_falsely_flagged(self):
+        # Requirement 4: a per-question or competitor figure using a
+        # different, clearly documented denominator must not be confused
+        # with the primary visibility claim.
+        data = full_cohort_fixture()
+        entry = data["outreach"][0]
+        entry["competitive_gap_finding"] = (
+            f"{entry['business']} appears in {se._fmt_num(entry['relevant_appearances'])} of "
+            f"{se._fmt_num(entry['relevant_opportunities'])} relevant opportunities. A competitor sits "
+            f"at 40 of 90 raw mentions, and coverage was 5 of 6 questions."
+        )
+        self.assertEqual(bw.detect_narrative_contradictions(entry), [])
+
+    def test_real_ajk_style_defect_is_detected(self):
+        # The actual real-run shape that prompted this whole change,
+        # reproduced with fictitious numbers: relevant_opportunities=60,
+        # narrative claims "13 of the 90 raw answers".
+        entry = {
+            "business": "Fixture AJK-style Co", "relevant_appearances": 13, "relevant_opportunities": 60,
+            "competitive_gap_finding": "Fixture AJK-style Co was named in 13 of the 90 raw answers collected "
+                                        "across all six questions and three assistants.",
+            "why_prospect": "Kitchen specialist (design/supply/install); independently owned local business",
+            "business_type_notes": "Kitchen specialist (design/supply/install); independently owned local business",
+        }
+        problems = bw.detect_narrative_contradictions(entry)
+        self.assertEqual(len(problems), 2)  # both the denominator mismatch and the business_type_notes copy
+
+
+class NarrativeQcAndRequireScoredTests(unittest.TestCase):
+    """QC-sheet warnings (default render, historical files stay readable)
+    vs. --require-scored hard rejection (a new campaign)."""
+
+    def test_qc_flags_never_regenerated_narrative_without_blocking_render(self):
+        data = full_cohort_fixture()
+        # Simulate a legacy narrative that was hand-typed and never run
+        # through scoring_engine.py's mandatory generation step.
+        data["outreach"][0]["narrative_generated_from"] = "stale-signature-from-before-a-rescore"
+        with tempfile.TemporaryDirectory() as tmp:
+            out = os.path.join(tmp, "out.xlsx")
+            bw.validate(data)  # must not raise - default mode stays permissive
+            bw.build_workbook(data, out)  # must not raise, workbook still renders
+            wb = load_workbook(out)
+            ws = wb["QC"]
+            rows = {row[0].value: row[1].value for row in ws.iter_rows(min_row=2, max_row=ws.max_row) if row[0].value}
+            self.assertEqual(rows["Narrative fields regenerated from current scored values"], "FAIL")
+
+    def test_qc_reports_pass_for_clean_narratives(self):
+        data = full_cohort_fixture()
+        with tempfile.TemporaryDirectory() as tmp:
+            out = os.path.join(tmp, "out.xlsx")
+            bw.build_workbook(data, out)
+            wb = load_workbook(out)
+            ws = wb["QC"]
+            rows = {row[0].value: row[1].value for row in ws.iter_rows(min_row=2, max_row=ws.max_row) if row[0].value}
+            self.assertEqual(rows["Narrative fields regenerated from current scored values"], "PASS")
+            self.assertEqual(rows["Narrative fields consistent with structured data"], "PASS")
+
+    def test_require_scored_rejects_never_regenerated_narrative(self):
+        data = full_cohort_fixture()
+        data["outreach"][0]["narrative_generated_from"] = "stale-signature-from-before-a-rescore"
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate_strict_scored(data)
+        self.assertIn("not (re)generated", str(ctx.exception))
+
+    def test_require_scored_rejects_missing_narrative_generated_from(self):
+        data = full_cohort_fixture()
+        del data["outreach"][0]["narrative_generated_from"]
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate_strict_scored(data)
+        self.assertIn("not (re)generated", str(ctx.exception))
+
+    def test_require_scored_rejects_why_prospect_equal_to_business_type_notes(self):
+        data = full_cohort_fixture()
+        data["outreach"][0]["business_type_notes"] = "Kitchen specialist; independently owned"
+        data["outreach"][0]["why_prospect"] = "Kitchen specialist; independently owned"
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate_strict_scored(data)
+        self.assertIn("business_type_notes", str(ctx.exception))
+
+    def test_require_scored_rejects_contradictory_primary_visibility_figure(self):
+        data = full_cohort_fixture()
+        entry = data["outreach"][0]
+        entry["competitive_gap_finding"] = f"{entry['business']} was named in 999 of the 90 raw answers."
+        # Re-stamp the signature so this fails on the CONTRADICTION check
+        # specifically, not merely the staleness check - isolates the two.
+        entry["narrative_generated_from"] = se.narrative_signature(entry)
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate_strict_scored(data)
+        self.assertIn("primary visibility claim", str(ctx.exception))
+
+    def test_require_scored_accepts_clean_regenerated_narrative(self):
+        data = full_cohort_fixture()
+        bw.validate_strict_scored(data)  # must not raise - se.run_engine() already generated+stamped it
+
+
+class ShortlistNarrativeMappingTests(unittest.TestCase):
+    """Requirement 5: the Shortlist sheet's "Why this is a prospect" column
+    must show why_prospect, never business_type_notes."""
+
+    def test_shortlist_shows_why_prospect_not_business_type_notes(self):
+        data = full_cohort_fixture()
+        entry = data["outreach"][0]  # "Ready Co" - already ready_to_email=YES from the engine's own gate
+        self.assertEqual(entry["ready_to_email"], "YES")
+        entry["business_type_notes"] = "This text must NOT appear in the Shortlist prospect-reason column."
+        # entry["why_prospect"] is already the engine-generated narrative from full_cohort_fixture()'s
+        # se.run_engine() call, distinct from business_type_notes (not part of the narrative signature,
+        # so setting it here doesn't trigger regeneration - that's fine, we're checking the render, not
+        # generation).
+        with tempfile.TemporaryDirectory() as tmp:
+            out = os.path.join(tmp, "out.xlsx")
+            bw.build_workbook(data, out)
+            wb = load_workbook(out)
+            ws = wb["Shortlist"]
+            headers = [c.value for c in ws[1]]
+            why_col = headers.index("Why this is a prospect")
+            biz_col = headers.index("Business")
+            row = next(r for r in ws.iter_rows(min_row=2, max_row=ws.max_row) if r[biz_col].value == entry["business"])
+            self.assertEqual(row[why_col].value, entry["why_prospect"])
+            self.assertNotIn("must NOT appear", row[why_col].value)
+
+
 if __name__ == "__main__":
     unittest.main()

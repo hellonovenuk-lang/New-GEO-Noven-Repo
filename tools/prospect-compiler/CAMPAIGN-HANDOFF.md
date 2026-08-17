@@ -303,6 +303,66 @@ harder to research than the others) staying an ordinary, unflagged
 scoring pass — the gap was invisible before because nothing forced it to be
 named.
 
+**Narrative generation — added 2026-08-17, mandatory, not an optional
+helper.** `competitive_gap_finding` and `why_prospect` on every scored
+`outreach[]` entry are generated deterministically by
+`scoring_engine.py`'s `generate_competitive_gap_finding()`/
+`generate_why_prospect()`, automatically, as the last step of `score_pool()`
+— after `opportunity_type`, `nearest_competitor`, `group_top_visibility_rate`
+and every rank are already final. This exists because a real campaign
+(Kitchen and Bathroom Design & Installation, Wirral) shipped a specialist's
+`competitive_gap_finding` stating "13 of the 90 raw answers" when that
+business's real relevance-aware denominator was 60, and a `why_prospect`
+that was a verbatim copy of `business_type_notes` — neither defect was
+mechanically possible to catch before this existed, because nothing
+connected the prose to the structured values it was supposed to describe.
+
+- **The primary visibility claim always uses `relevant_appearances`/
+  `relevant_opportunities`, never the raw campaign total, unless the two
+  genuinely coincide** (a business relevant to every campaign question) —
+  and even then the text says so explicitly ("every one of this campaign's
+  questions was relevant to this business"), never silently reusing
+  ambiguous "N of 90" language indistinguishable from the bug. Per-question,
+  competitor, and provider-split figures use clearly different phrasing
+  precisely so they are never confused with the primary claim (see the
+  contradiction-detection rule below).
+- **Provider split is mentioned only where mechanically material** — absent
+  from a provider entirely, or one provider carrying ≥70% of the total —
+  not appended to every finding as boilerplate.
+- **`why_prospect` is branched by `opportunity_type`** (DEFEND/GROWTH/GAP/
+  REVIEW) and states the actual commercial case; `business_type_notes` may
+  be cited as one further, clearly separate clause for context, never as
+  the entire field.
+- **Regeneration is forced by a signature mismatch, not skipped because the
+  field is already non-empty.** `narrative_generated_from` fingerprints the
+  structured inputs a narrative was generated from; `score_pool()` recomputes
+  and compares it on every run and only regenerates when it no longer
+  matches. This is what makes a corrected mention count (or any other
+  re-score) automatically update the narrative — a stale sentence can never
+  survive purely because nobody remembered to rewrite it by hand.
+- **A signature match means "already current," not "must be exactly the
+  generated text."** A human/Claude may refine the generated baseline
+  afterward with real, specific evidence — a named competitor's actual
+  differentiator, a detail surfaced during research — and that refinement
+  survives an unrelated re-score untouched, since the signature doesn't
+  change. What it does not survive is a contradiction: `build_workbook.py`'s
+  `detect_narrative_contradictions()` independently checks the *text* of
+  both fields (not just whether they were regenerated) for exactly two
+  mechanical problems — the primary claim's numbers not matching
+  `relevant_appearances`/`relevant_opportunities`, or `why_prospect` equal
+  to `business_type_notes` — regardless of who wrote the words or when.
+  `--require-scored` rejects both; the default render flags them as QC
+  warnings instead, so a historical file stays readable while still being
+  honestly labelled.
+- **Structured fields are the source of truth for any downstream numeric
+  claim, prose is for human-readable drafting only.** Any consumer of a
+  campaign JSON — `/outreach` included — should prefer
+  `relevant_appearances`/`relevant_opportunities`/`visibility_rate`/
+  `opportunity_type` etc. directly over parsing a sentence out of
+  `competitive_gap_finding`/`why_prospect` for anything that needs to be
+  numerically reliable, precisely because the prose can (rarely, and now
+  detectably) drift from the numbers it describes.
+
 **Two scripts, two jobs, same separation of concerns Section 1 already
 establishes for `build_workbook.py`:**
 
@@ -564,8 +624,9 @@ genuinely varies run-count per question is not yet supported by
 | `openai_appearances` / `gemini_appearances` / `perplexity_appearances` | no | AUTO |
 | `strongest_competitor` | yes | CLAUDE — the strongest genuine direct competitor by appearance count in this market |
 | `competitor_appearances` | yes | AUTO — once `strongest_competitor` is identified, its count is a lookup |
-| `competitive_gap_finding` | yes | CLAUDE — one factual sentence stating the counts, per the letter templates in `playbook/outreach-process.md` |
-| `why_prospect` | yes | CLAUDE — the case for this business against `playbook/outreach-process.md`'s definition of a strong prospect |
+| `competitive_gap_finding` | yes | **AUTO for a scored entry** (`scoring_engine.py`'s `generate_competitive_gap_finding()` — see Section 3a's narrative subsection), mandatory and unconditional, never hand-written first. CLAUDE for an unscored/legacy-path entry: one factual sentence stating the counts, per the letter templates in `playbook/outreach-process.md` |
+| `why_prospect` | yes | **AUTO for a scored entry** (`generate_why_prospect()`, same subsection) — the DEFEND/GROWTH/GAP commercial case, from structured values, mandatory and unconditional. CLAUDE for an unscored/legacy-path entry: the case for this business against `playbook/outreach-process.md`'s definition of a strong prospect. Either way, never a copy of `business_type_notes` |
+| `narrative_generated_from` | no (AUTO-only for a scored entry) | AUTO — a fingerprint of the values the two fields above were generated from, written only by `scoring_engine.py`. Never hand-set: doing so to make a hand-written narrative look machine-verified is exactly the defect this field exists to catch |
 | `legal_entity` | yes | RESEARCH — Companies House. **No confirmed active Ltd/LLP match, no entry in `outreach[]`** — the business stays `REVIEW` in `market[]` or moves to `excluded[]` (`NO RELIABLE LEGAL MATCH`) instead. This is the PECR rule in `CLAUDE.md`, enforced at the schema boundary, not worked around with a placeholder |
 | `company_number` | yes | RESEARCH — Companies House |
 | `company_status` | yes | RESEARCH — Companies House |

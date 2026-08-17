@@ -324,5 +324,183 @@ class QCChecklistTests(unittest.TestCase):
         self.assertNotEqual(data["outreach"][0]["opportunity_type"], "DEFEND")
 
 
+# ===========================================================================
+# Mandatory narrative generation (competitive_gap_finding / why_prospect)
+# ===========================================================================
+# Fictitious fixture reproducing the real defect found on the Kitchen and
+# Bathroom Design & Installation, Wirral campaign: "A J Kitchen Installations"
+# had relevant_appearances=13, relevant_opportunities=60 (a kitchen-only
+# specialist relevant to 4 of the campaign's 6 questions), but its hand-typed
+# competitive_gap_finding said "13 of the 90 raw answers" - the raw total,
+# not its own relevance-aware denominator. This fixture's 6-question,
+# 15-responses-per-question shape (raw total 90) reproduces the same
+# 60/45/90 denominator split real campaigns of this kind actually produce:
+# a kitchen-style specialist relevant to 4 questions (60), a bathroom-style
+# specialist relevant to 3 (45), and a combined provider relevant to all 6
+# (90) - none of it copied from the real business, sector, or numbers.
+
+def narrative_fixture():
+    run = {
+        "sector": "fictitious trade", "geography": "Sampleford", "campaign_slug": "narrative-fixture",
+        "date": "2026-08-16",
+        "questions": [
+            {"question_id": f"q{i:02d}", "text": f"question {i}"} for i in range(1, 7)
+        ],
+        "providers": [{"provider": "openai", "model": "x"}],
+        "responses_per_question": 15,
+        "service_scopes": [
+            {"label": "kitchen_only", "applicable_services": ["kitchen"], "structure": "INDEPENDENT_LOCAL"},
+            {"label": "bathroom_only", "applicable_services": ["bathroom"], "structure": "INDEPENDENT_LOCAL"},
+            {"label": "combined", "applicable_services": ["kitchen", "bathroom"], "structure": "INDEPENDENT_LOCAL"},
+        ],
+        "question_relevance": [
+            {"question_id": "q01", "type": "SINGLE_SERVICE_INCLUSIVE", "rationale": "inclusive kitchen+bathroom ask"},
+            {"question_id": "q02", "type": "SERVICE_ONLY", "service": "kitchen", "rationale": "kitchen only"},
+            {"question_id": "q03", "type": "SERVICE_ONLY", "service": "kitchen", "rationale": "kitchen only"},
+            {"question_id": "q04", "type": "SERVICE_ONLY", "service": "kitchen", "rationale": "kitchen only"},
+            {"question_id": "q05", "type": "SERVICE_ONLY", "service": "bathroom", "rationale": "bathroom only"},
+            {"question_id": "q06", "type": "SERVICE_ONLY", "service": "bathroom", "rationale": "bathroom only"},
+        ],
+    }
+    # kitchen_only: relevant to q01-q04 (4 questions x 15 = 60)
+    # bathroom_only: relevant to q01, q05, q06 (3 questions x 15 = 45)
+    # combined: relevant to every question (6 x 15 = 90) - offers both services,
+    #           so it gets full weight on every SERVICE_ONLY question too.
+    outreach = [
+        base_outreach_entry("Fixture Kitchen Co", service_scope="kitchen_only",
+                             question_appearances={"q01": 4, "q02": 3, "q03": 3, "q04": 3},
+                             business_credibility=4),
+        base_outreach_entry("Fixture Kitchen Leader", service_scope="kitchen_only",
+                             question_appearances={"q01": 10, "q02": 10, "q03": 10, "q04": 10},
+                             business_credibility=4),
+        base_outreach_entry("Fixture Bathroom Co", service_scope="bathroom_only",
+                             question_appearances={"q01": 1, "q05": 0, "q06": 0},
+                             business_credibility=5),
+        base_outreach_entry("Fixture Bathroom Peer", service_scope="bathroom_only",
+                             question_appearances={"q01": 10, "q05": 10, "q06": 10},
+                             business_credibility=4),
+        base_outreach_entry("Fixture Combined Co", service_scope="combined",
+                             question_appearances={"q01": 10, "q02": 10, "q03": 10, "q04": 10, "q05": 10, "q06": 10},
+                             business_credibility=5),
+        base_outreach_entry("Fixture Combined Peer", service_scope="combined",
+                             question_appearances={"q01": 3, "q02": 3, "q03": 3, "q04": 3, "q05": 3, "q06": 3},
+                             business_credibility=4),
+    ]
+    sources = [{"source_id": "S001", "business": "x", "publisher": "x", "fact_supported": "x", "url": "x", "access_date": "2026-08-16"}]
+    return {"run": run, "market": [], "outreach": outreach, "excluded": [], "sources": sources}
+
+
+def narrative_scored():
+    data = narrative_fixture()
+    se.run_engine(data)
+    return {e["business"]: e for e in data["outreach"]}
+
+
+class NarrativeDenominatorTests(unittest.TestCase):
+    """The core defect this whole change exists to prevent: a specialist's
+    primary visibility claim must use its own relevant denominator, never
+    the raw campaign total, unless the two genuinely coincide."""
+
+    def test_kitchen_style_specialist_uses_60_never_90(self):
+        e = narrative_scored()["Fixture Kitchen Co"]
+        self.assertEqual(e["relevant_appearances"], 13)
+        self.assertEqual(e["relevant_opportunities"], 60)
+        self.assertIn("13 of 60", e["competitive_gap_finding"])
+        self.assertNotIn("13 of 90", e["competitive_gap_finding"])
+        self.assertNotIn("of the 90", e["competitive_gap_finding"])
+
+    def test_bathroom_style_specialist_uses_45_denominator(self):
+        e = narrative_scored()["Fixture Bathroom Co"]
+        self.assertEqual(e["relevant_opportunities"], 45)
+        # Primary claim uses 45. The raw 90-answer campaign total may still
+        # appear as a clearly separate, distinctly-worded clause (requirement
+        # 6: preserve raw counts for auditability) - it must just never be
+        # the PRIMARY claim's own denominator for a scoped specialist.
+        self.assertIn("1 of 45", e["competitive_gap_finding"])
+        self.assertNotIn("1 of 90", e["competitive_gap_finding"])
+        self.assertNotIn("1 of the 90", e["competitive_gap_finding"])
+
+    def test_combined_provider_90_denominator_is_labelled_not_ambiguous(self):
+        e = narrative_scored()["Fixture Combined Co"]
+        self.assertEqual(e["relevant_opportunities"], 90)
+        self.assertIn("of 90", e["competitive_gap_finding"])
+        # Requirement: when raw and relevant totals coincide, label the
+        # measure accurately rather than silently reusing ambiguous "90"
+        # language indistinguishable from the legacy raw-count bug.
+        self.assertIn("every one of this campaign's questions was relevant", e["competitive_gap_finding"])
+
+
+class OpportunityRationaleTests(unittest.TestCase):
+    """why_prospect must explain the actual opportunity type, not merely
+    restate service_scope/business_type_notes."""
+
+    def test_defend_rationale(self):
+        e = narrative_scored()["Fixture Combined Co"]
+        self.assertEqual(e["opportunity_type"], "DEFEND")
+        self.assertIn("strongest AI-recommendation positions", e["why_prospect"])
+
+    def test_growth_rationale(self):
+        e = narrative_scored()["Fixture Kitchen Co"]
+        self.assertEqual(e["opportunity_type"], "GROWTH")
+        self.assertIn("room to strengthen", e["why_prospect"])
+
+    def test_gap_rationale(self):
+        e = narrative_scored()["Fixture Bathroom Co"]
+        self.assertEqual(e["opportunity_type"], "GAP")
+        self.assertIn("actionable gap", e["why_prospect"])
+
+    def test_why_prospect_is_never_just_business_type_notes(self):
+        data = narrative_fixture()
+        for o in data["outreach"]:
+            o["business_type_notes"] = "Kitchen specialist (design/supply/install); independently owned"
+        se.run_engine(data)
+        for o in data["outreach"]:
+            self.assertNotEqual(o["why_prospect"].strip(), o["business_type_notes"].strip())
+
+
+class NarrativeSignatureRegenerationTests(unittest.TestCase):
+    """Requirement 7: correcting a mention count and rescoring must
+    automatically change the narrative - never left stale merely because
+    the field was already non-empty. Reproduces the Timeless-style
+    undercount-then-fix shape with a fictitious business."""
+
+    def test_rescoring_after_a_corrected_mention_count_regenerates_narrative(self):
+        data = narrative_fixture()
+        target = next(o for o in data["outreach"] if o["business"] == "Fixture Bathroom Co")
+        target["question_appearances"] = {"q01": 1, "q05": 1, "q06": 0}  # understated, like "5" before the fix
+        se.run_engine(data)
+        first_finding = target["competitive_gap_finding"]
+        first_signature = target["narrative_generated_from"]
+        first_appearances = target["relevant_appearances"]
+
+        # Simulate the mention-count correction (5 -> 12 shape): more real
+        # appearances discovered, then scoring_engine.py is rerun exactly as
+        # /qualify's own Stage 11 would do after any re-score.
+        target["question_appearances"] = {"q01": 3, "q05": 3, "q06": 3}
+        se.run_engine(data)
+
+        self.assertNotEqual(target["relevant_appearances"], first_appearances)
+        self.assertNotEqual(target["narrative_generated_from"], first_signature)
+        self.assertNotEqual(target["competitive_gap_finding"], first_finding)
+        self.assertIn(f"{se._fmt_num(target['relevant_appearances'])} of 45", target["competitive_gap_finding"])
+
+    def test_untouched_entry_narrative_is_not_regenerated_unnecessarily(self):
+        # A signature match means "already current" - re-running the engine
+        # with nothing changed must not churn the text (e.g. if a human had
+        # refined it by hand on top of the generated baseline, that
+        # refinement must survive an unrelated rescore).
+        data = narrative_fixture()
+        se.run_engine(data)
+        entry = next(o for o in data["outreach"] if o["business"] == "Fixture Kitchen Co")
+        entry["why_prospect"] += " Hand-added detail from a real competitor comparison."
+        stamped_signature = entry["narrative_generated_from"]
+        hand_edited_text = entry["why_prospect"]
+
+        se.run_engine(data)  # nothing about the scored values changed
+
+        self.assertEqual(entry["narrative_generated_from"], stamped_signature)
+        self.assertEqual(entry["why_prospect"], hand_edited_text)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -201,6 +201,10 @@
         "competitor_appearances": { "type": "integer", "minimum": 0 },
         "competitive_gap_finding": { "type": "string", "minLength": 1 },
         "why_prospect": { "type": "string", "minLength": 1 },
+        "narrative_generated_from": {
+          "type": "string",
+          "description": "AUTO, written by scoring_engine.py only, for a scored (service_scope set) entry: a fingerprint of the structured values competitive_gap_finding/why_prospect were generated from. Recomputed and compared on every scoring_engine.py run - a mismatch forces regeneration, so a re-score can never leave a stale narrative behind merely because the field was already non-empty. Absent entirely means the narrative has never been machine-generated/verified against current values - build_workbook.py --require-scored rejects this for a new campaign; the default (non-strict) render flags it as a QC warning instead. Never hand-set."
+        },
         "legal_entity": { "type": "string", "minLength": 1 },
         "company_number": { "type": "string", "minLength": 1 },
         "company_status": { "type": "string", "minLength": 1 },

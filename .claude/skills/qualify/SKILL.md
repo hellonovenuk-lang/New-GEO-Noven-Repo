@@ -207,6 +207,25 @@ default into `DEFEND`. These remain *proposals*: the owner still approves
 `priority` and `ready_to_email` exactly as the approval gate below already
 requires.
 
+**This same command also mandatorily generates `competitive_gap_finding` and
+`why_prospect`** for every scored `outreach[]` entry — not a separate step,
+and not optional. It runs automatically after the derived fields above
+(scores, ranks, opportunity type, nearest competitor) are final, using
+`relevant_appearances`/`relevant_opportunities` — never the raw 90-answer
+total for a business scoped to fewer questions than that — plus
+`opportunity_type`, `nearest_competitor`, `group_top_visibility_rate`, and
+question coverage. **Do not hand-write `competitive_gap_finding` or
+`why_prospect` for a scored business before this step runs** — the
+generated baseline is the source of truth for the primary visibility claim,
+and writing prose first only means it gets silently overwritten (or, if
+you set `narrative_generated_from` yourself to dodge that, produces exactly
+the defect this exists to prevent). Refining the generated text afterward
+with real, specific evidence (a named competitor's actual differentiator,
+a detail from the audit conversation) is allowed — but the refinement must
+still pass `build_workbook.py`'s narrative-consistency checks (see Stage
+11), and structured fields remain the source of truth for any numeric claim
+regardless of how the prose reads.
+
 **`outreach[]` may not contain a qualitative-only entry in a new campaign.**
 Every business reaching `outreach[]` must have `service_scope` set and be
 `SCORED` in `run.scoring_cohort` — the old "business not opting in falls
@@ -396,8 +415,14 @@ python3 tools/prospect-compiler/build_workbook.py \
 `--require-scored` fails closed — no workbook is written — if canonical
 scoring wasn't actually completed: missing `service_scopes`, missing or
 incomplete `question_relevance`, a missing or incomplete `scoring_cohort`,
-a cohort member that met the inclusion floor but has no cohort entry, or
-any `outreach[]` entry without `service_scope`. **Do not omit the flag to
+a cohort member that met the inclusion floor but has no cohort entry, any
+`outreach[]` entry without `service_scope`, a missing
+`competitive_gap_finding`/`why_prospect`, a narrative that was never
+(re)generated from the entry's current scored values (`narrative_generated_from`
+doesn't match — including after a re-score, e.g. a corrected mention count,
+that the narrative wasn't regenerated for), `why_prospect` identical to
+`business_type_notes`, or a primary visibility claim in either field that
+doesn't match `relevant_appearances`/`relevant_opportunities`. **Do not omit the flag to
 get a campaign to render** — an error here means the canonical inputs
 genuinely aren't complete yet (Stage 4's INCOMPLETE path), not a reason to
 fall back to an unflagged, permissive render. `--require-scored` is never

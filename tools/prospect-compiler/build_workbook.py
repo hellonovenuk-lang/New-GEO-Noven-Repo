@@ -28,6 +28,8 @@ import re
 import sys
 
 import xlsxwriter
+
+import scoring_engine as se
 from openpyxl.utils import get_column_letter
 
 EXCLUDED_REASONS = {
@@ -86,6 +88,62 @@ def require_keys(obj, required, where):
 def check_enum(obj, field, allowed, where):
     if field in obj and obj[field] not in allowed:
         fail(f"{where}.{field}: '{obj[field]}' not one of {sorted(allowed)}")
+
+
+# Matches the shape of a PRIMARY visibility claim about the named business
+# itself - "appears in N of M", "named in N of M", "was named in N of the M"
+# - deliberately NOT matching a competitor's rate ("sits at 40.0%"), question
+# coverage ("83% of its own relevant questions"), or a provider-split note
+# ("5 of its 12 raw mentions"), none of which use this "appears/named in ...
+# of (the) ..." construction. Covers both generate_competitive_gap_finding()'s
+# own phrasing and the legacy hand-typed "was named in N of the 90 raw
+# answers" shape it replaces, so a not-yet-regenerated historical narrative
+# is still checkable, not just a freshly-generated one.
+PRIMARY_CLAIM_RE = re.compile(
+    r"(?:appears?\s+in|named\s+in|was\s+named\s+in)\s+(\d+(?:\.\d+)?)\s+of\s+(?:the\s+)?(\d+(?:\.\d+)?)",
+    re.I,
+)
+
+
+def detect_narrative_contradictions(entry):
+    """Every mechanically-checkable way a scored outreach entry's narrative
+    prose can contradict its own structured values. Returns a list of
+    problem strings (empty if clean) - never raises, so both the QC sheet
+    (a warning, historical files stay readable) and validate_strict_scored()
+    (a hard reject, for a new campaign) can use the same detector for their
+    different purposes.
+
+    Two checks, both requirement-4-scoped to "the primary visibility claim"
+    specifically - a per-question or competitor figure is allowed to use a
+    different, clearly distinct denominator and is not flagged:
+      1. The first PRIMARY_CLAIM_RE match in competitive_gap_finding or
+         why_prospect must equal (relevant_appearances, relevant_opportunities)
+         - not total_ai_appearances, not a competitor's count, not 90 unless
+         that genuinely is this business's own relevant denominator too.
+      2. why_prospect must not be a verbatim copy of business_type_notes -
+         a real defect found on a real campaign (A J Kitchen Installations),
+         not a hypothetical.
+    """
+    problems = []
+    business = entry.get("business", "?")
+    ra, ro = entry.get("relevant_appearances"), entry.get("relevant_opportunities")
+    if ra is not None and ro is not None:
+        for field in ("competitive_gap_finding", "why_prospect"):
+            text = entry.get(field) or ""
+            m = PRIMARY_CLAIM_RE.search(text)
+            if not m:
+                continue
+            n, d = float(m.group(1)), float(m.group(2))
+            if abs(n - float(ra)) > 0.01 or abs(d - float(ro)) > 0.01:
+                problems.append(
+                    f"{business}.{field}: primary visibility claim '{m.group(0)}' does not match the "
+                    f"structured values ({se._fmt_num(ra)} of {se._fmt_num(ro)} relevant opportunities)"
+                )
+    bt_notes = (entry.get("business_type_notes") or "").strip()
+    why = (entry.get("why_prospect") or "").strip()
+    if bt_notes and why and why == bt_notes:
+        problems.append(f"{business}.why_prospect: identical to business_type_notes, not an actual commercial rationale")
+    return problems
 
 
 def validate_scoring_block(entry, where):
@@ -322,6 +380,26 @@ def validate_strict_scored(data):
                 f"outreach[{i}] ({business}): ready_to_email is YES but outreach_rank is missing - run "
                 f"scoring_engine.py before build_workbook.py"
             )
+
+        # Narrative fields: mandatory, machine-generated, and re-checked
+        # every time - not a hand-authoring courtesy. Only meaningful once
+        # service_scope is set (score_pool() only ever generates narratives
+        # for a scored outreach entry).
+        if "service_scope" in o:
+            if not (o.get("competitive_gap_finding") or "").strip() or not (o.get("why_prospect") or "").strip():
+                problems.append(
+                    f"outreach[{i}] ({business}): missing competitive_gap_finding/why_prospect - run "
+                    f"scoring_engine.py before build_workbook.py, it generates these automatically"
+                )
+            elif o.get("narrative_generated_from") != se.narrative_signature(o):
+                problems.append(
+                    f"outreach[{i}] ({business}): competitive_gap_finding/why_prospect were not "
+                    f"(re)generated from this entry's current scored values - run scoring_engine.py "
+                    f"again; a legacy narrative never regenerated after scoring, or one left stale after "
+                    f"a re-score (e.g. a corrected mention count), is not allowed for a new campaign"
+                )
+            for problem in detect_narrative_contradictions(o):
+                problems.append(f"outreach[{i}]: {problem}")
 
     if problems:
         detail = "\n  - ".join(problems)
@@ -860,6 +938,15 @@ def build_qc_sheet(wb, fmts, data, ranked, shortlist_count):
     )
     opp_count = {t: sum(1 for e in entries if e["opportunity_type"] == t) for t in ("DEFEND", "GROWTH", "GAP", "REVIEW")}
 
+    outreach_scored = [e for _a, _i, e in ranked if _a == "outreach"]
+    stale_narratives = [
+        e["business"] for e in outreach_scored
+        if e.get("narrative_generated_from") != se.narrative_signature(e)
+    ]
+    narrative_problems = [p for e in outreach_scored for p in detect_narrative_contradictions(e)]
+    narratives_current = not stale_narratives
+    narratives_consistent = not narrative_problems
+
     rows = [
         ("Raw AI counts reconcile to source data", "PASS",
          f"raw_total for every scored business is SUM of its own question_appearances, itself sourced from "
@@ -910,6 +997,19 @@ def build_qc_sheet(wb, fmts, data, ranked, shortlist_count):
         ("Output sheets are legible and auditable", "PASS",
          "Frozen header rows, colour-coded Priority, wrapped long-text columns, and a Methodology sheet "
          "documenting every scale/weight/threshold/formula/tie-break before any score is shown."),
+        ("Narrative fields regenerated from current scored values", "PASS" if narratives_current else "FAIL",
+         "competitive_gap_finding/why_prospect vs. narrative_generated_from, recomputed against each "
+         "entry's current structured values: " + (
+             "all current." if narratives_current else
+             f"stale or never machine-generated for: {stale_narratives}. --require-scored rejects this "
+             f"for a new campaign; a historical file stays readable, treat these with appropriate "
+             f"caution until re-scored."
+         )),
+        ("Narrative fields consistent with structured data", "PASS" if narratives_consistent else "FAIL",
+         "Primary visibility claim in competitive_gap_finding/why_prospect vs. relevant_appearances/"
+         "relevant_opportunities, and why_prospect vs. business_type_notes: " + (
+             "no contradiction found." if narratives_consistent else "; ".join(narrative_problems)
+         )),
         ("Shortlist size", "INFO", f"{shortlist_count} business(es) at Ready to email = YES."),
     ]
     for i, (check, result, detail) in enumerate(rows):

@@ -28,6 +28,171 @@ import json
 import sys
 
 # ---------------------------------------------------------------------------
+# Narrative generation - mandatory, not an optional helper. Every scored
+# outreach[] entry gets competitive_gap_finding/why_prospect deterministically
+# derived from its own final structured values (scores, ranks, opportunity
+# type, nearest competitor - computed earlier in score_pool()), every time
+# those values change. See CAMPAIGN-HANDOFF.md Section 3a's narrative
+# subsection for the full rationale; the short version: a hand-typed
+# "13 of the 90 raw answers" sentence for a kitchen-only specialist whose
+# real relevant denominator is 60 is exactly the defect this exists to make
+# structurally impossible for a newly-generated campaign.
+# ---------------------------------------------------------------------------
+
+NARRATIVE_SIGNATURE_FIELDS = [
+    "relevant_appearances", "relevant_opportunities", "visibility_rate",
+    "opportunity_type", "nearest_competitor", "group_top_visibility_rate",
+    "relative_position", "question_coverage", "service_scope",
+    "business_credibility", "gap_strength",
+]
+
+
+def narrative_signature(entry):
+    """A deterministic, human-readable fingerprint of the structured values
+    a narrative was (or would be) generated from. score_pool() recomputes
+    and compares this on every run, so a re-score (a corrected mention
+    count, a changed VALUE field, ...) can never leave a stale narrative
+    behind just because the field already happened to be non-empty -
+    fingerprint mismatch forces regeneration. Deliberately a readable
+    "field=value|field=value" string, not an opaque hash - auditable by
+    inspection, the same standard as everything else in this pipeline."""
+    return "|".join(f"{f}={entry.get(f)}" for f in NARRATIVE_SIGNATURE_FIELDS)
+
+
+def _fmt_num(x):
+    """13.0 -> "13", 13.5 -> "13.5" - clean, auditable numeric text. A
+    weighted relevant_appearances/relevant_opportunities value can be
+    fractional (an AMBIGUOUS question's partial weight), so this can't
+    just always print an integer."""
+    if x is None:
+        return "0"
+    try:
+        xf = float(x)
+    except (TypeError, ValueError):
+        return str(x)
+    return str(int(xf)) if xf == int(xf) else f"{xf:g}"
+
+
+def _provider_split_note(entry):
+    """Provider split mentioned only where mechanically material: this
+    business was never named at all by at least one provider despite
+    appearing elsewhere, or one provider alone accounts for >=70% of its
+    total raw mentions. Neither condition holding means no note - not every
+    business's finding needs a provider-split sentence."""
+    total = entry.get("total_ai_appearances") or 0
+    if not total:
+        return ""
+    counts = {
+        "OpenAI": entry.get("openai_appearances") or 0,
+        "Gemini": entry.get("gemini_appearances") or 0,
+        "Perplexity": entry.get("perplexity_appearances") or 0,
+    }
+    absent = [p for p, c in counts.items() if c == 0]
+    if absent and len(absent) < 3:
+        return f" It was never named by {' or '.join(sorted(absent))}, despite appearing elsewhere."
+    dominant = max(counts, key=counts.get)
+    if counts[dominant] / total >= 0.7:
+        return f" {counts[dominant]} of its {_fmt_num(total)} raw mentions are on {dominant} alone."
+    return ""
+
+
+def generate_competitive_gap_finding(entry, run):
+    """Deterministic, relevance-aware competitive_gap_finding for a scored
+    outreach entry.
+
+    The opening clause ("appears in N of M relevant opportunities") is a
+    fixed, machine-recognizable shape - build_workbook.py's
+    detect_narrative_contradictions() depends on exactly this phrasing to
+    locate and check the PRIMARY visibility claim. Every other figure in
+    this text (competitor rate, question coverage, provider split) uses
+    deliberately different phrasing so it is never confused with the
+    primary measure, per CAMPAIGN-HANDOFF.md's contradiction-detection rule.
+    """
+    business = entry["business"]
+    ra, ro = entry.get("relevant_appearances", 0), entry.get("relevant_opportunities", 0)
+    rate = entry.get("visibility_rate", 0)
+    scope = entry.get("service_scope", "")
+    raw_total = (run.get("responses_per_question") or 0) * len(run.get("questions") or [])
+    same_as_raw = raw_total and round(ro) == raw_total
+
+    opening = (
+        f"{business} appears in {_fmt_num(ra)} of {_fmt_num(ro)} relevant opportunities "
+        f"in its {scope} scope ({rate:.1f}% relevance-aware visibility)"
+    )
+    if same_as_raw:
+        opening += (
+            " — every one of this campaign's questions was relevant to this business, "
+            "so this is also its raw total"
+        )
+    elif raw_total:
+        opening += f", out of {raw_total} raw answers collected across the whole campaign"
+
+    nearest = entry.get("nearest_competitor")
+    if nearest:
+        top_rate = entry.get("group_top_visibility_rate", 0)
+        relpos = entry.get("relative_position", 0)
+        competitor_clause = (
+            f" {nearest}, the strongest same-scope competitor, sits at {top_rate:.1f}% "
+            f"({relpos * 100:.0f}% of the leader's rate)."
+        )
+    else:
+        competitor_clause = " No comparable same-scope competitor is in this pool."
+
+    coverage_clause = (
+        f" It answered {entry.get('question_coverage', 0) * 100:.0f}% of its own "
+        f"relevant questions at least once."
+    )
+
+    return opening + "." + competitor_clause + coverage_clause + _provider_split_note(entry)
+
+
+def generate_why_prospect(entry, run):
+    """Deterministic why_prospect for a scored outreach entry, branched by
+    opportunity_type - always the commercial case (why this opportunity
+    type, evidenced), never just a restatement of service_scope or
+    business_type_notes. business_type_notes may be cited as one further,
+    clearly separate clause for context - it is never the whole field."""
+    business = entry["business"]
+    ra, ro = entry.get("relevant_appearances", 0), entry.get("relevant_opportunities", 0)
+    rate = entry.get("visibility_rate", 0)
+    nearest = entry.get("nearest_competitor") or "the nearest same-scope competitor"
+    top_rate = entry.get("group_top_visibility_rate", 0)
+    opp = entry.get("opportunity_type")
+    cred = entry.get("business_credibility", 0)
+    gap = entry.get("gap_strength", 0)
+    relpos = entry.get("relative_position", 0)
+
+    core = f"{business} appears in {_fmt_num(ra)} of {_fmt_num(ro)} relevant opportunities ({rate:.1f}%)"
+
+    if opp == "DEFEND":
+        text = (
+            f"{core}, already one of the strongest AI-recommendation positions in its service scope "
+            f"— {relpos * 100:.0f}% of {nearest}'s leading {top_rate:.1f}% rate. The opportunity is "
+            f"understanding what supports that position and monitoring whether it holds."
+        )
+    elif opp == "GAP":
+        text = (
+            f"{core}, materially underrepresented against {nearest} at {top_rate:.1f}% despite evidenced "
+            f"credibility ({cred}/5). This is a real, actionable gap, not explained by being new, tiny, "
+            f"specialist, or out of market."
+        )
+    elif opp == "GROWTH":
+        text = (
+            f"{core}, real and worth having, but sitting materially behind {nearest} at {top_rate:.1f}% "
+            f"(gap strength {gap}/5). There is clear, evidenced room to strengthen this position."
+        )
+    else:  # REVIEW or unset
+        text = (
+            f"{core}. Evidence is not yet sufficient to classify this business's commercial opportunity "
+            f"with confidence (business credibility {cred}/5)."
+        )
+
+    notes = (entry.get("business_type_notes") or "").strip()
+    if notes:
+        text += f" ({notes})"
+    return text
+
+# ---------------------------------------------------------------------------
 # Weights and thresholds - the ONE place these live. Change them here, not
 # per-call, so every campaign that uses this engine is governed by the same
 # documented rule. See CAMPAIGN-HANDOFF.md Section 3a for the rationale
@@ -315,6 +480,29 @@ def score_pool(run, entries):
                 f"by {trail:.1f}pp, at {entry['relative_position']*100:.0f}% of the leader's rate. "
                 f"Question coverage {entry['question_coverage']*100:.0f}%."
             )
+
+    # Mandatory narrative generation - runs for every scored outreach[] entry,
+    # every time score_pool() runs, using the final structured values just
+    # computed above (opportunity_type, nearest_competitor, and everything
+    # else). Not an optional step a caller might forget: regeneration is
+    # forced whenever narrative_signature(entry) no longer matches what's
+    # stored, so a re-score (e.g. a corrected mention count) can never leave
+    # a stale narrative behind merely because the field was already
+    # non-empty. A signature match means the narrative is already current -
+    # possibly hand-refined afterward with real evidence on top of the
+    # generated baseline - and is left untouched; build_workbook.py's
+    # detect_narrative_contradictions() is the separate, independent check
+    # that such a hand-edit didn't introduce a numeric contradiction.
+    # market[] entries are excluded: competitive_gap_finding/why_prospect
+    # are not valid market_entry properties in schema.json.
+    for array_name, _, entry in scored:
+        if array_name != "outreach":
+            continue
+        current_sig = narrative_signature(entry)
+        if entry.get("narrative_generated_from") != current_sig:
+            entry["competitive_gap_finding"] = generate_competitive_gap_finding(entry, run)
+            entry["why_prospect"] = generate_why_prospect(entry, run)
+            entry["narrative_generated_from"] = current_sig
 
     tiebreak_key = lambda e: (-e["final_score"], -e["gap_strength"], -e["business_credibility"], -e["visibility_score"], e["business"])
     overall_ordered = sorted((e for _, _, e in scored), key=tiebreak_key)
