@@ -28,6 +28,7 @@ Sole trader, one person. `wardith.co.uk`.
 | **Qualify a completed run into a campaign** | `/qualify` — `.claude/skills/qualify/` |
 | **Prepare outreach for a qualified campaign** | `/outreach` — `.claude/skills/outreach/` |
 | Compile a market run into an outreach workbook | `tools/prospect-compiler/` |
+| **Run the daily CRM** (every campaign and prospect, next actions, revenue) | `wardith-crm.xlsx`, built by `tools/tracker/` — data lives in `~/wardith-runs/tracker/`, never here |
 | Scan for news/research supporting "Why this matters" | `/context-watch` — `.claude/skills/context-watch/` |
 
 **No monthly-plan record template exists yet.** Maintain, Grow and Lead are
@@ -39,7 +40,7 @@ first actual recurring client, not designed further pre-revenue.
 ```
 playbook/   how the business is run. Start with business.md
 tools/      the scripts: trade-run, mention-count, prospect-compiler,
-            site-check, name-check
+            tracker, site-check, name-check
 site/       the website. Astro, deployed from main by Netlify
 assets/     brand originals and the email signature
 archive/    superseded documents, kept for one review cycle
