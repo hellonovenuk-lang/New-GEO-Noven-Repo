@@ -50,6 +50,7 @@ YES_REVIEW_VALUES = {"YES", "REVIEW"}
 YES_PROBABLE_NO_VALUES = {"YES", "PROBABLE", "NO"}
 YES_NO_VALUES = {"YES", "NO"}
 QUESTION_RELEVANCE_TYPES = {"SERVICE_ONLY", "EXPLICITLY_COMBINED", "SINGLE_SERVICE_INCLUSIVE", "AMBIGUOUS"}
+COHORT_STATUSES = {"SCORED", "EXCLUDED", "INCOMPLETE"}
 SOURCE_ID_RE = re.compile(r"^S[0-9]{3,}$")
 
 SCORED_VALUE_FIELDS = [
@@ -165,6 +166,16 @@ def validate(data):
         if not run.get("responses_per_question"):
             fail("run.responses_per_question: required because at least one business sets service_scope")
 
+    # Cohort shape-checking runs whenever scoring_cohort is present, regardless
+    # of --require-scored - a malformed cohort entry is a data error either way.
+    for i, c in enumerate(run.get("scoring_cohort") or []):
+        require_keys(c, ["business", "status"], f"run.scoring_cohort[{i}]")
+        check_enum(c, "status", COHORT_STATUSES, f"run.scoring_cohort[{i}]")
+        if c["status"] == "EXCLUDED" and not c.get("reason"):
+            fail(f"run.scoring_cohort[{i}] ({c['business']}): status EXCLUDED requires a 'reason'")
+        if c["status"] == "INCOMPLETE" and not c.get("missing_evidence"):
+            fail(f"run.scoring_cohort[{i}] ({c['business']}): status INCOMPLETE requires 'missing_evidence'")
+
     if not isinstance(data["sources"], list) or not data["sources"]:
         fail("sources: must be a non-empty list")
     known_source_ids = set()
@@ -221,6 +232,102 @@ def validate(data):
         fail(f"outreach[].outreach_rank values are not consecutive from 1: {outreach_ranks}")
 
 
+def validate_strict_scored(data):
+    """The --require-scored gate for a NEWLY GENERATED /qualify campaign.
+
+    validate() above stays permissive on purpose, so a historical/legacy
+    campaign JSON with no scoring at all remains loadable and renderable
+    (CAMPAIGN-HANDOFF.md Section 3a: scoring is additive to the schema).
+    This function is the separate, stricter check that a *new* campaign
+    must pass: canonical scoring is mandatory, the candidate cohort is
+    explicit and machine-checkable, and outreach[] cannot fall back to the
+    legacy qualitative-only path. Called only when --require-scored is
+    passed. Collects every unmet requirement before failing, so the caller
+    gets one complete list rather than one error at a time.
+    """
+    problems = []
+    run = data["run"]
+    market = data.get("market", [])
+    outreach = data.get("outreach", [])
+
+    scored = gather_scored_entries(data)
+    scored_businesses = {e["business"] for _a, _i, e in scored}
+    if not scored:
+        problems.append(
+            "no business in market[] or outreach[] has service_scope set - canonical scoring is "
+            "mandatory for a new /qualify campaign, the qualitative-only fallback is not an allowed "
+            "production path"
+        )
+
+    if not (run.get("service_scopes") or []):
+        problems.append("run.service_scopes: missing or empty")
+
+    question_ids = {q["question_id"] for q in run.get("questions", [])}
+    relevance = run.get("question_relevance") or []
+    classified = {r["question_id"] for r in relevance}
+    missing_relevance = question_ids - classified
+    if missing_relevance:
+        problems.append(f"run.question_relevance: missing classification for {sorted(missing_relevance)}")
+
+    min_appearances = run.get("cohort_inclusion_min_appearances")
+    if min_appearances is None:
+        problems.append(
+            "run.cohort_inclusion_min_appearances: missing - required so the candidate cohort's "
+            "inclusion floor is stated as data, not just prose in methodology_notes"
+        )
+
+    cohort = run.get("scoring_cohort") or []
+    if not cohort:
+        problems.append(
+            "run.scoring_cohort: missing or empty - the complete candidate cohort (every business "
+            "SCORED, EXCLUDED with a reason, or INCOMPLETE with the missing evidence stated) must be "
+            "recorded explicitly, so none can silently disappear into an unscored market[] record"
+        )
+    cohort_by_business = {c["business"]: c for c in cohort}
+
+    if min_appearances is not None and cohort:
+        missing_cohort = sorted(
+            e["business"] for e in market + outreach
+            if e.get("total_ai_appearances", 0) >= min_appearances
+            and e.get("business") not in cohort_by_business
+        )
+        if missing_cohort:
+            problems.append(
+                f"business(es) meeting cohort_inclusion_min_appearances ({min_appearances}) but missing "
+                f"from run.scoring_cohort: {missing_cohort}"
+            )
+
+    for business, c in cohort_by_business.items():
+        if c["status"] == "SCORED" and business not in scored_businesses:
+            problems.append(
+                f"run.scoring_cohort marks '{business}' SCORED, but it has no service_scope set in "
+                f"market[]/outreach[] - run scoring_engine.py, or correct the cohort status if it was "
+                f"actually excluded or left incomplete"
+            )
+
+    for i, o in enumerate(outreach):
+        business = o.get("business", f"outreach[{i}]")
+        if "service_scope" not in o:
+            problems.append(
+                f"outreach[{i}] ({business}): no service_scope set - a new campaign's outreach[] may "
+                f"not fall back to the legacy qualitative-only path"
+            )
+        elif "overall_rank" not in o:
+            problems.append(
+                f"outreach[{i}] ({business}): service_scope is set but overall_rank is missing - run "
+                f"scoring_engine.py before build_workbook.py"
+            )
+        if o.get("ready_to_email") == "YES" and "outreach_rank" not in o:
+            problems.append(
+                f"outreach[{i}] ({business}): ready_to_email is YES but outreach_rank is missing - run "
+                f"scoring_engine.py before build_workbook.py"
+            )
+
+    if problems:
+        detail = "\n  - ".join(problems)
+        fail(f"--require-scored: canonical scoring requirements not met:\n  - {detail}")
+
+
 # ===========================================================================
 # Rendering - xlsxwriter, cached values on every formula cell
 # ===========================================================================
@@ -262,7 +369,17 @@ def build_methodology_sheet(wb, fmts, data):
         r[0] += 1
 
     run = data["run"]
+    scored_anywhere = bool(gather_scored_entries(data))
     md(f"Scoring methodology - {run['sector']} / {run['geography']} ({run['campaign_slug']})", fmts["title"])
+    if not scored_anywhere:
+        md("LEGACY / UNSCORED CAMPAIGN - no business in this campaign has service_scope set, so the "
+           "auditable scoring model below did not run. The Scoring and Shortlist sheets are empty by "
+           "design, not by error. Priority, opportunity type and readiness for this campaign come only "
+           "from the qualitative fields on market[]/outreach[] (CAMPAIGN-HANDOFF.md Section 3), judged "
+           "against this market's own distribution - not from the scoring formulas documented below. "
+           "No claim is made that canonical qualification passed for this campaign; see the QC sheet.",
+           fmts["legacy_banner"])
+        r[0] += 1
     md("Canonical /qualify auditable scoring, generalized from the approved Kitchen and Bathroom Design & "
        "Installation, Wirral v2.1 regression test. Rendered from this campaign's own JSON - every rule below "
        "is the same rule for every campaign; only the values are campaign-specific.", fmts["subtitle"])
@@ -690,6 +807,37 @@ def build_qc_sheet(wb, fmts, data, ranked, shortlist_count):
 
     entries = [e for _a, _i, e in ranked]
     n = len(entries)
+
+    if n == 0:
+        # A legacy/unscored campaign - no vacuous PASS over an empty pool.
+        # Every check that would normally verify the scored pool's formulas,
+        # ranks and readiness gates is explicitly NOT APPLICABLE, not
+        # silently true because there was nothing to check.
+        na_rows = [
+            ("Canonical scoring pool", "NOT APPLICABLE",
+             "This campaign has no business with service_scope set - the auditable scoring model did "
+             "not run. See the Methodology sheet's LEGACY / UNSCORED banner."),
+            ("Raw AI counts reconcile to source data", "NOT APPLICABLE", "No scored pool to reconcile."),
+            ("Score formulas reproduce independently", "NOT APPLICABLE", "No scored pool to recompute."),
+            ("Ranking follows the documented tie-break rules", "NOT APPLICABLE", "No scored pool to rank."),
+            ("Outreach rank is consecutive", "NOT APPLICABLE", "No scored pool to rank."),
+            ("Readiness gates (ready_to_email / accessibility_grade / etc.)", "NOT APPLICABLE",
+             "No scored pool to gate."),
+            ("Canonical qualification verdict for this campaign", "NOT APPLICABLE",
+             "LEGACY / UNSCORED. This is not a PASS - no canonical-scoring claim is made for this "
+             "campaign; see market[]/outreach[] for its qualitative disposition/priority instead."),
+            ("Shortlist size", "INFO",
+             f"{shortlist_count} business(es) at Ready to email = YES in the scored pool (this campaign's "
+             f"scored pool is empty; a legacy campaign's own qualitative outreach[] readiness lives in "
+             f"the campaign JSON, not this sheet)."),
+        ]
+        for i, (check, result, detail) in enumerate(na_rows):
+            row0 = i + 1
+            ws.write(row0, 0, check, fmts["cell_bold"])
+            ws.write(row0, 1, result, fmts["na"] if result == "NOT APPLICABLE" else fmts["cell"])
+            ws.write(row0, 2, detail, fmts["cell_wrap"])
+        return ws
+
     raw_sum = sum(e["total_ai_appearances"] for e in entries)
     overall_ranks = sorted(e["overall_rank"] for e in entries)
     overall_ok = overall_ranks == list(range(1, n + 1))
@@ -787,6 +935,9 @@ def make_formats(wb):
         "cell_bold": wb.add_format({"valign": "top", "border": 1, "bold": True}),
         "yes": wb.add_format({"valign": "top", "border": 1, "bg_color": YES_BG}),
         "fail": wb.add_format({"valign": "top", "border": 1, "bg_color": FAIL_BG}),
+        "na": wb.add_format({"valign": "top", "border": 1, "bg_color": "#D9D9D9"}),
+        "legacy_banner": wb.add_format({"bold": True, "font_size": 10.5, "text_wrap": True, "valign": "top",
+                                         "bg_color": "#FCE4D6", "border": 1}),
         "priority": {k: wb.add_format({"valign": "top", "border": 1, "bg_color": v}) for k, v in PRIORITY_BG.items()},
     }
 
@@ -807,6 +958,12 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--input", required=True, help="Campaign JSON file, matching schema.json, already scored by scoring_engine.py")
     ap.add_argument("--output", required=True, help="Path to write the .xlsx workbook")
+    ap.add_argument("--require-scored", action="store_true",
+                     help="Fail closed unless this campaign meets the canonical scoring requirements for "
+                          "a newly-generated /qualify run (service_scopes, question_relevance, an explicit "
+                          "scoring_cohort, every outreach[] entry scored). Never pass this for a merely-"
+                          "historical campaign being re-rendered - the default (no flag) stays permissive "
+                          "so a legacy/unscored campaign remains readable.")
     args = ap.parse_args()
 
     with open(args.input, "r", encoding="utf-8") as f:
@@ -818,6 +975,8 @@ def main():
 
     try:
         validate(data)
+        if args.require_scored:
+            validate_strict_scored(data)
     except ValidationError as e:
         print(f"Invalid campaign data: {e}", file=sys.stderr)
         sys.exit(1)

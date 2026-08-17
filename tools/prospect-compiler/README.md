@@ -48,7 +48,26 @@ python3 build_workbook.py --input campaign.json --output workbook.xlsx
 ```
 
 A campaign where nothing sets `service_scope` can skip straight to
-`build_workbook.py`, exactly as pre-v2.
+`build_workbook.py`, exactly as pre-v2 — this is how a historical/legacy
+campaign JSON stays readable. The rendered workbook labels a campaign like
+this `LEGACY / UNSCORED` (Methodology sheet) and reports its QC checks as
+`NOT APPLICABLE` rather than a vacuous `PASS` over an empty scored pool.
+
+**As of 2026-08-17, `/qualify` requires canonical scoring for every newly
+generated campaign** (`.claude/skills/qualify/SKILL.md`) — that mandate is
+enforced at render time with `--require-scored`:
+
+```
+python3 build_workbook.py --input campaign.json --output workbook.xlsx --require-scored
+```
+
+This fails closed (no workbook written) unless the campaign has
+`run.service_scopes`, complete `run.question_relevance`, an explicit
+`run.scoring_cohort` covering every business that meets
+`run.cohort_inclusion_min_appearances`, and every `outreach[]` entry scored
+— see `CAMPAIGN-HANDOFF.md` §3a. Only pass this flag for a campaign this
+skill is generating fresh; never for a historical file being merely
+re-rendered, since that would (correctly) reject it.
 
 ## Output
 

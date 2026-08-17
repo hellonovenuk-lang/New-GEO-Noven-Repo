@@ -41,6 +41,22 @@
         "description": { "type": "string" }
       }
     },
+    "scoring_cohort_entry": {
+      "type": "object",
+      "description": "One business explicitly placed in the canonical scoring cohort for this campaign, per CAMPAIGN-HANDOFF.md Section 3a's candidate-pool-consistency rule. Every business meeting run.cohort_inclusion_min_appearances must have an entry here with a real status - the mechanism that stops a high-appearance business (e.g. one found late, or one that looked hard to research) from silently staying an unscored market[] record while lower-appearance businesses got the full scoring pass.",
+      "required": ["business", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "business": { "type": "string", "minLength": 1 },
+        "status": {
+          "type": "string",
+          "enum": ["SCORED", "EXCLUDED", "INCOMPLETE"],
+          "description": "SCORED: this business has service_scope set and appears in the scored pool (market[]/outreach[]). EXCLUDED: a documented reason (see 'reason') ruled it out of scoring, distinct from schema-level excluded_entry.reason though it may reuse the same value. INCOMPLETE: research is not yet sufficient to score or exclude it - see 'missing_evidence'."
+        },
+        "reason": { "type": "string", "description": "Required when status is EXCLUDED - why this cohort member was not scored." },
+        "missing_evidence": { "type": "string", "description": "Required when status is INCOMPLETE - exactly what evidence is still needed." }
+      }
+    },
     "question_relevance_entry": {
       "type": "object",
       "description": "The relevance classification of one campaign question, per CAMPAIGN-HANDOFF.md Section 3a. SERVICE_ONLY requires 'service' (must match a value that appears in at least one service_scope_def's applicable_services). AMBIGUOUS requires 'weight' (0 excludes the question from relevant-question scoring entirely; a fraction applies a documented partial weight; the field must not be silently omitted, defaulting a question to full relevance by accident).",
@@ -313,6 +329,16 @@
         },
         "raw_data_path": { "type": "string" },
         "methodology_notes": { "type": "string" },
+        "cohort_inclusion_min_appearances": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The mechanical floor of this campaign's stated candidate-pool inclusion threshold (CAMPAIGN-HANDOFF.md Section 3a): any market[]/outreach[] business with total_ai_appearances at or above this number must have a matching entry in run.scoring_cohort. A business below the floor may still be included in the cohort by judgement: this is a floor, not the whole rule - the qualitative parts of the inclusion rule stay in methodology_notes. Required, and mechanically enforced, only when build_workbook.py is run with --require-scored."
+        },
+        "scoring_cohort": {
+          "type": "array",
+          "description": "The complete, explicit candidate cohort selected for canonical qualification this campaign - every business is SCORED, EXCLUDED (with a reason), or INCOMPLETE (with the missing evidence stated), so none can silently disappear into an unscored market[] record. Required, and mechanically cross-checked against cohort_inclusion_min_appearances and the scored pool, only when build_workbook.py is run with --require-scored; historical campaigns without it remain readable.",
+          "items": { "$ref": "#/definitions/scoring_cohort_entry" }
+        },
         "service_scopes": {
           "type": "array",
           "description": "Every service-scope label used anywhere in this campaign's market[]/outreach[] entries, defined once here per CAMPAIGN-HANDOFF.md Section 3a.",

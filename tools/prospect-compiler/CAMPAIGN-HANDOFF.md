@@ -260,22 +260,48 @@ to skip the Audit by agreement — the exception, not the default sales path.
 ### 3a. Auditable scoring (candidate pool, service scope, question relevance, ranking)
 
 **Added 2026-08-16, generalized from the approved Kitchen and Bathroom Design
-& Installation, Wirral v2.1 regression test.** This subsection governs a
-NEW, optional layer on top of everything above — `disposition`,
-`opportunity_type`, `priority`, `accessibility`, `ready_to_email` still work
-exactly as documented in Section 3 and are still what `/outreach` reads.
-This subsection adds a documented, formula-driven, auditable *why* behind
-`opportunity_type` and `priority`'s proposed values, computed by
-`scoring_engine.py`, never hand-typed. A business that doesn't set
-`service_scope` simply isn't scored — it stays governed by Section 3 alone,
-exactly as before. **These fields supersede the "no proprietary score,
-visibility percentage or invented precision" line in the "Market position
-and opportunity type" subsection above for any business that opts in** —
-that line's caution was well-founded for a hand-eyeballed score; it does
-not apply to a fully documented, mechanically reproduced one. The two
-philosophies can coexist per business: an entry with no `service_scope` is
-still governed by the qualitative Leader/Upper-mid/Mid/Low/Absent judgement
-above.
+& Installation, Wirral v2.1 regression test.** This subsection adds a
+documented, formula-driven, auditable *why* behind `opportunity_type` and
+`priority`'s proposed values, computed by `scoring_engine.py`, never
+hand-typed. **These fields supersede the "no proprietary score, visibility
+percentage or invented precision" line in the "Market position and
+opportunity type" subsection above for any business that opts in** — that
+line's caution was well-founded for a hand-eyeballed score; it does not
+apply to a fully documented, mechanically reproduced one.
+
+**Schema-optional vs. process-mandatory — as of 2026-08-17, these are two
+different questions, deliberately kept apart.** At the `schema.json` level,
+every field in this subsection remains additive and optional, exactly as
+shipped 2026-08-16 — that is what keeps a pre-2026-08-17 campaign JSON file
+loadable and renderable forever, and it is not changing. Separately, as a
+*process* decision recorded in `.claude/skills/qualify/SKILL.md`, every
+newly-invoked `/qualify` run is now required to use this scoring layer —
+there is no qualitative-only production path for a new campaign. The
+distinction lives in the tooling, not the schema: `build_workbook.py`'s
+default (no flag) validation stays exactly as permissive as before, so a
+historical file still renders; a new `--require-scored` flag adds the
+stricter, mandatory-for-new-runs checks on top, including the candidate
+cohort below. A business that doesn't set `service_scope` in an *old*
+campaign is still governed by Section 3 alone, exactly as before — the two
+philosophies still coexist per business within a single historical file.
+
+**The candidate cohort — making "no cohort member silently disappears"
+machine-verifiable.** `run.cohort_inclusion_min_appearances` states, as
+data, the mechanical floor of this campaign's inclusion rule (any finer
+qualitative nuance stays in `methodology_notes`). `run.scoring_cohort` is
+the complete, explicit list of every business selected for canonical
+qualification, each an entry with `business` and `status` —
+`SCORED` (has `service_scope` set and appears in the scored pool),
+`EXCLUDED` (with a `reason`), or `INCOMPLETE` (with `missing_evidence`
+stating exactly what's needed). `--require-scored` cross-checks both
+mechanically: every `market[]`/`outreach[]` business meeting the stated
+floor must have a `scoring_cohort` entry, and every entry marked `SCORED`
+must actually have `service_scope` set. This is the fix for a real failure
+mode: a business with a high appearance count (found late, or that looked
+harder to research than the others) staying an ordinary, unflagged
+`market[]` record while every other business in its own tier got the full
+scoring pass — the gap was invisible before because nothing forced it to be
+named.
 
 **Two scripts, two jobs, same separation of concerns Section 1 already
 establishes for `build_workbook.py`:**

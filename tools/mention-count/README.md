@@ -48,9 +48,41 @@ python3 mention_count.py --run ~/wardith-runs/{trade}-{area}.csv \
     --out mention-counts.json
 ```
 
+## Alias generation and overlap-safe matching
+
+Every census business is matched by a set of auto-generated aliases (the
+brand as given, `&`/`and` swapped — case-insensitively, so a Title-Case
+"And" still generates the "&" form a model's answer actually used — and
+`Ltd`/`Limited`/`LLP`/`Estate Agents` suffixes stripped) plus any aliases
+supplied via `--variants-file`.
+
+Matching itself is overlap-aware: every alias, across every census
+business, is searched for within one answer first; only afterwards are
+overlapping matches resolved, longest span wins. This means a short
+business name that happens to be a literal substring of a longer one (e.g.
+"Builders Wirral" inside "Abbey Builders Wirral") is credited to the
+longer, more specific business wherever the two overlap, while a genuinely
+independent, non-overlapping mention of the short name elsewhere in the
+same or another answer still counts normally. A permanent, campaign-wide
+drop of the shorter name was deliberately rejected as a fix — it would
+undercount every answer where the short business is genuinely named on its
+own. Manual aliases from `--variants-file` go through the exact same
+overlap resolution as auto-generated ones; a human vouching for an alias's
+identity doesn't exempt it from the "don't double-count an overlapping
+match" rule.
+
+Matching is **not** word-boundary-anchored — a real run showed why: a
+census brand can be spelled slightly differently in real answer text (e.g.
+singular vs. plural, "Home Improvement" vs. "Home Improvements"), and an
+unanchored substring match is what catches that. `GENERIC_STOPWORDS`
+already guards against the class of false positive a word-boundary anchor
+would otherwise help with (a short generic variant matching mid-word).
+
 ## Output
 
-`mention-counts.json` — one entry per census business:
+`mention-counts.json` — one entry per census business, plus a top-level
+`_overlap_log` array recording every suppressed candidate (for audit — see
+below):
 
 ```json
 {
@@ -62,9 +94,19 @@ python3 mention_count.py --run ~/wardith-runs/{trade}-{area}.csv \
     "per_question": {"q01": 1, "q03": 1, "q06": 3},
     "variants_used": ["Example Estate Agents", "Example"],
     "matched_rows": [{"assistant": "openai", "question_id": "q01", "run_no": "5"}]
-  }
+  },
+  "_overlap_log": [
+    {
+      "assistant": "perplexity", "question_id": "q04", "run_no": "2",
+      "suppressed_business": "Builders Wirral", "suppressed_alias": "Builders Wirral",
+      "winning_business": "Abbey Builders Wirral", "winning_alias": "Abbey Builders Wirral"
+    }
+  ]
 }
 ```
 
 `variants_used` and `matched_rows` are there so a wrong count can be
 diagnosed by inspection, not by re-running the whole thing and guessing.
+`_overlap_log` is the same idea for overlap resolution specifically — every
+suppressed candidate names both the business that lost the match and the
+one that won it, for the same reason.

@@ -217,5 +217,214 @@ class RenderTests(unittest.TestCase):
             self.assertGreater(os.path.getsize(out), 0)
 
 
+def full_cohort_fixture():
+    """scored_fixture() plus the run.scoring_cohort / cohort_inclusion_min_appearances
+    fields --require-scored expects. Both scored_fixture() businesses meet the
+    floor (min_appearances=1) and are both marked SCORED, matching the fact
+    that scored_fixture() already gives both of them service_scope."""
+    data = scored_fixture()
+    data["run"]["cohort_inclusion_min_appearances"] = 1
+    data["run"]["scoring_cohort"] = [
+        {"business": "Ready Co", "status": "SCORED"},
+        {"business": "Not Ready Co", "status": "SCORED"},
+    ]
+    return data
+
+
+class LegacyWorkbookLabelingTests(unittest.TestCase):
+    """A campaign with nothing scored must render, but be unambiguously
+    labelled as legacy/unscored rather than silently rendering an empty
+    Scoring/QC block that could be misread as a canonical PASS."""
+
+    def test_methodology_sheet_carries_legacy_banner(self):
+        data = load_sample()
+        with tempfile.TemporaryDirectory() as tmp:
+            out = os.path.join(tmp, "out.xlsx")
+            bw.build_workbook(data, out)
+            wb = load_workbook(out)
+            ws = wb["Methodology"]
+            col_a_text = " ".join(c.value for c in ws["A"] if c.value)
+            self.assertIn("LEGACY / UNSCORED", col_a_text)
+
+    def test_scored_campaign_has_no_legacy_banner(self):
+        data = scored_fixture()
+        with tempfile.TemporaryDirectory() as tmp:
+            out = os.path.join(tmp, "out.xlsx")
+            bw.build_workbook(data, out)
+            wb = load_workbook(out)
+            ws = wb["Methodology"]
+            col_a_text = " ".join(c.value for c in ws["A"] if c.value)
+            self.assertNotIn("LEGACY / UNSCORED", col_a_text)
+
+    def test_empty_pool_qc_rows_are_not_applicable_not_pass(self):
+        data = load_sample()
+        with tempfile.TemporaryDirectory() as tmp:
+            out = os.path.join(tmp, "out.xlsx")
+            bw.build_workbook(data, out)
+            wb = load_workbook(out)
+            ws = wb["QC"]
+            results = [row[1].value for row in ws.iter_rows(min_row=2, max_row=ws.max_row) if row[1].value]
+            self.assertIn("NOT APPLICABLE", results)
+            self.assertNotIn("PASS", results)  # no vacuous PASS over the empty pool
+
+    def test_qc_does_not_claim_canonical_pass_for_legacy_campaign(self):
+        data = load_sample()
+        with tempfile.TemporaryDirectory() as tmp:
+            out = os.path.join(tmp, "out.xlsx")
+            bw.build_workbook(data, out)
+            wb = load_workbook(out)
+            ws = wb["QC"]
+            all_text = " ".join(str(c.value) for row in ws.iter_rows() for c in row if c.value)
+            self.assertIn("LEGACY / UNSCORED", all_text)
+
+    def test_scored_campaign_qc_still_reports_pass(self):
+        # Confirm the branch split didn't disturb the real scored path.
+        data = scored_fixture()
+        with tempfile.TemporaryDirectory() as tmp:
+            out = os.path.join(tmp, "out.xlsx")
+            bw.build_workbook(data, out)
+            wb = load_workbook(out)
+            ws = wb["QC"]
+            results = [row[1].value for row in ws.iter_rows(min_row=2, max_row=ws.max_row) if row[1].value]
+            self.assertIn("PASS", results)
+            self.assertNotIn("NOT APPLICABLE", results)
+
+
+class RequireScoredTests(unittest.TestCase):
+    """--require-scored: the forward-only gate for a newly-generated
+    /qualify campaign. Default (no flag) validate() must stay untouched -
+    covered by every test above this class."""
+
+    def test_legacy_campaign_rejected(self):
+        data = load_sample()
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate_strict_scored(data)
+        msg = str(ctx.exception)
+        self.assertIn("no business", msg)
+        self.assertIn("service_scope", msg)
+
+    def test_missing_service_scopes_rejected(self):
+        data = full_cohort_fixture()
+        del data["run"]["service_scopes"]
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate_strict_scored(data)
+        self.assertIn("service_scopes", str(ctx.exception))
+
+    def test_missing_question_relevance_rejected(self):
+        data = full_cohort_fixture()
+        data["run"]["question_relevance"] = data["run"]["question_relevance"][:1]
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate_strict_scored(data)
+        self.assertIn("question_relevance", str(ctx.exception))
+
+    def test_missing_scoring_cohort_rejected(self):
+        data = full_cohort_fixture()
+        del data["run"]["scoring_cohort"]
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate_strict_scored(data)
+        self.assertIn("scoring_cohort", str(ctx.exception))
+
+    def test_missing_cohort_inclusion_floor_rejected(self):
+        data = full_cohort_fixture()
+        del data["run"]["cohort_inclusion_min_appearances"]
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate_strict_scored(data)
+        self.assertIn("cohort_inclusion_min_appearances", str(ctx.exception))
+
+    def test_cohort_member_meeting_floor_but_absent_is_rejected(self):
+        # Reproduces the "Open Plan Building" failure mode: a business with
+        # enough appearances to meet the campaign's own stated floor, but
+        # left out of the cohort list entirely, must be named and rejected.
+        data = full_cohort_fixture()
+        data["market"].append({
+            "business": "Open Plan Analogue", "area": "Sampleford", "disposition": "REVIEW",
+            "total_ai_appearances": 32,
+        })
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate_strict_scored(data)
+        self.assertIn("Open Plan Analogue", str(ctx.exception))
+
+    def test_business_below_floor_need_not_be_in_cohort(self):
+        data = full_cohort_fixture()
+        data["market"].append({
+            "business": "Tiny Co", "area": "Sampleford", "disposition": "REVIEW",
+            "total_ai_appearances": 0,
+        })
+        bw.validate_strict_scored(data)  # must not raise - below the floor of 1
+
+    def test_cohort_scored_status_without_service_scope_rejected(self):
+        data = full_cohort_fixture()
+        data["run"]["scoring_cohort"].append({"business": "Ghost Co", "status": "SCORED"})
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate_strict_scored(data)
+        self.assertIn("Ghost Co", str(ctx.exception))
+
+    def test_cohort_excluded_without_reason_rejected_by_validate(self):
+        # Shape-checking lives in validate() itself, unconditionally.
+        data = full_cohort_fixture()
+        data["run"]["scoring_cohort"].append({"business": "Excluded Co", "status": "EXCLUDED"})
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate(data)
+        self.assertIn("EXCLUDED", str(ctx.exception))
+
+    def test_cohort_incomplete_without_missing_evidence_rejected_by_validate(self):
+        data = full_cohort_fixture()
+        data["run"]["scoring_cohort"].append({"business": "Pending Co", "status": "INCOMPLETE"})
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate(data)
+        self.assertIn("INCOMPLETE", str(ctx.exception))
+
+    def test_outreach_entry_without_service_scope_rejected(self):
+        # No qualitative-only fallback allowed in outreach[] for a new campaign.
+        data = full_cohort_fixture()
+        data["run"]["scoring_cohort"].append({"business": "Qualitative Co", "status": "SCORED"})
+        data["outreach"].append({
+            "priority": "REVIEW", "business": "Qualitative Co", "area": "Sampleford",
+            "total_ai_appearances": 5, "strongest_competitor": "x", "competitor_appearances": 1,
+            "competitive_gap_finding": "x", "why_prospect": "x", "legal_entity": "x",
+            "company_number": "9", "company_status": "Active", "ready_to_email": "REVIEW",
+            "evidence_source_ids": ["S001"], "accessibility": "DIRECT",
+        })
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate_strict_scored(data)
+        self.assertIn("Qualitative Co", str(ctx.exception))
+        self.assertIn("service_scope", str(ctx.exception))
+
+    def test_ready_without_outreach_rank_rejected(self):
+        data = full_cohort_fixture()
+        # scored_fixture()'s "Ready Co" already earns ready_to_email=YES from
+        # the engine's own gate (perfect VALUE fields) - confirm that, then
+        # simulate a hand-edited JSON where outreach_rank never got
+        # (re-)computed, e.g. after scoring_engine.py --in-place was skipped
+        # on a later edit.
+        self.assertEqual(data["outreach"][0]["ready_to_email"], "YES")
+        del data["outreach"][0]["outreach_rank"]
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate_strict_scored(data)
+        self.assertIn("outreach_rank", str(ctx.exception))
+
+    def test_fully_scored_campaign_with_cohort_is_accepted(self):
+        data = full_cohort_fixture()
+        bw.validate(data)
+        bw.validate_strict_scored(data)  # must not raise
+
+    def test_main_cli_rejects_legacy_campaign_and_writes_nothing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            in_path = os.path.join(tmp, "campaign.json")
+            out_path = os.path.join(tmp, "out.xlsx")
+            with open(in_path, "w", encoding="utf-8") as f:
+                json.dump(load_sample(), f)
+            import subprocess
+            import sys as _sys
+            result = subprocess.run(
+                [_sys.executable, os.path.join(os.path.dirname(__file__), "build_workbook.py"),
+                 "--input", in_path, "--output", out_path, "--require-scored"],
+                capture_output=True, text=True,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertFalse(os.path.exists(out_path))
+            self.assertIn("canonical scoring requirements not met", result.stderr)
+
+
 if __name__ == "__main__":
     unittest.main()
