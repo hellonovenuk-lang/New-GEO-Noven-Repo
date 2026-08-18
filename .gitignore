@@ -17,5 +17,6 @@ __pycache__/
 
 # /context-watch drafts. Unapproved article finds — review locally, never
 # committed. An approved draft is promoted into `site/src/content/context/`
-# by hand as its own explicit step; that's what enters git.
-content/
+# by hand as its own explicit step; that's what enters git. Anchored to the
+# repo root so it doesn't also swallow `site/src/content/`.
+/content/

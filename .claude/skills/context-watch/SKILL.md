@@ -54,6 +54,10 @@ list verbatim:
 - AI shopping / AI agents making purchase or booking decisions
 - How LLMs choose which businesses to name or recommend
 - Research or surveys on consumer trust in AI-generated answers
+- AI crawler/bot traffic to websites (GPTBot, ClaudeBot, PerplexityBot,
+  Google-Extended) and what blocking or allowing them means for a site
+- Growth in consumer use of AI assistants/agents for search, planning, or
+  shopping in place of typing into Google
 
 Keep the list current — if the owner mentions a new angle worth tracking,
 add it here rather than treating it as a one-off search.
