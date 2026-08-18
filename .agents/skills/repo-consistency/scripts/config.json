@@ -1,0 +1,247 @@
+{
+  "_comment": [
+    "Configuration for check.py. Edit this rather than the script when the",
+    "business changes. Every value here is a fact about this repo, not about",
+    "consistency checking in general.",
+    "",
+    "canonical_source: the file the checker reads current facts out of. It is",
+    "the single source of truth for name, email and prices, and says so in its",
+    "own header comment. If that ever stops being true, this checker is wrong.",
+    "",
+    "superseded_terms: names, domains and addresses the business used to use.",
+    "Finding one outside a historical path usually means a rename was left",
+    "half-done. Add to this list on the day a rename happens, not later.",
+    "",
+    "historical_paths: files whose job is to record what happened. Old names and",
+    "old prices are CORRECT here and must not be 'fixed' — editing them destroys",
+    "the record of why a decision went the way it did. The whole of `archive/`",
+    "is in this category since the 2026-08-10 rewrite — see archive/README.md:",
+    "it is superseded, kept for one review cycle, and also in git log.",
+    "",
+    "plan_aliases: how a plan gets named in prose, so a price sitting next to it",
+    "can be checked against the canonical number for that plan."
+  ],
+  "canonical_source": "site/src/data/business.ts",
+  "superseded_terms": [
+    "Noven Studio",
+    "novenstudio.co.uk",
+    "hello@novenstudio.co.uk",
+    "Noven"
+  ],
+  "historical_paths": [
+    "archive/",
+    ".claude/skills/",
+    "node_modules/",
+    ".git/"
+  ],
+  "plan_aliases": {
+    "audit": [
+      "audit"
+    ],
+    "foundation": [
+      "foundation"
+    ],
+    "maintain": [
+      "maintain"
+    ],
+    "grow": [
+      "grow"
+    ],
+    "lead": [
+      "lead"
+    ]
+  },
+  "status_vocabulary": [
+    "Live",
+    "Decided, unvalidated",
+    "Closed",
+    "Stub",
+    "Reopened"
+  ],
+  "status_required_in": [
+    "playbook/"
+  ],
+  "_external_files_note": [
+    "Files the documents name on purpose that are not in this repo, so",
+    "the refs check does not report them as broken. Client audit data",
+    "lives in the client's own folder outside the repo — playbook/audit-",
+    "process.md — so the per-run timings.md is meant to be absent."
+  ],
+  "external_files": [
+    "timings.md",
+    "runs.csv",
+    "runs-clean.csv"
+  ],
+  "duplicate_min_chars": 200,
+  "duplicate_similarity": 0.75,
+  "_reviewed_dupes_note": [
+    "Passages duplicated on purpose, by file pair, with the reason. checks.md",
+    "allows exactly one case: a banner repeated at the top of several entry",
+    "points so that no reader misses it.",
+    "",
+    "The exemption is conditional on the copies staying identical. While they",
+    "are, the finding drops to a note with the reason attached. The moment they",
+    "diverge it becomes an ERROR rather than the usual verify — a banner saying",
+    "different things in three places is worse than one written once, and it is",
+    "the specific failure this entry exists to catch.",
+    "",
+    "Emptied 2026-08-11: the rename banner it recorded lived in README.md,",
+    "HANDOVER.md and ROADMAP.md, and the 2026-08-10 rewrite moved HANDOVER.md",
+    "and ROADMAP.md into archive/ (now historical) and dropped the banner from",
+    "README.md entirely. Nothing live currently claims a deliberate duplicate."
+  ],
+  "reviewed_dupes": [],
+  "_record_section_note": [
+    "A heading matching this pattern marks a section whose job is to record a",
+    "price change, so the old prices inside it are correct and are skipped by",
+    "the facts check. It runs until the next heading of the same or higher",
+    "level, so subsections stay inside it.",
+    "",
+    "Keep this narrow. A loose version ('any dated heading saying changed')",
+    "matched ROADMAP.md's 'What changed on 2026-08-06' — a section about the",
+    "present — and silently hid a stale price underneath it. A noisy finding",
+    "costs a glance; a suppressed one costs the whole point of the check."
+  ],
+  "record_section_heading": "\\b(repricing|price history|superseded prices)\\b",
+  "_reviewed_names_note": [
+    "File/term pairs judged correct as written, with the reason and the date the",
+    "judgement was made. The names check downgrades these to notes instead of",
+    "errors, so a later run does not re-investigate them from scratch.",
+    "",
+    "This is a record of a decision, not a mute button: the mentions are still",
+    "printed with the reason attached. Delete an entry to put it back in front of",
+    "the reader — and do delete it if the file's purpose changes.",
+    "",
+    "Reviewed 2026-08-11 against the post-rewrite tree. Entries under the old",
+    "`ops/` layout were dropped: their files are either now inside `archive/`",
+    "(historical, skipped wholesale) or renamed, in which case the entry moved",
+    "with them below."
+  ],
+  "reviewed_names": [
+    {
+      "path": "tools/name-check/README.md",
+      "term": "Noven",
+      "reason": "the name collision this tool was built to test, and the 2026-08-02 self-audit that found it"
+    },
+    {
+      "path": "tools/name-check/name_check.py",
+      "term": "Noven",
+      "reason": "the name collision this tool was built to test"
+    },
+    {
+      "path": "tools/site-check/README.md",
+      "term": "Noven",
+      "reason": "names the 2026-08-02 self-audit and the run it was called at the time"
+    },
+    {
+      "path": "tools/site-check/site_check.py",
+      "term": "Noven",
+      "reason": "names the 2026-08-02 self-audit and the run it was called at the time"
+    },
+    {
+      "path": "tools/trade-run/README.md",
+      "term": "Noven",
+      "reason": "describes trade_run.py as a copy of the 2026-08-02 self-audit's script"
+    },
+    {
+      "path": "tools/trade-run/trade_run.py",
+      "term": "Noven",
+      "reason": "describes itself as a copy of the 2026-08-02 self-audit's script"
+    },
+    {
+      "path": "playbook/audit-site-checklist.md",
+      "term": "Noven",
+      "reason": "names the 2026-08-02 self-audit whose access failure this checklist item exists to catch"
+    },
+    {
+      "path": "playbook/business.md",
+      "term": "novenstudio.co.uk",
+      "reason": "the source domain of the live Search Console Change of Address, running to ~Feb 2027"
+    },
+    {
+      "path": "playbook/decisions.md",
+      "term": "hello@novenstudio.co.uk",
+      "reason": "the closed decision that the alias must keep receiving for at least twelve months — matches the comment in site/src/data/business.ts"
+    },
+    {
+      "path": "assets/brand/trim.mjs",
+      "term": "Noven",
+      "reason": "comment about the committed brand set as verified on 2026-08-04"
+    },
+    {
+      "path": "assets/og/og.html",
+      "term": "Noven",
+      "reason": "comment recording the wordmark ratio it was derived from"
+    },
+    {
+      "path": "site/src/data/business.ts",
+      "term": "hello@novenstudio.co.uk",
+      "reason": "the comment explaining why the address was flipped and when"
+    },
+    {
+      "path": "site/src/pages/ask-your-ai/index.astro",
+      "term": "Noven",
+      "reason": "a published section whose subject is why the name changed; rewriting it would delete the explanation"
+    },
+    {
+      "path": "site/src/pages/ask-your-ai/self-audit.astro",
+      "term": "Noven",
+      "reason": "published reproduction of the dated self-audit report"
+    },
+    {
+      "path": "site/src/pages/ask-your-ai/self-audit.astro",
+      "term": "novenstudio.co.uk",
+      "reason": "published reproduction of the dated self-audit report"
+    },
+    {
+      "path": "site/src/pages/ask-your-ai/self-audit.astro",
+      "term": "hello@novenstudio.co.uk",
+      "reason": "the report's original signature; the alias still receives"
+    }
+  ],
+  "_superseded_prices_note": [
+    "Prices this business has charged and stopped charging, from the repricing",
+    "records in ops/service-tiers.md sections 9 and 11. Any of these stated",
+    "outside a record section or a historical file is drift.",
+    "",
+    "This exists because attribution is not enough. 'a stranger can read the site",
+    "and pay us £125' names no plan and holds one amount, so neither the",
+    "price-to-plan rule nor the ladder rule can see it — but £125 is a price this",
+    "business has not charged since 2026-08-05.",
+    "",
+    "250 is deliberately absent: it was Grow's old monthly price and is now the",
+    "audit's, so it cannot be judged from the number alone.",
+    "",
+    "30 and 75 were dropped after they collided with supplier costs — a £30",
+    "Hoxton Mix plan is not our old audit price. Small round numbers are common",
+    "in other people's pricing, and both were retired at the first repricing",
+    "rather than the current one."
+  ],
+  "superseded_prices": [
+    95,
+    125,
+    350,
+    495,
+    750
+  ],
+  "_reviewed_facts_note": [
+    "Amounts that are correct as written but read as price drift, judged once so",
+    "they are not re-triaged every run. Keyed on file and amount, not line, so",
+    "they survive a condensing pass moving the text.",
+    "",
+    "These only ever downgrade the 'verify' grade. An ERROR — a document stating a",
+    "price this business does not charge — can never be silenced from here. If a",
+    "fact is wrong, fix the fact.",
+    "",
+    "Emptied 2026-08-11: every prior entry keyed on a file now inside `archive/`",
+    "(historical, skipped wholesale by the facts check). Re-populate against the",
+    "current `playbook/` tree as discursive verifies turn up there."
+  ],
+  "reviewed_facts": [
+    {
+      "path": "playbook/accounts-and-dates.md",
+      "amount": 10,
+      "reason": "the OpenAI/Perplexity API spend cap per provider, not the audit's price"
+    }
+  ]
+}
