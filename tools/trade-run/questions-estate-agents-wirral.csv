@@ -1,0 +1,7 @@
+audit_id,question_id,category,question_text,frozen_from
+estate-agents-wirral-2026-08-11,q01,discovery,"Who's a good estate agent on the Wirral?",
+estate-agents-wirral-2026-08-11,q02,discovery,"Can you recommend an estate agent near Birkenhead?",
+estate-agents-wirral-2026-08-11,q03,discovery,"I'm moving to Wallasey and need to find an estate agent — who should I look at?",
+estate-agents-wirral-2026-08-11,q04,qualified-discovery,"Which estate agents on the Wirral deal with rental properties?",
+estate-agents-wirral-2026-08-11,q05,buying-intent,"I need to sell my house in Heswall fairly quickly — who should I call?",
+estate-agents-wirral-2026-08-11,q06,comparison,"I'm comparing a few estate agents on the Wirral — who tends to come up, and how do they differ?",
