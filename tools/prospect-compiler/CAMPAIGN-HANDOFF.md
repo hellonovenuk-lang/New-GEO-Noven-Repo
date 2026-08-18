@@ -257,6 +257,329 @@ little to structurally fix may go straight from Audit to an ongoing plan. If a
 prospect explicitly asks to start directly on ongoing work, Wardith may agree
 to skip the Audit by agreement — the exception, not the default sales path.
 
+### 3a. Auditable scoring (candidate pool, service scope, question relevance, ranking)
+
+**Added 2026-08-16, generalized from the approved Kitchen and Bathroom Design
+& Installation, Wirral v2.1 regression test.** This subsection adds a
+documented, formula-driven, auditable *why* behind `opportunity_type` and
+`priority`'s proposed values, computed by `scoring_engine.py`, never
+hand-typed. **These fields supersede the "no proprietary score, visibility
+percentage or invented precision" line in the "Market position and
+opportunity type" subsection above for any business that opts in** — that
+line's caution was well-founded for a hand-eyeballed score; it does not
+apply to a fully documented, mechanically reproduced one.
+
+**Schema-optional vs. process-mandatory — as of 2026-08-17, these are two
+different questions, deliberately kept apart.** At the `schema.json` level,
+every field in this subsection remains additive and optional, exactly as
+shipped 2026-08-16 — that is what keeps a pre-2026-08-17 campaign JSON file
+loadable and renderable forever, and it is not changing. Separately, as a
+*process* decision recorded in `.claude/skills/qualify/SKILL.md`, every
+newly-invoked `/qualify` run is now required to use this scoring layer —
+there is no qualitative-only production path for a new campaign. The
+distinction lives in the tooling, not the schema: `build_workbook.py`'s
+default (no flag) validation stays exactly as permissive as before, so a
+historical file still renders; a new `--require-scored` flag adds the
+stricter, mandatory-for-new-runs checks on top, including the candidate
+cohort below. A business that doesn't set `service_scope` in an *old*
+campaign is still governed by Section 3 alone, exactly as before — the two
+philosophies still coexist per business within a single historical file.
+
+**The candidate cohort — making "no cohort member silently disappears"
+machine-verifiable.** `run.cohort_inclusion_min_appearances` states, as
+data, the mechanical floor of this campaign's inclusion rule (any finer
+qualitative nuance stays in `methodology_notes`). `run.scoring_cohort` is
+the complete, explicit list of every business selected for canonical
+qualification, each an entry with `business` and `status` —
+`SCORED` (has `service_scope` set and appears in the scored pool),
+`EXCLUDED` (with a `reason`), or `INCOMPLETE` (with `missing_evidence`
+stating exactly what's needed). `--require-scored` cross-checks both
+mechanically: every `market[]`/`outreach[]` business meeting the stated
+floor must have a `scoring_cohort` entry, and every entry marked `SCORED`
+must actually have `service_scope` set. This is the fix for a real failure
+mode: a business with a high appearance count (found late, or that looked
+harder to research than the others) staying an ordinary, unflagged
+`market[]` record while every other business in its own tier got the full
+scoring pass — the gap was invisible before because nothing forced it to be
+named.
+
+**Narrative generation — added 2026-08-17, mandatory, not an optional
+helper.** `competitive_gap_finding` and `why_prospect` on every scored
+`outreach[]` entry are generated deterministically by
+`scoring_engine.py`'s `generate_competitive_gap_finding()`/
+`generate_why_prospect()`, automatically, as the last step of `score_pool()`
+— after `opportunity_type`, `nearest_competitor`, `group_top_visibility_rate`
+and every rank are already final. This exists because a real campaign
+(Kitchen and Bathroom Design & Installation, Wirral) shipped a specialist's
+`competitive_gap_finding` stating "13 of the 90 raw answers" when that
+business's real relevance-aware denominator was 60, and a `why_prospect`
+that was a verbatim copy of `business_type_notes` — neither defect was
+mechanically possible to catch before this existed, because nothing
+connected the prose to the structured values it was supposed to describe.
+
+- **The primary visibility claim always uses `relevant_appearances`/
+  `relevant_opportunities`, never the raw campaign total, unless the two
+  genuinely coincide** (a business relevant to every campaign question) —
+  and even then the text says so explicitly ("every one of this campaign's
+  questions was relevant to this business"), never silently reusing
+  ambiguous "N of 90" language indistinguishable from the bug. Per-question,
+  competitor, and provider-split figures use clearly different phrasing
+  precisely so they are never confused with the primary claim (see the
+  contradiction-detection rule below).
+- **Provider split is mentioned only where mechanically material** — absent
+  from a provider entirely, or one provider carrying ≥70% of the total —
+  not appended to every finding as boilerplate.
+- **`why_prospect` is branched by `opportunity_type`** (DEFEND/GROWTH/GAP/
+  REVIEW) and states the actual commercial case; `business_type_notes` may
+  be cited as one further, clearly separate clause for context, never as
+  the entire field.
+- **Regeneration is forced by a signature mismatch, not skipped because the
+  field is already non-empty.** `narrative_generated_from` fingerprints the
+  structured inputs a narrative was generated from; `score_pool()` recomputes
+  and compares it on every run and only regenerates when it no longer
+  matches. This is what makes a corrected mention count (or any other
+  re-score) automatically update the narrative — a stale sentence can never
+  survive purely because nobody remembered to rewrite it by hand.
+- **A signature match means "already current," not "must be exactly the
+  generated text."** A human/Claude may refine the generated baseline
+  afterward with real, specific evidence — a named competitor's actual
+  differentiator, a detail surfaced during research — and that refinement
+  survives an unrelated re-score untouched, since the signature doesn't
+  change. What it does not survive is a contradiction: `build_workbook.py`'s
+  `detect_narrative_contradictions()` independently checks the *text* of
+  both fields (not just whether they were regenerated) for exactly two
+  mechanical problems — the primary claim's numbers not matching
+  `relevant_appearances`/`relevant_opportunities`, or `why_prospect` equal
+  to `business_type_notes` — regardless of who wrote the words or when.
+  `--require-scored` rejects both; the default render flags them as QC
+  warnings instead, so a historical file stays readable while still being
+  honestly labelled.
+- **Structured fields are the source of truth for any downstream numeric
+  claim, prose is for human-readable drafting only.** Any consumer of a
+  campaign JSON — `/outreach` included — should prefer
+  `relevant_appearances`/`relevant_opportunities`/`visibility_rate`/
+  `opportunity_type` etc. directly over parsing a sentence out of
+  `competitive_gap_finding`/`why_prospect` for anything that needs to be
+  numerically reliable, precisely because the prose can (rarely, and now
+  detectably) drift from the numbers it describes.
+
+**Two scripts, two jobs, same separation of concerns Section 1 already
+establishes for `build_workbook.py`:**
+
+- **`scoring_engine.py` is deterministic computation only.** Given the 9
+  evidence-backed VALUE fields (below) plus `service_scope` and the
+  campaign's `run.service_scopes[]` / `run.question_relevance[]`
+  definitions, it mechanically fills in every DERIVED field. It does not
+  research businesses and does not decide the VALUE fields — Claude does,
+  from evidence, before running it.
+- **`build_workbook.py` renders whatever `scoring_engine.py` computed** as
+  live Excel formulas with genuine cached values (Section 7 below covers the
+  render/validate command) — it does not recompute anything itself.
+
+**Candidate-pool inclusion — apply one documented, consistent threshold to
+everyone.** Before scoring anyone, state the campaign's inclusion rule (e.g.
+"every census business with total_ai_appearances >= 5, plus every business
+the owner named explicitly") and apply the SAME research depth to every
+business that meets it — never promote a business into the scored pool
+merely because it happened to get researched first or was easy to verify. A
+business that meets the threshold but whose research is still incomplete
+stays in `market[]` at `disposition: REVIEW` (or in `outreach[]` at
+`priority: REVIEW` / `ready_to_email: REVIEW` if it progressed that far) —
+distinguish "not resolved yet" from "commercially rejected" and never
+present the researched subset as if it were the whole ranked market.
+
+**Service-scope classification** (`service_scope`, `business_structure`,
+`business_type_notes`) — RESEARCH/CLAUDE, from evidence, never inferred from
+the business name alone. `service_scope` is a short campaign-defined label
+(e.g. `kitchen_only` / `bathroom_only` / `combined` for a kitchen-and-bathroom
+campaign — a different vocabulary entirely for a different sector) declared
+once in `run.service_scopes[]` with its `applicable_services` (which of the
+campaign's real-world services it genuinely offers — this is what
+question-relevance weighting keys off, not the label string). `structure`
+records ownership shape at the service-scope level where it's uniform
+(`INDEPENDENT_LOCAL` / `LOCALLY_OWNED_FRANCHISE` / `CENTRALLY_CONTROLLED_CHAIN`)
+or per-business via `business_structure` where it varies within a scope. A
+business whose scope isn't yet resolved should not set `service_scope` at
+all rather than guessing — it stays unscored (Section 3's qualitative path
+still applies to it).
+
+**Question-relevance classification** (`run.question_relevance[]`) —
+CLAUDE, from ordinary customer meaning, one entry per `question_id`,
+required and documented before any business is scored:
+
+- `SERVICE_ONLY` (+ `service`) — the question only makes sense answered by a
+  business offering that one named service. Full relevance only to
+  businesses whose `applicable_services` includes that service.
+- `EXPLICITLY_COMBINED` — the question's own wording excludes single-service
+  businesses (e.g. "not just one trade"). Full relevance only to a business
+  whose `applicable_services` covers more than one service.
+- `SINGLE_SERVICE_INCLUSIVE` — the question names multiple services but,
+  read as an ordinary customer would, doesn't require any one business to
+  offer all of them (e.g. "best kitchen and bathroom fitters" reads as "who's
+  good at kitchen fitting, and who's good at bathroom fitting"). Full
+  relevance to every business with at least one real applicable service.
+  Corroborate this reading empirically where possible — if a single-service
+  specialist genuinely got named on this question in the real run answers,
+  that is evidence for an inclusive reading, not just a semantic guess.
+- `AMBIGUOUS` (+ required `weight`, 0–1) — neither of the above cleanly
+  applies. `weight: 0` excludes the question from relevant-question scoring
+  entirely; a documented fraction applies a partial weight uniformly to
+  every business with a real applicable service. This field must never be
+  omitted for an `AMBIGUOUS` question — an omitted weight silently
+  defaulting to full relevance is exactly what this rule exists to prevent.
+
+A specialist is never penalized for absence from a question outside its
+verified scope — that question is simply excluded from its denominator, not
+counted as a miss.
+
+**The 14 scored fields** (all optional, all on both `market_entry` and
+`outreach_entry` — see `schema.json`'s `scoring_fields` definition for the
+authoritative shape/range of every field named below):
+
+| Field | Nature | Who/what sets it |
+|---|---|---|
+| `commercial_fit` (0–5) | VALUE | CLAUDE — ownership/structure fit for a marketing customer, independent of trade |
+| `service_relevance` (0–5) | VALUE | CLAUDE — how closely the actual offer matches this campaign's sector |
+| `visibility_score` (0–5) | DERIVED | scoring_engine.py — banded from `visibility_rate` |
+| `gap_strength` (0–5) | DERIVED | scoring_engine.py — `CLAMP(business_credibility - visibility_score + 3, 0, 5)` |
+| `business_credibility` (0–5) | VALUE | CLAUDE, from RESEARCH — verifiable evidence of genuine, active, established trading |
+| `ability_to_buy` (0–5) | VALUE | CLAUDE — scale proxy only (sites/premises/marketing signals), never presented as a financial fact |
+| `decision_maker_identified` (0–5) | VALUE | CLAUDE, from RESEARCH — existence/identification of a named owner/director |
+| `direct_dm_route` (0–5) | VALUE | CLAUDE, from RESEARCH — the 6-tier scale below |
+| `contact_route_quality` (0–5) | VALUE | CLAUDE, from RESEARCH — mechanism quality, independent of who it reaches |
+| `contact_identity_confidence` (0–5) | VALUE | CLAUDE, from RESEARCH — confidence in WHO the route reaches |
+| `overall_evidence_confidence` (0–5) | DERIVED | scoring_engine.py — `MIN(business_credibility, decision_maker_identified, contact_identity_confidence, research_completeness)` |
+| `research_completeness` (0–5) | VALUE | CLAUDE — how many material fields are actually resolved with direct evidence |
+| `final_score` (0–100) | DERIVED | scoring_engine.py — weighted sum of 9 components (see below), never a visibility-size ranking |
+| `overall_rank` / `outreach_rank` | DERIVED | scoring_engine.py — see "Ranking" below |
+
+`final_score` weights: `commercial_fit`×3, `service_relevance`×2,
+`visibility_score`×2, `gap_strength`×4, `business_credibility`×3,
+`ability_to_buy`×2, `decision_maker_identified`×2, `direct_dm_route`×3,
+`contact_route_quality`×1 (max raw points 110) →
+`ROUND(raw_points / 110 * 100, 1)`.
+
+**Decision-maker accessibility — the 6-tier `direct_dm_route` scale, used
+verbatim, and materially affecting rank via `final_score` and `priority`,
+not just recorded in notes:**
+
+`5` confirmed named owner/director, direct route · `4` confirmed named
+owner/director, generic business route · `3` probable contact, identity
+supported but not confirmed · `2` generic business inbox only · `1` contact
+form or telephone only · `0` no usable route. `accessibility_grade`
+(`CONFIRMED_DIRECT` / `CONFIRMED_GENERIC_ROUTE` / `PROBABLE_UNCONFIRMED` /
+`GENERIC_INBOX_ONLY` / `CONTACT_FORM_OR_PHONE_ONLY` / `NO_USABLE_ROUTE`) is
+the same tier as a machine-readable label, derived automatically from
+`direct_dm_route` — never set independently of it. **A generic inbox
+(`2`/`GENERIC_INBOX_ONLY`) is never treated as equivalent to a direct route
+(`5`) just because an email address technically exists** — this is the
+specific flaw the v2.1 test found and fixed: `ready_to_email` cannot reach
+`YES` on a generic-inbox-only, unconfirmed-identity record any more, however
+plausible the commercial case.
+
+**Structured confidence labels**, distinct from `direct_dm_route`'s route
+quality — `identity_confidence` (`CONFIRMED` / `PROBABLE` / `POSSIBLE` /
+`UNKNOWN`) answers *who* the contact reaches, kept separate from
+`business_verified`/`contact_route_verified`/`named_decision_maker_verified`/
+`research_complete`/`eligible_for_outreach` (all derived, all distinct
+booleans-as-enums — see `scoring_engine.py`'s gate constants for the exact
+threshold each one uses). **An inferred identity is never presented as
+`CONFIRMED`** — `contact_identity_confidence` must independently be ≥4 for
+the `CONFIRMED` label to appear; a same-name coincidence or an unopened
+LinkedIn search result stays `PROBABLE` or `POSSIBLE`.
+
+**`ready_to_email` gate** (on `outreach_entry` only) — YES only if ALL of:
+`eligible_for_outreach=YES` (itself `business_verified=YES` AND
+`contact_route_verified=YES` AND `commercial_fit>=2` AND
+`service_relevance>=2` — this is what keeps a centrally-controlled chain out,
+via the `commercial_fit` gate, without a separate hand-rule) AND
+`decision_maker_identified>=3` AND `contact_identity_confidence>=3` AND
+`research_complete=YES` AND `overall_evidence_confidence>=3`. `priority` is
+`REVIEW` whenever `eligible_for_outreach != YES` or `research_complete !=
+YES`, regardless of `final_score` — **a high-scoring candidate with
+unresolved material evidence is never promoted on the strength of its score
+alone.** Both remain `scoring_engine.py`'s *proposed* values — the Section 5
+approval gate below is unchanged: the owner still approves `priority` and
+`ready_to_email` before either is final.
+
+**Opportunity type, generalized** (supersedes the qualitative-only framing
+above wherever `service_scope` is set — `NO OPPORTUNITY` remains a valid
+legacy value on old, unscored records; the engine itself only ever produces
+`DEFEND` / `GROWTH` / `GAP` / `REVIEW`):
+
+```
+DEFEND   if a comparable same-scope peer exists (>=2 businesses share this
+             service_scope in the pool)
+         AND visibility_score >= 3
+         AND relative_position >= 0.85   (own visibility_rate / the highest
+             visibility_rate among OTHER businesses sharing this exact
+             service_scope - never compared across scopes with different
+             denominators)
+         AND question_coverage >= 0.75   (share of the business's OWN
+             relevant questions it appears on at least once - a breadth
+             check independent of raw volume)
+GAP      elif business_credibility >= 3 AND visibility_score <= 1
+REVIEW   elif visibility_score == 0 AND business_credibility < 3
+GROWTH   otherwise
+```
+
+Three deliberate safeguards baked into this rule, each added because an
+earlier version of it got a real case wrong: **(1)** DEFEND requires a real
+peer — a business alone in its `service_scope` cannot be "leading" a
+group of one, however high its own `visibility_score`. **(2)** DEFEND still
+needs `visibility_score >= 3` in absolute terms even when `relative_position`
+is 1.0 — leading a weak field is not the same as meaningful visibility.
+**(3)** GAP requires `business_credibility >= 3` — a business with
+near-zero visibility AND unresolved credibility is not a confident
+commercial opportunity in either direction; it is `REVIEW`.
+
+**Ranking** — `overall_rank`: dense rank across every scored business in
+this campaign (`market[]` and `outreach[]` combined) by `final_score`, tied
+broken by (`gap_strength` desc, `business_credibility` desc,
+`visibility_score` desc, `business` A–Z). `outreach_rank`: the identical
+tie-break, computed only among `outreach[]` entries with
+`ready_to_email=YES`, consecutive from 1 — **`build_workbook.py`'s
+`validate()` rejects a file where `outreach_rank` values have a gap, or
+where any entry without `ready_to_email=YES` carries one.** A business can
+have a high `overall_rank` and no `outreach_rank` at all — that gap in the
+sequence is the intended, self-explaining signal that evidence is still
+unresolved, not a bug to paper over.
+
+**Evidence separation** — `sources[].fact_category` (optional; one of
+`LEGAL_IDENTITY` / `SERVICE_SCOPE` / `LOCAL_OWNERSHIP` /
+`DECISION_MAKER_IDENTITY` / `CONTACT_ROUTE` / `AI_APPEARANCE` /
+`COMPETITOR_COMPARISON` / `COMMERCIAL_CLAIM`) lets evidence for different
+kinds of claims about the same business be told apart at a glance instead of
+being one undifferentiated list. Record a correction explicitly (a new
+source entry stating what was previously believed and what the current
+evidence shows) rather than silently overwriting an earlier finding — see
+`sample/sample-campaign.json` for the general pattern; a real example is the
+Wirral v2.1 run's Kutchenhaus Wirral correction (a director who had
+resigned was still being described as the current owner).
+
+**Portable downstream handoff** — `build_workbook.py` is built with
+`xlsxwriter`, not `openpyxl`, specifically so every formula cell carries a
+genuine cached value. Verify this after building: reopen the output file
+with `openpyxl.load_workbook(path, data_only=True)` and confirm ranks,
+scores, visibility measures, statuses, accessibility grades, and opportunity
+types are populated, not `None`. (One narrow, documented exception:
+`Outreach rank`'s cached value for a non-ready business is a real, present
+empty string — the mathematically correct result of that formula's ELSE
+branch — which `openpyxl`'s reader happens to surface as `None`
+indistinguishably from a genuinely missing calculation; check the saved XML
+directly if this specific distinction ever matters.) The `Shortlist` sheet
+is written as plain values with no formulas at all, so it needs no formula
+engine whatsoever — this is `/outreach`'s primary handoff even though, today,
+`/outreach` actually reads the campaign JSON directly and never opens the
+workbook.
+
+**Known limitation, stated plainly rather than hidden:** the weighted-
+denominator formula assumes every question in a campaign was run the same
+number of times across the same providers (`run.responses_per_question`,
+uniform) — true of every `trade_run.py` campaign to date. A campaign that
+genuinely varies run-count per question is not yet supported by
+`scoring_engine.py` and would need that formula extended first.
+
 ### `run` (required: `sector`, `geography`, `campaign_slug`, `date`, `questions`, `providers`)
 
 | Field | Required | Source |
@@ -265,12 +588,15 @@ to skip the Audit by agreement — the exception, not the default sales path.
 | `geography` | yes | AUTO to populate, copied from the run's own scope — but see §2: if the market's boundary was ambiguous, that was a HUMAN call made *before* Stage A, not something to resolve here |
 | `campaign_slug` | yes | AUTO — matches the `--client` value used in `trade_run.py` |
 | `date` | yes | AUTO — the date the campaign JSON is compiled |
-| `questions` | yes | AUTO — the `question_text` values from the question CSV, in order |
+| `questions` | yes | AUTO — a list of `{question_id, text}` objects (schema v2; was a list of plain strings pre-v2). `question_id` matches the raw CSV's own `question_id` column (e.g. `q01`) — the join key `question_relevance[]` and every business's `question_appearances` key off |
 | `providers` | yes | AUTO — a list of `{provider, model}` objects. `provider` is one of the schema's fixed enum (`openai`, `gemini`, `perplexity`, `copilot`, `ai-overviews`) — a trade run currently produces the first three. `model` is the exact `model_version` string the raw CSV actually recorded, per `playbook/models-and-schemas.md` ("record the exact model version string on every single run") — not the nominal `OPENAI_MODEL` env var, the string the provider actually returned |
 | `expected_responses` | no | AUTO — the planned query count (e.g. 90) |
 | `successful_responses` | no | AUTO — count of raw CSV rows with an empty `errors` column |
+| `responses_per_question` | no (required if any business sets `service_scope`) | AUTO — runs × providers for one question (e.g. 5×3=15). Assumes a uniform count per question — see Section 3a's limitation note |
 | `raw_data_path` | no | AUTO — the `--out` path the run was written to |
 | `methodology_notes` | no | CLAUDE — anything methodological worth flagging: errored/retried rows, a geography-ambiguity note, anything that would make a later reader distrust a naive comparison |
+| `service_scopes` | no (required if any business sets `service_scope`) | CLAUDE, from RESEARCH — see Section 3a |
+| `question_relevance` | no (required if any business sets `service_scope`) | CLAUDE — see Section 3a; one entry per `question_id`, all questions must be covered |
 
 ### `market[]` — `market_entry` (required: `business`, `area`, `disposition`, `total_ai_appearances`)
 
@@ -298,8 +624,9 @@ to skip the Audit by agreement — the exception, not the default sales path.
 | `openai_appearances` / `gemini_appearances` / `perplexity_appearances` | no | AUTO |
 | `strongest_competitor` | yes | CLAUDE — the strongest genuine direct competitor by appearance count in this market |
 | `competitor_appearances` | yes | AUTO — once `strongest_competitor` is identified, its count is a lookup |
-| `competitive_gap_finding` | yes | CLAUDE — one factual sentence stating the counts, per the letter templates in `playbook/outreach-process.md` |
-| `why_prospect` | yes | CLAUDE — the case for this business against `playbook/outreach-process.md`'s definition of a strong prospect |
+| `competitive_gap_finding` | yes | **AUTO for a scored entry** (`scoring_engine.py`'s `generate_competitive_gap_finding()` — see Section 3a's narrative subsection), mandatory and unconditional, never hand-written first. CLAUDE for an unscored/legacy-path entry: one factual sentence stating the counts, per the letter templates in `playbook/outreach-process.md` |
+| `why_prospect` | yes | **AUTO for a scored entry** (`generate_why_prospect()`, same subsection) — the DEFEND/GROWTH/GAP commercial case, from structured values, mandatory and unconditional. CLAUDE for an unscored/legacy-path entry: the case for this business against `playbook/outreach-process.md`'s definition of a strong prospect. Either way, never a copy of `business_type_notes` |
+| `narrative_generated_from` | no (AUTO-only for a scored entry) | AUTO — a fingerprint of the values the two fields above were generated from, written only by `scoring_engine.py`. Never hand-set: doing so to make a hand-written narrative look machine-verified is exactly the defect this field exists to catch |
 | `legal_entity` | yes | RESEARCH — Companies House. **No confirmed active Ltd/LLP match, no entry in `outreach[]`** — the business stays `REVIEW` in `market[]` or moves to `excluded[]` (`NO RELIABLE LEGAL MATCH`) instead. This is the PECR rule in `CLAUDE.md`, enforced at the schema boundary, not worked around with a placeholder |
 | `company_number` | yes | RESEARCH — Companies House |
 | `company_status` | yes | RESEARCH — Companies House |
@@ -427,8 +754,13 @@ will pass validation.
    never as an automatic override of commercial opportunity.
 5. Present the HUMAN fields — `priority` and `ready_to_email` — for the
    owner's approval before treating anything as final.
-6. Populate the final JSON against `schema.json` exactly, using §3 as the
-   field-by-field checklist.
+6. Populate the final JSON against `schema.json` exactly, using §3 (and §3a
+   for any business opting into scoring) as the field-by-field checklist.
+6a. If any business sets `service_scope`, run `scoring_engine.py` before
+   `build_workbook.py` — see §7. It fills in every DERIVED field in §3a;
+   trying to hand-type `final_score`, `overall_rank`, `opportunity_type`, or
+   any other DERIVED field instead of running the engine defeats the entire
+   point of an auditable, reproducible score.
 7. Save the campaign JSON in the run's canonical location. There is no
    formal folder rule for prospecting runs yet (only client audits have one,
    in `playbook/records-and-data.md`) — until one exists, follow the pattern
@@ -447,17 +779,26 @@ will pass validation.
 
 ## 7. Validation command
 
-The one command, exactly as documented in `tools/prospect-compiler/README.md`:
+Two commands, exactly as documented in `tools/prospect-compiler/README.md`.
+If any business in the campaign sets `service_scope`, run the scoring engine
+first — it fills in every §3a DERIVED field the render step then displays:
 
 ```
+python3 scoring_engine.py --input campaign.json --in-place
 python3 build_workbook.py --input campaign.json --output workbook.xlsx
 ```
 
+A campaign with no scored businesses (nothing sets `service_scope`) can skip
+straight to `build_workbook.py`, exactly as before.
+
 `build_workbook.py`'s own `validate()` function is the final machine gate —
-it checks every required field, every enum value, and that every
-`evidence_source_ids` entry resolves to a real source, and it fails with a
-specific error rather than guessing. There is no separate validation
-framework to reach for; a failure here is read and fixed, not routed around.
+it checks every required field, every enum value, that every
+`evidence_source_ids` entry resolves to a real source, that every scored
+entry has both its VALUE and DERIVED fields populated (i.e. the engine
+actually ran), and that `outreach_rank` values are consecutive and confined
+to `ready_to_email=YES` entries — and it fails with a specific error rather
+than guessing. There is no separate validation framework to reach for; a
+failure here is read and fixed, not routed around.
 
 ---
 
