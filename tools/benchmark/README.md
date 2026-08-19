@@ -71,6 +71,12 @@ names the client was answered by an assistant that was handed the name.
 Counting it as visibility measures the question set, not the business. In the
 test fixture it is the difference between 13.3% and 40%.
 
+The rule is Wardith-wide as of 2026-08-19 and its canonical definition is
+`playbook/models-and-schemas.md`, "Prompted and unprompted visibility" —
+unprompted measures discovery and powers the headline and every peer
+comparison; prompted measures representation and is reported separately. This
+file describes how these two scripts implement it, not the rule itself.
+
 `playbook/audit-process.md`'s wording rule 3 says no business name outside the
 named-business pair, but its own `q08` template ("Who are the main
 alternatives to `{business}`…") is a comparison question that does name the

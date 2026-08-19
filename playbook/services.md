@@ -12,10 +12,11 @@ published on the site and in `site/src/data/`. Change them there, not here.*
 | **Lead** | £700/month | 25 questions, two answer pages a month, plus a quarterly review of the competitors named ahead of them |
 
 **The agency product line is not in this table and is not on the site.**
-Wardith for Agencies — the Benchmark, the Monthly Review and the Quarterly
-Review, sold to SEO agencies for their own clients — is designed in
-`playbook/agency-product.md` and has never been sold, delivered or timed. Its
-prices are targets there, not published prices.
+Wardith for Agencies — sold to SEO agencies for their own clients — is
+**£500 for the Benchmark, then £150 a month per client**, with the Quarterly
+Deep Review and the white-label output included while they stay on the
+monthly service. Full scope: `playbook/agency-product.md`. Never sold,
+delivered or timed.
 
 ## The three verbs
 

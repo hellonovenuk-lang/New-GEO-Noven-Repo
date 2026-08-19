@@ -58,6 +58,12 @@ recommendation on nearly every audit.
 3. **No business name in discovery, qualified discovery, comparison or buying
    intent.** An assistant handed a name will use it and the run is worthless as
    a measure of discovery. Naming happens only in the named-business pair.
+   **This rule and the `q08` template above disagree, and `q08` is right** —
+   "who are the main alternatives to {business}" needs the name to mean
+   anything. So three of the ten questions are prompted, not two. That is
+   fine as long as their runs are never counted inside a discovery figure:
+   `models-and-schemas.md`, "Prompted and unprompted visibility". Noted
+   2026-08-19; the question set itself is unchanged.
 4. **Write it as a person would say it out loud**, including the untidiness.
 
 **Show the client the ten before running them.** That is why turnaround is two

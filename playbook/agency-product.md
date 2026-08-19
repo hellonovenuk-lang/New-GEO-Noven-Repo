@@ -2,8 +2,9 @@
 
 *The agency product line: a research layer SEO agencies buy for their own
 clients. Designed 2026-08-19. **Nothing here has been sold, delivered or
-timed.** Prices below are targets, not published prices — `services.md`
-holds what is actually on the site.*
+timed.** The prices below are the commercial model for the MVP, settled
+2026-08-19 (`decisions.md`). They are not published on the site —
+`services.md` holds what is.*
 
 ---
 
@@ -21,13 +22,26 @@ the agency, under the agency's name where they want that.
 
 ## The three products
 
-| | Price target | Cadence | Queries |
-|---|---|---|---|
-| **The Benchmark** | £495 one-off | Once, at the start | 12 questions x 3 assistants x 5 runs = 180 |
-| **The Monthly Review** | £149/month | Monthly | The same 180, re-run |
-| **The Quarterly Review** | Included while subscribed | Every third month, in place of that month's review | The same 180, plus a refreshed framework check |
+**£500 Benchmark, then £150 a month.** That is the whole commercial model
+for the MVP and it is meant to be sayable in one sentence.
 
-Agency volume discounts are a later decision, not designed here.
+| | Price | Cadence | Queries |
+|---|---|---|---|
+| **The Benchmark** | £500 one-off, per client | Once, at the start | 12 questions x 3 assistants x 5 runs = 180 |
+| **The Monthly Review** | £150/month, per client | Monthly | The same 180, re-run |
+| **The Quarterly Review** | Included while the client is on the monthly service | Every third month, in place of that month's review | The same 180, plus a refreshed framework check |
+| **White-label output** | Included for agency customers | | |
+
+**No introductory rate and no discount for going first** — `decisions.md`,
+unchanged. The one exception in that file is the Agency Sample, and it is a
+sales asset rather than a discount on anything.
+
+**Portfolio pricing is available to an agency placing several clients on the
+service.** The thresholds are deliberately not written here.
+`[PLACEHOLDER: set them from early agency conversations and real delivery
+economics.]` Writing a tier table before a single client has been delivered
+would be inventing the numbers that decide whether this works — see §8, where
+the per-client economics are still an estimate.
 
 ---
 
@@ -52,8 +66,15 @@ customer buying situations, confirmed with the agency before anything runs.
 
 `audit-process.md`'s four wording rules apply unchanged: the customer's word
 not the industry's word, a named town plus one wider area and never a
-postcode, no business name outside the `named-business` pair, and written the
-way a person says it out loud.
+postcode, no business name in a discovery, qualified-discovery or
+buying-intent question, and written the way a person says it out loud.
+
+**Eight of the twelve are unprompted, four are prompted.** The two
+`comparison` questions name the client and need to — "who are the main
+alternatives to X" means nothing without it — and so do the two
+`named-business` questions. That leaves the three discovery, three
+qualified-discovery and two buying-intent questions as the eight that
+measure discovery. See §1.3.
 
 **High-intent subset.** The agency nominates which questions represent work
 they actually want more of — normally the `qualified-discovery` and
@@ -94,35 +115,46 @@ where an invented composite would take hold.
 | Often | 3-4 of 5 |
 | Consistently | 5 of 5 |
 
+**Unprompted and prompted visibility are two measurements and never one
+number** — `models-and-schemas.md`, "Prompted and unprompted visibility",
+which is the canonical definition for every Wardith product. Four of the
+Benchmark's twelve questions name the client (§1.1); their runs are
+reported, labelled, and kept out of the headline and out of the peer
+comparison. The headline denominator is the other eight.
+
 Sections, each of which has to survive the implementability test in §5:
 
-1. **Visibility and recommendation frequency** — banded, per question, with
-   the raw counts beside them.
-2. **Visibility by assistant** — where the client is strong on one and
+1. **Unprompted visibility and recommendation frequency** — the headline.
+   Banded, per question, with the raw counts beside them.
+2. **Prompted representation** — what the assistants say once they have been
+   told who to talk about, including anything they state that is untrue.
+   Reported beside the headline, never inside it. `decisions.md`'s "report
+   named wrongly separately and loudly" applies here.
+3. **Visibility by assistant** — where the client is strong on one and
    silent on another. Reported only where the split is material
    (absent from one assistant entirely, or one carrying 70% or more of the
    total), not as boilerplate on every finding.
-3. **Visibility by question category** — discovery versus qualified
+4. **Visibility by question category** — discovery versus qualified
    discovery versus buying intent is a different diagnosis each time.
-4. **High-intent visibility** — the nominated subset, on its own.
-5. **Competitor benchmark** — the peer set is the businesses the answers
+5. **High-intent visibility** — the nominated subset, on its own.
+6. **Competitor benchmark** — the peer set is the businesses the answers
    themselves named, not a market census researched from scratch. Counted
    mechanically by `tools/mention-count/mention_count.py`.
-6. **Citation and source analysis** — which domains the assistants built
+7. **Citation and source analysis** — which domains the assistants built
    these answers from, which name the client, and which name a competitor
    but not the client. See §1.4.
-7. **Meaningful competitor advantages** — what the cited sources show a
+8. **Meaningful competitor advantages** — what the cited sources show a
    better-represented competitor has that the client does not. Evidence,
    then inference, kept apart.
-8. **Client site, entity and evidence inspection** —
+9. **Client site, entity and evidence inspection** —
    `tools/site-check/site_check.py` for crawler access and machine-readable
    facts, plus an entity check: is the business's name, address and
    description the same everywhere a cited source repeats it.
-9. **Five to ten prioritised actions**, each tagged with the finding it
+10. **Five to ten prioritised actions**, each tagged with the finding it
    answers and who does it (agency dev, agency content, client).
-10. **Confidence and limitations**, including anything the run could not
+11. **Confidence and limitations**, including anything the run could not
     establish.
-11. **Baseline metrics** — the machine-readable `baseline.json` the Monthly
+12. **Baseline metrics** — the machine-readable `baseline.json` the Monthly
     diffs against.
 
 ### 1.4 Citation and source analysis
@@ -176,39 +208,55 @@ should the SEO team do about it.**
 Not another audit. The framework is frozen, the peer set is carried forward,
 the site is not re-inspected. The same 180 queries are re-run and diffed.
 
-Reported:
+Reported, once §2.1 is settled:
 
-- Material visibility changes, per question and in aggregate.
+- Visibility changes, per question and in aggregate, unprompted and prompted
+  kept apart exactly as the Benchmark keeps them apart.
 - Gains and losses by question group, with the high-intent subset separated.
-- Meaningful competitor movement.
+- Competitor movement.
 - New and lost citations and sources.
 - Change in recommendation frequency.
 - Whether the previous run's priority areas appear to have moved.
 - Three to five actions or investigations for the coming month.
-- Confidence, including which changes are inside expected variation.
+- Confidence, including which changes cannot yet be distinguished from
+  ordinary run-to-run variation.
 
-### 2.1 The stochasticity rule
+### 2.1 Change classification — deliberately not defined yet
 
-**`[PLACEHOLDER: needs the owner's decision before the Monthly is sold.]`**
-The proposal below is what the design assumes; it is not settled.
+**No threshold is written here, and none should be invented.** This is the
+one part of the product that is being left open on purpose.
 
 `audit-process.md` is explicit that five runs cannot distinguish 3 of 5 from
-2 of 5, because that difference is inside what chance produces from an
-unchanged business. A monthly product that reports that difference as
-progress is selling noise. So:
+2 of 5, because that difference is inside what chance produces from a
+business that has not changed. A monthly product that reports that
+difference as progress is selling noise. The problem is that nobody knows
+how much wider than one run in five the real variation is, because **the
+same question set has never been run twice.**
 
-- Change is reported at **band** level, not count level.
-- A single question moving by **one run in five** is labelled *inside
-  expected variation* and is never a headline.
-- A change is called **material** only when the same direction shows across
-  **three or more questions**, or when a **high-intent question changes
-  band**.
-- Everything else is shown in the data and explicitly not claimed.
+**What has to happen first.** Repeated runs, under conditions that isolate
+run-to-run variation from everything else:
 
-**The noise floor has never been measured.** Nobody has run one question set
-twice. Until that happens the rule above is reasoned, not evidenced — the
-first pilot should run its Benchmark twice, two weeks apart, with nothing
-changed in between, which measures the floor for the cost of one extra run.
+- identical query framework, question for question;
+- identical client and identical peer scope;
+- identical methodology, provider set and runs per question;
+- the same recorded model version per provider (§2.2);
+- no deliberate optimisation work between the runs, where that can be
+  arranged with the agency.
+
+Only then is there evidence for what "unchanged" looks like.
+
+**The eventual vocabulary is expected to be three levels — stable,
+directional, material** — reported per question group and per assistant, with
+the high-intent subset separated. What separates them is exactly the thing
+the repeated runs are for. Writing thresholds now and measuring afterwards
+would produce numbers chosen to look reasonable rather than numbers that
+describe this data, and the first agency to check one would be right to
+stop trusting the rest.
+
+Until then the Monthly is not sellable as a change-classification product.
+`baseline.json` is the intended comparison input and its `schema` field is
+the compatibility gate, but the diff engine itself is deliberately not
+built — `tools/benchmark/README.md`, "What is not here yet".
 
 ### 2.2 The model-change gate
 
@@ -325,33 +373,35 @@ constants rather than reinvented.
 `ready_to_email` half of the campaign schema. A client the agency already
 owns has no decision-maker to score and nobody to email.
 
-**New.** The client-anchored twelve-question framework; the citation and
-source analysis; benchmark metrics for one focal business against a peer set
-rather than a census ranked for prospecting; and change detection with a
-stated noise floor.
+**New.** The client-anchored twelve-question framework; the prompted/
+unprompted split (`models-and-schemas.md`); the citation and source
+analysis; and benchmark metrics for one focal business against a peer set
+rather than a census ranked for prospecting. Change detection is specified
+and deliberately unbuilt — §2.1.
 
 ---
 
 ## 8. Open, and needed before this is sold
 
-- **The free sample contradicts a settled decision.** `decisions.md`: *"No
-  free audits, no introductory rate, no first-five discount, no bundling."*
-  `/agencysample` is not an audit, is not for the end client, and is a
-  condensed version of a different product — but it is a free piece of paid
-  work and needs an explicit decision either way.
-  `[PLACEHOLDER: owner's decision.]`
-- **The stochasticity rule in §2.1.** `[PLACEHOLDER: owner's decision.]`
+**Settled 2026-08-19, no longer open:** the Agency Sample exception and the
+pricing, both recorded in `decisions.md`.
+
+- **Change classification (§2.1) needs repeated runs before it can be
+  defined.** Not a decision waiting on the owner — evidence waiting on a
+  measurement nobody has taken. This is the one thing standing between the
+  Monthly and being sellable.
 - **Nothing here has been timed**, and neither has the £250 audit. Both
   budgets are guesses. Time the first one.
-- **The economics need more than one client per agency.** At £495 plus
-  £149 x 12 = £2,283 a year against roughly 35 owner-hours, the model works
+- **The economics need more than one client per agency.** At £500 plus
+  £150 x 12 = £2,300 a year against roughly 35 owner-hours, the model works
   at about £65/hour — but only because the framework, peer set and citation
   index are reusable across an agency's clients in the same sector and
   geography. A single-client agency is worse than selling that client a
-  £250 audit directly. Consider a floor of two or three clients per agency.
+  £250 audit directly. This is what portfolio pricing has to be set from,
+  and why its thresholds are not written yet.
   `[PLACEHOLDER: no real timings exist to check this against.]`
 - **The Monthly's API cost is real.** 180 queries at the self-audit's
-  observed OpenAI rate is roughly £24 a month against £149, before any owner
+  observed OpenAI rate is roughly £24 a month against £150, before any owner
   time.
 - **Authority for the site inspection.** The paid Benchmark makes live
   requests to the client's site. The agency should confirm they have their

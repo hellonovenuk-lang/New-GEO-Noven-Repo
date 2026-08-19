@@ -12,10 +12,29 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
   never the first thing sold. 2026-08-14.
 - **No free audits, no introductory rate, no first-five discount, no bundling.**
   2026-07-31.
+- **One narrow exception: the Agency Sample.** Wardith may produce a limited
+  Agency Sample as a sales-development asset for a prospective SEO agency.
+  It goes to the agency and never to the end client; it uses a publicly
+  evidenced agency-client relationship; it is materially narrower than the
+  paid £500 Benchmark and is never represented as it; it demonstrates the
+  methodology and two or three useful findings; it excludes the complete
+  opportunity map, the full implementation prioritisation and the recurring
+  benchmark setup. **This sets no precedent for free Wardith audits** — the
+  rule above is otherwise unchanged. 2026-08-19.
+- **Agency pricing: £500 Benchmark, then £150/month per client.** Quarterly
+  Deep Review and white-label output both included while the client is on
+  the monthly service. Portfolio pricing exists for agencies placing several
+  clients; the thresholds come from early agency conversations and real
+  delivery economics, not from a table written in advance. 2026-08-19.
 - **Tiers separate on permanent answer pages, not question volume.** 2026-07-31.
 - **We do not build websites.** The Foundation works on the site they have.
 - **No score out of ten, no visibility index, no percentage.** Bands with raw
   counts.
+- **Prompted and unprompted visibility are never blended into one headline.**
+  Unprompted (the question does not name the business) measures discovery and
+  powers the headline and every peer comparison. Prompted (it does) measures
+  representation and is reported separately. Definition:
+  `models-and-schemas.md`. 2026-08-19.
 - **Report "named wrongly" separately and loudly.** It is worse than absence.
 - **Copilot and AI Overviews are checked by hand**, at a reduced sample, because
   neither has an API and the Azure route would measure something else.

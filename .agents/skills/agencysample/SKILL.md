@@ -31,6 +31,15 @@ is the subject of the research and is never contacted, never emailed, and
 never told this happened. Everything produced here goes to Wardith, for
 Wardith to send to the agency.
 
+**This is permitted, and narrowly.** `playbook/decisions.md` records the
+Agency Sample as the single exception to "no free audits, no introductory
+rate, no first-five discount, no bundling" — a sales-development asset for a
+prospective agency, materially narrower than the paid £500 Benchmark, never
+represented as it, and no precedent for a free audit for anyone else. Every
+constraint in that line is a constraint on this skill's output. If a run
+would produce something indistinguishable from the paid Benchmark, it has
+gone too far — see Stage 8's "What is held back".
+
 ## Where things go
 
 ```
@@ -137,9 +146,12 @@ has no locale parameter at this tier.
 **Two of the six name the client** — the comparison question and the
 named-business question. That is deliberate and it is measured separately:
 `benchmark_metrics.py` flags them `prompted` and keeps them out of the
-headline, because an assistant handed the name will use it. Do not try to
-avoid this by writing a comparison question that omits the name; a
-comparison question needs it.
+headline and out of the peer table, because an assistant handed the name
+will use it. The rule is Wardith-wide and its definition is
+`playbook/models-and-schemas.md`, "Prompted and unprompted visibility"; this
+skill applies it rather than restating it. Do not try to avoid the issue by
+writing a comparison question that omits the name — a comparison question
+needs it.
 
 Show the six in your own output before running them.
 
@@ -325,9 +337,14 @@ Two files, both drafts.
 - the one finding worth leading with, and why that one;
 - what the agency plausibly gets out of it, in their terms — they keep the
   client and do the work, Wardith does the research layer;
-- the commercial ask: the Benchmark at £495 and the Monthly Review at
-  £149 per client per month (`playbook/agency-product.md`), with the
-  volume position left open;
+- the commercial ask: **£500 for the Benchmark, then £150 a month per
+  client**, with the Quarterly Deep Review and the white-label output both
+  included while they stay on the monthly service
+  (`playbook/agency-product.md`). Portfolio pricing exists for an agency
+  placing several clients; **do not quote a tier, a threshold or a
+  discount** — none are set, and inventing one in an email would settle a
+  price nobody has decided. Say it is available and ask how many clients
+  they would put through it;
 - **anything that would make this approach wrong**, stated plainly. A
   relationship that may have ended, a finding the data does not really
   support, an agency that appears to already do this.

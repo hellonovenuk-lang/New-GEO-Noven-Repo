@@ -122,6 +122,18 @@ Two things worth knowing before you read the rest:
 
 Across {n} checks, {business} was named {n} times.
 
+**`[PLACEHOLDER: needs correcting before the next paid audit — see
+`models-and-schemas.md`, "Prompted and unprompted visibility".]` That
+sentence currently blends two different measurements.** Three of the ten
+questions name the business — `q06`, `q07` and `q08` — and an assistant
+handed a name will use it, so those runs inflate a single combined figure.
+The recommended change is small and has no code behind it: give the headline
+as the unprompted count (`q01`–`q05`, `q09`, `q10`), and report the
+named-business runs in "What they believe about you", which is where they
+already belong. Split the table the same way. Not changed here because the
+audit's format is deliberately frozen for the first five paid deliveries
+(§ top of `audit-process.md`) and no audit has yet been sold.
+
 | What we asked | ChatGPT | Gemini | Perplexity |
 |---|---|---|---|
 | {q01} | {band} ({n} of 5) | | |

@@ -41,6 +41,36 @@
 | `answer_text` | Text | Full answer, verbatim |
 | `notes` | String | Refusals, misread questions, outages, oddities |
 
+### Prompted and unprompted visibility
+
+**Two different measurements. Never one number.** Added 2026-08-19; applies
+across every Wardith product.
+
+| | Which questions | What it measures |
+|---|---|---|
+| **Unprompted** | The question does not name the business | Discovery and recommendation visibility. Does the assistant reach for them unasked |
+| **Prompted** | The question names the business | Representation, knowledge and answer quality once the assistant has already been told who to talk about |
+
+**Unprompted is the headline.** It powers visibility figures, peer
+comparison and any market-discovery metric. **Prompted never enters that
+figure**, because an assistant handed a name will use it — folding the two
+together measures the wording of our own questions and reports it as
+evidence about the business.
+
+Both belong in a report. Their different meanings have to be stated where
+they appear, not left to the reader.
+
+**Category is not the whole test.** `named-business` is always prompted, but
+a question in another category can name the business too — `comparison`
+routinely does, and needs to. Decide by whether the question text names the
+business, and record the answer per question rather than inferring it later.
+
+Measured mechanically for the agency product by
+`tools/benchmark/benchmark_metrics.py`, which flags every question
+`prompted` or not and keeps the two apart in `baseline.json`. On the test
+fixture the difference is a 13.3% unprompted headline against a 93.3%
+prompted figure; blended, it reads 40%.
+
 ### `questions.csv` — frozen question set
 
 | Column | Type | Notes |
