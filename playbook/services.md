@@ -11,6 +11,12 @@ published on the site and in `site/src/data/`. Change them there, not here.*
 | **Grow** | £400/month | Maintain across 15 questions, plus one new answer page a month |
 | **Lead** | £700/month | 25 questions, two answer pages a month, plus a quarterly review of the competitors named ahead of them |
 
+**The agency product line is not in this table and is not on the site.**
+Wardith for Agencies — the Benchmark, the Monthly Review and the Quarterly
+Review, sold to SEO agencies for their own clients — is designed in
+`playbook/agency-product.md` and has never been sold, delivered or timed. Its
+prices are targets there, not published prices.
+
 ## The three verbs
 
 Each level is a different thing the client wants, not more of the same thing.
