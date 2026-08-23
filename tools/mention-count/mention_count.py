@@ -57,6 +57,11 @@ Usage:
   # --variants-file below):
   python3 mention_count.py --run ... --census ... --area {area} \
       --out ... --variants-file variant-overrides.json
+
+  # with unprompted-only totals added alongside the existing ones (see
+  # "Prompted and unprompted totals" in README.md):
+  python3 mention_count.py --run ... --census ... --area {area} \
+      --out ... --questions questions-{trade}-{area}.csv
 """
 
 import argparse
@@ -139,6 +144,67 @@ def pluralize_final_token(v):
     return {plural} if plural.strip() else set()
 
 
+# Legal-entity and connective words stripped before a cross-business alias
+# token-overlap check (validate_variant_aliases, below) — sharing "Ltd" or
+# "and" says nothing about whether two names are the same business.
+LEGAL_SUFFIX_TOKENS = {"ltd", "llp", "limited", "and"}
+
+
+def _tokenize(name):
+    """Lowercase alphanumeric tokens (length > 2) from a business name,
+    with legal-entity/connective words stripped. Used only by
+    validate_variant_aliases() below — a token-overlap check, not the
+    matching regex variants() builds."""
+    tokens = {t.lower() for t in re.findall(r"[A-Za-z0-9']+", name) if len(t) > 2}
+    return tokens - LEGAL_SUFFIX_TOKENS - GENERIC_STOPWORDS
+
+
+def validate_variant_aliases(manual_variants, census, business_column):
+    """Flags a --variants-file alias that shares no SUBSTANTIAL token with
+    its parent business name — added after a real defect on a completed
+    drainage run: two aliases ("RPD Building & Drainage", "RPD Drainage
+    Specialists") were credited to one business on the strength of
+    sharing only the word "Drainage", a word several other census
+    businesses' own names also carried. In a private report that is a
+    rounding error; in a published figure it is the first thing a
+    competitor picks apart.
+
+    A shared token only counts as substantial if it is not a generic/
+    legal/connective word (GENERIC_STOPWORDS, LEGAL_SUFFIX_TOKENS — see
+    _tokenize) AND does not recur in more than one OTHER census
+    business's own name. A token common to several unrelated businesses
+    in this market (a trade word like "drainage", not hardcoded anywhere
+    since this script has to work for any sector) proves nothing about
+    one specific alias's identity, however confident the shared word
+    looks.
+
+    Flags only — never auto-removes anything. A real alias can
+    legitimately share no token at all with its parent (an old trading
+    name, an owner's own name used informally in an answer) — this is
+    exactly the kind of judgement call the owner makes per business, not
+    something this script should decide for them."""
+    token_business_count = Counter()
+    for entry in census:
+        for t in _tokenize(entry[business_column]):
+            token_business_count[t] += 1
+
+    flags = []
+    for parent, aliases in manual_variants.items():
+        parent_tokens = _tokenize(parent)
+        for alias in aliases:
+            alias_tokens = _tokenize(alias)
+            shared = parent_tokens & alias_tokens
+            substantial = {t for t in shared if token_business_count.get(t, 0) <= 1}
+            if substantial:
+                continue
+            reason = (
+                "shared token(s) are also generic across this census: " + ", ".join(sorted(shared))
+                if shared else "shares no token at all with its parent"
+            )
+            flags.append({"parent": parent, "alias": alias, "shared_tokens": sorted(shared), "reason": reason})
+    return flags
+
+
 def variants(brand, extra_stopwords):
     v = {brand.strip()}
     base_noparen = re.sub(r"\s*\([^)]*\)", "", brand).strip()
@@ -219,6 +285,55 @@ def load_manual_variants(path):
     with open(path, encoding="utf-8") as f:
         raw = json.load(f)
     return {k: set(v) for k, v in raw.items()}
+
+
+def load_questions(path):
+    with open(path, encoding="utf-8-sig", newline="") as f:
+        return list(csv.DictReader(f))
+
+
+def compute_prompted_question_ids(business_patterns, questions):
+    """Per census business, the set of question_ids whose own wording
+    names that business — the whole-census analogue of
+    tools/benchmark/benchmark_metrics.py's question_names_client(), which
+    does the same job for one focal client. Reuses the exact same alias
+    patterns already built for scanning answer text, so a question counts
+    as prompted for a business exactly when this script would also credit
+    that business with a mention inside the question's own wording — one
+    definition of "names the business," not two. Says nothing about
+    whether the same question is prompted for any OTHER business it also
+    names (a comparison question routinely does) or a business named only
+    as an "alternative" without its own name appearing in the question."""
+    prompted = {}
+    for business, _alias_text, pattern in business_patterns:
+        ids = prompted.setdefault(business, set())
+        for q in questions:
+            text = q.get("question_text", "") or ""
+            qid = q.get("question_id", "")
+            if text and qid and pattern.search(text):
+                ids.add(qid)
+    return prompted
+
+
+def add_unprompted_fields(results, prompted_by_business):
+    """Adds *_unprompted totals alongside the existing totals — never
+    replaces them, per playbook/models-and-schemas.md's "Prompted and
+    unprompted visibility": two measurements, never blended into one.
+    Computed from each business's own matched_rows, so it needs no second
+    pass over the run. A business with no entry in prompted_by_business
+    (nothing in the questions file names it) gets an empty prompted set,
+    so its unprompted total simply equals its total — correct for a plain
+    trade run, where none of the six questions name a business at all."""
+    for business, r in results.items():
+        prompted_ids = prompted_by_business.get(business, set())
+        r["prompted_question_ids"] = sorted(prompted_ids)
+        rows = r["matched_rows"]
+        r["unprompted_total"] = sum(1 for row in rows if row["question_id"] not in prompted_ids)
+        for provider in ("openai", "gemini", "perplexity"):
+            r[f"unprompted_{provider}"] = sum(
+                1 for row in rows
+                if row["assistant"] == provider and row["question_id"] not in prompted_ids
+            )
 
 
 def build_business_patterns(census, business_column, extra_stopwords, manual_variants):
@@ -351,6 +466,7 @@ def main():
     ap.add_argument("--out", required=True, help="Where to write mention-counts.json")
     ap.add_argument("--business-column", default="business", help="Census CSV column holding the business name (default: business). Older census files may use 'brand' instead")
     ap.add_argument("--variants-file", default=None, help="Optional JSON file of {business_name: [extra misspellings/genuine aliases]}, for a model's own recurring misspelling of a brand or a business's known alternate trading name — spot-checked and added per run, not guessed in advance. Goes through the same overlap-safety resolution as every other alias")
+    ap.add_argument("--questions", default=None, help="Optional questions CSV (tools/trade-run/ schema: question_id, question_text, ...). When given, adds *_unprompted totals alongside the existing totals for every business, computed from the question(s) whose own wording names that business — see playbook/models-and-schemas.md, 'Prompted and unprompted visibility'. Omit for a plain trade run whose questions never name a business at all")
     args = ap.parse_args()
 
     census = load_census(args.census, args.business_column)
@@ -365,18 +481,42 @@ def main():
 
     print(f"Loaded {len(run_rows)} run rows, {len(census)} census businesses", file=sys.stderr)
 
+    variant_flags = []
+    if manual_variants:
+        variant_flags = validate_variant_aliases(manual_variants, census, args.business_column)
+        if variant_flags:
+            print(f"\n{len(variant_flags)} --variants-file alias(es) flagged — shares no substantial token "
+                  f"with its parent business name. Not auto-removed; review each one:", file=sys.stderr)
+            for flag in variant_flags:
+                print(f"  {flag['parent']!r} <- {flag['alias']!r}: {flag['reason']}", file=sys.stderr)
+
     results, overlap_log = count_mentions(census, run_rows, args.business_column, extra_stopwords, manual_variants)
+
+    if args.questions:
+        questions = load_questions(args.questions)
+        business_patterns, _ = build_business_patterns(census, args.business_column, extra_stopwords, manual_variants)
+        prompted_by_business = compute_prompted_question_ids(business_patterns, questions)
+        add_unprompted_fields(results, prompted_by_business)
 
     output = dict(results)
     output["_overlap_log"] = overlap_log
+    if manual_variants:
+        output["_variant_flags"] = variant_flags
 
     with open(args.out, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2)
 
-    print(f"\n{'business':38s} {'total':>5s} {'oai':>4s} {'gem':>4s} {'ppx':>4s}  questions")
-    for brand, r in sorted(results.items(), key=lambda x: -x[1]["total"]):
-        qs = ",".join(sorted(r["per_question"].keys()))
-        print(f"{brand:38s} {r['total']:5d} {r['openai']:4d} {r['gemini']:4d} {r['perplexity']:4d}  {qs}")
+    if args.questions:
+        print(f"\n{'business':38s} {'total':>5s} {'unprompted':>10s} {'oai':>4s} {'gem':>4s} {'ppx':>4s}  questions")
+        for brand, r in sorted(results.items(), key=lambda x: -x[1]["total"]):
+            qs = ",".join(sorted(r["per_question"].keys()))
+            print(f"{brand:38s} {r['total']:5d} {r['unprompted_total']:10d} "
+                  f"{r['openai']:4d} {r['gemini']:4d} {r['perplexity']:4d}  {qs}")
+    else:
+        print(f"\n{'business':38s} {'total':>5s} {'oai':>4s} {'gem':>4s} {'ppx':>4s}  questions")
+        for brand, r in sorted(results.items(), key=lambda x: -x[1]["total"]):
+            qs = ",".join(sorted(r["per_question"].keys()))
+            print(f"{brand:38s} {r['total']:5d} {r['openai']:4d} {r['gemini']:4d} {r['perplexity']:4d}  {qs}")
     if overlap_log:
         print(f"\n{len(overlap_log)} overlap-suppressed candidate(s) — see _overlap_log in the output for detail:", file=sys.stderr)
         for entry in overlap_log:

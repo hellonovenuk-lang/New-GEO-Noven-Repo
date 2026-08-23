@@ -1,0 +1,7 @@
+audit_id,question_id,category,question_text,frozen_from
+sample-fixture,q01,named-business,What do you know about Meadow Kitchens And Bathrooms Limited?,
+sample-fixture,q02,discovery,Who does kitchen and bathroom refits in Anytown?,
+sample-fixture,q03,discovery,Who does general building work in Anytown?,
+sample-fixture,q04,discovery,Who does home renovations in Anytown?,
+sample-fixture,q05,discovery,Who does loft conversions in Anytown?,
+sample-fixture,q06,discovery,Who does bathroom refits in Anytown?,

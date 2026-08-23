@@ -28,6 +28,9 @@ FIXTURES = os.path.join(os.path.dirname(__file__), "tests", "fixtures")
 CENSUS_PATH = os.path.join(FIXTURES, "sample_census.csv")
 RUN_PATH = os.path.join(FIXTURES, "sample_run.csv")
 VARIANTS_PATH = os.path.join(FIXTURES, "sample_variants.json")
+QUESTIONS_PATH = os.path.join(FIXTURES, "sample_questions.csv")
+VARIANT_VALIDATION_CENSUS_PATH = os.path.join(FIXTURES, "variant_validation_census.csv")
+VARIANT_VALIDATION_VARIANTS_PATH = os.path.join(FIXTURES, "variant_validation_variants.json")
 
 
 def run_fixture(manual_variants=None):
@@ -308,6 +311,107 @@ class OverlapResolutionUnitTests(unittest.TestCase):
         r1, _ = mc.resolve_overlaps(candidates)
         r2, _ = mc.resolve_overlaps(list(reversed(candidates)))
         self.assertEqual(r1[0][2], r2[0][2])
+
+
+class VariantAliasValidationTests(unittest.TestCase):
+    """validate_variant_aliases() — the cross-business over-matching check
+    added after a real drainage-run defect: two aliases were credited to
+    the wrong parent business on the strength of sharing only a trade-
+    generic word ("Drainage") that several other census businesses' own
+    names also carried. All fixture businesses here are fictitious, built
+    to reproduce that exact shape without naming a real business."""
+
+    def _flags(self):
+        census = mc.load_census(VARIANT_VALIDATION_CENSUS_PATH, "business")
+        manual = mc.load_manual_variants(VARIANT_VALIDATION_VARIANTS_PATH)
+        return mc.validate_variant_aliases(manual, census, "business")
+
+    def test_alias_sharing_only_a_market_generic_token_is_flagged(self):
+        # "Drainage" is shared, but it also appears in "Oakham Drainage
+        # Services" — generic across this census, not evidence of identity.
+        flags = self._flags()
+        matches = [f for f in flags if f["alias"] == "FDG Building & Drainage"]
+        self.assertEqual(len(matches), 1)
+        self.assertEqual(matches[0]["shared_tokens"], ["drainage"])
+
+    def test_alias_sharing_no_token_at_all_is_flagged(self):
+        flags = self._flags()
+        matches = [f for f in flags if f["alias"] == "Copperfield Rod Solutions Ltd"]
+        self.assertEqual(len(matches), 1)
+        self.assertEqual(matches[0]["shared_tokens"], [])
+
+    def test_alias_sharing_a_distinctive_token_is_not_flagged(self):
+        # "Copperfield" appears in no other census business's name — a
+        # genuine, distinctive shared token, so this alias is not flagged.
+        flags = self._flags()
+        flagged_aliases = {f["alias"] for f in flags}
+        self.assertNotIn("Copperfield Rod Services", flagged_aliases)
+
+    def test_flagging_never_removes_or_alters_the_alias(self):
+        # A flagged alias still matches normally — this is a report, not a
+        # filter. Reuses the main sample fixtures: "SDS Home Renovations"
+        # shares no token with "Silverline Design Studio" and is flagged,
+        # but ManualAliasTests already proves it still counts a real match.
+        census = mc.load_census(CENSUS_PATH, "business")
+        manual = mc.load_manual_variants(VARIANTS_PATH)
+        flags = mc.validate_variant_aliases(manual, census, "business")
+        self.assertEqual(len(flags), 1)
+        self.assertEqual(flags[0]["alias"], "SDS Home Renovations")
+
+
+class PromptedQuestionTests(unittest.TestCase):
+    """compute_prompted_question_ids() and add_unprompted_fields() — the
+    *_unprompted totals added alongside the existing ones. sample_questions.csv
+    marks q01 (only) as a named-business question naming "Meadow Kitchens
+    And Bathrooms Limited" specifically; every other question is a plain
+    discovery question naming no business."""
+
+    def _prompted_by_business(self):
+        census = mc.load_census(CENSUS_PATH, "business")
+        questions = mc.load_questions(QUESTIONS_PATH)
+        business_patterns, _ = mc.build_business_patterns(census, "business", {"anytown"}, {})
+        return mc.compute_prompted_question_ids(business_patterns, questions)
+
+    def test_only_the_named_business_is_prompted_on_q01(self):
+        prompted = self._prompted_by_business()
+        self.assertEqual(prompted.get("Meadow Kitchens And Bathrooms Limited"), {"q01"})
+
+    def test_unrelated_businesses_have_no_prompted_questions(self):
+        prompted = self._prompted_by_business()
+        for business in ("Harborview Builders Anytown", "Ridgeline Home Improvement Ltd",
+                          "Seaside Bathrooms Limited"):
+            self.assertEqual(prompted.get(business, set()), set())
+
+    def test_unprompted_total_excludes_only_the_prompted_question(self):
+        results, _log = run_fixture()
+        prompted = self._prompted_by_business()
+        mc.add_unprompted_fields(results, prompted)
+        r = results["Meadow Kitchens And Bathrooms Limited"]
+        # total=3 (openai q01, gemini q01, perplexity q02); q01 is prompted,
+        # so only the q02 perplexity row survives into the unprompted total.
+        self.assertEqual(r["total"], 3)
+        self.assertEqual(r["unprompted_total"], 1)
+        self.assertEqual(r["prompted_question_ids"], ["q01"])
+
+    def test_unprompted_total_equals_total_when_business_never_prompted(self):
+        results, _log = run_fixture()
+        prompted = self._prompted_by_business()
+        mc.add_unprompted_fields(results, prompted)
+        r = results["Ridgeline Home Improvement Ltd"]
+        self.assertEqual(r["unprompted_total"], r["total"])
+        self.assertEqual(r["prompted_question_ids"], [])
+
+    def test_existing_totals_are_never_replaced(self):
+        results, _log = run_fixture()
+        prompted = self._prompted_by_business()
+        before = {b: dict(r) for b, r in results.items()}
+        mc.add_unprompted_fields(results, prompted)
+        for business, snapshot in before.items():
+            r = results[business]
+            self.assertEqual(r["total"], snapshot["total"])
+            self.assertEqual(r["openai"], snapshot["openai"])
+            self.assertEqual(r["gemini"], snapshot["gemini"])
+            self.assertEqual(r["perplexity"], snapshot["perplexity"])
 
 
 if __name__ == "__main__":

@@ -38,7 +38,13 @@ Python 3.9+, stdlib only. Nothing to `pip install`.
 - **`--variants-file`** (optional) — a JSON file of
   `{"Business Name": ["Misspelling One", "Misspelling Two"]}` for a model's
   own recurring misspelling of a brand. Spot-check the raw answers for these
-  after a first pass; don't guess them in advance.
+  after a first pass; don't guess them in advance. When given, every alias is
+  also validated — see "Cross-business alias validation" below.
+- **`--questions`** (optional) — a questions CSV in the
+  `tools/trade-run/` schema (`question_id`, `question_text`, ...). When
+  given, adds `*_unprompted` totals alongside the existing ones for every
+  business — see "Prompted and unprompted totals" below. Omit for a plain
+  trade run, whose six questions never name a business at all.
 
 ## Usage
 
@@ -110,3 +116,46 @@ diagnosed by inspection, not by re-running the whole thing and guessing.
 `_overlap_log` is the same idea for overlap resolution specifically — every
 suppressed candidate names both the business that lost the match and the
 one that won it, for the same reason.
+
+## Cross-business alias validation
+
+Every `--variants-file` alias is checked against its parent business name
+before counting starts: does it share at least one *substantial* token with
+the parent? A shared token only counts if it isn't a legal/connective word
+(`Ltd`, `and`, ...) and doesn't also appear in another census business's own
+name — a word several unrelated businesses in this market share (a trade
+word like "Drainage") proves nothing about one specific alias's identity,
+however confident it looks. Found after a real defect on a completed
+drainage run: two aliases were credited to the wrong business on the
+strength of sharing only a trade-generic word with it.
+
+Flags print to stderr and are written to the output's `_variant_flags`
+array — **this is a report, not a filter.** No alias is ever removed or
+excluded from matching because of a flag; a genuine alias (an old trading
+name, an owner's own name used informally) can legitimately share no token
+at all with its parent. Review every flag by hand.
+
+## Prompted and unprompted totals
+
+Pass `--questions` to add `unprompted_total`, `unprompted_openai`,
+`unprompted_gemini`, `unprompted_perplexity` and `prompted_question_ids`
+alongside the existing totals for every business — never replacing them,
+per `playbook/models-and-schemas.md`'s "Prompted and unprompted visibility":
+two measurements, never blended into one number.
+
+A question is "prompted" for a business exactly when that business's own
+name (by the same alias matching used against answer text) appears in the
+question's own wording — the whole-census version of
+`tools/benchmark/benchmark_metrics.py`'s `question_names_client()`, which
+does the same job for one focal client. On a plain `/90qrun` trade run, none
+of the six questions name a business at all, so every business's
+`unprompted_total` simply equals its `total`. On an agency-sample or
+Benchmark run, the comparison and named-business questions name the focal
+client, so that client's `unprompted_total` is materially lower than its
+`total` — and every other business's is unaffected, since the question
+never named them.
+
+**Any figure intended for publication must use the unprompted total, never
+the raw one** — the raw total mixes in questions that handed the assistant
+the business's own name, which measures the question's wording, not the
+business's AI visibility.
