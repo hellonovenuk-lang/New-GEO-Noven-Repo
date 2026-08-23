@@ -72,7 +72,7 @@
     },
     "scoring_fields": {
       "type": "object",
-      "description": "The auditable v2.1 scoring model, generalized. Every 0-5 field's scale, every formula, every threshold, and every gate is documented in CAMPAIGN-HANDOFF.md Section 3a - this schema only enforces shape and range, not the reasoning behind a value. VALUE fields (commercial_fit, service_relevance, business_credibility, ability_to_buy, decision_maker_identified, direct_dm_route, contact_route_quality, contact_identity_confidence, research_completeness) are Claude's evidence-backed judgement calls. DERIVED fields (visibility_rate, visibility_score, relative_position, question_coverage, gap_strength, overall_evidence_confidence, final_score, overall_rank, outreach_rank, and the *_verified/*_complete/eligible_for_outreach gates) must be produced by tools/prospect-compiler/scoring_engine.py, never hand-computed or hand-typed - see CAMPAIGN-HANDOFF.md Section 3a's 'formulas, not vibes' rule.",
+      "description": "The auditable v2.1 scoring model, generalized. Every 0-5 field's scale, every formula, every threshold, and every gate is documented in CAMPAIGN-HANDOFF.md Section 3a - this schema only enforces shape and range, not the reasoning behind a value. VALUE fields (commercial_fit, service_relevance, business_credibility, ability_to_buy, decision_maker_identified, direct_dm_route, contact_route_quality, contact_identity_confidence, research_completeness, active_entity_verified, live_website_verified, contact_route_exists) are Claude's evidence-backed judgement calls - the last three feed only GAP's lighter gate (2026-08-23), never business_credibility/contact_route_quality directly. DERIVED fields (visibility_rate, visibility_score, relative_position, question_coverage, gap_strength, overall_evidence_confidence, final_score, overall_rank, outreach_rank, gap_lighter_gate_passed, and the *_verified/*_complete/eligible_for_outreach gates) must be produced by tools/prospect-compiler/scoring_engine.py, never hand-computed or hand-typed - see CAMPAIGN-HANDOFF.md Section 3a's 'formulas, not vibes' rule.",
       "properties": {
         "service_scope": { "type": "string", "minLength": 1 },
         "business_structure": { "type": "string", "enum": ["INDEPENDENT_LOCAL", "LOCALLY_OWNED_FRANCHISE", "CENTRALLY_CONTROLLED_CHAIN"] },
@@ -120,7 +120,11 @@
           ]
         },
         "nearest_competitor": { "type": "string" },
-        "leadership_evidence": { "type": "string" }
+        "leadership_evidence": { "type": "string" },
+        "active_entity_verified": { "type": "boolean" },
+        "live_website_verified": { "type": "boolean" },
+        "contact_route_exists": { "type": "boolean" },
+        "gap_lighter_gate_passed": { "type": "boolean" }
       }
     },
     "market_entry": {
@@ -174,7 +178,11 @@
           "enum": ["CONFIRMED_DIRECT", "CONFIRMED_GENERIC_ROUTE", "PROBABLE_UNCONFIRMED", "GENERIC_INBOX_ONLY", "CONTACT_FORM_OR_PHONE_ONLY", "NO_USABLE_ROUTE"]
         },
         "nearest_competitor": { "type": "string" },
-        "leadership_evidence": { "type": "string" }
+        "leadership_evidence": { "type": "string" },
+        "active_entity_verified": { "type": "boolean" },
+        "live_website_verified": { "type": "boolean" },
+        "contact_route_exists": { "type": "boolean" },
+        "gap_lighter_gate_passed": { "type": "boolean" }
       }
     },
     "outreach_entry": {
@@ -257,7 +265,11 @@
           "enum": ["CONFIRMED_DIRECT", "CONFIRMED_GENERIC_ROUTE", "PROBABLE_UNCONFIRMED", "GENERIC_INBOX_ONLY", "CONTACT_FORM_OR_PHONE_ONLY", "NO_USABLE_ROUTE"]
         },
         "nearest_competitor": { "type": "string" },
-        "leadership_evidence": { "type": "string" }
+        "leadership_evidence": { "type": "string" },
+        "active_entity_verified": { "type": "boolean" },
+        "live_website_verified": { "type": "boolean" },
+        "contact_route_exists": { "type": "boolean" },
+        "gap_lighter_gate_passed": { "type": "boolean" }
       }
     },
     "excluded_entry": {
@@ -337,6 +349,16 @@
           "type": "integer",
           "minimum": 0,
           "description": "The mechanical floor of this campaign's stated candidate-pool inclusion threshold (CAMPAIGN-HANDOFF.md Section 3a): any market[]/outreach[] business with total_ai_appearances at or above this number must have a matching entry in run.scoring_cohort. A business below the floor may still be included in the cohort by judgement: this is a floor, not the whole rule - the qualitative parts of the inclusion rule stay in methodology_notes. Required, and mechanically enforced, only when build_workbook.py is run with --require-scored."
+        },
+        "gap_cohort_min_appearances": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "2026-08-23. A second, lighter, separately-capped floor for GAP eligibility specifically - may be 0, since a zero-appearance business is the strongest GAP case there is. Governs the lighter research pass (active_entity_verified/live_website_verified/contact_route_exists) for a business below cohort_inclusion_min_appearances. Not mechanically enforced by build_workbook.py; the discipline is process, per .claude/skills/qualify/SKILL.md Stage 4."
+        },
+        "gap_cohort_cap": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "2026-08-23. The maximum number of below-cohort_inclusion_min_appearances businesses researched via the lighter GAP gate in this run - stated as data before researching anyone, same discipline as cohort_inclusion_min_appearances, chosen per campaign from real cost evidence rather than invented in advance. A below-floor business beyond this cap stays INCOMPLETE in run.scoring_cohort, not silently dropped."
         },
         "scoring_cohort": {
           "type": "array",

@@ -502,5 +502,100 @@ class NarrativeSignatureRegenerationTests(unittest.TestCase):
         self.assertEqual(entry["why_prospect"], hand_edited_text)
 
 
+class OpportunityTypeRankingTests(unittest.TestCase):
+    """2026-08-23: opportunity_type is the PRIMARY rank (GAP > GROWTH >
+    DEFEND > REVIEW); final_score is only the tiebreak within a type. The
+    real defect this fixes: final_score measures evidence quality, which
+    correlates with business size, which correlates negatively with
+    willingness to buy - the two most-visible, least-motivated DEFEND
+    businesses in a real campaign outranked the one prospect with a real,
+    actionable gap under the old final_score-first sort."""
+
+    def test_gap_outranks_defend_even_with_a_lower_final_score(self):
+        s = scored()
+        gap, defend = s["Invisible But Credible"], s["Combined Leader"]
+        self.assertEqual(gap["opportunity_type"], "GAP")
+        self.assertEqual(defend["opportunity_type"], "DEFEND")
+        # Precondition this test actually proves something: DEFEND scores
+        # higher on final_score alone, yet must still rank behind GAP.
+        self.assertGreater(defend["final_score"], gap["final_score"])
+        self.assertLess(gap["overall_rank"], defend["overall_rank"])
+        self.assertLess(gap["outreach_rank"], defend["outreach_rank"])
+
+    def test_final_score_still_breaks_ties_within_one_type(self):
+        # Both GROWTH in the main fixture, with different final_score -
+        # within the same opportunity_type, the higher final_score must
+        # still rank first, exactly as before this change.
+        s = scored()
+        higher, lower = s["Combined Runner-up"], s["Weak Field Leader"]
+        self.assertEqual(higher["opportunity_type"], lower["opportunity_type"])
+        self.assertGreater(higher["final_score"], lower["final_score"])
+        self.assertLess(higher["overall_rank"], lower["overall_rank"])
+
+
+class GapLighterGateTests(unittest.TestCase):
+    """2026-08-23: GAP_LIGHTER_GATE_FIELDS lets a zero/low-visibility
+    business reach GAP without business_credibility >= 3 - the bar was
+    circular for exactly this cohort, since a business absent from every
+    answer is typically thin on the web too. All three fields are Claude's
+    judgement calls from a deliberately lighter research pass; missing or
+    false on any one leaves the existing business_credibility path as the
+    only route, unchanged."""
+
+    def _entry(self, **overrides):
+        data = make_fixture()
+        defaults = {
+            "service_scope": "combined",
+            "question_appearances": {"q01": 0, "q02": 0, "q03": 0, "q04": 0},
+            "business_credibility": 1,  # deliberately below GAP_MIN_CREDIBILITY
+        }
+        defaults.update(overrides)
+        entry = base_outreach_entry("Lighter Gate Candidate", **defaults)
+        data["outreach"].append(entry)
+        se.run_engine(data)
+        return next(o for o in data["outreach"] if o["business"] == "Lighter Gate Candidate")
+
+    def test_all_three_fields_true_reaches_gap_despite_low_credibility(self):
+        e = self._entry(active_entity_verified=True, live_website_verified=True, contact_route_exists=True)
+        self.assertTrue(e["gap_lighter_gate_passed"])
+        self.assertEqual(e["opportunity_type"], "GAP")
+
+    def test_one_field_missing_gate_does_not_fire(self):
+        e = self._entry(active_entity_verified=True, live_website_verified=True)  # contact_route_exists unset
+        self.assertFalse(e["gap_lighter_gate_passed"])
+        self.assertEqual(e["opportunity_type"], "REVIEW")  # unchanged from pre-existing behaviour
+
+    def test_one_field_false_gate_does_not_fire(self):
+        e = self._entry(active_entity_verified=True, live_website_verified=True, contact_route_exists=False)
+        self.assertFalse(e["gap_lighter_gate_passed"])
+        self.assertEqual(e["opportunity_type"], "REVIEW")
+
+    def test_no_fields_set_behaves_exactly_as_before(self):
+        e = self._entry()
+        self.assertFalse(e["gap_lighter_gate_passed"])
+        self.assertEqual(e["opportunity_type"], "REVIEW")
+
+    def test_lighter_gate_never_overrides_a_real_visibility_score(self):
+        # The gate only ever applies at vis_score <= GAP_MAX_VISIBILITY_SCORE
+        # (1) - it says nothing about visibility strength, so a business with
+        # real appearances must not be pulled into GAP just because the
+        # three lighter-gate fields happen to be true.
+        e = self._entry(
+            question_appearances={"q01": 10, "q02": 10, "q03": 10, "q04": 10},
+            active_entity_verified=True, live_website_verified=True, contact_route_exists=True,
+        )
+        self.assertNotEqual(e["opportunity_type"], "GAP")
+
+    def test_lighter_gate_does_not_relax_ready_to_email(self):
+        # opportunity_type and outreach-readiness are separate questions
+        # (outreach-process.md): passing the lighter gate classifies the
+        # opportunity, it does not manufacture the decision-maker/contact
+        # evidence ready_to_email still requires.
+        e = self._entry(active_entity_verified=True, live_website_verified=True, contact_route_exists=True,
+                         decision_maker_identified=1, contact_identity_confidence=1, research_completeness=1)
+        self.assertEqual(e["opportunity_type"], "GAP")
+        self.assertEqual(e["ready_to_email"], "REVIEW")
+
+
 if __name__ == "__main__":
     unittest.main()

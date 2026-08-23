@@ -54,6 +54,15 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
   filter — a strongly visible business is a DEFEND opportunity, not a dead
   end. REVIEW is not a fifth opportunity type; it stays a state of
   disposition and priority. 2026-08-14.
+- **DEFEND is ranked last and marked experimental.** `overall_rank`/
+  `outreach_rank` sort by opportunity_type first — GAP > GROWTH > DEFEND —
+  with `final_score` only the tiebreak within a type: `final_score` measures
+  evidence quality, which correlates with business size, which correlates
+  negatively with willingness to buy, so scoring it first put a market's
+  most-visible, least-motivated businesses ahead of a genuine gap. The
+  opportunity type itself is not deleted — a market leader may buy
+  monitoring once a monitoring product with delivery history exists — but no
+  DEFEND outreach has actually run yet. 2026-08-23.
 - **Opportunity type, commercial priority and send-readiness are three
   separate fields, never conflated.** Visibility count alone does not set
   priority. 2026-08-14.

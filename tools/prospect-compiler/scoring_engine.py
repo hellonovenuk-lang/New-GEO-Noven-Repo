@@ -213,6 +213,29 @@ DEFEND_MIN_QUESTION_COVERAGE = 0.75
 GAP_MIN_CREDIBILITY = 3
 GAP_MAX_VISIBILITY_SCORE = 1
 
+# GAP's lighter gate (2026-08-23) - a zero/low-visibility business's
+# opportunity_type may reach GAP through here instead of business_credibility
+# >= GAP_MIN_CREDIBILITY. That threshold was circular for exactly the
+# businesses this gate exists for: a business absent from all 90 answers is
+# typically thin on the web too, so it fails the same credibility bar that's
+# supposed to decide whether its absence is a real gap. These three fields
+# are Claude's judgement calls from a deliberately lighter research pass
+# (active-company status, a live site, some working contact route) - not a
+# proxy for visibility strength, and not a substitute for the full evidence
+# fields eligible_for_outreach/ready_to_email still gate on below. All three
+# optional; missing/false on any one means this gate simply doesn't fire and
+# the existing business_credibility path is the only route to GAP, exactly
+# as before.
+GAP_LIGHTER_GATE_FIELDS = ["active_entity_verified", "live_website_verified", "contact_route_exists"]
+
+# 2026-08-23 - primary sort key for overall_rank/outreach_rank. GAP is the
+# strongest, most actionable sale (a real, checkable gap); DEFEND ranks last
+# and is marked experimental in playbook/decisions.md - no DEFEND outreach
+# has actually run. REVIEW (evidence not yet sufficient to classify) has no
+# established commercial hook at all, so it ranks below even DEFEND.
+# final_score is the tiebreak WITHIN a type, never the primary rank.
+OPPORTUNITY_TYPE_RANK_ORDER = {"GAP": 0, "GROWTH": 1, "DEFEND": 2, "REVIEW": 3}
+
 BUSINESS_VERIFIED_MIN_CREDIBILITY = 3
 CONTACT_ROUTE_VERIFIED_MIN_QUALITY = 3
 NAMED_DM_VERIFIED_MIN = 4
@@ -431,10 +454,12 @@ def score_pool(run, entries):
         entry["accessibility_grade"] = ACCESSIBILITY_GRADE_BY_DM_ROUTE[entry["direct_dm_route"]]
 
         relpos, cov = entry["relative_position"], entry["question_coverage"]
+        gap_lighter_gate = all(entry.get(f) for f in GAP_LIGHTER_GATE_FIELDS)
+        entry["gap_lighter_gate_passed"] = gap_lighter_gate
         if (entry["_has_comparable_peer"] and vis_score >= DEFEND_MIN_VISIBILITY_SCORE
                 and relpos >= DEFEND_MIN_RELATIVE_POSITION and cov >= DEFEND_MIN_QUESTION_COVERAGE):
             opp = "DEFEND"
-        elif cred >= GAP_MIN_CREDIBILITY and vis_score <= GAP_MAX_VISIBILITY_SCORE:
+        elif vis_score <= GAP_MAX_VISIBILITY_SCORE and (cred >= GAP_MIN_CREDIBILITY or gap_lighter_gate):
             opp = "GAP"
         elif vis_score == 0 and cred < GAP_MIN_CREDIBILITY:
             opp = "REVIEW"
@@ -504,7 +529,17 @@ def score_pool(run, entries):
             entry["why_prospect"] = generate_why_prospect(entry, run)
             entry["narrative_generated_from"] = current_sig
 
-    tiebreak_key = lambda e: (-e["final_score"], -e["gap_strength"], -e["business_credibility"], -e["visibility_score"], e["business"])
+    # opportunity_type is the PRIMARY rank - GAP > GROWTH > DEFEND > REVIEW
+    # (OPPORTUNITY_TYPE_RANK_ORDER). final_score is the tiebreak WITHIN a
+    # type, never the primary rank: final_score measures evidence quality,
+    # which correlates with business size, which correlates negatively with
+    # willingness to buy - ranking on it first put the two hardest sales
+    # (the market's most-visible, least-motivated businesses) ahead of the
+    # one prospect with a real, actionable gap.
+    tiebreak_key = lambda e: (
+        OPPORTUNITY_TYPE_RANK_ORDER.get(e["opportunity_type"], len(OPPORTUNITY_TYPE_RANK_ORDER)),
+        -e["final_score"], -e["gap_strength"], -e["business_credibility"], -e["visibility_score"], e["business"],
+    )
     overall_ordered = sorted((e for _, _, e in scored), key=tiebreak_key)
     for i, entry in enumerate(overall_ordered, 1):
         entry["overall_rank"] = i

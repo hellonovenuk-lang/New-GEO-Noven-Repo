@@ -432,7 +432,7 @@ A specialist is never penalized for absence from a question outside its
 verified scope — that question is simply excluded from its denominator, not
 counted as a miss.
 
-**The 14 scored fields** (all optional, all on both `market_entry` and
+**The scored fields** (all optional, all on both `market_entry` and
 `outreach_entry` — see `schema.json`'s `scoring_fields` definition for the
 authoritative shape/range of every field named below):
 
@@ -452,6 +452,10 @@ authoritative shape/range of every field named below):
 | `research_completeness` (0–5) | VALUE | CLAUDE — how many material fields are actually resolved with direct evidence |
 | `final_score` (0–100) | DERIVED | scoring_engine.py — weighted sum of 9 components (see below), never a visibility-size ranking |
 | `overall_rank` / `outreach_rank` | DERIVED | scoring_engine.py — see "Ranking" below |
+| `active_entity_verified` (bool) | VALUE | CLAUDE, from RESEARCH — GAP's lighter gate only (see below); active Ltd/LLP at Companies House |
+| `live_website_verified` (bool) | VALUE | CLAUDE, from RESEARCH — GAP's lighter gate only; the business has a live, reachable site |
+| `contact_route_exists` (bool) | VALUE | CLAUDE, from RESEARCH — GAP's lighter gate only; some working contact route exists, unscored |
+| `gap_lighter_gate_passed` | DERIVED | scoring_engine.py — `true` iff all three lighter-gate fields above are true; see "Opportunity type" below |
 
 `final_score` weights: `commercial_fit`×3, `service_relevance`×2,
 `visibility_score`×2, `gap_strength`×4, `business_credibility`×3,
@@ -518,25 +522,51 @@ DEFEND   if a comparable same-scope peer exists (>=2 businesses share this
          AND question_coverage >= 0.75   (share of the business's OWN
              relevant questions it appears on at least once - a breadth
              check independent of raw volume)
-GAP      elif business_credibility >= 3 AND visibility_score <= 1
+GAP      elif visibility_score <= 1 AND (business_credibility >= 3
+             OR gap_lighter_gate_passed)
 REVIEW   elif visibility_score == 0 AND business_credibility < 3
 GROWTH   otherwise
 ```
 
-Three deliberate safeguards baked into this rule, each added because an
+Four deliberate safeguards baked into this rule, each added because an
 earlier version of it got a real case wrong: **(1)** DEFEND requires a real
 peer — a business alone in its `service_scope` cannot be "leading" a
 group of one, however high its own `visibility_score`. **(2)** DEFEND still
 needs `visibility_score >= 3` in absolute terms even when `relative_position`
 is 1.0 — leading a weak field is not the same as meaningful visibility.
-**(3)** GAP requires `business_credibility >= 3` — a business with
+**(3)** GAP normally requires `business_credibility >= 3` — a business with
 near-zero visibility AND unresolved credibility is not a confident
-commercial opportunity in either direction; it is `REVIEW`.
+commercial opportunity in either direction; it is `REVIEW`. **(4)** GAP's
+lighter gate (2026-08-23, `GAP_LIGHTER_GATE_FIELDS` in `scoring_engine.py`)
+is the one deliberate exception to (3): `active_entity_verified`,
+`live_website_verified` and `contact_route_exists` — three optional
+booleans, Claude's judgement from a lighter research pass — let a
+zero/low-visibility business reach GAP without clearing
+`business_credibility >= 3` first. That bar was circular for exactly this
+cohort: a business absent from every answer is typically thin on the web
+too, so it fails the same credibility bar that's supposed to decide whether
+its absence is a real gap. All three fields must be true or the gate simply
+doesn't fire; `gap_lighter_gate_passed` records which path applied, for
+audit. **The lighter gate never touches `eligible_for_outreach` or
+`ready_to_email`** — those still require the full evidence fields
+unchanged; passing the lighter gate classifies the opportunity, it does not
+manufacture the decision-maker or contact-route evidence outreach-readiness
+still needs.
 
-**Ranking** — `overall_rank`: dense rank across every scored business in
-this campaign (`market[]` and `outreach[]` combined) by `final_score`, tied
-broken by (`gap_strength` desc, `business_credibility` desc,
-`visibility_score` desc, `business` A–Z). `outreach_rank`: the identical
+**Ranking (2026-08-23, revised)** — `opportunity_type` is the PRIMARY sort
+key, not `final_score`: `GAP` > `GROWTH` > `DEFEND` > `REVIEW`
+(`OPPORTUNITY_TYPE_RANK_ORDER` in `scoring_engine.py`). `final_score`
+measures evidence quality, which correlates with business size, which
+correlates negatively with willingness to buy — ranking on it first put a
+market's most-visible, least-motivated `DEFEND` businesses ahead of a
+genuine `GAP` prospect with a real, actionable gap. `DEFEND` ranks last on
+purpose and is marked experimental in `playbook/decisions.md` — no DEFEND
+outreach has actually run yet. `overall_rank`: dense rank across every
+scored business in this campaign (`market[]` and `outreach[]` combined) by
+(`opportunity_type` per the order above, then `final_score` desc as the
+tiebreak WITHIN a type), tied further by (`gap_strength` desc,
+`business_credibility` desc, `visibility_score` desc, `business` A–Z).
+`outreach_rank`: the identical
 tie-break, computed only among `outreach[]` entries with
 `ready_to_email=YES`, consecutive from 1 — **`build_workbook.py`'s
 `validate()` rejects a file where `outreach_rank` values have a gap, or

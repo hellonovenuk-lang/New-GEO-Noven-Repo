@@ -171,6 +171,36 @@ single number. Apply the same research depth to every business that meets
 it — never let selection bias (researching whoever's easiest first) decide
 who reaches `outreach[]`.
 
+**A second, lighter, capped floor exists specifically for GAP eligibility
+(2026-08-23).** The floor above governs full canonical scoring — real
+appearance-count evidence justifies that depth of research. But a
+zero-appearance business is the strongest GAP case there is ("named by
+nobody", `outreach-process.md` step 4), and researching only businesses that
+already clear a visibility floor meant a business's own absence from the
+answers silently excluded it from ever being classified as the opportunity
+its absence represents. So: `run.gap_cohort_min_appearances` may be stated
+as `0`, and any below-the-main-floor business up to that governs a lighter
+research pass — `active_entity_verified`, `live_website_verified`,
+`contact_route_exists` (`scoring_engine.py`'s `GAP_LIGHTER_GATE_FIELDS`)
+instead of deep credibility/accessibility research. **State a cap on this
+cohort before researching anyone, as data** — `run.gap_cohort_cap`, the
+maximum number of below-the-main-floor businesses researched this way in
+this run — same discipline as the main floor: a real number chosen for this
+campaign from real cost evidence, never invented in advance and never left
+unstated. (Worked example: the kitchen-and-bathroom census has 39
+businesses total, only 13 clear a floor of 5 — an uncapped lighter gate
+could add up to 26 more real per-business lookups in one run.) A
+below-the-main-floor business beyond the stated cap stays `INCOMPLETE` in
+`run.scoring_cohort` (`missing_evidence: "below this run's GAP-cohort
+cap"`) — a legitimate, explicit stopping point, not a silent drop. **`SCORED`
+still means all 9 VALUE fields are set, even for a lighter-gate business**
+— the Stage 6 contact/accessibility fields
+(`decision_maker_identified`/`direct_dm_route`/`contact_identity_confidence`/
+`research_completeness`) are honestly low rather than skipped, which is
+exactly what correctly keeps a lighter-gate business out of
+`ready_to_email` until that deeper work is actually done, while still
+letting `opportunity_type: GAP` register and its narrative generate.
+
 **Every business that meets the stated floor must get an explicit
 `run.scoring_cohort` entry** — `{business, status}` where `status` is one
 of:
@@ -340,8 +370,9 @@ and `CAMPAIGN-HANDOFF.md`. Rules that must hold:
   `opportunity_type` from `scoring_engine.py`, not hand judgement** —
   `CAMPAIGN-HANDOFF.md` §3a's general rule (DEFEND requires a real
   same-scope peer, meaningful visibility in absolute terms, close relative
-  position, and broad question coverage; GAP requires real credibility;
-  REVIEW covers genuinely insufficient evidence). `REVIEW` is a legitimate
+  position, and broad question coverage; GAP requires real credibility OR
+  the lighter GAP-eligibility gate above; REVIEW covers genuinely
+  insufficient evidence). `REVIEW` is a legitimate
   `opportunity_type` value for a scored business specifically — unlike the
   unscored path above, where `REVIEW` still belongs to `disposition`/
   `priority` only.
