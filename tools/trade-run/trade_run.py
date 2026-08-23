@@ -62,7 +62,7 @@ DEFAULT_RUNS = 5
 
 FIELDS = [
     "audit_id", "client", "run_at", "assistant", "surface", "model_version",
-    "question_id", "run_no", "outcome", "competitors", "errors",
+    "question_id", "run_no", "errors",
     "sources_cited", "answer_text", "notes",
 ]
 
@@ -357,8 +357,6 @@ def main():
                     "model_version": model_version,
                     "question_id": q["question_id"],
                     "run_no": run_no,
-                    "outcome": "",
-                    "competitors": "",
                     "errors": errors,
                     "sources_cited": ";".join(sources),
                     "answer_text": answer,

@@ -34,8 +34,6 @@
 | `model_version` | String | Exact string the provider reports |
 | `question_id` | String | `q01`–`q10` |
 | `run_no` | Integer | 1–5 for API, 1–3 for hand |
-| `outcome` | Enum | `not_named` / `named` / `named_detail` / `named_wrong` |
-| `competitors` | String | Semicolon-separated, as written in answer |
 | `errors` | String | What was said that is untrue, if anything |
 | `sources_cited` | String | URLs cited, semicolon-separated |
 | `answer_text` | Text | Full answer, verbatim |
