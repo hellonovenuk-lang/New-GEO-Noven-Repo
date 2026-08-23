@@ -353,7 +353,7 @@
         "gap_cohort_min_appearances": {
           "type": "integer",
           "minimum": 0,
-          "description": "2026-08-23. A second, lighter, separately-capped floor for GAP eligibility specifically - may be 0, since a zero-appearance business is the strongest GAP case there is. Governs the lighter research pass (active_entity_verified/live_website_verified/contact_route_exists) for a business below cohort_inclusion_min_appearances. Not mechanically enforced by build_workbook.py; the discipline is process, per .claude/skills/qualify/SKILL.md Stage 4."
+          "description": "2026-08-23. A second, lighter, separately-capped floor for GAP eligibility specifically - may be 0, since a zero-appearance business is the strongest GAP case there is. Governs the lighter research pass (active_entity_verified/live_website_verified/contact_route_exists) for a business below cohort_inclusion_min_appearances. Required, and mechanically cross-checked against gap_cohort_cap and the scored pool, only when build_workbook.py is run with --require-scored; historical campaigns without it remain readable."
         },
         "gap_cohort_cap": {
           "type": "integer",

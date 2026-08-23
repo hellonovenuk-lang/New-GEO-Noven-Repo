@@ -363,6 +363,37 @@ def validate_strict_scored(data):
                 f"actually excluded or left incomplete"
             )
 
+    # GAP's lighter, capped inclusion floor (2026-08-23) - the mechanical
+    # counterpart to cohort_inclusion_min_appearances above. Required
+    # unconditionally, same discipline: a stated 0 is a real answer, an
+    # absent field is not.
+    gap_min = run.get("gap_cohort_min_appearances")
+    if gap_min is None:
+        problems.append(
+            "run.gap_cohort_min_appearances: missing - required so GAP's lighter-gate eligibility "
+            "floor is stated as data; may be 0"
+        )
+
+    gap_cap = run.get("gap_cohort_cap")
+    if gap_cap is None:
+        problems.append(
+            "run.gap_cohort_cap: missing - required so the lighter-gate cohort's size is capped as "
+            "data, before researching anyone, not discovered mid-run"
+        )
+
+    if min_appearances is not None and gap_min is not None and gap_cap is not None:
+        appearances_by_business = {e["business"]: e.get("total_ai_appearances", 0) for e in market + outreach}
+        lighter_gate_scored = sorted(
+            business for business, c in cohort_by_business.items()
+            if c["status"] == "SCORED"
+            and gap_min <= appearances_by_business.get(business, 0) < min_appearances
+        )
+        if len(lighter_gate_scored) > gap_cap:
+            problems.append(
+                f"run.gap_cohort_cap ({gap_cap}) exceeded: {len(lighter_gate_scored)} SCORED business(es) "
+                f"fall in the lighter-gate appearance band [{gap_min}, {min_appearances}): {lighter_gate_scored}"
+            )
+
     for i, o in enumerate(outreach):
         business = o.get("business", f"outreach[{i}]")
         if "service_scope" not in o:

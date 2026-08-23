@@ -221,9 +221,15 @@ def full_cohort_fixture():
     """scored_fixture() plus the run.scoring_cohort / cohort_inclusion_min_appearances
     fields --require-scored expects. Both scored_fixture() businesses meet the
     floor (min_appearances=1) and are both marked SCORED, matching the fact
-    that scored_fixture() already gives both of them service_scope."""
+    that scored_fixture() already gives both of them service_scope.
+    gap_cohort_min_appearances/gap_cohort_cap (2026-08-23): both fixture
+    businesses have total_ai_appearances=0, so both fall in the lighter-gate
+    band [0, 1) - cap=10 is well above that count, so this fixture alone
+    never trips the cap check; RequireScoredTests exercises that separately."""
     data = scored_fixture()
     data["run"]["cohort_inclusion_min_appearances"] = 1
+    data["run"]["gap_cohort_min_appearances"] = 0
+    data["run"]["gap_cohort_cap"] = 10
     data["run"]["scoring_cohort"] = [
         {"business": "Ready Co", "status": "SCORED"},
         {"business": "Not Ready Co", "status": "SCORED"},
@@ -330,6 +336,64 @@ class RequireScoredTests(unittest.TestCase):
         with self.assertRaises(bw.ValidationError) as ctx:
             bw.validate_strict_scored(data)
         self.assertIn("cohort_inclusion_min_appearances", str(ctx.exception))
+
+    def test_missing_gap_cohort_min_appearances_rejected(self):
+        data = full_cohort_fixture()
+        del data["run"]["gap_cohort_min_appearances"]
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate_strict_scored(data)
+        self.assertIn("gap_cohort_min_appearances", str(ctx.exception))
+
+    def test_missing_gap_cohort_cap_rejected(self):
+        data = full_cohort_fixture()
+        del data["run"]["gap_cohort_cap"]
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate_strict_scored(data)
+        self.assertIn("gap_cohort_cap", str(ctx.exception))
+
+    def test_gap_cohort_cap_zero_is_a_real_value_not_missing(self):
+        # 0 must not be treated the same as an absent field (falsy-but-set).
+        data = full_cohort_fixture()
+        data["run"]["gap_cohort_cap"] = 0
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate_strict_scored(data)
+        self.assertIn("gap_cohort_cap (0) exceeded", str(ctx.exception))
+
+    def test_gap_cohort_cap_exceeded_is_rejected(self):
+        # Both fixture businesses (total_ai_appearances=0) fall in the
+        # lighter-gate band [0, 1) - a cap of 1 must reject 2 SCORED entries.
+        data = full_cohort_fixture()
+        data["run"]["gap_cohort_cap"] = 1
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate_strict_scored(data)
+        msg = str(ctx.exception)
+        self.assertIn("gap_cohort_cap (1) exceeded", msg)
+        self.assertIn("Ready Co", msg)
+        self.assertIn("Not Ready Co", msg)
+
+    def test_gap_cohort_cap_not_exceeded_passes(self):
+        # Sanity check that a cap comfortably above the real count is fine -
+        # covered implicitly by every other full_cohort_fixture() test too,
+        # but explicit here as the direct positive case.
+        data = full_cohort_fixture()
+        bw.validate_strict_scored(data)  # must not raise
+
+    def test_business_above_the_main_floor_does_not_count_against_the_cap(self):
+        # A business already meeting cohort_inclusion_min_appearances went
+        # through full canonical research, not the lighter gate - it must
+        # never be counted against gap_cohort_cap even though it's SCORED.
+        data = full_cohort_fixture()
+        data["run"]["gap_cohort_cap"] = 0  # even one lighter-gate entry now exceeds it
+        ready_co = next(o for o in data["outreach"] if o["business"] == "Ready Co")
+        ready_co["total_ai_appearances"] = 5  # clears the main floor (1)
+        with self.assertRaises(bw.ValidationError) as ctx:
+            bw.validate_strict_scored(data)
+        msg = str(ctx.exception)
+        self.assertIn("gap_cohort_cap (0) exceeded", msg)
+        # "Not Ready Co" contains "Ready Co" as a substring, so check the
+        # exact listed set: only "Not Ready Co" (still at 0) is lighter-gate;
+        # "Ready Co" (now above the main floor) must not appear on its own.
+        self.assertIn("['Not Ready Co']", msg)
 
     def test_cohort_member_meeting_floor_but_absent_is_rejected(self):
         # Reproduces the "Open Plan Building" failure mode: a business with

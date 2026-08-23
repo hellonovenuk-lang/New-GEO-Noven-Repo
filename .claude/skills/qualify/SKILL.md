@@ -192,7 +192,12 @@ businesses total, only 13 clear a floor of 5 — an uncapped lighter gate
 could add up to 26 more real per-business lookups in one run.) A
 below-the-main-floor business beyond the stated cap stays `INCOMPLETE` in
 `run.scoring_cohort` (`missing_evidence: "below this run's GAP-cohort
-cap"`) — a legitimate, explicit stopping point, not a silent drop. **`SCORED`
+cap"`) — a legitimate, explicit stopping point, not a silent drop.
+`build_workbook.py --require-scored` mechanically cross-checks the cap
+(counts `SCORED` cohort members whose `total_ai_appearances` falls in
+`[gap_cohort_min_appearances, cohort_inclusion_min_appearances)` and fails
+if that count exceeds `gap_cohort_cap`) — this is not a convention to
+remember, it fails the render. **`SCORED`
 still means all 9 VALUE fields are set, even for a lighter-gate business**
 — the Stage 6 contact/accessibility fields
 (`decision_maker_identified`/`direct_dm_route`/`contact_identity_confidence`/
