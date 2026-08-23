@@ -120,7 +120,7 @@ SOURCES = {
 
 FIELDS = [
     "audit_id", "client", "run_at", "assistant", "surface", "model_version",
-    "question_id", "run_no", "outcome", "competitors", "errors",
+    "question_id", "run_no", "errors",
     "sources_cited", "answer_text", "notes",
 ]
 
@@ -177,8 +177,6 @@ def main():
                     "model_version": model,
                     "question_id": qid,
                     "run_no": run_no,
-                    "outcome": "",
-                    "competitors": "",
                     "errors": "",
                     "sources_cited": ";".join(
                         f"https://{d}/{qid}-{run_no}" for d in SOURCES.get((qid, provider), [])),

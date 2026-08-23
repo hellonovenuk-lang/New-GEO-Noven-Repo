@@ -38,15 +38,57 @@ from datetime import datetime, timezone
 # Reuses the audit's provider callers so the UK locale settings are identical
 # to the ones the 2026-08-02 baseline ran with. That script is archived beside
 # the audit it belongs to, not duplicated here — one copy, one behaviour.
+#
+# FIELDS/append_row/ensure_header are NOT reused from audit_query.py — that
+# file is an archived, frozen historical record (README.md: "archive/
+# superseded documents, kept for one review cycle") and this tool's own CSV
+# schema has since moved on without it (models-and-schemas.md's runs.csv
+# dropped outcome/competitors; the archived copy still carries them, on
+# purpose, as the record of what actually ran on 2026-08-02).
 sys.path.insert(0, os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "..", "audits", "noven-2026-08-02"))
+    os.path.dirname(os.path.abspath(__file__)), "..", "..", "archive", "audits", "noven-2026-08-02"))
 try:
-    from audit_query import CALLERS, PROVIDERS, FIELDS, append_row, ensure_header
+    from audit_query import CALLERS, PROVIDERS
 except ImportError:
     sys.exit(
         "Can't find audit_query.py. Expected it at "
         "archive/audits/noven-2026-08-02/audit_query.py relative to this file."
     )
+
+FIELDS = [
+    "audit_id", "client", "run_at", "assistant", "surface", "model_version",
+    "question_id", "run_no", "errors", "sources_cited", "answer_text", "notes",
+]
+
+
+def ensure_header(path):
+    if not os.path.exists(path) or os.path.getsize(path) == 0:
+        with open(path, "w", newline="", encoding="utf-8") as f:
+            csv.DictWriter(f, fieldnames=FIELDS, quoting=csv.QUOTE_ALL).writeheader()
+        return
+    # An existing file's header may predate this schema (names-runs.csv, at
+    # this writing, still carries the old outcome/competitors columns).
+    # append_row() below writes exactly FIELDS worth of columns regardless of
+    # what the file's own header says — appending onto a mismatched header
+    # would silently misalign every new row. Fail loudly instead.
+    with open(path, newline="", encoding="utf-8") as f:
+        existing_header = next(csv.reader(f), [])
+    if existing_header != FIELDS:
+        sys.exit(
+            f"{path} already exists with a different column set than this script "
+            f"now writes.\n  existing: {existing_header}\n  current:  {FIELDS}\n"
+            f"Appending would misalign every new row. Point --out at a new file, "
+            f"or reconcile {path}'s header by hand before re-running."
+        )
+
+
+def append_row(path, row):
+    with open(path, "a", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=FIELDS, quoting=csv.QUOTE_ALL)
+        w.writerow(row)
+        f.flush()
+        os.fsync(f.fileno())
+
 
 QUESTIONS = [
     ("n1", "What do you know about {name}?"),
@@ -137,8 +179,6 @@ def main():
                         "model_version": model_version,
                         "question_id": question_id,
                         "run_no": run_no,
-                        "outcome": "",
-                        "competitors": "",
                         "errors": errors,
                         "sources_cited": ";".join(sources),
                         "answer_text": answer,
