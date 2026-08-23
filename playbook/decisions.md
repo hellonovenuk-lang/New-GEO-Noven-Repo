@@ -63,8 +63,11 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
   automatically sets or overrides it. 2026-08-15.
 - **Companies House is the filter, never the source of the list.** 2026-08-10.
 - **One finding, one offer, no chasing sequence.**
-- **Never publish a ranked table of named local businesses.** Telling a prospect
-  privately is a different act and is in scope.
+- **2026-08-23 — Recognition lists of named businesses may be published:**
+  positive-only, no rank numbers, nobody below the named set identified
+  individually or by implication, removal on request. Ranked league tables
+  remain out of scope. Telling a prospect privately about a competitor is a
+  separate, different act and is unaffected either way.
 - **Cold calling is not started.** Separate rules, no work done.
 - **LinkedIn outreach is later, not now.**
 
