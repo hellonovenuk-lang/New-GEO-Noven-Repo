@@ -294,9 +294,7 @@ def load_questions(path):
 
 def compute_prompted_question_ids(business_patterns, questions):
     """Per census business, the set of question_ids whose own wording
-    names that business — the whole-census analogue of
-    tools/benchmark/benchmark_metrics.py's question_names_client(), which
-    does the same job for one focal client. Reuses the exact same alias
+    names that business. Reuses the exact same alias
     patterns already built for scanning answer text, so a question counts
     as prompted for a business exactly when this script would also credit
     that business with a mention inside the question's own wording — one

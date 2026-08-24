@@ -145,9 +145,7 @@ two measurements, never blended into one number.
 
 A question is "prompted" for a business exactly when that business's own
 name (by the same alias matching used against answer text) appears in the
-question's own wording — the whole-census version of
-`tools/benchmark/benchmark_metrics.py`'s `question_names_client()`, which
-does the same job for one focal client. On a plain `/90qrun` trade run, none
+question's own wording. On a plain `/90qrun` trade run, none
 of the six questions name a business at all, so every business's
 `unprompted_total` simply equals its `total`. On an agency-sample or
 Benchmark run, the comparison and named-business questions name the focal

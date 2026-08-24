@@ -12,7 +12,8 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
   never the first thing sold. 2026-08-14.
 - **No free audits, no introductory rate, no first-five discount, no bundling.**
   2026-07-31.
-- **One narrow exception: the Agency Sample.** Wardith may produce a limited
+- **SUPERSEDED 2026-08-24 — agency channel scrapped, see 'Outreach'
+  section.** **One narrow exception: the Agency Sample.** Wardith may produce a limited
   Agency Sample as a sales-development asset for a prospective SEO agency.
   It goes to the agency and never to the end client; it uses a publicly
   evidenced agency-client relationship; it is materially narrower than the
@@ -21,7 +22,8 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
   opportunity map, the full implementation prioritisation and the recurring
   benchmark setup. **This sets no precedent for free Wardith audits** — the
   rule above is otherwise unchanged. 2026-08-19.
-- **Agency pricing: £500 Benchmark, then £150/month per client.** Quarterly
+- **SUPERSEDED 2026-08-24 — agency channel scrapped, see 'Outreach'
+  section.** **Agency pricing: £500 Benchmark, then £150/month per client.** Quarterly
   Deep Review and white-label output both included while the client is on
   the monthly service. Portfolio pricing exists for agencies placing several
   clients; the thresholds come from early agency conversations and real
@@ -42,6 +44,13 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
 
 ## Outreach
 
+- **Direct to SME owners, not white-label to agencies.** Local trades and
+  professional services, sector × local market, the £250 Audit as the entry
+  product. The agency white-label channel (`archive/agency-product.md`) was
+  explored and dropped — it is a contested channel against funded
+  competitors, and the repo's own writing is visibly better aimed at an
+  owner than an agency director. Kept in the repo as history, not deleted.
+  2026-08-24.
 - **The first clients are cold.** The owner has no business network. 2026-08-09.
 - **Never contact anyone without a live limited company or LLP.** PECR.
 - **The never-named are the first batch**, not the per-assistant gaps.
@@ -77,6 +86,10 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
   individually or by implication, removal on request. Ranked league tables
   remain out of scope. Telling a prospect privately about a competitor is a
   separate, different act and is unaffected either way.
+- **This narrowed publish rule was retained after the agency channel was
+  dropped**, not written for it — it was reasoned through and settled on its
+  own merits for the direct-to-SME recognition list, so dropping that
+  channel does not reopen it. 2026-08-24.
 - **Cold calling is not started.** Separate rules, no work done.
 - **LinkedIn outreach is later, not now.**
 

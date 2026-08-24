@@ -15,7 +15,7 @@ published on the site and in `site/src/data/`. Change them there, not here.*
 Wardith for Agencies — sold to SEO agencies for their own clients — is
 **£500 for the Benchmark, then £150 a month per client**, with the Quarterly
 Deep Review and the white-label output included while they stay on the
-monthly service. Full scope: `playbook/agency-product.md`. Never sold,
+monthly service. Full scope: `archive/agency-product.md`. Never sold,
 delivered or timed.
 
 ## The three verbs

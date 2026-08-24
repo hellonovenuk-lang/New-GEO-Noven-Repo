@@ -63,12 +63,6 @@ a question in another category can name the business too — `comparison`
 routinely does, and needs to. Decide by whether the question text names the
 business, and record the answer per question rather than inferring it later.
 
-Measured mechanically for the agency product by
-`tools/benchmark/benchmark_metrics.py`, which flags every question
-`prompted` or not and keeps the two apart in `baseline.json`. On the test
-fixture the difference is a 13.3% unprompted headline against a 93.3%
-prompted figure; blended, it reads 40%.
-
 ### `questions.csv` — frozen question set
 
 | Column | Type | Notes |
