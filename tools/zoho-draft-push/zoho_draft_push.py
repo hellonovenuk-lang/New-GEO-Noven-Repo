@@ -24,6 +24,7 @@ Usage:
   python3 zoho_draft_push.py --input outreach-prep.json --in-place
   python3 zoho_draft_push.py --input outreach-prep.json --in-place --dry-run
 """
+import html
 import json
 import os
 import urllib.error
@@ -85,6 +86,28 @@ def refresh_access_token(credentials):
     if not token:
         raise ZohoAPIError(f"token refresh response had no access_token: {resp_data}")
     return token
+
+
+def _to_html(text):
+    """Plain-text email body (paragraphs separated by a blank line) to
+    simple HTML - tables/inline-styles-only-signature territory doesn't
+    apply here, this is just the message text, not the signature."""
+    paragraphs = [p.strip() for p in text.strip().split("\n\n") if p.strip()]
+    return "".join(f"<p>{html.escape(p)}</p>" for p in paragraphs)
+
+
+def build_message_payload(entry, from_address):
+    """Maps one outreach-prep entry (as written by /outreach's Stage 7) to
+    the JSON body for Zoho's create/update-draft call. Never includes a
+    signature - that is Zoho's own "new mail" setting, per
+    assets/brand/email-signature.html's own instructions."""
+    return {
+        "fromAddress": from_address,
+        "toAddress": entry.get("contact_route", {}).get("email", ""),
+        "subject": entry.get("email_subject", ""),
+        "content": _to_html(entry.get("email_body", "")),
+        "mailFormat": "html",
+    }
 
 
 if __name__ == "__main__":

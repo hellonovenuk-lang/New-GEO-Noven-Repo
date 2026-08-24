@@ -100,5 +100,41 @@ class RefreshAccessTokenTests(unittest.TestCase):
             zdp.refresh_access_token(FAKE_CREDENTIALS)
 
 
+class BuildMessagePayloadTests(unittest.TestCase):
+    def test_maps_business_fields_to_zoho_payload(self):
+        entry = {
+            "business": "Sampleford Glazing",
+            "contact_route": {"email": "owner@sampleford-glazing.example"},
+            "email_subject": "Sampleford Glazing — for the practice owner",
+            "email_body": "Hello,\n\nSome finding.",
+        }
+        payload = zdp.build_message_payload(entry, "hello@wardith.co.uk")
+        self.assertEqual(payload["fromAddress"], "hello@wardith.co.uk")
+        self.assertEqual(payload["toAddress"], "owner@sampleford-glazing.example")
+        self.assertEqual(payload["subject"], "Sampleford Glazing — for the practice owner")
+        self.assertEqual(payload["mailFormat"], "html")
+
+    def test_body_html_escapes_special_characters(self):
+        entry = {
+            "business": "A & B Ltd",
+            "contact_route": {"email": "x@example.com"},
+            "email_subject": "s",
+            "email_body": "You appear less than <competitor>.",
+        }
+        payload = zdp.build_message_payload(entry, "hello@wardith.co.uk")
+        self.assertIn("&lt;competitor&gt;", payload["content"])
+        self.assertNotIn("<competitor>", payload["content"])
+
+    def test_body_paragraphs_become_separate_p_tags(self):
+        entry = {
+            "business": "x", "contact_route": {"email": "x@example.com"},
+            "email_subject": "s", "email_body": "First paragraph.\n\nSecond paragraph.",
+        }
+        payload = zdp.build_message_payload(entry, "hello@wardith.co.uk")
+        self.assertEqual(payload["content"].count("<p>"), 2)
+        self.assertIn("<p>First paragraph.</p>", payload["content"])
+        self.assertIn("<p>Second paragraph.</p>", payload["content"])
+
+
 if __name__ == "__main__":
     unittest.main()
