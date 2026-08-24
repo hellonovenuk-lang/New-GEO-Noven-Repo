@@ -177,14 +177,11 @@ Usage:
   python3 zoho_draft_push.py --input outreach-prep.json --in-place
   python3 zoho_draft_push.py --input outreach-prep.json --in-place --dry-run
 """
-import argparse
 import json
 import os
-import sys
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
 
 DEFAULT_CREDENTIALS_PATH = os.path.expanduser("~/.wardith/zoho-credentials.json")
 REQUIRED_CREDENTIAL_FIELDS = [
@@ -452,7 +449,15 @@ Expected: FAIL with `AttributeError: module 'zoho_draft_push' has no attribute '
 
 - [ ] **Step 3: Write the minimal implementation**
 
-In `tools/zoho-draft-push/zoho_draft_push.py`, add after `build_message_payload`:
+In `tools/zoho-draft-push/zoho_draft_push.py`, add this import alongside
+the existing ones at the top of the file (`push_entry` below needs it for
+`zoho_pushed_at`):
+
+```python
+from datetime import datetime, timezone
+```
+
+Then add after `build_message_payload`:
 
 ```python
 def _extract_draft_id(resp_data):
@@ -751,7 +756,16 @@ Expected: FAIL — the script currently does nothing when run (`if __name__: pas
 
 - [ ] **Step 3: Write the minimal implementation**
 
-In `tools/zoho-draft-push/zoho_draft_push.py`, replace the final `if __name__ == "__main__": pass` block with:
+In `tools/zoho-draft-push/zoho_draft_push.py`, add these two imports
+alongside the existing ones at the top of the file (`main` below needs
+them):
+
+```python
+import argparse
+import sys
+```
+
+Then replace the final `if __name__ == "__main__": pass` block with:
 
 ```python
 def main():
