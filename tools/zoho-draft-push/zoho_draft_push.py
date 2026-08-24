@@ -71,7 +71,8 @@ def refresh_access_token(credentials):
         "client_secret": credentials["client_secret"],
         "grant_type": "refresh_token",
     }).encode("utf-8")
-    req = urllib.request.Request(url, data=params, method="POST")
+    req = urllib.request.Request(url, data=params, method="POST",
+                                  headers={"Content-Type": "application/x-www-form-urlencoded"})
     try:
         with urllib.request.urlopen(req, timeout=30) as resp:
             resp_data = json.loads(resp.read().decode("utf-8"))
