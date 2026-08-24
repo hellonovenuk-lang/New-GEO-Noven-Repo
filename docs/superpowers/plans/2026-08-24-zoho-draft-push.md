@@ -984,7 +984,8 @@ def exchange_grant_token(accounts_domain, client_id, client_secret, grant_token)
         "client_secret": client_secret,
         "grant_type": "authorization_code",
     }).encode("utf-8")
-    req = urllib.request.Request(url, data=params, method="POST")
+    req = urllib.request.Request(url, data=params, method="POST",
+                                  headers={"Content-Type": "application/x-www-form-urlencoded"})
     try:
         with urllib.request.urlopen(req, timeout=30) as resp:
             data = json.loads(resp.read().decode("utf-8"))
