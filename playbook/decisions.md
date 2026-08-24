@@ -58,12 +58,28 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
 - **A per-assistant gap is only worth a letter when the assistant is ChatGPT.**
   2026-08-10. Still true for the GAP letter specifically; a Gemini- or
   Perplexity-only absence can now be a GROWTH angle instead. 2026-08-14.
-- **High AI visibility is no longer an automatic outreach exclusion.**
+- **SUPERSEDED 2026-08-24 — the most-named cohort within DEFEND now
+  defaults to excluded again; see the most-named-cohort bullet below.**
+  **High AI visibility is no longer an automatic outreach exclusion.**
   GAP / GROWTH / DEFEND / NO OPPORTUNITY replaces the old visibility-only
   filter — a strongly visible business is a DEFEND opportunity, not a dead
   end. REVIEW is not a fifth opportunity type; it stays a state of
   disposition and priority. 2026-08-14.
-- **DEFEND is ranked last and marked experimental.** `overall_rank`/
+- **A market's most-named cohort — the small cluster already dominating its
+  AI answers, as few as one business or as many as five — defaults to
+  excluded from outreach; a DEFEND business outside that cohort does not.**
+  `most_named_cohort` in `scoring_engine.py`: an absolute visibility floor
+  (`visibility_score >= 3`), a relative-position band (`>= 0.7` of the
+  group's own top rate, loosened from the old 0.85), and a rank-within-group
+  cap (top 5 by visibility_rate within its own service_scope group) — no
+  longer conditioned on having a comparable peer at all. `GAP` is
+  unconditional at zero visibility now; `business_credibility` no longer
+  gates it. Both are proposals (`disposition_recommendation`,
+  `opportunity_type`) the owner can override. 2026-08-24.
+- **SUPERSEDED 2026-08-24 — DEFEND's classification changed to
+  `most_named_cohort` (see above); the ranking order itself (GAP > GROWTH >
+  DEFEND) is unchanged.**
+  **DEFEND is ranked last and marked experimental.** `overall_rank`/
   `outreach_rank` sort by opportunity_type first — GAP > GROWTH > DEFEND —
   with `final_score` only the tiebreak within a type: `final_score` measures
   evidence quality, which correlates with business size, which correlates

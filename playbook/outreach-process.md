@@ -71,13 +71,18 @@ companies. The sweep is a filter, never a source.
 **Large or national chains may stay in the market benchmark** — they are real
 competitors — **but normally drop out of local outreach** where there is no
 realistic local purchasing decision-maker (check who the registered provider
-is). That is the only reason to drop a highly-visible business by default.
+is).
 
 **Being named as consistently as its direct competitors is not, by itself, a
-reason to drop a business.** It used to be — the rule was "there's nothing to
-sell them." The Chester and Wirral retrospective (2026-08-14) showed that was
-too narrow: a business with a strong existing AI position is a `DEFEND`
-opportunity, not a dead end. See step 4.
+reason to drop a business — being in the small cluster already dominating
+that market's answers is (2026-08-24).** The Chester and Wirral
+retrospective (2026-08-14) first showed that visibility alone was too narrow
+a reason to drop a business: a business with a strong existing AI position
+is a `DEFEND` opportunity, not a dead end. The 2026-08-24 refinement narrows
+that back, deliberately: not every visible business, only the small
+most-named cohort of a market (as few as one business, or as many as five)
+now defaults to excluded from this round by default — a `DEFEND` business
+outside that cohort is still pursued exactly like `GAP`/`GROWTH`. See step 4.
 
 ### 4. Classify the opportunity, then qualify
 
@@ -105,6 +110,14 @@ single "prospect or not" test — plus a fourth non-opportunity bucket
   and commercially capable. The opportunity is to show what's supporting
   that position, monitor it, and flag if it starts to erode. **Do not
   manufacture a visibility problem for a business that doesn't have one.**
+  **A business in the small cluster already dominating a market's answers
+  (as few as one, as many as five — the "most-named cohort") defaults to
+  excluded from this round of outreach (2026-08-24), reason `ALREADY
+  STRONGLY VISIBLE`.** This is a proposal, not an automatic drop: `DEFEND`
+  is still a real, valid opportunity type for that business (a
+  monitoring/retention play worth pursuing on its own terms later), and the
+  owner can override the disposition for a specific business. A `DEFEND`
+  business outside the most-named cohort is not excluded by default.
 - **NO OPPORTUNITY** — market or business fit is unclear, legal or trading
   status is unresolved, geography is ambiguous, the apparent gap is
   explained by being new/specialist/out-of-market, local decision-making is

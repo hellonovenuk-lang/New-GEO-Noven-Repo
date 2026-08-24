@@ -207,26 +207,26 @@ FINAL_SCORE_MAX_RAW = sum(w * 5 for w in FINAL_SCORE_WEIGHTS.values())  # 110
 
 VISIBILITY_BANDS = [(0, 0), (10, 1), (25, 2), (40, 3), (60, 4), (100, 5)]
 
-DEFEND_MIN_VISIBILITY_SCORE = 3
-DEFEND_MIN_RELATIVE_POSITION = 0.85
-DEFEND_MIN_QUESTION_COVERAGE = 0.75
-GAP_MIN_CREDIBILITY = 3
-GAP_MAX_VISIBILITY_SCORE = 1
-
-# GAP's lighter gate (2026-08-23) - a zero/low-visibility business's
-# opportunity_type may reach GAP through here instead of business_credibility
-# >= GAP_MIN_CREDIBILITY. That threshold was circular for exactly the
-# businesses this gate exists for: a business absent from all 90 answers is
-# typically thin on the web too, so it fails the same credibility bar that's
-# supposed to decide whether its absence is a real gap. These three fields
-# are Claude's judgement calls from a deliberately lighter research pass
-# (active-company status, a live site, some working contact route) - not a
-# proxy for visibility strength, and not a substitute for the full evidence
-# fields eligible_for_outreach/ready_to_email still gate on below. All three
-# optional; missing/false on any one means this gate simply doesn't fire and
-# the existing business_credibility path is the only route to GAP, exactly
-# as before.
-GAP_LIGHTER_GATE_FIELDS = ["active_entity_verified", "live_website_verified", "contact_route_exists"]
+# most_named_cohort (2026-08-24, replaces the old peer-gated DEFEND rule) -
+# the default target is EVERY Companies-House-verified business in a market
+# EXCEPT the small cluster already dominating that market's AI answers, not
+# just a lone leader of a weak field. Three conditions, all required:
+# visibility_score >= MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE (an absolute
+# floor - alone in a weak field still isn't "dominant"), relative_position >=
+# MOST_NAMED_COHORT_MIN_RELATIVE_POSITION (a band, deliberately looser than
+# the old 0.85, so more than just the single top scorer can qualify), and a
+# rank of MOST_NAMED_COHORT_MAX_SIZE or better by visibility_rate within its
+# own service_scope group. That cap is what actually bounds the cohort - a
+# market can be bunched at the top with as few as 1 or as many as
+# MOST_NAMED_COHORT_MAX_SIZE businesses genuinely dominating it, and this
+# rule accepts either shape without hard-coding a count. Unlike the old rule,
+# a business with no real peer in its service_scope can now reach DEFEND on
+# its own absolute visibility and relative_position=1.0 against itself - the
+# "comparable same-scope peer exists" and "question_coverage >= 0.75"
+# requirements are both dropped entirely, not tightened.
+MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE = 3
+MOST_NAMED_COHORT_MIN_RELATIVE_POSITION = 0.7
+MOST_NAMED_COHORT_MAX_SIZE = 5
 
 # 2026-08-23 - primary sort key for overall_rank/outreach_rank. GAP is the
 # strongest, most actionable sale (a real, checkable gap); DEFEND ranks last
@@ -396,23 +396,27 @@ def score_pool(run, entries):
 
     # group top visibility rate + relative position, grouped by service_scope label
     group_top = {}
-    group_size = {}
     for _, _, entry in scored:
         label = entry["service_scope"]
         group_top[label] = max(group_top.get(label, 0.0), entry["visibility_rate"])
-        group_size[label] = group_size.get(label, 0) + 1
     for _, _, entry in scored:
         scope_label = entry["service_scope"]
         top = group_top[scope_label]
         entry["group_top_visibility_rate"] = top
         entry["relative_position"] = round(entry["visibility_rate"] / top, 3) if top > 0 else 0.0
-        # A business that is the sole member of its service_scope in this
-        # pool has no real peer to be "leading" - relative_position=1.0
-        # against itself is not market leadership, per CAMPAIGN-HANDOFF.md
-        # Section 3a's explicit rule that a business leading an extremely
-        # weak (here, nonexistent) comparison group must not automatically
-        # become DEFEND.
-        entry["_has_comparable_peer"] = group_size[scope_label] >= 2
+
+    # Rank each entry within its own service_scope group by visibility_rate -
+    # freshly grouped and sorted here, never against a stale/last-iterated
+    # group (see PeerGroupRankingBugRegressionTests) - this rank feeds the
+    # MOST_NAMED_COHORT_MAX_SIZE cap below. Ties break on business name for a
+    # deterministic order, matching the file's other tiebreak keys.
+    groups = {}
+    for _, _, entry in scored:
+        groups.setdefault(entry["service_scope"], []).append(entry)
+    for members in groups.values():
+        ranked = sorted(members, key=lambda e: (-e["visibility_rate"], e["business"]))
+        for rank, member in enumerate(ranked, 1):
+            member["_group_visibility_rank"] = rank
 
     for _, _, entry in scored:
         cred, vis_score = entry["business_credibility"], entry["visibility_score"]
@@ -453,16 +457,16 @@ def score_pool(run, entries):
 
         entry["accessibility_grade"] = ACCESSIBILITY_GRADE_BY_DM_ROUTE[entry["direct_dm_route"]]
 
-        relpos, cov = entry["relative_position"], entry["question_coverage"]
-        gap_lighter_gate = all(entry.get(f) for f in GAP_LIGHTER_GATE_FIELDS)
-        entry["gap_lighter_gate_passed"] = gap_lighter_gate
-        if (entry["_has_comparable_peer"] and vis_score >= DEFEND_MIN_VISIBILITY_SCORE
-                and relpos >= DEFEND_MIN_RELATIVE_POSITION and cov >= DEFEND_MIN_QUESTION_COVERAGE):
+        relpos = entry["relative_position"]
+        entry["most_named_cohort"] = (
+            vis_score >= MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE
+            and relpos >= MOST_NAMED_COHORT_MIN_RELATIVE_POSITION
+            and entry["_group_visibility_rank"] <= MOST_NAMED_COHORT_MAX_SIZE
+        )
+        if entry["most_named_cohort"]:
             opp = "DEFEND"
-        elif vis_score <= GAP_MAX_VISIBILITY_SCORE and (cred >= GAP_MIN_CREDIBILITY or gap_lighter_gate):
+        elif vis_score == 0:
             opp = "GAP"
-        elif vis_score == 0 and cred < GAP_MIN_CREDIBILITY:
-            opp = "REVIEW"
         else:
             opp = "GROWTH"
         entry["opportunity_type"] = opp
@@ -478,7 +482,11 @@ def score_pool(run, entries):
         entry["_priority_recommendation"] = priority
         if array_name == "outreach":
             entry["priority"] = priority
-            entry["disposition_recommendation"] = "OUTREACH" if entry["eligible_for_outreach"] == "YES" else "REVIEW"
+            if entry["most_named_cohort"]:
+                entry["disposition_recommendation"] = "EXCLUDED"
+                entry["disposition_recommendation_reason"] = "ALREADY STRONGLY VISIBLE"
+            else:
+                entry["disposition_recommendation"] = "OUTREACH" if entry["eligible_for_outreach"] == "YES" else "REVIEW"
 
     # nearest same-scope competitor + leadership evidence text
     for _, _, entry in scored:
@@ -551,7 +559,7 @@ def score_pool(run, entries):
     for _, _, entry in scored:
         entry.pop("_ready_recommendation", None)
         entry.pop("_priority_recommendation", None)
-        entry.pop("_has_comparable_peer", None)
+        entry.pop("_group_visibility_rank", None)
 
     return scored
 

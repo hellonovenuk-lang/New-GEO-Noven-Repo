@@ -452,10 +452,10 @@ authoritative shape/range of every field named below):
 | `research_completeness` (0–5) | VALUE | CLAUDE — how many material fields are actually resolved with direct evidence |
 | `final_score` (0–100) | DERIVED | scoring_engine.py — weighted sum of 9 components (see below), never a visibility-size ranking |
 | `overall_rank` / `outreach_rank` | DERIVED | scoring_engine.py — see "Ranking" below |
-| `active_entity_verified` (bool) | VALUE | CLAUDE, from RESEARCH — GAP's lighter gate only (see below); active Ltd/LLP at Companies House |
-| `live_website_verified` (bool) | VALUE | CLAUDE, from RESEARCH — GAP's lighter gate only; the business has a live, reachable site |
-| `contact_route_exists` (bool) | VALUE | CLAUDE, from RESEARCH — GAP's lighter gate only; some working contact route exists, unscored |
-| `gap_lighter_gate_passed` | DERIVED | scoring_engine.py — `true` iff all three lighter-gate fields above are true; see "Opportunity type" below |
+| `active_entity_verified` (bool) | VALUE | CLAUDE, from RESEARCH — not currently consumed by scoring_engine.py (formerly GAP's lighter gate, retired 2026-08-24); active Ltd/LLP at Companies House |
+| `live_website_verified` (bool) | VALUE | CLAUDE, from RESEARCH — not currently consumed; the business has a live, reachable site |
+| `contact_route_exists` (bool) | VALUE | CLAUDE, from RESEARCH — not currently consumed; some working contact route exists, unscored |
+| `most_named_cohort` (bool) | DERIVED | scoring_engine.py — `true` iff this business is in the small cluster already dominating its service_scope group's AI answers; see "Opportunity type" below |
 
 `final_score` weights: `commercial_fit`×3, `service_relevance`×2,
 `visibility_score`×2, `gap_strength`×4, `business_credibility`×3,
@@ -506,52 +506,61 @@ alone.** Both remain `scoring_engine.py`'s *proposed* values — the Section 5
 approval gate below is unchanged: the owner still approves `priority` and
 `ready_to_email` before either is final.
 
-**Opportunity type, generalized** (supersedes the qualitative-only framing
-above wherever `service_scope` is set — `NO OPPORTUNITY` remains a valid
-legacy value on old, unscored records; the engine itself only ever produces
-`DEFEND` / `GROWTH` / `GAP` / `REVIEW`):
+**Opportunity type, generalized** (2026-08-24, supersedes the earlier
+peer-gated version of this same rule, as well as the qualitative-only
+framing above, wherever `service_scope` is set — `NO OPPORTUNITY` remains a
+valid legacy value on old, unscored records; the engine itself only ever
+produces `DEFEND` / `GROWTH` / `GAP`, never `REVIEW`):
 
 ```
-DEFEND   if a comparable same-scope peer exists (>=2 businesses share this
-             service_scope in the pool)
-         AND visibility_score >= 3
-         AND relative_position >= 0.85   (own visibility_rate / the highest
-             visibility_rate among OTHER businesses sharing this exact
-             service_scope - never compared across scopes with different
-             denominators)
-         AND question_coverage >= 0.75   (share of the business's OWN
-             relevant questions it appears on at least once - a breadth
-             check independent of raw volume)
-GAP      elif visibility_score <= 1 AND (business_credibility >= 3
-             OR gap_lighter_gate_passed)
-REVIEW   elif visibility_score == 0 AND business_credibility < 3
+most_named_cohort = visibility_score >= MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE   (3)
+                 AND relative_position >= MOST_NAMED_COHORT_MIN_RELATIVE_POSITION   (0.7 -
+                     own visibility_rate / the highest visibility_rate among
+                     OTHER businesses sharing this exact service_scope -
+                     never compared across scopes with different
+                     denominators)
+                 AND ranked MOST_NAMED_COHORT_MAX_SIZE (5) or better by
+                     visibility_rate within its own service_scope group
+
+DEFEND   if most_named_cohort
+GAP      elif visibility_score == 0
 GROWTH   otherwise
 ```
 
-Four deliberate safeguards baked into this rule, each added because an
-earlier version of it got a real case wrong: **(1)** DEFEND requires a real
-peer — a business alone in its `service_scope` cannot be "leading" a
-group of one, however high its own `visibility_score`. **(2)** DEFEND still
-needs `visibility_score >= 3` in absolute terms even when `relative_position`
-is 1.0 — leading a weak field is not the same as meaningful visibility.
-**(3)** GAP normally requires `business_credibility >= 3` — a business with
-near-zero visibility AND unresolved credibility is not a confident
-commercial opportunity in either direction; it is `REVIEW`. **(4)** GAP's
-lighter gate (2026-08-23, `GAP_LIGHTER_GATE_FIELDS` in `scoring_engine.py`)
-is the one deliberate exception to (3): `active_entity_verified`,
-`live_website_verified` and `contact_route_exists` — three optional
-booleans, Claude's judgement from a lighter research pass — let a
-zero/low-visibility business reach GAP without clearing
-`business_credibility >= 3` first. That bar was circular for exactly this
-cohort: a business absent from every answer is typically thin on the web
-too, so it fails the same credibility bar that's supposed to decide whether
-its absence is a real gap. All three fields must be true or the gate simply
-doesn't fire; `gap_lighter_gate_passed` records which path applied, for
-audit. **The lighter gate never touches `eligible_for_outreach` or
-`ready_to_email`** — those still require the full evidence fields
-unchanged; passing the lighter gate classifies the opportunity, it does not
-manufacture the decision-maker or contact-route evidence outreach-readiness
-still needs.
+The default target is now **every** Companies-House-verified business in a
+market **except** the small cluster already dominating that market's AI
+answers — not just a lone leader of a weak field, and not conditioned on
+having a peer at all. Three deliberate choices baked into this rule:
+**(1)** the absolute floor (`visibility_score >= 3`) is kept even though the
+peer requirement below is dropped — a business alone in its `service_scope`
+can now reach `DEFEND` (`relative_position` is trivially 1.0 against
+itself), but only if its own visibility is genuinely meaningful, not merely
+because it has no comparison group. **(2)** `relative_position`'s floor is
+loosened from the old 0.85 to `MOST_NAMED_COHORT_MIN_RELATIVE_POSITION`
+(0.7) and is deliberately a band, not a "must be the single top scorer"
+test — a market can be bunched at the top. **(3)** `MOST_NAMED_COHORT_MAX_SIZE`
+(5) caps how large that dominant cluster can be within one `service_scope`
+group — it only bites in a large group; a market's genuinely dominant
+cluster can be as small as 1 business or as large as 5, and this rule
+accepts either shape without hard-coding a count. The old **"comparable
+same-scope peer exists (>=2 businesses)"** and **"question_coverage >=
+0.75"** requirements are both dropped entirely, not tightened — a lone
+business or one with patchy question coverage is no longer blocked from
+`DEFEND` on those grounds alone. `GAP` is now unconditional at
+`visibility_score == 0` — `business_credibility` no longer gates it in
+either direction, retiring the old `REVIEW`-for-uncertain-credibility branch
+and the lighter-gate exception built specifically to route around it
+(`active_entity_verified`/`live_website_verified`/`contact_route_exists`
+remain valid optional research fields but are not currently consumed by
+this classification).
+
+**`most_named_cohort` also sets the default `disposition_recommendation`**
+on a scored `outreach[]` entry: `EXCLUDED` (reason `ALREADY STRONGLY
+VISIBLE`) when `true`, `OUTREACH`/`REVIEW` from `eligible_for_outreach`
+exactly as before when `false`. This is a *proposal* like every other
+derived field here — `DEFEND` remains a real, valid commercial opportunity
+type (a monitoring/retention play), and the owner can override the
+disposition for a specific business at the approval gate below.
 
 **Ranking (2026-08-23, revised)** — `opportunity_type` is the PRIMARY sort
 key, not `final_score`: `GAP` > `GROWTH` > `DEFEND` > `REVIEW`

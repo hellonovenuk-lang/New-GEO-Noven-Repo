@@ -72,7 +72,7 @@
     },
     "scoring_fields": {
       "type": "object",
-      "description": "The auditable v2.1 scoring model, generalized. Every 0-5 field's scale, every formula, every threshold, and every gate is documented in CAMPAIGN-HANDOFF.md Section 3a - this schema only enforces shape and range, not the reasoning behind a value. VALUE fields (commercial_fit, service_relevance, business_credibility, ability_to_buy, decision_maker_identified, direct_dm_route, contact_route_quality, contact_identity_confidence, research_completeness, active_entity_verified, live_website_verified, contact_route_exists) are Claude's evidence-backed judgement calls - the last three feed only GAP's lighter gate (2026-08-23), never business_credibility/contact_route_quality directly. DERIVED fields (visibility_rate, visibility_score, relative_position, question_coverage, gap_strength, overall_evidence_confidence, final_score, overall_rank, outreach_rank, gap_lighter_gate_passed, and the *_verified/*_complete/eligible_for_outreach gates) must be produced by tools/prospect-compiler/scoring_engine.py, never hand-computed or hand-typed - see CAMPAIGN-HANDOFF.md Section 3a's 'formulas, not vibes' rule.",
+      "description": "The auditable v2.1 scoring model, generalized. Every 0-5 field's scale, every formula, every threshold, and every gate is documented in CAMPAIGN-HANDOFF.md Section 3a - this schema only enforces shape and range, not the reasoning behind a value. VALUE fields (commercial_fit, service_relevance, business_credibility, ability_to_buy, decision_maker_identified, direct_dm_route, contact_route_quality, contact_identity_confidence, research_completeness, active_entity_verified, live_website_verified, contact_route_exists) are Claude's evidence-backed judgement calls - the last three are not currently consumed by scoring_engine.py (formerly GAP's lighter gate, retired 2026-08-24). DERIVED fields (visibility_rate, visibility_score, relative_position, question_coverage, gap_strength, overall_evidence_confidence, final_score, overall_rank, outreach_rank, most_named_cohort, and the *_verified/*_complete/eligible_for_outreach gates) must be produced by tools/prospect-compiler/scoring_engine.py, never hand-computed or hand-typed - see CAMPAIGN-HANDOFF.md Section 3a's 'formulas, not vibes' rule.",
       "properties": {
         "service_scope": { "type": "string", "minLength": 1 },
         "business_structure": { "type": "string", "enum": ["INDEPENDENT_LOCAL", "LOCALLY_OWNED_FRANCHISE", "CENTRALLY_CONTROLLED_CHAIN"] },
@@ -124,7 +124,7 @@
         "active_entity_verified": { "type": "boolean" },
         "live_website_verified": { "type": "boolean" },
         "contact_route_exists": { "type": "boolean" },
-        "gap_lighter_gate_passed": { "type": "boolean" }
+        "most_named_cohort": { "type": "boolean" }
       }
     },
     "market_entry": {
@@ -182,7 +182,7 @@
         "active_entity_verified": { "type": "boolean" },
         "live_website_verified": { "type": "boolean" },
         "contact_route_exists": { "type": "boolean" },
-        "gap_lighter_gate_passed": { "type": "boolean" }
+        "most_named_cohort": { "type": "boolean" }
       }
     },
     "outreach_entry": {
@@ -269,7 +269,7 @@
         "active_entity_verified": { "type": "boolean" },
         "live_website_verified": { "type": "boolean" },
         "contact_route_exists": { "type": "boolean" },
-        "gap_lighter_gate_passed": { "type": "boolean" }
+        "most_named_cohort": { "type": "boolean" }
       }
     },
     "excluded_entry": {

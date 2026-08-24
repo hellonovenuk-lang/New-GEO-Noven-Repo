@@ -166,56 +166,74 @@ class RelevanceWeightTests(unittest.TestCase):
             se.build_relevance_index(run)
 
 
-class PeerGroupSizeBugRegressionTests(unittest.TestCase):
-    """Dedicated regression test for a real bug caught during development:
-    the peer-count loop in score_pool() computed group_size correctly, but
-    a SECOND loop re-read a stale `label` variable left over from the LAST
-    iteration of the FIRST loop instead of each entry's own service_scope -
-    so every business's _has_comparable_peer check was silently evaluated
-    against whichever scope happened to be processed last, not its own.
-    This fixture is shaped specifically to catch that class of bug: scopes
-    are given deliberately different group sizes, and the scope most likely
-    to be iterated last (alphabetically/insertion-order last) has size 1 -
-    if the stale-variable bug ever returns, every business in a >=2-member
-    group would wrongly see group_size=1 and never reach DEFEND."""
+class PeerGroupRankingBugRegressionTests(unittest.TestCase):
+    """Dedicated regression test for two real bug classes:
 
-    def test_business_in_large_group_not_contaminated_by_smaller_last_group(self):
+    1. A historical bug where a SECOND loop re-read a stale `label` variable
+       left over from the LAST iteration of a FIRST loop instead of each
+       entry's own service_scope - so a per-entry check was silently
+       evaluated against whichever scope happened to be processed last, not
+       its own. most_named_cohort's MOST_NAMED_COHORT_MAX_SIZE rank is
+       computed the same shape (group, then per-entry lookup), so this
+       fixture keeps a deliberately differently-sized, differently-ordered
+       second group to keep catching that class of bug.
+    2. The cap must be scoped to each business's OWN service_scope group,
+       never the whole pool - a solo business in a tiny, moderate-visibility
+       group must not be excluded just because a large, high-visibility
+       group elsewhere would fill every place in a pool-wide top 5; and a
+       big group's 6th/7th-ranked member must not sneak in just because
+       they'd still be highly-ranked pool-wide."""
+
+    def test_group_scoped_top_5_cap_not_pool_wide(self):
         run = {
             "sector": "x", "geography": "x", "campaign_slug": "x", "date": "2026-08-16",
             "questions": [{"question_id": "q01", "text": "inclusive question"}],
             "providers": [{"provider": "openai", "model": "x"}],
-            "responses_per_question": 15,
+            "responses_per_question": 100,
             "service_scopes": [
                 {"label": "big_group", "applicable_services": ["A"]},
                 {"label": "zzz_solo_group", "applicable_services": ["A"]},  # sorts/inserts last
             ],
             "question_relevance": [{"question_id": "q01", "type": "SINGLE_SERVICE_INCLUSIVE", "rationale": "x"}],
         }
-        outreach = [
-            base_outreach_entry("Big Group Member A", service_scope="big_group",
-                                 question_appearances={"q01": 10}, business_credibility=5),
-            base_outreach_entry("Big Group Member B", service_scope="big_group",
-                                 question_appearances={"q01": 9}, business_credibility=5),
-            base_outreach_entry("Big Group Member C", service_scope="big_group",
-                                 question_appearances={"q01": 9}, business_credibility=5),
-            # Deliberately the LAST entry, so its scope is the last one touched
-            # by the first (group-counting) loop - this is exactly the
-            # condition that exposed the stale-variable bug.
+        # big_group: 7 members at 100/95/90/85/80/75/71% visibility_rate -
+        # every member clears the absolute floor (>=3) and the
+        # relative-position band (>=0.7 of the group's own 100% top rate;
+        # 71% is deliberately the lowest value that still clears 0.7), so
+        # only the MOST_NAMED_COHORT_MAX_SIZE cap can separate ranks 1-5
+        # from ranks 6-7.
+        big_group = [
+            base_outreach_entry(f"Big Group Member {i}", service_scope="big_group",
+                                 question_appearances={"q01": appearances}, business_credibility=5)
+            for i, appearances in enumerate([100, 95, 90, 85, 80, 75, 71], start=1)
+        ]
+        # Deliberately the LAST entry, so its scope is the last one touched
+        # by the group-computation loop - this is exactly the condition that
+        # exposed the stale-variable bug. Moderate visibility (50%, rank 8
+        # of 8 pool-wide) - would be wrongly excluded by a pool-wide top 5,
+        # but is rank 1 of 1 within its own group.
+        outreach = big_group + [
             base_outreach_entry("Solo Group Member", service_scope="zzz_solo_group",
-                                 question_appearances={"q01": 10}, business_credibility=5),
+                                 question_appearances={"q01": 50}, business_credibility=5),
         ]
         data = {"run": run, "market": [], "outreach": outreach, "excluded": [],
                 "sources": [{"source_id": "S001", "business": "x", "publisher": "x", "fact_supported": "x",
                              "url": "x", "access_date": "2026-08-16"}]}
         se.run_engine(data)
         by_name = {e["business"]: e for e in data["outreach"]}
-        # The big_group leader has a real peer (3 members) and should reach
-        # DEFEND. Under the bug, it would incorrectly inherit
-        # zzz_solo_group's group_size=1 and be blocked from DEFEND entirely.
-        self.assertEqual(by_name["Big Group Member A"]["opportunity_type"], "DEFEND")
-        # The solo group member has NO real peer and must never reach DEFEND,
-        # regardless of its own visibility.
-        self.assertNotEqual(by_name["Solo Group Member"]["opportunity_type"], "DEFEND")
+        # Ranks 1-5 by visibility_rate within big_group reach the cohort.
+        for i in range(1, 6):
+            self.assertTrue(by_name[f"Big Group Member {i}"]["most_named_cohort"], f"member {i} should be in cohort")
+            self.assertEqual(by_name[f"Big Group Member {i}"]["opportunity_type"], "DEFEND")
+        # Ranks 6-7 clear the absolute floor and relative-position band but
+        # are capped out by MOST_NAMED_COHORT_MAX_SIZE.
+        for i in (6, 7):
+            self.assertFalse(by_name[f"Big Group Member {i}"]["most_named_cohort"], f"member {i} should be capped")
+            self.assertNotEqual(by_name[f"Big Group Member {i}"]["opportunity_type"], "DEFEND")
+        # The solo member is rank 1 of its own 1-member group and must reach
+        # the cohort despite ranking outside the top 5 pool-wide.
+        self.assertTrue(by_name["Solo Group Member"]["most_named_cohort"])
+        self.assertEqual(by_name["Solo Group Member"]["opportunity_type"], "DEFEND")
 
 
 class FixtureScenarioTests(unittest.TestCase):
@@ -301,27 +319,40 @@ class QCChecklistTests(unittest.TestCase):
             expected = round(raw / se.FINAL_SCORE_MAX_RAW * 100, 1)
             self.assertAlmostEqual(e["final_score"], expected, places=6)
 
-    def test_gap_requires_credibility(self):
+    def test_gap_no_longer_requires_credibility(self):
+        # 2026-08-24: GAP is unconditional at zero visibility now - credibility
+        # is irrelevant to the classification (it still drives ready_to_email
+        # separately, via overall_evidence_confidence).
         for e in self.s.values():
             if e["opportunity_type"] == "GAP":
-                self.assertGreaterEqual(e["business_credibility"], 3)
+                self.assertEqual(e["visibility_score"], 0)
+
+    def test_no_opportunity_type_is_ever_review(self):
+        # 2026-08-24: the REVIEW-for-uncertain-credibility branch is gone -
+        # every scored entry gets DEFEND, GAP or GROWTH, never REVIEW.
+        for e in self.s.values():
+            self.assertIn(e["opportunity_type"], ("DEFEND", "GAP", "GROWTH"))
 
     def test_defend_requires_absolute_and_relative_evidence(self):
         for e in self.s.values():
             if e["opportunity_type"] == "DEFEND":
-                self.assertGreaterEqual(e["visibility_score"], 3)
-                self.assertGreaterEqual(e["relative_position"], 0.85)
+                self.assertTrue(e["most_named_cohort"])
+                self.assertGreaterEqual(e["visibility_score"], se.MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE)
+                self.assertGreaterEqual(e["relative_position"], se.MOST_NAMED_COHORT_MIN_RELATIVE_POSITION)
 
-    def test_defend_never_from_a_group_of_one(self):
-        # No business in this fixture is alone in its scope except via a
-        # dedicated check: force one and confirm it cannot reach DEFEND.
+    def test_defend_no_longer_requires_a_group_of_two(self):
+        # 2026-08-24: the "comparable same-scope peer exists" requirement is
+        # dropped - a business alone in its service_scope can now reach
+        # DEFEND on the strength of its own absolute visibility and relative
+        # position alone (relative_position=1.0 against itself, trivially).
         data = make_fixture()
         data["outreach"] = [base_outreach_entry(
             "Lone Scope Business", service_scope="combined",
             question_appearances={"q01": 10, "q02": 10, "q03": 10, "q04": 10}, business_credibility=5,
         )]
         se.run_engine(data)
-        self.assertNotEqual(data["outreach"][0]["opportunity_type"], "DEFEND")
+        self.assertEqual(data["outreach"][0]["opportunity_type"], "DEFEND")
+        self.assertTrue(data["outreach"][0]["most_named_cohort"])
 
 
 # ===========================================================================
@@ -385,6 +416,13 @@ def narrative_fixture():
         base_outreach_entry("Fixture Combined Peer", service_scope="combined",
                              question_appearances={"q01": 3, "q02": 3, "q03": 3, "q04": 3, "q05": 3, "q06": 3},
                              business_credibility=4),
+        # Zero visibility_score, deliberately low credibility - proves GAP is
+        # unconditional at zero visibility now (2026-08-24), not gated on
+        # credibility the way "Fixture Bathroom Co" above (visibility_score=1,
+        # GROWTH under the current rule) used to be.
+        base_outreach_entry("Fixture Bathroom Ghost", service_scope="bathroom_only",
+                             question_appearances={"q01": 0, "q05": 0, "q06": 0},
+                             business_credibility=2),
     ]
     sources = [{"source_id": "S001", "business": "x", "publisher": "x", "fact_supported": "x", "url": "x", "access_date": "2026-08-16"}]
     return {"run": run, "market": [], "outreach": outreach, "excluded": [], "sources": sources}
@@ -445,7 +483,7 @@ class OpportunityRationaleTests(unittest.TestCase):
         self.assertIn("room to strengthen", e["why_prospect"])
 
     def test_gap_rationale(self):
-        e = narrative_scored()["Fixture Bathroom Co"]
+        e = narrative_scored()["Fixture Bathroom Ghost"]
         self.assertEqual(e["opportunity_type"], "GAP")
         self.assertIn("actionable gap", e["why_prospect"])
 
@@ -533,68 +571,94 @@ class OpportunityTypeRankingTests(unittest.TestCase):
         self.assertLess(higher["overall_rank"], lower["overall_rank"])
 
 
-class GapLighterGateTests(unittest.TestCase):
-    """2026-08-23: GAP_LIGHTER_GATE_FIELDS lets a zero/low-visibility
-    business reach GAP without business_credibility >= 3 - the bar was
-    circular for exactly this cohort, since a business absent from every
-    answer is typically thin on the web too. All three fields are Claude's
-    judgement calls from a deliberately lighter research pass; missing or
-    false on any one leaves the existing business_credibility path as the
-    only route, unchanged."""
+class MostNamedCohortReclassificationTests(unittest.TestCase):
+    """2026-08-24: opportunity_type is redefined around most_named_cohort -
+    DEFEND targets only the small cluster already dominating a market's
+    answers (visibility_score >= 3, relative_position >= 0.7, ranked in the
+    top MOST_NAMED_COHORT_MAX_SIZE of its own service_scope group by
+    visibility_rate); GAP is unconditional at visibility_score == 0; GROWTH
+    is everything else. These four fixture businesses (unchanged from the
+    shared make_fixture()) each land on a different opportunity_type than
+    the pre-2026-08-24 rule gave them - the real behaviour change this
+    redefinition exists to make, not a hypothetical."""
 
-    def _entry(self, **overrides):
-        data = make_fixture()
-        defaults = {
-            "service_scope": "combined",
-            "question_appearances": {"q01": 0, "q02": 0, "q03": 0, "q04": 0},
-            "business_credibility": 1,  # deliberately below GAP_MIN_CREDIBILITY
-        }
-        defaults.update(overrides)
-        entry = base_outreach_entry("Lighter Gate Candidate", **defaults)
-        data["outreach"].append(entry)
-        se.run_engine(data)
-        return next(o for o in data["outreach"] if o["business"] == "Lighter Gate Candidate")
+    def setUp(self):
+        self.s = scored()
 
-    def test_all_three_fields_true_reaches_gap_despite_low_credibility(self):
-        e = self._entry(active_entity_verified=True, live_website_verified=True, contact_route_exists=True)
-        self.assertTrue(e["gap_lighter_gate_passed"])
+    def test_zero_visibility_low_credibility_business_is_gap_not_review(self):
+        # Weak Field Runner-up: visibility_score=0, business_credibility=2.
+        # Previously REVIEW (credibility below GAP_MIN_CREDIBILITY, no
+        # lighter-gate fields set) - now GAP outright, since credibility no
+        # longer gates GAP at all.
+        e = self.s["Weak Field Runner-up"]
+        self.assertEqual(e["visibility_score"], 0)
+        self.assertLess(e["business_credibility"], 3)
         self.assertEqual(e["opportunity_type"], "GAP")
 
-    def test_one_field_missing_gate_does_not_fire(self):
-        e = self._entry(active_entity_verified=True, live_website_verified=True)  # contact_route_exists unset
-        self.assertFalse(e["gap_lighter_gate_passed"])
-        self.assertEqual(e["opportunity_type"], "REVIEW")  # unchanged from pre-existing behaviour
+    def test_low_nonzero_visibility_no_longer_qualifies_for_gap(self):
+        # Generic Inbox Confirmed Owner and Inferred Contact Only both sit at
+        # visibility_score=1 (nonzero). Previously GAP (vis_score <= 1, real
+        # credibility) - now GROWTH, since GAP requires visibility_score
+        # == 0 exactly, not merely low.
+        for business in ("Generic Inbox Confirmed Owner", "Inferred Contact Only"):
+            e = self.s[business]
+            self.assertEqual(e["visibility_score"], 1)
+            self.assertEqual(e["opportunity_type"], "GROWTH")
 
-    def test_one_field_false_gate_does_not_fire(self):
-        e = self._entry(active_entity_verified=True, live_website_verified=True, contact_route_exists=False)
-        self.assertFalse(e["gap_lighter_gate_passed"])
-        self.assertEqual(e["opportunity_type"], "REVIEW")
+    def test_lone_business_in_its_scope_can_now_defend(self):
+        # Central Chain is the only member of chain_central in this fixture,
+        # with visibility_score=3 and relative_position=1.0 (against
+        # itself). Previously GROWTH, blocked from DEFEND by the
+        # comparable-same-scope-peer requirement - now DEFEND, since that
+        # requirement is dropped and it independently clears the absolute
+        # floor and relative-position band.
+        e = self.s["Central Chain"]
+        self.assertGreaterEqual(e["visibility_score"], se.MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE)
+        self.assertEqual(e["relative_position"], 1.0)
+        self.assertTrue(e["most_named_cohort"])
+        self.assertEqual(e["opportunity_type"], "DEFEND")
 
-    def test_no_fields_set_behaves_exactly_as_before(self):
-        e = self._entry()
-        self.assertFalse(e["gap_lighter_gate_passed"])
-        self.assertEqual(e["opportunity_type"], "REVIEW")
 
-    def test_lighter_gate_never_overrides_a_real_visibility_score(self):
-        # The gate only ever applies at vis_score <= GAP_MAX_VISIBILITY_SCORE
-        # (1) - it says nothing about visibility strength, so a business with
-        # real appearances must not be pulled into GAP just because the
-        # three lighter-gate fields happen to be true.
-        e = self._entry(
-            question_appearances={"q01": 10, "q02": 10, "q03": 10, "q04": 10},
-            active_entity_verified=True, live_website_verified=True, contact_route_exists=True,
-        )
-        self.assertNotEqual(e["opportunity_type"], "GAP")
+class DispositionRecommendationTests(unittest.TestCase):
+    """2026-08-24: disposition_recommendation on an outreach[] entry follows
+    most_named_cohort, not opportunity_type generally - only the dominant
+    cluster defaults to EXCLUDED; GAP and GROWTH default exactly as before
+    (OUTREACH if eligible_for_outreach, else REVIEW)."""
 
-    def test_lighter_gate_does_not_relax_ready_to_email(self):
-        # opportunity_type and outreach-readiness are separate questions
-        # (outreach-process.md): passing the lighter gate classifies the
-        # opportunity, it does not manufacture the decision-maker/contact
-        # evidence ready_to_email still requires.
-        e = self._entry(active_entity_verified=True, live_website_verified=True, contact_route_exists=True,
-                         decision_maker_identified=1, contact_identity_confidence=1, research_completeness=1)
-        self.assertEqual(e["opportunity_type"], "GAP")
-        self.assertEqual(e["ready_to_email"], "REVIEW")
+    def setUp(self):
+        self.s = scored()
+
+    def test_most_named_cohort_defaults_to_excluded_already_strongly_visible(self):
+        # Combined Leader is most_named_cohort (DEFEND) and otherwise fully
+        # eligible - proves the EXCLUDED default comes from most_named_cohort
+        # itself, not from some other disqualifying factor.
+        e = self.s["Combined Leader"]
+        self.assertTrue(e["most_named_cohort"])
+        self.assertEqual(e["eligible_for_outreach"], "YES")
+        self.assertEqual(e["disposition_recommendation"], "EXCLUDED")
+        self.assertEqual(e["disposition_recommendation_reason"], "ALREADY STRONGLY VISIBLE")
+
+    def test_most_named_cohort_excluded_even_when_otherwise_ineligible(self):
+        # Central Chain is most_named_cohort (see MostNamedCohortReclassificationTests)
+        # but eligible_for_outreach=REVIEW (commercial_fit=0) - EXCLUDED must
+        # still be the recommendation, not REVIEW, since most_named_cohort is
+        # checked first.
+        e = self.s["Central Chain"]
+        self.assertTrue(e["most_named_cohort"])
+        self.assertEqual(e["eligible_for_outreach"], "REVIEW")
+        self.assertEqual(e["disposition_recommendation"], "EXCLUDED")
+        self.assertEqual(e["disposition_recommendation_reason"], "ALREADY STRONGLY VISIBLE")
+
+    def test_gap_and_growth_default_outreach_or_review_same_as_today(self):
+        for business, expected_eligible in (
+            ("Invisible But Credible", "YES"),  # GAP, eligible
+            ("Weak Field Leader", "YES"),  # GROWTH, eligible
+        ):
+            e = self.s[business]
+            self.assertFalse(e["most_named_cohort"])
+            self.assertEqual(e["eligible_for_outreach"], expected_eligible)
+            self.assertEqual(e["disposition_recommendation"], "OUTREACH")
+            self.assertNotIn("disposition_recommendation_reason", e)
 
 
 if __name__ == "__main__":

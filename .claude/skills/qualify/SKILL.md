@@ -181,8 +181,12 @@ answers silently excluded it from ever being classified as the opportunity
 its absence represents. So: `run.gap_cohort_min_appearances` may be stated
 as `0`, and any below-the-main-floor business up to that governs a lighter
 research pass — `active_entity_verified`, `live_website_verified`,
-`contact_route_exists` (`scoring_engine.py`'s `GAP_LIGHTER_GATE_FIELDS`)
-instead of deep credibility/accessibility research. **State a cap on this
+`contact_route_exists` — instead of deep credibility/accessibility research.
+(2026-08-24: `GAP` is unconditional at `visibility_score == 0`, so these
+three fields no longer feed `opportunity_type` directly — the cohort
+floor/cap discipline below still applies, as the mechanical budget on how
+many below-floor businesses get *any* research pass this run, light or not.)
+**State a cap on this
 cohort before researching anyone, as data** — `run.gap_cohort_cap`, the
 maximum number of below-the-main-floor businesses researched this way in
 this run — same discipline as the main floor: a real number chosen for this
@@ -236,11 +240,15 @@ python3 tools/prospect-compiler/scoring_engine.py --input <campaign>.json --in-p
 
 This mechanically computes `visibility_score`, `gap_strength`,
 `final_score`, `overall_rank`, `outreach_rank`, every readiness gate, and a
-proposed `opportunity_type` per §3a's general rule — never from an absolute
-visibility band alone, and never letting a business with no real peer
-default into `DEFEND`. These remain *proposals*: the owner still approves
-`priority` and `ready_to_email` exactly as the approval gate below already
-requires.
+proposed `opportunity_type` per §3a's general rule (2026-08-24: `DEFEND` is
+`most_named_cohort` — an absolute visibility floor, a relative-position band,
+and a rank-within-group cap, no longer a real-peer requirement; `GAP` is
+unconditional at zero visibility). These remain *proposals*: the owner still
+approves `priority` and `ready_to_email` exactly as the approval gate below
+already requires — and, new as of 2026-08-24, `disposition_recommendation`
+for a `most_named_cohort` business (defaults to `EXCLUDED`, reason `ALREADY
+STRONGLY VISIBLE`) is a proposal in exactly the same sense, not an automatic
+drop from this campaign.
 
 **This same command also mandatorily generates `competitive_gap_finding` and
 `why_prospect`** for every scored `outreach[]` entry — not a separate step,
@@ -354,14 +362,20 @@ One of exactly four values — **`GAP`**, **`GROWTH`**, **`DEFEND`**, or
 **`NO OPPORTUNITY`** — per the definitions in `outreach-process.md` step 4
 and `CAMPAIGN-HANDOFF.md`. Rules that must hold:
 
-- **High visibility alone is never grounds for automatic exclusion.** A
-  business named as often as its competitors is a `DEFEND` candidate by
-  default, not a dead end — the old "already strongly visible → exclude"
-  rule is gone.
+- **High visibility alone is not grounds for silent, unrecorded exclusion —
+  but a scored business in the small cluster already dominating its market
+  (`most_named_cohort`) now defaults to `EXCLUDED`, stated as a reason
+  (`ALREADY STRONGLY VISIBLE`), not a dead end.** (2026-08-24: this reverses
+  the 2026-08-14 "DEFEND candidate by default, not excluded" default — see
+  `playbook/decisions.md`'s "Outreach" section.) It is still a *proposal*:
+  `DEFEND` remains a real, valid opportunity type for that business (a
+  monitoring/retention play), and the owner can override the disposition for
+  a specific business at the approval gate.
 - **`GAP` / `GROWTH` / `DEFEND` describe commercial opportunity, not
-  outreach priority or campaign disposition.** Setting `opportunity_type`
-  says nothing about whether this business is in this campaign's
-  `outreach[]`, or how urgently.
+  outreach priority.** Setting `opportunity_type` says nothing about how
+  urgently a business should be approached — only `disposition_recommendation`
+  (above) ties `DEFEND` to a default campaign disposition, and only for the
+  `most_named_cohort` subset of it.
 - **`REVIEW` is not a value here.** It is not a fifth (or fourth)
   opportunity type. An unclassifiable business simply gets no
   `opportunity_type` set, with the ambiguity carried by `disposition`
@@ -373,22 +387,22 @@ and `CAMPAIGN-HANDOFF.md`. Rules that must hold:
   shape: `DEFEND`, `EXCLUDED` from this round, both true at once.
 - **A business scored per Stage 4's auditable model gets its
   `opportunity_type` from `scoring_engine.py`, not hand judgement** —
-  `CAMPAIGN-HANDOFF.md` §3a's general rule (DEFEND requires a real
-  same-scope peer, meaningful visibility in absolute terms, close relative
-  position, and broad question coverage; GAP requires real credibility OR
-  the lighter GAP-eligibility gate above; REVIEW covers genuinely
-  insufficient evidence). `REVIEW` is a legitimate
-  `opportunity_type` value for a scored business specifically — unlike the
-  unscored path above, where `REVIEW` still belongs to `disposition`/
-  `priority` only.
+  `CAMPAIGN-HANDOFF.md` §3a's general rule (2026-08-24: `DEFEND` is
+  `most_named_cohort` — an absolute visibility floor, a relative-position
+  band, and a rank-within-group cap, no real-peer requirement; `GAP` is
+  unconditional at zero visibility; `GROWTH` is everything else). The engine
+  never produces `REVIEW` as a scored business's `opportunity_type` any
+  more — an unresolved-evidence business still carries that state on
+  `disposition`/`priority` instead, same as the unscored path above.
 
 ## Stage 9 — Assign disposition, reason, priority, ready_to_email
 
 - `disposition` (`market_entry`): `OUTREACH` / `EXCLUDED` / `REVIEW`.
 - `reason` (`excluded_entry`), only for `EXCLUDED`: the fixed enum in
-  `schema.json` — `ALREADY STRONGLY VISIBLE` still exists for the rare case
-  it's genuinely the only real reason, but per Stage 8 it should no longer
-  be the default outcome of high visibility.
+  `schema.json` — `ALREADY STRONGLY VISIBLE` is `scoring_engine.py`'s
+  proposed reason for exactly the `most_named_cohort` subset of `DEFEND`
+  (Stage 8); for an unscored business, it's still a legitimate hand-judged
+  reason where genuinely true.
 - **`priority`** (`A`/`B`/`C`/`REVIEW`) — commercial value, not a
   visibility-size ranking. Weighs evidence quality, market relevance,
   credibility, competitive position, commercial value, and decision-maker
