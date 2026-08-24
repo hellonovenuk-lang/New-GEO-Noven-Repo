@@ -30,6 +30,7 @@ import os
 import urllib.error
 import urllib.parse
 import urllib.request
+from datetime import datetime, timezone
 
 DEFAULT_CREDENTIALS_PATH = os.path.expanduser("~/.wardith/zoho-credentials.json")
 REQUIRED_CREDENTIAL_FIELDS = [
@@ -107,6 +108,68 @@ def build_message_payload(entry, from_address):
         "subject": entry.get("email_subject", ""),
         "content": _to_html(entry.get("email_body", "")),
         "mailFormat": "html",
+    }
+
+
+def _extract_draft_id(resp_data):
+    data = resp_data.get("data")
+    if isinstance(data, dict) and data.get("messageId"):
+        return str(data["messageId"])
+    if isinstance(data, list) and data and data[0].get("messageId"):
+        return str(data[0]["messageId"])
+    raise ZohoAPIError(f"unexpected Zoho response shape (no data.messageId): {resp_data}")
+
+
+def push_entry(entry, from_address, api_domain, account_id, access_token, dry_run=False):
+    """Creates or updates exactly one Zoho draft for one outreach-prep
+    entry. Never raises - every failure mode (HTTP error, unexpected
+    response shape) is caught and returned as a FAILED status so one
+    business's problem never stops the batch (see process_outreach_prep)."""
+    if entry.get("withheld"):
+        return {"zoho_push_status": "SKIPPED (withheld)"}
+
+    existing_id = entry.get("zoho_draft_id")
+    action = "updated" if existing_id else "created"
+
+    if dry_run:
+        payload = build_message_payload(entry, from_address)
+        dry_action = "update" if existing_id else "create"
+        print(f"[dry-run] would {dry_action} draft for {entry.get('business', '?')!r}: "
+              f"to={payload['toAddress']!r} subject={payload['subject']!r}")
+        return {"zoho_push_status": f"DRY-RUN ({dry_action})", "zoho_push_action": dry_action}
+
+    payload = build_message_payload(entry, from_address)
+    payload["mode"] = "draft"
+    url = f"{api_domain}/api/accounts/{account_id}/messages"
+    if existing_id:
+        url = f"{url}/{existing_id}"
+        method = "PUT"
+    else:
+        method = "POST"
+
+    req = urllib.request.Request(
+        url, data=json.dumps(payload).encode("utf-8"), method=method,
+        headers={"Authorization": f"Zoho-oauthtoken {access_token}", "Content-Type": "application/json"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            resp_data = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        detail = e.read().decode("utf-8", errors="replace")[:200]
+        return {"zoho_push_status": f"FAILED: HTTP {e.code} {detail}"}
+    except urllib.error.URLError as e:
+        return {"zoho_push_status": f"FAILED: {e.reason}"}
+
+    try:
+        draft_id = existing_id or _extract_draft_id(resp_data)
+    except ZohoAPIError as e:
+        return {"zoho_push_status": f"FAILED: {e}"}
+
+    return {
+        "zoho_draft_id": draft_id,
+        "zoho_push_status": "OK",
+        "zoho_push_action": action,
+        "zoho_pushed_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     }
 
 

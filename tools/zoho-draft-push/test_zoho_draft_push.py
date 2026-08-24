@@ -136,5 +136,72 @@ class BuildMessagePayloadTests(unittest.TestCase):
         self.assertIn("<p>Second paragraph.</p>", payload["content"])
 
 
+class PushEntryTests(unittest.TestCase):
+    def _entry(self, **overrides):
+        entry = {
+            "business": "Sampleford Glazing",
+            "withheld": False,
+            "contact_route": {"email": "owner@sampleford-glazing.example"},
+            "email_subject": "Sampleford Glazing — for the practice owner",
+            "email_body": "Hello,\n\nSome finding.",
+        }
+        entry.update(overrides)
+        return entry
+
+    def test_withheld_entry_is_skipped_with_no_http_call(self):
+        entry = self._entry(withheld=True)
+        with patch("urllib.request.urlopen") as mock_urlopen:
+            result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        mock_urlopen.assert_not_called()
+        self.assertEqual(result["zoho_push_status"], "SKIPPED (withheld)")
+
+    @patch("urllib.request.urlopen")
+    def test_new_entry_posts_and_records_created(self, mock_urlopen):
+        mock_urlopen.return_value = _FakeResponse({"data": {"messageId": "999888777"}})
+        entry = self._entry()
+        result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        self.assertEqual(result["zoho_draft_id"], "999888777")
+        self.assertEqual(result["zoho_push_status"], "OK")
+        self.assertEqual(result["zoho_push_action"], "created")
+        self.assertIn("zoho_pushed_at", result)
+        called_request = mock_urlopen.call_args[0][0]
+        self.assertEqual(called_request.get_method(), "POST")
+        self.assertIn("111", called_request.full_url)
+
+    @patch("urllib.request.urlopen")
+    def test_entry_with_existing_draft_id_puts_and_records_updated(self, mock_urlopen):
+        mock_urlopen.return_value = _FakeResponse({"data": {"messageId": "999888777"}})
+        entry = self._entry(zoho_draft_id="999888777")
+        result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        self.assertEqual(result["zoho_draft_id"], "999888777")
+        self.assertEqual(result["zoho_push_action"], "updated")
+        called_request = mock_urlopen.call_args[0][0]
+        self.assertEqual(called_request.get_method(), "PUT")
+        self.assertIn("999888777", called_request.full_url)
+
+    @patch("urllib.request.urlopen")
+    def test_http_error_recorded_as_failed_not_raised(self, mock_urlopen):
+        mock_urlopen.side_effect = _http_error(400, {"error": "invalid toAddress"})
+        entry = self._entry()
+        result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        self.assertTrue(result["zoho_push_status"].startswith("FAILED"))
+        self.assertIn("400", result["zoho_push_status"])
+
+    @patch("urllib.request.urlopen")
+    def test_unexpected_response_shape_recorded_as_failed_not_raised(self, mock_urlopen):
+        mock_urlopen.return_value = _FakeResponse({"nothing": "useful"})
+        entry = self._entry()
+        result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        self.assertTrue(result["zoho_push_status"].startswith("FAILED"))
+
+    def test_dry_run_makes_no_http_call(self):
+        entry = self._entry()
+        with patch("urllib.request.urlopen") as mock_urlopen:
+            result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok", dry_run=True)
+        mock_urlopen.assert_not_called()
+        self.assertTrue(result["zoho_push_status"].startswith("DRY-RUN"))
+        self.assertEqual(result["zoho_push_action"], "create")
+
+
 if __name__ == "__main__":
     unittest.main()
