@@ -20,3 +20,10 @@ __pycache__/
 # by hand as its own explicit step; that's what enters git. Anchored to the
 # repo root so it doesn't also swallow `site/src/content/`.
 /content/
+
+# Zoho credentials (tools/zoho-draft-push/) live at ~/.wardith/ and should
+# never be inside this repo at all - these entries are belt-and-braces in
+# case a local override ever points --credentials somewhere in here, same
+# defensive reasoning as .claude/settings.local.json above.
+zoho-credentials.json
+.wardith/
