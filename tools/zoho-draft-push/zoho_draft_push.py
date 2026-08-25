@@ -7,8 +7,11 @@ INVARIANT, load-bearing: this file makes exactly three kinds of Zoho API
 call, all to fixed paths - POST {accounts_domain}/oauth/v2/token (refresh
 an access token), GET {api_domain}/api/accounts (setup_zoho_oauth.py only),
 and POST/PUT {api_domain}/api/accounts/{account_id}/messages with
-mode: "draft" (create or update one draft). No other Zoho endpoint is
-referenced anywhere below - no reply, no delete, no folder move. Those are
+mode: "draft" (create or update one draft). The two domains those paths
+hang off come from the credentials file, so load_credentials() checks both
+against Zoho's five known regional hosts before any of them is used. No
+other Zoho endpoint is referenced anywhere below - no reply, no delete,
+no folder move. Those are
 separate Zoho API surfaces, needing scopes this token does not carry, and
 nothing here calls them.
 
@@ -61,6 +64,24 @@ REQUIRED_CREDENTIAL_FIELDS = [
     "from_address", "api_domain", "accounts_domain",
 ]
 
+# Zoho's five regional hosts. Both of these values come out of a file on disk
+# and are interpolated straight into request URLs - the api_domain alongside
+# the OAuth bearer token - so this file checks them itself rather than
+# trusting whatever wrote the file. Deliberately duplicated from
+# setup_zoho_oauth.py's REGION_DOMAINS rather than imported: these two
+# scripts share no imports by design (each is standalone and stdlib-only),
+# and this is the reading end's own check on input it did not produce. Keep
+# the two lists in step if Zoho ever adds a region.
+ZOHO_ACCOUNTS_DOMAINS = frozenset([
+    "https://accounts.zoho.com", "https://accounts.zoho.eu",
+    "https://accounts.zoho.in", "https://accounts.zoho.com.au",
+    "https://accounts.zoho.jp",
+])
+ZOHO_API_DOMAINS = frozenset([
+    "https://mail.zoho.com", "https://mail.zoho.eu", "https://mail.zoho.in",
+    "https://mail.zoho.com.au", "https://mail.zoho.jp",
+])
+
 
 class ZohoAPIError(Exception):
     pass
@@ -104,6 +125,16 @@ def load_credentials(path=None):
     missing = [field for field in REQUIRED_CREDENTIAL_FIELDS if field not in creds]
     if missing:
         raise ZohoAPIError(f"credentials file at {path} is missing field(s): {missing}")
+    for field, allowed in (("api_domain", ZOHO_API_DOMAINS),
+                           ("accounts_domain", ZOHO_ACCOUNTS_DOMAINS)):
+        if creds[field] not in allowed:
+            # Name the field, never the rejected value - it goes to the
+            # terminal and this file's other fields are secrets.
+            raise ZohoAPIError(
+                f"credentials file at {path} has an unrecognised {field} - "
+                f"expected one of {sorted(allowed)}. Re-run "
+                f"tools/zoho-draft-push/setup_zoho_oauth.py to regenerate it."
+            )
     return creds
 
 
@@ -169,6 +200,14 @@ def build_message_payload(entry, from_address):
     }
 
 
+def _is_valid_draft_id(value):
+    """Zoho message ids are numeric strings. This one comes from Zoho's own
+    earlier response, but it round trips through a JSON file on disk before
+    being interpolated into a URL path - so check it there. Defence in depth,
+    not the primary control."""
+    return isinstance(value, str) and value.isdigit() and 1 <= len(value) <= 32
+
+
 def _extract_draft_id(resp_data):
     if not isinstance(resp_data, dict):
         raise ZohoAPIError(f"unexpected Zoho response shape (not a dict): {_safe_detail(resp_data)}")
@@ -201,6 +240,11 @@ def push_entry(entry, from_address, api_domain, account_id, access_token, dry_ru
         print(f"[dry-run] would {dry_action} draft for {entry.get('business', '?')!r}: "
               f"to={payload['toAddress']!r} subject={payload['subject']!r}")
         return {"zoho_push_status": f"DRY-RUN ({dry_action})", "zoho_push_action": dry_action}
+
+    if existing_id and not _is_valid_draft_id(existing_id):
+        return {"zoho_push_status": "FAILED: stored zoho_draft_id is not a valid Zoho "
+                                    "message id (expected digits only) - delete it from this "
+                                    "entry to push a new draft"}
 
     payload = build_message_payload(entry, from_address)
     url = f"{api_domain}/api/accounts/{account_id}/messages"

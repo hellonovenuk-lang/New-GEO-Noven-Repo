@@ -82,6 +82,50 @@ class LoadCredentialsTests(unittest.TestCase):
                 zdp.load_credentials(path)
         self.assertIn("setup_zoho_oauth.py", str(ctx.exception))
 
+    def _creds_file(self, d, creds):
+        path = os.path.join(d, "creds.json")
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(creds, f)
+        return path
+
+    def test_all_five_zoho_regions_are_accepted(self):
+        for accounts, api in [
+            ("https://accounts.zoho.com", "https://mail.zoho.com"),
+            ("https://accounts.zoho.eu", "https://mail.zoho.eu"),
+            ("https://accounts.zoho.in", "https://mail.zoho.in"),
+            ("https://accounts.zoho.com.au", "https://mail.zoho.com.au"),
+            ("https://accounts.zoho.jp", "https://mail.zoho.jp"),
+        ]:
+            with self.subTest(region=api):
+                creds = dict(FAKE_CREDENTIALS, accounts_domain=accounts, api_domain=api)
+                with tempfile.TemporaryDirectory() as d:
+                    loaded = zdp.load_credentials(self._creds_file(d, creds))
+                self.assertEqual(loaded["api_domain"], api)
+
+    def test_unrecognised_api_domain_is_rejected(self):
+        """Both domains are interpolated straight into request URLs, one of
+        them alongside the OAuth bearer token. A credentials file naming a
+        host that isn't Zoho's must not be used."""
+        creds = dict(FAKE_CREDENTIALS, api_domain="https://mail.zoho.eu.attacker.example")
+        with tempfile.TemporaryDirectory() as d:
+            with self.assertRaises(zdp.ZohoAPIError) as ctx:
+                zdp.load_credentials(self._creds_file(d, creds))
+        self.assertIn("api_domain", str(ctx.exception))
+
+    def test_unrecognised_accounts_domain_is_rejected(self):
+        creds = dict(FAKE_CREDENTIALS, accounts_domain="http://accounts.zoho.eu")
+        with tempfile.TemporaryDirectory() as d:
+            with self.assertRaises(zdp.ZohoAPIError) as ctx:
+                zdp.load_credentials(self._creds_file(d, creds))
+        self.assertIn("accounts_domain", str(ctx.exception))
+
+    def test_domain_rejection_names_the_field_not_the_bad_value(self):
+        creds = dict(FAKE_CREDENTIALS, api_domain="https://mail.zoho.eu/../evil?t=secret")
+        with tempfile.TemporaryDirectory() as d:
+            with self.assertRaises(zdp.ZohoAPIError) as ctx:
+                zdp.load_credentials(self._creds_file(d, creds))
+        self.assertNotIn("secret", str(ctx.exception))
+
     def test_missing_required_field_raises(self):
         incomplete = dict(FAKE_CREDENTIALS)
         del incomplete["account_id"]
@@ -443,6 +487,20 @@ class PushEntryTests(unittest.TestCase):
         entry = self._entry()
         result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
         self.assertTrue(result["zoho_push_status"].startswith("FAILED"))
+
+    def test_non_numeric_stored_draft_id_is_never_put_into_a_url(self):
+        """zoho_draft_id normally comes from Zoho's own response, but it round
+        trips through a JSON file on disk before being interpolated into a URL
+        path. Sanity-check it there."""
+        for bad in ["../../accounts", "999888777/../x", "abc", "9" * 64, 999888777.5]:
+            with self.subTest(draft_id=bad):
+                entry = self._entry(zoho_draft_id=bad)
+                with patch("urllib.request.urlopen") as mock_urlopen:
+                    result = zdp.push_entry(entry, "hello@wardith.co.uk",
+                                            "https://mail.zoho.eu", "111", "tok")
+                mock_urlopen.assert_not_called()
+                self.assertTrue(result["zoho_push_status"].startswith("FAILED"))
+                self.assertIn("zoho_draft_id", result["zoho_push_status"])
 
     @patch("urllib.request.urlopen")
     def test_read_phase_exception_recorded_as_failed_not_raised(self, mock_urlopen):
