@@ -69,7 +69,11 @@ interrupting for every individual file read, web check, or file write:
   skill contacts a business, submits a form, connects on LinkedIn, or posts
   anywhere else. Actually sending an email is still a separate, explicit,
   later action the owner takes inside Zoho Mail after reviewing the draft
-  there.
+  there. **If the owner asks this skill to actually send — not just draft —
+  stop and say that's out of scope for `/outreach`.** Stage 7.5 only ever
+  creates a draft; sending is a separate, later, explicitly human step the
+  owner takes in Zoho Mail themselves. Don't route around that with a
+  different tool, a changed `mode`, or a mail client.
 
 Say this once at the start in one message, then run the rest of the stages
 straight through without pausing for approval again — the same pattern
