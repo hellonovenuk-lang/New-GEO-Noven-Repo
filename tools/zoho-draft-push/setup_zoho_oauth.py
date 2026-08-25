@@ -49,7 +49,8 @@ def exchange_grant_token(accounts_domain, client_id, client_secret, grant_token)
     except urllib.error.HTTPError as e:
         raise SystemExit(f"Grant token exchange failed: HTTP {e.code} {e.read().decode('utf-8', errors='replace')[:200]}")
     if "refresh_token" not in data or "access_token" not in data:
-        raise SystemExit(f"Zoho did not return tokens - response: {data}")
+        missing = [k for k in ("refresh_token", "access_token") if k not in data]
+        raise SystemExit(f"Zoho did not return tokens - missing: {missing}")
     return data["refresh_token"], data["access_token"]
 
 

@@ -45,6 +45,18 @@ class ExchangeGrantTokenTests(unittest.TestCase):
         with self.assertRaises(SystemExit):
             sz.exchange_grant_token("https://accounts.zoho.eu", "id", "secret", "bad-token")
 
+    @patch("urllib.request.urlopen")
+    def test_partial_tokens_does_not_expose_token_in_error(self, mock_urlopen):
+        """Verify that error messages never expose token values, even partial ones."""
+        mock_urlopen.return_value = _FakeResponse({"access_token": "1000.realtoken", "expires_in": 3600})
+        with self.assertRaises(SystemExit) as cm:
+            sz.exchange_grant_token("https://accounts.zoho.eu", "id", "secret", "token")
+        error_message = str(cm.exception)
+        # The token value must never appear in the error message
+        self.assertNotIn("1000.realtoken", error_message)
+        # The message should indicate what's missing
+        self.assertIn("refresh_token", error_message)
+
 
 class LookupAccountTests(unittest.TestCase):
     @patch("urllib.request.urlopen")
