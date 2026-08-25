@@ -62,15 +62,25 @@ def lookup_account(api_domain, access_token):
             data = json.loads(resp.read().decode("utf-8"))
     except urllib.error.HTTPError as e:
         raise SystemExit(f"Account lookup failed: HTTP {e.code} {e.read().decode('utf-8', errors='replace')[:200]}")
-    accounts = data.get("data", [])
-    if not accounts:
-        raise SystemExit(f"Zoho returned no accounts for this token - response: {data}")
+    # Report which expected fields were missing; never interpolate the raw
+    # response or account record. Same rule as exchange_grant_token above -
+    # a Zoho account record carries tokens and other fields that have no
+    # business being echoed to the terminal.
+    accounts = data.get("data") if isinstance(data, dict) else None
+    if not accounts or not isinstance(accounts, list):
+        raise SystemExit(
+            "Zoho returned no accounts for this token - check the Self Client "
+            "was granted the ZohoMail.accounts.READ scope, then generate a new "
+            "grant token and re-run this script."
+        )
     account = accounts[0]
-    account_id = account.get("accountId")
-    from_address = account.get("primaryEmailAddress")
-    if not account_id or not from_address:
-        raise SystemExit(f"Could not find accountId/primaryEmailAddress in Zoho's response: {account}")
-    return str(account_id), from_address
+    if not isinstance(account, dict):
+        raise SystemExit("Zoho's account record was not an object - cannot read accountId "
+                         "or primaryEmailAddress from it.")
+    missing = [k for k in ("accountId", "primaryEmailAddress") if not account.get(k)]
+    if missing:
+        raise SystemExit(f"Zoho's account record was missing field(s): {missing}")
+    return str(account["accountId"]), account["primaryEmailAddress"]
 
 
 def main():

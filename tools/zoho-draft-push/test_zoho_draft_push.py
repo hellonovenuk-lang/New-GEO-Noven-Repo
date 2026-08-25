@@ -115,6 +115,66 @@ class RefreshAccessTokenTests(unittest.TestCase):
             zdp.refresh_access_token(FAKE_CREDENTIALS)
 
 
+class RemoteDataInMessagesTests(unittest.TestCase):
+    """Same class of bug as the one already fixed in setup_zoho_oauth.py's
+    exchange_grant_token (see test_partial_tokens_does_not_expose_token_in_error):
+    a raw remote response interpolated into a message that then gets printed
+    to the terminal or persisted into the campaign JSON. Report which
+    expected keys were missing, never the body itself."""
+
+    @patch("urllib.request.urlopen")
+    def test_missing_access_token_error_does_not_echo_the_response(self, mock_urlopen):
+        mock_urlopen.return_value = _FakeResponse({
+            "error": "invalid_grant",
+            "some_other_token": "1000.averyrealsecret",
+            "debug": "x" * 5000,
+        })
+        with self.assertRaises(zdp.ZohoAPIError) as ctx:
+            zdp.refresh_access_token(FAKE_CREDENTIALS)
+        message = str(ctx.exception)
+        self.assertNotIn("1000.averyrealsecret", message)
+        self.assertNotIn("x" * 200, message)
+        self.assertIn("access_token", message)
+
+    def test_extract_draft_id_error_is_truncated(self):
+        huge = {"data": {"junk": "y" * 20000}}
+        with self.assertRaises(zdp.ZohoAPIError) as ctx:
+            zdp._extract_draft_id(huge)
+        self.assertLess(len(str(ctx.exception)), 400)
+
+    @patch("urllib.request.urlopen")
+    def test_oversized_response_body_is_not_persisted_in_full(self, mock_urlopen):
+        """zoho_push_status is written into the campaign JSON, so an
+        oversized or hostile response body must not land there whole."""
+        mock_urlopen.return_value = _FakeResponse({"data": {"junk": "z" * 20000}})
+        entry = {"business": "x", "withheld": False, "contact_route": {"email": "x@example.com"},
+                 "email_subject": "s", "email_body": "b"}
+        result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        self.assertTrue(result["zoho_push_status"].startswith("FAILED"))
+        self.assertLess(len(result["zoho_push_status"]), 400)
+
+    @patch("urllib.request.urlopen")
+    def test_http_error_detail_redacts_email_addresses(self, mock_urlopen):
+        """A Zoho error body commonly echoes the request back. The recipient
+        address must not be copied verbatim into a status that gets persisted
+        and read aloud in Stage 8's report."""
+        mock_urlopen.side_effect = _http_error(
+            400, {"error": "rejected recipient owner@sampleford-glazing.example"})
+        entry = {"business": "x", "withheld": False,
+                 "contact_route": {"email": "owner@sampleford-glazing.example"},
+                 "email_subject": "s", "email_body": "b"}
+        result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        self.assertNotIn("owner@sampleford-glazing.example", result["zoho_push_status"])
+        self.assertIn("400", result["zoho_push_status"])
+
+    @patch("urllib.request.urlopen")
+    def test_token_refresh_http_error_detail_redacts_email_addresses(self, mock_urlopen):
+        mock_urlopen.side_effect = _http_error(400, {"error": "bad account hello@wardith.co.uk"})
+        with self.assertRaises(zdp.ZohoAPIError) as ctx:
+            zdp.refresh_access_token(FAKE_CREDENTIALS)
+        self.assertNotIn("hello@wardith.co.uk", str(ctx.exception))
+
+
 class BuildMessagePayloadTests(unittest.TestCase):
     def test_maps_business_fields_to_zoho_payload(self):
         entry = {

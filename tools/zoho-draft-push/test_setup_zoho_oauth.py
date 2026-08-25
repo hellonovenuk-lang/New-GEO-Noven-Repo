@@ -74,6 +74,34 @@ class LookupAccountTests(unittest.TestCase):
         with self.assertRaises(SystemExit):
             sz.lookup_account("https://mail.zoho.eu", "1000.at")
 
+    @patch("urllib.request.urlopen")
+    def test_no_accounts_error_does_not_echo_the_response(self, mock_urlopen):
+        """Same rule as exchange_grant_token above: report what was missing,
+        never the raw remote response - it can carry tokens or noise."""
+        mock_urlopen.return_value = _FakeResponse({"data": [], "oauthToken": "1000.realtoken"})
+        with self.assertRaises(SystemExit) as cm:
+            sz.lookup_account("https://mail.zoho.eu", "1000.at")
+        self.assertNotIn("1000.realtoken", str(cm.exception))
+
+    @patch("urllib.request.urlopen")
+    def test_missing_account_fields_error_names_fields_not_raw_data(self, mock_urlopen):
+        mock_urlopen.return_value = _FakeResponse({
+            "data": [{"accountId": 111222333, "incomingBlocked": False,
+                      "oauthToken": "1000.realtoken"}]
+        })
+        with self.assertRaises(SystemExit) as cm:
+            sz.lookup_account("https://mail.zoho.eu", "1000.at")
+        message = str(cm.exception)
+        self.assertNotIn("1000.realtoken", message)
+        self.assertIn("primaryEmailAddress", message)
+
+    @patch("urllib.request.urlopen")
+    def test_account_record_that_is_not_a_dict_is_rejected_cleanly(self, mock_urlopen):
+        mock_urlopen.return_value = _FakeResponse({"data": ["not-an-account-object"]})
+        with self.assertRaises(SystemExit) as cm:
+            sz.lookup_account("https://mail.zoho.eu", "1000.at")
+        self.assertNotIn("not-an-account-object", str(cm.exception))
+
 
 class MainCliTests(unittest.TestCase):
     @patch("urllib.request.urlopen")

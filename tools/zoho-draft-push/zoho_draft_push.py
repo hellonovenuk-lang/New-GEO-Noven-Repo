@@ -48,6 +48,7 @@ import argparse
 import html
 import json
 import os
+import re
 import sys
 import urllib.error
 import urllib.parse
@@ -63,6 +64,28 @@ REQUIRED_CREDENTIAL_FIELDS = [
 
 class ZohoAPIError(Exception):
     pass
+
+
+# Every message built from a remote response goes through this. Those
+# messages get printed to the terminal by main() and, via zoho_push_status,
+# written into the outreach-prep JSON - so an oversized or hostile response
+# body must never land there whole, and a body that echoes the request back
+# must not copy a recipient address along with it. Same rule as the one
+# already applied to setup_zoho_oauth.py's exchange_grant_token: say what was
+# wrong, never repeat the response verbatim.
+_EMAIL_SHAPED = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+DETAIL_LIMIT = 200
+
+
+def _safe_detail(value, limit=DETAIL_LIMIT):
+    """Truncate a remote-supplied string and redact address-shaped
+    substrings from it. Not a general sanitiser - a bound and an obvious
+    redaction, sized to keep an error legible without persisting a payload."""
+    text = value if isinstance(value, str) else repr(value)
+    text = _EMAIL_SHAPED.sub("[address redacted]", text)
+    if len(text) > limit:
+        text = text[:limit] + f"... [truncated, {len(text)} chars]"
+    return text
 
 
 def load_credentials(path=None):
@@ -101,13 +124,19 @@ def refresh_access_token(credentials):
         with urllib.request.urlopen(req, timeout=30) as resp:
             resp_data = json.loads(resp.read().decode("utf-8"))
     except urllib.error.HTTPError as e:
-        detail = e.read().decode("utf-8", errors="replace")[:200]
+        detail = _safe_detail(e.read().decode("utf-8", errors="replace"))
         raise ZohoAPIError(f"token refresh failed: HTTP {e.code} {detail}")
     except urllib.error.URLError as e:
         raise ZohoAPIError(f"token refresh failed: {e.reason}")
-    token = resp_data.get("access_token")
+    token = resp_data.get("access_token") if isinstance(resp_data, dict) else None
     if not token:
-        raise ZohoAPIError(f"token refresh response had no access_token: {resp_data}")
+        # Name the missing field only. main() prints this straight to the
+        # terminal, and the response body can carry other tokens.
+        raise ZohoAPIError(
+            "token refresh response was missing field(s): ['access_token'] - "
+            "the refresh token may have been revoked; re-run "
+            "tools/zoho-draft-push/setup_zoho_oauth.py"
+        )
     return token
 
 
@@ -142,14 +171,15 @@ def build_message_payload(entry, from_address):
 
 def _extract_draft_id(resp_data):
     if not isinstance(resp_data, dict):
-        raise ZohoAPIError(f"unexpected Zoho response shape (not a dict): {resp_data}")
+        raise ZohoAPIError(f"unexpected Zoho response shape (not a dict): {_safe_detail(resp_data)}")
     data = resp_data.get("data")
     if isinstance(data, dict) and data.get("messageId"):
         return str(data["messageId"])
     if isinstance(data, list) and data:
         if isinstance(data[0], dict) and data[0].get("messageId"):
             return str(data[0]["messageId"])
-    raise ZohoAPIError(f"unexpected Zoho response shape (no data.messageId): {resp_data}")
+    raise ZohoAPIError(
+        f"unexpected Zoho response shape (no data.messageId): {_safe_detail(resp_data)}")
 
 
 def push_entry(entry, from_address, api_domain, account_id, access_token, dry_run=False):
@@ -195,7 +225,7 @@ def push_entry(entry, from_address, api_domain, account_id, access_token, dry_ru
         with urllib.request.urlopen(req, timeout=30) as resp:
             resp_data = json.loads(resp.read().decode("utf-8"))
     except urllib.error.HTTPError as e:
-        detail = e.read().decode("utf-8", errors="replace")[:200]
+        detail = _safe_detail(e.read().decode("utf-8", errors="replace"))
         if existing_id and e.code == 404:
             # The stored draft is gone - most likely the owner deleted or sent
             # it in Zoho. Clear the id rather than leaving this entry stuck
