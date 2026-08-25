@@ -10,6 +10,8 @@ Run: python3 test_zoho_draft_push.py -v
 import io
 import json
 import os
+import subprocess
+import sys
 import tempfile
 import unittest
 import urllib.error
@@ -291,6 +293,61 @@ class SummarizeTests(unittest.TestCase):
         self.assertIn("1 failed", text)
         self.assertIn("1 skipped", text)
         self.assertIn("C: FAILED: HTTP 400 x", text)
+
+
+class MainCliTests(unittest.TestCase):
+    def _write_json(self, d, path, payload):
+        full = os.path.join(d, path)
+        with open(full, "w", encoding="utf-8") as f:
+            json.dump(payload, f)
+        return full
+
+    def test_dry_run_end_to_end_writes_in_place_with_no_credentials_needed(self):
+        entries = [{
+            "business": "Sampleford Glazing", "withheld": False,
+            "contact_route": {"email": "a@example.com"},
+            "email_subject": "s1", "email_body": "b1",
+        }]
+        with tempfile.TemporaryDirectory() as d:
+            input_path = self._write_json(d, "prep.json", entries)
+            script = os.path.join(os.path.dirname(__file__), "zoho_draft_push.py")
+            result = subprocess.run(
+                [sys.executable, script, "--input", input_path, "--in-place", "--dry-run"],
+                capture_output=True, text=True, timeout=30,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("Zoho draft push:", result.stdout)
+            with open(input_path, "r", encoding="utf-8") as f:
+                updated = json.load(f)
+            self.assertTrue(updated[0]["zoho_push_status"].startswith("DRY-RUN"))
+
+    def test_missing_output_flag_exits_with_usage_error(self):
+        with tempfile.TemporaryDirectory() as d:
+            input_path = self._write_json(d, "prep.json", [])
+            script = os.path.join(os.path.dirname(__file__), "zoho_draft_push.py")
+            result = subprocess.run(
+                [sys.executable, script, "--input", input_path],
+                capture_output=True, text=True, timeout=30,
+            )
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("--output", result.stderr)
+
+    def test_missing_credentials_exits_before_any_entry_processed(self):
+        entries = [{
+            "business": "Sampleford Glazing", "withheld": False,
+            "contact_route": {"email": "a@example.com"},
+            "email_subject": "s1", "email_body": "b1",
+        }]
+        with tempfile.TemporaryDirectory() as d:
+            input_path = self._write_json(d, "prep.json", entries)
+            missing_creds = os.path.join(d, "no-such-credentials.json")
+            script = os.path.join(os.path.dirname(__file__), "zoho_draft_push.py")
+            result = subprocess.run(
+                [sys.executable, script, "--input", input_path, "--in-place", "--credentials", missing_creds],
+                capture_output=True, text=True, timeout=30,
+            )
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("setup_zoho_oauth.py", result.stderr)
 
 
 if __name__ == "__main__":

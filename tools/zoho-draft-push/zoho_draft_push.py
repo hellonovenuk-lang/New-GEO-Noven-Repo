@@ -24,9 +24,11 @@ Usage:
   python3 zoho_draft_push.py --input outreach-prep.json --in-place
   python3 zoho_draft_push.py --input outreach-prep.json --in-place --dry-run
 """
+import argparse
 import html
 import json
 import os
+import sys
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -221,5 +223,44 @@ def summarize(results):
     return "\n".join(lines)
 
 
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--input", required=True, help="outreach-prep-<slug>-<date>.json from /outreach's Stage 7")
+    ap.add_argument("--output", help="Path to write the updated outreach-prep JSON")
+    ap.add_argument("--in-place", action="store_true", help="Overwrite --input instead")
+    ap.add_argument("--credentials", help="Path to Zoho credentials JSON (default: ~/.wardith/zoho-credentials.json or $WARDITH_ZOHO_CREDENTIALS)")
+    ap.add_argument("--dry-run", action="store_true", help="Log what would be pushed without calling Zoho or requiring credentials")
+    args = ap.parse_args()
+    if not args.output and not args.in_place:
+        print("Specify --output PATH or --in-place", file=sys.stderr)
+        sys.exit(2)
+
+    with open(args.input, "r", encoding="utf-8") as f:
+        entries = json.load(f)
+
+    credentials = None
+    access_token = None
+    if not args.dry_run:
+        try:
+            credentials = load_credentials(args.credentials)
+            access_token = refresh_access_token(credentials)
+        except ZohoAPIError as e:
+            print(f"Zoho setup error: {e}", file=sys.stderr)
+            sys.exit(1)
+    else:
+        try:
+            credentials = load_credentials(args.credentials)
+        except ZohoAPIError:
+            credentials = None  # dry-run works even before setup_zoho_oauth.py has ever run
+
+    results = process_outreach_prep(entries, credentials, access_token, dry_run=args.dry_run)
+
+    out_path = args.input if args.in_place else args.output
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(entries, f, indent=2, ensure_ascii=False)
+
+    print(summarize(results))
+
+
 if __name__ == "__main__":
-    pass
+    main()
