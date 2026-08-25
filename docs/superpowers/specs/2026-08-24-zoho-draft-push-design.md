@@ -117,13 +117,30 @@ fixed, hard-coded paths:
 3. `POST` / `PUT {api_domain}/api/accounts/{account_id}/messages` with
    `mode: "draft"` — create or update a draft.
 
-No other Zoho endpoint is referenced anywhere in the file — no send, no
-reply, no delete, no folder move. The OAuth scope requested
-(`ZohoMail.messages.CREATE`) cannot authorize those calls even if the code
-tried, since Zoho enforces scope server-side. This is called out as an
-invariant in the file's own docstring (mirroring how `scoring_engine.py`
-states its own invariants up top) so a future edit has to consciously
-violate a stated rule to add a send path, not just add a line.
+No other Zoho endpoint is referenced anywhere in the file — no reply, no
+delete, no folder move. Those are separate Zoho API surfaces needing scopes
+this token doesn't carry, and the code never calls them.
+
+**Correction, 2026-08-25** (this spec originally claimed the OAuth scope
+made a send impossible; that was wrong, and the error is recorded here
+rather than quietly overwritten, since this spec is the authority the
+implementation plan argued from). Zoho's "Send an Email" and "Save Draft or
+Template" APIs are the *same* endpoint (`POST`/`PUT .../messages`), the same
+HTTP method, and the same scope — `ZohoMail.messages.CREATE` is documented
+as valid for both. The only thing distinguishing a send from a draft-save is
+the request body's `mode` field, so the scope alone rules out nothing here.
+
+The real property, which is still sufficient, is how the payload is built:
+`build_message_payload()` returns a closed dict of six literal keys
+(`fromAddress`, `toAddress`, `subject`, `content`, `mailFormat`, `mode`)
+with `mode` hardcoded to `"draft"` unconditionally. Entry data is read only
+into named values; no entry dict is ever merged into the payload, so no
+business's outreach content can reach or override `mode`. This is called out
+as an invariant in the file's own docstring (mirroring how
+`scoring_engine.py` states its own invariants up top) *and* enforced by
+`DraftModeInvariantTests` in `test_zoho_draft_push.py`, so a future edit has
+to consciously violate a stated rule and delete passing tests to add a send
+path, not just add a line.
 
 ## Data shape changes
 

@@ -3,7 +3,8 @@
 Pushes `/outreach`'s drafted emails into Zoho Mail as real drafts, ready to
 open, edit, and send by hand. Never sends, replies, or deletes anything —
 see `zoho_draft_push.py`'s own docstring for the exact three API calls this
-tool is capable of making, and no others.
+tool is capable of making, and no others, and for exactly what stops it
+sending (summarised under "What this tool will and won't do" below).
 
 ## One-time setup
 
@@ -45,8 +46,21 @@ tool is capable of making, and no others.
   an email for, or update the existing draft if one was already pushed for
   that business on a previous run of the same campaign.
 - **Won't:** send, reply to, or delete anything, in Zoho or anywhere else.
-  The OAuth scope requested (`ZohoMail.messages.CREATE`) cannot authorize
-  those actions even if the code tried to call them.
+  Reply, delete and folder-move are separate Zoho API surfaces needing
+  scopes this token doesn't carry, and nothing in the code calls them.
+- **Won't send — and here's the actual reason, which is not the OAuth
+  scope.** Zoho's "Send an Email" and "Save Draft or Template" APIs are the
+  *same* endpoint (`POST`/`PUT .../messages`), the same method, and the same
+  scope (`ZohoMail.messages.CREATE` is documented as valid for both). The
+  only difference is the `mode` field in the request body. What stops a send
+  is that `zoho_draft_push.py`'s `build_message_payload()` returns a closed
+  dict of six literal keys — `fromAddress`, `toAddress`, `subject`,
+  `content`, `mailFormat`, `mode` — with `mode` hardcoded to `"draft"` and
+  never derived from entry data. No business's outreach content is ever
+  merged into that dict, so nothing in a campaign can reach or override
+  `mode`. `test_zoho_draft_push.py`'s `DraftModeInvariantTests` asserts
+  exactly that on every payload the tool builds, so the guarantee is checked
+  by the test suite rather than only asserted in prose.
 - **Won't:** touch the email signature. That's Zoho's own account-level
   "signature for new mail" setting (see `assets/brand/email-signature.html`
   for how it's installed) — this tool doesn't duplicate it into the draft

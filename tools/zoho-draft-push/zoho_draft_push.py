@@ -8,10 +8,30 @@ call, all to fixed paths - POST {accounts_domain}/oauth/v2/token (refresh
 an access token), GET {api_domain}/api/accounts (setup_zoho_oauth.py only),
 and POST/PUT {api_domain}/api/accounts/{account_id}/messages with
 mode: "draft" (create or update one draft). No other Zoho endpoint is
-referenced anywhere below - no send, no reply, no delete, no folder move.
-The OAuth scope requested at setup (ZohoMail.messages.CREATE) cannot
-authorize those calls even if this file tried. A future edit that adds a
-send path must consciously violate this stated rule, not just add a line.
+referenced anywhere below - no reply, no delete, no folder move. Those are
+separate Zoho API surfaces, needing scopes this token does not carry, and
+nothing here calls them.
+
+Sending is NOT one of those separate surfaces, and the OAuth scope does not
+rule it out. Zoho's "Send an Email" and "Save Draft or Template" APIs are
+the SAME endpoint (POST/PUT .../messages), the same HTTP method, and the
+same scope (ZohoMail.messages.CREATE is documented as valid for both). The
+ONLY thing distinguishing a send from a draft-save is the request body's
+`mode` field. So the safety boundary is not the scope and not endpoint
+separation - it is this file's payload construction:
+
+  build_message_payload() returns a closed dict of six literal keys
+  (fromAddress, toAddress, subject, content, mailFormat, mode) with mode
+  hardcoded to "draft" unconditionally. Entry data is only ever read out of
+  named fields into named values; no entry dict is ever merged, spread, or
+  update()d into the payload. So no business's outreach content can reach
+  or override `mode`, whatever it contains.
+
+test_zoho_draft_push.py's DraftModeInvariantTests enforces both halves of
+that - mode == "draft" and the exact key set - on every payload this file
+builds and on every body it would put on the wire. A future edit that adds
+a send path must consciously violate this stated rule and delete those
+tests, not just add a line.
 
 Reads the outreach-prep-<slug>-<date>.json file /outreach's Stage 7 writes
 (a JSON array, one object per business - see .claude/skills/outreach/
@@ -103,13 +123,20 @@ def build_message_payload(entry, from_address):
     """Maps one outreach-prep entry (as written by /outreach's Stage 7) to
     the JSON body for Zoho's create/update-draft call. Never includes a
     signature - that is Zoho's own "new mail" setting, per
-    assets/brand/email-signature.html's own instructions."""
+    assets/brand/email-signature.html's own instructions.
+
+    This dict literal is the tool's whole send/draft safety boundary (see
+    the module docstring): a closed set of six keys, `mode` hardcoded to
+    "draft", entry data read only into named values and never merged in.
+    Do not add a key here that is derived from `entry`, and never set
+    `mode` from anything but this literal."""
     return {
         "fromAddress": from_address,
         "toAddress": entry.get("contact_route", {}).get("email", ""),
         "subject": entry.get("email_subject", ""),
         "content": _to_html(entry.get("email_body", "")),
         "mailFormat": "html",
+        "mode": "draft",
     }
 
 
@@ -144,7 +171,6 @@ def push_entry(entry, from_address, api_domain, account_id, access_token, dry_ru
         return {"zoho_push_status": f"DRY-RUN ({dry_action})", "zoho_push_action": dry_action}
 
     payload = build_message_payload(entry, from_address)
-    payload["mode"] = "draft"
     url = f"{api_domain}/api/accounts/{account_id}/messages"
     if existing_id:
         url = f"{url}/{existing_id}"

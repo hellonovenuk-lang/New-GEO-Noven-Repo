@@ -59,12 +59,17 @@ interrupting for every individual file read, web check, or file write:
   never inside this repository, never anywhere else on disk.
 - **Creates/updates Zoho Mail drafts, never sends.** Stage 7.5 pushes each
   drafted email into the owner's Zoho Mail Drafts folder via
-  `tools/zoho-draft-push/`, using a token scoped to `ZohoMail.messages.CREATE`
-  only — a scope that cannot send, reply, or delete anything even if the
-  code tried. Nothing in this skill contacts a business, submits a form,
-  connects on LinkedIn, or posts anywhere else. Actually sending an email is
-  still a separate, explicit, later action the owner takes inside Zoho
-  Mail after reviewing the draft there.
+  `tools/zoho-draft-push/`. In Zoho's API, saving a draft and sending are the
+  *same* endpoint under the same `ZohoMail.messages.CREATE` scope — the only
+  difference is the `mode` field in the request body — so what guarantees no
+  send is that tool's own payload construction: a closed dict of six literal
+  keys with `mode` hardcoded to `"draft"`, never derived from campaign data,
+  asserted by its tests. Reply, delete and folder-move are separate API
+  surfaces this token doesn't reach and the code never calls. Nothing in this
+  skill contacts a business, submits a form, connects on LinkedIn, or posts
+  anywhere else. Actually sending an email is still a separate, explicit,
+  later action the owner takes inside Zoho Mail after reviewing the draft
+  there.
 
 Say this once at the start in one message, then run the rest of the stages
 straight through without pausing for approval again — the same pattern
@@ -409,10 +414,14 @@ draft still gets pushed.
   This skill can *withhold* a business from its own output (Stage 4), but
   never edits the campaign JSON to do it.
 - **Does not send email, reply to email, delete email, or post to
-  LinkedIn.** Stage 7.5 creates/updates a Zoho Mail *draft* via a token
-  scoped to `ZohoMail.messages.CREATE` only — no broader capability exists
-  anywhere in this skill's pipeline. Every output remains a draft for human
-  review; sending is still a separate, explicit, later human action.
+  LinkedIn.** Stage 7.5 creates/updates a Zoho Mail *draft*. Because Zoho
+  saves a draft and sends through the same endpoint and the same
+  `ZohoMail.messages.CREATE` scope, what rules a send out is not the scope
+  but `tools/zoho-draft-push/`'s payload: a closed set of literal keys with
+  `mode` hardcoded to `"draft"` and never taken from campaign data, enforced
+  by that tool's tests. Reply, delete and folder-move are separate Zoho API
+  surfaces nothing in this pipeline calls. Every output remains a draft for
+  human review; sending is still a separate, explicit, later human action.
 - **Does not sell Foundation, Maintain, Grow or Lead.** The Audit is the
   only offer this skill ever drafts.
 - **Does not process `REVIEW` or `EXCLUDED` businesses**, regardless of how

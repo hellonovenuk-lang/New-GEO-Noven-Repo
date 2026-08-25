@@ -42,6 +42,18 @@ def _http_error(code, body_dict):
     return urllib.error.HTTPError(url="https://x", code=code, msg="error", hdrs=None, fp=io.BytesIO(body))
 
 
+def _sent_payload(mock_urlopen):
+    """The JSON body of the request the mocked urlopen was last called with."""
+    return json.loads(mock_urlopen.call_args[0][0].data.decode("utf-8"))
+
+
+# The complete, closed set of keys zoho_draft_push.py is allowed to send to
+# Zoho's messages endpoint. Kept here, spelled out literally, so widening the
+# payload is a deliberate test edit and not a silent side effect.
+EXPECTED_PAYLOAD_KEYS = {
+    "fromAddress", "toAddress", "subject", "content", "mailFormat", "mode",
+}
+
 FAKE_CREDENTIALS = {
     "client_id": "1000.FAKECLIENTID",
     "client_secret": "fakesecret",
@@ -136,6 +148,96 @@ class BuildMessagePayloadTests(unittest.TestCase):
         self.assertEqual(payload["content"].count("<p>"), 2)
         self.assertIn("<p>First paragraph.</p>", payload["content"])
         self.assertIn("<p>Second paragraph.</p>", payload["content"])
+
+
+class DraftModeInvariantTests(unittest.TestCase):
+    """The load-bearing safety property of this tool.
+
+    Zoho's "Send an Email" and "Save Draft" APIs are the SAME endpoint, the
+    same method, and the same OAuth scope - the request body's `mode` field
+    is the only thing that tells them apart. So the scope does not prevent a
+    send; the payload construction does. These tests are what enforce it:
+    every payload this tool builds must carry mode == "draft", and must
+    consist of exactly the closed set of literal keys above, so no entry
+    field can ever inject or override `mode`.
+    """
+
+    def _entry(self, **overrides):
+        entry = {
+            "business": "Sampleford Glazing",
+            "withheld": False,
+            "contact_route": {"email": "owner@sampleford-glazing.example"},
+            "email_subject": "s",
+            "email_body": "b",
+        }
+        entry.update(overrides)
+        return entry
+
+    def test_built_payload_has_mode_draft(self):
+        payload = zdp.build_message_payload(self._entry(), "hello@wardith.co.uk")
+        self.assertEqual(payload["mode"], "draft")
+
+    def test_built_payload_key_set_is_exactly_the_closed_set(self):
+        payload = zdp.build_message_payload(self._entry(), "hello@wardith.co.uk")
+        self.assertEqual(set(payload), EXPECTED_PAYLOAD_KEYS)
+
+    def test_entry_cannot_inject_or_override_mode(self):
+        """An entry carrying its own `mode`/`askReceipt`/etc. must not reach
+        the payload - the payload is built from named fields only, never by
+        merging entry data."""
+        hostile = self._entry(mode="send", askReceipt="yes", fromAddress="attacker@example.com")
+        payload = zdp.build_message_payload(hostile, "hello@wardith.co.uk")
+        self.assertEqual(payload["mode"], "draft")
+        self.assertEqual(payload["fromAddress"], "hello@wardith.co.uk")
+        self.assertEqual(set(payload), EXPECTED_PAYLOAD_KEYS)
+
+    def test_entry_with_hostile_nested_fields_cannot_widen_payload(self):
+        hostile = self._entry(contact_route={"email": "x@example.com", "mode": "send"})
+        payload = zdp.build_message_payload(hostile, "hello@wardith.co.uk")
+        self.assertEqual(payload["mode"], "draft")
+        self.assertEqual(set(payload), EXPECTED_PAYLOAD_KEYS)
+
+    @patch("urllib.request.urlopen")
+    def test_create_path_sends_mode_draft_and_nothing_else(self, mock_urlopen):
+        mock_urlopen.return_value = _FakeResponse({"data": {"messageId": "999888777"}})
+        zdp.push_entry(self._entry(), "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        sent = _sent_payload(mock_urlopen)
+        self.assertEqual(sent["mode"], "draft")
+        self.assertEqual(set(sent), EXPECTED_PAYLOAD_KEYS)
+
+    @patch("urllib.request.urlopen")
+    def test_update_path_sends_mode_draft_and_nothing_else(self, mock_urlopen):
+        mock_urlopen.return_value = _FakeResponse({"data": {"messageId": "999888777"}})
+        zdp.push_entry(self._entry(zoho_draft_id="999888777"), "hello@wardith.co.uk",
+                       "https://mail.zoho.eu", "111", "tok")
+        sent = _sent_payload(mock_urlopen)
+        self.assertEqual(sent["mode"], "draft")
+        self.assertEqual(set(sent), EXPECTED_PAYLOAD_KEYS)
+
+    @patch("urllib.request.urlopen")
+    def test_every_payload_in_a_whole_batch_is_a_draft(self, mock_urlopen):
+        mock_urlopen.return_value = _FakeResponse({"data": {"messageId": "1"}})
+        entries = [
+            self._entry(business="A", mode="send"),
+            self._entry(business="B", zoho_draft_id="123456"),
+            self._entry(business="C"),
+        ]
+        zdp.process_outreach_prep(entries, FAKE_CREDENTIALS, "tok")
+        sent_bodies = [json.loads(c[0][0].data.decode("utf-8")) for c in mock_urlopen.call_args_list]
+        self.assertEqual(len(sent_bodies), 3)
+        for body in sent_bodies:
+            self.assertEqual(body["mode"], "draft")
+            self.assertEqual(set(body), EXPECTED_PAYLOAD_KEYS)
+
+    def test_source_hardcodes_mode_draft_and_never_assigns_it_dynamically(self):
+        """Guards the claim in the module docstring: `mode` appears in this
+        file only as a literal "draft", never assigned from a variable."""
+        src_path = os.path.join(os.path.dirname(__file__), "zoho_draft_push.py")
+        with open(src_path, "r", encoding="utf-8") as f:
+            source = f.read()
+        mode_lines = [ln.strip() for ln in source.splitlines()
+                      if '"mode"' in ln and not ln.strip().startswith("#")]
+        self.assertEqual(mode_lines, ['"mode": "draft",'])
 
 
 class PushEntryTests(unittest.TestCase):
