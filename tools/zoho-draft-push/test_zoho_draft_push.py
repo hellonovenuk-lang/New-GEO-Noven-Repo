@@ -194,6 +194,39 @@ class PushEntryTests(unittest.TestCase):
         result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
         self.assertTrue(result["zoho_push_status"].startswith("FAILED"))
 
+    @patch("urllib.request.urlopen")
+    def test_malformed_json_response_recorded_as_failed_not_raised(self, mock_urlopen):
+        fake_resp = _FakeResponse({"data": {"messageId": "123"}})
+        fake_resp.read = lambda: b"{ invalid json"
+        mock_urlopen.return_value = fake_resp
+        entry = self._entry()
+        result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        self.assertTrue(result["zoho_push_status"].startswith("FAILED"))
+        self.assertIn("JSONDecodeError", result["zoho_push_status"])
+
+    @patch("urllib.request.urlopen")
+    def test_data_field_is_string_recorded_as_failed_not_raised(self, mock_urlopen):
+        mock_urlopen.return_value = _FakeResponse({"data": "not a dict or list"})
+        entry = self._entry()
+        result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        self.assertTrue(result["zoho_push_status"].startswith("FAILED"))
+
+    @patch("urllib.request.urlopen")
+    def test_data_list_with_non_dict_elements_recorded_as_failed_not_raised(self, mock_urlopen):
+        mock_urlopen.return_value = _FakeResponse({"data": [1, 2, 3]})
+        entry = self._entry()
+        result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        self.assertTrue(result["zoho_push_status"].startswith("FAILED"))
+
+    @patch("urllib.request.urlopen")
+    def test_response_is_not_dict_recorded_as_failed_not_raised(self, mock_urlopen):
+        fake_resp = _FakeResponse({})
+        fake_resp.read = lambda: b'[{"messageId": "123"}]'
+        mock_urlopen.return_value = fake_resp
+        entry = self._entry()
+        result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        self.assertTrue(result["zoho_push_status"].startswith("FAILED"))
+
     def test_dry_run_makes_no_http_call(self):
         entry = self._entry()
         with patch("urllib.request.urlopen") as mock_urlopen:

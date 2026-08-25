@@ -112,11 +112,14 @@ def build_message_payload(entry, from_address):
 
 
 def _extract_draft_id(resp_data):
+    if not isinstance(resp_data, dict):
+        raise ZohoAPIError(f"unexpected Zoho response shape (not a dict): {resp_data}")
     data = resp_data.get("data")
     if isinstance(data, dict) and data.get("messageId"):
         return str(data["messageId"])
-    if isinstance(data, list) and data and data[0].get("messageId"):
-        return str(data[0]["messageId"])
+    if isinstance(data, list) and data:
+        if isinstance(data[0], dict) and data[0].get("messageId"):
+            return str(data[0]["messageId"])
     raise ZohoAPIError(f"unexpected Zoho response shape (no data.messageId): {resp_data}")
 
 
@@ -159,6 +162,8 @@ def push_entry(entry, from_address, api_domain, account_id, access_token, dry_ru
         return {"zoho_push_status": f"FAILED: HTTP {e.code} {detail}"}
     except urllib.error.URLError as e:
         return {"zoho_push_status": f"FAILED: {e.reason}"}
+    except (json.JSONDecodeError, UnicodeDecodeError) as e:
+        return {"zoho_push_status": f"FAILED: malformed response ({type(e).__name__})"}
 
     try:
         draft_id = existing_id or _extract_draft_id(resp_data)
