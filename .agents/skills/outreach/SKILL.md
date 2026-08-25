@@ -11,8 +11,9 @@ description: >-
   this whenever the owner asks to prepare, draft or get ready outreach/emails
   for a qualified campaign, or names a campaign slug and asks what's
   send-ready. Does not rerun research or qualification, does not re-decide
-  priority or ready_to_email, and never sends or posts anything — output is
-  drafts for human review only.
+  priority or ready_to_email, and never sends or posts anything — every
+  email is pushed into the owner's Zoho Mail account as a draft for human
+  review, and sending it stays a separate human action there.
 ---
 
 # /outreach
