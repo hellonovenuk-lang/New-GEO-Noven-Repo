@@ -175,6 +175,13 @@ def push_entry(entry, from_address, api_domain, account_id, access_token, dry_ru
     payload = build_message_payload(entry, from_address)
     url = f"{api_domain}/api/accounts/{account_id}/messages"
     if existing_id:
+        # UNVERIFIED, pending the owner's first real setup run: Zoho's public
+        # docs cover creating a draft at this path but do not clearly document
+        # PUT .../messages/{messageId} for updating one. If the first re-run of
+        # a campaign reports "FAILED: HTTP 404/405" for every already-pushed
+        # business, this branch is the reason - the fix would be to delete the
+        # old draft by hand and let the create path run, or to find whatever
+        # update call Zoho does support. Flagged in README.md too.
         url = f"{url}/{existing_id}"
         method = "PUT"
     else:
@@ -189,6 +196,17 @@ def push_entry(entry, from_address, api_domain, account_id, access_token, dry_ru
             resp_data = json.loads(resp.read().decode("utf-8"))
     except urllib.error.HTTPError as e:
         detail = e.read().decode("utf-8", errors="replace")[:200]
+        if existing_id and e.code == 404:
+            # The stored draft is gone - most likely the owner deleted or sent
+            # it in Zoho. Clear the id rather than leaving this entry stuck
+            # PUTting forever at a message that no longer exists; the next run
+            # takes the create branch and makes a fresh draft.
+            return {
+                "zoho_draft_id": None,
+                "zoho_push_status": "FAILED: HTTP 404 - the stored draft may have been deleted "
+                                    "in Zoho; its id has been cleared, so the next run will "
+                                    "create a new draft",
+            }
         return {"zoho_push_status": f"FAILED: HTTP {e.code} {detail}"}
     except urllib.error.URLError as e:
         return {"zoho_push_status": f"FAILED: {e.reason}"}
@@ -205,10 +223,16 @@ def push_entry(entry, from_address, api_domain, account_id, access_token, dry_ru
         # This function's contract is that it never raises; this keeps it.
         return {"zoho_push_status": f"FAILED: {type(e).__name__}"}
 
+    # Validate the response envelope on BOTH paths. On the update path we
+    # already hold the id and don't need the one this yields - but an API can
+    # answer HTTP 200 with an error body, and "OK, updated" must never be
+    # recorded for a call that actually failed. A shape _extract_draft_id
+    # rejects is a real failure here exactly as it is on the create path.
     try:
-        draft_id = existing_id or _extract_draft_id(resp_data)
+        returned_id = _extract_draft_id(resp_data)
     except ZohoAPIError as e:
         return {"zoho_push_status": f"FAILED: {e}"}
+    draft_id = existing_id or returned_id
 
     return {
         "zoho_draft_id": draft_id,

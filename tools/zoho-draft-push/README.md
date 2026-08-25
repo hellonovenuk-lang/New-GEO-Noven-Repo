@@ -45,6 +45,17 @@ sending (summarised under "What this tool will and won't do" below).
 - **Will:** create a new Zoho draft for each business `/outreach` drafted
   an email for, or update the existing draft if one was already pushed for
   that business on a previous run of the same campaign.
+- **Known-unverified — watch for this on the first re-run of a campaign.**
+  Creating a draft is documented by Zoho; *updating* one is not clearly
+  documented. The update path issues
+  `PUT .../api/accounts/{accountId}/messages/{messageId}`, which is a
+  reasonable reading of the API but has never been exercised against a real
+  Zoho account. If a re-run reports `FAILED: HTTP 404`/`405` for every
+  business already pushed once, this is why — delete those drafts in Zoho by
+  hand so the create path runs, and tell the owner the update path needs
+  correcting. A 404 on the update path is handled specially: the stored
+  draft id is cleared, so the next run creates a fresh draft rather than
+  retrying a message that no longer exists.
 - **Won't:** send, reply to, or delete anything, in Zoho or anywhere else.
   Reply, delete and folder-move are separate Zoho API surfaces needing
   scopes this token doesn't carry, and nothing in the code calls them.

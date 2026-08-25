@@ -285,6 +285,58 @@ class PushEntryTests(unittest.TestCase):
         self.assertIn("999888777", called_request.full_url)
 
     @patch("urllib.request.urlopen")
+    def test_update_path_with_malformed_response_does_not_report_false_success(self, mock_urlopen):
+        """The update path must validate the response envelope too. An API
+        that answers HTTP 200 with an error body must not be recorded as
+        'OK, updated' just because we already held a draft id."""
+        mock_urlopen.return_value = _FakeResponse({"status": {"code": 500, "description": "internal error"}})
+        entry = self._entry(zoho_draft_id="999888777")
+        result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        self.assertTrue(result["zoho_push_status"].startswith("FAILED"))
+        self.assertNotEqual(result.get("zoho_push_action"), "updated")
+
+    @patch("urllib.request.urlopen")
+    def test_update_path_404_clears_the_stored_draft_id(self, mock_urlopen):
+        """The owner deleting the draft in Zoho must not leave this entry
+        permanently stuck retrying a PUT at a message id that no longer
+        exists - clear the id so the next run creates a fresh draft."""
+        mock_urlopen.side_effect = _http_error(404, {"status": {"code": 404}})
+        entry = self._entry(zoho_draft_id="999888777")
+        result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        self.assertTrue(result["zoho_push_status"].startswith("FAILED"))
+        self.assertIn("deleted", result["zoho_push_status"])
+        self.assertIsNone(result["zoho_draft_id"])
+
+    @patch("urllib.request.urlopen")
+    def test_create_path_404_is_not_treated_as_a_deleted_draft(self, mock_urlopen):
+        mock_urlopen.side_effect = _http_error(404, {"status": {"code": 404}})
+        result = zdp.push_entry(self._entry(), "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        self.assertTrue(result["zoho_push_status"].startswith("FAILED"))
+        self.assertNotIn("deleted", result["zoho_push_status"])
+        self.assertNotIn("zoho_draft_id", result)
+
+    @patch("urllib.request.urlopen")
+    def test_update_path_other_http_error_keeps_the_stored_draft_id(self, mock_urlopen):
+        """A 500 is transient; the draft is still there. Only a 404 clears."""
+        mock_urlopen.side_effect = _http_error(500, {"status": {"code": 500}})
+        entry = self._entry(zoho_draft_id="999888777")
+        result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        self.assertTrue(result["zoho_push_status"].startswith("FAILED"))
+        self.assertNotIn("zoho_draft_id", result)
+
+    @patch("urllib.request.urlopen")
+    def test_cleared_draft_id_makes_the_next_run_create_instead_of_update(self, mock_urlopen):
+        entry = self._entry(zoho_draft_id="999888777")
+        mock_urlopen.side_effect = _http_error(404, {"status": {"code": 404}})
+        entry.update(zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok"))
+        mock_urlopen.side_effect = None
+        mock_urlopen.return_value = _FakeResponse({"data": {"messageId": "444"}})
+        result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        self.assertEqual(result["zoho_push_action"], "created")
+        self.assertEqual(result["zoho_draft_id"], "444")
+        self.assertEqual(mock_urlopen.call_args[0][0].get_method(), "POST")
+
+    @patch("urllib.request.urlopen")
     def test_http_error_recorded_as_failed_not_raised(self, mock_urlopen):
         mock_urlopen.side_effect = _http_error(400, {"error": "invalid toAddress"})
         entry = self._entry()
