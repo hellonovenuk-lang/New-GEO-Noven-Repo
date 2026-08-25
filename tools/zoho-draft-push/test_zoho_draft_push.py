@@ -236,5 +236,62 @@ class PushEntryTests(unittest.TestCase):
         self.assertEqual(result["zoho_push_action"], "create")
 
 
+class ProcessOutreachPrepTests(unittest.TestCase):
+    def _entries(self):
+        return [
+            {
+                "business": "Sampleford Glazing", "withheld": False,
+                "contact_route": {"email": "a@example.com"},
+                "email_subject": "s1", "email_body": "b1",
+            },
+            {
+                "business": "Withheld Co", "withheld": True,
+                "contact_route": {"email": "b@example.com"},
+                "email_subject": "s2", "email_body": "b2",
+            },
+        ]
+
+    @patch("urllib.request.urlopen")
+    def test_mutates_entries_in_place_and_returns_results(self, mock_urlopen):
+        mock_urlopen.return_value = _FakeResponse({"data": {"messageId": "1"}})
+        entries = self._entries()
+        results = zdp.process_outreach_prep(entries, FAKE_CREDENTIALS, "tok")
+        self.assertEqual(entries[0]["zoho_draft_id"], "1")
+        self.assertEqual(entries[1]["zoho_push_status"], "SKIPPED (withheld)")
+        self.assertEqual(len(results), 2)
+
+    @patch("urllib.request.urlopen")
+    def test_one_entry_failing_does_not_stop_the_rest(self, mock_urlopen):
+        mock_urlopen.side_effect = [_http_error(500, {"error": "server error"}), _FakeResponse({"data": {"messageId": "2"}})]
+        entries = [
+            {"business": "Fails Ltd", "withheld": False, "contact_route": {"email": "a@example.com"}, "email_subject": "s", "email_body": "b"},
+            {"business": "Succeeds Ltd", "withheld": False, "contact_route": {"email": "b@example.com"}, "email_subject": "s", "email_body": "b"},
+        ]
+        zdp.process_outreach_prep(entries, FAKE_CREDENTIALS, "tok")
+        self.assertTrue(entries[0]["zoho_push_status"].startswith("FAILED"))
+        self.assertEqual(entries[1]["zoho_push_status"], "OK")
+
+    def test_dry_run_with_no_credentials_still_works(self):
+        entries = self._entries()
+        results = zdp.process_outreach_prep(entries, None, None, dry_run=True)
+        self.assertTrue(results[0]["zoho_push_status"].startswith("DRY-RUN"))
+
+
+class SummarizeTests(unittest.TestCase):
+    def test_counts_each_outcome(self):
+        results = [
+            {"business": "A", "zoho_push_status": "OK", "zoho_push_action": "created"},
+            {"business": "B", "zoho_push_status": "OK", "zoho_push_action": "updated"},
+            {"business": "C", "zoho_push_status": "FAILED: HTTP 400 x"},
+            {"business": "D", "zoho_push_status": "SKIPPED (withheld)"},
+        ]
+        text = zdp.summarize(results)
+        self.assertIn("1 created", text)
+        self.assertIn("1 updated", text)
+        self.assertIn("1 failed", text)
+        self.assertIn("1 skipped", text)
+        self.assertIn("C: FAILED: HTTP 400 x", text)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -178,5 +178,48 @@ def push_entry(entry, from_address, api_domain, account_id, access_token, dry_ru
     }
 
 
+def process_outreach_prep(entries, credentials, access_token, dry_run=False):
+    """entries: the JSON array from an outreach-prep-<slug>-<date>.json
+    file, loaded and passed in by main(). Mutates each entry in place with
+    the zoho_* fields; returns the same information as a flat list for
+    summarize()."""
+    from_address = credentials["from_address"] if credentials else "(dry-run: no credentials loaded)"
+    api_domain = credentials["api_domain"] if credentials else None
+    account_id = credentials["account_id"] if credentials else None
+
+    results = []
+    for entry in entries:
+        outcome = push_entry(entry, from_address, api_domain, account_id, access_token, dry_run=dry_run)
+        entry.update(outcome)
+        results.append({"business": entry.get("business", "?"), **outcome})
+    return results
+
+
+def summarize(results):
+    counts = {"created": 0, "updated": 0, "failed": 0, "skipped": 0, "dry_run": 0}
+    failures = []
+    for r in results:
+        status = r.get("zoho_push_status", "")
+        action = r.get("zoho_push_action")
+        if status == "OK" and action == "created":
+            counts["created"] += 1
+        elif status == "OK" and action == "updated":
+            counts["updated"] += 1
+        elif status.startswith("FAILED"):
+            counts["failed"] += 1
+            failures.append(f"  {r.get('business', '?')}: {status}")
+        elif status.startswith("SKIPPED"):
+            counts["skipped"] += 1
+        elif status.startswith("DRY-RUN"):
+            counts["dry_run"] += 1
+    lines = [
+        f"Zoho draft push: {counts['created']} created, {counts['updated']} updated, "
+        f"{counts['failed']} failed, {counts['skipped']} skipped (withheld), "
+        f"{counts['dry_run']} dry-run."
+    ]
+    lines.extend(failures)
+    return "\n".join(lines)
+
+
 if __name__ == "__main__":
     pass
