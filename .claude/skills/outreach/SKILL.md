@@ -57,10 +57,14 @@ interrupting for every individual file read, web check, or file write:
   see Stage 4. Nothing is submitted to any site; these are page reads only.
 - **Writes**, confined to a new `~/wardith-runs/<slug>/outreach/` folder —
   never inside this repository, never anywhere else on disk.
-- **No sends.** No email client, no LinkedIn API or browser automation, no
-  webhook, nothing that posts, submits, or transmits outreach anywhere. If
-  the owner asks this skill to also send something, stop and say that's out
-  of scope for `/outreach` — it is a separate, later, explicitly human step.
+- **Creates/updates Zoho Mail drafts, never sends.** Stage 7.5 pushes each
+  drafted email into the owner's Zoho Mail Drafts folder via
+  `tools/zoho-draft-push/`, using a token scoped to `ZohoMail.messages.CREATE`
+  only — a scope that cannot send, reply, or delete anything even if the
+  code tried. Nothing in this skill contacts a business, submits a form,
+  connects on LinkedIn, or posts anywhere else. Actually sending an email is
+  still a separate, explicit, later action the owner takes inside Zoho
+  Mail after reviewing the draft there.
 
 Say this once at the start in one message, then run the rest of the stages
 straight through without pausing for approval again — the same pattern
@@ -332,7 +336,11 @@ with exactly these fields:
   "linkedin_draft": "... or null",
   "caveats": ["..."],
   "evidence_source_ids": ["..."],          // carried from the campaign entry, unchanged
-  "source_campaign_json": "~/wardith-runs/<slug>/<slug>-campaign.json"
+  "source_campaign_json": "~/wardith-runs/<slug>/<slug>-campaign.json",
+  "zoho_draft_id": "... or absent, written by Stage 7.5",
+  "zoho_push_status": "OK / FAILED: ... / SKIPPED (withheld) / DRY-RUN (...), written by Stage 7.5",
+  "zoho_push_action": "created / updated / create / update, written by Stage 7.5",
+  "zoho_pushed_at": "YYYY-MM-DDThh:mm:ssZ or absent, written by Stage 7.5"
 }
 ```
 
@@ -345,6 +353,36 @@ render it in full, not summarised.
 **Never write into the campaign JSON, the workbook, or anywhere inside this
 repository.** This skill's only writes are the two files above.
 
+## Stage 7.5 — Push drafts to Zoho Mail
+
+Immediately after writing both Stage 7 files, push every drafted email into
+Zoho Mail as a real draft:
+
+```
+python3 tools/zoho-draft-push/zoho_draft_push.py \
+    --input ~/wardith-runs/<slug>/outreach/outreach-prep-<slug>-<date>.json \
+    --in-place
+```
+
+This is the one point in this skill's pipeline that touches an external
+API — see `tools/zoho-draft-push/README.md` and the script's own docstring
+for the exact, narrow set of calls it's capable of making (create/update a
+draft only; never send, reply, or delete). `--in-place` writes
+`zoho_draft_id`/`zoho_push_status`/`zoho_push_action`/`zoho_pushed_at` back
+into each processed entry in the same JSON file, so re-running `/outreach`
+on this campaign later updates the existing Zoho draft instead of creating
+a duplicate.
+
+**If `tools/zoho-draft-push/README.md`'s one-time setup hasn't been run
+yet**, this step will fail with a clear message pointing at that file — stop
+and tell the owner, don't silently skip Stage 7.5 or fall back to leaving
+drafts local-only without saying so.
+
+**A single business's push failing (a stale contact address Zoho rejects, a
+transient network error) does not stop this stage** — it's recorded in the
+script's summary and carried into Stage 8's report; every other business's
+draft still gets pushed.
+
 ## Stage 8 — Report
 
 - The campaign processed, and the working set size (how many
@@ -354,8 +392,12 @@ repository.** This skill's only writes are the two files above.
 - The full text of every email drafted, shown directly in the response —
   this is the point at which the owner reviews before any send.
 - Any LinkedIn drafts, clearly marked not-sent.
-- A one-line reminder: **nothing has been sent or posted; sending is a
-  separate, explicit, later action outside this skill.**
+- **Zoho push results** from Stage 7.5: how many drafts created, how many
+  updated, how many failed and why (business name + reason for each
+  failure), how many skipped as withheld.
+- A one-line reminder: **nothing has been sent; the drafts are sitting in
+  Zoho Mail's Drafts folder for review, and sending is a separate,
+  explicit, later action the owner takes there.**
 
 ## What this skill does not do
 
@@ -366,8 +408,11 @@ repository.** This skill's only writes are the two files above.
   `ready_to_email`.** Those are `/qualify`'s fields, human-approved there.
   This skill can *withhold* a business from its own output (Stage 4), but
   never edits the campaign JSON to do it.
-- **Does not send email, does not post to LinkedIn, does not call any
-  sending API.** Every output is a draft for human review.
+- **Does not send email, reply to email, delete email, or post to
+  LinkedIn.** Stage 7.5 creates/updates a Zoho Mail *draft* via a token
+  scoped to `ZohoMail.messages.CREATE` only — no broader capability exists
+  anywhere in this skill's pipeline. Every output remains a draft for human
+  review; sending is still a separate, explicit, later human action.
 - **Does not sell Foundation, Maintain, Grow or Lead.** The Audit is the
   only offer this skill ever drafts.
 - **Does not process `REVIEW` or `EXCLUDED` businesses**, regardless of how
