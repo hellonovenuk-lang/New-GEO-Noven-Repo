@@ -125,10 +125,20 @@ this token doesn't carry, and the code never calls them.
 made a send impossible; that was wrong, and the error is recorded here
 rather than quietly overwritten, since this spec is the authority the
 implementation plan argued from). Zoho's "Send an Email" and "Save Draft or
-Template" APIs are the *same* endpoint (`POST`/`PUT .../messages`), the same
+Template" APIs are the *same* endpoint (`POST .../messages`), the same
 HTTP method, and the same scope — `ZohoMail.messages.CREATE` is documented
 as valid for both. The only thing distinguishing a send from a draft-save is
 the request body's `mode` field, so the scope alone rules out nothing here.
+
+**Second correction, same date** (found by the re-review of the fix for the
+first one — the same error class survived one sentence away, because the
+"no reply, no delete, no folder move" line just above was assumed correct
+rather than re-checked). "Those are separate Zoho API surfaces needing
+scopes this token doesn't carry" is also wrong for Reply specifically:
+Zoho's Reply API is documented under this same `ZohoMail.messages.CREATE`
+scope. Delete and folder-move genuinely do need scopes this token lacks.
+The accurate claim for all three is narrower: this code never calls any of
+them, not that the scope prevents it.
 
 The real property, which is still sufficient, is how the payload is built:
 `build_message_payload()` returns a closed dict of six literal keys

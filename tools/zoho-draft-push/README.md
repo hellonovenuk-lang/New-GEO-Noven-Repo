@@ -76,11 +76,14 @@ access token on every run.
   draft id is cleared, so the next run creates a fresh draft rather than
   retrying a message that no longer exists.
 - **Won't:** send, reply to, or delete anything, in Zoho or anywhere else.
-  Reply, delete and folder-move are separate Zoho API surfaces needing
-  scopes this token doesn't carry, and nothing in the code calls them.
+  Reply, delete and folder-move are separate Zoho API surfaces this code
+  never calls — not surfaces the granted scope is incapable of reaching.
+  Delete and folder-move do need scopes this token lacks, but Reply is
+  documented under this same `ZohoMail.messages.CREATE` scope, same as
+  Send below — the scope alone rules out neither.
 - **Won't send — and here's the actual reason, which is not the OAuth
   scope.** Zoho's "Send an Email" and "Save Draft or Template" APIs are the
-  *same* endpoint (`POST`/`PUT .../messages`), the same method, and the same
+  *same* endpoint (`POST .../messages`), the same method, and the same
   scope (`ZohoMail.messages.CREATE` is documented as valid for both). The
   only difference is the `mode` field in the request body. What stops a send
   is that `zoho_draft_push.py`'s `build_message_payload()` returns a closed

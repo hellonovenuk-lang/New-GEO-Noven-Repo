@@ -11,16 +11,19 @@ mode: "draft" (create or update one draft). The two domains those paths
 hang off come from the credentials file, so load_credentials() checks both
 against Zoho's five known regional hosts before any of them is used. No
 other Zoho endpoint is referenced anywhere below - no reply, no delete, no
-folder move. Those are separate Zoho API surfaces, needing scopes this
-token does not carry, and nothing here calls them.
+folder move. Those are separate Zoho API surfaces this code never calls -
+NOT surfaces the granted scope is incapable of reaching. Delete and
+folder-move do need scopes this token lacks, but Reply is documented under
+this same ZohoMail.messages.CREATE scope, same as Send (below) - the scope
+alone does not rule any of them out.
 
-Sending is NOT one of those separate surfaces, and the OAuth scope does not
-rule it out. Zoho's "Send an Email" and "Save Draft or Template" APIs are
-the SAME endpoint (POST/PUT .../messages), the same HTTP method, and the
-same scope (ZohoMail.messages.CREATE is documented as valid for both). The
-ONLY thing distinguishing a send from a draft-save is the request body's
-`mode` field. So the safety boundary is not the scope and not endpoint
-separation - it is this file's payload construction:
+Sending is the sharpest case of this: the OAuth scope does not rule it out
+at all. Zoho's "Send an Email" and "Save Draft or Template" APIs are the
+SAME endpoint (POST .../messages), the same HTTP method, and the same scope
+(ZohoMail.messages.CREATE is documented as valid for both). The ONLY thing
+distinguishing a send from a draft-save is the request body's `mode` field.
+So the safety boundary is not the scope and not endpoint separation - it is
+this file's payload construction:
 
   build_message_payload() returns a closed dict of six literal keys
   (fromAddress, toAddress, subject, content, mailFormat, mode) with mode

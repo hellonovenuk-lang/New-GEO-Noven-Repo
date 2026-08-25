@@ -66,7 +66,10 @@ interrupting for every individual file read, web check, or file write:
   send is that tool's own payload construction: a closed dict of six literal
   keys with `mode` hardcoded to `"draft"`, never derived from campaign data,
   asserted by its tests. Reply, delete and folder-move are separate API
-  surfaces this token doesn't reach and the code never calls. Nothing in this
+  surfaces this code never calls — not surfaces the scope is incapable of
+  reaching (delete and folder-move do need scopes this token lacks, but
+  reply is documented under this same `ZohoMail.messages.CREATE` scope,
+  same as send above). Nothing in this
   skill contacts a business, submits a form, connects on LinkedIn, or posts
   anywhere else. Actually sending an email is still a separate, explicit,
   later action the owner takes inside Zoho Mail after reviewing the draft

@@ -10,6 +10,14 @@
 
 **Spec:** `docs/superpowers/specs/2026-08-24-zoho-draft-push-design.md`
 
+**Corrected 2026-08-25 (see the spec's own dated corrections):** several task
+bodies below say the OAuth scope (`ZohoMail.messages.CREATE`) itself rules
+out sending/replying — that's wrong; Zoho documents Send and Reply under
+this same scope. This plan is a historical execution record, left as-written
+below rather than edited after the fact; the actual shipped code, docs, and
+`playbook/decisions.md` all carry the corrected claim — see the spec for
+what's actually true.
+
 ## Global Constraints
 
 - **No send/reply/delete code path may exist anywhere in `zoho_draft_push.py`, ever.** The only Zoho endpoints referenced are `POST {accounts_domain}/oauth/v2/token` (refresh), `GET {api_domain}/api/accounts` (setup-only lookup), and `POST`/`PUT {api_domain}/api/accounts/{account_id}/messages` with `mode: "draft"`. This is a hard constraint on every task that touches this file, not just its own task.
