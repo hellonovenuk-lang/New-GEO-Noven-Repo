@@ -109,15 +109,29 @@ def main():
         "api_domain": domains["api"],
         "accounts_domain": domains["accounts"],
     }
+    # A 0700 directory holding a 0600 file - playbook/records-and-data.md's
+    # settled pattern for secrets on this machine (`mkdir -p ~/.noven &&
+    # chmod 700`, then `chmod 600` the file). The mode is established when
+    # the file is CREATED, not chmod'd on afterwards, so the refresh token
+    # never sits in a default-permission file even momentarily. Every
+    # permission call is best-effort: not all platforms honour POSIX modes.
     out_dir = os.path.dirname(args.out)
     if out_dir:
         os.makedirs(out_dir, exist_ok=True)
-    with open(args.out, "w", encoding="utf-8") as f:
-        json.dump(creds, f, indent=2)
+        try:
+            os.chmod(out_dir, 0o700)
+        except OSError:
+            pass
+    fd = os.open(args.out, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
     try:
-        os.chmod(args.out, 0o600)
-    except OSError:
-        pass  # best-effort; not all platforms support POSIX permissions
+        # O_CREAT's mode applies only to a file it actually creates, so tighten
+        # an already-existing one too - by descriptor, before anything is
+        # written through it.
+        os.fchmod(fd, 0o600)
+    except (AttributeError, OSError):
+        pass  # no os.fchmod on Windows
+    with os.fdopen(fd, "w", encoding="utf-8") as f:
+        json.dump(creds, f, indent=2)
 
     masked = refresh_token[:6] + "..." + refresh_token[-4:] if len(refresh_token) > 10 else "***"
     print(f"Wrote {args.out}")

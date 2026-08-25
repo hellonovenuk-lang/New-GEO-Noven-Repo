@@ -33,12 +33,31 @@ sending (summarised under "What this tool will and won't do" below).
 
    This writes `~/.wardith/zoho-credentials.json` (outside this repo,
    never committed) containing a long-lived refresh token, your account id,
-   and your from-address. The grant token itself is single-use and expires
-   within minutes either way, so there's nothing further to revoke if this
-   step is repeated.
+   and your from-address. The directory is created `0700` and the file
+   `0600`, following `playbook/records-and-data.md`'s rule for secrets. The
+   grant token itself is single-use and expires within minutes either way,
+   so there's nothing further to revoke if this step is repeated.
 4. **Done.** `/outreach` will use this automatically from now on. To
    re-run setup later (e.g. a new region, a revoked token), just run step 3
    again — it overwrites the credentials file.
+
+## How to revoke access
+
+**Delete the Self Client at [api-console.zoho.com](https://api-console.zoho.com/).**
+That is the whole revocation, and it is the only thing that actually works:
+the refresh token in `~/.wardith/zoho-credentials.json` is long-lived and
+does not expire on its own, and it is what this tool exchanges for a fresh
+access token on every run.
+
+- Deleting `~/.wardith/zoho-credentials.json` stops *this machine* using the
+  token, which is worth doing too — but the token itself stays valid at
+  Zoho's end until the Self Client is gone. Do both, in that order: console
+  first, file second.
+- The **grant token** from setup step 2 needs no revocation. It is single-use
+  and expires within minutes, so by the time setup has finished it is already
+  dead.
+- Revoking does not touch anything in the mailbox. Drafts already pushed stay
+  where they are, for the owner to send or delete by hand as usual.
 
 ## What this tool will and won't do
 

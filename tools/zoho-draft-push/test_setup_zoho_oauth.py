@@ -125,6 +125,42 @@ class MainCliTests(unittest.TestCase):
         self.assertEqual(creds["api_domain"], "https://mail.zoho.eu")
         self.assertEqual(creds["accounts_domain"], "https://accounts.zoho.eu")
 
+    @patch("urllib.request.urlopen")
+    def test_secret_file_and_its_directory_get_restrictive_modes(self, mock_urlopen):
+        """playbook/records-and-data.md's settled pattern for secrets is a
+        0700 directory holding a 0600 file. The mode must be established at
+        creation, not chmod'd on afterwards, so the refresh token never sits
+        in a default-permission file even momentarily. Asserted on the calls
+        rather than on os.stat, since Windows does not honour POSIX modes."""
+        mock_urlopen.side_effect = [
+            _FakeResponse({"refresh_token": "1000.rt", "access_token": "1000.at"}),
+            _FakeResponse({"data": [{"accountId": 111222333, "primaryEmailAddress": "hello@wardith.co.uk"}]}),
+        ]
+        real_os_open = os.open
+        opened = {}
+        chmodded = {}
+
+        def spy_open(path, flags, mode=0o777, **kwargs):
+            opened[os.path.abspath(path)] = mode
+            return real_os_open(path, flags, mode, **kwargs)
+
+        def spy_chmod(path, mode, **kwargs):
+            chmodded[os.path.abspath(path)] = mode
+
+        with tempfile.TemporaryDirectory() as d:
+            secret_dir = os.path.join(d, "dotwardith")
+            out_path = os.path.join(secret_dir, "zoho-credentials.json")
+            sys.argv = [
+                "setup_zoho_oauth.py", "--client-id", "cid", "--client-secret", "csecret",
+                "--grant-token", "gtoken", "--region", "eu", "--out", out_path,
+            ]
+            with patch("os.open", side_effect=spy_open), patch("os.chmod", side_effect=spy_chmod):
+                sz.main()
+            self.assertEqual(opened.get(os.path.abspath(out_path)), 0o600)
+            self.assertEqual(chmodded.get(os.path.abspath(secret_dir)), 0o700)
+            with open(out_path, "r", encoding="utf-8") as f:
+                self.assertEqual(json.load(f)["refresh_token"], "1000.rt")
+
 
 if __name__ == "__main__":
     unittest.main()
