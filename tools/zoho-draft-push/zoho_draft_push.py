@@ -10,10 +10,9 @@ and POST/PUT {api_domain}/api/accounts/{account_id}/messages with
 mode: "draft" (create or update one draft). The two domains those paths
 hang off come from the credentials file, so load_credentials() checks both
 against Zoho's five known regional hosts before any of them is used. No
-other Zoho endpoint is referenced anywhere below - no reply, no delete,
-no folder move. Those are
-separate Zoho API surfaces, needing scopes this token does not carry, and
-nothing here calls them.
+other Zoho endpoint is referenced anywhere below - no reply, no delete, no
+folder move. Those are separate Zoho API surfaces, needing scopes this
+token does not carry, and nothing here calls them.
 
 Sending is NOT one of those separate surfaces, and the OAuth scope does not
 rule it out. Zoho's "Send an Email" and "Save Draft or Template" APIs are
