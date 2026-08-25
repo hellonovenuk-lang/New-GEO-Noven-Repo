@@ -1,0 +1,81 @@
+# zoho-draft-push
+
+Pushes `/outreach`'s drafted emails into Zoho Mail as real drafts, ready to
+open, edit, and send by hand. Never sends, replies, or deletes anything —
+see `zoho_draft_push.py`'s own docstring for the exact three API calls this
+tool is capable of making, and no others.
+
+## One-time setup
+
+1. **Register a Self Client** at
+   [api-console.zoho.com](https://api-console.zoho.com/) (log in with the
+   same Zoho account as your mailbox). Choose **Self Client**. Note which
+   regional domain your console URL uses (`accounts.zoho.com`,
+   `accounts.zoho.eu`, etc.) — that's your `--region` below.
+2. **Generate a grant token** for that Self Client with scopes:
+   - `ZohoMail.messages.CREATE`
+   - `ZohoMail.accounts.READ`
+
+   Set the validity to the shortest option offered (these tokens expire in
+   minutes and are only used once, immediately, by the command below).
+3. **Run the setup script**, using the client ID, client secret, and grant
+   token Zoho just showed you (all copied from Zoho's own console — never
+   typed anywhere else, never shared with Claude):
+
+   ```
+   python3 tools/zoho-draft-push/setup_zoho_oauth.py \
+       --client-id "1000.XXXXXXXX" \
+       --client-secret "your-client-secret" \
+       --grant-token "your-grant-token" \
+       --region eu
+   ```
+
+   This writes `~/.wardith/zoho-credentials.json` (outside this repo,
+   never committed) containing a long-lived refresh token, your account id,
+   and your from-address. The grant token itself is single-use and expires
+   within minutes either way, so there's nothing further to revoke if this
+   step is repeated.
+4. **Done.** `/outreach` will use this automatically from now on. To
+   re-run setup later (e.g. a new region, a revoked token), just run step 3
+   again — it overwrites the credentials file.
+
+## What this tool will and won't do
+
+- **Will:** create a new Zoho draft for each business `/outreach` drafted
+  an email for, or update the existing draft if one was already pushed for
+  that business on a previous run of the same campaign.
+- **Won't:** send, reply to, or delete anything, in Zoho or anywhere else.
+  The OAuth scope requested (`ZohoMail.messages.CREATE`) cannot authorize
+  those actions even if the code tried to call them.
+- **Won't:** touch the email signature. That's Zoho's own account-level
+  "signature for new mail" setting (see `assets/brand/email-signature.html`
+  for how it's installed) — this tool doesn't duplicate it into the draft
+  body. The first real run will show whether Zoho applies it automatically
+  to an API-created draft the same way it does for one composed by hand; if
+  it doesn't, that's a decision for the owner to make once observed, not
+  something to guess at in code ahead of time.
+
+## Manual usage
+
+Normally run automatically as part of `/outreach`'s Stage 7.5. To run by
+hand against an existing `outreach-prep-*.json` file:
+
+```
+python3 tools/zoho-draft-push/zoho_draft_push.py \
+    --input ~/wardith-runs/<slug>/outreach/outreach-prep-<slug>-<date>.json \
+    --in-place
+```
+
+Add `--dry-run` to see what would be pushed (business, recipient, subject)
+without calling Zoho at all — works even before setup has been run.
+
+## Running the tests
+
+```
+cd tools/zoho-draft-push
+python3 test_zoho_draft_push.py -v
+python3 test_setup_zoho_oauth.py -v
+```
+
+No real network calls, no real Zoho credentials required — every
+`urllib.request.urlopen` call is mocked.
