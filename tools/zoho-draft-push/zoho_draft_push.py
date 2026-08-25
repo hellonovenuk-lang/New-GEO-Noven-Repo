@@ -154,9 +154,11 @@ def _extract_draft_id(resp_data):
 
 def push_entry(entry, from_address, api_domain, account_id, access_token, dry_run=False):
     """Creates or updates exactly one Zoho draft for one outreach-prep
-    entry. Never raises - every failure mode (HTTP error, unexpected
-    response shape) is caught and returned as a FAILED status so one
-    business's problem never stops the batch (see process_outreach_prep)."""
+    entry. Never raises - every failure mode (HTTP error, connection
+    failure, a read that dies mid-response, unexpected response shape, and
+    anything else) is caught and returned as a FAILED status, so one
+    business's problem never stops the batch (see process_outreach_prep) and
+    never costs the batch the draft ids it has already earned."""
     if entry.get("withheld"):
         return {"zoho_push_status": "SKIPPED (withheld)"}
 
@@ -192,6 +194,16 @@ def push_entry(entry, from_address, api_domain, account_id, access_token, dry_ru
         return {"zoho_push_status": f"FAILED: {e.reason}"}
     except (json.JSONDecodeError, UnicodeDecodeError) as e:
         return {"zoho_push_status": f"FAILED: malformed response ({type(e).__name__})"}
+    except Exception as e:  # noqa: BLE001 - deliberate, see below
+        # A connection dropped *after* the response headers arrive raises out
+        # of resp.read() as http.client.IncompleteRead, ConnectionResetError,
+        # or a read-phase TimeoutError - none of which urllib wraps in
+        # URLError. If one of those escaped this function, main() would die
+        # before writing the JSON file at all, discarding every zoho_draft_id
+        # already earned earlier in the same batch even though those drafts
+        # exist in the real mailbox - and the next run would create duplicates.
+        # This function's contract is that it never raises; this keeps it.
+        return {"zoho_push_status": f"FAILED: {type(e).__name__}"}
 
     try:
         draft_id = existing_id or _extract_draft_id(resp_data)

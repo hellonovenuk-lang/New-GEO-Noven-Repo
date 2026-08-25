@@ -7,6 +7,7 @@ tools/prospect-compiler/test_scoring_engine.py.
 
 Run: python3 test_zoho_draft_push.py -v
 """
+import http.client
 import io
 import json
 import os
@@ -330,6 +331,60 @@ class PushEntryTests(unittest.TestCase):
         entry = self._entry()
         result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
         self.assertTrue(result["zoho_push_status"].startswith("FAILED"))
+
+    @patch("urllib.request.urlopen")
+    def test_read_phase_exception_recorded_as_failed_not_raised(self, mock_urlopen):
+        """A connection dropped after the response headers arrive raises out
+        of resp.read() as something urllib does not wrap in URLError. If that
+        escapes push_entry, main() dies before writing the JSON file and every
+        zoho_draft_id already earned in this batch is lost - so the next run
+        creates duplicate drafts in the real mailbox."""
+        fake_resp = _FakeResponse({"data": {"messageId": "1"}})
+
+        def _boom():
+            raise ConnectionResetError("connection reset by peer")
+
+        fake_resp.read = _boom
+        mock_urlopen.return_value = fake_resp
+        entry = self._entry()
+        result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        self.assertTrue(result["zoho_push_status"].startswith("FAILED"))
+        self.assertIn("ConnectionResetError", result["zoho_push_status"])
+
+    @patch("urllib.request.urlopen")
+    def test_incomplete_read_recorded_as_failed_not_raised(self, mock_urlopen):
+        fake_resp = _FakeResponse({"data": {"messageId": "1"}})
+
+        def _boom():
+            raise http.client.IncompleteRead(b"partial")
+
+        fake_resp.read = _boom
+        mock_urlopen.return_value = fake_resp
+        result = zdp.push_entry(self._entry(), "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
+        self.assertTrue(result["zoho_push_status"].startswith("FAILED"))
+        self.assertIn("IncompleteRead", result["zoho_push_status"])
+
+    @patch("urllib.request.urlopen")
+    def test_a_mid_batch_read_failure_does_not_lose_earlier_draft_ids(self, mock_urlopen):
+        """The whole point of the catch-all: entry 1's real, already-created
+        Zoho draft id must survive entry 2 blowing up mid-read."""
+        good = _FakeResponse({"data": {"messageId": "555"}})
+        bad = _FakeResponse({})
+
+        def _boom():
+            raise ConnectionResetError("connection reset by peer")
+
+        bad.read = _boom
+        mock_urlopen.side_effect = [good, bad]
+        entries = [
+            {"business": "First Ltd", "withheld": False, "contact_route": {"email": "a@example.com"},
+             "email_subject": "s", "email_body": "b"},
+            {"business": "Second Ltd", "withheld": False, "contact_route": {"email": "b@example.com"},
+             "email_subject": "s", "email_body": "b"},
+        ]
+        zdp.process_outreach_prep(entries, FAKE_CREDENTIALS, "tok")
+        self.assertEqual(entries[0]["zoho_draft_id"], "555")
+        self.assertTrue(entries[1]["zoho_push_status"].startswith("FAILED"))
 
     def test_dry_run_makes_no_http_call(self):
         entry = self._entry()
