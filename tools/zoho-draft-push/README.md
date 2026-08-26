@@ -97,10 +97,13 @@ access token on every run.
 - **Won't:** touch the email signature. That's Zoho's own account-level
   "signature for new mail" setting (see `assets/brand/email-signature.html`
   for how it's installed) — this tool doesn't duplicate it into the draft
-  body. The first real run will show whether Zoho applies it automatically
-  to an API-created draft the same way it does for one composed by hand; if
-  it doesn't, that's a decision for the owner to make once observed, not
-  something to guess at in code ahead of time.
+  body. **Confirmed on first real use (2026-08-26): Zoho does NOT apply the
+  signature automatically to an API-created draft** the way it does for one
+  composed by hand in the web UI. The owner adds it manually per draft
+  before sending. This tool still won't duplicate the signature into the
+  draft body itself — that would just create the second copy of it
+  `assets/brand/email-signature.html` already warns against — so this stays
+  a manual step, by design, not a gap to code around.
 
 ## Manual usage
 

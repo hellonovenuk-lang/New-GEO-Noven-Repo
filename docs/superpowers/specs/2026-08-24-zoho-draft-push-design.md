@@ -225,10 +225,30 @@ Applies to both `.claude/skills/outreach/SKILL.md` and
 1. **Which Zoho data center/region** — `.eu` or `.com`? Needed for
    `api_domain`/`accounts_domain`. Determined when the owner registers the
    Self Client (the API console URL itself indicates the region), recorded
-   by `setup_zoho_oauth.py`, not assumed here.
+   by `setup_zoho_oauth.py`, not assumed here. **Resolved 2026-08-26: `.eu`.**
+   One real-setup wrinkle worth recording: generating the grant token's two
+   required scopes (`ZohoMail.messages.CREATE`, `ZohoMail.accounts.READ`)
+   separately in Zoho's console produces two single-scope, single-use
+   tokens, neither of which alone authorizes both calls this tool makes.
+   Both scopes must be entered together in one generation step to get one
+   combined token — confirmed by hitting `INVALID_OAUTHSCOPE` on the
+   account-lookup call after exchanging a `.create`-only token first.
 2. **Does Zoho auto-apply the account's "new mail" signature to a draft
-   created via the API**, or only to ones composed through the web UI? Not
-   verifiable from documentation alone — first real test run will show it.
-   If it doesn't, that's a follow-up decision (still not solved by having
-   this script duplicate the signature HTML — see Non-goals) for the owner
-   to make once observed, not something to guess at now.
+   created via the API**, or only to ones composed through the web UI?
+   **Resolved 2026-08-26, on the first real test draft: no, it does not.**
+   The owner adds the signature manually per draft before sending — this
+   was always the fallback this spec anticipated (see Non-goals: not solved
+   by having the script duplicate the signature HTML), now confirmed as the
+   actual, permanent behavior rather than a possibility to watch for.
+3. **The Zoho account this tool authenticates against uses a send-as alias**
+   — the underlying mailbox is `hello@novenstudio.co.uk`, but the owner has
+   configured `hello@wardith.co.uk` as an alias and wants drafts to send
+   from that address. Zoho's account-lookup response doesn't reliably
+   surface which alias to prefer (this spec's design only ever read
+   `primaryEmailAddress`), so `setup_zoho_oauth.py` recorded the wrong
+   address on first run and `from_address` was corrected by hand in
+   `~/.wardith/zoho-credentials.json` after setup. Not a design gap worth
+   solving in code for a one-mailbox, one-operator setup — YAGNI — but
+   worth knowing if setup is ever re-run: check `from_address` in the
+   written credentials file against what the owner actually wants before
+   trusting it.
