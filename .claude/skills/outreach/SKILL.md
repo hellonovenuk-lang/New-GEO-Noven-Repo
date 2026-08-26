@@ -396,6 +396,23 @@ transient network error) does not stop this stage** — it's recorded in the
 script's summary and carried into Stage 8's report; every other business's
 draft still gets pushed.
 
+## Stage 7.6 — Auto-ingest into the CRM
+
+Immediately after Stage 7.5's Zoho push, pull this campaign's outreach
+output into the CRM so it's live there without a separate manual refresh:
+
+```
+python3 tools/crm/main.py ingest --slug <slug>
+```
+
+Same tool, same non-blocking rule as `/qualify`'s Stage 11.5: `ingest` is
+stdlib-only, safe to run any time, reads only files already written under
+`~/wardith-runs/<slug>/`, and its only write is to the CRM's own SQLite
+database. A failure here (CRM not set up yet, whatever) is recorded as one
+line in Stage 8's report and never blocks or invalidates this skill's own
+output — the outreach-prep files and Zoho drafts are already correct and
+complete before this stage runs.
+
 ## Stage 8 — Report
 
 - The campaign processed, and the working set size (how many
@@ -408,6 +425,7 @@ draft still gets pushed.
 - **Zoho push results** from Stage 7.5: how many drafts created, how many
   updated, how many failed and why (business name + reason for each
   failure), how many skipped as withheld.
+- **CRM ingest result** from Stage 7.6: ingested OK, or failed and why.
 - A one-line reminder: **nothing has been sent; the drafts are sitting in
   Zoho Mail's Drafts folder for review, and sending is a separate,
   explicit, later action the owner takes there.**
