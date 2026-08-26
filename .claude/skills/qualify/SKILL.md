@@ -77,6 +77,19 @@ source, an ambiguous but resolvable name variant, one business needing a
 second lookup) gets handled and folded into the final report, not raised as
 a mid-run question.
 
+**In a cloud session** (`$CLAUDE_CODE_REMOTE` is `true`), before Stage 1:
+attach the private CRM data repo — `hellonovenuk-lang/wardith-crm-data` —
+with `add_repo` (`access: "push"`, since Stage 11.5 needs to push back
+later) and clone it to `~/.wardith-crm-repo/`, then copy its `wardith.db` to
+`~/wardith-runs/crm/wardith.db` so Stage 5's CRM lookup and Stage 11.5's
+ingest see the real, current data instead of starting from an empty
+database every session. **This step is entirely optional and must never
+block the run**: if that repo doesn't exist yet, isn't reachable, or
+`add_repo` fails for any reason, note it once in this stage's summary and
+continue exactly as if no prior CRM data existed — same posture as a
+missing `COMPANIES_HOUSE_API_KEY`. Entirely unnecessary in a local session —
+the owner's own `~/wardith-runs/crm/` is already there.
+
 **Safe to run alongside an independent `/90qrun`.** This skill never touches
 `trade_run.py` and never writes to a raw run CSV — it only reads one already
 flagged complete, and only writes inside its own `~/wardith-runs/<slug>/`
@@ -575,14 +588,15 @@ never run, whatever) is recorded as one line in Stage 12's report — ingested
 OK, or failed and why — and never downgrades `PASS`/`PASS WITH
 REVIEW`/`INCOMPLETE`.
 
-**In a cloud session** (`$CLAUDE_CODE_REMOTE` is `true`), `wardith.db` only
-exists because the `SessionStart` hook pulled it from the private CRM data
-repo at the start of this session — it does not survive the VM being
-reclaimed unless pushed back. Once `ingest` above succeeds, commit and push
-`~/wardith-runs/crm/wardith.db` back to that repo before moving on, so the
-update this run just made isn't lost. Same non-blocking rule as the ingest
-step itself: a push failure is one more line in Stage 12's report, never a
-reason to downgrade the verdict.
+**In a cloud session** (`$CLAUDE_CODE_REMOTE` is `true`) where Stage 0 pulled
+`wardith.db` from the private CRM data repo into `~/.wardith-crm-repo/`:
+once `ingest` above succeeds, copy the updated
+`~/wardith-runs/crm/wardith.db` into that clone, commit, and push it back
+before moving on — the VM's disk, and the update this run just made, doesn't
+survive the VM being reclaimed otherwise. Same non-blocking rule as the
+ingest step itself: a push failure is one more line in Stage 12's report,
+never a reason to downgrade the verdict. Skip silently if Stage 0 never
+attached the CRM data repo (nothing to push back to).
 
 ## Stage 11.6 — Deliver the workbook to the owner's phone, in a cloud session
 

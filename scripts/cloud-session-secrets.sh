@@ -12,7 +12,10 @@
 # config itself. Expected secret keys in that Bitwarden Secrets Manager
 # project: OPENAI_API_KEY, OPENAI_MODEL, GEMINI_API_KEY, GEMINI_MODEL,
 # PERPLEXITY_API_KEY, PERPLEXITY_MODEL, ZOHO_CREDENTIALS_JSON (the full
-# contents of a zoho-credentials.json file, as one secret value).
+# contents of a zoho-credentials.json file, as one secret value), and
+# optionally COMPANIES_HOUSE_API_KEY (tools/companies-house/ - /qualify
+# Stage 5 falls back to manual WebFetch/WebSearch if this one is absent, so
+# it's fetched best-effort and never blocks the bootstrap).
 # BWS_PROJECT_ID is optional - set it to scope the lookup if the token can
 # see more than one project.
 set -uo pipefail

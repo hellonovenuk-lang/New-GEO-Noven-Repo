@@ -86,6 +86,14 @@ blocker (Stage 1's gate, a missing required field, a contact route that no
 longer resolves at all) — not for routine reads, checks or writes already
 covered by the scope above.
 
+**In a cloud session** (`$CLAUDE_CODE_REMOTE` is `true`) and
+`~/.wardith-crm-repo/` isn't already present from an earlier `/qualify` run
+this session: attach `hellonovenuk-lang/wardith-crm-data` with `add_repo`
+(`access: "push"`, needed by Stage 7.6) and clone it there, same as
+`/qualify`'s Stage 0. Entirely optional and never a blocker — if the repo
+doesn't exist yet or `add_repo` fails, note it once and continue; Stage 7.6
+simply has nothing to push back to. Not needed in a local session.
+
 ## Stage 1 — Load the campaign and gate the working set
 
 Load the campaign JSON. Confirm it validates against
@@ -412,6 +420,12 @@ database. A failure here (CRM not set up yet, whatever) is recorded as one
 line in Stage 8's report and never blocks or invalidates this skill's own
 output — the outreach-prep files and Zoho drafts are already correct and
 complete before this stage runs.
+
+**In a cloud session**, where Stage 0 attached and cloned
+`hellonovenuk-lang/wardith-crm-data` into `~/.wardith-crm-repo/`: once
+`ingest` above succeeds, copy the updated `~/wardith-runs/crm/wardith.db`
+into that clone, commit, and push it back, same non-blocking rule as
+everything else here. Skip silently if Stage 0 never attached the repo.
 
 ## Stage 8 — Report
 
