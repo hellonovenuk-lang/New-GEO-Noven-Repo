@@ -13,7 +13,21 @@
       "Bash(git log *)",
       "PowerShell",
       "WebFetch",
-      "WebSearch"
+      "WebSearch",
+      "Bash(bash scripts/cloud-session-secrets.sh)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR\"/scripts/cloud-session-secrets.sh"
+          }
+        ]
+      }
     ]
   }
 }

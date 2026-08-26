@@ -489,6 +489,21 @@ workbook reopens with populated calculated values in data-only mode —
 one narrow, documented exception (a non-ready business's `Outreach rank`
 cell).
 
+## Stage 11.5 — Deliver the workbook to the owner's phone, in a cloud session
+
+`~/wardith-runs/<slug>/<slug>-prospects.xlsx` lives only on the session's own
+disk, which is wiped when a cloud session's VM is reclaimed — there is no
+local machine for the owner to walk over to. If `$CLAUDE_CODE_REMOTE` is
+`true`, send the rendered workbook to the owner with the `SendUserFile` tool
+(`status: normal`, since this is the direct answer to a run they triggered)
+immediately after Stage 11's render succeeds, before writing the Stage 12
+report. This is a convenience copy for the owner to read or save locally
+later — it is not the system of record; the durable campaign JSON and CRM
+update (if configured) remain under `~/wardith-runs/<slug>/` and whatever
+durable store this environment is wired to. Skip this step entirely in a
+local session (`$CLAUDE_CODE_REMOTE` unset or `false`) — the owner already
+has the file on their own disk there.
+
 ## Stage 12 — Report
 
 Close every run with a concise completion summary — this is the one
@@ -515,7 +530,8 @@ checkpoint the owner sees, the same posture `/90qrun`'s own Step 7 takes:
   named individually with the one-line reason, so the owner knows exactly
   what still needs a human look and why.
 - File paths: the census CSV, `mention-counts.json`, the campaign JSON, and
-  the rendered workbook — all under `~/wardith-runs/<slug>/`.
+  the rendered workbook — all under `~/wardith-runs/<slug>/`. In a cloud
+  session, note that the workbook was also sent directly via Stage 11.5.
 - The Human Approval Table from the gate below, for the owner's actual
   review.
 
