@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Pipeline - Wardith CRM{% endblock %}
+{% block content %}
+<h1>Pipeline</h1>
+
+<h2>Funnel</h2>
+<table>
+  <tr><th>Stage</th><th>Count</th></tr>
+  {% for stage, count in funnel.items() %}
+  <tr><td>{{ stage }}</td><td>{{ count }}</td></tr>
+  {% endfor %}
+</table>
+
+<h2>Campaign x stage</h2>
+<table>
+  <tr><th>Campaign</th>
+  {% set all_stages = [] %}
+  {% for item in rollup %}{% for stage in item.stage_counts.keys() %}{% if stage not in all_stages %}{% set _ = all_stages.append(stage) %}{% endif %}{% endfor %}{% endfor %}
+  {% for stage in all_stages %}<th>{{ stage }}</th>{% endfor %}
+  </tr>
+  {% for item in rollup %}
+  <tr>
+    <td>{{ item.campaign.campaign_id }}</td>
+    {% for stage in all_stages %}<td>{{ item.stage_counts.get(stage, 0) }}</td>{% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

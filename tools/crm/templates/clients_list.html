@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Clients - Wardith CRM{% endblock %}
+{% block content %}
+<h1>Clients</h1>
+<p><a class="export" href="{{ url_for('export_clients') }}">Export CSV</a>
+   <a class="export" href="{{ url_for('clients_new') }}">Add a client</a></p>
+
+<table>
+  <tr><th>Business</th><th>Plan tier</th><th>Contact</th><th>Next check-in due</th>
+      <th>Retention/deletion due</th><th>Do not contact</th></tr>
+  {% for c in clients %}
+  <tr class="{{ 'due-today' if c.next_checkin_due_date and c.next_checkin_due_date <= today.isoformat() else '' }}">
+    <td><a href="{{ url_for('client_detail', client_id=c.client_id) }}">{{ c.business }}</a></td>
+    <td>{{ c.plan_tier or '' }}</td>
+    <td>{{ c.contact_person or '' }}</td>
+    <td>{{ c.next_checkin_due_date or '' }}</td>
+    <td>{{ c.retention_deletion_due_date or '' }}</td>
+    <td>{{ 'Yes' if c.do_not_contact else '' }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% if not clients %}<p class="muted">No clients yet - convert a prospect from its detail page, or add one directly.</p>{% endif %}
+{% endblock %}

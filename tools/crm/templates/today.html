@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Today - Wardith CRM{% endblock %}
+{% block content %}
+<h1>Today - {{ today.isoformat() }}</h1>
+
+{% macro prospect_table(rows) %}
+{% if rows %}
+<table>
+  <tr><th>Business</th><th>Campaign</th><th>Stage</th><th>Next action</th><th>Due</th></tr>
+  {% for row in rows %}
+  <tr class="{{ 'overdue' if row.state.overdue else '' }}">
+    <td><a href="{{ url_for('prospect_detail', prospect_id=row.prospect_id) }}">{{ row.business or row.prospect_id }}</a></td>
+    <td>{{ row.campaign_id }}</td>
+    <td>{{ row.state.stage }}</td>
+    <td>{{ row.state.next_action }}</td>
+    <td>{{ row.state.next_action_due_date or '' }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p class="muted">Nothing here.</p>
+{% endif %}
+{% endmacro %}
+
+<div class="section">
+  <h2>Overdue ({{ summary.overdue|length }})</h2>
+  {{ prospect_table(summary.overdue) }}
+</div>
+
+<div class="section">
+  <h2>Due today ({{ summary.due_today|length }})</h2>
+  {{ prospect_table(summary.due_today) }}
+</div>
+
+<div class="section">
+  <h2>Upcoming (7 days) ({{ summary.upcoming|length }})</h2>
+  {{ prospect_table(summary.upcoming) }}
+</div>
+
+<div class="section">
+  <h2>New outreach-ready ({{ summary.outreach_ready|length }})</h2>
+  {{ prospect_table(summary.outreach_ready) }}
+</div>
+
+<div class="section">
+  <h2>Replies needing action ({{ summary.replies|length }})</h2>
+  {{ prospect_table(summary.replies) }}
+</div>
+{% endblock %}

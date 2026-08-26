@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Prospects - Wardith CRM{% endblock %}
+{% block content %}
+<h1>Prospects</h1>
+<p><a class="export" href="{{ url_for('export_prospects') }}">Export CSV</a></p>
+
+<form method="get" class="filters">
+  <label>Campaign:
+    <select name="campaign_id" onchange="this.form.submit()">
+      <option value="">All</option>
+      {% for c in campaigns %}
+      <option value="{{ c.campaign_id }}" {{ 'selected' if c.campaign_id == campaign_id else '' }}>{{ c.campaign_id }}</option>
+      {% endfor %}
+    </select>
+  </label>
+</form>
+
+<table id="prospects-table">
+  <tr>
+    <th data-sort="business">Business</th>
+    <th data-sort="area">Area</th>
+    <th data-sort="priority">Priority</th>
+    <th data-sort="stage">Stage</th>
+    <th data-sort="next_action">Next action</th>
+    <th data-sort="due">Due</th>
+    <th data-sort="ready">Ready to email</th>
+  </tr>
+  {% for row in prospects %}
+  <tr class="{{ 'overdue' if row.state.overdue else ('due-today' if row.state.next_action_due_date == today else '') }}">
+    <td data-value="{{ row.business or '' }}"><a href="{{ url_for('prospect_detail', prospect_id=row.prospect_id) }}">{{ row.business or row.prospect_id }}</a></td>
+    <td data-value="{{ row.area or '' }}">{{ row.area or '' }}</td>
+    <td data-value="{{ row.priority or '' }}">{{ row.priority or '' }}</td>
+    <td data-value="{{ row.state.stage }}">{{ row.state.stage }}</td>
+    <td data-value="{{ row.state.next_action }}">{{ row.state.next_action }}</td>
+    <td data-value="{{ row.state.next_action_due_date or '' }}">{{ row.state.next_action_due_date or '' }}</td>
+    <td data-value="{{ row.ready_to_email or '' }}">{{ row.ready_to_email or '' }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<script>
+// Minimal client-side sort - click a header to sort the table by that column.
+document.querySelectorAll('#prospects-table th[data-sort]').forEach(function (th, idx) {
+  var asc = true;
+  th.addEventListener('click', function () {
+    var table = th.closest('table');
+    var rows = Array.from(table.querySelectorAll('tr')).slice(1);
+    rows.sort(function (a, b) {
+      var av = a.children[idx].dataset.value, bv = b.children[idx].dataset.value;
+      return asc ? av.localeCompare(bv) : bv.localeCompare(av);
+    });
+    rows.forEach(function (r) { table.appendChild(r); });
+    asc = !asc;
+  });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Settings - Wardith CRM{% endblock %}
+{% block content %}
+<h1>Settings: cadence table</h1>
+<p class="muted">Editing a row here changes what every prospect's next action/due date
+   recommends immediately, on the next page load - no re-import or restart needed.</p>
+
+<form method="post">
+  <table>
+    <tr>
+      <th>Key</th><th>Label</th><th>Next action</th><th>Cadence (days)</th><th>Stage label</th>
+      <th>Stops cold follow-up</th><th>Blocks outreach</th><th>Revenue event</th>
+    </tr>
+    {% for row in rows %}
+    <tr>
+      <td>{{ row.key }}<input type="hidden" name="key" value="{{ row.key }}"></td>
+      <td>{{ row.label }}</td>
+      <td><input type="text" name="next_action_label__{{ row.key }}" value="{{ row.next_action_label }}"></td>
+      <td><input type="number" name="cadence_days__{{ row.key }}" value="{{ row.cadence_days if row.cadence_days is not none else '' }}"></td>
+      <td><input type="text" name="stage_label__{{ row.key }}" value="{{ row.stage_label }}"></td>
+      <td><input type="checkbox" name="stops_cold_followup__{{ row.key }}" {{ 'checked' if row.stops_cold_followup else '' }}></td>
+      <td><input type="checkbox" name="blocks_outreach__{{ row.key }}" {{ 'checked' if row.blocks_outreach else '' }}></td>
+      <td><input type="checkbox" name="is_revenue_event__{{ row.key }}" {{ 'checked' if row.is_revenue_event else '' }}></td>
+    </tr>
+    {% endfor %}
+  </table>
+  <button type="submit" class="btn">Save all</button>
+</form>
+{% endblock %}

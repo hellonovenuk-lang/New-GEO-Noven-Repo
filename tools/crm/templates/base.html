@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Wardith CRM{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <span class="brand">Wardith CRM</span>
+  <nav>
+    <a href="{{ url_for('today') }}">Today</a>
+    <a href="{{ url_for('prospects_list') }}">Prospects</a>
+    <a href="{{ url_for('activities_log') }}">Activities</a>
+    <a href="{{ url_for('campaigns_view') }}">Campaigns</a>
+    <a href="{{ url_for('pipeline_view') }}">Pipeline</a>
+    <a href="{{ url_for('revenue_view') }}">Revenue</a>
+    <a href="{{ url_for('clients_list') }}">Clients</a>
+    <a href="{{ url_for('settings_cadence') }}">Settings</a>
+    <a href="{{ url_for('import_log_view') }}">Import Log</a>
+  </nav>
+  <form method="post" action="{{ url_for('run_ingest') }}" class="inline-form">
+    <button type="submit">Refresh from campaigns</button>
+  </form>
+</header>
+<main class="content">
+{% if request.args.get('ingested') %}
+  <p class="flash">Ingest complete: {{ request.args.get('campaigns') }} campaign(s),
+     {{ request.args.get('prospects') }} prospect(s) processed.</p>
+{% endif %}
+{% block content %}{% endblock %}
+</main>
+</body>
+</html>

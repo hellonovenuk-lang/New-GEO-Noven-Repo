@@ -1,0 +1,67 @@
+:root {
+  --border: #d8d8d8;
+  --muted: #666;
+  --accent: #1f4f3d;
+  --bg: #fbfbfa;
+  --overdue: #b3261e;
+  --due: #9a6a00;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  margin: 0;
+  color: #1a1a1a;
+  background: var(--bg);
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--accent);
+  color: white;
+  flex-wrap: wrap;
+}
+.topbar .brand { font-weight: 700; }
+.topbar nav a {
+  color: white;
+  text-decoration: none;
+  margin-right: 1rem;
+  opacity: 0.9;
+}
+.topbar nav a:hover { opacity: 1; text-decoration: underline; }
+.topbar form.inline-form { margin-left: auto; }
+.topbar button {
+  background: white;
+  color: var(--accent);
+  border: none;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.content { padding: 1.5rem; max-width: 1200px; margin: 0 auto; }
+h1, h2 { color: var(--accent); }
+table { border-collapse: collapse; width: 100%; margin-bottom: 1.5rem; font-size: 0.92rem; }
+th, td { border: 1px solid var(--border); padding: 0.4rem 0.6rem; text-align: left; vertical-align: top; }
+th { background: #f0efe8; cursor: pointer; user-select: none; }
+tr.overdue { background: #fdecea; }
+tr.due-today { background: #fff6e0; }
+.badge { display: inline-block; padding: 0.1rem 0.5rem; border-radius: 10px; font-size: 0.78rem; background: #eee; }
+.badge.overdue { background: var(--overdue); color: white; }
+.badge.due { background: var(--due); color: white; }
+.section { margin-bottom: 2rem; }
+form.stack { display: flex; flex-direction: column; gap: 0.6rem; max-width: 480px; }
+form.stack label { font-weight: 600; font-size: 0.85rem; }
+form.stack input, form.stack select, form.stack textarea {
+  padding: 0.4rem; border: 1px solid var(--border); border-radius: 4px; font: inherit;
+}
+form.stack button, .btn {
+  align-self: flex-start; background: var(--accent); color: white; border: none;
+  padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; text-decoration: none; display: inline-block;
+}
+.muted { color: var(--muted); }
+.flash { background: #e6f3ea; border: 1px solid #a9d6b8; padding: 0.5rem 0.9rem; border-radius: 4px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.filters { margin-bottom: 1rem; }
+a.export { font-size: 0.85rem; margin-right: 1rem; }

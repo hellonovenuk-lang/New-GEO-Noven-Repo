@@ -29,7 +29,7 @@ Sole trader, one person. `wardith.co.uk`.
 | **Prepare outreach for a qualified campaign** | `/outreach` — `.claude/skills/outreach/` |
 | Compile a market run into an outreach workbook | `tools/prospect-compiler/` |
 | Push prepared outreach into Zoho Mail as drafts — never sends | `tools/zoho-draft-push/` |
-| **Run the daily CRM** (every campaign and prospect, next actions, revenue) | `wardith-crm.xlsx`, built by `tools/tracker/` — data lives in `~/wardith-runs/tracker/`, never here |
+| **Run the daily CRM** (every campaign, prospect and client, next actions, revenue) | `python3 tools/crm/main.py serve` — data lives in `~/wardith-runs/crm/`, never here |
 | Scan for news/research supporting "Why this matters" | `/context-watch` — `.claude/skills/context-watch/` |
 
 **No monthly-plan record template exists yet.** Maintain, Grow and Lead are
@@ -41,7 +41,7 @@ first actual recurring client, not designed further pre-revenue.
 ```
 playbook/   how the business is run. Start with business.md
 tools/      the scripts: trade-run, mention-count, prospect-compiler,
-            tracker, site-check, name-check, zoho-draft-push
+            crm, tracker, site-check, name-check, zoho-draft-push
 site/       the website. Astro, deployed from main by Netlify
 assets/     brand originals and the email signature
 archive/    superseded documents, kept for one review cycle

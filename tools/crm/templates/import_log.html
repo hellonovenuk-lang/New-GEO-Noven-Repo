@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Import Log - Wardith CRM{% endblock %}
+{% block content %}
+<h1>Import Log</h1>
+<table>
+  <tr><th>Timestamp</th><th>Message</th></tr>
+  {% for e in entries %}
+  <tr><td>{{ e.timestamp }}</td><td>{{ e.message }}</td></tr>
+  {% endfor %}
+</table>
+{% if not entries %}<p class="muted">No warnings recorded.</p>{% endif %}
+{% endblock %}

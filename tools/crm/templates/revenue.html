@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Revenue - Wardith CRM{% endblock %}
+{% block content %}
+<h1>Revenue</h1>
+<p class="muted">A record of amounts typed in against a sold/started activity - not invoicing
+   or payment processing. See <a href="{{ url_for('activities_log') }}">Activities</a> to log a sale.</p>
+
+<h2>Total: £{{ '%.2f'|format(summary.total) }}</h2>
+
+<h2>By month</h2>
+<table>
+  <tr><th>Month</th><th>Amount</th></tr>
+  {% for month, amount in summary.monthly.items()|sort %}
+  <tr><td>{{ month }}</td><td>£{{ '%.2f'|format(amount) }}</td></tr>
+  {% endfor %}
+</table>
+
+<h2>Itemised</h2>
+<table>
+  <tr><th>Date</th><th>Business</th><th>Activity</th><th>Amount</th><th>Running total</th></tr>
+  {% for item in summary.itemised %}
+  <tr>
+    <td>{{ item.activity_date }}</td>
+    <td><a href="{{ url_for('prospect_detail', prospect_id=item.prospect_id) }}">{{ item.business }}</a></td>
+    <td>{{ item.activity_type }}</td>
+    <td>£{{ '%.2f'|format(item.amount_gbp or 0) }}</td>
+    <td>£{{ '%.2f'|format(item.running_total) }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

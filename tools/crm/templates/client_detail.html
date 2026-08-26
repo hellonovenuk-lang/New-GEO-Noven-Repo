@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}{{ client.business if client else 'Add client' }} - Wardith CRM{% endblock %}
+{% block content %}
+<h1>{{ client.business if client else 'Add a client' }}</h1>
+{% if client and client.prospect_id %}
+<p class="muted">Converted from prospect
+   <a href="{{ url_for('prospect_detail', prospect_id=client.prospect_id) }}">{{ client.prospect_id }}</a></p>
+{% endif %}
+
+<div class="grid-2">
+<section>
+<h2>Client record</h2>
+<form method="post" class="stack">
+  <label>Business<input type="text" name="business" value="{{ client.business if client else '' }}" required></label>
+  <label>Contact person<input type="text" name="contact_person" value="{{ client.contact_person if client else '' }}"></label>
+  <label>Role<input type="text" name="role" value="{{ client.role if client else '' }}"></label>
+  <label>Email<input type="email" name="contact_email" value="{{ client.contact_email if client else '' }}"></label>
+  <label>Phone<input type="text" name="contact_phone" value="{{ client.contact_phone if client else '' }}"></label>
+  {% if client %}
+  <label>Plan tier
+    <select name="plan_tier">
+      {% for tier in ['', 'Audit only', 'Foundation', 'Maintain', 'Grow', 'Lead'] %}
+      <option value="{{ tier }}" {{ 'selected' if client.plan_tier == tier else '' }}>{{ tier or '(none)' }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>Audit sold<input type="date" name="audit_sold_date" value="{{ client.audit_sold_date or '' }}"></label>
+  <label>Audit completed<input type="date" name="audit_completed_date" value="{{ client.audit_completed_date or '' }}"></label>
+  <label>Foundation sold<input type="date" name="foundation_sold_date" value="{{ client.foundation_sold_date or '' }}"></label>
+  <label>Foundation completed<input type="date" name="foundation_completed_date" value="{{ client.foundation_completed_date or '' }}"></label>
+  <label>Ongoing started<input type="date" name="ongoing_started_date" value="{{ client.ongoing_started_date or '' }}"></label>
+  <label>Next check-in due<input type="date" name="next_checkin_due_date" value="{{ client.next_checkin_due_date or '' }}"></label>
+  <label>Retention/deletion due<input type="date" name="retention_deletion_due_date" value="{{ client.retention_deletion_due_date or '' }}"></label>
+  <label><input type="checkbox" name="do_not_contact" {{ 'checked' if client.do_not_contact else '' }}> Do not contact (permanent)</label>
+  <label>Notes (e.g. where the audit folder lives on disk)<textarea name="notes" rows="4">{{ client.notes or '' }}</textarea></label>
+  {% endif %}
+  <button type="submit">Save</button>
+</form>
+</section>
+
+{% if client %}
+<section>
+<h2>Log a service activity</h2>
+<form method="post" class="stack">
+  <input type="hidden" name="form" value="client_activity">
+  <label>Type
+    <select name="activity_type" required>
+      {% for t in ['Call', 'Check-in', 'Issue', 'Deliverable sent', 'Note'] %}
+      <option value="{{ t }}">{{ t }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>Date<input type="date" name="activity_date" value="{{ today.isoformat() }}" required></label>
+  <label>Notes<textarea name="notes" rows="2"></textarea></label>
+  <button type="submit">Add</button>
+</form>
+
+<h2>Service history</h2>
+{% if activities %}
+<table>
+  <tr><th>Date</th><th>Type</th><th>Notes</th></tr>
+  {% for a in activities %}
+  <tr><td>{{ a.activity_date }}</td><td>{{ a.activity_type }}</td><td>{{ a.notes or '' }}</td></tr>
+  {% endfor %}
+</table>
+{% else %}
+<p class="muted">No service activity logged yet.</p>
+{% endif %}
+</section>
+{% endif %}
+</div>
+{% endblock %}

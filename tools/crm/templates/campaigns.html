@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Campaigns - Wardith CRM{% endblock %}
+{% block content %}
+<h1>Campaigns</h1>
+<table>
+  <tr><th>Campaign</th><th>Sector</th><th>Geography</th><th>Run date</th><th>Pipeline stage</th>
+      <th>Market</th><th>Outreach</th><th>Excluded</th><th>Stage breakdown</th></tr>
+  {% for item in rollup %}
+  <tr>
+    <td><a href="{{ url_for('prospects_list', campaign_id=item.campaign.campaign_id) }}">{{ item.campaign.campaign_id }}</a></td>
+    <td>{{ item.campaign.sector or '' }}</td>
+    <td>{{ item.campaign.geography or '' }}</td>
+    <td>{{ item.campaign.run_date or '' }}</td>
+    <td>{{ item.campaign.pipeline_stage or '' }}</td>
+    <td>{{ item.campaign.market_count if item.campaign.market_count is not none else '' }}</td>
+    <td>{{ item.campaign.outreach_count if item.campaign.outreach_count is not none else '' }}</td>
+    <td>{{ item.campaign.excluded_count if item.campaign.excluded_count is not none else '' }}</td>
+    <td>
+      {% for stage, count in item.stage_counts.items() %}{{ stage }}: {{ count }}{% if not loop.last %}, {% endif %}{% endfor %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
