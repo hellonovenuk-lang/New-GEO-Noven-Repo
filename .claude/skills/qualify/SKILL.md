@@ -78,7 +78,7 @@ second lookup) gets handled and folded into the final report, not raised as
 a mid-run question.
 
 **Before Stage 1, sync `~/wardith-runs/` against the private
-`hellonovenuk-lang/wardith-runs-data` repo** — this holds every trade-run
+`hellonovenuk-lang/wardith-crm-data` repo** — this holds every trade-run
 CSV, campaign folder and the CRM db, so a run started on one machine/session
 picks up what an earlier run on a *different* one already produced (see
 `scripts/wardith-runs-sync.sh`'s own header for the full mechanism and why
@@ -596,7 +596,7 @@ never run, whatever) is recorded as one line in Stage 12's report — ingested
 OK, or failed and why — and never downgrades `PASS`/`PASS WITH
 REVIEW`/`INCOMPLETE`.
 
-**Where Stage 0 synced against `wardith-runs-data`** (cloud or local): once
+**Where Stage 0 synced against `wardith-crm-data`** (cloud or local): once
 `ingest` above succeeds, run
 `bash scripts/wardith-runs-sync.sh push "qualify <slug>"` to commit and push
 everything this run wrote — the campaign folder and the updated `wardith.db`

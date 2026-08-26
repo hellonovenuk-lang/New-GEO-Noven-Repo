@@ -48,7 +48,7 @@ a campaign JSON, or pulling in campaigns from another machine).
 exists on whichever machine last had it - a cloud session's VM is wiped
 when it's reclaimed. `scripts/wardith-runs-sync.sh` (repo root) syncs the
 whole `~/wardith-runs/` tree, this db included, against the private
-`hellonovenuk-lang/wardith-runs-data` repo, and `/90qrun`/`/qualify`/`/outreach`
+`hellonovenuk-lang/wardith-crm-data` repo, and `/90qrun`/`/qualify`/`/outreach`
 already call it automatically in a cloud session. On the laptop, run
 `bash scripts/wardith-runs-sync.sh pull` before opening `serve` (or running
 `ingest`) to pick up anything a phone-triggered run added, and

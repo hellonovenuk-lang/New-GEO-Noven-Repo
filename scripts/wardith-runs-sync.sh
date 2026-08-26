@@ -1,7 +1,7 @@
 #!/bin/bash
 # Syncs ~/wardith-runs/ (trade-run CSVs, campaign folders, outreach prep,
 # and the CRM's wardith.db) against a private GitHub repo,
-# hellonovenuk-lang/wardith-runs-data, so this data survives between an
+# hellonovenuk-lang/wardith-crm-data, so this data survives between an
 # ephemeral cloud VM being reclaimed AND between the laptop and the cloud -
 # not just the CRM db, everything under ~/wardith-runs/. Never run inside
 # this repository's own git history; ~/.wardith-runs-repo/ is a separate
@@ -13,7 +13,7 @@
 #
 # Cloud sessions: this script does NOT attach or clone the repo itself - it
 # has no credentials of its own to do that. The calling skill must first
-# call the add_repo tool for hellonovenuk-lang/wardith-runs-data
+# call the add_repo tool for hellonovenuk-lang/wardith-crm-data
 # (access: "push") and run the clone command that tool returns, cloning to
 # ~/.wardith-runs-repo/. Once that clone exists, `pull`/`push` here work the
 # same on cloud and local.
@@ -31,7 +31,7 @@
 # than one place at once in practice, so it's synced as a plain overwrite.
 set -uo pipefail
 
-REPO_URL="https://github.com/hellonovenuk-lang/wardith-runs-data.git"
+REPO_URL="https://github.com/hellonovenuk-lang/wardith-crm-data.git"
 CLONE_DIR="$HOME/.wardith-runs-repo"
 RUNS_DIR="$HOME/wardith-runs"
 DB_REL="crm/wardith.db"
@@ -47,12 +47,12 @@ case "$cmd" in
   pull)
     if [ ! -d "$CLONE_DIR/.git" ]; then
       if [ "${CLAUDE_CODE_REMOTE:-}" = "true" ]; then
-        echo "wardith-runs-sync: $CLONE_DIR not found. In a cloud session, call add_repo for hellonovenuk-lang/wardith-runs-data (access: push) and clone it there first - this script never attaches a repo itself." >&2
+        echo "wardith-runs-sync: $CLONE_DIR not found. In a cloud session, call add_repo for hellonovenuk-lang/wardith-crm-data (access: push) and clone it there first - this script never attaches a repo itself." >&2
         exit 0
       fi
       echo "wardith-runs-sync: cloning $REPO_URL to $CLONE_DIR" >&2
       git clone "$REPO_URL" "$CLONE_DIR" || {
-        echo "wardith-runs-sync: clone failed - continuing with no synced data. Create hellonovenuk-lang/wardith-runs-data if it doesn't exist yet." >&2
+        echo "wardith-runs-sync: clone failed - continuing with no synced data. Create hellonovenuk-lang/wardith-crm-data if it doesn't exist yet." >&2
         exit 0
       }
     else

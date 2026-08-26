@@ -79,7 +79,7 @@ this is the one input this skill genuinely cannot infer.
    against an empty environment. Every command in Step 4 and Step 5 must
    re-source the file in the *same* call as the script invocation — see
    those steps.
-3. **Sync `~/wardith-runs/` against the private `hellonovenuk-lang/wardith-runs-data`
+3. **Sync `~/wardith-runs/` against the private `hellonovenuk-lang/wardith-crm-data`
    repo** before the prior-run cross-check below reads it — see
    `scripts/wardith-runs-sync.sh`'s header for the full mechanism. Cloud
    session: attach the repo with `add_repo` (`access: "push"`, needed at the
@@ -302,7 +302,7 @@ hand when the next stage (market census, mention counting, qualification)
 starts — write it now, once, while everything is fresh, rather than
 reconstructing it later.
 
-**Where Step 2 synced against `wardith-runs-data`**: run
+**Where Step 2 synced against `wardith-crm-data`**: run
 `bash scripts/wardith-runs-sync.sh push "90qrun <slug>"` now, so the raw CSV
 and run log this run just produced are there for a `/qualify` run in a
 *different* session or on the laptop to pick up — in a cloud session this
@@ -324,7 +324,7 @@ Then report to the user — **this is the only checkpoint they see**:
   the branch, and say plainly that it hasn't been pushed or opened as a PR),
   the run CSV, the run log — the latter two under `~/wardith-runs/`, never
   inside the repo.
-- Whether the run CSV/log were also synced to `wardith-runs-data`: pushed
+- Whether the run CSV/log were also synced to `wardith-crm-data`: pushed
   OK, or the repo wasn't set up — never affects the verdict above.
 - One line stating plainly that this is stage one only, and prospect
   qualification is separate, later work.

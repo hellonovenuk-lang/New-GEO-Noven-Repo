@@ -87,7 +87,7 @@ longer resolves at all) — not for routine reads, checks or writes already
 covered by the scope above.
 
 **Before Stage 1, sync `~/wardith-runs/` against the private
-`hellonovenuk-lang/wardith-runs-data` repo**, same as `/qualify`'s Stage 0
+`hellonovenuk-lang/wardith-crm-data` repo**, same as `/qualify`'s Stage 0
 (see `scripts/wardith-runs-sync.sh`'s header for the mechanism):
 
 - **Cloud session**, and `~/.wardith-runs-repo/` isn't already cloned from an
@@ -430,7 +430,7 @@ line in Stage 8's report and never blocks or invalidates this skill's own
 output — the outreach-prep files and Zoho drafts are already correct and
 complete before this stage runs.
 
-**Where Stage 0 synced against `wardith-runs-data`**: once `ingest` above
+**Where Stage 0 synced against `wardith-crm-data`**: once `ingest` above
 succeeds, run `bash scripts/wardith-runs-sync.sh push "outreach <slug>"` to
 push this run's outreach-prep files and the updated `wardith.db` back — in a
 cloud session this is what stops them being lost when the VM is reclaimed.
