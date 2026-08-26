@@ -79,7 +79,18 @@ this is the one input this skill genuinely cannot infer.
    against an empty environment. Every command in Step 4 and Step 5 must
    re-source the file in the *same* call as the script invocation — see
    those steps.
-3. **Confirm the loaded models are the intended prospecting models, not
+3. **Sync `~/wardith-runs/` against the private `hellonovenuk-lang/wardith-runs-data`
+   repo** before the prior-run cross-check below reads it — see
+   `scripts/wardith-runs-sync.sh`'s header for the full mechanism. Cloud
+   session: attach the repo with `add_repo` (`access: "push"`, needed at the
+   end of Step 7) and run the clone command it returns, then
+   `bash scripts/wardith-runs-sync.sh pull`. Local session: just
+   `bash scripts/wardith-runs-sync.sh pull` (self-clones on first use).
+   Entirely optional and never blocks — if the repo doesn't exist yet or
+   `add_repo` fails, note it once and continue with whatever's already on
+   disk, same posture as a missing `COMPANIES_HOUSE_API_KEY` elsewhere in
+   this pipeline.
+4. **Confirm the loaded models are the intended prospecting models, not
    stale or leftover values — before Step 4 spends anything.** Two named
    failure modes, both observed on a real run, plus a general check:
    - **`PERPLEXITY_MODEL` must be a bare model name (`sonar`), never a
@@ -105,11 +116,11 @@ this is the one input this skill genuinely cannot infer.
      a deliberate one, confirmed by the owner, not a stale env.ps1 default
      nobody re-checked. This is exactly the gap that let 19 of 90 queries
      run on a stale `OPENAI_MODEL` before anyone noticed, purely by chance.
-4. Print one reminder line that provider spend caps
+5. Print one reminder line that provider spend caps
    (`playbook/records-and-data.md`, "Spend caps") should already be
    confirmed set on each provider dashboard. This is not something you can
    check programmatically — say it once, then move on. Do not block on it.
-5. Check the current git branch. If it's the default branch, create and
+6. Check the current git branch. If it's the default branch, create and
    switch to a new branch for this run (e.g. `trade-run/<slug>`) before
    writing the question file in Step 3 — this repo's convention
    (`CLAUDE.md`, "Always work on a branch") applies to the question file
@@ -291,6 +302,15 @@ hand when the next stage (market census, mention counting, qualification)
 starts — write it now, once, while everything is fresh, rather than
 reconstructing it later.
 
+**Where Step 2 synced against `wardith-runs-data`**: run
+`bash scripts/wardith-runs-sync.sh push "90qrun <slug>"` now, so the raw CSV
+and run log this run just produced are there for a `/qualify` run in a
+*different* session or on the laptop to pick up — in a cloud session this
+is what stops them being lost when the VM is reclaimed. Non-blocking, same
+as everything else in this pipeline: note a push failure in the report
+below, never treat it as a reason to change the verdict. Skip silently if
+Step 2 never found or synced the repo.
+
 Then report to the user — **this is the only checkpoint they see**:
 
 - **Verdict**, stated plainly: `PASS` (90/90 clean first time) /
@@ -304,6 +324,8 @@ Then report to the user — **this is the only checkpoint they see**:
   the branch, and say plainly that it hasn't been pushed or opened as a PR),
   the run CSV, the run log — the latter two under `~/wardith-runs/`, never
   inside the repo.
+- Whether the run CSV/log were also synced to `wardith-runs-data`: pushed
+  OK, or the repo wasn't set up — never affects the verdict above.
 - One line stating plainly that this is stage one only, and prospect
   qualification is separate, later work.
 
