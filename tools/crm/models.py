@@ -12,6 +12,7 @@ request time instead of being translated into a spreadsheet formula.
 from datetime import date, datetime, timezone
 
 import cadence
+import ingest
 
 # ---------------------------------------------------------------------------
 # Campaigns
@@ -49,6 +50,31 @@ def list_prospects(conn, campaign_id=None):
 
 def get_prospect(conn, prospect_id):
     row = conn.execute(_PROSPECT_QUERY + " WHERE p.prospect_id = ?", (prospect_id,)).fetchone()
+    return dict(row) if row else None
+
+
+def find_prospect(conn, business=None, company_number=None):
+    """Read-only lookup for /qualify's optional CRM-backed research reuse
+    (Stage 5/6, `.claude/skills/qualify/SKILL.md`): does this business
+    already have a researched prospect record from a past campaign? Matches
+    on the same business_key ingest.business_key_for() computes when
+    writing a row - a verified company_number preferred, a slugified
+    business name as fallback - across every campaign, returning the most
+    recently imported match if more than one campaign has researched the
+    same business. Never called by ingest itself; this is the only read
+    path into `prospects` that runs *before* the row it might be reading -
+    a business appearing in a run for the first time (the common case)
+    simply gets no match, which is not an error."""
+    if company_number and str(company_number).strip() and "[PLACEHOLDER]" not in str(company_number):
+        key = f"cn-{ingest.slugify(str(company_number))}"
+    elif business and business.strip():
+        key = ingest.slugify(business)
+    else:
+        return None
+    row = conn.execute(
+        "SELECT * FROM prospects WHERE business_key = ? ORDER BY last_imported_at DESC LIMIT 1",
+        (key,),
+    ).fetchone()
     return dict(row) if row else None
 
 

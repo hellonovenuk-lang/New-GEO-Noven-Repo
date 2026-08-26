@@ -37,6 +37,13 @@ to run at any time, including mid-run on another campaign. Research
 fields are overwritten on every refresh; hand-entered activity, notes and
 `do_not_contact` are never touched by it.
 
+**`/qualify` and `/outreach` now call this automatically** at the end of
+their own run (`/qualify`'s Stage 11.5, `/outreach`'s Stage 7.6), scoped to
+just the campaign that finished - so a fresh prospect or outreach record is
+already here without a manual refresh. The button and the bare `ingest`
+command still exist for an on-demand full re-sync (e.g. after hand-editing
+a campaign JSON, or pulling in campaigns from another machine).
+
 ## What's in it
 
 - **Today** - overdue/due-today/upcoming/outreach-ready/replies-needing-action,
@@ -64,6 +71,14 @@ Prospect identity (`prospect_id`) prefers a verified Companies House
 `company_number` over a slugified business name when one is known, so a
 business rename doesn't silently create a duplicate row - see
 `business_key_for()` in `ingest.py`.
+
+**`models.find_prospect()` is a second, read-only consumer of that same
+`business_key`:** `/qualify` Stages 5-6 call it before researching a
+business's legal entity or contact route from scratch, to reuse a prior
+campaign's already-researched record for the same business (still subject
+to `/qualify`'s own current-status re-check and staleness threshold - see
+`.claude/skills/qualify/SKILL.md`). It never writes anything; only `ingest`
+writes to `prospects`.
 
 ## What this doesn't do
 

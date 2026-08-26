@@ -295,15 +295,77 @@ genuinely operates in the sector and geography, and — before it can reach
 or LLP, no entry in `outreach[]`, full stop. Search by name, never by
 postcode or SIC-code sweep.
 
+**Check the CRM for a prior record before researching from zero.** The same
+business can turn up in more than one campaign (overlapping geographies, a
+re-qualified slug, a business excluded before and now reconsidered). If
+`~/wardith-runs/crm/wardith.db` exists, look up this business —
+`tools/crm/models.py`'s `find_prospect(conn, business=..., company_number=...)`,
+matching the same `business_key` `ingest.business_key_for()` computes
+(a verified `company_number` first, a slugified business name otherwise),
+across every campaign, returning the most recently imported match:
+
+```python
+import sys; sys.path.insert(0, "tools/crm")
+import db, models
+conn = db.connect()  # default path; skip this whole check if the DB file doesn't exist yet
+prior = models.find_prospect(conn, business="<business>")
+```
+
+If `~/wardith-runs/crm/wardith.db` doesn't exist yet, this check is simply
+unavailable — skip it and research fresh, same as always; never treat a
+missing database as a blocker.
+
+**On a hit:** use the record's `legal_entity`/`company_number`/
+`company_status` (this stage) and `contact_person`/`role`/`contact_email`/
+`decision_maker_linkedin`/`accessibility`/`accessibility_notes` (Stage 6) as
+a verified starting point instead of researching from zero — but this is a
+starting point, not a silent trust: Stage 7's existing light current-status
+check still applies to these reused values (a director can leave, a generic
+inbox can replace a named one), and a record whose `last_imported_at` is
+more than roughly 90 days old should be treated as a strong hint to
+re-verify in full rather than reused outright, since accessibility and
+contact routes go stale faster than legal-entity status does. Record the
+reuse explicitly — a `sources[]` entry or a `notes` line, e.g. "contact/
+legal data reused from CRM record, originally researched `<date>`" — so it's
+auditable, not a silent shortcut, matching `CAMPAIGN-HANDOFF.md` §4's
+evidence-traceability rules.
+
+**On a miss, or no CRM database yet**, research fresh, unchanged.
+
+**Use `tools/companies-house/company_lookup.py` for fresh research, not manual
+browsing, when `COMPANIES_HOUSE_API_KEY` is set:**
+
+```
+python3 tools/companies-house/company_lookup.py --name "<business>" --json
+```
+
+Review the returned candidates and apply exactly the same judgement this
+stage has always required — a same-name chain, a dissolved-then-
+reincorporated entity, or several plausible matches is still not a defensible
+match; **the API returns candidates, it does not pick one.** Confirm a match
+with `--number <company_number>` when the profile detail (status, type,
+registered office) is needed to settle it. If `COMPANIES_HOUSE_API_KEY`
+isn't set (see `tools/companies-house/README.md` for the free one-time
+setup), fall back to the existing `WebFetch`/`WebSearch` method against the
+Companies House website unchanged — this is never a reason to stop or block
+a `/qualify` run.
+
 ## Stage 6 — Contact-route, decision-maker discovery, and accessibility classification
 
-For businesses heading toward `outreach[]`: find the best verified contact
-route, preferring in order — named owner/director/manager with a business
-email, named decision-maker with a contact form or business inbox, a
-verified generic business inbox, an official website contact form, then a
-trusted portal enquiry route only if nothing better exists. Never invent a
-name, role, or email, and never infer an email pattern that hasn't been
-independently confirmed on the business's own site or a trusted source.
+**If Stage 5's CRM check found a prior record for this business**, start
+from its `contact_person`/`role`/`contact_email`/`decision_maker_linkedin`/
+`accessibility`/`accessibility_notes` per that stage's reuse rule (still
+subject to Stage 7's light current-status check, and to full re-research if
+the record is stale) rather than researching this section from zero.
+
+For businesses heading toward `outreach[]` with no reusable prior record:
+find the best verified contact route, preferring in order — named
+owner/director/manager with a business email, named decision-maker with a
+contact form or business inbox, a verified generic business inbox, an
+official website contact form, then a trusted portal enquiry route only if
+nothing better exists. Never invent a name, role, or email, and never infer
+an email pattern that hasn't been independently confirmed on the business's
+own site or a trusted source.
 
 **Then classify decision-maker accessibility** — the full method,
 categories, and evidence rules live in `CAMPAIGN-HANDOFF.md`'s
@@ -489,20 +551,52 @@ workbook reopens with populated calculated values in data-only mode —
 one narrow, documented exception (a non-ready business's `Outreach rank`
 cell).
 
-## Stage 11.5 — Deliver the workbook to the owner's phone, in a cloud session
+## Stage 11.5 — Auto-ingest into the CRM
+
+Immediately after a successful render, pull this campaign into the CRM so
+its data is live there without a separate manual refresh:
+
+```
+python3 tools/crm/main.py ingest --slug <slug>
+```
+
+`tools/crm/ingest.py` is stdlib-only (`requirements.txt`'s `flask`
+dependency is used only by `serve`, never by `ingest`) and is documented as
+safe to run at any time, including mid-run on another campaign
+(`tools/crm/README.md`). It reads only files already written by this skill
+under `~/wardith-runs/<slug>/`, and its only write is to the CRM's own
+SQLite database (`~/wardith-runs/crm/wardith.db`) — never back into the
+campaign JSON or workbook.
+
+**Never let this stage affect this run's verdict.** The campaign JSON and
+workbook are already correct and complete before this stage runs; a failure
+here (the CRM not yet set up, `pip install -r tools/crm/requirements.txt`
+never run, whatever) is recorded as one line in Stage 12's report — ingested
+OK, or failed and why — and never downgrades `PASS`/`PASS WITH
+REVIEW`/`INCOMPLETE`.
+
+**In a cloud session** (`$CLAUDE_CODE_REMOTE` is `true`), `wardith.db` only
+exists because the `SessionStart` hook pulled it from the private CRM data
+repo at the start of this session — it does not survive the VM being
+reclaimed unless pushed back. Once `ingest` above succeeds, commit and push
+`~/wardith-runs/crm/wardith.db` back to that repo before moving on, so the
+update this run just made isn't lost. Same non-blocking rule as the ingest
+step itself: a push failure is one more line in Stage 12's report, never a
+reason to downgrade the verdict.
+
+## Stage 11.6 — Deliver the workbook to the owner's phone, in a cloud session
 
 `~/wardith-runs/<slug>/<slug>-prospects.xlsx` lives only on the session's own
 disk, which is wiped when a cloud session's VM is reclaimed — there is no
 local machine for the owner to walk over to. If `$CLAUDE_CODE_REMOTE` is
 `true`, send the rendered workbook to the owner with the `SendUserFile` tool
 (`status: normal`, since this is the direct answer to a run they triggered)
-immediately after Stage 11's render succeeds, before writing the Stage 12
-report. This is a convenience copy for the owner to read or save locally
-later — it is not the system of record; the durable campaign JSON and CRM
-update (if configured) remain under `~/wardith-runs/<slug>/` and whatever
-durable store this environment is wired to. Skip this step entirely in a
-local session (`$CLAUDE_CODE_REMOTE` unset or `false`) — the owner already
-has the file on their own disk there.
+immediately after Stage 11.5, before writing the Stage 12 report. This is a
+convenience copy for the owner to read or save locally later — it is not
+the system of record; the durable campaign JSON and the CRM update from
+Stage 11.5 remain the system of record. Skip this step entirely in a local
+session (`$CLAUDE_CODE_REMOTE` unset or `false`) — the owner already has the
+file on their own disk there.
 
 ## Stage 12 — Report
 
@@ -531,7 +625,9 @@ checkpoint the owner sees, the same posture `/90qrun`'s own Step 7 takes:
   what still needs a human look and why.
 - File paths: the census CSV, `mention-counts.json`, the campaign JSON, and
   the rendered workbook — all under `~/wardith-runs/<slug>/`. In a cloud
-  session, note that the workbook was also sent directly via Stage 11.5.
+  session, note that the workbook was also sent directly via Stage 11.6.
+- **CRM ingest result** from Stage 11.5: ingested OK, or failed and why —
+  never affects the verdict above.
 - The Human Approval Table from the gate below, for the owner's actual
   review.
 
