@@ -30,13 +30,25 @@ if [ -z "${BWS_ACCESS_TOKEN:-}" ]; then
 fi
 
 if ! command -v bws >/dev/null 2>&1; then
-  echo "cloud-session-secrets: bws CLI not found - installing now. For faster session starts, add 'curl -fsSL https://bitwarden.com/secrets/install | sh' to this environment's Setup script instead, so it's cached." >&2
-  curl -fsSL https://bitwarden.com/secrets/install | sh >/dev/null 2>&1 || true
-  export PATH="$HOME/.bws/bin:$PATH"
+  # bitwarden.com/secrets/install (the officially documented one-liner) 404s
+  # as of 2026-08 - confirmed dead, not a transient blip. crates.io is a
+  # more durable install path anyway: it's unconditionally in this
+  # environment's Trusted network allowlist (no add_repo/attachment needed,
+  # unlike a GitHub-releases download would require), and cargo/rustc are
+  # pre-installed on every Anthropic-hosted cloud session VM. CONFIRMED
+  # WORKING (2026-08-27) but compiling from source takes ~4-5 minutes, every
+  # single time this branch runs - SessionStart hooks are NOT cached like an
+  # environment's Setup script is. Strongly add 'cargo install bws --locked'
+  # to this environment's Setup script field (claude.ai/code -> environment
+  # dialog) so it's compiled once and cached, and this slow branch never
+  # runs at all on later sessions.
+  echo "cloud-session-secrets: bws CLI not found - installing via 'cargo install bws' now. This takes ~4-5 minutes because it compiles from source - add 'cargo install bws --locked' to this environment's Setup script so this only ever happens once." >&2
+  cargo install bws --locked --quiet >/dev/null 2>&1 || true
+  export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
 if ! command -v bws >/dev/null 2>&1; then
-  echo "cloud-session-secrets: bws install failed - secrets not bootstrapped." >&2
+  echo "cloud-session-secrets: bws install failed (cargo missing, or 'cargo install bws' itself failed) - secrets not bootstrapped." >&2
   exit 0
 fi
 
