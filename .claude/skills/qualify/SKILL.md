@@ -77,6 +77,27 @@ source, an ambiguous but resolvable name variant, one business needing a
 second lookup) gets handled and folded into the final report, not raised as
 a mid-run question.
 
+**Before Stage 1, sync `~/wardith-runs/` against the private
+`hellonovenuk-lang/wardith-crm-data` repo** — this holds every trade-run
+CSV, campaign folder and the CRM db, so a run started on one machine/session
+picks up what an earlier run on a *different* one already produced (see
+`scripts/wardith-runs-sync.sh`'s own header for the full mechanism and why
+it's a separate repo from this one):
+
+- **Cloud session** (`$CLAUDE_CODE_REMOTE` is `true`): attach the repo with
+  `add_repo` (`access: "push"`, needed for the push-back after Stage 11.5)
+  and run the clone command it returns, cloning to `~/.wardith-runs-repo/`.
+  Then run `bash scripts/wardith-runs-sync.sh pull`.
+- **Local session**: just run `bash scripts/wardith-runs-sync.sh pull` — it
+  clones the repo itself on first use, using credentials already on this
+  machine.
+
+**Entirely optional and must never block the run**: if the repo doesn't
+exist yet, isn't reachable, or `add_repo` fails, the script says so on
+stderr and exits 0 — note that once in this stage's summary and continue
+exactly as if no prior data existed, same posture as a missing
+`COMPANIES_HOUSE_API_KEY`.
+
 **Safe to run alongside an independent `/90qrun`.** This skill never touches
 `trade_run.py` and never writes to a raw run CSV — it only reads one already
 flagged complete, and only writes inside its own `~/wardith-runs/<slug>/`
@@ -575,6 +596,30 @@ never run, whatever) is recorded as one line in Stage 12's report — ingested
 OK, or failed and why — and never downgrades `PASS`/`PASS WITH
 REVIEW`/`INCOMPLETE`.
 
+**Where Stage 0 synced against `wardith-crm-data`** (cloud or local): once
+`ingest` above succeeds, run
+`bash scripts/wardith-runs-sync.sh push "qualify <slug>"` to commit and push
+everything this run wrote — the campaign folder and the updated `wardith.db`
+— back to that repo. In a cloud session this is the only thing standing
+between this run's output and it being lost when the VM is reclaimed. Same
+non-blocking rule as the ingest step itself: a push failure is one more line
+in Stage 12's report, never a reason to downgrade the verdict. Skip silently
+if Stage 0 never found or attached the repo.
+
+## Stage 11.6 — Deliver the workbook to the owner's phone, in a cloud session
+
+`~/wardith-runs/<slug>/<slug>-prospects.xlsx` lives only on the session's own
+disk, which is wiped when a cloud session's VM is reclaimed — there is no
+local machine for the owner to walk over to. If `$CLAUDE_CODE_REMOTE` is
+`true`, send the rendered workbook to the owner with the `SendUserFile` tool
+(`status: normal`, since this is the direct answer to a run they triggered)
+immediately after Stage 11.5, before writing the Stage 12 report. This is a
+convenience copy for the owner to read or save locally later — it is not
+the system of record; the durable campaign JSON and the CRM update from
+Stage 11.5 remain the system of record. Skip this step entirely in a local
+session (`$CLAUDE_CODE_REMOTE` unset or `false`) — the owner already has the
+file on their own disk there.
+
 ## Stage 12 — Report
 
 Close every run with a concise completion summary — this is the one
@@ -601,7 +646,8 @@ checkpoint the owner sees, the same posture `/90qrun`'s own Step 7 takes:
   named individually with the one-line reason, so the owner knows exactly
   what still needs a human look and why.
 - File paths: the census CSV, `mention-counts.json`, the campaign JSON, and
-  the rendered workbook — all under `~/wardith-runs/<slug>/`.
+  the rendered workbook — all under `~/wardith-runs/<slug>/`. In a cloud
+  session, note that the workbook was also sent directly via Stage 11.6.
 - **CRM ingest result** from Stage 11.5: ingested OK, or failed and why —
   never affects the verdict above.
 - The Human Approval Table from the gate below, for the owner's actual

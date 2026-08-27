@@ -44,6 +44,19 @@ already here without a manual refresh. The button and the bare `ingest`
 command still exist for an on-demand full re-sync (e.g. after hand-editing
 a campaign JSON, or pulling in campaigns from another machine).
 
+**Using this alongside phone-triggered cloud runs?** `wardith.db` only
+exists on whichever machine last had it - a cloud session's VM is wiped
+when it's reclaimed. `scripts/wardith-runs-sync.sh` (repo root) syncs the
+whole `~/wardith-runs/` tree, this db included, against the private
+`hellonovenuk-lang/wardith-crm-data` repo, and `/90qrun`/`/qualify`/`/outreach`
+already call it automatically in a cloud session. On the laptop, run
+`bash scripts/wardith-runs-sync.sh pull` before opening `serve` (or running
+`ingest`) to pick up anything a phone-triggered run added, and
+`bash scripts/wardith-runs-sync.sh push "laptop CRM update"` after you make
+changes here - `pull` refuses to overwrite a local `wardith.db` that's
+changed since the last sync, so a forgotten `push` is a stop, not a silent
+loss of hand-entered notes.
+
 ## What's in it
 
 - **Today** - overdue/due-today/upcoming/outreach-ready/replies-needing-action,

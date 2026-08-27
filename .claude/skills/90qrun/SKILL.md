@@ -52,16 +52,45 @@ this is the one input this skill genuinely cannot infer.
 2. Confirm all six env vars are set and non-empty. If any are missing, stop
    and quote the exact fix from `tools/trade-run/README.md` ("Setting up the
    keys") — do not guess a model name or proceed with a partial set.
-   **Load them by running `. "$HOME\.noven\env.ps1"` inside an actual
-   PowerShell tool call — never via the `!` user-command prefix.** That
-   prefix runs a different shell, which cannot interpret a PowerShell-syntax
-   file at all, and will silently leave every env var unset rather than
-   error. **Shell state does not carry over between separate tool
-   invocations, either.** Sourcing the file in one call and running
-   `trade_run.py` in a later, separate call means the script runs against an
-   empty environment. Every command in Step 4 and Step 5 must re-source the
-   file in the *same* call as the script invocation — see those steps.
-3. **Confirm the loaded models are the intended prospecting models, not
+
+   **Check `$CLAUDE_CODE_REMOTE` first — it decides which shell and which
+   keys file the rest of this skill uses.**
+
+   - **Cloud session (`CLAUDE_CODE_REMOTE=true`):** there is no PowerShell in
+     this VM. A repo-committed `SessionStart` hook already ran before this
+     skill started and, if it succeeded, has written `~/.noven/env` (bash
+     format) from the Bitwarden vault. **Load it by running
+     `source ~/.noven/env` inside an actual Bash tool call.** If the file
+     doesn't exist or the vars still come back empty after sourcing it, that
+     hook failed or the Bitwarden bootstrap token isn't configured on this
+     environment — stop and say so plainly rather than guessing; this is a
+     preflight failure, not something to work around.
+   - **Local session (Windows):** **Load them by running
+     `. "$HOME\.noven\env.ps1"` inside an actual PowerShell tool call — never
+     via the `!` user-command prefix.** That prefix runs a different shell,
+     which cannot interpret a PowerShell-syntax file at all, and will
+     silently leave every env var unset rather than error.
+   - **Local session (macOS/Linux):** `source ~/.noven/env` inside a Bash
+     tool call, same as the cloud case above.
+
+   **Shell state does not carry over between separate tool invocations,
+   either, in any of the three cases.** Sourcing the file in one call and
+   running `trade_run.py` in a later, separate call means the script runs
+   against an empty environment. Every command in Step 4 and Step 5 must
+   re-source the file in the *same* call as the script invocation — see
+   those steps.
+3. **Sync `~/wardith-runs/` against the private `hellonovenuk-lang/wardith-crm-data`
+   repo** before the prior-run cross-check below reads it — see
+   `scripts/wardith-runs-sync.sh`'s header for the full mechanism. Cloud
+   session: attach the repo with `add_repo` (`access: "push"`, needed at the
+   end of Step 7) and run the clone command it returns, then
+   `bash scripts/wardith-runs-sync.sh pull`. Local session: just
+   `bash scripts/wardith-runs-sync.sh pull` (self-clones on first use).
+   Entirely optional and never blocks — if the repo doesn't exist yet or
+   `add_repo` fails, note it once and continue with whatever's already on
+   disk, same posture as a missing `COMPANIES_HOUSE_API_KEY` elsewhere in
+   this pipeline.
+4. **Confirm the loaded models are the intended prospecting models, not
    stale or leftover values — before Step 4 spends anything.** Two named
    failure modes, both observed on a real run, plus a general check:
    - **`PERPLEXITY_MODEL` must be a bare model name (`sonar`), never a
@@ -87,11 +116,11 @@ this is the one input this skill genuinely cannot infer.
      a deliberate one, confirmed by the owner, not a stale env.ps1 default
      nobody re-checked. This is exactly the gap that let 19 of 90 queries
      run on a stale `OPENAI_MODEL` before anyone noticed, purely by chance.
-4. Print one reminder line that provider spend caps
+5. Print one reminder line that provider spend caps
    (`playbook/records-and-data.md`, "Spend caps") should already be
    confirmed set on each provider dashboard. This is not something you can
    check programmatically — say it once, then move on. Do not block on it.
-5. Check the current git branch. If it's the default branch, create and
+6. Check the current git branch. If it's the default branch, create and
    switch to a new branch for this run (e.g. `trade-run/<slug>`) before
    writing the question file in Step 3 — this repo's convention
    (`CLAUDE.md`, "Always work on a branch") applies to the question file
@@ -144,9 +173,19 @@ without having to open the file.
 
 ## Step 4 — Smoke test (automatic, not a manual checkpoint)
 
-Run inside a single PowerShell tool call — the env-var sourcing and the
-script invocation are in the *same* call, per Step 2 item 2, never split
-across two:
+Run inside a single tool call of whichever shell Step 2 identified — the
+env-var sourcing and the script invocation are in the *same* call, per Step
+2 item 2, never split across two.
+
+Cloud session (Bash tool call):
+
+```bash
+source ~/.noven/env
+python3 trade_run.py --questions questions-<slug>.csv --client <slug> \
+    --location <geography> --out ~/wardith-runs/<slug>.csv --smoke
+```
+
+Local Windows session (PowerShell tool call):
 
 ```powershell
 . "$HOME\.noven\env.ps1"
@@ -187,8 +226,18 @@ what's expected. Continue immediately once cleared — no prompt, no pause.
 
 ## Step 5 — Full run (automatic, this is the real spend)
 
-Same rule as Step 4 — source the keys file inside this same PowerShell call,
-never a separate one:
+Same rule as Step 4 — source the keys file inside this same tool call, never
+a separate one:
+
+Cloud session (Bash tool call):
+
+```bash
+source ~/.noven/env
+python3 trade_run.py --questions questions-<slug>.csv --client <slug> \
+    --location <geography> --out ~/wardith-runs/<slug>.csv --cap 90
+```
+
+Local Windows session (PowerShell tool call):
 
 ```powershell
 . "$HOME\.noven\env.ps1"
@@ -253,6 +302,15 @@ hand when the next stage (market census, mention counting, qualification)
 starts — write it now, once, while everything is fresh, rather than
 reconstructing it later.
 
+**Where Step 2 synced against `wardith-crm-data`**: run
+`bash scripts/wardith-runs-sync.sh push "90qrun <slug>"` now, so the raw CSV
+and run log this run just produced are there for a `/qualify` run in a
+*different* session or on the laptop to pick up — in a cloud session this
+is what stops them being lost when the VM is reclaimed. Non-blocking, same
+as everything else in this pipeline: note a push failure in the report
+below, never treat it as a reason to change the verdict. Skip silently if
+Step 2 never found or synced the repo.
+
 Then report to the user — **this is the only checkpoint they see**:
 
 - **Verdict**, stated plainly: `PASS` (90/90 clean first time) /
@@ -266,6 +324,8 @@ Then report to the user — **this is the only checkpoint they see**:
   the branch, and say plainly that it hasn't been pushed or opened as a PR),
   the run CSV, the run log — the latter two under `~/wardith-runs/`, never
   inside the repo.
+- Whether the run CSV/log were also synced to `wardith-crm-data`: pushed
+  OK, or the repo wasn't set up — never affects the verdict above.
 - One line stating plainly that this is stage one only, and prospect
   qualification is separate, later work.
 

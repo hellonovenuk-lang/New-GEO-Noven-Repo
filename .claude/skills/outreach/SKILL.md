@@ -86,6 +86,23 @@ blocker (Stage 1's gate, a missing required field, a contact route that no
 longer resolves at all) — not for routine reads, checks or writes already
 covered by the scope above.
 
+**Before Stage 1, sync `~/wardith-runs/` against the private
+`hellonovenuk-lang/wardith-crm-data` repo**, same as `/qualify`'s Stage 0
+(see `scripts/wardith-runs-sync.sh`'s header for the mechanism):
+
+- **Cloud session**, and `~/.wardith-runs-repo/` isn't already cloned from an
+  earlier skill run this session: attach the repo with `add_repo`
+  (`access: "push"`, needed by Stage 7.6) and run the clone command it
+  returns. Then run `bash scripts/wardith-runs-sync.sh pull`.
+- **Local session**: run `bash scripts/wardith-runs-sync.sh pull` — it
+  self-clones on first use.
+
+Entirely optional and never a blocker — if the repo doesn't exist yet,
+isn't reachable, or `add_repo` fails, the script says so and exits 0; note
+it once and continue. Without this, `/outreach` still reads
+`~/wardith-runs/<slug>/` exactly as it always has — this only affects
+whether that folder came from *this* session or a prior one.
+
 ## Stage 1 — Load the campaign and gate the working set
 
 Load the campaign JSON. Confirm it validates against
@@ -412,6 +429,13 @@ database. A failure here (CRM not set up yet, whatever) is recorded as one
 line in Stage 8's report and never blocks or invalidates this skill's own
 output — the outreach-prep files and Zoho drafts are already correct and
 complete before this stage runs.
+
+**Where Stage 0 synced against `wardith-crm-data`**: once `ingest` above
+succeeds, run `bash scripts/wardith-runs-sync.sh push "outreach <slug>"` to
+push this run's outreach-prep files and the updated `wardith.db` back — in a
+cloud session this is what stops them being lost when the VM is reclaimed.
+Same non-blocking rule as everything else here. Skip silently if Stage 0
+never found or synced the repo.
 
 ## Stage 8 — Report
 
