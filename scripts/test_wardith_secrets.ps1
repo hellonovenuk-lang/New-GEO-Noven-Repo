@@ -10,6 +10,7 @@ $binDir = Join-Path $root 'bin'
 $probe = Join-Path $root 'probe.ps1'
 $result = Join-Path $root 'result.json'
 $script = Join-Path $PSScriptRoot 'wardith-secrets.ps1'
+$powershell = (Get-Process -Id $PID).Path
 
 try {
     New-Item -ItemType Directory -Path $configDir, $binDir | Out-Null
@@ -40,7 +41,7 @@ $zohoPath = [Environment]::GetEnvironmentVariable('WARDITH_ZOHO_CREDENTIALS')
 
     $env:WARDITH_SECRETS_CONFIG_DIR = $configDir
     $env:WARDITH_BWS_CLI = Join-Path $binDir 'bws.cmd'
-    & $script run pwsh -NoProfile -File $probe $result
+    & $script run $powershell -NoProfile -File $probe $result
     if ($LASTEXITCODE -ne 0) { throw 'secret-wrapped child process failed' }
 
     $observed = Get-Content -Raw $result | ConvertFrom-Json
@@ -54,9 +55,12 @@ $zohoPath = [Environment]::GetEnvironmentVariable('WARDITH_ZOHO_CREDENTIALS')
     $missingCli = Join-Path $binDir 'missing-secret-bws.cmd'
     '@echo [{"key":"OPENAI_API_KEY","value":"only-one"}]' | Set-Content -LiteralPath $missingCli
     $env:WARDITH_BWS_CLI = $missingCli
-    $missingOutput = (& pwsh -NoProfile -File $script run pwsh -NoProfile -Command 'exit 0' 2>&1 | Out-String)
-    Assert-True ($LASTEXITCODE -ne 0) 'missing required secrets did not stop execution'
-    Assert-True ($missingOutput -match 'missing required secret') 'missing-secret failure was not explained safely'
+    $ErrorActionPreference = 'Continue'
+    $missingOutput = (& $powershell -NoProfile -ExecutionPolicy Bypass -File $script run $powershell -NoProfile -Command 'exit 0' 2>&1 | Out-String)
+    $missingExit = $LASTEXITCODE
+    $ErrorActionPreference = 'Stop'
+    Assert-True ($missingExit -ne 0) 'missing required secrets did not stop execution'
+    Assert-True ($missingOutput -match 'missing\s+required\s+secret') 'missing-secret failure was not explained safely'
     Assert-True (-not ($missingOutput -match 'only-one|machine-token-for-test')) 'a secret appeared in failure output'
 
     $badZohoCli = Join-Path $binDir 'bad-zoho-bws.cmd'
@@ -64,8 +68,11 @@ $zohoPath = [Environment]::GetEnvironmentVariable('WARDITH_ZOHO_CREDENTIALS')
         Set-Content -LiteralPath $badZohoCli
     $env:WARDITH_BWS_CLI = $badZohoCli
     $marker = Join-Path $root 'child-ran'
-    $badZohoOutput = (& pwsh -NoProfile -File $script run pwsh -NoProfile -Command "Set-Content -LiteralPath '$marker' -Value ran" 2>&1 | Out-String)
-    Assert-True ($LASTEXITCODE -ne 0) 'malformed Zoho credentials did not stop execution'
+    $ErrorActionPreference = 'Continue'
+    $badZohoOutput = (& $powershell -NoProfile -ExecutionPolicy Bypass -File $script run $powershell -NoProfile -Command "Set-Content -LiteralPath '$marker' -Value ran" 2>&1 | Out-String)
+    $badZohoExit = $LASTEXITCODE
+    $ErrorActionPreference = 'Stop'
+    Assert-True ($badZohoExit -ne 0) 'malformed Zoho credentials did not stop execution'
     Assert-True (-not (Test-Path -LiteralPath $marker)) 'child ran with malformed Zoho credentials'
     Assert-True ($badZohoOutput -match 'missing field') 'malformed Zoho failure did not identify its safe cause'
 
