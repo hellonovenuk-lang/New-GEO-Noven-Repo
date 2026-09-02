@@ -23,7 +23,7 @@ a trade that runs on referral has nothing for us to find.
 ### 2. Run the discovery questions once for the trade
 
 Not once per business. Six questions × three assistants × five runs = **90
-queries, about $15**, and it answers the question for every business in the area
+queries, about $5**, and it answers the question for every business in the area
 at once. The runner is `tools/trade-run/`, the runbook is beside it. `/90qrun`
 (`.claude/skills/90qrun/`) automates this whole step end to end, from just
 the trade and place name.

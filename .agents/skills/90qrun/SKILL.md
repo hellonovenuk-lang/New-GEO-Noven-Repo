@@ -159,7 +159,7 @@ row` in `notes`. Check all three automatically against the five checks
 `tools/trade-run/README.md` lists for a human to run by eye — do the ones
 that are actually checkable in code, and treat the rest as a soft signal:
 
-**Stop here — genuinely serious, spending the full $15 would be wasted:**
+**Stop here — genuinely serious, spending the full ~$5 would be wasted:**
 - Any provider's smoke row carries an `errors` value (that provider is
   unreachable or rejecting the call outright).
 - Any provider's smoke row has an empty `sources_cited` (the search/grounding
@@ -202,7 +202,7 @@ geography-aware; see the comment on `call_perplexity()` in `trade_run.py`
 for why this exists and what it does and doesn't cover across the three
 providers.
 
-Six questions x three providers x five runs = 90 queries, ~$15 across the
+Six questions x three providers x five runs = 90 queries, roughly $5 across the
 three providers combined (per `playbook/outreach-process.md`). This runs to
 completion (or until it errors row-by-row and keeps going — the script logs
 each error and continues, per its own design) with no approval checkpoint.
@@ -230,7 +230,7 @@ automatic retry closes for free.
 see below): re-run the *exact same Step 5 command* once. `trade_run.py`'s
 own resume logic skips every row that already succeeded and retries only
 the ones that errored, so this costs at most a few pennies, not another
-$15. Then run the validator again.
+$5. Then run the validator again.
 
 **Retry exactly once.** Do not loop. If the second validation still exits 1,
 stop and report the exact remaining gap (provider, question, run number,
