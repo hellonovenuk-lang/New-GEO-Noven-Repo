@@ -356,6 +356,10 @@ evidence-traceability rules.
 **Use `tools/companies-house/company_lookup.py` for fresh research, not manual
 browsing, when `COMPANIES_HOUSE_API_KEY` is set:**
 
+On Windows, invoke it through `scripts/wardith-secrets.ps1 run` so the key is
+retrieved from Bitwarden for this process rather than read from a plaintext
+local file.
+
 ```
 python3 tools/companies-house/company_lookup.py --name "<business>" --json
 ```

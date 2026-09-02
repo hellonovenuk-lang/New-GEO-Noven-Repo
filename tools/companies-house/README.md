@@ -18,16 +18,9 @@ not the verification step.
 1. Register a free account and application at
    [developer.company-information.service.gov.uk](https://developer.company-information.service.gov.uk/).
 2. Create a "Live" application (`REST API` access) and copy its API key.
-3. Add it the same way every other provider key already goes in, per
-   `playbook/records-and-data.md`:
-   - Bitwarden, as the copy of last resort.
-   - `~/.noven/env`, outside any git repository:
-     ```sh
-     cat >> ~/.noven/env <<'EOF'
-     export COMPANIES_HOUSE_API_KEY="..."
-     EOF
-     chmod 600 ~/.noven/env
-     ```
+3. Add it to the Wardith Bitwarden Secrets Manager project with the exact key
+   `COMPANIES_HOUSE_API_KEY`. On Windows, `scripts/wardith-secrets.ps1` loads
+   it for `/qualify` without keeping a plaintext local copy.
 4. **Done.** `/qualify` Stage 5 will use it automatically from then on. If
    `COMPANIES_HOUSE_API_KEY` isn't set, Stage 5 falls back to the manual
    `WebFetch`/`WebSearch` method unchanged — this is never a blocker to
@@ -40,7 +33,7 @@ step, no refresh token, no `~/.wardith/` credentials file.
 
 Delete or deactivate the application at
 [developer.company-information.service.gov.uk](https://developer.company-information.service.gov.uk/),
-then remove the key from `~/.noven/env` and Bitwarden.
+then remove the secret from the Wardith Bitwarden project.
 
 ## What this tool will and won't do
 

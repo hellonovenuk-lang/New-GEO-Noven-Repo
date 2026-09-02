@@ -368,6 +368,10 @@ repository.** This skill's only writes are the two files above.
 
 ## Stage 7.5 — Push drafts to Zoho Mail
 
+On Windows, run the command below through `scripts/wardith-secrets.ps1 run`;
+the wrapper supplies a temporary Zoho credential file from Bitwarden and
+removes it when the process exits.
+
 Immediately after writing both Stage 7 files, push every drafted email into
 Zoho Mail as a real draft:
 

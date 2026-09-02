@@ -37,9 +37,10 @@ sending (summarised under "What this tool will and won't do" below).
    `0600`, following `playbook/records-and-data.md`'s rule for secrets. The
    grant token itself is single-use and expires within minutes either way,
    so there's nothing further to revoke if this step is repeated.
-4. **Done.** `/outreach` will use this automatically from now on. To
-   re-run setup later (e.g. a new region, a revoked token), just run step 3
-   again — it overwrites the credentials file.
+4. Store the complete generated JSON as `ZOHO_CREDENTIALS_JSON` in the Wardith
+   Bitwarden Secrets Manager project. On Windows, delete the plaintext file
+   after verifying `scripts/wardith-secrets.ps1 status`; the wrapper creates
+   a restricted temporary copy only while `/outreach` is running.
 
 ## How to revoke access
 

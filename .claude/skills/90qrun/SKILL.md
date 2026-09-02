@@ -65,11 +65,11 @@ this is the one input this skill genuinely cannot infer.
      hook failed or the Bitwarden bootstrap token isn't configured on this
      environment — stop and say so plainly rather than guessing; this is a
      preflight failure, not something to work around.
-   - **Local session (Windows):** **Load them by running
-     `. "$HOME\.noven\env.ps1"` inside an actual PowerShell tool call — never
-     via the `!` user-command prefix.** That prefix runs a different shell,
-     which cannot interpret a PowerShell-syntax file at all, and will
-     silently leave every env var unset rather than error.
+   - **Local session (Windows):** run provider commands through
+     `scripts/wardith-secrets.ps1 run`. Check it first with
+     `pwsh -File scripts/wardith-secrets.ps1 status`; it retrieves the exact
+     approved secrets from Bitwarden for the child process and keeps no
+     plaintext key file.
    - **Local session (macOS/Linux):** `source ~/.noven/env` inside a Bash
      tool call, same as the cloud case above.
 
@@ -185,11 +185,11 @@ python3 trade_run.py --questions questions-<slug>.csv --client <slug> \
     --location <geography> --out ~/wardith-runs/<slug>.csv --smoke
 ```
 
-Local Windows session (PowerShell tool call):
+Local Windows session, from the repository root:
 
 ```powershell
-. "$HOME\.noven\env.ps1"
-py trade_run.py --questions questions-<slug>.csv --client <slug> `
+pwsh -File scripts/wardith-secrets.ps1 run py tools/trade-run/trade_run.py `
+    --questions tools/trade-run/questions-<slug>.csv --client <slug> `
     --location <geography> --out ~/wardith-runs/<slug>.csv --smoke
 ```
 
@@ -226,8 +226,7 @@ what's expected. Continue immediately once cleared — no prompt, no pause.
 
 ## Step 5 — Full run (automatic, this is the real spend)
 
-Same rule as Step 4 — source the keys file inside this same tool call, never
-a separate one:
+Same rule as Step 4 — use the environment-specific loader in the same call:
 
 Cloud session (Bash tool call):
 
@@ -237,11 +236,11 @@ python3 trade_run.py --questions questions-<slug>.csv --client <slug> \
     --location <geography> --out ~/wardith-runs/<slug>.csv --cap 90
 ```
 
-Local Windows session (PowerShell tool call):
+Local Windows session, from the repository root:
 
 ```powershell
-. "$HOME\.noven\env.ps1"
-py trade_run.py --questions questions-<slug>.csv --client <slug> `
+pwsh -File scripts/wardith-secrets.ps1 run py tools/trade-run/trade_run.py `
+    --questions tools/trade-run/questions-<slug>.csv --client <slug> `
     --location <geography> --out ~/wardith-runs/<slug>.csv --cap 90
 ```
 

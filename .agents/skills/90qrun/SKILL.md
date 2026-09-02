@@ -52,15 +52,12 @@ this is the one input this skill genuinely cannot infer.
 2. Confirm all six env vars are set and non-empty. If any are missing, stop
    and quote the exact fix from `tools/trade-run/README.md` ("Setting up the
    keys") — do not guess a model name or proceed with a partial set.
-   **Load them by running `. "$HOME\.noven\env.ps1"` inside an actual
-   PowerShell tool call — never via the `!` user-command prefix.** That
-   prefix runs a different shell, which cannot interpret a PowerShell-syntax
-   file at all, and will silently leave every env var unset rather than
-   error. **Shell state does not carry over between separate tool
-   invocations, either.** Sourcing the file in one call and running
-   `trade_run.py` in a later, separate call means the script runs against an
-   empty environment. Every command in Step 4 and Step 5 must re-source the
-   file in the *same* call as the script invocation — see those steps.
+   **On Windows, run provider commands through
+   `scripts/wardith-secrets.ps1 run`.** It fetches the approved values from
+   Bitwarden Secrets Manager for that child process and never leaves API keys
+   in a plaintext local file. Check it first with
+   `pwsh -File scripts/wardith-secrets.ps1 status`; a failure is a blocking
+   preflight error. Every command in Step 4 and Step 5 must use the wrapper.
 3. **Confirm the loaded models are the intended prospecting models, not
    stale or leftover values — before Step 4 spends anything.** Two named
    failure modes, both observed on a real run, plus a general check:
@@ -144,13 +141,11 @@ without having to open the file.
 
 ## Step 4 — Smoke test (automatic, not a manual checkpoint)
 
-Run inside a single PowerShell tool call — the env-var sourcing and the
-script invocation are in the *same* call, per Step 2 item 2, never split
-across two:
+Run from the repository root through the Bitwarden wrapper:
 
 ```powershell
-. "$HOME\.noven\env.ps1"
-py trade_run.py --questions questions-<slug>.csv --client <slug> `
+pwsh -File scripts/wardith-secrets.ps1 run py tools/trade-run/trade_run.py `
+    --questions tools/trade-run/questions-<slug>.csv --client <slug> `
     --location <geography> --out ~/wardith-runs/<slug>.csv --smoke
 ```
 
@@ -187,12 +182,11 @@ what's expected. Continue immediately once cleared — no prompt, no pause.
 
 ## Step 5 — Full run (automatic, this is the real spend)
 
-Same rule as Step 4 — source the keys file inside this same PowerShell call,
-never a separate one:
+Same rule as Step 4 — run from the repository root through the wrapper:
 
 ```powershell
-. "$HOME\.noven\env.ps1"
-py trade_run.py --questions questions-<slug>.csv --client <slug> `
+pwsh -File scripts/wardith-secrets.ps1 run py tools/trade-run/trade_run.py `
+    --questions tools/trade-run/questions-<slug>.csv --client <slug> `
     --location <geography> --out ~/wardith-runs/<slug>.csv --cap 90
 ```
 

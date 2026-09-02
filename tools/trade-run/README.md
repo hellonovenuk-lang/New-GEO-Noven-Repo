@@ -36,31 +36,27 @@ times.
 
 ## Setting up the keys
 
-Keys live in a file outside every git repository — `~/.noven/env` (macOS/Linux)
-or `$HOME\.noven\env.ps1` (Windows) — and are loaded deliberately into the
-shell before running, never from a profile script that loads them
-automatically:
-
-```
-. "$HOME\.noven\env.ps1"      # Windows PowerShell
-source ~/.noven/env           # macOS/Linux
-```
-
-If the file doesn't exist yet, create it and paste in the real values:
+Bitwarden Secrets Manager is the source of truth. On Windows, configure its
+read-only machine account once and run commands through the repository wrapper:
 
 ```powershell
-$env:OPENAI_API_KEY     = "sk-..."
-$env:GEMINI_API_KEY     = "..."
-$env:PERPLEXITY_API_KEY = "pplx-..."
-$env:OPENAI_MODEL       = "gpt-..."
-$env:GEMINI_MODEL       = "gemini-..."
-$env:PERPLEXITY_MODEL   = "sonar"
+pwsh -File scripts/wardith-secrets.ps1 setup <bitwarden-project-id>
+pwsh -File scripts/wardith-secrets.ps1 run py tools/trade-run/trade_run.py ...
 ```
+
+The wrapper decrypts only the Bitwarden machine token with Windows DPAPI,
+fetches an explicit allowlist, injects the provider values into the child
+process, and removes temporary Zoho credentials when that process exits.
+Secrets are never committed or stored as permanent plaintext files.
+
+Cloud sessions continue to use `scripts/cloud-session-secrets.sh`; local
+macOS/Linux sessions use `source ~/.noven/env` until they gain an equivalent
+native wrapper.
 
 **Three rules, no exceptions:** the file lives outside every repo; it's loaded
 deliberately, never from a profile script; no key string ever appears in a
-file inside this repo or is pasted into a cloud session. Keys also go in the
-password vault (`playbook/accounts-and-dates.md`) as the copy of last resort.
+file inside this repo or is pasted into a chat or cloud session. Bitwarden
+Secrets Manager remains the canonical copy (`playbook/accounts-and-dates.md`).
 
 ## Question-file expectations
 
