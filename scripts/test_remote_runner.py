@@ -33,6 +33,7 @@ class PromptTests(unittest.TestCase):
         prompt = remote_runner.build_prompt("qualify", "wirral-dentists")
         self.assertIn(".agents/skills/qualify/SKILL.md", prompt)
         self.assertIn("wirral-dentists", prompt)
+        self.assertIn("commit and push only WARDITH_DATA_REPO", prompt)
 
     def test_outreach_prompt_forbids_sending(self):
         prompt = remote_runner.build_prompt("outreach", "wirral-dentists")

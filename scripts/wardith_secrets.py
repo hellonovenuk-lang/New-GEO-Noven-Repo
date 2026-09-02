@@ -106,6 +106,25 @@ def run_child(command: list[str], environment: dict[str, str]) -> int:
         shutil.rmtree(temp_dir, ignore_errors=True)
 
 
+def export_github_environment(environment: dict[str, str]) -> None:
+    github_env = environment.get("GITHUB_ENV", "").strip()
+    if not github_env:
+        raise SecretError("GITHUB_ENV is required for github-env")
+    values, _ = load_secrets(environment)
+    mask_for_github(values, environment)
+    try:
+        with Path(github_env).open("a", encoding="utf-8", newline="\n") as output:
+            for key in REQUIRED_KEYS:
+                export_name = "WARDITH_ZOHO_CREDENTIALS_JSON" if key == "ZOHO_CREDENTIALS_JSON" else key
+                value = values[key]
+                if "\n" in value or "\r" in value:
+                    raise SecretError(f"{key} must be stored as a single line")
+                output.write(f"{export_name}={value}\n")
+            output.write(f"WARDITH_SECRETS_READY={len(REQUIRED_KEYS)}\n")
+    finally:
+        values.clear()
+
+
 def main(argv: list[str] | None = None) -> int:
     args = list(sys.argv[1:] if argv is None else argv)
     environment = os.environ.copy()
@@ -119,6 +138,9 @@ def main(argv: list[str] | None = None) -> int:
         if args and args[0] == "run":
             command = args[2:] if len(args) > 1 and args[1] == "--" else args[1:]
             return run_child(command, environment)
+        if args == ["github-env"]:
+            export_github_environment(environment)
+            return 0
         raise SecretError("use status or run -- <command>")
     except SecretError as error:
         print(f"wardith-secrets: {error}", file=sys.stderr)

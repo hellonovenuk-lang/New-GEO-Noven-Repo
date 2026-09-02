@@ -45,7 +45,10 @@ def build_prompt(operation: str, target: str) -> str:
     return (
         f"Read .agents/skills/{operation}/SKILL.md completely and execute it "
         f"for target {target!r}. Use WARDITH_RUNS_DIR for all operational "
-        "outputs and do not modify the Wardith core checkout. Complete every "
+        "outputs and do not modify the Wardith core checkout. After validation, "
+        "copy the contents of WARDITH_RUNS_DIR into WARDITH_DATA_REPO, excluding "
+        "Git metadata and transient SQLite files, then commit and push only "
+        "WARDITH_DATA_REPO. Complete every "
         "stage that does not require new owner judgment, then report genuine "
         f"blockers plainly.{safety}"
     )

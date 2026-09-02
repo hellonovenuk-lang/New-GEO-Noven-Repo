@@ -1,0 +1,24 @@
+default_permissions = "wardith-remote"
+
+[features]
+network_proxy = true
+
+[permissions.wardith-remote]
+description = "Wardith operations with scoped workspace writes and provider access."
+extends = ":workspace"
+
+[permissions.wardith-remote.network]
+enabled = true
+
+[permissions.wardith-remote.network.domains]
+"api.openai.com" = "allow"
+"generativelanguage.googleapis.com" = "allow"
+"api.perplexity.ai" = "allow"
+"api.company-information.service.gov.uk" = "allow"
+"accounts.zoho.eu" = "allow"
+"mail.zoho.eu" = "allow"
+"api.bitwarden.com" = "allow"
+"identity.bitwarden.com" = "allow"
+"github.com" = "allow"
+"api.github.com" = "allow"
+"raw.githubusercontent.com" = "allow"

@@ -1,0 +1,122 @@
+name: Wardith remote run
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Operation to run
+        required: true
+        type: choice
+        options:
+          - preflight
+          - 90qrun
+          - qualify
+          - outreach
+      target:
+        description: Target description for 90qrun, or existing run slug
+        required: false
+        type: string
+      confirmation:
+        description: Type RUN for 90qrun or DRAFT for outreach
+        required: false
+        type: string
+
+concurrency:
+  group: wardith-operational-runs
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    name: ${{ inputs.operation }} ${{ inputs.target }}
+    runs-on: ubuntu-latest
+    environment: wardith-production
+    timeout-minutes: 180
+    env:
+      BWS_PROJECT_ID: 6ab59b25-f5ae-4e3e-8518-b4b30131120f
+      WARDITH_REMOTE: "true"
+      WARDITH_DATA_REPO: ${{ github.workspace }}/.wardith-data
+      WARDITH_RUNS_DIR: ${{ github.workspace }}/.wardith-runs
+    steps:
+      - name: Check out Wardith core
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Validate dispatch
+        shell: bash
+        env:
+          OPERATION: ${{ inputs.operation }}
+          TARGET: ${{ inputs.target }}
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: >-
+          python3 scripts/remote_runner.py validate
+          --operation "$OPERATION"
+          --target "$TARGET"
+          --confirmation "$CONFIRMATION"
+
+      - name: Check out Wardith data
+        uses: actions/checkout@v5
+        with:
+          repository: hellonovenuk-lang/wardith-crm-data
+          path: .wardith-data
+          ssh-key: ${{ secrets.WARDITH_DATA_DEPLOY_KEY }}
+
+      - name: Install Bitwarden CLI
+        shell: bash
+        run: |
+          cargo install bws --locked --version 2.1.0
+          bws --version
+
+      - name: Bootstrap Wardith secrets
+        shell: bash
+        env:
+          BWS_ACCESS_TOKEN: ${{ secrets.BWS_ACCESS_TOKEN }}
+        run: python3 scripts/wardith_secrets.py github-env
+
+      - name: Prepare run directories
+        shell: bash
+        run: |
+          mkdir -p "$WARDITH_RUNS_DIR"
+          rsync -a --exclude='.git/' "$WARDITH_DATA_REPO/" "$WARDITH_RUNS_DIR/"
+          git -C "$WARDITH_DATA_REPO" config user.name "wardith-actions[bot]"
+          git -C "$WARDITH_DATA_REPO" config user.email "wardith-actions[bot]@users.noreply.github.com"
+
+      - name: Run free preflight
+        if: inputs.operation == 'preflight'
+        shell: bash
+        run: |
+          test "$WARDITH_SECRETS_READY" = "8"
+          python3 scripts/remote_runner.py preflight \
+            --operation preflight \
+            --core "$GITHUB_WORKSPACE" \
+            --data "$WARDITH_DATA_REPO" \
+            --runs "$WARDITH_RUNS_DIR"
+
+      - name: Prepare agent prompt
+        if: inputs.operation != 'preflight'
+        shell: bash
+        env:
+          OPERATION: ${{ inputs.operation }}
+          TARGET: ${{ inputs.target }}
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          cp .github/wardith-codex/prompt.md .wardith-prompt.md
+          python3 scripts/remote_runner.py prompt \
+            --operation "$OPERATION" \
+            --target "$TARGET" \
+            --confirmation "$CONFIRMATION" >> .wardith-prompt.md
+
+      - name: Run Wardith operation
+        if: inputs.operation != 'preflight'
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ env.OPENAI_API_KEY }}
+          prompt-file: .wardith-prompt.md
+          output-file: .wardith-final-message.md
+          codex-home: .github/wardith-codex
+          permission-profile: "wardith-remote"
+          safety-strategy: drop-sudo
+          codex-args: '["--search"]'

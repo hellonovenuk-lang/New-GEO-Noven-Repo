@@ -114,6 +114,34 @@ class HostedSecretWrapperTests(unittest.TestCase):
         self.assertNotEqual(0, result.returncode)
         self.assertIn("ZOHO_CREDENTIALS_JSON is not valid JSON", result.stderr)
 
+    def test_github_env_exports_allowlist_without_bootstrap_token(self):
+        github_env = self.temp_path / "github.env"
+        env = os.environ.copy()
+        env.update(
+            BWS_ACCESS_TOKEN="bootstrap-test",
+            BWS_PROJECT_ID="project-test",
+            WARDITH_BWS_CLI=sys.executable,
+            WARDITH_BWS_ARGS=json.dumps([str(self.bws)]),
+            FAKE_BWS_JSON=str(self.payload),
+            FAKE_BWS_TOKEN_FILE=str(self.token_file),
+            GITHUB_ACTIONS="true",
+            GITHUB_ENV=str(github_env),
+        )
+        result = subprocess.run(
+            [sys.executable, str(WRAPPER), "github-env"],
+            cwd=ROOT,
+            env=env,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(0, result.returncode, result.stderr)
+        exported = github_env.read_text(encoding="utf-8")
+        self.assertIn("OPENAI_API_KEY=openai-test", exported)
+        self.assertIn("WARDITH_ZOHO_CREDENTIALS_JSON=", exported)
+        self.assertIn("WARDITH_SECRETS_READY=8", exported)
+        self.assertNotIn("BWS_ACCESS_TOKEN", exported)
+        self.assertNotIn("UNEXPECTED_SECRET", exported)
+
 
 if __name__ == "__main__":
     unittest.main()
