@@ -18,6 +18,20 @@ description: >-
 
 # /outreach
 
+## GitHub Actions remote adapter
+
+When `WARDITH_REMOTE=true`, the workflow has already used
+`scripts/wardith-secrets.sh`'s allowlisted implementation to load the approved
+values. `BWS_ACCESS_TOKEN` is deliberately absent by this stage. Do not call
+PowerShell, the Claude session hook, or Bitwarden again. Use `python3` directly
+and `$WARDITH_RUNS_DIR`. Before the Zoho draft tool runs, write
+`$WARDITH_ZOHO_CREDENTIALS_JSON` to a mode-600 temporary file, set
++`WARDITH_ZOHO_CREDENTIALS` to that path, and remove the file immediately after
+the tool exits. Treat `$WARDITH_DATA_REPO` as the only repository that may be
+committed and pushed. Never modify or commit the core checkout, and never send
+or transmit outreach; Zoho drafts remain the maximum external effect.
+
+
 Invoked as `/outreach <campaign>`, where `<campaign>` is the same slug
 `/qualify` used (e.g. `estate-agents-chester`), or a direct path to a
 campaign JSON. From the slug, the canonical locations follow `/qualify`'s

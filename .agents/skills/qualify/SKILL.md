@@ -19,6 +19,17 @@ description: >-
 
 # /qualify
 
+## GitHub Actions remote adapter
+
+When `WARDITH_REMOTE=true`, the workflow has already used
+`scripts/wardith-secrets.sh`'s allowlisted implementation to load the approved
+provider and Companies House values. `BWS_ACCESS_TOKEN` is deliberately absent
+by this stage. Do not call PowerShell, the Claude session hook, or Bitwarden
+again. Use `python3` directly, use `$WARDITH_RUNS_DIR` instead of assuming
+`~/wardith-runs`, and treat `$WARDITH_DATA_REPO` as the only repository that
+may be committed and pushed. Never modify or commit the core checkout.
+
+
 Invoked as `/qualify <run>`, where `<run>` is either the client slug used
 when the run was made (e.g. `estate-agents-chester`, matching `trade_run.py
 --client`) or a direct path to the raw run CSV. From the slug, the canonical

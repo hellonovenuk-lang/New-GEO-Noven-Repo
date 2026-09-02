@@ -47,5 +47,24 @@ class RemoteWorkflowTests(unittest.TestCase):
         self.assertNotIn("\n      - name:", text[action:])
 
 
+class RemoteSkillContractTests(unittest.TestCase):
+    def skill_texts(self):
+        for runtime in (".agents", ".claude"):
+            for operation in ("90qrun", "qualify", "outreach"):
+                path = ROOT / runtime / "skills" / operation / "SKILL.md"
+                yield operation, path.read_text(encoding="utf-8")
+
+    def test_every_operational_skill_supports_hosted_runner(self):
+        for operation, text in self.skill_texts():
+            with self.subTest(operation=operation):
+                self.assertIn("WARDITH_REMOTE=true", text)
+                self.assertIn("scripts/wardith-secrets.sh", text)
+
+    def test_every_outreach_skill_keeps_no_send_boundary(self):
+        for runtime in (".agents", ".claude"):
+            text = (ROOT / runtime / "skills" / "outreach" / "SKILL.md").read_text(encoding="utf-8")
+            self.assertIn("never sends", text.lower())
+
+
 if __name__ == "__main__":
     unittest.main()

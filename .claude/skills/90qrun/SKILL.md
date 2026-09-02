@@ -17,6 +17,17 @@ description: >-
 
 # 90Q run
 
+## GitHub Actions remote adapter
+
+When `WARDITH_REMOTE=true`, the workflow has already used
+`scripts/wardith-secrets.sh`'s allowlisted implementation to load the approved
+provider values. `BWS_ACCESS_TOKEN` is deliberately absent by this stage. Do
+not call PowerShell, the Claude session hook, or Bitwarden again. Use `python3`
+directly for provider commands, use `$WARDITH_RUNS_DIR` instead of assuming
+`~/wardith-runs`, and treat `$WARDITH_DATA_REPO` as the only repository that
+may be committed and pushed. Never modify or commit the core checkout.
+
+
 *Trade x geography, AI-visibility research stage. Ninety queries, one CSV,
 one verdict. Reference implementation: `estate-agents-chester`, 2026-08.*
 
