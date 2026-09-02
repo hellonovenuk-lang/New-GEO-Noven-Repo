@@ -14,12 +14,15 @@ class TestSchemaInit(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.db_path = Path(self.tmp.name) / "wardith.db"
+        self.conn = None
 
     def tearDown(self):
+        if self.conn is not None:
+            self.conn.close()
         self.tmp.cleanup()
 
     def test_init_db_creates_all_tables(self):
-        conn = db_mod.connect(self.db_path)
+        conn = self.conn = db_mod.connect(self.db_path)
         db_mod.init_db(conn)
         tables = {r[0] for r in conn.execute(
             "SELECT name FROM sqlite_master WHERE type='table'"
@@ -29,7 +32,7 @@ class TestSchemaInit(unittest.TestCase):
             self.assertIn(expected, tables)
 
     def test_init_db_is_idempotent(self):
-        conn = db_mod.connect(self.db_path)
+        conn = self.conn = db_mod.connect(self.db_path)
         db_mod.init_db(conn)
         db_mod.init_db(conn)  # must not raise or wipe data
         conn.execute("INSERT INTO campaigns (campaign_id) VALUES ('x')")
@@ -39,9 +42,10 @@ class TestSchemaInit(unittest.TestCase):
         self.assertIsNotNone(row)
 
     def test_db_file_created_outside_repo_path_given(self):
-        conn = db_mod.connect(self.db_path)
+        conn = self.conn = db_mod.connect(self.db_path)
         db_mod.init_db(conn)
         conn.close()
+        self.conn = None
         self.assertTrue(self.db_path.exists())
 
 

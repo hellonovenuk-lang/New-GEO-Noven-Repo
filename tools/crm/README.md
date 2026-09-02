@@ -49,13 +49,25 @@ exists on whichever machine last had it - a cloud session's VM is wiped
 when it's reclaimed. `scripts/wardith-runs-sync.sh` (repo root) syncs the
 whole `~/wardith-runs/` tree, this db included, against the private
 `hellonovenuk-lang/wardith-crm-data` repo, and `/90qrun`/`/qualify`/`/outreach`
-already call it automatically in a cloud session. On the laptop, run
-`bash scripts/wardith-runs-sync.sh pull` before opening `serve` (or running
-`ingest`) to pick up anything a phone-triggered run added, and
-`bash scripts/wardith-runs-sync.sh push "laptop CRM update"` after you make
-changes here - `pull` refuses to overwrite a local `wardith.db` that's
-changed since the last sync, so a forgotten `push` is a stop, not a silent
-loss of hand-entered notes.
+already call it automatically in a cloud session. On the laptop, sync before
+opening `serve` (or running `ingest`) to pick up anything a phone-triggered
+run added, then sync back after making changes:
+
+```powershell
+# Windows
+pwsh -File scripts/wardith-runs-sync.ps1 pull
+pwsh -File scripts/wardith-runs-sync.ps1 push "laptop CRM update"
+```
+
+```bash
+# macOS/Linux
+bash scripts/wardith-runs-sync.sh pull
+bash scripts/wardith-runs-sync.sh push "laptop CRM update"
+```
+
+Both versions refuse to overwrite a local `wardith.db` that's changed since
+the last sync, so a forgotten `push` is a stop, not silent loss of hand-entered
+notes.
 
 ## What's in it
 
