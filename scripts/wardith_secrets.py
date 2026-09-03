@@ -86,8 +86,12 @@ def child_environment(base: dict[str, str], values: dict[str, str], returned_key
 
 def mask_for_github(values: dict[str, str], environment: dict[str, str]) -> None:
     if environment.get("GITHUB_ACTIONS") == "true":
-        for value in values.values():
-            print(f"::add-mask::{value}")
+        masks = list(values.values())
+        zoho = json.loads(values.get("ZOHO_CREDENTIALS_JSON", "{}"))
+        masks.extend(value for value in zoho.values() if isinstance(value, str) and value)
+        for value in masks:
+            escaped = value.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+            print(f"::add-mask::{escaped}", flush=True)
 
 
 def run_child(command: list[str], environment: dict[str, str]) -> int:
@@ -113,6 +117,10 @@ def export_github_environment(environment: dict[str, str]) -> None:
     values, _ = load_secrets(environment)
     mask_for_github(values, environment)
     try:
+        values["ZOHO_CREDENTIALS_JSON"] = json.dumps(json.loads(values["ZOHO_CREDENTIALS_JSON"]), separators=(",", ":"))
+        for key, value in values.items():
+            if "\n" in value or "\r" in value:
+                raise SecretError(f"{key} must be stored as a single line")
         with Path(github_env).open("a", encoding="utf-8", newline="\n") as output:
             for key in REQUIRED_KEYS:
                 export_name = "WARDITH_ZOHO_CREDENTIALS_JSON" if key == "ZOHO_CREDENTIALS_JSON" else key

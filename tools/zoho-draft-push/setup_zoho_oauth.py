@@ -16,8 +16,11 @@ Usage:
       --grant-token TOKEN --region eu
 """
 import argparse
+import getpass
 import json
 import os
+import sys
+import warnings
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -47,7 +50,7 @@ def exchange_grant_token(accounts_domain, client_id, client_secret, grant_token)
         with urllib.request.urlopen(req, timeout=30) as resp:
             data = json.loads(resp.read().decode("utf-8"))
     except urllib.error.HTTPError as e:
-        raise SystemExit(f"Grant token exchange failed: HTTP {e.code} {e.read().decode('utf-8', errors='replace')[:200]}")
+        raise SystemExit(f"Grant token exchange failed: HTTP {e.code}") from None
     if "refresh_token" not in data or "access_token" not in data:
         missing = [k for k in ("refresh_token", "access_token") if k not in data]
         raise SystemExit(f"Zoho did not return tokens - missing: {missing}")
@@ -83,15 +86,48 @@ def lookup_account(api_domain, access_token):
     return str(account["accountId"]), account["primaryEmailAddress"]
 
 
+def interactive_setup(region):
+    """User-only terminal exchange; no arguments or files contain credentials."""
+    if os.environ.get("GITHUB_ACTIONS") or os.environ.get("CI") or not sys.stdin.isatty() or not sys.stdout.isatty():
+        raise SystemExit("Interactive setup requires a private local terminal, not CI or redirected output.")
+    print("Do not record this terminal or share screenshots. Inputs are hidden.")
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", getpass.GetPassWarning)
+        try:
+            client_id = getpass.getpass("New Zoho Client ID: ").strip()
+            client_secret = getpass.getpass("New Zoho Client Secret: ").strip()
+            print("Now generate the short-lived code in Zoho, then paste it below.")
+            grant = getpass.getpass("Zoho generated code: ").strip()
+        except getpass.GetPassWarning:
+            raise SystemExit("Hidden input is unavailable. No credentials were read.") from None
+    if not all((client_id, client_secret, grant)):
+        raise SystemExit("All three inputs are required.")
+    try:
+        refresh, _ = exchange_grant_token(REGION_DOMAINS[region]["accounts"], client_id, client_secret, grant)
+    except (urllib.error.URLError, ValueError, TypeError):
+        raise SystemExit("Token exchange failed. No credentials have been displayed or saved.") from None
+    input("Press Enter to display the refresh token privately for copying into Bitwarden: ")
+    print(refresh)
+    print("Copy only the token into Bitwarden's refresh_token field, save, then close this terminal. No file was written.")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--client-id", required=True)
-    ap.add_argument("--client-secret", required=True)
-    ap.add_argument("--grant-token", required=True)
+    ap.add_argument("--interactive", action="store_true", help="Use hidden local prompts; display the refresh token privately without writing a file")
+    ap.add_argument("--client-id")
+    ap.add_argument("--client-secret")
+    ap.add_argument("--grant-token")
     ap.add_argument("--region", choices=sorted(REGION_DOMAINS), required=True,
                      help="The domain in your API console URL: accounts.zoho.<region>")
     ap.add_argument("--out", default=DEFAULT_OUT_PATH)
     args = ap.parse_args()
+
+    if args.interactive:
+        if args.client_id or args.client_secret or args.grant_token:
+            ap.error("Do not supply credential arguments with --interactive")
+        return interactive_setup(args.region)
+    if not all((args.client_id, args.client_secret, args.grant_token)):
+        ap.error("Use --interactive for hidden credential entry")
 
     domains = REGION_DOMAINS[args.region]
     print(f"Exchanging grant token via {domains['accounts']} ...")

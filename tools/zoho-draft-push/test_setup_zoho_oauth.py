@@ -6,6 +6,9 @@ credentials - every urllib.request.urlopen call is mocked.
 Run: python3 test_setup_zoho_oauth.py -v
 """
 import json
+import io
+import urllib.error
+from contextlib import redirect_stdout
 import os
 import subprocess
 import sys
@@ -31,6 +34,13 @@ class _FakeResponse:
 
 
 class ExchangeGrantTokenTests(unittest.TestCase):
+    @patch("urllib.request.urlopen")
+    def test_http_error_body_is_never_exposed(self, mock_urlopen):
+        mock_urlopen.side_effect = urllib.error.HTTPError("https://accounts.zoho.eu", 400, "bad", {}, io.BytesIO(b"secret-value"))
+        with self.assertRaises(SystemExit) as error:
+            sz.exchange_grant_token("https://accounts.zoho.eu", "id", "secret", "grant")
+        self.assertNotIn("secret-value", str(error.exception))
+
     @patch("urllib.request.urlopen")
     def test_returns_refresh_and_access_token(self, mock_urlopen):
         mock_urlopen.return_value = _FakeResponse({"refresh_token": "1000.rt", "access_token": "1000.at"})
@@ -104,6 +114,22 @@ class LookupAccountTests(unittest.TestCase):
 
 
 class MainCliTests(unittest.TestCase):
+    def test_interactive_refuses_captured_terminal_before_reading_credentials(self):
+        with patch.object(sys.stdin, "isatty", return_value=False):
+            with self.assertRaises(SystemExit):
+                sz.interactive_setup("eu")
+
+    @patch("urllib.request.urlopen")
+    def test_interactive_exchange_uses_hidden_inputs_and_displays_only_refresh_token(self, mock_urlopen):
+        mock_urlopen.return_value = _FakeResponse({"refresh_token": "replacement-refresh", "access_token": "private-access"})
+        output = io.StringIO()
+        with patch.object(sys.stdin, "isatty", return_value=True), patch.object(sys.stdout, "isatty", return_value=True), patch.dict(os.environ, {}, clear=True), patch("getpass.getpass", side_effect=["new-client", "private-secret", "private-grant"]), patch("builtins.input", return_value=""), redirect_stdout(output):
+            with patch.object(output, "isatty", return_value=True):
+                sz.interactive_setup("eu")
+        self.assertIn("replacement-refresh", output.getvalue())
+        for secret in ("private-secret", "private-grant", "private-access"):
+            self.assertNotIn(secret, output.getvalue())
+
     @patch("urllib.request.urlopen")
     def test_writes_complete_credentials_file(self, mock_urlopen):
         mock_urlopen.side_effect = [

@@ -4,7 +4,12 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import io
+from contextlib import redirect_stdout
+from unittest.mock import patch
 from pathlib import Path
+
+from scripts import wardith_secrets
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,6 +41,26 @@ def secret_items(include_unexpected=True):
 
 
 class HostedSecretWrapperTests(unittest.TestCase):
+    def test_mask_commands_escape_multiline_values_and_mask_nested_secrets(self):
+        value = json.dumps(dict(ZOHO, client_secret="secret%\r\nline"), indent=2)
+        output = io.StringIO()
+        with redirect_stdout(output):
+            wardith_secrets.mask_for_github({"ZOHO_CREDENTIALS_JSON": value}, {"GITHUB_ACTIONS": "true"})
+        lines = output.getvalue().splitlines()
+        self.assertTrue(all(line.startswith("::add-mask::") for line in lines))
+        self.assertIn("::add-mask::secret%25%0D%0Aline", lines)
+        self.assertIn("::add-mask::refresh-test", lines)
+
+    def test_pretty_zoho_json_exports_as_one_line(self):
+        values = {item["key"]: item["value"] for item in secret_items(False)}
+        values["ZOHO_CREDENTIALS_JSON"] = json.dumps(ZOHO, indent=2)
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory) / "env"
+            with patch.object(wardith_secrets, "load_secrets", return_value=(values, set(values))):
+                wardith_secrets.export_github_environment({"GITHUB_ENV": str(target)})
+            line = next(line for line in target.read_text().splitlines() if line.startswith("WARDITH_ZOHO_CREDENTIALS_JSON="))
+            self.assertEqual(ZOHO, json.loads(line.split("=", 1)[1]))
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.temp_path = Path(self.temp.name)
