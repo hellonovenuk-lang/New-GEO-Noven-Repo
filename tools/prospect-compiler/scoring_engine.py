@@ -56,7 +56,8 @@ def narrative_signature(entry):
     fingerprint mismatch forces regeneration. Deliberately a readable
     "field=value|field=value" string, not an opaque hash - auditable by
     inspection, the same standard as everything else in this pipeline."""
-    return "|".join(f"{f}={entry.get(f)}" for f in NARRATIVE_SIGNATURE_FIELDS)
+    # Generator changes must invalidate narratives even when scores are unchanged.
+    return "v2|" + "|".join(f"{f}={entry.get(f)}" for f in NARRATIVE_SIGNATURE_FIELDS)
 
 
 def _fmt_num(x):
@@ -132,8 +133,8 @@ def generate_competitive_gap_finding(entry, run):
         top_rate = entry.get("group_top_visibility_rate", 0)
         relpos = entry.get("relative_position", 0)
         competitor_clause = (
-            f" {nearest}, the strongest same-scope competitor, sits at {top_rate:.1f}% "
-            f"({relpos * 100:.0f}% of the leader's rate)."
+            f" The highest visibility rate in this service-scope group is {top_rate:.1f}%; "
+            f"this business is at {relpos * 100:.0f}% of that rate."
         )
     else:
         competitor_clause = " No comparable same-scope competitor is in this pool."
@@ -155,7 +156,6 @@ def generate_why_prospect(entry, run):
     business = entry["business"]
     ra, ro = entry.get("relevant_appearances", 0), entry.get("relevant_opportunities", 0)
     rate = entry.get("visibility_rate", 0)
-    nearest = entry.get("nearest_competitor") or "the nearest same-scope competitor"
     top_rate = entry.get("group_top_visibility_rate", 0)
     opp = entry.get("opportunity_type")
     cred = entry.get("business_credibility", 0)
@@ -167,18 +167,18 @@ def generate_why_prospect(entry, run):
     if opp == "DEFEND":
         text = (
             f"{core}, already one of the strongest AI-recommendation positions in its service scope "
-            f"— {relpos * 100:.0f}% of {nearest}'s leading {top_rate:.1f}% rate. The opportunity is "
+            f"— {relpos * 100:.0f}% of the group's highest visibility rate ({top_rate:.1f}%). The opportunity is "
             f"understanding what supports that position and monitoring whether it holds."
         )
     elif opp == "GAP":
         text = (
-            f"{core}, materially underrepresented against {nearest} at {top_rate:.1f}% despite evidenced "
+            f"{core}, materially underrepresented against the group's highest visibility rate ({top_rate:.1f}%) despite evidenced "
             f"credibility ({cred}/5). This is a real, actionable gap, not explained by being new, tiny, "
             f"specialist, or out of market."
         )
     elif opp == "GROWTH":
         text = (
-            f"{core}, real and worth having, but sitting materially behind {nearest} at {top_rate:.1f}% "
+            f"{core}, real and worth having, but sitting materially behind the group's highest visibility rate ({top_rate:.1f}%) "
             f"(gap strength {gap}/5). There is clear, evidenced room to strengthen this position."
         )
     else:  # REVIEW or unset
