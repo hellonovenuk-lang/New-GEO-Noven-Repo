@@ -10,10 +10,10 @@ class RemoteWorkflowTests(unittest.TestCase):
     def workflow(self):
         return WORKFLOW.read_text(encoding="utf-8")
 
-    def test_manual_dispatch_exposes_all_four_operations(self):
+    def test_manual_dispatch_exposes_all_operations(self):
         text = self.workflow()
         self.assertIn("workflow_dispatch:", text)
-        for operation in ("preflight", "90qrun", "qualify", "outreach"):
+        for operation in ("preflight", "smoke", "90qrun", "qualify", "outreach"):
             self.assertIn(f"- {operation}", text)
         self.assertIn("confirmation:", text)
 

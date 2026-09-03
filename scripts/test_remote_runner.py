@@ -7,6 +7,16 @@ from scripts import remote_runner
 
 
 class DispatchValidationTests(unittest.TestCase):
+    def test_smoke_requires_explicit_paid_confirmation(self):
+        for confirmation in ("", "RUN", "smoke"):
+            with self.subTest(confirmation=confirmation), self.assertRaisesRegex(ValueError, "confirmation SMOKE"):
+                remote_runner.validate_dispatch("smoke", "", confirmation)
+        remote_runner.validate_dispatch("smoke", "", "SMOKE")
+
+    def test_smoke_rejects_targets_to_keep_the_test_fixed(self):
+        with self.assertRaisesRegex(ValueError, "target must be blank"):
+            remote_runner.validate_dispatch("smoke", "full market", "SMOKE")
+
     def test_paid_run_requires_exact_confirmation(self):
         with self.assertRaisesRegex(ValueError, "confirmation RUN"):
             remote_runner.validate_dispatch("90qrun", "Wirral dentists", "run")
@@ -29,6 +39,10 @@ class DispatchValidationTests(unittest.TestCase):
 
 
 class PromptTests(unittest.TestCase):
+    def test_smoke_cannot_launch_an_agent_or_outreach(self):
+        with self.assertRaisesRegex(ValueError, "does not use an agent prompt"):
+            remote_runner.build_prompt("smoke", "")
+
     def test_prompt_uses_provider_neutral_skill_and_target(self):
         prompt = remote_runner.build_prompt("qualify", "wirral-dentists")
         self.assertIn(".agents/skills/qualify/SKILL.md", prompt)

@@ -9,6 +9,7 @@ on:
         type: choice
         options:
           - preflight
+          - smoke
           - 90qrun
           - qualify
           - outreach
@@ -17,7 +18,7 @@ on:
         required: false
         type: string
       confirmation:
-        description: Type RUN for 90qrun or DRAFT for outreach
+        description: Type SMOKE for smoke, RUN for 90qrun, or DRAFT for outreach
         required: false
         type: string
 
@@ -95,8 +96,31 @@ jobs:
             --data "$WARDITH_DATA_REPO" \
             --runs "$WARDITH_RUNS_DIR"
 
+      - name: Run provider smoke test
+        id: provider_smoke
+        if: inputs.operation == 'smoke'
+        timeout-minutes: 15
+        shell: bash
+        run: |
+          python3 -u scripts/provider_smoke.py \
+            --out "$WARDITH_DATA_REPO/smoke-tests/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+
+      - name: Save private smoke results
+        if: always() && inputs.operation == 'smoke' && (steps.provider_smoke.outcome == 'success' || steps.provider_smoke.outcome == 'failure')
+        shell: bash
+        run: |
+          smoke_rel="smoke-tests/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          if [ -d "$WARDITH_DATA_REPO/$smoke_rel" ]; then
+            git -C "$WARDITH_DATA_REPO" add -- "$smoke_rel"
+            if ! git -C "$WARDITH_DATA_REPO" diff --cached --quiet -- "$smoke_rel"; then
+              git -C "$WARDITH_DATA_REPO" commit -m "Record provider smoke ${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" -- "$smoke_rel"
+              git -C "$WARDITH_DATA_REPO" push origin HEAD:main
+            fi
+            echo "[Private provider smoke results](https://github.com/hellonovenuk-lang/wardith-crm-data/tree/main/$smoke_rel)" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
       - name: Prepare agent prompt
-        if: inputs.operation != 'preflight'
+        if: inputs.operation != 'preflight' && inputs.operation != 'smoke'
         shell: bash
         env:
           OPERATION: ${{ inputs.operation }}
@@ -110,7 +134,7 @@ jobs:
             --confirmation "$CONFIRMATION" >> .wardith-prompt.md
 
       - name: Run Wardith operation
-        if: inputs.operation != 'preflight'
+        if: inputs.operation != 'preflight' && inputs.operation != 'smoke'
         uses: openai/codex-action@v1
         with:
           openai-api-key: ${{ env.OPENAI_API_KEY }}

@@ -127,6 +127,21 @@ not the rule itself.
 first call — if the planned query count exceeds it, the script exits having
 spent nothing.
 
+**Bounded retries.** Each provider query retries HTTP 429/503 at most twice,
+after 15 and 45 seconds. The cap counts planned queries, not HTTP attempts:
+`--smoke --cap 3` makes three queries and at most nine attempts. Authentication
+errors, other HTTP errors, timeouts and malformed responses are not retried.
+Retries can add provider costs. No model is substituted.
+
+**Safe diagnostics.** Error logs and CSV error cells contain only locally
+constructed status/type information, never request URLs, headers or raw
+provider error bodies. Gemini's key is sent in a header, not its URL.
+
+**Smoke exit status.** A smoke test exits unsuccessfully if any provider
+errors, returns an empty answer, or returns no sources. Other provider results
+are retained. The cloud entry point is `scripts/provider_smoke.py`; it requires
+a new output directory so test rows never become campaign data.
+
 **Resume and errors.** Every row is flushed to disk as it lands. A re-run
 skips rows that already succeeded and retries only rows that errored, so a
 rate limit or outage partway through costs nothing but the re-run.

@@ -1,7 +1,7 @@
 # Wardith remote runner
 
 The `Wardith remote run` GitHub Actions workflow runs while the laptop is off.
-It supports `preflight`, `90qrun`, `qualify`, and `outreach`.
+It supports `preflight`, `smoke`, `90qrun`, `qualify`, and `outreach`.
 
 ## Start it from a phone
 
@@ -9,12 +9,38 @@ It supports `preflight`, `90qrun`, `qualify`, and `outreach`.
 2. Open **Actions**, then **Wardith remote run**, then **Run workflow**.
 3. Choose the operation. For `90qrun`, enter an industry and geography; for
    `qualify` or `outreach`, enter the existing run slug. Leave the target blank
-   for `preflight`.
-4. Type `RUN` to confirm a paid `90qrun`, or `DRAFT` to confirm `outreach`.
+   for `preflight` and `smoke`.
+4. Type `SMOKE` for a provider smoke test, `RUN` to confirm a paid `90qrun`,
+   or `DRAFT` to confirm `outreach`.
    Leave confirmation blank for `preflight` and `qualify`.
 
 Start with `preflight`. It performs no paid provider calls and creates no Zoho
 drafts.
+
+## Small cloud smoke test
+
+Choose **smoke**, leave **target** blank, and enter **SMOKE**. Approve the
+`wardith-production` deployment if GitHub requests it. The test asks the first
+sample Wirral dentists question once each to OpenAI, Gemini and Perplexity,
+using the models already configured in Bitwarden.
+
+It makes three provider queries, with at most two retries per query for HTTP
+429/503 (15 then 45 seconds). The upper limit is nine HTTP attempts, not nine
+questions; provider charges may apply. Authentication errors and ambiguous
+network failures are not retried. It never runs a research agent, qualification,
+outreach, CRM imports or Zoho operations.
+
+Results are committed only to the private `wardith-crm-data` repository under
+`smoke-tests/<GitHub run ID>-<attempt>/`: `results.csv` contains the answers and
+sources, and `summary.json` contains provider pass/fail checks. Partial results
+are retained on failure. No public artifact contains the answers. A green job
+requires nonempty answers and sources from all three providers and a successful
+private results push. This tests connectivity, not research quality.
+
+For the phone-only acceptance check, turn the laptop off, trigger **preflight**
+from the phone and verify its success. Then trigger **smoke** and verify both the
+job result and its private results directory from the phone. Do not trigger
+`90qrun` as part of this check.
 
 ## Safety boundaries
 
@@ -40,7 +66,7 @@ secrets:
   half is installed with write access on `hellonovenuk-lang/wardith-crm-data`.
 
 Enable a required reviewer on `wardith-production` when GitHub offers that
-control for the repository plan. The workflow's literal `RUN` and `DRAFT`
+control for the repository plan. The workflow's literal `SMOKE`, `RUN` and `DRAFT`
 confirmations remain required either way.
 
 ## Rotation

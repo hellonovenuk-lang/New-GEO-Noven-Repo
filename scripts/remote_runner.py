@@ -9,12 +9,18 @@ import sys
 from pathlib import Path
 
 
-OPERATIONS = {"preflight", "90qrun", "qualify", "outreach"}
+OPERATIONS = {"preflight", "smoke", "90qrun", "qualify", "outreach"}
 
 
 def validate_dispatch(operation: str, target: str, confirmation: str) -> None:
     if operation not in OPERATIONS:
         raise ValueError(f"unsupported operation: {operation}")
+    if operation == "smoke":
+        if confirmation != "SMOKE":
+            raise ValueError("smoke requires confirmation SMOKE")
+        if target.strip():
+            raise ValueError("smoke target must be blank")
+        return
     if operation == "preflight":
         if target.strip():
             raise ValueError("preflight target must be blank")
@@ -32,8 +38,8 @@ def validate_dispatch(operation: str, target: str, confirmation: str) -> None:
 
 
 def build_prompt(operation: str, target: str) -> str:
-    if operation == "preflight":
-        raise ValueError("preflight does not use an agent prompt")
+    if operation in ("preflight", "smoke"):
+        raise ValueError(f"{operation} does not use an agent prompt")
     if operation not in OPERATIONS:
         raise ValueError(f"unsupported operation: {operation}")
     safety = ""

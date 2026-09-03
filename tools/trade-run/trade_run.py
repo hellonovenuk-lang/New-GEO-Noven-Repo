@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""
+r"""
 Trade run — asks the three assistants a trade-and-area question set and
 logs every answer. Per archive/outreach.md section 4.
 
@@ -78,6 +78,10 @@ def env(name):
     return v
 
 
+class ProviderRequestError(RuntimeError):
+    """Only locally constructed, credential-free diagnostics belong here."""
+
+
 def post_json(url, headers, body, timeout=120):
     data = json.dumps(body).encode()
     req = urllib.request.Request(
@@ -85,14 +89,28 @@ def post_json(url, headers, body, timeout=120):
         headers={**headers, "Content-Type": "application/json"},
         method="POST",
     )
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            return json.loads(resp.read().decode())
-    except urllib.error.HTTPError as e:
-        # Surface the provider's actual error body (why, not just the status
-        # code) instead of losing it — that's the thing worth logging.
-        detail = e.read().decode(errors="replace")
-        raise RuntimeError(f"HTTP {e.code} from {url}: {detail[:800]}") from None
+    # AI queries only, never Zoho/mail operations. Do not retry timeouts or
+    # broken responses: the request may already have completed.
+    delays = (15, 45)
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return json.loads(resp.read().decode())
+        except urllib.error.HTTPError as error:
+            code = error.code
+            error.close()
+            # URLs, headers, response bodies and exception text can all
+            # echo credentials. None may enter the public error log.
+            if code in (429, 503) and attempt < 2:
+                delay = delays[attempt]
+                print(f"Provider HTTP {code}: retry {attempt + 1}/2 in {delay}s.", flush=True)
+                time.sleep(delay)
+                continue
+            raise ProviderRequestError(f"Provider HTTP {code}; attempts={attempt + 1}") from None
+        except Exception as error:
+            raise ProviderRequestError(
+                f"Provider request failed ({type(error).__name__}); not retried"
+            ) from None
 
 
 def call_openai(question, location):
@@ -153,9 +171,9 @@ def call_gemini(question, location):
     }
     url = (
         f"https://generativelanguage.googleapis.com/v1beta/models/"
-        f"{model}:generateContent?key={key}"
+        f"{model}:generateContent"
     )
-    data = post_json(url, {}, body)
+    data = post_json(url, {"x-goog-api-key": key}, body)
     model_version = data.get("modelVersion", model)
     text_parts, sources = [], []
     for cand in data.get("candidates", []):
@@ -222,20 +240,21 @@ def load_questions(path):
         return list(csv.DictReader(f))
 
 
-def load_done(path):
+def load_done(path, smoke=False):
     # Only a row that actually succeeded counts as done. A row carrying an
     # error is a failed attempt, and re-running must retry it rather than
     # skip it — otherwise a provider rate-limiting halfway through leaves
     # holes that can only be fixed by hand-editing the CSV.
     #
-    # NB an empty answer_text with no error is a real result, not a failure:
-    # that is how an ungrounded Gemini run looks (audit-setup.md 8b), and
-    # those rows stay.
+    # Legacy full-run behaviour keeps empty, error-free responses as data.
+    # A smoke test must instead prove that answer text and sources exist.
     done = set()
     if os.path.exists(path):
         with open(path, newline="", encoding="utf-8") as f:
             for row in csv.DictReader(f):
                 if row.get("errors"):
+                    continue
+                if smoke and (not row.get("answer_text", "").strip() or not row.get("sources_cited", "").strip()):
                     continue
                 done.add((row["assistant"], row["question_id"], row["run_no"]))
     return done
@@ -282,7 +301,7 @@ def append_row(path, row):
         os.fsync(f.fileno())
 
 
-def main():
+def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--questions", required=True)
     ap.add_argument("--out", required=True, help="Write this OUTSIDE the repo — see the module docstring")
@@ -292,13 +311,13 @@ def main():
     ap.add_argument("--runs", type=int, default=DEFAULT_RUNS, help=f"Runs per question per assistant (default {DEFAULT_RUNS})")
     ap.add_argument("--cap", type=int, default=100, help="Hard cap on total queries this invocation")
     ap.add_argument("--smoke", action="store_true", help="1 query per provider on the first question, tagged 'smoke' in notes")
-    args = ap.parse_args()
+    args = ap.parse_args(argv)
 
     questions = load_questions(args.questions)
     if not questions:
         sys.exit(f"No questions in {args.questions}")
     audit_id = args.audit_id or questions[0]["audit_id"]
-    done = load_done(args.out)
+    done = load_done(args.out, smoke=args.smoke)
     ensure_header(args.out)
 
     if args.smoke:
@@ -310,7 +329,8 @@ def main():
     if total > args.cap:
         sys.exit(f"Planned {total} queries exceeds cap {args.cap} — stopping before the first call.")
 
-    print(f"Plan: {total} queries across {len(PROVIDERS)} providers. Cap {args.cap}.")
+    print(f"Plan: {total} queries across {len(PROVIDERS)} providers. Cap {args.cap}. "
+          f"At most {total * 3} HTTP attempts including bounded retries.", flush=True)
     # Resume-aware progress counter: how many of THIS plan's own
     # (provider, question, run_no) keys are already satisfied in `done` —
     # the same source of truth and the same key shape the skip check below
@@ -324,6 +344,7 @@ def main():
     ]
     progress_count = sum(1 for k in plan_keys if k in done)
     count = 0
+    failures = 0
     for provider in PROVIDERS:
         caller = CALLERS[provider]
         for q, n_runs in plan:
@@ -338,11 +359,18 @@ def main():
                              f"Delete nothing; re-run this command to resume.")
                 try:
                     model_version, answer, sources = caller(q["question_text"], args.location)
+                    if not isinstance(answer, str) or not isinstance(sources, list) or any(not isinstance(source, str) for source in sources):
+                        raise ProviderRequestError("Provider response has invalid answer/source format")
+                    sources = [source for source in sources if source.strip()]
                     errors = ""
+                    if args.smoke and (not answer.strip() or not sources):
+                        errors = "Smoke check failed: empty answer or missing sources"
                 except Exception as e:  # noqa: BLE001 — crude script, log and keep going
                     model_version, answer, sources = "", "", []
-                    errors = repr(e)
-                    print(f"  ERROR: {e}", file=sys.stderr)
+                    errors = str(e) if isinstance(e, ProviderRequestError) else f"Provider response failed ({type(e).__name__})"
+                if errors:
+                    failures += 1
+                    print(f"  ERROR: {errors}", file=sys.stderr)
                 progress_count += 1
                 print(format_progress_line(
                     progress_count, total, provider, q["question_id"],
@@ -360,14 +388,14 @@ def main():
                     "errors": errors,
                     "sources_cited": ";".join(sources),
                     "answer_text": answer,
-                    "notes": "smoke — delete this row" if args.smoke else "",
+                    "notes": "smoke - keep separate from campaign results" if args.smoke else "",
                 }
                 append_row(args.out, row)
                 time.sleep(0.5)
 
     if args.smoke:
-        print("Smoke test done. Check the 5 things in audit-setup.md section 8 "
-              "on these 3 rows, then delete them from runs.csv before the real run.")
+        print(f"Smoke test {'FAILED' if failures else 'passed'}: {failures} failed provider check(s). "
+              "Keep these test rows separate from real campaign results.")
     else:
         errored = sum(1 for r in csv.DictReader(
             open(args.out, newline="", encoding="utf-8")) if r.get("errors"))
@@ -378,7 +406,8 @@ def main():
                   f"After a successful retry the failed row is still in the file "
                   f"alongside its replacement: sort by the errors column and "
                   f"delete the non-empty ones before reading the answers.")
+    return 1 if failures else 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
