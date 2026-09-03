@@ -273,6 +273,26 @@ genuinely operates in the sector and geography, and — before it can reach
 or LLP, no entry in `outreach[]`, full stop. Search by name, never by
 postcode or SIC-code sweep.
 
+**Use the Companies House API for fresh research when
+`COMPANIES_HOUSE_API_KEY` is set:**
+
+```
+python3 tools/companies-house/company_lookup.py --name "<business>" --json
+python3 tools/companies-house/company_lookup.py --number <company_number> --json
+```
+
+The name search returns candidates, not a confirmed match. Confirm a defensible
+candidate by company number and cross-check its legal name, type and active
+status against the trading business's own published details. An ambiguous
+match remains `REVIEW`. When `WARDITH_REMOTE=true`, use the key already loaded
+by the workflow; do not invoke Bitwarden or PowerShell again. For a local
+Windows session, use `scripts/wardith-secrets.ps1 run` to load the key without
+keeping a plaintext copy. If the key is unavailable, use read-only Companies
+House website searches instead and record that fallback. Authentication or
+service errors are lookup failures, never evidence that a company is absent,
+inactive or unsuitable; record unresolved verification and continue other
+businesses where possible.
+
 ## Stage 6 — Contact-route, decision-maker discovery, and accessibility classification
 
 For businesses heading toward `outreach[]`: find the best verified contact
