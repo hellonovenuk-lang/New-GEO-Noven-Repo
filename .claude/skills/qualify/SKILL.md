@@ -194,17 +194,25 @@ use the full canonical pipeline below. There is no qualitative-only
 production path for a new run — see the INCOMPLETE behaviour at the end of
 this stage for what happens when the canonical inputs can't be completed.
 
-**Candidate-pool consistency first.** State this campaign's inclusion
-threshold before researching anyone (e.g. "every census business with
-`total_ai_appearances >= 5`"), and record it as data, not just prose:
-`run.cohort_inclusion_min_appearances` (the mechanical floor) plus a fuller
-description in `methodology_notes` if the real rule is more nuanced than a
-single number. Apply the same research depth to every business that meets
-it — never let selection bias (researching whoever's easiest first) decide
-who reaches `outreach[]`.
+**Candidate-pool consistency first.** The default target is the majority of
+relevant businesses outside the current most-named cohort, including
+zero-appearance businesses. Set `run.cohort_inclusion_min_appearances` to `0`
+before researching anyone, so every census business receives an explicit
+cohort status. Apply enough initial research to every census business to
+establish service/geography relevance and whether a genuine exclusion applies.
+Then apply the same full qualification depth to every relevant business that is
+not a centrally controlled chain or a confirmed current `most_named_cohort`
+member. Do not stop after finding a small convenient shortlist or only research
+businesses with five or more appearances.
 
-**A second, lighter, capped floor exists specifically for GAP eligibility
-(2026-08-23).** The floor above governs full canonical scoring — real
+Set the legacy `gap_cohort_min_appearances` and `gap_cohort_cap` fields to `0`
+for this full-cohort policy. There is no below-main-floor research band when
+the main floor is zero; the old lighter-research cap must not limit coverage.
+
+**Historical policy only (2026-08-23, superseded for new qualifications on
+2026-09-03): a second, lighter, capped floor existed for GAP eligibility.**
+The following explains historical records, not the current research scope.
+The floor above governed full canonical scoring — real
 appearance-count evidence justifies that depth of research. But a
 zero-appearance business is the strongest GAP case there is ("named by
 nobody", `outreach-process.md` step 4), and researching only businesses that
@@ -667,6 +675,27 @@ checkpoint the owner sees, the same posture `/90qrun`'s own Step 7 takes:
   never affects the verdict above.
 - The Human Approval Table from the gate below, for the owner's actual
   review.
+
+Also produce the census-wide selection coverage report before assigning the
+verdict:
+
+```
+python3 tools/prospect-compiler/qualification_coverage.py \
+    --input ~/wardith-runs/<slug>/<slug>-campaign.json \
+    --census ~/wardith-runs/<slug>/market-census-<slug>.csv \
+    --output ~/wardith-runs/<slug>/qualification-coverage-<slug>.json \
+    --require-complete
+```
+
+Report its `SEND NOW`, `SECONDARY`, `REVIEW`, `EXCLUDE`, and `INCUMBENT`
+counts, plus `potential_non_top` and every missing census business. `SEND NOW`
+is a proposal for owner approval, never permission to send. A suitable active
+Ltd/LLP reached only through a verified general business inbox remains in the
+candidate pool as `SECONDARY`; do not invent a named person to promote it.
+If coverage is `INCOMPLETE` or the command exits nonzero, the overall verdict
+is `INCOMPLETE`, even if workbook validation passed. Name each missing or
+unfinished cohort assessment from `completion_blockers`. On a repeat review,
+use a new dated/attempt-suffixed report path; never overwrite the prior report.
 
 ## The approval gate — stop here
 

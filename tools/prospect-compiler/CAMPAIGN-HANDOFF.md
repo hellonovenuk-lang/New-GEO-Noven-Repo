@@ -303,6 +303,13 @@ harder to research than the others) staying an ordinary, unflagged
 scoring pass — the gap was invisible before because nothing forced it to be
 named.
 
+For new qualifications from 2026-09-03, set this floor to `0`: every census
+business gets an explicit status, with full qualification of every relevant
+non-incumbent not genuinely excluded. A small shortlist or a missing named
+person is not a reason to stop researching the remaining market. Retain a
+verified general-inbox prospect as `SECONDARY` in the separate coverage report
+while existing send-readiness and owner-approval gates remain unchanged.
+
 **Narrative generation — added 2026-08-17, mandatory, not an optional
 helper.** `competitive_gap_finding` and `why_prospect` on every scored
 `outreach[]` entry are generated deterministically by

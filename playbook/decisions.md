@@ -44,6 +44,8 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
 
 ## Outreach
 
+- **2026-09-03: Qualification targets the majority of relevant non-top businesses, including zero-visibility businesses; use a zero appearance floor, retain verified general-inbox prospects as secondary, and report census-wide coverage without weakening send-readiness or approval checks.**
+
 - **Direct to SME owners, not white-label to agencies.** Local trades and
   professional services, sector × local market, the £250 Audit as the entry
   product. The agency white-label channel (`archive/agency-product.md`) was

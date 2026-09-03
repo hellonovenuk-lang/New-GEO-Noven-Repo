@@ -1,5 +1,20 @@
 # Prospect compiler
 
+`qualification_coverage.py` provides a separate, non-mutating census-wide
+coverage check. It keeps zero-visibility and census-only businesses visible,
+separates current incumbents from genuine exclusions, and reports the exact
+research blockers for every review candidate. It never sends outreach and does
+not turn a historical `ready_to_email` value into fresh approval.
+
+```
+python3 qualification_coverage.py --input campaign.json --census census.csv --output coverage.json --require-complete
+```
+
+The output path must be new. `--require-complete` saves the diagnostic report
+then returns exit 1 if any census/cohort assessment is missing or unfinished,
+or the new-run zero-floor policy was not used. Historical review can omit the
+flag; an incomplete diagnostic report is not a qualified campaign.
+
 Turns a validated, structured market-run dataset — prepared during a Wardith
 sector × local-market campaign — into a consistent Excel workbook.
 
