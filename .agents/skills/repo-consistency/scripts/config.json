@@ -70,7 +70,11 @@
   "external_files": [
     "timings.md",
     "runs.csv",
-    "runs-clean.csv"
+    "runs-clean.csv",
+    "content-package.json",
+    "personal-linkedin.md",
+    "wardith-linkedin.md",
+    "source-ledger.md"
   ],
   "duplicate_min_chars": 200,
   "duplicate_similarity": 0.75,
