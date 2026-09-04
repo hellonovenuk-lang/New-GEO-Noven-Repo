@@ -60,6 +60,10 @@ For interrupted, missing, or conflicting research, also use
 `tools/prospect-compiler/REVIEW-EVIDENCE.md`. Its evidence-led routing governs bounded
 missing-only resumption, request records, timing, and the final digest.
 
+Use its **Repeatable execution contract** to open/resume a run and close the
+handoff. Reuse already completed research and separately prepared content;
+qualification does not recreate content or enable a weekly sending schedule.
+
 ## Stage 0 — Scope and permissions, then run straight through
 
 Before touching anything, state plainly what this run is about to do, so the
@@ -620,6 +624,12 @@ workbook reopens with populated calculated values in data-only mode —
 one narrow, documented exception (a non-ready business's `Outreach rank`
 cell).
 
+**Recalculate before release.** Follow the live-recalculation acceptance check
+in `tools/prospect-compiler/REVIEW-EVIDENCE.md`. Correct saved values and a
+strict-validator PASS do not prove live formulas are correct. Hold only the
+affected workbook if recalculation fails; preserve campaign data and report
+the precise repair needed. Do not restart business research for a renderer bug.
+
 ## Stage 11.5 — Auto-ingest into the CRM
 
 Skip this entire stage when the user explicitly selected evidence-led mode
@@ -674,6 +684,13 @@ session (`$CLAUDE_CODE_REMOTE` unset or `false`) — the owner already has the
 file on their own disk there.
 
 ## Stage 12 — Report
+
+Include the close-out fields from the repeatable execution contract. A bounded
+review pass may be finished while full-market qualification is INCOMPLETE.
+Keep factual gaps, execution-control failures, file validation, owner approval
+and deployment status separate. Deliver the verified subset with its exceptions
+and stop; reopening parked research requires a recorded new reason, not another
+generic `continue` or an attempt to fill the shortlist artificially.
 
 Close every run with a concise completion summary — this is the one
 checkpoint the owner sees, the same posture `/90qrun`'s own Step 7 takes:

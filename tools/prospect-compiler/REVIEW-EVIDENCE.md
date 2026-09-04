@@ -177,6 +177,78 @@ not reset just because a task was reopened. Reconcile pending attempts first.
 
 ## Reports and reconciliation
 
+### Repeatable execution contract
+
+Use this alongside the numbered qualification stages, not as a second pipeline.
+
+1. **Open/resume:** record the active campaign slugs, selected scope, source
+   campaign/raw-run hashes, original dates, permissions and output directory.
+   Resolve existing work and prior approvals before starting. Keep an explicit
+   manifest of finalized assessment/ledger paths; do not ingest every matching
+   JSON file, including intermediate definitions or superseded variants.
+2. **Coverage:** retain every census row and reuse validated raw answers/counts.
+   Track a business shared by campaigns under one research budget, while
+   assessing service/question relevance separately for each campaign. A verified
+   single-service specialist can use its narrower scope; do not require an
+   unsupported second service or silently change counts to resolve duplicates.
+3. **Research action:** verify remaining allowance, persist a successful
+   reservation, perform only that action, then immediately persist completion
+   with actual timestamps before commentary, packaging or another action.
+   Reservation rejection ends that action branch, including local research and
+   later commands in the same batch. A caught error is not permission to continue.
+   Keep business-reading/analysis inside its accounted allowance. Use a timeout
+   within the allowance where the tool supports it; otherwise do not certify
+   enforced timing merely because a ledger exists.
+4. **Interruption:** close pending work truthfully before resuming. Preserve
+   source-specific retrieval times, failures, quoted evidence and old versions.
+   Record any unreserved work separately with observed bounds and an explicit
+   procedural failure; it is not covered by ledger-only totals. Never invent
+   timestamps, backdate a reservation or reset a budget to obtain a PASS.
+5. **Close each record:** either integrate defensible facts with supported VALUE
+   inputs or park the exact gap and next external source/stop reason. A missing
+   email is not an owner question, a lookup failure is not closure, and a generic
+   published inbox is not a confirmed personal route. Do not spend unused
+   allowance after the bounded attempt has reached a justified stopping point.
+6. **Assemble:** use new draft paths; preserve originals and source dates. Run
+   the canonical scoring engine, strict renderer and full-census coverage check.
+   Reconcile assessed totals to the census and compare input hashes/counts.
+   Do not repeat paid runs, completed content work or unrelated campaigns.
+7. **Release:** complete the live-recalculation check below, then produce one
+   digest containing: review-pass status; full-market verdict and coverage groups;
+   exact parked facts; budget/procedural exceptions (including unreserved work);
+   validation results; artifact paths and draft hashes; proposed disposition,
+   priority/readiness/accessibility with approval status; and local/committed/
+   pushed/deployed status with any known revision. Name the next stage once.
+
+The close-out is not a request to start another pilot or research loop. Retain
+the verified candidate subset and parked exceptions for the next stage. Do not
+describe the majority-target objective as achieved without coverage evidence.
+Research-process failures can leave facts usable while unattended execution is
+not signed off. Updating these instructions alone does not prove that a caller
+enforces timeouts or authorise scheduling, CRM writes, publishing or sending.
+
+### Live-recalculation acceptance check
+
+After strict rendering, check both saved caches and actual recalculation using
+an available spreadsheet calculation engine. Trigger calculation before reading
+results: an imported workbook's initial values may only be its old caches. In
+Artifact Tool, rendering the Scoring range triggers calculation; read the values
+after that, not before it. Do not substitute a static QC PASS cell for this check.
+
+Match records by business identity, not row position. Compare every scored
+business's opportunity type, overall rank, outreach rank and readiness with the
+scored JSON, including the intentionally blank rank for non-ready records.
+Check formula errors and the affected views against the shortlist. The canonical
+engine's current opportunity order, cohort thresholds and tie-breaks govern;
+do not independently hard-code historical rules into the verification.
+
+If calculation tooling is unavailable, report recalculation UNVERIFIED and hold
+workbook release rather than claim it passed. A discrepancy requires a saved
+reproduction and a targeted renderer repair within separately authorised scope,
+not weakened validation, frozen replacement numbers or renewed prospect research.
+After repair, rerender the same campaign, rerun the failing check, and confirm
+campaign evidence, counts and approval hashes were not changed by the repair.
+
 `build_report` gives requirement-specific exceptions and next actor: `agent`,
 `external-information`, or `owner-policy` for the separate approval batch.
 Missing email is parked/unresolved, not excluded and not an owner approval

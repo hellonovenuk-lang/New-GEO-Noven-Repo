@@ -705,6 +705,18 @@ def build_scoring_sheet(wb, fmts, data):
     vis_rng = f"${L(col_idx['visibility_score'])}${first+1}:${L(col_idx['visibility_score'])}${last+1}"
     name_rng = f"${L(col_idx['business'])}${first+1}:${L(col_idx['business'])}${last+1}"
     ready_rng = f"${L(col_idx['ready_to_email'])}${first+1}:${L(col_idx['ready_to_email'])}${last+1}"
+    opportunity_rng = f"${L(col_idx['opportunity_type'])}${first+1}:${L(col_idx['opportunity_type'])}${last+1}"
+
+    def opportunity_order(reference):
+        # Boolean arithmetic stays array-valued inside SUMPRODUCT, including
+        # spreadsheet readers that implicitly intersect nested IF ranges.
+        terms = [f'({reference}="{label}")*{order}'
+                 for label, order in se.OPPORTUNITY_TYPE_RANK_ORDER.items()]
+        unknown = '*'.join(f'({reference}<>"{label}")' for label in se.OPPORTUNITY_TYPE_RANK_ORDER)
+        terms.append(f'{unknown}*{len(se.OPPORTUNITY_TYPE_RANK_ORDER)}')
+        return '(' + '+'.join(terms) + ')'
+
+    opportunity_order_rng = opportunity_order(opportunity_rng)
 
     for ri, (_array, _i, e) in enumerate(ranked):
         row0 = first + ri
@@ -801,9 +813,13 @@ def build_scoring_sheet(wb, fmts, data):
                           fmts["cell"], e.get("ready_to_email", "REVIEW"))
 
         scope_c = f"{L(col_idx['service_scope'])}{xr}"
-        has_peer = f"(COUNTIF({scope_rng},{scope_c})>=2)"
-        opp_formula = (f'=IF(AND({has_peer},{vis_c}>=3,{relpos_c}>=0.85,{cov_c}>=0.75),"DEFEND",'
-                       f'IF(AND({cred_c}>=3,{vis_c}<=1),"GAP",IF(AND({vis_c}=0,{cred_c}<3),"REVIEW","GROWTH")))')
+        name_c = f"{L(col_idx['business'])}{xr}"
+        group_rank = (f"(1+SUMPRODUCT(({scope_rng}={scope_c})*"
+                      f"(({vrate_rng}>{vrate_c})+(({vrate_rng}={vrate_c})*({name_rng}<{name_c})))))")
+        opp_formula = (f'=IF(AND({vis_c}>={se.MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE},'
+                       f'{relpos_c}>={se.MOST_NAMED_COHORT_MIN_RELATIVE_POSITION},'
+                       f'{group_rank}<={se.MOST_NAMED_COHORT_MAX_SIZE}),"DEFEND",'
+                       f'IF({vis_c}=0,"GAP","GROWTH"))')
         ws.write_formula(row0, col_idx["opportunity_type"], opp_formula, fmts["cell"], e["opportunity_type"])
 
         priority_val = e.get("priority", e.get("_priority_recommendation", "REVIEW"))
@@ -816,20 +832,22 @@ def build_scoring_sheet(wb, fmts, data):
         fs, gp, cr, vs, nm = (f"{L(col_idx['final_score'])}{xr}", f"{L(col_idx['gap_strength'])}{xr}",
                               f"{L(col_idx['business_credibility'])}{xr}", f"{L(col_idx['visibility_score'])}{xr}",
                               f"{L(col_idx['business'])}{xr}")
-        overall_formula = (
-            f"=1+SUMPRODUCT(({score_rng}>{fs})+(({score_rng}={fs})*({gap_rng}>{gp}))+"
+        score_ties = (
+            f"({score_rng}>{fs})+(({score_rng}={fs})*({gap_rng}>{gp}))+"
             f"(({score_rng}={fs})*({gap_rng}={gp})*({cred_rng}>{cr}))+"
             f"(({score_rng}={fs})*({gap_rng}={gp})*({cred_rng}={cr})*({vis_rng}>{vs}))+"
-            f"(({score_rng}={fs})*({gap_rng}={gp})*({cred_rng}={cr})*({vis_rng}={vs})*({name_rng}<{nm})))"
+            f"(({score_rng}={fs})*({gap_rng}={gp})*({cred_rng}={cr})*({vis_rng}={vs})*({name_rng}<{nm}))"
         )
+        opportunity_order_cell = opportunity_order(f"{L(col_idx['opportunity_type'])}{xr}")
+        # Match the engine: opportunity first, then the existing score tie-breaks.
+        ahead = (f"(({opportunity_order_rng}<{opportunity_order_cell})+"
+                 f"({opportunity_order_rng}={opportunity_order_cell})*({score_ties}))")
+        overall_formula = f"=1+SUMPRODUCT({ahead})"
         ws.write_formula(row0, col_idx["overall_rank"], overall_formula, fmts["cell"], e["overall_rank"])
 
         ready_c = f"{L(col_idx['ready_to_email'])}{xr}"
         outreach_formula = (
-            f'=IF({ready_c}="YES",1+SUMPRODUCT(({ready_rng}="YES")*(({score_rng}>{fs})+'
-            f'(({score_rng}={fs})*({gap_rng}>{gp}))+(({score_rng}={fs})*({gap_rng}={gp})*({cred_rng}>{cr}))+'
-            f'(({score_rng}={fs})*({gap_rng}={gp})*({cred_rng}={cr})*({vis_rng}>{vs}))+'
-            f'(({score_rng}={fs})*({gap_rng}={gp})*({cred_rng}={cr})*({vis_rng}={vs})*({name_rng}<{nm})))),"")'
+            f'=IF({ready_c}="YES",1+SUMPRODUCT(({ready_rng}="YES")*{ahead}),"")'
         )
         outreach_val = e.get("outreach_rank", "")
         ws.write_formula(row0, col_idx["outreach_rank"], outreach_formula, fmts["cell"], outreach_val)
