@@ -123,7 +123,7 @@ single "prospect or not" test — plus a fourth non-opportunity bucket
   explained by being new/specialist/out-of-market, local decision-making is
   unrealistic, or the only available outreach angle would be misleading.
   **This is not `REVIEW`** — REVIEW is a state of disposition and priority
-  (unresolved, needs a human look), not a fourth opportunity type. A business
+  (unresolved, with a recorded evidence reason), not a fourth opportunity type. A business
   can settle cleanly on NO OPPORTUNITY, or simply carry no opportunity type
   at all while its disposition stays REVIEW.
 
@@ -188,6 +188,14 @@ agree to skip the Audit — the exception, not the default sales path.
 5. there is a suitable evidenced business contact route.
 
 **Ambiguous prospects are REVIEW, not assumed valid.**
+
+Route missing, conflicting, or resumed evidence through
+`tools/prospect-compiler/REVIEW-EVIDENCE.md`: preserve a verified published
+inbox, park an unverified route with its precise missing fact, and resume only
+that gap. A missing email or external fact is not an individual owner decision.
+Timing must be measured across requests, reading, and pauses, or recorded as
+`conservative_elapsed`; `unknown` timing blocks additional requests. No pilot
+or rollout passes from request counts alone.
 
 **Batch of ten to twenty, weekly**, four or five a day rather than all at once.
 One stop rule: do not send batch two while batch one has more than four audits

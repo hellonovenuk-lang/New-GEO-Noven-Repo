@@ -141,8 +141,8 @@ From that position, classify `opportunity_type`:
   unresolved, geography ambiguous, the gap explained by being
   new/specialist/out-of-market, local decision-making unrealistic, or the
   only available angle would be misleading. **This is not `REVIEW`** —
-  `REVIEW` is a state of `disposition` and `priority` (unresolved, needs a
-  human look), not a kind of opportunity. A business can be `NO OPPORTUNITY`
+  `REVIEW` is a state of `disposition` and `priority` (unresolved, with a
+  recorded evidence reason), not a kind of opportunity. A business can be `NO OPPORTUNITY`
   and cleanly settled (there is definitely nothing to sell it) or it can
   simply have no `opportunity_type` at all, with the ambiguity carried by
   `disposition: REVIEW` instead.
@@ -221,6 +221,12 @@ or a trusted register never goes in `accessibility_notes`,
 inferred email pattern (`firstname.lastname@` guessed from a naming
 convention seen elsewhere) is exactly this kind of invention and is
 forbidden here too.
+
+For a missing email, unresolved route, interrupted pass, or conflicting
+external fact, use `tools/prospect-compiler/REVIEW-EVIDENCE.md`. Keep a
+verified general inbox with its actual quality; otherwise record the precise
+missing evidence and park the business. That state does not justify an
+invented contact, an individual owner question, or a readiness promotion.
 
 **Decision-maker accessibility informs priority; it does not decide it.** A
 `GATEKEPT` business with a strong `GAP`/`DEFEND` story and real commercial
@@ -753,14 +759,15 @@ genuinely varies run-count per question is not yet supported by
 
 ---
 
-## 5. Priority gate
+## 5. Priority gate — one final digest
 
 **`outreach_entry.priority` (`A`/`B`/`C`/`REVIEW`) and
 `outreach_entry.ready_to_email` (`YES`/`REVIEW`) are the two fields the owner
-must approve before a campaign JSON is treated as outreach-ready.** Claude
-may — should — propose values for both, backed by the evidence already
-gathered, but the file is not final until the owner has reviewed and
-confirmed them.
+must approve in one final digest before a campaign JSON is treated as
+outreach-ready.** Claude may — should — propose values for both, backed by
+the evidence already gathered, but the file is not final until the owner has
+reviewed and confirmed the digest. Do not seek individual approval for a
+missing email or external fact; park it with the precise evidence reason.
 
 **`priority` is not `opportunity_type`, and it is not a visibility ranking.**
 A business's opportunity type (§3) says why it's worth approaching; priority
@@ -798,8 +805,10 @@ will pass validation.
    `reason` for every exclusion, `priority` and `ready_to_email` for every
    outreach candidate — weighing `accessibility` as one factor among several,
    never as an automatic override of commercial opportunity.
-5. Present the HUMAN fields — `priority` and `ready_to_email` — for the
-   owner's approval before treating anything as final.
+5. Present one final digest of the HUMAN fields — `priority` and
+   `ready_to_email` — for the owner's policy approval before treating
+   anything as final. Include parked evidence reasons; do not interrupt for
+   individual research approvals.
 6. Populate the final JSON against `schema.json` exactly, using §3 (and §3a
    for any business opting into scoring) as the field-by-field checklist.
 6a. If any business sets `service_scope`, run `scoring_engine.py` before

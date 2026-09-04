@@ -1,6 +1,6 @@
 # Evidence-led qualification with an exception list
 
-Status: approach approved; detailed design awaiting owner review. No implementation yet.
+Status: design and six-record pilot approved by the owner on 2026-09-03. Implementation is local only. Pilot release checks must pass before wider rollout; no deployment or outreach is authorised by this design.
 
 ## Scope
 

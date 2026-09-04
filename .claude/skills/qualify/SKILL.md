@@ -56,6 +56,10 @@ This file is the procedure that walks through them in order; it does not
 restate their content, and if this file and either of them disagree, they
 win — fix this file, not the other way round.
 
+For interrupted, missing, or conflicting research, also use
+`tools/prospect-compiler/REVIEW-EVIDENCE.md`. Its evidence-led routing governs bounded
+missing-only resumption, request records, timing, and the final digest.
+
 ## Stage 0 — Scope and permissions, then run straight through
 
 Before touching anything, state plainly what this run is about to do, so the
@@ -87,6 +91,14 @@ schema-required field genuinely can't be populated from real evidence, or
 source, an ambiguous but resolvable name variant, one business needing a
 second lookup) gets handled and folded into the final report, not raised as
 a mid-run question.
+
+If the user explicitly selects evidence-led mode with no CRM mutations,
+pushes, or deploys, that instruction takes precedence over the cloud sync/CRM
+adapter defaults. It does not weaken the legal-entity, scoring, readiness, or
+remote credential boundaries.
+
+For an explicitly offline/local-only evidence-led review, skip Stage 0 sync and
+all CRM fetches: use the supplied local artifacts and report any missing input.
 
 **Before Stage 1, sync `~/wardith-runs/` against the private
 `hellonovenuk-lang/wardith-crm-data` repo** — this holds every trade-run
@@ -153,6 +165,11 @@ Fail clearly here rather than discovering a gap four stages in.
    should be read and reused once confirmed still valid, not recomputed
    from scratch — this keeps a resumed qualify run cheap the same way
    `trade_run.py`'s own resume logic does.
+5. **Resume only recorded gaps.** Read the evidence register and follow
+   `tools/prospect-compiler/REVIEW-EVIDENCE.md`: retain verified facts and published inboxes,
+   reserve/save the exact missing fact before each external request, and do
+   not reset completed research. Missing email or external corroboration is a
+   parked, precise `REVIEW`/`INCOMPLETE` reason, not an owner question.
 
 ## Stage 2 — Market census
 
@@ -355,6 +372,9 @@ If `~/wardith-runs/crm/wardith.db` doesn't exist yet, this check is simply
 unavailable — skip it and research fresh, same as always; never treat a
 missing database as a blocker.
 
+For an offline/local-only evidence-led review, this lookup is not required;
+consult a permitted local database only when it is in scope.
+
 **On a hit:** use the record's `legal_entity`/`company_number`/
 `company_status` (this stage) and `contact_person`/`role`/`contact_email`/
 `decision_maker_linkedin`/`accessibility`/`accessibility_notes` (Stage 6) as
@@ -445,6 +465,11 @@ research pass itself:
 personal email, or address that isn't published by the business itself or a
 trusted register — the same rule already governing `contact_person` and
 `contact_email` applies to every accessibility field too.
+
+Use the evidence routing reference for a missing email or unresolved route:
+retain a verified generic inbox with its actual route quality, otherwise park
+the business with the exact missing evidence. Do not promote it, repeat
+completed searches, or ask the owner to supply an external fact.
 
 **Recording a LinkedIn match here is research, not outreach.**
 `playbook/decisions.md`'s "LinkedIn outreach is later, not now" is
@@ -597,6 +622,10 @@ cell).
 
 ## Stage 11.5 — Auto-ingest into the CRM
 
+Skip this entire stage when the user explicitly selected evidence-led mode
+with no CRM mutations, pushes, or deploys. Record the intentional skip in the
+final digest; it does not affect the campaign verdict.
+
 Immediately after a successful render, pull this campaign into the CRM so
 its data is live there without a separate manual refresh:
 
@@ -619,7 +648,8 @@ never run, whatever) is recorded as one line in Stage 12's report — ingested
 OK, or failed and why — and never downgrades `PASS`/`PASS WITH
 REVIEW`/`INCOMPLETE`.
 
-**Where Stage 0 synced against `wardith-crm-data`** (cloud or local): once
+**Where Stage 0 synced against `wardith-crm-data`** (cloud or local), and
+evidence-led mode has not prohibited pushes: once
 `ingest` above succeeds, run
 `bash scripts/wardith-runs-sync.sh push "qualify <slug>"` to commit and push
 everything this run wrote — the campaign folder and the updated `wardith.db`
@@ -650,8 +680,8 @@ checkpoint the owner sees, the same posture `/90qrun`'s own Step 7 takes:
 
 - **Verdict**, stated plainly: `PASS` (every stage completed, nothing left
   ambiguous), `PASS WITH REVIEW` (a valid, `--require-scored`-passing
-  campaign JSON exists, but one or more businesses are `REVIEW` on
-  disposition, priority, or accessibility and need the owner's eyes), or
+  campaign JSON exists, but one or more businesses remain `REVIEW` with a
+  precise parked-evidence reason or await the final policy digest), or
   `INCOMPLETE` (a stage couldn't complete, or `build_workbook.py
   --require-scored` rejected the campaign — say exactly which requirement
   is unmet, per Stage 1's fail-clearly rule and Stage 4's canonical-inputs
@@ -664,10 +694,10 @@ checkpoint the owner sees, the same posture `/90qrun`'s own Step 7 takes:
 - **Accessibility breakdown** — counts of DIRECT / IDENTIFIABLE / GATEKEPT /
   CORPORATE / REVIEW among `outreach[]`, so the access-problem shape of the
   campaign is visible in the report, not just buried in the workbook.
-- **Unresolved / manual-review items** — every business left at
+- **Parked evidence items** — every business left at
   `disposition: REVIEW`, `priority: REVIEW`, or `accessibility: REVIEW`,
-  named individually with the one-line reason, so the owner knows exactly
-  what still needs a human look and why.
+  named individually with the exact missing or conflicting evidence and the
+  next source or stop reason.
 - File paths: the census CSV, `mention-counts.json`, the campaign JSON, and
   the rendered workbook — all under `~/wardith-runs/<slug>/`. In a cloud
   session, note that the workbook was also sent directly via Stage 11.6.
@@ -697,16 +727,18 @@ is `INCOMPLETE`, even if workbook validation passed. Name each missing or
 unfinished cohort assessment from `completion_blockers`. On a repeat review,
 use a new dated/attempt-suffixed report path; never overwrite the prior report.
 
-## The approval gate — stop here
+## The approval gate — one final digest
 
 A campaign JSON that passes validation is not the same as one that's
 outreach-ready. `build_workbook.py` only checks that `priority`,
 `ready_to_email` and `accessibility` hold a valid enum value — it cannot
-check whether the owner has actually reviewed them. **Present the proposed
-`priority` and `ready_to_email` for every `outreach[]` business for
-explicit owner approval before treating any of it as final** — the same
-gate `CAMPAIGN-HANDOFF.md` §5 already defines; this skill does not add a
-new one or skip it because the compiler ran successfully. Show
+check whether the owner has actually reviewed them. **Present one final digest
+containing the proposed `priority` and `ready_to_email` for every `outreach[]`
+business for explicit owner policy approval before treating any of it as
+final.** Do not stop for individual approval questions about missing emails or
+external facts. The final digest is the same gate `CAMPAIGN-HANDOFF.md` §5
+defines; this skill does not add a new one or skip it because the compiler ran
+successfully. Show
 `accessibility` alongside them in that same table for context (it shapes
 how the owner might sequence contact, e.g. trying LinkedIn first on a
 `GATEKEPT` Priority A) — it is a Claude-proposed research finding, not a
