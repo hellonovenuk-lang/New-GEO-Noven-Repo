@@ -17,6 +17,8 @@ STATES = {'VERIFIED', 'MISSING', 'CONFLICT', 'STALE', 'NOT_APPLICABLE'}
 PREREQUISITES = {'legal_identity', 'active_company', 'contact_route'}
 OUTCOMES = {'success', 'transient_error', 'auth_error', 'access_error',
             'unavailable', 'permanent_error', 'interrupted'}
+COMPANY_TYPES = {'ltd': 'private limited company', 'llp': 'limited liability partnership',
+                 'plc': 'public limited company'}
 
 
 def _require(condition, message):
@@ -77,6 +79,11 @@ def _number(value):
 
 def _published(value, excerpt):
     return re.search(r'(?<![\w@.+-])' + re.escape(value.casefold()) + r'(?![\w@.+-])', excerpt.casefold()) is not None
+
+
+def _company_type(value):
+    normalized = ' '.join(value.casefold().split())
+    return next((code for code, label in COMPANY_TYPES.items() if normalized in {code, label}), None)
 
 
 def _finding(item, previous, created):
@@ -141,6 +148,11 @@ def _finding(item, previous, created):
                  _published(value['status'], registry_text), 'Registry excerpt must support exact number and status')
         _require(any('/company/' + value['company_number'] in _url(s['url']).path for s in sources if s['role'] == 'registry'),
                  'Status registry URL must identify the exact company number')
+        company_type = _company_type(value['company_type'])
+        supported = {code for code, label in COMPANY_TYPES.items() if _published(label, registry_text) or
+                     re.search(r'\b(?:company_type|type)["\x27]?\s*:\s*["\x27]?' + code + r'(?=["\x27\s,}\]]|$)', registry_text)}
+        _require(company_type is not None and supported == {company_type},
+                 'Registry excerpt must explicitly corroborate the supported company type; name suffix alone is insufficient')
     elif req == 'contact_route':
         email = value.get('email', '')
         _require(isinstance(email, str) and re.fullmatch(r'[^\s@]+@[^\s@]+\.[^\s@]+', email), 'Valid published email required')
@@ -172,6 +184,7 @@ def _seconds(value):
 def _account(attempts, start=0, repeat_start=0):
     requests = seconds = retries = 0
     overrun = False
+    timing_verified = True
     reservations, completions = {}, {}
     targets = set()
     for index, item in enumerate(attempts):
@@ -215,16 +228,23 @@ def _account(attempts, start=0, repeat_start=0):
             reserved = reservations[identifier]
             _require(_time(item['at']) >= _time(reserved['at']), 'Completion predates reservation')
             _require(item.get('outcome') in OUTCOMES, 'Invalid completion outcome')
+            basis = item.get('timing_basis', 'unknown')
+            _require(basis in {'conservative_elapsed', 'measured_active', 'unknown'}, 'Invalid completion timing basis')
+            if basis == 'conservative_elapsed':
+                elapsed = math.ceil((_time(item['at']) - _time(reserved['at'])).total_seconds())
+                _require(amount >= elapsed, 'Conservative elapsed timing understates timestamp duration')
             if item['outcome'] == 'interrupted':
                 _require(amount >= reserved['seconds'], 'Interrupted work consumes at least the full reservation')
             if index >= start:
+                timing_verified = timing_verified and basis != 'unknown'
                 seconds += amount - reserved['seconds']
                 overrun = overrun or amount > reserved['seconds'] or seconds > 300
             completions[identifier] = item
         else:
             raise ValueError('Attempt action must be reserve or complete')
     return {'requests': requests, 'seconds': seconds, 'retries': retries,
-            'pending_reservations': sorted(reservations.keys() - completions.keys()), 'overrun': overrun}
+            'pending_reservations': sorted(reservations.keys() - completions.keys()), 'overrun': overrun,
+            'timing_verified': timing_verified and not (reservations.keys() - completions.keys())}
 
 
 def _validate(ledger):
@@ -325,8 +345,19 @@ def record_attempt(ledger, business, attempt):
     record = _record(result, business)
     _require(_time(attempt.get('at')) >= _time(result['created_at']), 'Attempt predates ledger')
     if attempt.get('action') == 'reserve':
-        _require(not _lifecycle(record)[0], 'Parked record requires explicit reopening')
-    record['attempts'].append(copy.deepcopy(attempt))
+        parked, start, repeat_start = _lifecycle(record)
+        _require(not parked, 'Parked record requires explicit reopening')
+        _require(_account(record['attempts'], start, repeat_start)['timing_verified'],
+                 'Unknown or pending timing blocks further requests; preserve history and explicitly resolve/reset')
+    item = copy.deepcopy(attempt)
+    if item.get('action') == 'complete':
+        item.setdefault('timing_basis', 'conservative_elapsed')
+        if item['timing_basis'] == 'conservative_elapsed':
+            reserved = next((a for a in record['attempts'] if a['id'] == item.get('id') and a['action'] == 'reserve'), None)
+            _require(reserved is not None, 'Completion needs pending reservation')
+            elapsed = math.ceil((_time(item['at']) - _time(reserved['at'])).total_seconds())
+            item['seconds'] = max(_seconds(item.get('seconds')), elapsed)
+    record['attempts'].append(item)
     _seal(result)
     _validate(result)
     return result
@@ -365,7 +396,7 @@ def _positive(req, assessment):
         return False
     value = assessment['value']
     if req == 'active_company':
-        return value['status'].casefold() == 'active' and value['company_type'] in {'ltd', 'llp'}
+        return value['status'].casefold() == 'active' and _company_type(value['company_type']) in {'ltd', 'llp'}
     if req == 'services':
         return value['relevant']
     if req == 'geography':
@@ -394,7 +425,7 @@ def build_plan(ledger, now):
         pending = [req for req, a in assessments.items() if a['state'] not in {'VERIFIED', 'NOT_APPLICABLE'}]
         parked, start, repeat_start = _lifecycle(record)
         budget = _account(record['attempts'], start, repeat_start)
-        can_request = bool(pending) and not parked and not budget['overrun'] and not budget['pending_reservations'] and budget['requests'] < 12 and budget['seconds'] < 300
+        can_request = bool(pending) and not parked and budget['timing_verified'] and not budget['overrun'] and not budget['pending_reservations'] and budget['requests'] < 12 and budget['seconds'] < 300
         rows.append({'id': record['id'], 'business': record['business'], 'pending': pending,
                      'requirements': assessments, 'budget': budget, 'parked': parked,
                      'can_request': can_request,
@@ -447,7 +478,7 @@ def _proposals(row):
     if _positive('legal_identity', legal) and _positive('active_company', status):
         result['company_number'] = ('legal_identity', legal['value']['company_number'])
         result['company_status'] = ('active_company', 'Active')
-        result['legal_entity'] = ('active_company', 'Private limited company' if status['value']['company_type'] == 'ltd' else 'Limited liability partnership')
+        result['legal_entity'] = ('active_company', COMPANY_TYPES[_company_type(status['value']['company_type'])].capitalize())
     if _positive('contact_route', contact):
         result['contact_email'] = ('contact_route', contact['value']['email'])
     return result
@@ -524,6 +555,10 @@ def build_report(ledger, campaign, now):
         if row['budget']['overrun'] or row['budget']['pending_reservations']:
             exceptions.append({'business': row['business'], 'kind': 'operational_failure',
                 'requirement': 'research_budget', 'reason': 'Reconcile pending reservation or review recorded time overrun', 'next_actor': 'agent'})
+        if not row['budget']['timing_verified']:
+            exceptions.append({'business': row['business'], 'kind': 'operational_failure',
+                'requirement': 'research_timing', 'reason': 'Timing is NOT VERIFIED: unknown/legacy estimates or pending work cannot prove the research-time cap.',
+                'next_actor': 'agent'})
         for req, assessment in row['requirements'].items():
             if not _positive(req, assessment):
                 exceptions.append({'business': row['business'], 'requirement': req, 'state': assessment['state'],
@@ -533,7 +568,8 @@ def build_report(ledger, campaign, now):
         if any(c['business'] == row['business'] for c in reconciled['conflicts']):
             row['evidence_ready'] = False
     return {**plan, 'exceptions': exceptions,
-            'attempt_completion': 'COMPLETE' if all(r['parked'] or r['evidence_ready'] for r in plan['records']) else 'INCOMPLETE',
+            'timing_verified': all(r['budget']['timing_verified'] for r in plan['records']),
+            'attempt_completion': 'COMPLETE' if all((r['parked'] or r['evidence_ready']) and r['budget']['timing_verified'] and not r['budget']['overrun'] for r in plan['records']) else 'INCOMPLETE',
             'canonical_coverage': canonical_report(campaign),
             'remaining_requirements': reconciled['remaining_requirements'],
             'approval_batch': {**reconciled['approval_batch'], 'next_actor': 'owner-policy'},

@@ -56,6 +56,7 @@
         "url": {"type": "string", "format": "uri"},
         "retry_of": {"type": "string", "minLength": 1},
         "retry_after_seconds": {"type": "number", "minimum": 0},
+        "timing_basis": {"enum": ["conservative_elapsed", "measured_active", "unknown"], "description": "New completions default to conservative_elapsed in the API. Missing on legacy completions means unknown, never verified or rewritten."},
         "outcome": {"enum": ["success", "transient_error", "auth_error", "access_error", "unavailable", "permanent_error", "interrupted"]}
       },
       "allOf": [

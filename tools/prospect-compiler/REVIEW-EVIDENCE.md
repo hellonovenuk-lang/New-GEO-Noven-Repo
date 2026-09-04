@@ -47,7 +47,7 @@ describes shape, not all cross-record evidence and accounting constraints.
 | Requirement | VERIFIED value |
 | --- | --- |
 | `legal_identity` | `company_number`, `legal_name`, `basis: "published_number"` or `"corroborated_name_address"`; latter also needs `address` |
-| `active_company` | `company_number`, `status` (e.g. `"active"`), `company_type` (`"ltd"` or `"llp"` for positive eligibility) |
+| `active_company` | `company_number`, `status` (e.g. `"active"`), `company_type` (supported exact API code or web label; see below) |
 | `services` | `relevant: true/false` |
 | `geography` | `local: true/false` |
 | `decision_maker` | `name`, `operational: true/false` |
@@ -68,6 +68,15 @@ is corroborated in both excerpts. Name-only matching is rejected. Active status
 must match the verified legal number; its registry URL and excerpt identify the
 number and status. Registered-office location alone cannot establish trading
 geography, nor registry directorship alone operational ownership.
+
+Company type must also be explicitly corroborated in the registry excerpt.
+Supported exact aliases are `ltd` / `Private limited company`, `llp` / `Limited
+liability partnership`, and `plc` / `Public limited company` (case and whitespace
+normalized). Short API codes require a labeled `type:` or `company_type:` field,
+including JSON field syntax; a company's name ending in Ltd is not a type field.
+Generic `limited company`, absent type, unsupported codes and contradictory types
+are rejected. A corroborated public company stays a non-eligible fact under this
+helper's limited-company/LLP policy, never rewritten as a private company.
 
 Contact email must occur as a whole token in a business-source excerpt and be
 declared explicitly published. Generic and published personal-domain inboxes are
@@ -98,7 +107,7 @@ ledger = record_attempt(ledger, "Example", {
 # Persist before external work. Apply the tool's timeout within 30 seconds.
 ledger = record_attempt(ledger, "Example", {
     "action": "complete", "id": "request-1", "at": completed_at,
-    "seconds": 12, "outcome": "success"
+    "seconds": 12, "outcome": "success", "timing_basis": "conservative_elapsed"
 })
 ```
 
@@ -110,10 +119,37 @@ query and retry; use separate reservations for separate requests, including
 redirects if the calling tool exposes additional requests. Account active reading
 or analysis work with a cache reservation, not just network wait time.
 
-The cap is 12 requests or 300 active seconds per business. Pending reservations
+The cap is 12 requests or 300 active seconds per business. Use conservative elapsed
+timing by default: for every new completion the API records `timing_basis:
+"conservative_elapsed"` when omitted, and charges the larger of the supplied
+seconds and the ceiling of `completion.at - reservation.at`. Use actual timestamps
+from the clock, not estimates. This deliberately includes pauses, reading and
+analysis between reservation and completion, so park early when the allowance
+cannot cover more work. Loaded conservative completions that understate this
+duration are rejected, not silently changed.
+
+`timing_basis: "measured_active"` is only for callers that actually measure every
+active research/reading segment and separately reserve/account those segments;
+it is a caller measurement declaration, not an estimate or an automatic timer.
+Do not select it merely to exclude inconvenient elapsed time. The helper does not
+run a background timer or verify a caller's measurement instrument.
+
+Explicit `timing_basis: "unknown"` and old completion records with no basis remain
+loadable without rewriting their seconds or timestamps. Such current-budget
+records make `budget.timing_verified` and report `timing_verified` false, block
+new reservations, and keep attempt completion INCOMPLETE even when records are
+parked. Multiple old rounds can still be read and audited; they do not prove the
+time cap held. Never label historical estimates as measured after the fact.
+Changed-input, freshness and new-evidence reopenings do not clear unknown timing.
+Only an explicitly reasoned budget reset starts a fresh timing-accounted budget;
+it preserves all old estimates and does not verify the old pilot. Expansion stays
+on hold until a genuinely timed validation has passed.
+
+Pending reservations
 block the next action and count their full allowance after interruption. Complete
 an interrupted/unknown-duration action with `outcome: "interrupted"` and at least
-its reserved seconds. Do not discard reservations on resume. If an external tool
+its reserved seconds, using `timing_basis: "unknown"` when elapsed duration cannot
+be established. Do not discard reservations on resume. If an external tool
 overruns, record its truthful actual seconds: `budget.overrun` blocks further
 actions. This offline helper cannot cancel a hung external tool or measure work
 the agent omits. The agent must set timeouts, stop within the remaining allowance,
@@ -147,7 +183,8 @@ Missing email is parked/unresolved, not excluded and not an owner approval
 request. Failed access is an operational exception, not proof of absent facts.
 Suspected/confirmed duplicates remain proposals; the helper never combines rows.
 
-The sidecar's `evidence_ready` is not canonical readiness. `canonical_coverage`
+The sidecar's `evidence_ready` describes cited facts, not budget compliance or
+canonical readiness. Check timing_verified and overrun independently. `canonical_coverage`
 is the unchanged existing coverage report for the supplied campaign, without
 claiming that the selected ledger names are a complete census. Its explicit
 missing-census blocker remains. For full-market coverage pass the complete census

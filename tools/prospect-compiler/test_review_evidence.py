@@ -35,7 +35,7 @@ def finding(requirement, value, state='VERIFIED', at=NOW, supersedes=()):
                 'publisher': 'Example business', 'role': 'business'}]
     if requirement in {'legal_identity', 'active_company'}:
         sources.append({'url': 'https://find-and-update.company-information.service.gov.uk/company/00000001',
-                        'retrieved_at': at, 'excerpt': 'Example Ltd 00000001 active limited company',
+                        'retrieved_at': at, 'excerpt': 'Example Ltd 00000001 active private limited company',
                         'publisher': 'Companies House', 'role': 'registry'})
     return {'requirement': requirement, 'state': state, 'value': value,
             'sources': sources, 'method': 'published_page',
@@ -91,7 +91,7 @@ class EvidenceTests(unittest.TestCase):
     def test_mismatched_active_number_is_a_conflict(self):
         ledger = add_finding(self.ledger(), 'Example', finding('legal_identity', LEGAL), NOW)
         item = finding('active_company', {**ACTIVE, 'company_number': '00000002'})
-        item['sources'][1]['excerpt'] = '00000002 active limited company'
+        item['sources'][1]['excerpt'] = '00000002 active private limited company'
         item['sources'][1]['url'] = item['sources'][1]['url'].replace('00000001', '00000002')
         ledger = add_finding(ledger, 'Example', item, NOW)
         self.assertEqual(build_plan(ledger, NOW)['records'][0]['requirements']['active_company']['state'], 'CONFLICT')
@@ -259,6 +259,38 @@ class EvidenceTests(unittest.TestCase):
             item['sources'][1][field] = value
             with self.assertRaises(ValueError):
                 add_finding(self.ledger(), 'Example', item, NOW)
+
+    def test_company_type_requires_supported_registry_corroboration(self):
+        for excerpt in ['00000001 active public limited company',
+                        'Example Ltd 00000001 active', '00000001 active limited company',
+                        '00000001 active type: llp', '00000001 active type: ltd-private-special']:
+            item = finding('active_company', ACTIVE)
+            item['sources'][1]['excerpt'] = excerpt
+            with self.assertRaises(ValueError):
+                add_finding(self.ledger(), 'Example', item, NOW)
+
+    def test_company_type_accepts_exact_web_and_api_aliases(self):
+        for value_type, excerpt_type, expected in [
+            ('ltd', 'private limited company', 'Private limited company'),
+            ('Private limited company', '"type": "ltd"', 'Private limited company'),
+            ('llp', 'Limited liability partnership', 'Limited liability partnership'),
+            ('Limited liability partnership', 'company_type: llp', 'Limited liability partnership')]:
+            original = campaign()
+            original['outreach'] = [{'business': 'Example'}]
+            ledger = new_ledger(original, ['Example'], NOW)
+            ledger = add_finding(ledger, 'Example', finding('legal_identity', LEGAL), NOW)
+            item = finding('active_company', {**ACTIVE, 'company_type': value_type})
+            item['sources'][1]['excerpt'] = '00000001 active ' + excerpt_type
+            ledger = add_finding(ledger, 'Example', item, NOW)
+            self.assertEqual(reconcile(ledger, original, NOW)['draft']['outreach'][0]['legal_entity'], expected)
+
+    def test_public_company_type_is_not_reconciled_as_private_company(self):
+        ledger = add_finding(self.ledger(), 'Example', finding('legal_identity', LEGAL), NOW)
+        item = finding('active_company', {**ACTIVE, 'company_type': 'plc'})
+        item['sources'][1]['excerpt'] = '00000001 active public limited company'
+        ledger = add_finding(ledger, 'Example', item, NOW)
+        self.assertEqual(build_plan(ledger, NOW)['records'][0]['requirements']['active_company']['state'], 'VERIFIED')
+        self.assertFalse(build_plan(ledger, NOW)['records'][0]['evidence_ready'])
 
     def test_planning_cannot_precede_recorded_evidence(self):
         ledger = add_finding(self.ledger(), 'Example', finding('services', {'relevant': True}, at=LATER), LATER)
@@ -454,6 +486,106 @@ class BudgetTests(unittest.TestCase):
             reopen(ledger, 'Example', 'freshness', 'Not actually stale', NOW)
         ledger = reopen(ledger, 'Example', 'freshness', 'Same-day mutable facts now need refresh', TOMORROW)
         self.assertTrue(build_plan(ledger, TOMORROW)['records'][0]['can_request'])
+
+    def test_completion_defaults_to_conservative_ceiling_of_elapsed_time(self):
+        ledger = self.reserve(self.ledger(), seconds=30)
+        original = copy.deepcopy(ledger)
+        done = record_attempt(ledger, 'Example', {'action': 'complete', 'id': 'r1',
+            'at': '2026-09-03T12:00:12.100+00:00', 'seconds': 1, 'outcome': 'success'})
+        completion = done['records'][0]['attempts'][-1]
+        self.assertEqual(completion['seconds'], 13)
+        self.assertEqual(completion['timing_basis'], 'conservative_elapsed')
+        self.assertTrue(build_plan(done, LATER)['records'][0]['budget']['timing_verified'])
+        self.assertEqual(ledger, original)
+
+    def test_conservative_pause_overrun_is_charged_and_blocks_further_requests(self):
+        ledger = self.reserve(self.ledger(), seconds=30)
+        done = record_attempt(ledger, 'Example', {'action': 'complete', 'id': 'r1',
+            'at': '2026-09-03T12:06:00+00:00', 'seconds': 2, 'outcome': 'success'})
+        row = build_plan(done, LATER)['records'][0]
+        self.assertEqual(row['budget']['seconds'], 360)
+        self.assertTrue(row['budget']['overrun'])
+        self.assertFalse(row['can_request'])
+        with self.assertRaises(ValueError):
+            self.reserve(done, 'next', query='new query')
+
+    def test_measured_active_basis_preserves_measured_seconds(self):
+        done = record_attempt(self.reserve(self.ledger()), 'Example', {
+            'action': 'complete', 'id': 'r1', 'at': LATER, 'seconds': 12,
+            'outcome': 'success', 'timing_basis': 'measured_active'})
+        row = build_plan(done, LATER)['records'][0]
+        self.assertEqual(row['budget']['seconds'], 12)
+        self.assertTrue(row['budget']['timing_verified'])
+
+    def legacy(self):
+        ledger = self.complete(self.reserve(self.ledger()))
+        ledger['records'][0]['attempts'][-1].pop('timing_basis', None)
+        ledger.pop('integrity_sha256')
+        ledger['integrity_sha256'] = hashlib.sha256(json.dumps(ledger, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode()).hexdigest()
+        return ledger
+
+    def test_legacy_timing_loads_unchanged_but_blocks_requests_and_completion_claim(self):
+        ledger = self.legacy()
+        original = copy.deepcopy(ledger)
+        row = build_plan(ledger, NOW)['records'][0]
+        self.assertFalse(row['budget']['timing_verified'])
+        self.assertFalse(row['can_request'])
+        with self.assertRaises(ValueError):
+            self.reserve(ledger, 'next', query='new query')
+        parked = park(ledger, 'Example', 'Historical estimates need review', NOW)
+        report = build_report(parked, campaign(), NOW)
+        self.assertFalse(report['timing_verified'])
+        self.assertEqual(report['attempt_completion'], 'INCOMPLETE')
+        self.assertIn('research_timing', [e['requirement'] for e in report['exceptions']])
+        self.assertEqual(ledger, original)
+
+    def test_changed_input_reopen_does_not_clear_unknown_timing(self):
+        ledger = park(self.legacy(), 'Example', 'Timing unknown', NOW)
+        ledger = reopen(ledger, 'Example', 'changed_input', 'New website', NOW)
+        self.assertFalse(build_plan(ledger, NOW)['records'][0]['budget']['timing_verified'])
+        with self.assertRaises(ValueError):
+            self.reserve(ledger, 'new', query='new query')
+
+    def test_explicit_reset_retains_legacy_estimates_and_starts_verified_budget(self):
+        ledger = park(self.legacy(), 'Example', 'Timing unknown', NOW)
+        ledger = reopen(ledger, 'Example', 'budget_reset', 'Explicit fresh research authorization; old timing stays unknown', NOW)
+        self.assertTrue(build_plan(ledger, NOW)['records'][0]['budget']['timing_verified'])
+        self.assertNotIn('timing_basis', ledger['records'][0]['attempts'][1])
+        ledger = self.complete(self.reserve(ledger, 'fresh'), 'fresh')
+        self.assertEqual(build_plan(ledger, NOW)['records'][0]['budget']['requests'], 1)
+
+    def test_explicit_unknown_interruption_stays_unknown_and_consumes_reservation(self):
+        done = record_attempt(self.reserve(self.ledger()), 'Example', {
+            'action': 'complete', 'id': 'r1', 'at': NOW, 'seconds': 20,
+            'outcome': 'interrupted', 'timing_basis': 'unknown'})
+        row = build_plan(done, NOW)['records'][0]
+        self.assertEqual(row['budget']['seconds'], 20)
+        self.assertFalse(row['budget']['timing_verified'])
+        with self.assertRaises(ValueError):
+            record_attempt(self.reserve(self.ledger()), 'Example', {'action': 'complete', 'id': 'r1',
+                'at': NOW, 'seconds': 2, 'outcome': 'success', 'timing_basis': 'estimated'})
+
+    def test_loaded_conservative_understatement_is_rejected_without_relabelling(self):
+        ledger = self.complete(self.reserve(self.ledger()))
+        item = ledger['records'][0]['attempts'][-1]
+        item.update(at=LATER, seconds=1, timing_basis='conservative_elapsed')
+        ledger.pop('integrity_sha256')
+        ledger['integrity_sha256'] = hashlib.sha256(json.dumps(ledger, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode()).hexdigest()
+        with self.assertRaises(ValueError):
+            build_plan(ledger, LATER)
+
+    def test_multiple_legacy_rounds_remain_loadable_without_claiming_verified_time(self):
+        ledger = self.complete(self.reserve(self.ledger()))
+        ledger = self.complete(self.reserve(ledger, 'r2', query='second query'), 'r2')
+        for item in ledger['records'][0]['attempts']:
+            item.pop('timing_basis', None)
+        ledger.pop('integrity_sha256')
+        ledger['integrity_sha256'] = hashlib.sha256(json.dumps(ledger, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode()).hexdigest()
+        original = copy.deepcopy(ledger)
+        row = build_plan(ledger, NOW)['records'][0]
+        self.assertEqual(row['budget']['requests'], 2)
+        self.assertFalse(row['budget']['timing_verified'])
+        self.assertEqual(ledger, original)
 
 
 class CliTests(unittest.TestCase):
