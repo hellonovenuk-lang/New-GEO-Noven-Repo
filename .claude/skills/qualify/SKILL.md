@@ -761,6 +761,25 @@ how the owner might sequence contact, e.g. trying LinkedIn first on a
 `GATEKEPT` Priority A) — it is a Claude-proposed research finding, not a
 second formal HUMAN-gated field the way `priority`/`ready_to_email` are.
 
+## Content handoff — offer, do not run
+
+Once the owner has responded to the approval table and the campaign has a
+`PASS` or `PASS WITH REVIEW` verdict, check the evidence already loaded for one
+genuinely publishable market finding. This is a light handoff assessment, not a
+new research stage.
+
+- If there is a worthwhile finding, state it in one sentence and offer the exact
+  next action: `/content <campaign-slug>`. Do not invoke `/content`, create a
+  content folder or draft a post until the owner explicitly accepts the offer.
+- If there is no finding strong enough to publish, say so plainly and make no
+  content offer. A completed qualification does not create a content quota.
+
+Judge usefulness separately from outreach priority. Prefer a clear market-wide
+pattern that can be explained without exposing a prospect negatively. A named
+business is suitable only under the positive-recognition rule in
+`playbook/decisions.md`. The later `/content` run owns the final evidence,
+editorial and brand checks; this handoff only identifies the opportunity.
+
 ## What this skill does not do
 
 - **Does not run or resume `tools/trade-run/`.** The 90-question stage is
