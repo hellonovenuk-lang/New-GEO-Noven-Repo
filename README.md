@@ -31,6 +31,7 @@ Sole trader, one person. `wardith.co.uk`.
 | Push prepared outreach into Zoho Mail as drafts — never sends | `tools/zoho-draft-push/` |
 | **Run the daily CRM** (every campaign, prospect and client, next actions, revenue) | `python3 tools/crm/main.py serve` — data lives in `~/wardith-runs/crm/`, never here |
 | Scan for news/research supporting "Why this matters" | `/context-watch` — `.claude/skills/context-watch/` |
+| Turn approved evidence into branded LinkedIn content | `/content` — `.claude/skills/content/` |
 
 **No monthly-plan record template exists yet.** Maintain, Grow and Lead are
 priced and published but never delivered — that format will be built from the

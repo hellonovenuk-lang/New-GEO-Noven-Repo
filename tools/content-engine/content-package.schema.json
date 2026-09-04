@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Wardith Content Engine review package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "slug",
+    "source_type",
+    "review_state",
+    "evidence",
+    "publication",
+    "posts",
+    "graphic"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "source_type": { "enum": ["campaign", "research"] },
+    "review_state": { "const": "READY_FOR_REVIEW" },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "claim", "source_title", "publisher", "date", "locator"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^E[0-9]{2,}$" },
+          "claim": { "type": "string", "minLength": 1 },
+          "source_title": { "type": "string", "minLength": 1 },
+          "publisher": { "type": "string", "minLength": 1 },
+          "date": { "type": "string", "format": "date" },
+          "url": { "type": "string", "pattern": "^https://" },
+          "local_file": { "type": "string", "minLength": 1 },
+          "locator": { "type": "string", "minLength": 1 }
+        },
+        "anyOf": [
+          { "required": ["url"] },
+          { "required": ["local_file"] }
+        ]
+      }
+    },
+    "publication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["named_businesses", "recognition_basis"],
+      "properties": {
+        "named_businesses": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "recognition_basis": { "enum": ["none", "positive-recognition"] }
+      }
+    },
+    "posts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["personal", "company"],
+      "properties": {
+        "personal": { "$ref": "#/$defs/post" },
+        "company": { "$ref": "#/$defs/post" }
+      }
+    },
+    "graphic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["template", "label", "headline", "detail", "source_line", "evidence_ids"],
+      "properties": {
+        "template": { "enum": ["market-finding", "research-finding"] },
+        "label": { "type": "string", "minLength": 1, "maxLength": 50 },
+        "headline": { "type": "string", "minLength": 1, "maxLength": 105 },
+        "detail": { "type": "string", "minLength": 1, "maxLength": 180 },
+        "source_line": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "evidence_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^E[0-9]{2,}$" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "post": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "evidence_ids"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1 },
+        "evidence_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^E[0-9]{2,}$" }
+        }
+      }
+    }
+  }
+}
