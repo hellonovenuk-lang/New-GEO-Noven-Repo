@@ -278,6 +278,81 @@ class TestCanonicalSourcePrecedence(IngestTestCase):
         self.assertTrue(any("older than the stored canonical run_date" in w for w in warnings))
 
 
+class TestNonScalarOutreachPrepFields(IngestTestCase):
+    """Every earlier outreach-prep fixture set "linkedin_draft": None, so the
+    prep_entry branch of build_prospect_research had only ever been exercised
+    with scalars. The first real /outreach run to produce a structured
+    LinkedIn note - {url, note, char_count, label}, written whenever a named
+    LinkedIn contact was found - bound a dict to a TEXT column and aborted the
+    whole ingest with sqlite3.ProgrammingError."""
+
+    LINKEDIN_DRAFT = {
+        "url": "https://www.linkedin.com/in/sharon-example",
+        "note": "Hi Sharon, I'm Kieran, I run Wardith.",
+        "char_count": 37,
+        "label": "LINKEDIN DRAFT - NOT SENT.",
+    }
+
+    def _prepared_campaign(self, prep_overrides):
+        slug = "estate-agents-chester"
+        write_json(self.runs_dir / slug / f"{slug}-campaign.json",
+                   make_campaign_json(slug, outreach=[make_outreach_entry("A Move Homes")]))
+        prep = {
+            "campaign_slug": slug, "business": "A Move Homes", "area": "Chester",
+            "contact_route": {"person": "Sharon", "role": "MD", "email": "s@x.co.uk"},
+            "outreach_angle": "angle", "email_subject": "subject", "email_body": "body",
+            "linkedin_draft": None, "caveats": [], "evidence_source_ids": ["S001"],
+        }
+        prep.update(prep_overrides)
+        write_json(
+            self.runs_dir / slug / "outreach" / f"outreach-prep-{slug}-2026-08-15.json",
+            [prep],
+        )
+        return slug
+
+    def test_structured_linkedin_draft_is_stored_as_json_text(self):
+        slug = self._prepared_campaign({"linkedin_draft": self.LINKEDIN_DRAFT})
+        n_c, n_p, warnings = it.import_all(self.conn, self.runs_dir)
+        self.assertEqual((n_c, n_p), (1, 1))
+        self.assertEqual(it.get_campaign(self.conn, slug)["pipeline_stage"], "OUTREACH_PREPARED")
+        prospect = it.get_prospect(self.conn, f"{slug}::cn-01234567")
+        self.assertEqual(json.loads(prospect["linkedin_draft"]), self.LINKEDIN_DRAFT)
+        # The rest of the prep entry still lands unchanged.
+        self.assertEqual(prospect["contact_person"], "Sharon")
+        self.assertEqual(prospect["email_body"], "body")
+
+    def test_plain_string_linkedin_draft_is_unchanged(self):
+        slug = self._prepared_campaign({"linkedin_draft": "Hi Sharon, ..."})
+        it.import_all(self.conn, self.runs_dir)
+        prospect = it.get_prospect(self.conn, f"{slug}::cn-01234567")
+        self.assertEqual(prospect["linkedin_draft"], "Hi Sharon, ...")
+
+    def test_other_prep_text_fields_survive_a_non_scalar(self):
+        slug = self._prepared_campaign({
+            "outreach_angle": ["first point", "second point"],
+            "withheld_reason": {"code": "NO_ROUTE", "detail": "no published address"},
+        })
+        it.import_all(self.conn, self.runs_dir)
+        prospect = it.get_prospect(self.conn, f"{slug}::cn-01234567")
+        self.assertEqual(json.loads(prospect["outreach_angle"]), ["first point", "second point"])
+        self.assertEqual(json.loads(prospect["withheld_reason"])["code"], "NO_ROUTE")
+
+    def test_non_scalar_contact_route_is_dropped_not_coerced(self):
+        slug = self._prepared_campaign({
+            "contact_route": {"person": {"first": "Sharon"}, "role": "MD",
+                              "email": ["s@x.co.uk"]},
+        })
+        n_c, n_p, warnings = it.import_all(self.conn, self.runs_dir)
+        prospect = it.get_prospect(self.conn, f"{slug}::cn-01234567")
+        # An address is never invented from a non-scalar; the campaign JSON
+        # value stands (here: absent) and the run warns instead.
+        self.assertIsNone(prospect["contact_email"])
+        self.assertIsNone(prospect["contact_person"])
+        self.assertEqual(prospect["role"], "MD")
+        self.assertTrue(any("contact_route.email" in w for w in warnings))
+        self.assertTrue(any("contact_route.person" in w for w in warnings))
+
+
 class TestImportLog(IngestTestCase):
     def test_warnings_persist_across_runs(self):
         slug = "mid-write-campaign"

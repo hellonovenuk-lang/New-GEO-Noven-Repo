@@ -53,6 +53,41 @@ def now_iso():
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+def as_text(value):
+    """Coerce one outreach-prep free-text field to something SQLite can bind
+    to a TEXT column.
+
+    /outreach's Stage 7 schema documents these fields as strings, but the
+    skill is a prompt, not a validator, and a run is free to emit a richer
+    shape - `linkedin_draft` arrives as an object ({url, note, char_count,
+    label}) whenever a named LinkedIn contact was found. Passing that
+    straight through raised `sqlite3.ProgrammingError: type 'dict' is not
+    supported` and aborted the whole ingest, losing the other campaigns in
+    the same run too. Serialise instead of dropping: the structure is
+    research output, and a JSON string keeps all of it recoverable, the
+    same way `caveats` and `evidence_source_ids` are already stored."""
+    if value is None or isinstance(value, str):
+        return value
+    if isinstance(value, bool):
+        return json.dumps(value)
+    if isinstance(value, (int, float)):
+        return str(value)
+    return json.dumps(value, ensure_ascii=False, sort_keys=True)
+
+
+def scalar_or_none(value, business, field, warnings):
+    """Contact-route values are used to address a real person, so a
+    non-scalar one is never coerced into an address or a name - it is
+    dropped, warned about, and the campaign JSON's own value stands."""
+    if value is None or (isinstance(value, (str, int, float)) and not isinstance(value, bool)):
+        return value
+    warnings.append(
+        f"{business or 'unknown business'}: outreach-prep contact_route.{field} is "
+        f"{type(value).__name__}, not a scalar - ignored, campaign JSON value kept"
+    )
+    return None
+
+
 def load_json(path):
     """Returns (data, error). Tolerant of a file mid-write by a running
     /qualify or /outreach job: a decode error is reported, never raised."""
@@ -196,7 +231,7 @@ def business_key_for(entry, prep_entry):
     return slugify((entry or {}).get("business") or (prep_entry or {}).get("business") or "")
 
 
-def build_prospect_research(entry, prep_match):
+def build_prospect_research(entry, prep_match, warnings=None):
     prep_entry, prep_path = prep_match if prep_match else (None, None)
     research = {field: None for field in RESEARCH_FIELDS}
     research.update({
@@ -225,18 +260,22 @@ def build_prospect_research(entry, prep_match):
         "withheld_reason": None,
     })
     if prep_entry:
+        if warnings is None:
+            warnings = []
+        business = prep_entry.get("business") or entry.get("business")
         contact_route = prep_entry.get("contact_route") or {}
-        research["contact_person"] = contact_route.get("person") or research["contact_person"]
-        research["role"] = contact_route.get("role") or research["role"]
-        research["contact_email"] = contact_route.get("email") or research["contact_email"]
-        research["outreach_angle"] = prep_entry.get("outreach_angle")
-        research["email_subject"] = prep_entry.get("email_subject")
-        research["email_body"] = prep_entry.get("email_body")
-        research["linkedin_draft"] = prep_entry.get("linkedin_draft")
+        for column, key in (("contact_person", "person"), ("role", "role"),
+                            ("contact_email", "email")):
+            value = scalar_or_none(contact_route.get(key), business, key, warnings)
+            research[column] = value or research[column]
+        research["outreach_angle"] = as_text(prep_entry.get("outreach_angle"))
+        research["email_subject"] = as_text(prep_entry.get("email_subject"))
+        research["email_body"] = as_text(prep_entry.get("email_body"))
+        research["linkedin_draft"] = as_text(prep_entry.get("linkedin_draft"))
         research["caveats_json"] = json.dumps(prep_entry.get("caveats"))
         research["source_outreach_prep_json"] = str(prep_path)
         research["withheld_at_outreach"] = 1 if prep_entry.get("withheld") is True else 0
-        research["withheld_reason"] = prep_entry.get("withheld_reason")
+        research["withheld_reason"] = as_text(prep_entry.get("withheld_reason"))
     return research
 
 
@@ -368,7 +407,7 @@ def import_all(conn, runs_dir, slugs=None, warnings=None):
             prep_entry = prep_match[0] if prep_match else None
             business_key = business_key_for(entry, prep_entry)
             prospect_id = f"{slug}::{business_key}"
-            research = build_prospect_research(entry, prep_match)
+            research = build_prospect_research(entry, prep_match, warnings)
             upsert_prospect(conn, prospect_id, slug, business_key, research)
             imported_prospects += 1
 
@@ -379,7 +418,8 @@ def import_all(conn, runs_dir, slugs=None, warnings=None):
             business_key = business_key_for({"business": business}, prep_entry)
             prospect_id = f"{slug}::{business_key}"
             research = build_prospect_research(
-                {"business": business, "area": prep_entry.get("area")}, (prep_entry, prep_path)
+                {"business": business, "area": prep_entry.get("area")},
+                (prep_entry, prep_path), warnings,
             )
             research["orphaned_outreach_prep"] = 1
             warnings.append(
