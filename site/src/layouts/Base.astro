@@ -1,68 +1,24 @@
 ---
-import '../styles/global.css';
-import '../styles/redesign.css';
+import '../styles/signal.css';
 import { business, plan, money, addressLines } from '../data/business';
 import { organizationSchema } from '../data/schema';
 import { orderHref } from '../data/order';
 import { legalNavItems } from '../data/legal';
 import { toSource } from '../lib/json-code';
-
-interface Props {
-  title: string;
-  description: string;
-  /** Optional extra JSON-LD objects, serialised into their own script tags. */
-  schema?: object[];
-  /**
-   * Keep this page out of search results. Used by the payment page and nothing
-   * else — it is the second half of a transaction, not an entry point. A page
-   * that sets this should also be excluded from the sitemap in
-   * `astro.config.mjs`: telling a crawler to index a page and then telling it
-   * not to is the kind of contradiction this site is sold to find.
-   */
-  noindex?: boolean;
-}
-
+interface Props { title: string; description: string; schema?: object[]; noindex?: boolean; }
 const { title, description, schema = [], noindex = false } = Astro.props;
-
-const canonical = new URL(Astro.url.pathname, Astro.site);
-
-const navItems = [
-  { href: '/how-it-works/', label: 'How it works' },
-  { href: '/pricing/', label: 'Pricing' },
-  // Sits between the service pages and the ones about us, because that is
-  // where it belongs in the argument: it is the evidence for the first two
-  // and the reason to believe the last two.
-  { href: '/ask-your-ai/', label: 'Ask your AI' },
-  { href: '/faq/', label: 'FAQ' },
-  { href: '/about/', label: 'About' },
-];
-
-const currentPath = Astro.url.pathname;
-const isCurrent = (href: string) =>
-  currentPath === href || currentPath === href.replace(/\/$/, '');
-
+const path = Astro.url.pathname;
+const canonical = new URL(path, Astro.site);
 const audit = plan('audit');
-
-/* The footer asks for the sale once, at the end of every page. It should not
-   ask on the two pages where the reader is already doing it: a button back to
-   the order form, shown to somebody halfway through paying, is a repeated
-   call-to-action in the exact place the design rules exist to prevent. The
-   footer's navigation stays — only the ask goes. */
-const isOrderRoute = currentPath.startsWith('/order') || currentPath.startsWith('/contact');
-
-const footerAddress = addressLines(business.addressForService);
-
-// The same object the homepage renders as a visible code block. Pretty-printed
-// rather than minified so that "view source and compare" is a real invitation
-// — the bytes in the head match the bytes on the page.
-const orgSchema = organizationSchema(Astro.site);
-
-// The link-preview card — rendered from the brand assets by assets/og/, one
-// image for the whole site. Platforms need the URL absolute.
-const ogImage = new URL('/og.png', Astro.site);
+const quietFooter = path.startsWith('/contact') || path.startsWith('/order');
+const navigation = [
+  { href: '/how-it-works/', label: 'The audit' },
+  { href: '/ask-your-ai/', label: 'The evidence' },
+  { href: '/pricing/', label: 'Pricing' },
+];
+const current = (href: string) => path.replace(/\/$/, '') === href.replace(/\/$/, '');
 ---
-
-<html lang="en-GB" data-page={currentPath === '/' ? 'home' : 'inner'}>
+<html lang="en-GB">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -72,281 +28,73 @@ const ogImage = new URL('/og.png', Astro.site);
     <link rel="canonical" href={canonical.href} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content="#170969" />
+    <meta name="theme-color" content="#101211" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={business.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical.href} />
     <meta property="og:locale" content="en_GB" />
-    <meta property="og:image" content={ogImage.href} />
+    <meta property="og:image" content={new URL('/og.png', Astro.site).href} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta
-      property="og:image:alt"
-      content="Wardith — when your customers ask an AI who to use, the answer should include you."
-    />
+    <meta property="og:image:alt" content="Wardith — when your customers ask an AI who to use, the answer should include you." />
     <meta name="twitter:card" content="summary_large_image" />
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap"
-    />
-
-    <script type="application/ld+json" set:html={toSource(orgSchema)} />
-    {schema.map((obj) => <script type="application/ld+json" set:html={toSource(obj)} />)}
-
-    {/* Set before first paint, so reveal-state styles never flash. */}
-    <script is:inline>
-      document.documentElement.classList.add('js');
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=Manrope:wght@400;500;600;650;700&display=swap" rel="stylesheet" />
+    <script type="application/ld+json" set:html={toSource(organizationSchema(Astro.site))} />
+    {schema.map((item) => <script type="application/ld+json" set:html={toSource(item)} />)}
+    <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
-
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-
-    <header class="site-header" data-header>
-      <div class="wrap">
-        <a class="wordmark" href="/">
-          <img src="/logo.svg" alt="Wardith — home" width="1298" height="238" />
-        </a>
-
-        <button
-          class="nav-toggle"
-          type="button"
-          aria-expanded="false"
-          aria-controls="site-nav"
-          data-nav-toggle
-        >
-          <span class="nav-toggle-bars" aria-hidden="true"></span>
-          Menu
-        </button>
-
-        <nav class="site-nav" id="site-nav" aria-label="Main">
-          {
-            navItems.map((item) => (
-              <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-                {item.label}
-              </a>
-            ))
-          }
-          {/* Points at the order page once it is live, and at the contact page
-              until then — one value, in `data/order.ts`, so the two buttons on
-              every page can never disagree about where ordering happens. */}
-          <a class="nav-cta" href={orderHref} aria-current={isCurrent(orderHref) ? 'page' : undefined}>
-            Start with an audit
-          </a>
+  <body data-route={path}>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <header class="header">
+      <div class="shell header-inner">
+        <a href="/" class="brand" aria-label="Wardith home"><img src="/logo-dark.svg" alt="Wardith" width="1298" height="238" /></a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navigation">Menu <span aria-hidden="true">+</span></button>
+        <nav id="navigation" class="navigation" aria-label="Main navigation">
+          <div class="navigation-links">{navigation.map((item) => <a href={item.href} aria-current={current(item.href) ? 'page' : undefined}>{item.label}</a>)}</div>
+          <a href={orderHref} class="button button-nav" aria-current={current(orderHref) ? 'page' : undefined}>Start your audit <span aria-hidden="true">↗</span></a>
         </nav>
       </div>
-      <div class="progress" data-progress aria-hidden="true"></div>
     </header>
-
-    <main id="main">
-      <slot />
-    </main>
-
-    <footer class="site-footer">
-      <div class="wrap">
-        {/* The site asks once, here, at the end of every page. */}
-        <div class:list={['footer-top', isOrderRoute && 'footer-top--quiet']}>
-          {
-            !isOrderRoute && (
-              <div data-reveal>
-                <h2>Your next customer could be asking AI.</h2>
-                <p class="cta-note" style="margin-top: 0;">
-                  Find out whether your business is in the answer. A written audit for {money(audit.price)}, with no commitment to further work.
-                </p>
-                <div class="cta-row">
-                  <a class="btn" href={orderHref}>
-                    Start with an audit
-                    <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
-                      <path
-                        d="M9 1l4 4-4 4M13 5H1"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-linecap="square"
-                      />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            )
-          }
-          <div data-reveal>
-            <ul class="footer-nav">
-              {navItems.map((item) => (
-                <li>
-                  <a href={item.href}>{item.label}</a>
-                </li>
-              ))}
-              <li><a href="/contact/">Contact</a></li>
-              {legalNavItems.map((item) => (
-                <li>
-                  <a href={item.href}>{item.label}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
+    <main id="main"><slot /></main>
+    <footer class="footer">
+      {!quietFooter && <div class="footer-invitation">
+        <div class="shell invitation-grid">
+          <div><p class="eyebrow">Your next move</p><h2>Let’s bring your<br />business into focus.</h2></div>
+          <div class="invitation-action"><p>A clear view of where you stand.<br />A practical plan for what comes next.</p><a class="button button-dark" href={orderHref}>Start with the {money(audit.price)} audit <span aria-hidden="true">↗</span></a><span class="fine">One-off. No ongoing commitment.</span></div>
         </div>
-
-        <div class="footer-bottom">
-          <div>
-            <a class="wordmark" href="/">
-              <img src="/logo-dark.svg" alt="Wardith — home" width="1298" height="238" />
-            </a>
-          </div>
-          <p class="footer-small">
-            &copy; {new Date().getFullYear()} {business.name}. {business.legalNote} Based in {
-              business.basedIn
-            }, available to clients across the {business.areaServedLabel}. Not VAT registered, so
-            the prices shown are the prices you pay.
-            {
-              footerAddress.length > 0 && (
-                <>
-                  {' '}
-                  Documents may be served at {footerAddress.join(', ')}.
-                </>
-              )
-            }
-          </p>
-        </div>
-        {/*
-          **The address for service of documents renders in the line above, and
-          as of 2026-08-10 it is a real one** — UK Postbox, Poole. It is set in
-          one place, `addressForService` in `data/business.ts`, which is also
-          what put the `PostalAddress` into the structured data and published
-          `/terms/`. Nothing about the address is typed into this file.
-
-          **Two things follow from it being published rather than pending.**
-          First, changing it is now a change of address, not an edit: it is in
-          the JSON-LD that assistants read, and their caches and any third-party
-          copy outlive a commit. Second, the £12/month subscription behind it is
-          load-bearing — a failed card payment eventually returns post to sender
-          and quietly breaks a legal disclosure. `playbook/accounts-and-dates.md` carries both.
-
-          The history below is kept because it is the reason for that design.
-
-          ---
-          Removed from the rendered page 2026-08-06, by the owner's decision, on the
-          eve of submitting the domain to Search Console and Bing. The placeholder
-          that stood here published three things to every crawler: the literal token
-          `[PLACEHOLDER`, the name of an internal repo file, and a written statement
-          that the business had not met a legal disclosure requirement. Cached and
-          repeated by an assistant, that is a red flag handed to a prospect — on a
-          business whose whole pitch is that its own published facts are correct.
-
-          **This comment is the reminder now, and it is weaker than the one it
-          replaced**, because a visible flag on nine pages is impossible to forget
-          and a source comment is not. The commitment it stands for:
-          **the address is published here before the first customer is onboarded.**
-          Trading under a business name that is not the founder's surname carries a
-          duty to show a name and a UK address where documents can be served. Nothing
-          on the site takes a payment yet, which is what makes removing it defensible
-          rather than merely convenient — the moment that changes, this is overdue.
-
-          Tracked in archive/ROADMAP.md 1c, playbook/accounts-and-dates.md, and archive/third-party-services.md
-          B1. The provider decision is parked to 26 August. Do not close any of those
-          items because this page no longer says anything.
-        */}
+      </div>}
+      <div class="shell footer-content">
+        <div class="footer-topline"><a class="footer-email" href={`mailto:${business.email}`}>{business.email}</a><p>Independent AI visibility.<br />Wirral based. Working across the UK.</p></div>
+        <div class="footer-navigation"><nav aria-label="Footer navigation">{navigation.map((item) => <a href={item.href}>{item.label}</a>)}<a href="/about/">About</a><a href="/faq/">FAQ</a><a href="/contact/">Contact</a></nav><nav aria-label="Legal navigation">{legalNavItems.map((item) => <a href={item.href}>{item.label}</a>)}{business.businessLinkedIn && <a href={business.businessLinkedIn}>LinkedIn ↗</a>}</nav></div>
+        <a href="/" class="footer-wordmark" aria-label="Wardith home"><img src="/logo-dark.svg" alt="Wardith" width="1298" height="238" loading="lazy" /></a>
+        <div class="footer-legal"><span>© {new Date().getFullYear()} Wardith</span><p>{business.legalNote} Based in {business.basedIn}. Not VAT registered. Documents may be served at {addressLines(business.addressForService).join(', ')}.</p></div>
       </div>
     </footer>
-
     <script>
-      // Progressive enhancement only. Every behaviour here is additive: with
-      // this script blocked, the page still reads and navigates correctly.
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-      /* Reveal on scroll. */
-      const revealables = document.querySelectorAll<HTMLElement>('[data-reveal]');
-      if ('IntersectionObserver' in window && !reduced.matches) {
-        const io = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (!entry.isIntersecting) return;
-              const el = entry.target as HTMLElement;
-              // Siblings revealed together cascade rather than land at once.
-              const siblings = el.parentElement
-                ? Array.from(el.parentElement.querySelectorAll('[data-reveal]'))
-                : [];
-              const index = Math.min(siblings.indexOf(el), 5);
-              el.style.setProperty('--reveal-delay', `${Math.max(index, 0) * 70}ms`);
-              el.classList.add('is-in');
-              io.unobserve(el);
-            });
-          },
-          { rootMargin: '0px 0px -12% 0px', threshold: 0.05 },
-        );
-        revealables.forEach((el) => io.observe(el));
-      } else {
-        revealables.forEach((el) => el.classList.add('is-in'));
-      }
-
-      /* Hero headline: words rise out of their own clipped boxes. Only run on
-         a plain-text heading, so marked-up headings are left alone. */
-      const heading = document.querySelector<HTMLElement>('.hero h1');
-      if (heading && heading.children.length === 0) {
-        const words = (heading.textContent || '').trim().split(/\s+/);
-        heading.textContent = '';
-        words.forEach((word, i) => {
-          const outer = document.createElement('span');
-          outer.className = 'word';
-          const inner = document.createElement('span');
-          inner.textContent = word;
-          inner.style.setProperty('--word-delay', `${i * 45}ms`);
-          outer.appendChild(inner);
-          heading.appendChild(outer);
-          if (i < words.length - 1) heading.appendChild(document.createTextNode(' '));
-        });
-        requestAnimationFrame(() => heading.classList.add('is-in'));
-      }
-
-      /* Header state and reading progress. */
-      const header = document.querySelector<HTMLElement>('[data-header]');
-      const progress = document.querySelector<HTMLElement>('[data-progress]');
-      let ticking = false;
-
-      const onScroll = () => {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(() => {
-          const y = window.scrollY;
-          header?.classList.toggle('is-stuck', y > 8);
-          if (progress) {
-            const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-            const ratio = scrollable > 0 ? Math.min(y / scrollable, 1) : 0;
-            progress.style.transform = `scaleX(${ratio})`;
-          }
-          ticking = false;
-        });
-      };
-
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-
-      /* Small-screen navigation. */
-      const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
-      const nav = document.getElementById('site-nav');
-
-      const closeNav = () => {
+      const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+      const nav = document.getElementById('navigation');
+      const closeMenu = (restoreFocus = false) => {
         toggle?.setAttribute('aria-expanded', 'false');
-        nav?.classList.remove('is-open');
+        nav?.classList.remove('open');
+        if (restoreFocus) toggle?.focus();
       };
-
       toggle?.addEventListener('click', () => {
-        const open = toggle.getAttribute('aria-expanded') === 'true';
-        toggle.setAttribute('aria-expanded', String(!open));
-        nav?.classList.toggle('is-open', !open);
+        const open = toggle.getAttribute('aria-expanded') !== 'true';
+        toggle.setAttribute('aria-expanded', String(open));
+        nav?.classList.toggle('open', open);
       });
-
       document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') closeNav();
+        if (event.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') closeMenu(true);
       });
-
-      window.addEventListener('resize', () => {
-        if (window.innerWidth >= 768) closeNav();
+      document.addEventListener('click', (event) => {
+        if (event.target instanceof Node && !nav?.contains(event.target) && !toggle?.contains(event.target)) closeMenu();
       });
+      nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => closeMenu()));
+      window.matchMedia('(min-width: 901px)').addEventListener('change', () => closeMenu());
     </script>
   </body>
 </html>

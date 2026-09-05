@@ -131,49 +131,7 @@ const faqSchema = {
 /** Paragraphs are authored plain, but owner placeholders must stand out. */
 const isFlag = (text: string) => text.trim().startsWith('[PLACEHOLDER');
 ---
-
 <Base title={title} description={description} schema={[faqSchema]}>
-  <section class="hero hero--rules">
-    <div class="wrap">
-      <h1>Frequently asked questions</h1>
-      <p class="lede" data-reveal>
-        Plain answers, including the ones that don't flatter us. If your question isn't here,
-        <a href="/contact/">ask us directly</a>.
-      </p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      {
-        faqs.map((item) => (
-          <details class="qa">
-            <summary>{item.q}</summary>
-            <div class="qa-answer">
-              {item.a.map((para) =>
-                isFlag(para) ? <p class="flag">{para}</p> : <p>{para}</p>,
-              )}
-            </div>
-          </details>
-        ))
-      }
-    </div>
-  </section>
-
-  <section class="section section--invert">
-    <div class="wrap split">
-      <div data-reveal>
-        <h2>Don't take our word for any of this.</h2>
-      </div>
-      <div data-reveal>
-        <p>
-          Every answer above is also published as structured data on this page, giving machines an
-          explicit version of the same information rather than forcing them to infer it from the
-          visual layout. View the source and read it: the {money(audit.price)} audit is described
-          there in the same words it is described in here, because both are built from one file.
-          That is the whole method, run on ourselves.
-        </p>
-      </div>
-    </div>
-  </section>
+  <section class="page-hero"><div class="shell"><p class="eyebrow">Frequently asked questions</p><h1>Good questions.<br /><span>Straight answers.</span></h1><p class="page-lede">What the audit covers, how the work happens, and where the limits are.</p></div></section>
+  <section class="section"><div class="shell faq-layout"><aside><p class="eyebrow">Still weighing it up?</p><h2>Ask Kieran.</h2><p>There’s no need to book a call to ask a question. A short email is fine.</p><a class="text-link" href="/contact/">Get in touch <span aria-hidden="true">↗</span></a></aside><div class="accordion">{faqs.map((item) => <details class="qa"><summary>{item.q}</summary>{item.a.map((para) => isFlag(para) ? <p class="flag">{para}</p> : <p>{para}</p>)}</details>)}</div></div></section>
 </Base>
