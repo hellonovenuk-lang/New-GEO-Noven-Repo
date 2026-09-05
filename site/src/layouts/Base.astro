@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '../styles/redesign.css';
 import { business, plan, money, addressLines } from '../data/business';
 import { organizationSchema } from '../data/schema';
 import { orderHref } from '../data/order';
@@ -47,7 +48,7 @@ const audit = plan('audit');
    the order form, shown to somebody halfway through paying, is a repeated
    call-to-action in the exact place the design rules exist to prevent. The
    footer's navigation stays — only the ask goes. */
-const isOrderRoute = currentPath.startsWith('/order');
+const isOrderRoute = currentPath.startsWith('/order') || currentPath.startsWith('/contact');
 
 const footerAddress = addressLines(business.addressForService);
 
@@ -61,7 +62,7 @@ const orgSchema = organizationSchema(Astro.site);
 const ogImage = new URL('/og.png', Astro.site);
 ---
 
-<html lang="en-GB">
+<html lang="en-GB" data-page={currentPath === '/' ? 'home' : 'inner'}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -135,7 +136,7 @@ const ogImage = new URL('/og.png', Astro.site);
               until then — one value, in `data/order.ts`, so the two buttons on
               every page can never disagree about where ordering happens. */}
           <a class="nav-cta" href={orderHref} aria-current={isCurrent(orderHref) ? 'page' : undefined}>
-            Order the {money(audit.price)} audit
+            Start with an audit
           </a>
         </nav>
       </div>
@@ -153,14 +154,13 @@ const ogImage = new URL('/og.png', Astro.site);
           {
             !isOrderRoute && (
               <div data-reveal>
-                <h2>Find out where your business stands.</h2>
+                <h2>Your next customer could be asking AI.</h2>
                 <p class="cta-note" style="margin-top: 0;">
-                  The {money(audit.price)} audit is a written report on where you show up today and
-                  what's in the way. If you're already in good shape, it says so.
+                  Find out whether your business is in the answer. A written audit for {money(audit.price)}, with no commitment to further work.
                 </p>
                 <div class="cta-row">
                   <a class="btn" href={orderHref}>
-                    Order the {money(audit.price)} audit
+                    Start with an audit
                     <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
                       <path
                         d="M9 1l4 4-4 4M13 5H1"
