@@ -92,12 +92,13 @@ def make_fixture():
         base_outreach_entry("Invisible But Credible", service_scope="combined",
                              question_appearances={"q01": 0, "q02": 0, "q03": 0, "q04": 0},
                              business_credibility=5),
-        # 5. High-scoring candidate withheld for incomplete evidence (research_completeness < 4).
+        # 5. High-scoring candidate withheld for incomplete evidence
+        # (research_completeness below RESEARCH_COMPLETE_MIN).
         base_outreach_entry("Incomplete Evidence Star", service_scope="combined",
                              question_appearances={"q01": 9, "q02": 9, "q03": 9, "q04": 9},
                              business_credibility=5, commercial_fit=5, ability_to_buy=5,
                              decision_maker_identified=5, direct_dm_route=5, contact_route_quality=5,
-                             contact_identity_confidence=5, research_completeness=3),
+                             contact_identity_confidence=5, research_completeness=2),
         # 6. Confirmed owner reached through a generic inbox (direct_dm_route=4, not 5).
         base_outreach_entry("Generic Inbox Confirmed Owner", service_scope="a_only",
                              question_appearances={"q01": 1, "q03": 1},
@@ -127,6 +128,38 @@ def make_fixture():
 
 def scored():
     data = make_fixture()
+    se.run_engine(data)
+    return {e["business"]: e for e in data["outreach"]}
+
+
+def lone_scope_incumbent_fixture():
+    """A campaign whose single most-mentioned business is the only member of
+    its own service_scope AND commercially ineligible (commercial_fit=0).
+    Kept separate from make_fixture() so the shared fixture's ranking is not
+    bent to serve two tests."""
+    run = {
+        "sector": "x", "geography": "x", "campaign_slug": "lone-scope", "date": "2026-08-16",
+        "questions": [{"question_id": "q01", "text": "inclusive question"}],
+        "providers": [{"provider": "openai", "model": "x"}],
+        "responses_per_question": 100,
+        "service_scopes": [
+            {"label": "chain_central", "applicable_services": ["A"], "structure": "CENTRALLY_CONTROLLED_CHAIN"},
+            {"label": "indie", "applicable_services": ["A"], "structure": "INDEPENDENT_LOCAL"},
+        ],
+        "question_relevance": [{"question_id": "q01", "type": "SINGLE_SERVICE_INCLUSIVE", "rationale": "x"}],
+    }
+    outreach = [
+        base_outreach_entry("Central Chain", service_scope="chain_central",
+                             question_appearances={"q01": 60}, commercial_fit=0,
+                             business_structure="CENTRALLY_CONTROLLED_CHAIN", business_credibility=5),
+        base_outreach_entry("Indie Leader", service_scope="indie",
+                             question_appearances={"q01": 20}, business_credibility=4),
+        base_outreach_entry("Indie Follower", service_scope="indie",
+                             question_appearances={"q01": 5}, business_credibility=4),
+    ]
+    data = {"run": run, "market": [], "outreach": outreach, "excluded": [],
+            "sources": [{"source_id": "S001", "business": "x", "publisher": "x", "fact_supported": "x",
+                         "url": "x", "access_date": "2026-08-16"}]}
     se.run_engine(data)
     return {e["business"]: e for e in data["outreach"]}
 
@@ -166,25 +199,18 @@ class RelevanceWeightTests(unittest.TestCase):
             se.build_relevance_index(run)
 
 
-class PeerGroupRankingBugRegressionTests(unittest.TestCase):
-    """Dedicated regression test for two real bug classes:
+class IncumbentExclusionTests(unittest.TestCase):
+    """2026-09-05: the incumbent hold-out is campaign-wide and fixed at
+    INCUMBENT_EXCLUSION_COUNT, ranked by relevant_appearances - not a rank
+    within each service_scope group. Also the standing regression test for a
+    real bug class: a SECOND loop re-reading a stale `label` left over from
+    the LAST iteration of a FIRST loop instead of each entry's own
+    service_scope, so a per-entry check was silently evaluated against
+    whichever scope happened to be processed last. relative_position is still
+    computed that shape, so the fixture keeps a deliberately
+    differently-sized, differently-ordered second group to keep catching it."""
 
-    1. A historical bug where a SECOND loop re-read a stale `label` variable
-       left over from the LAST iteration of a FIRST loop instead of each
-       entry's own service_scope - so a per-entry check was silently
-       evaluated against whichever scope happened to be processed last, not
-       its own. most_named_cohort's MOST_NAMED_COHORT_MAX_SIZE rank is
-       computed the same shape (group, then per-entry lookup), so this
-       fixture keeps a deliberately differently-sized, differently-ordered
-       second group to keep catching that class of bug.
-    2. The cap must be scoped to each business's OWN service_scope group,
-       never the whole pool - a solo business in a tiny, moderate-visibility
-       group must not be excluded just because a large, high-visibility
-       group elsewhere would fill every place in a pool-wide top 5; and a
-       big group's 6th/7th-ranked member must not sneak in just because
-       they'd still be highly-ranked pool-wide."""
-
-    def test_group_scoped_top_5_cap_not_pool_wide(self):
+    def build(self):
         run = {
             "sector": "x", "geography": "x", "campaign_slug": "x", "date": "2026-08-16",
             "questions": [{"question_id": "q01", "text": "inclusive question"}],
@@ -200,8 +226,7 @@ class PeerGroupRankingBugRegressionTests(unittest.TestCase):
         # every member clears the absolute floor (>=3) and the
         # relative-position band (>=0.7 of the group's own 100% top rate;
         # 71% is deliberately the lowest value that still clears 0.7), so
-        # only the MOST_NAMED_COHORT_MAX_SIZE cap can separate ranks 1-5
-        # from ranks 6-7.
+        # only the campaign-wide count cap can separate them.
         big_group = [
             base_outreach_entry(f"Big Group Member {i}", service_scope="big_group",
                                  question_appearances={"q01": appearances}, business_credibility=5)
@@ -209,9 +234,7 @@ class PeerGroupRankingBugRegressionTests(unittest.TestCase):
         ]
         # Deliberately the LAST entry, so its scope is the last one touched
         # by the group-computation loop - this is exactly the condition that
-        # exposed the stale-variable bug. Moderate visibility (50%, rank 8
-        # of 8 pool-wide) - would be wrongly excluded by a pool-wide top 5,
-        # but is rank 1 of 1 within its own group.
+        # exposed the stale-variable bug.
         outreach = big_group + [
             base_outreach_entry("Solo Group Member", service_scope="zzz_solo_group",
                                  question_appearances={"q01": 50}, business_credibility=5),
@@ -220,20 +243,34 @@ class PeerGroupRankingBugRegressionTests(unittest.TestCase):
                 "sources": [{"source_id": "S001", "business": "x", "publisher": "x", "fact_supported": "x",
                              "url": "x", "access_date": "2026-08-16"}]}
         se.run_engine(data)
-        by_name = {e["business"]: e for e in data["outreach"]}
-        # Ranks 1-5 by visibility_rate within big_group reach the cohort.
-        for i in range(1, 6):
-            self.assertTrue(by_name[f"Big Group Member {i}"]["most_named_cohort"], f"member {i} should be in cohort")
-            self.assertEqual(by_name[f"Big Group Member {i}"]["opportunity_type"], "DEFEND")
-        # Ranks 6-7 clear the absolute floor and relative-position band but
-        # are capped out by MOST_NAMED_COHORT_MAX_SIZE.
-        for i in (6, 7):
-            self.assertFalse(by_name[f"Big Group Member {i}"]["most_named_cohort"], f"member {i} should be capped")
-            self.assertNotEqual(by_name[f"Big Group Member {i}"]["opportunity_type"], "DEFEND")
-        # The solo member is rank 1 of its own 1-member group and must reach
-        # the cohort despite ranking outside the top 5 pool-wide.
-        self.assertTrue(by_name["Solo Group Member"]["most_named_cohort"])
-        self.assertEqual(by_name["Solo Group Member"]["opportunity_type"], "DEFEND")
+        return {e["business"]: e for e in data["outreach"]}
+
+    def test_only_the_two_most_mentioned_are_held_out_campaign_wide(self):
+        by_name = self.build()
+        held_out = sorted(b for b, e in by_name.items() if e["most_named_cohort"])
+        self.assertEqual(held_out, ["Big Group Member 1", "Big Group Member 2"])
+        self.assertEqual(len(held_out), se.INCUMBENT_EXCLUSION_COUNT)
+
+    def test_remaining_qualifying_businesses_stay_prospects(self):
+        # Ranks 3-7 clear the absolute floor and the relative-position band
+        # but are no longer excluded - this is the change that puts a market's
+        # sendable batch back into double figures.
+        by_name = self.build()
+        for i in range(3, 8):
+            e = by_name[f"Big Group Member {i}"]
+            self.assertFalse(e["most_named_cohort"], f"member {i} should not be held out")
+            self.assertNotEqual(e["opportunity_type"], "DEFEND")
+            self.assertEqual(e["disposition_recommendation"], "OUTREACH")
+
+    def test_relative_position_stays_scoped_to_each_businesss_own_group(self):
+        # The stale-`label` regression: Solo Group Member is rank 1 of its own
+        # 1-member group, so its relative_position is 1.0 against itself, not
+        # a fraction of big_group's 100% leader.
+        by_name = self.build()
+        self.assertEqual(by_name["Solo Group Member"]["relative_position"], 1.0)
+        self.assertEqual(by_name["Solo Group Member"]["group_top_visibility_rate"],
+                          by_name["Solo Group Member"]["visibility_rate"])
+        self.assertFalse(by_name["Solo Group Member"]["most_named_cohort"])
 
 
 class FixtureScenarioTests(unittest.TestCase):
@@ -573,13 +610,12 @@ class OpportunityTypeRankingTests(unittest.TestCase):
 
 class MostNamedCohortReclassificationTests(unittest.TestCase):
     """2026-08-24: opportunity_type is redefined around most_named_cohort -
-    DEFEND targets only the small cluster already dominating a market's
-    answers (visibility_score >= 3, relative_position >= 0.7, ranked in the
-    top MOST_NAMED_COHORT_MAX_SIZE of its own service_scope group by
-    visibility_rate); GAP is unconditional at visibility_score == 0; GROWTH
-    is everything else. These four fixture businesses (unchanged from the
-    shared make_fixture()) each land on a different opportunity_type than
-    the pre-2026-08-24 rule gave them - the real behaviour change this
+    DEFEND targets only the businesses already dominating a market's answers
+    (visibility_score >= 3, relative_position >= 0.7, and - since 2026-09-05 -
+    among the INCUMBENT_EXCLUSION_COUNT most-mentioned campaign-wide); GAP is
+    unconditional at visibility_score == 0; GROWTH is everything else. These
+    fixture businesses each land on a different opportunity_type than the
+    pre-2026-08-24 rule gave them - the real behaviour change this
     redefinition exists to make, not a hypothetical."""
 
     def setUp(self):
@@ -606,17 +642,63 @@ class MostNamedCohortReclassificationTests(unittest.TestCase):
             self.assertEqual(e["opportunity_type"], "GROWTH")
 
     def test_lone_business_in_its_scope_can_now_defend(self):
-        # Central Chain is the only member of chain_central in this fixture,
-        # with visibility_score=3 and relative_position=1.0 (against
-        # itself). Previously GROWTH, blocked from DEFEND by the
-        # comparable-same-scope-peer requirement - now DEFEND, since that
-        # requirement is dropped and it independently clears the absolute
-        # floor and relative-position band.
-        e = self.s["Central Chain"]
+        # A business alone in its service_scope is not blocked from the cohort
+        # by having no comparable peer (relative_position is 1.0 against
+        # itself): it reaches DEFEND on its own absolute visibility, provided
+        # it is also among the campaign's most-mentioned.
+        e = lone_scope_incumbent_fixture()["Central Chain"]
         self.assertGreaterEqual(e["visibility_score"], se.MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE)
         self.assertEqual(e["relative_position"], 1.0)
         self.assertTrue(e["most_named_cohort"])
         self.assertEqual(e["opportunity_type"], "DEFEND")
+
+
+class SendGateTests(unittest.TestCase):
+    """2026-09-05: the ready_to_email gate keeps business verification, contact
+    route, commercial fit and evidence accuracy, and drops the named
+    decision-maker requirement. Optional enrichment does not block; a business
+    with no usable route still does."""
+
+    def ready(self, **overrides):
+        data = {"run": copy.deepcopy(make_fixture()["run"]), "market": [], "excluded": [],
+                "sources": [{"source_id": "S001", "business": "x", "publisher": "x",
+                             "fact_supported": "x", "url": "x", "access_date": "2026-08-16"}]}
+        data["outreach"] = [base_outreach_entry("Subject", service_scope="a_only",
+                                                 question_appearances={"q01": 1}, **overrides)]
+        se.run_engine(data)
+        return data["outreach"][0]
+
+    def test_no_named_contact_does_not_block_a_verified_route(self):
+        e = self.ready(decision_maker_identified=0, contact_identity_confidence=0, direct_dm_route=2)
+        self.assertEqual(e["ready_to_email"], "YES")
+        self.assertEqual(e["identity_confidence"], "UNKNOWN")
+        self.assertEqual(e["named_decision_maker_verified"], "NO")
+        self.assertEqual(e["accessibility_grade"], "GENERIC_INBOX_ONLY")
+
+    def test_no_usable_route_still_blocks(self):
+        for route in (0, 1):
+            e = self.ready(direct_dm_route=route)
+            self.assertEqual(e["ready_to_email"], "REVIEW", f"direct_dm_route={route} must block")
+
+    def test_unverified_business_still_blocks(self):
+        e = self.ready(business_credibility=2)
+        self.assertEqual(e["business_verified"], "REVIEW")
+        self.assertEqual(e["ready_to_email"], "REVIEW")
+
+    def test_unverified_contact_route_still_blocks(self):
+        e = self.ready(contact_route_quality=2)
+        self.assertEqual(e["contact_route_verified"], "REVIEW")
+        self.assertEqual(e["ready_to_email"], "REVIEW")
+
+    def test_incomplete_research_still_blocks(self):
+        e = self.ready(research_completeness=se.RESEARCH_COMPLETE_MIN - 1)
+        self.assertEqual(e["research_complete"], "NO")
+        self.assertEqual(e["ready_to_email"], "REVIEW")
+
+    def test_evidence_confidence_is_credibility_and_research_only(self):
+        e = self.ready(business_credibility=4, research_completeness=3,
+                       decision_maker_identified=0, contact_identity_confidence=0)
+        self.assertEqual(e["overall_evidence_confidence"], 3)
 
 
 class DispositionRecommendationTests(unittest.TestCase):
@@ -639,11 +721,10 @@ class DispositionRecommendationTests(unittest.TestCase):
         self.assertEqual(e["disposition_recommendation_reason"], "ALREADY STRONGLY VISIBLE")
 
     def test_most_named_cohort_excluded_even_when_otherwise_ineligible(self):
-        # Central Chain is most_named_cohort (see MostNamedCohortReclassificationTests)
-        # but eligible_for_outreach=REVIEW (commercial_fit=0) - EXCLUDED must
-        # still be the recommendation, not REVIEW, since most_named_cohort is
-        # checked first.
-        e = self.s["Central Chain"]
+        # A held-out incumbent that is also eligible_for_outreach=REVIEW
+        # (commercial_fit=0) must still recommend EXCLUDED, not REVIEW, since
+        # most_named_cohort is checked first.
+        e = lone_scope_incumbent_fixture()["Central Chain"]
         self.assertTrue(e["most_named_cohort"])
         self.assertEqual(e["eligible_for_outreach"], "REVIEW")
         self.assertEqual(e["disposition_recommendation"], "EXCLUDED")

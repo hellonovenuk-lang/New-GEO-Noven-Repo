@@ -236,11 +236,11 @@ python3 tools/prospect-compiler/scoring_engine.py --input <campaign>.json --in-p
 
 This mechanically computes `visibility_score`, `gap_strength`,
 `final_score`, `overall_rank`, `outreach_rank`, every readiness gate, and a
-proposed `opportunity_type` per §3a's general rule (2026-08-24: `DEFEND` is
+proposed `opportunity_type` per §3a's general rule (`DEFEND` is
 `most_named_cohort` — an absolute visibility floor, a relative-position band,
-and a rank-within-group cap, no longer a real-peer requirement; `GAP` is
-unconditional at zero visibility). These remain *proposals*: the owner still
-approves `priority` and `ready_to_email` exactly as the approval gate below
+and, since 2026-09-05, being among the two most-mentioned businesses
+campaign-wide; `GAP` is unconditional at zero visibility). These remain
+*proposals*: the owner still approves `priority` and `ready_to_email` exactly as the approval gate below
 already requires — and, new as of 2026-08-24, `disposition_recommendation`
 for a `most_named_cohort` business (defaults to `EXCLUDED`, reason `ALREADY
 STRONGLY VISIBLE`) is a proposal in exactly the same sense, not an automatic
@@ -347,9 +347,12 @@ research pass itself:
    `direct_dm_route` on the same 6-tier scale used verbatim in
    `CAMPAIGN-HANDOFF.md` §3a (5=confirmed direct route down to 0=no usable
    route), plus `contact_route_quality` and `contact_identity_confidence`.
-   A generic inbox is never scored as equivalent to a confirmed direct
-   route just because an email address exists — this is what makes
-   `ready_to_email` a genuine gate rather than "an address was found".
+   A generic inbox is never *scored* as equivalent to a confirmed direct
+   route just because an email address exists — it grades lower and ranks
+   lower. It is still a valid route to send on (2026-09-05): `direct_dm_route
+   >= 2` is the floor `ready_to_email` requires, so a verified business inbox
+   with no named contact qualifies, while a contact form or phone number
+   alone (`1`) or no route at all (`0`) does not.
 
 **Never invent or infer personal contact details.** No phone number,
 personal email, or address that isn't published by the business itself or a
@@ -360,6 +363,12 @@ Use the evidence routing reference for a missing email or unresolved route:
 retain a verified generic inbox with its actual route quality, otherwise park
 the business with the exact missing evidence. Do not promote it, repeat
 completed searches, or ask the owner to supply an external fact.
+
+**Missing optional information never blocks a prospect.** A name, a role, a
+LinkedIn profile, a phone number, a registered address: absent, the field
+stays unset and the record proceeds on what is verified. What is never done
+is filling the gap — no invented or inferred contact name, address or
+finding, ever, and no name in an email that was not confirmed.
 
 **Recording a LinkedIn match here is research, not outreach.**
 `playbook/decisions.md`'s "LinkedIn outreach is later, not now" is
@@ -384,10 +393,12 @@ One of exactly four values — **`GAP`**, **`GROWTH`**, **`DEFEND`**, or
 and `CAMPAIGN-HANDOFF.md`. Rules that must hold:
 
 - **High visibility alone is not grounds for silent, unrecorded exclusion —
-  but a scored business in the small cluster already dominating its market
-  (`most_named_cohort`) now defaults to `EXCLUDED`, stated as a reason
-  (`ALREADY STRONGLY VISIBLE`), not a dead end.** (2026-08-24: this reverses
-  the 2026-08-14 "DEFEND candidate by default, not excluded" default — see
+  but the two most-mentioned businesses in the campaign (`most_named_cohort`)
+  default to `EXCLUDED`, stated as a reason (`ALREADY STRONGLY VISIBLE`), not
+  a dead end.** They keep every scored field and stay in the market analysis;
+  only their default disposition changes. (2026-09-05: the hold-out is a
+  campaign-wide count of two, replacing a rank-within-service-scope cap that
+  could hold out five businesses per scope group — see
   `playbook/decisions.md`'s "Outreach" section.) It is still a *proposal*:
   `DEFEND` remains a real, valid opportunity type for that business (a
   monitoring/retention play), and the owner can override the disposition for
@@ -408,11 +419,10 @@ and `CAMPAIGN-HANDOFF.md`. Rules that must hold:
   shape: `DEFEND`, `EXCLUDED` from this round, both true at once.
 - **A business scored per Stage 4's auditable model gets its
   `opportunity_type` from `scoring_engine.py`, not hand judgement** —
-  `CAMPAIGN-HANDOFF.md` §3a's general rule (2026-08-24: `DEFEND` is
-  `most_named_cohort` — an absolute visibility floor, a relative-position
-  band, and a rank-within-group cap, no real-peer requirement; `GAP` is
-  unconditional at zero visibility; `GROWTH` is everything else). The engine
-  never produces `REVIEW` as a scored business's `opportunity_type` any
+  `CAMPAIGN-HANDOFF.md` §3a's general rule (`DEFEND` is `most_named_cohort`
+  — an absolute visibility floor, a relative-position band, and being among
+  the two most-mentioned campaign-wide; `GAP` is unconditional at zero
+  visibility; `GROWTH` is everything else). The engine never produces `REVIEW` as a scored business's `opportunity_type` any
   more — an unresolved-evidence business still carries that state on
   `disposition`/`priority` instead, same as the unscored path above.
 
@@ -440,10 +450,12 @@ and `CAMPAIGN-HANDOFF.md`. Rules that must hold:
   principles in `outreach-process.md` step 4 — not fixed copy). For a
   business scored per Stage 4, `scoring_engine.py` proposes this value from
   `CAMPAIGN-HANDOFF.md` §3a's explicit gate (verified business, adequate
-  commercial fit, sufficient evidence confidence, completed research,
-  verified contact route, acceptable identity confidence) — still a
+  commercial fit, sufficient evidence confidence, completed research, a
+  verified contact route, and a usable route to the business) — still a
   proposal for the owner to approve, same as always, but no longer a vibes
-  call: a generic inbox with an unconfirmed name can no longer read `YES`.
+  call. As of 2026-09-05 a named decision-maker is **not** part of this gate:
+  a verified business inbox is enough to send to the business, and where no
+  name is confirmed, no name goes in the email.
 
 Every `outreach[]` entry must also carry `accessibility` by this point —
 it's a required field on the schema, not an optional extra (Stage 6).
@@ -567,8 +579,18 @@ python3 tools/prospect-compiler/qualification_coverage.py \
 Report its `SEND NOW`, `SECONDARY`, `REVIEW`, `EXCLUDE`, and `INCUMBENT`
 counts, plus `potential_non_top` and every missing census business. `SEND NOW`
 is a proposal for owner approval, never permission to send. A suitable active
-Ltd/LLP reached only through a verified general business inbox remains in the
-candidate pool as `SECONDARY`; do not invent a named person to promote it.
+Ltd/LLP reached through a verified general business inbox now reaches `SEND
+NOW` on its own evidence; a named person is never invented to get it there.
+
+**Aim for 10–15 `SEND NOW` prospects per market — a target, not a quota.**
+Where a market holds fewer suitable businesses than that, the honest number
+is the answer. When fewer than 10 qualify, **state the actual blockers** —
+the coverage report names them per business, so report which ones recur and
+how many businesses each accounts for. Do **not** automatically commission
+more research, re-run searches already completed, relax a gate, or promote a
+parked business to close the gap: reopening parked research needs a recorded
+new reason, exactly as this stage already requires.
+
 If coverage is `INCOMPLETE` or the command exits nonzero, the overall verdict
 is `INCOMPLETE`, even if workbook validation passed. Name each missing or
 unfinished cohort assessment from `completion_blockers`. On a repeat review,

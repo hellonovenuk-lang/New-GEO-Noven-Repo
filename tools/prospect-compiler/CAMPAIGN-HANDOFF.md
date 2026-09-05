@@ -461,7 +461,7 @@ authoritative shape/range of every field named below):
 | `direct_dm_route` (0–5) | VALUE | CLAUDE, from RESEARCH — the 6-tier scale below |
 | `contact_route_quality` (0–5) | VALUE | CLAUDE, from RESEARCH — mechanism quality, independent of who it reaches |
 | `contact_identity_confidence` (0–5) | VALUE | CLAUDE, from RESEARCH — confidence in WHO the route reaches |
-| `overall_evidence_confidence` (0–5) | DERIVED | scoring_engine.py — `MIN(business_credibility, decision_maker_identified, contact_identity_confidence, research_completeness)` |
+| `overall_evidence_confidence` (0–5) | DERIVED | scoring_engine.py — `MIN(business_credibility, research_completeness)`. Contact-identity depth is reported by `identity_confidence`/`accessibility_grade`, not folded in here |
 | `research_completeness` (0–5) | VALUE | CLAUDE — how many material fields are actually resolved with direct evidence |
 | `final_score` (0–100) | DERIVED | scoring_engine.py — weighted sum of 9 components (see below), never a visibility-size ranking |
 | `overall_rank` / `outreach_rank` | DERIVED | scoring_engine.py — see "Ranking" below |
@@ -489,10 +489,15 @@ form or telephone only · `0` no usable route. `accessibility_grade`
 the same tier as a machine-readable label, derived automatically from
 `direct_dm_route` — never set independently of it. **A generic inbox
 (`2`/`GENERIC_INBOX_ONLY`) is never treated as equivalent to a direct route
-(`5`) just because an email address technically exists** — this is the
-specific flaw the v2.1 test found and fixed: `ready_to_email` cannot reach
-`YES` on a generic-inbox-only, unconfirmed-identity record any more, however
-plausible the commercial case.
+(`5`)** — it still scores lower, still shows its real grade, and still ranks
+below a confirmed direct route. **(2026-09-05)** It is, however, a valid
+route to send on: `2` is the floor `ready_to_email` requires, so a verified
+business inbox with no named contact can reach `YES`, while contact form or
+telephone only (`1`) and no usable route (`0`) cannot. This reverses the
+v2.1 rule that a generic-inbox-only, unconfirmed-identity record could never
+be ready — that rule withheld well-evidenced prospects over an enrichment
+field, not a safety one. What it never licenses is inventing the missing
+half: **no confirmed name, no name in the email.**
 
 **Structured confidence labels**, distinct from `direct_dm_route`'s route
 quality — `identity_confidence` (`CONFIRMED` / `PROBABLE` / `POSSIBLE` /
@@ -505,13 +510,20 @@ threshold each one uses). **An inferred identity is never presented as
 the `CONFIRMED` label to appear; a same-name coincidence or an unopened
 LinkedIn search result stays `PROBABLE` or `POSSIBLE`.
 
-**`ready_to_email` gate** (on `outreach_entry` only) — YES only if ALL of:
-`eligible_for_outreach=YES` (itself `business_verified=YES` AND
+**`ready_to_email` gate** (on `outreach_entry` only, 2026-09-05) — YES only
+if ALL of: `eligible_for_outreach=YES` (itself `business_verified=YES` AND
 `contact_route_verified=YES` AND `commercial_fit>=2` AND
 `service_relevance>=2` — this is what keeps a centrally-controlled chain out,
 via the `commercial_fit` gate, without a separate hand-rule) AND
-`decision_maker_identified>=3` AND `contact_identity_confidence>=3` AND
-`research_complete=YES` AND `overall_evidence_confidence>=3`. `priority` is
+`direct_dm_route>=2` AND `research_complete=YES` AND
+`overall_evidence_confidence>=3`. The `decision_maker_identified>=3` and
+`contact_identity_confidence>=3` requirements are **gone**: a named
+decision-maker is optional enrichment describing *who* a verified route
+reaches, and it still drives `final_score`, `identity_confidence`,
+`accessibility_grade` and `priority` — it no longer withholds the email.
+`research_complete` now means `research_completeness>=3` (every field the
+gate itself depends on resolved with direct evidence) rather than `>=4`
+(which additionally required optional enrichment). `priority` is
 `REVIEW` whenever `eligible_for_outreach != YES` or `research_complete !=
 YES`, regardless of `final_score` — **a high-scoring candidate with
 unresolved material evidence is never promoted on the strength of its score
@@ -532,8 +544,10 @@ most_named_cohort = visibility_score >= MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE  
                      OTHER businesses sharing this exact service_scope -
                      never compared across scopes with different
                      denominators)
-                 AND ranked MOST_NAMED_COHORT_MAX_SIZE (5) or better by
-                     visibility_rate within its own service_scope group
+                 AND among the INCUMBENT_EXCLUSION_COUNT (2) most-mentioned
+                     of the businesses meeting both conditions above,
+                     CAMPAIGN-WIDE, ranked by relevant_appearances (ties:
+                     visibility_rate, then business name)
 
 DEFEND   if most_named_cohort
 GAP      elif visibility_score == 0
@@ -551,11 +565,18 @@ itself), but only if its own visibility is genuinely meaningful, not merely
 because it has no comparison group. **(2)** `relative_position`'s floor is
 loosened from the old 0.85 to `MOST_NAMED_COHORT_MIN_RELATIVE_POSITION`
 (0.7) and is deliberately a band, not a "must be the single top scorer"
-test — a market can be bunched at the top. **(3)** `MOST_NAMED_COHORT_MAX_SIZE`
-(5) caps how large that dominant cluster can be within one `service_scope`
-group — it only bites in a large group; a market's genuinely dominant
-cluster can be as small as 1 business or as large as 5, and this rule
-accepts either shape without hard-coding a count. The old **"comparable
+test — a market can be bunched at the top. **(3) (2026-09-05, replaces the
+per-group `MOST_NAMED_COHORT_MAX_SIZE` (5) rank)** the cap is now a
+campaign-wide count: `INCUMBENT_EXCLUSION_COUNT` (2). Only the two
+most-mentioned incumbents in the whole campaign are held out of the default
+cold-outreach batch, and they keep every scored field and stay in the market
+analysis — the exclusion is a disposition, not a deletion. The old cap was a
+rank within each `service_scope` group, so a market split across four scopes
+could hold out twenty businesses and leave almost nothing sendable. Ranking
+on `relevant_appearances` — a relevance-weighted count, not a rate — is what
+makes "most-mentioned" comparable across scopes whose answer-opportunity
+denominators differ; `relative_position` stays scoped to each business's own
+group, where the denominators do match. The old **"comparable
 same-scope peer exists (>=2 businesses)"** and **"question_coverage >=
 0.75"** requirements are both dropped entirely, not tightened — a lone
 business or one with patchy question coverage is no longer blocked from

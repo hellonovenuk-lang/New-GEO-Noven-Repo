@@ -23,22 +23,50 @@ def _business(record):
     return " ".join(str(record.get("business", "")).split())
 
 
-def _is_current_canonical_send(record, run):
-    return (
-        run.get("date") == date.today().isoformat()
-        and record.get("ready_to_email") == "YES"
-        and record.get("eligible_for_outreach") == "YES"
-        and record.get("research_complete") == "YES"
-        and record.get("business_verified") == "YES"
-        and record.get("contact_route_verified") == "YES"
-        and bool(record.get("company_number"))
-        and str(record.get("company_status", "")).casefold() == "active"
-        and bool(record.get("contact_email"))
-        and record.get("decision_maker_identified", 0) >= 3
-        and record.get("contact_identity_confidence", 0) >= 3
-        and record.get("overall_evidence_confidence", 0) >= 3
-        and record.get("direct_dm_route", 0) >= 3
-    )
+# 2026-09-05: SEND NOW mirrors scoring_engine.py's ready_to_email gate exactly -
+# a named decision-maker is optional enrichment, a usable route to the business
+# is not. The freshness window matches the /qualify Stage 5 rule already in use
+# for reusing a CRM record: inside it, evidence is a verified starting point;
+# beyond it, contact routes and accessibility have gone stale and the record is
+# re-verified before use.
+SEND_NOW_FRESHNESS_DAYS = 90
+MIN_SEND_DM_ROUTE = 2
+
+
+def _within_freshness_window(run):
+    try:
+        run_date = date.fromisoformat(str(run.get("date", "")))
+    except ValueError:
+        return False
+    return 0 <= (date.today() - run_date).days <= SEND_NOW_FRESHNESS_DAYS
+
+
+def _send_blockers(record, run):
+    """Every unmet SEND NOW condition, named. A record that is not SEND NOW
+    always says why - that is what the count shortfall is read against."""
+    blockers = []
+    if not _within_freshness_window(run):
+        blockers.append(f"Historical evidence, older than {SEND_NOW_FRESHNESS_DAYS} days: refresh legal status, "
+                        "contact route and commercial findings before use.")
+    if record.get("business_verified") != "YES":
+        blockers.append("Business verification is incomplete.")
+    if not record.get("company_number") or str(record.get("company_status", "")).casefold() != "active":
+        blockers.append("No confirmed active Ltd/LLP match in the campaign record.")
+    if record.get("contact_route_verified") != "YES":
+        blockers.append("Contact route verification is incomplete.")
+    if record.get("direct_dm_route", 0) < MIN_SEND_DM_ROUTE:
+        blockers.append("No usable contact route to the business: contact form or telephone only, or no route at all.")
+    if not record.get("contact_email"):
+        blockers.append("Verified email route not yet recorded.")
+    if record.get("research_complete") != "YES":
+        blockers.append("Qualification research is incomplete.")
+    if record.get("overall_evidence_confidence", 0) < 3:
+        blockers.append("Evidence confidence is below the send threshold: business credibility or research completeness is unresolved.")
+    if record.get("eligible_for_outreach") != "YES":
+        blockers.append("Not commercially eligible: business fit or service relevance is unresolved.")
+    if record.get("ready_to_email") != "YES":
+        blockers.append("The campaign record does not carry an approved ready_to_email=YES.")
+    return blockers
 
 
 def _classify(records, run, duplicate_labels):
@@ -55,8 +83,8 @@ def _classify(records, run, duplicate_labels):
         blockers.append("Duplicate spelling/capitalisation records were merged for counting; verify the identity match.")
     reason = str(combined.get("reason", "")).upper()
     if combined.get("most_named_cohort") is True:
-        if run.get("date") == date.today().isoformat():
-            return "INCUMBENT", ["Recorded as a member of this campaign's most-named cohort."] + blockers
+        if _within_freshness_window(run):
+            return "INCUMBENT", ["Held out of the default cold-outreach batch as one of this campaign's most-mentioned incumbents; retained in the market analysis."] + blockers
         return "REVIEW", ["Historical dominance claim needs current canonical verification."] + blockers
     if reason in HARD_EXCLUSIONS:
         return "EXCLUDE", [f"Genuine exclusion recorded: {reason}."] + blockers
@@ -66,31 +94,14 @@ def _classify(records, run, duplicate_labels):
         blockers.append(f"Research remains open: {reason}.")
     if blockers:
         return "REVIEW", blockers
-    if _is_current_canonical_send(combined, run):
+    blockers = _send_blockers(combined, run)
+    if not blockers:
         return "SEND NOW", []
-    if run.get("date") != date.today().isoformat():
-        blockers.append("Historical evidence: refresh legal status, contact route and commercial findings before use.")
-    if combined.get("decision_maker_identified", 0) < 3 or combined.get("contact_identity_confidence", 0) < 3:
-        blockers.append("Named contact identity has not met the current send-readiness gate; retain a verified business inbox as secondary.")
-    if combined.get("contact_route_verified") != "YES":
-        blockers.append("Contact route verification is incomplete.")
-    if combined.get("business_verified") != "YES":
-        blockers.append("Business verification is incomplete.")
-    if combined.get("research_complete") != "YES":
-        blockers.append("Full qualification research is incomplete.")
     if combined.get("eligible_for_outreach") == "YES" and combined.get("research_complete") == "YES":
-        if combined.get("ready_to_email") != "YES":
-            blockers.append("Commercially eligible, but the current send-readiness gate is not complete.")
         if combined.get("direct_dm_route") == 2 and combined.get("contact_email"):
-            blockers.append("Verified general business inbox retained; no named decision-maker has been invented.")
+            blockers.append("Verified general business inbox, no named decision-maker: address the business, never an invented name.")
         return "SECONDARY", blockers
-    if combined.get("ready_to_email") == "YES":
-        blockers.append("Historical ready flag is not treated as fresh verification.")
-    elif not combined.get("company_number"):
-        blockers.append("Active Ltd/LLP match not yet confirmed in the campaign record.")
-    if not combined.get("contact_email"):
-        blockers.append("Verified email route not yet recorded.")
-    return "REVIEW", blockers or ["Qualification evidence is incomplete."]
+    return "REVIEW", blockers
 
 
 def build_report(data, census=()):

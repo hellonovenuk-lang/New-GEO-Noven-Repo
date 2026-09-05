@@ -207,26 +207,24 @@ FINAL_SCORE_MAX_RAW = sum(w * 5 for w in FINAL_SCORE_WEIGHTS.values())  # 110
 
 VISIBILITY_BANDS = [(0, 0), (10, 1), (25, 2), (40, 3), (60, 4), (100, 5)]
 
-# most_named_cohort (2026-08-24, replaces the old peer-gated DEFEND rule) -
-# the default target is EVERY Companies-House-verified business in a market
-# EXCEPT the small cluster already dominating that market's AI answers, not
-# just a lone leader of a weak field. Three conditions, all required:
-# visibility_score >= MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE (an absolute
-# floor - alone in a weak field still isn't "dominant"), relative_position >=
-# MOST_NAMED_COHORT_MIN_RELATIVE_POSITION (a band, deliberately looser than
-# the old 0.85, so more than just the single top scorer can qualify), and a
-# rank of MOST_NAMED_COHORT_MAX_SIZE or better by visibility_rate within its
-# own service_scope group. That cap is what actually bounds the cohort - a
-# market can be bunched at the top with as few as 1 or as many as
-# MOST_NAMED_COHORT_MAX_SIZE businesses genuinely dominating it, and this
-# rule accepts either shape without hard-coding a count. Unlike the old rule,
-# a business with no real peer in its service_scope can now reach DEFEND on
-# its own absolute visibility and relative_position=1.0 against itself - the
-# "comparable same-scope peer exists" and "question_coverage >= 0.75"
-# requirements are both dropped entirely, not tightened.
+# most_named_cohort - the incumbents held out of the default cold-outreach
+# batch. Two qualifying conditions, unchanged since 2026-08-24: an absolute
+# visibility floor (alone in a weak field still isn't "dominant") and a
+# relative-position band within the business's own service_scope, deliberately
+# a band rather than a "must be the single top scorer" test.
+#
+# 2026-09-05: the cap that turns those candidates into an exclusion list is now
+# campaign-wide and fixed - the INCUMBENT_EXCLUSION_COUNT most-mentioned
+# candidates in the whole campaign, ranked by relevant_appearances. The old cap
+# was a rank of 5-or-better WITHIN each service_scope group, so a market split
+# across four scopes could hold out twenty businesses and leave almost nothing
+# sendable. Ranking on relevant_appearances (a relevance-weighted count, not a
+# rate) is what makes "most-mentioned" comparable across scopes whose
+# opportunity denominators differ. Excluded incumbents keep every scored field
+# and stay in the market analysis - only the default disposition changes.
 MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE = 3
 MOST_NAMED_COHORT_MIN_RELATIVE_POSITION = 0.7
-MOST_NAMED_COHORT_MAX_SIZE = 5
+INCUMBENT_EXCLUSION_COUNT = 2
 
 # 2026-08-23 - primary sort key for overall_rank/outreach_rank. GAP is the
 # strongest, most actionable sale (a real, checkable gap); DEFEND ranks last
@@ -242,11 +240,24 @@ NAMED_DM_VERIFIED_MIN = 4
 NAMED_DM_PROBABLE_MIN = 3
 IDENTITY_CONFIRMED_MIN = 4
 IDENTITY_PROBABLE_EXACT = 3
-RESEARCH_COMPLETE_MIN = 4
+# 2026-09-05: 3 = every field the send gate itself depends on is resolved with
+# direct evidence. 4-5 additionally covers optional enrichment (a named
+# decision-maker, a LinkedIn match, a second corroborating source), which does
+# not change whether an email to a verified business at a verified route is
+# safe or relevant - it only delays it.
+RESEARCH_COMPLETE_MIN = 3
 ELIGIBLE_MIN_FIT = 2
 ELIGIBLE_MIN_RELEVANCE = 2
-READY_MIN_DM_IDENTIFIED = 3
-READY_MIN_IDENTITY_CONFIDENCE = 3
+# 2026-09-05: the send gate no longer requires a named decision-maker
+# (decision_maker_identified/contact_identity_confidence minimums are gone).
+# Those two fields describe optional enrichment - WHO a verified route reaches -
+# and still drive final_score, identity_confidence, accessibility_grade and
+# priority. What the gate requires instead is a usable route to the business at
+# all: READY_MIN_DM_ROUTE=2 is the 6-tier scale's "generic business inbox only",
+# so a contact-form/phone-only (1) or no-route (0) record still cannot be ready.
+# Personalisation stays evidence-bound elsewhere: no confirmed name, no name in
+# the email - see the /outreach skill.
+READY_MIN_DM_ROUTE = 2
 READY_MIN_EVIDENCE_CONFIDENCE = 3
 
 PRIORITY_A_MIN_SCORE = 70
@@ -405,18 +416,25 @@ def score_pool(run, entries):
         entry["group_top_visibility_rate"] = top
         entry["relative_position"] = round(entry["visibility_rate"] / top, 3) if top > 0 else 0.0
 
-    # Rank each entry within its own service_scope group by visibility_rate -
-    # freshly grouped and sorted here, never against a stale/last-iterated
-    # group (see PeerGroupRankingBugRegressionTests) - this rank feeds the
-    # MOST_NAMED_COHORT_MAX_SIZE cap below. Ties break on business name for a
-    # deterministic order, matching the file's other tiebreak keys.
-    groups = {}
+    # Campaign-wide incumbent rank: the candidates that clear both cohort
+    # conditions, ordered most-mentioned first, so INCUMBENT_EXCLUSION_COUNT
+    # can hold out a fixed number of businesses per campaign rather than a
+    # fixed number per service_scope group. Read from each entry's own
+    # relative_position, freshly computed just above, never a stale
+    # last-iterated group value (see IncumbentExclusionTests). Ties break on
+    # visibility_rate then business name for a deterministic order, matching
+    # the file's other tiebreak keys.
     for _, _, entry in scored:
-        groups.setdefault(entry["service_scope"], []).append(entry)
-    for members in groups.values():
-        ranked = sorted(members, key=lambda e: (-e["visibility_rate"], e["business"]))
-        for rank, member in enumerate(ranked, 1):
-            member["_group_visibility_rank"] = rank
+        entry["_incumbent_candidate"] = (
+            entry["visibility_score"] >= MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE
+            and entry["relative_position"] >= MOST_NAMED_COHORT_MIN_RELATIVE_POSITION
+        )
+    candidates = sorted(
+        (e for _, _, e in scored if e["_incumbent_candidate"]),
+        key=lambda e: (-e["relevant_appearances"], -e["visibility_rate"], e["business"]),
+    )
+    for rank, member in enumerate(candidates, 1):
+        member["_incumbent_rank"] = rank
 
     for _, _, entry in scored:
         cred, vis_score = entry["business_credibility"], entry["visibility_score"]
@@ -425,9 +443,15 @@ def score_pool(run, entries):
         raw_points = sum(entry[field] * weight for field, weight in FINAL_SCORE_WEIGHTS.items())
         entry["final_score"] = round(raw_points / FINAL_SCORE_MAX_RAW * 100, 1)
 
+        # 2026-09-05: the weakest link across the evidence the campaign's
+        # CLAIMS rest on - that this business is genuinely trading, and that
+        # its findings were actually researched. Contact-identity depth is no
+        # longer folded in here: it is reported separately by
+        # identity_confidence and accessibility_grade, and a verified business
+        # inbox with no named contact used to drag this to 0 and read as
+        # "no evidence" when the evidence was in fact complete.
         entry["overall_evidence_confidence"] = min(
-            entry["business_credibility"], entry["decision_maker_identified"],
-            entry["contact_identity_confidence"], entry["research_completeness"],
+            entry["business_credibility"], entry["research_completeness"],
         )
 
         entry["business_verified"] = "YES" if cred >= BUSINESS_VERIFIED_MIN_CREDIBILITY else "REVIEW"
@@ -448,8 +472,9 @@ def score_pool(run, entries):
                       and entry["commercial_fit"] >= ELIGIBLE_MIN_FIT and entry["service_relevance"] >= ELIGIBLE_MIN_RELEVANCE)
             else "REVIEW"
         )
-        ready = (entry["eligible_for_outreach"] == "YES" and dmid >= READY_MIN_DM_IDENTIFIED
-                 and idconf >= READY_MIN_IDENTITY_CONFIDENCE and entry["research_complete"] == "YES"
+        ready = (entry["eligible_for_outreach"] == "YES"
+                 and entry["direct_dm_route"] >= READY_MIN_DM_ROUTE
+                 and entry["research_complete"] == "YES"
                  and entry["overall_evidence_confidence"] >= READY_MIN_EVIDENCE_CONFIDENCE)
         entry["_ready_recommendation"] = "YES" if ready else "REVIEW"
         if array_name == "outreach":
@@ -457,11 +482,9 @@ def score_pool(run, entries):
 
         entry["accessibility_grade"] = ACCESSIBILITY_GRADE_BY_DM_ROUTE[entry["direct_dm_route"]]
 
-        relpos = entry["relative_position"]
         entry["most_named_cohort"] = (
-            vis_score >= MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE
-            and relpos >= MOST_NAMED_COHORT_MIN_RELATIVE_POSITION
-            and entry["_group_visibility_rank"] <= MOST_NAMED_COHORT_MAX_SIZE
+            entry["_incumbent_candidate"]
+            and entry["_incumbent_rank"] <= INCUMBENT_EXCLUSION_COUNT
         )
         if entry["most_named_cohort"]:
             opp = "DEFEND"
@@ -559,7 +582,8 @@ def score_pool(run, entries):
     for _, _, entry in scored:
         entry.pop("_ready_recommendation", None)
         entry.pop("_priority_recommendation", None)
-        entry.pop("_group_visibility_rank", None)
+        entry.pop("_incumbent_candidate", None)
+        entry.pop("_incumbent_rank", None)
 
     return scored
 

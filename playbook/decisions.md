@@ -67,17 +67,34 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
   filter — a strongly visible business is a DEFEND opportunity, not a dead
   end. REVIEW is not a fifth opportunity type; it stays a state of
   disposition and priority. 2026-08-14.
-- **A market's most-named cohort — the small cluster already dominating its
-  AI answers, as few as one business or as many as five — defaults to
-  excluded from outreach; a DEFEND business outside that cohort does not.**
-  `most_named_cohort` in `scoring_engine.py`: an absolute visibility floor
-  (`visibility_score >= 3`), a relative-position band (`>= 0.7` of the
-  group's own top rate, loosened from the old 0.85), and a rank-within-group
-  cap (top 5 by visibility_rate within its own service_scope group) — no
-  longer conditioned on having a comparable peer at all. `GAP` is
-  unconditional at zero visibility now; `business_credibility` no longer
-  gates it. Both are proposals (`disposition_recommendation`,
-  `opportunity_type`) the owner can override. 2026-08-24.
+- **A market's two most-mentioned incumbents default to excluded from the
+  cold-outreach batch and stay in the market analysis; every other DEFEND
+  business does not.** `most_named_cohort` in `scoring_engine.py`: an
+  absolute visibility floor (`visibility_score >= 3`), a relative-position
+  band (`>= 0.7` of the group's own top rate), and — 2026-09-05, replacing
+  the old top-5-within-each-service_scope rank — being among the
+  `INCUMBENT_EXCLUSION_COUNT` (2) most-mentioned campaign-wide by
+  `relevant_appearances`. The per-group cap held out up to five businesses in
+  every scope group, which emptied the sendable batch in a multi-scope
+  market. `GAP` is unconditional at zero visibility; `business_credibility`
+  no longer gates it. Both are proposals (`disposition_recommendation`,
+  `opportunity_type`) the owner can override. 2026-08-24, revised 2026-09-05.
+- **A named decision-maker is not required to send.** `ready_to_email`
+  requires a verified active Ltd/LLP, adequate commercial fit and service
+  relevance, a verified contact route, a usable route to the business
+  (`direct_dm_route >= 2` — a general business inbox counts, a contact form
+  or phone number alone does not), and completed research
+  (`research_completeness >= 3`). The `decision_maker_identified >= 3` and
+  `contact_identity_confidence >= 3` requirements are removed: they described
+  optional enrichment, and withheld well-evidenced prospects without making
+  the email safer. Where no name is confirmed, the email addresses the
+  business and no name is invented. Reverses the v2.1 "a generic inbox can
+  never be ready" rule. 2026-09-05.
+- **Qualification aims for 10–15 sendable prospects per market, as a target,
+  not a quota.** Where a market holds fewer suitable businesses, the honest
+  number is the answer: report the actual blockers per business rather than
+  commissioning more research or relaxing a gate to reach the band.
+  2026-09-05.
 - **SUPERSEDED 2026-08-24 — DEFEND's classification changed to
   `most_named_cohort` (see above); the ranking order itself (GAP > GROWTH >
   DEFEND) is unchanged.**

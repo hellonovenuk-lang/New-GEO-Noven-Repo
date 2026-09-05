@@ -92,6 +92,9 @@ class CoverageTests(unittest.TestCase):
         self.assertIn('Historical', ' '.join(result['rows'][0]['blockers']))
 
     def test_inconsistent_generic_ready_flags_cannot_reach_send_now(self):
+        # 2026-09-05: a missing named decision-maker no longer blocks - a
+        # verified business inbox is a valid route. A missing email route and
+        # unresolved evidence confidence still do, and are named as blockers.
         data = self.fixture()
         data['run']['date'] = date.today().isoformat()
         data['outreach'] = [{'business': 'Unsafe Ltd', 'ready_to_email': 'YES',
@@ -102,7 +105,37 @@ class CoverageTests(unittest.TestCase):
             'contact_identity_confidence': 0}]
         result = self.report(data)
         self.assertEqual(result['counts']['SEND NOW'], 0)
-        self.assertIn('identity', ' '.join(result['rows'][0]['blockers']).lower())
+        self.assertIn('email route', ' '.join(result['rows'][0]['blockers']).lower())
+
+    def test_missing_named_contact_alone_does_not_block_send_now(self):
+        # A verified active company, a verified generic business inbox and
+        # complete research is sendable. No name is invented to get there.
+        data = self.fixture()
+        data['run']['date'] = date.today().isoformat()
+        data['outreach'] = [{'business': 'Generic Inbox Ltd', 'ready_to_email': 'YES',
+            'eligible_for_outreach': 'YES', 'research_complete': 'YES',
+            'business_verified': 'YES', 'contact_route_verified': 'YES',
+            'company_number': '00000004', 'company_status': 'Active',
+            'contact_email': 'hello@example.invalid', 'overall_evidence_confidence': 3,
+            'direct_dm_route': 2, 'decision_maker_identified': 0,
+            'contact_identity_confidence': 0}]
+        result = self.report(data)
+        self.assertEqual(result['counts']['SEND NOW'], 1)
+        self.assertEqual(result['rows'][0]['blockers'], [])
+
+    def test_every_non_send_row_states_a_blocker(self):
+        data = self.fixture()
+        data['run']['date'] = date.today().isoformat()
+        data['outreach'] = [{'business': 'Half Done Ltd', 'ready_to_email': 'YES',
+            'eligible_for_outreach': 'YES', 'research_complete': 'YES',
+            'business_verified': 'YES', 'contact_route_verified': 'YES',
+            'company_number': '00000005', 'company_status': 'Active',
+            'contact_email': 'hello@example.invalid', 'overall_evidence_confidence': 2,
+            'direct_dm_route': 2}]
+        result = self.report(data)
+        for row in result['rows']:
+            if row['selection_group'] != 'SEND NOW':
+                self.assertTrue(row['blockers'], f"{row['business']} has no stated blocker")
 
     def test_cohort_specific_missing_evidence_is_preserved(self):
         data = self.fixture()

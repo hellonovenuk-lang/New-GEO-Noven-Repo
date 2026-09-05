@@ -552,8 +552,9 @@ def build_methodology_sheet(wb, fmts, data):
         ("Contact-route quality (VALUE)", "5=direct named email, verified live | 4=verified generic business "
          "email, live | 3=working contact form | 2=phone-only | 1=third-party portal only | 0=no usable route."),
         ("Contact-identity confidence (VALUE)", "5/4=CONFIRMED | 3=PROBABLE | 2/1=POSSIBLE | 0=UNKNOWN."),
-        ("Overall evidence confidence (FORMULA)", "= MIN(business_credibility, decision_maker_identified, "
-         "contact_identity_confidence, research_completeness) - weakest-link rule."),
+        ("Overall evidence confidence (FORMULA)", "= MIN(business_credibility, research_completeness) - "
+         "weakest-link rule across the evidence the campaign's claims rest on. Contact-identity depth is "
+         "reported separately by Identity confidence and Accessibility grade, and is not folded in here."),
         ("Research completeness (VALUE)", "5=all material fields resolved with direct evidence ... 0=not "
          "researched this round."),
         ("Final qualification score, 0-100 (FORMULA)", "Weighted sum of 9 components (commercial_fit x3, "
@@ -571,22 +572,23 @@ def build_methodology_sheet(wb, fmts, data):
         md("   " + desc, fmts["body_small"])
     r[0] += 1
 
-    md("5. Opportunity-type rule (DEFEND / GROWTH / GAP / REVIEW)", fmts["h2"])
-    md('  DEFEND   if a comparable same-scope peer exists (>=2 businesses share this service_scope in the '
-       'pool)  AND  visibility_score >= 3  AND  relative_position >= 0.85  AND  question_coverage >= 0.75',
-       fmts["body_small"])
-    md('  GAP      elif business_credibility >= 3  AND  visibility_score <= 1', fmts["body_small"])
-    md('  REVIEW   elif visibility_score == 0  AND  business_credibility < 3', fmts["body_small"])
+    md("5. Opportunity-type rule (DEFEND / GROWTH / GAP)", fmts["h2"])
+    md(f'  DEFEND   if visibility_score >= {se.MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE}  AND  relative_position '
+       f'>= {se.MOST_NAMED_COHORT_MIN_RELATIVE_POSITION}  AND  among the {se.INCUMBENT_EXCLUSION_COUNT} '
+       f'most-mentioned of the businesses meeting those two conditions, campaign-wide, by '
+       f'relevant-question appearances', fmts["body_small"])
+    md('  GAP      elif visibility_score == 0', fmts["body_small"])
     md('  GROWTH   otherwise', fmts["body_small"])
-    md("relative_position = own visibility rate / the highest visibility rate among all OTHER businesses "
-       "sharing the SAME service_scope in this pool (group_top_visibility_rate) - comparisons never cross "
-       "service scopes, so the comparison is always on the same denominator basis. question_coverage = share "
-       "of the business's OWN relevant questions it appears on at least once - a breadth check independent of "
-       "raw volume, so a business cannot reach DEFEND on one over-performing question alone. A business "
-       "leading an extremely weak comparison group still needs visibility_score>=3 in ABSOLUTE terms to reach "
-       "DEFEND - leading a weak field is not the same as meaningful visibility. A business with NO comparable "
-       "peer at all (it is the only one with its service_scope in this pool) can never reach DEFEND regardless "
-       "of its own visibility_score - relative_position=1.0 against yourself is not market leadership.")
+    md(f"relative_position = own visibility rate / the highest visibility rate among the businesses sharing "
+       f"the SAME service_scope in this pool (group_top_visibility_rate) - comparisons never cross service "
+       f"scopes, so the comparison is always on the same denominator basis. A business leading an extremely "
+       f"weak comparison group still needs visibility_score >= "
+       f"{se.MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE} in ABSOLUTE terms - leading a weak field is not the "
+       f"same as meaningful visibility. The final cap is a campaign-wide count, not a per-scope rank: only "
+       f"the {se.INCUMBENT_EXCLUSION_COUNT} most-mentioned incumbents are held out of the default "
+       f"cold-outreach batch, and they keep every scored field and stay in the market analysis. Ranking on "
+       f"relevant-question appearances (a count, not a rate) is what makes 'most-mentioned' comparable "
+       f"across scopes whose answer-opportunity denominators differ.")
     r[0] += 1
 
     md("6. Status/eligibility gates (separate from the score)", fmts["h2"])
@@ -595,13 +597,18 @@ def build_methodology_sheet(wb, fmts, data):
         "contact_route_verified = YES if contact_route_quality >= 3, else REVIEW",
         "named_decision_maker_verified = YES if decision_maker_identified >= 4, PROBABLE if >= 3, else NO",
         "identity_confidence = CONFIRMED if contact_identity_confidence>=4, PROBABLE if =3, POSSIBLE if 1-2, UNKNOWN if 0",
-        "research_complete = YES if research_completeness >= 4, else NO",
+        f"research_complete = YES if research_completeness >= {se.RESEARCH_COMPLETE_MIN}, else NO - that is "
+        "every field the send gate itself depends on resolved with direct evidence; 4-5 additionally covers "
+        "optional enrichment, which does not change whether the email is safe or relevant",
         "eligible_for_outreach = YES if business_verified=YES AND contact_route_verified=YES AND "
         "commercial_fit>=2 AND service_relevance>=2 (this is what keeps a centrally-controlled chain out, via "
         "the commercial_fit gate, without a separate hand-rule)",
-        "ready_to_email = YES only if eligible_for_outreach=YES AND decision_maker_identified>=3 AND "
-        "contact_identity_confidence>=3 AND research_complete=YES AND overall_evidence_confidence>=3. "
-        "Otherwise REVIEW - a generic inbox alone can never produce ready_to_email=YES.",
+        f"ready_to_email = YES only if eligible_for_outreach=YES AND direct_dm_route>="
+        f"{se.READY_MIN_DM_ROUTE} AND research_complete=YES AND overall_evidence_confidence>="
+        f"{se.READY_MIN_EVIDENCE_CONFIDENCE}. Otherwise REVIEW. A named decision-maker is optional "
+        "enrichment and does not gate the send; a verified general business inbox is a valid route, and "
+        "contact form or telephone only (1) or no route at all (0) is not. No confirmed name means no name "
+        "in the email - never an inferred one.",
         "priority: REVIEW if eligible_for_outreach != YES OR research_complete != YES (incomplete research "
         "forces REVIEW regardless of score). Else A if final_score>=70, B if 50<=final_score<70, C if <50.",
     ]:
@@ -704,6 +711,8 @@ def build_scoring_sheet(wb, fmts, data):
     cred_rng = f"${L(col_idx['business_credibility'])}${first+1}:${L(col_idx['business_credibility'])}${last+1}"
     vis_rng = f"${L(col_idx['visibility_score'])}${first+1}:${L(col_idx['visibility_score'])}${last+1}"
     name_rng = f"${L(col_idx['business'])}${first+1}:${L(col_idx['business'])}${last+1}"
+    relpos_rng = f"${L(col_idx['relative_position'])}${first+1}:${L(col_idx['relative_position'])}${last+1}"
+    rapp_rng = f"${L(col_idx['relevant_appearances'])}${first+1}:${L(col_idx['relevant_appearances'])}${last+1}"
     ready_rng = f"${L(col_idx['ready_to_email'])}${first+1}:${L(col_idx['ready_to_email'])}${last+1}"
     opportunity_rng = f"${L(col_idx['opportunity_type'])}${first+1}:${L(col_idx['opportunity_type'])}${last+1}"
 
@@ -782,7 +791,7 @@ def build_scoring_sheet(wb, fmts, data):
 
         idc_c = f"{L(col_idx['contact_identity_confidence'])}{xr}"
         comp_c = f"{L(col_idx['research_completeness'])}{xr}"
-        ws.write_formula(row0, col_idx["overall_evidence_confidence"], f"=MIN({cred_c},{dmid_c},{idc_c},{comp_c})",
+        ws.write_formula(row0, col_idx["overall_evidence_confidence"], f"=MIN({cred_c},{comp_c})",
                           fmts["cell"], e["overall_evidence_confidence"])
         evc_c = f"{L(col_idx['overall_evidence_confidence'])}{xr}"
 
@@ -802,23 +811,30 @@ def build_scoring_sheet(wb, fmts, data):
         ws.write_formula(row0, col_idx["identity_confidence"],
                           f'=IF({idc_c}>=4,"CONFIRMED",IF({idc_c}=3,"PROBABLE",IF({idc_c}>=1,"POSSIBLE","UNKNOWN")))',
                           fmts["cell"], e["identity_confidence"])
-        ws.write_formula(row0, col_idx["research_complete"], f'=IF({comp_c}>=4,"YES","NO")', fmts["cell"], e["research_complete"])
+        ws.write_formula(row0, col_idx["research_complete"],
+                          f'=IF({comp_c}>={se.RESEARCH_COMPLETE_MIN},"YES","NO")', fmts["cell"], e["research_complete"])
         rc_c = f"{L(col_idx['research_complete'])}{xr}"
         ws.write_formula(row0, col_idx["eligible_for_outreach"],
                           f'=IF(AND({biz_v_c}="YES",{route_v_c}="YES",{fit_c}>=2,{relv_c}>=2),"YES","REVIEW")',
                           fmts["cell"], e["eligible_for_outreach"])
         elig_c = f"{L(col_idx['eligible_for_outreach'])}{xr}"
         ws.write_formula(row0, col_idx["ready_to_email"],
-                          f'=IF(AND({elig_c}="YES",{dmid_c}>=3,{idc_c}>=3,{rc_c}="YES",{evc_c}>=3),"YES","REVIEW")',
+                          f'=IF(AND({elig_c}="YES",{dmroute_c}>={se.READY_MIN_DM_ROUTE},{rc_c}="YES",'
+                          f'{evc_c}>={se.READY_MIN_EVIDENCE_CONFIDENCE}),"YES","REVIEW")',
                           fmts["cell"], e.get("ready_to_email", "REVIEW"))
 
-        scope_c = f"{L(col_idx['service_scope'])}{xr}"
         name_c = f"{L(col_idx['business'])}{xr}"
-        group_rank = (f"(1+SUMPRODUCT(({scope_rng}={scope_c})*"
-                      f"(({vrate_rng}>{vrate_c})+(({vrate_rng}={vrate_c})*({name_rng}<{name_c})))))")
+        # Campaign-wide rank among the businesses that clear both cohort
+        # conditions, most-mentioned first - the same order scoring_engine.py
+        # ranks on, so the workbook's live formula and its cached value agree.
+        candidate_mask = (f"({vis_rng}>={se.MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE})*"
+                          f"({relpos_rng}>={se.MOST_NAMED_COHORT_MIN_RELATIVE_POSITION})")
+        ahead = (f"(({rapp_rng}>{rel_c})+(({rapp_rng}={rel_c})*"
+                 f"(({vrate_rng}>{vrate_c})+(({vrate_rng}={vrate_c})*({name_rng}<{name_c})))))")
+        incumbent_rank = f"(1+SUMPRODUCT({candidate_mask}*{ahead}))"
         opp_formula = (f'=IF(AND({vis_c}>={se.MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE},'
                        f'{relpos_c}>={se.MOST_NAMED_COHORT_MIN_RELATIVE_POSITION},'
-                       f'{group_rank}<={se.MOST_NAMED_COHORT_MAX_SIZE}),"DEFEND",'
+                       f'{incumbent_rank}<={se.INCUMBENT_EXCLUSION_COUNT}),"DEFEND",'
                        f'IF({vis_c}=0,"GAP","GROWTH"))')
         ws.write_formula(row0, col_idx["opportunity_type"], opp_formula, fmts["cell"], e["opportunity_type"])
 
@@ -982,6 +998,10 @@ def build_qc_sheet(wb, fmts, data, ranked, shortlist_count):
     gap_credibility_ok = all(not (e["opportunity_type"] == "GAP" and e["business_credibility"] < 3) for e in entries)
     defend_absolute_ok = all(not (e["opportunity_type"] == "DEFEND" and e["visibility_score"] < 3) for e in entries)
     incomplete_never_ready = all(not (e.get("ready_to_email") == "YES" and e["research_complete"] != "YES") for e in entries)
+    no_route_never_ready = all(
+        not (e.get("ready_to_email") == "YES" and e["direct_dm_route"] < se.READY_MIN_DM_ROUTE) for e in entries
+    )
+    held_out = [e["business"] for e in entries if e.get("most_named_cohort")]
     unconfirmed_never_confirmed_label = all(
         not (e["identity_confidence"] == "CONFIRMED" and e["contact_identity_confidence"] < 4) for e in entries
     )
@@ -1028,6 +1048,14 @@ def build_qc_sheet(wb, fmts, data, ranked, shortlist_count):
          f"directly against the stored value: {unconfirmed_never_confirmed_label}."),
         ("Incomplete research cannot become ready", "PASS" if incomplete_never_ready else "FAIL",
          f"No entry with ready_to_email=YES has research_complete != YES: {incomplete_never_ready}."),
+        ("A business with no usable route cannot become ready", "PASS" if no_route_never_ready else "FAIL",
+         f"No entry with ready_to_email=YES has direct_dm_route < {se.READY_MIN_DM_ROUTE} (contact form or "
+         f"telephone only, or no route at all): {no_route_never_ready}."),
+        ("Incumbent hold-out is capped campaign-wide",
+         "PASS" if len(held_out) <= se.INCUMBENT_EXCLUSION_COUNT else "FAIL",
+         f"At most {se.INCUMBENT_EXCLUSION_COUNT} most-mentioned businesses are held out of the default "
+         f"cold-outreach batch; they keep every scored field and stay in the market analysis. Held out this "
+         f"run ({len(held_out)}): {', '.join(held_out) or 'none'}."),
         ("GAP requires adequate credibility", "PASS" if gap_credibility_ok else "FAIL",
          f"No entry classified GAP has business_credibility < 3: {gap_credibility_ok}."),
         ("DEFEND uses relative AND absolute evidence", "PASS" if defend_absolute_ok else "FAIL",
