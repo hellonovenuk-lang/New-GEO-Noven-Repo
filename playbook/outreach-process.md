@@ -117,7 +117,8 @@ single "prospect or not" test — plus a fourth non-opportunity bucket
   opportunity type for that business (a monitoring/retention play worth
   pursuing on its own terms later), and the owner can override the
   disposition for a specific business. A `DEFEND` business outside those two
-  is not excluded by default.
+  is not excluded by default, and keeps its `DEFEND` classification — the cap
+  decides how many incumbents this round skips, never what a business is.
 - **NO OPPORTUNITY** — market or business fit is unclear, legal or trading
   status is unresolved, geography is ambiguous, the apparent gap is
   explained by being new/specialist/out-of-market, local decision-making is

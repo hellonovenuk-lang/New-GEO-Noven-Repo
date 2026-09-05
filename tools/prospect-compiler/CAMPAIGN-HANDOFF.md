@@ -523,7 +523,14 @@ reaches, and it still drives `final_score`, `identity_confidence`,
 `accessibility_grade` and `priority` — it no longer withholds the email.
 `research_complete` now means `research_completeness>=3` (every field the
 gate itself depends on resolved with direct evidence) rather than `>=4`
-(which additionally required optional enrichment). `priority` is
+(which additionally required optional enrichment). **Re-scoring an older
+campaign does not inherit that meaning for free:** a `research_completeness`
+recorded before 2026-09-05 was judged against the old bar, so re-assess it
+against the evidence actually on file before accepting a stored `3` as
+complete. A value that was "3 because two material fields were still open"
+is not the same as a value that is "3 because everything the gate needs is
+resolved and only enrichment is missing", and only the second may send.
+`priority` is
 `REVIEW` whenever `eligible_for_outreach != YES` or `research_complete !=
 YES`, regardless of `final_score` — **a high-scoring candidate with
 unresolved material evidence is never promoted on the strength of its score
@@ -538,21 +545,38 @@ valid legacy value on old, unscored records; the engine itself only ever
 produces `DEFEND` / `GROWTH` / `GAP`, never `REVIEW`):
 
 ```
-most_named_cohort = visibility_score >= MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE   (3)
+dominant_visibility = visibility_score >= MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE   (3)
                  AND relative_position >= MOST_NAMED_COHORT_MIN_RELATIVE_POSITION   (0.7 -
                      own visibility_rate / the highest visibility_rate among
                      OTHER businesses sharing this exact service_scope -
                      never compared across scopes with different
                      denominators)
-                 AND among the INCUMBENT_EXCLUSION_COUNT (2) most-mentioned
-                     of the businesses meeting both conditions above,
-                     CAMPAIGN-WIDE, ranked by relevant_appearances (ties:
-                     visibility_rate, then business name)
 
-DEFEND   if most_named_cohort
+DEFEND   if dominant_visibility
 GAP      elif visibility_score == 0
 GROWTH   otherwise
+
+# Separately, and layered on top of the classification above:
+most_named_cohort = dominant_visibility
+                 AND among the INCUMBENT_EXCLUSION_COUNT (2) most-mentioned
+                     of the dominant businesses, CAMPAIGN-WIDE, ranked by
+                     relevant_appearances (ties: visibility_rate, then
+                     business name)
 ```
+
+**Classification and exclusion are two separate judgements and must not be
+collapsed (2026-09-05).** `dominant_visibility` decides `opportunity_type`
+— a business that clears both conditions is `DEFEND` because that is what
+its market position *is*. `most_named_cohort` decides only whether it is
+also held out of this round's cold-outreach batch, which is a batching
+decision about how many incumbents to skip, not a statement about the
+business. A `DEFEND` business outside the two exclusion places keeps its
+classification and stays available for an evidence-appropriate `DEFEND`
+approach; it is never silently reclassified `GROWTH` because the places
+happen to be filled. Collapsing the two also produced false prose — a
+service-scope leader reclassified `GROWTH` was then described by
+`generate_why_prospect()` as "materially behind" a highest visibility rate
+that was its own.
 
 The default target is now **every** Companies-House-verified business in a
 market **except** the small cluster already dominating that market's AI
@@ -566,17 +590,18 @@ because it has no comparison group. **(2)** `relative_position`'s floor is
 loosened from the old 0.85 to `MOST_NAMED_COHORT_MIN_RELATIVE_POSITION`
 (0.7) and is deliberately a band, not a "must be the single top scorer"
 test — a market can be bunched at the top. **(3) (2026-09-05, replaces the
-per-group `MOST_NAMED_COHORT_MAX_SIZE` (5) rank)** the cap is now a
-campaign-wide count: `INCUMBENT_EXCLUSION_COUNT` (2). Only the two
-most-mentioned incumbents in the whole campaign are held out of the default
+per-group `MOST_NAMED_COHORT_MAX_SIZE` (5) rank)** the exclusion cap is now
+a campaign-wide count: `INCUMBENT_EXCLUSION_COUNT` (2). Only the two
+most-mentioned of the dominant businesses are held out of the default
 cold-outreach batch, and they keep every scored field and stay in the market
-analysis — the exclusion is a disposition, not a deletion. The old cap was a
-rank within each `service_scope` group, so a market split across four scopes
-could hold out twenty businesses and leave almost nothing sendable. Ranking
-on `relevant_appearances` — a relevance-weighted count, not a rate — is what
-makes "most-mentioned" comparable across scopes whose answer-opportunity
-denominators differ; `relative_position` stays scoped to each business's own
-group, where the denominators do match. The old **"comparable
+analysis — the exclusion is a disposition, not a deletion, and not a
+classification. The old cap was a rank within each `service_scope` group, so
+a market split across four scopes could hold out twenty businesses and leave
+almost nothing sendable. Ranking on `relevant_appearances` — a
+relevance-weighted count, not a rate — is what makes "most-mentioned"
+comparable across scopes whose answer-opportunity denominators differ;
+`relative_position` stays scoped to each business's own group, where the
+denominators do match. The old **"comparable
 same-scope peer exists (>=2 businesses)"** and **"question_coverage >=
 0.75"** requirements are both dropped entirely, not tightened — a lone
 business or one with patchy question coverage is no longer blocked from
@@ -587,6 +612,19 @@ and the lighter-gate exception built specifically to route around it
 (`active_entity_verified`/`live_website_verified`/`contact_route_exists`
 remain valid optional research fields but are not currently consumed by
 this classification).
+
+**Narrative wording never tells a group leader it is behind its own rate
+(2026-09-05).** `generate_why_prospect()` branches on
+`leads_its_group(entry)` — `visibility_rate >= group_top_visibility_rate`,
+ties and all-zero groups included. A leader gets "the group's own highest
+visibility rate" (`DEFEND`) or "the highest visibility rate in its own
+service-scope group, but short of a dominant position in absolute terms"
+(`GROWTH`); a `GAP` business in a group where nobody registers any
+visibility says so rather than claiming it is behind 0.0%. The
+"materially behind"/"materially underrepresented against" phrasings are
+reserved for businesses that genuinely trail a rate someone else holds.
+`narrative_signature()` is versioned `v3`, so every stored narrative
+regenerates on the next re-score rather than keeping the old wording.
 
 **`most_named_cohort` also sets the default `disposition_recommendation`**
 on a scored `outreach[]` entry: `EXCLUDED` (reason `ALREADY STRONGLY

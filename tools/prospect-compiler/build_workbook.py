@@ -574,9 +574,7 @@ def build_methodology_sheet(wb, fmts, data):
 
     md("5. Opportunity-type rule (DEFEND / GROWTH / GAP)", fmts["h2"])
     md(f'  DEFEND   if visibility_score >= {se.MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE}  AND  relative_position '
-       f'>= {se.MOST_NAMED_COHORT_MIN_RELATIVE_POSITION}  AND  among the {se.INCUMBENT_EXCLUSION_COUNT} '
-       f'most-mentioned of the businesses meeting those two conditions, campaign-wide, by '
-       f'relevant-question appearances', fmts["body_small"])
+       f'>= {se.MOST_NAMED_COHORT_MIN_RELATIVE_POSITION}', fmts["body_small"])
     md('  GAP      elif visibility_score == 0', fmts["body_small"])
     md('  GROWTH   otherwise', fmts["body_small"])
     md(f"relative_position = own visibility rate / the highest visibility rate among the businesses sharing "
@@ -584,11 +582,14 @@ def build_methodology_sheet(wb, fmts, data):
        f"scopes, so the comparison is always on the same denominator basis. A business leading an extremely "
        f"weak comparison group still needs visibility_score >= "
        f"{se.MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE} in ABSOLUTE terms - leading a weak field is not the "
-       f"same as meaningful visibility. The final cap is a campaign-wide count, not a per-scope rank: only "
-       f"the {se.INCUMBENT_EXCLUSION_COUNT} most-mentioned incumbents are held out of the default "
-       f"cold-outreach batch, and they keep every scored field and stay in the market analysis. Ranking on "
-       f"relevant-question appearances (a count, not a rate) is what makes 'most-mentioned' comparable "
-       f"across scopes whose answer-opportunity denominators differ.")
+       f"same as meaningful visibility. Separately from this classification, the "
+       f"{se.INCUMBENT_EXCLUSION_COUNT} most-mentioned of the DEFEND businesses - campaign-wide, ranked by "
+       f"relevant-question appearances, which is a count rather than a rate and so stays comparable across "
+       f"scopes whose answer-opportunity denominators differ - are held out of the default cold-outreach "
+       f"batch. That hold-out is a batching decision, not a classification: it changes only "
+       f"disposition_recommendation, the held-out businesses keep every scored field and stay in the market "
+       f"analysis, and a DEFEND business outside those places stays available for an evidence-appropriate "
+       f"DEFEND approach rather than being reclassified GROWTH.")
     r[0] += 1
 
     md("6. Status/eligibility gates (separate from the score)", fmts["h2"])
@@ -711,8 +712,6 @@ def build_scoring_sheet(wb, fmts, data):
     cred_rng = f"${L(col_idx['business_credibility'])}${first+1}:${L(col_idx['business_credibility'])}${last+1}"
     vis_rng = f"${L(col_idx['visibility_score'])}${first+1}:${L(col_idx['visibility_score'])}${last+1}"
     name_rng = f"${L(col_idx['business'])}${first+1}:${L(col_idx['business'])}${last+1}"
-    relpos_rng = f"${L(col_idx['relative_position'])}${first+1}:${L(col_idx['relative_position'])}${last+1}"
-    rapp_rng = f"${L(col_idx['relevant_appearances'])}${first+1}:${L(col_idx['relevant_appearances'])}${last+1}"
     ready_rng = f"${L(col_idx['ready_to_email'])}${first+1}:${L(col_idx['ready_to_email'])}${last+1}"
     opportunity_rng = f"${L(col_idx['opportunity_type'])}${first+1}:${L(col_idx['opportunity_type'])}${last+1}"
 
@@ -823,18 +822,13 @@ def build_scoring_sheet(wb, fmts, data):
                           f'{evc_c}>={se.READY_MIN_EVIDENCE_CONFIDENCE}),"YES","REVIEW")',
                           fmts["cell"], e.get("ready_to_email", "REVIEW"))
 
-        name_c = f"{L(col_idx['business'])}{xr}"
-        # Campaign-wide rank among the businesses that clear both cohort
-        # conditions, most-mentioned first - the same order scoring_engine.py
-        # ranks on, so the workbook's live formula and its cached value agree.
-        candidate_mask = (f"({vis_rng}>={se.MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE})*"
-                          f"({relpos_rng}>={se.MOST_NAMED_COHORT_MIN_RELATIVE_POSITION})")
-        ahead = (f"(({rapp_rng}>{rel_c})+(({rapp_rng}={rel_c})*"
-                 f"(({vrate_rng}>{vrate_c})+(({vrate_rng}={vrate_c})*({name_rng}<{name_c})))))")
-        incumbent_rank = f"(1+SUMPRODUCT({candidate_mask}*{ahead}))"
+        # Opportunity type is decided by the two dominance conditions alone.
+        # The campaign-wide exclusion cap is a batching decision applied on top
+        # of it (see the QC sheet's hold-out row and disposition_recommendation
+        # in the campaign JSON), never an input to the classification - a
+        # strongly visible business outside the cap stays DEFEND.
         opp_formula = (f'=IF(AND({vis_c}>={se.MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE},'
-                       f'{relpos_c}>={se.MOST_NAMED_COHORT_MIN_RELATIVE_POSITION},'
-                       f'{incumbent_rank}<={se.INCUMBENT_EXCLUSION_COUNT}),"DEFEND",'
+                       f'{relpos_c}>={se.MOST_NAMED_COHORT_MIN_RELATIVE_POSITION}),"DEFEND",'
                        f'IF({vis_c}=0,"GAP","GROWTH"))')
         ws.write_formula(row0, col_idx["opportunity_type"], opp_formula, fmts["cell"], e["opportunity_type"])
 
@@ -995,13 +989,21 @@ def build_qc_sheet(wb, fmts, data, ranked, shortlist_count):
         expected = round(raw_points / 110 * 100, 1)
         if abs(expected - e["final_score"]) > 1e-9:
             score_ok = False
-    gap_credibility_ok = all(not (e["opportunity_type"] == "GAP" and e["business_credibility"] < 3) for e in entries)
+    # 2026-09-05: replaces an obsolete "GAP requires business_credibility >= 3"
+    # check. Credibility stopped gating GAP on 2026-08-24, so that row reported
+    # FAIL on correctly-classified campaigns. What is actually checkable now is
+    # that GAP means exactly zero relevance-aware visibility, in both directions.
+    gap_definition_ok = all((e["opportunity_type"] == "GAP") == (e["visibility_score"] == 0) for e in entries)
     defend_absolute_ok = all(not (e["opportunity_type"] == "DEFEND" and e["visibility_score"] < 3) for e in entries)
     incomplete_never_ready = all(not (e.get("ready_to_email") == "YES" and e["research_complete"] != "YES") for e in entries)
     no_route_never_ready = all(
         not (e.get("ready_to_email") == "YES" and e["direct_dm_route"] < se.READY_MIN_DM_ROUTE) for e in entries
     )
     held_out = [e["business"] for e in entries if e.get("most_named_cohort")]
+    defend_total = sum(1 for e in entries if e["opportunity_type"] == "DEFEND")
+    holdout_is_subset_of_defend = all(
+        e["opportunity_type"] == "DEFEND" for e in entries if e.get("most_named_cohort")
+    )
     unconfirmed_never_confirmed_label = all(
         not (e["identity_confidence"] == "CONFIRMED" and e["contact_identity_confidence"] < 4) for e in entries
     )
@@ -1051,13 +1053,21 @@ def build_qc_sheet(wb, fmts, data, ranked, shortlist_count):
         ("A business with no usable route cannot become ready", "PASS" if no_route_never_ready else "FAIL",
          f"No entry with ready_to_email=YES has direct_dm_route < {se.READY_MIN_DM_ROUTE} (contact form or "
          f"telephone only, or no route at all): {no_route_never_ready}."),
+        ("Opportunity type is independent of the outreach hold-out",
+         "PASS" if holdout_is_subset_of_defend else "FAIL",
+         f"{defend_total} business(es) classified DEFEND on the two dominance conditions; "
+         f"{len(held_out)} of them held out of this round's batch. A DEFEND business outside the "
+         f"hold-out keeps its classification and stays available for outreach - filling the exclusion "
+         f"places never reclassifies a strongly visible business as GROWTH: {holdout_is_subset_of_defend}."),
         ("Incumbent hold-out is capped campaign-wide",
          "PASS" if len(held_out) <= se.INCUMBENT_EXCLUSION_COUNT else "FAIL",
          f"At most {se.INCUMBENT_EXCLUSION_COUNT} most-mentioned businesses are held out of the default "
          f"cold-outreach batch; they keep every scored field and stay in the market analysis. Held out this "
          f"run ({len(held_out)}): {', '.join(held_out) or 'none'}."),
-        ("GAP requires adequate credibility", "PASS" if gap_credibility_ok else "FAIL",
-         f"No entry classified GAP has business_credibility < 3: {gap_credibility_ok}."),
+        ("GAP is exactly zero relevance-aware visibility", "PASS" if gap_definition_ok else "FAIL",
+         f"Every entry with visibility_score == 0 is classified GAP and no entry above it is: "
+         f"{gap_definition_ok}. business_credibility has not gated GAP since 2026-08-24 and is "
+         f"deliberately not checked here."),
         ("DEFEND uses relative AND absolute evidence", "PASS" if defend_absolute_ok else "FAIL",
          f"No entry classified DEFEND has visibility_score < 3 (the absolute floor) regardless of how far "
          f"ahead of its group it is: {defend_absolute_ok}. Opportunity-type counts this run: {opp_count}."),

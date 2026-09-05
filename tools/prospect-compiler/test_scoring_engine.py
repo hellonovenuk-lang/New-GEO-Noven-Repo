@@ -253,14 +253,29 @@ class IncumbentExclusionTests(unittest.TestCase):
 
     def test_remaining_qualifying_businesses_stay_prospects(self):
         # Ranks 3-7 clear the absolute floor and the relative-position band
-        # but are no longer excluded - this is the change that puts a market's
-        # sendable batch back into double figures.
+        # but are no longer held out - this is the change that puts a market's
+        # sendable batch back into double figures. They KEEP their DEFEND
+        # classification: filling the two exclusion places does not reclassify
+        # a strongly visible business as GROWTH.
         by_name = self.build()
         for i in range(3, 8):
             e = by_name[f"Big Group Member {i}"]
             self.assertFalse(e["most_named_cohort"], f"member {i} should not be held out")
-            self.assertNotEqual(e["opportunity_type"], "DEFEND")
+            self.assertEqual(e["opportunity_type"], "DEFEND", f"member {i} keeps its classification")
             self.assertEqual(e["disposition_recommendation"], "OUTREACH")
+            self.assertEqual(e["ready_to_email"], "YES")
+
+    def test_classification_is_independent_of_the_exclusion_cap(self):
+        # Every business meeting the dominance conditions is DEFEND; only the
+        # two most-mentioned of them are held out.
+        by_name = self.build()
+        defend = {b for b, e in by_name.items() if e["opportunity_type"] == "DEFEND"}
+        held_out = {b for b, e in by_name.items() if e["most_named_cohort"]}
+        # Every big_group member plus the solo-group leader, which is dominant
+        # within its own scope but nowhere near the two most-mentioned.
+        self.assertEqual(defend, {f"Big Group Member {i}" for i in range(1, 8)} | {"Solo Group Member"})
+        self.assertTrue(held_out < defend)
+        self.assertEqual(len(held_out), se.INCUMBENT_EXCLUSION_COUNT)
 
     def test_relative_position_stays_scoped_to_each_businesss_own_group(self):
         # The stale-`label` regression: Solo Group Member is rank 1 of its own
@@ -373,9 +388,14 @@ class QCChecklistTests(unittest.TestCase):
     def test_defend_requires_absolute_and_relative_evidence(self):
         for e in self.s.values():
             if e["opportunity_type"] == "DEFEND":
-                self.assertTrue(e["most_named_cohort"])
                 self.assertGreaterEqual(e["visibility_score"], se.MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE)
                 self.assertGreaterEqual(e["relative_position"], se.MOST_NAMED_COHORT_MIN_RELATIVE_POSITION)
+
+    def test_every_held_out_business_is_defend_but_not_the_reverse(self):
+        # The hold-out is a subset of DEFEND, never its definition.
+        for e in self.s.values():
+            if e["most_named_cohort"]:
+                self.assertEqual(e["opportunity_type"], "DEFEND")
 
     def test_defend_no_longer_requires_a_group_of_two(self):
         # 2026-08-24: the "comparable same-scope peer exists" requirement is
@@ -512,7 +532,7 @@ class OpportunityRationaleTests(unittest.TestCase):
     def test_defend_rationale(self):
         e = narrative_scored()["Fixture Combined Co"]
         self.assertEqual(e["opportunity_type"], "DEFEND")
-        self.assertIn("strongest AI-recommendation positions", e["why_prospect"])
+        self.assertIn("strongest AI-recommendation position", e["why_prospect"])
 
     def test_growth_rationale(self):
         e = narrative_scored()["Fixture Kitchen Co"]
@@ -651,6 +671,83 @@ class MostNamedCohortReclassificationTests(unittest.TestCase):
         self.assertEqual(e["relative_position"], 1.0)
         self.assertTrue(e["most_named_cohort"])
         self.assertEqual(e["opportunity_type"], "DEFEND")
+
+
+class LeaderOutsideExclusionTests(unittest.TestCase):
+    """2026-09-05 regression. Three service scopes, each with a clear leader
+    that meets both dominance conditions. Only two exclusion places exist, so
+    the third scope's leader falls outside them. It must (a) keep DEFEND
+    rather than being reclassified GROWTH because the places are full,
+    (b) stay available for outreach, and (c) never be told in prose that it
+    sits behind a visibility rate that is its own."""
+
+    BEHIND_PHRASES = ("materially behind", "materially underrepresented against",
+                      "% of the group's highest visibility rate")
+
+    def build(self):
+        run = {
+            "sector": "x", "geography": "x", "campaign_slug": "leaders", "date": "2026-08-16",
+            "questions": [{"question_id": "q01", "text": "inclusive question"}],
+            "providers": [{"provider": "openai", "model": "x"}],
+            "responses_per_question": 100,
+            "service_scopes": [
+                {"label": f"scope_{n}", "applicable_services": ["A"]} for n in ("a", "b", "c")
+            ],
+            "question_relevance": [{"question_id": "q01", "type": "SINGLE_SERVICE_INCLUSIVE", "rationale": "x"}],
+        }
+        outreach = []
+        # Leaders at 90 / 70 / 50 appearances; the scope_c leader is third
+        # most-mentioned campaign-wide, so it falls outside the two places.
+        for label, lead, follow in (("scope_a", 90, 20), ("scope_b", 70, 15), ("scope_c", 50, 10)):
+            outreach.append(base_outreach_entry(f"{label} leader", service_scope=label,
+                                                 question_appearances={"q01": lead}, business_credibility=5))
+            outreach.append(base_outreach_entry(f"{label} follower", service_scope=label,
+                                                 question_appearances={"q01": follow}, business_credibility=4))
+        data = {"run": run, "market": [], "outreach": outreach, "excluded": [],
+                "sources": [{"source_id": "S001", "business": "x", "publisher": "x", "fact_supported": "x",
+                             "url": "x", "access_date": "2026-08-16"}]}
+        se.run_engine(data)
+        return {e["business"]: e for e in data["outreach"]}
+
+    def test_only_two_leaders_are_held_out(self):
+        by_name = self.build()
+        held_out = sorted(b for b, e in by_name.items() if e["most_named_cohort"])
+        self.assertEqual(held_out, ["scope_a leader", "scope_b leader"])
+
+    def test_leader_outside_the_cap_keeps_defend_and_stays_available(self):
+        e = self.build()["scope_c leader"]
+        self.assertFalse(e["most_named_cohort"])
+        self.assertEqual(e["opportunity_type"], "DEFEND")
+        self.assertEqual(e["disposition_recommendation"], "OUTREACH")
+        self.assertNotIn("disposition_recommendation_reason", e)
+        self.assertEqual(e["ready_to_email"], "YES")
+        self.assertIn("outreach_rank", e)
+
+    def test_leader_outside_the_cap_gets_truthful_wording(self):
+        e = self.build()["scope_c leader"]
+        self.assertEqual(e["relative_position"], 1.0)
+        self.assertIn("strongest AI-recommendation position", e["why_prospect"])
+        for phrase in self.BEHIND_PHRASES:
+            self.assertNotIn(phrase, e["why_prospect"],
+                              f"a group leader must not be described with {phrase!r}")
+
+    def test_no_group_leader_anywhere_is_described_as_behind_its_own_rate(self):
+        for name, e in self.build().items():
+            if not se.leads_its_group(e):
+                continue
+            for phrase in self.BEHIND_PHRASES:
+                self.assertNotIn(phrase, e["why_prospect"], f"{name}: {phrase!r}")
+
+    def test_a_growth_group_leader_is_also_described_truthfully(self):
+        # Weak Field Leader leads its a_only group (relative_position 1.0) but
+        # sits below the absolute floor, so it stays GROWTH - the wording must
+        # still not claim it trails a rate that is its own.
+        e = scored()["Weak Field Leader"]
+        self.assertEqual(e["opportunity_type"], "GROWTH")
+        self.assertEqual(e["relative_position"], 1.0)
+        self.assertIn("highest visibility rate in its own service-scope group", e["why_prospect"])
+        for phrase in self.BEHIND_PHRASES:
+            self.assertNotIn(phrase, e["why_prospect"])
 
 
 class SendGateTests(unittest.TestCase):

@@ -79,6 +79,14 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
   market. `GAP` is unconditional at zero visibility; `business_credibility`
   no longer gates it. Both are proposals (`disposition_recommendation`,
   `opportunity_type`) the owner can override. 2026-08-24, revised 2026-09-05.
+- **The exclusion cap decides batching, never classification.**
+  `opportunity_type` comes from the two dominance conditions alone: a
+  strongly visible business outside the two exclusion places stays `DEFEND`
+  and stays available for an evidence-appropriate `DEFEND` approach, rather
+  than becoming `GROWTH` because the places are filled. Collapsing the two
+  also made `generate_why_prospect()` tell a service-scope leader it sat
+  "materially behind" a visibility rate that was its own; narrative wording
+  now branches on whether the business leads its group. 2026-09-05.
 - **A named decision-maker is not required to send.** `ready_to_email`
   requires a verified active Ltd/LLP, adequate commercial fit and service
   relevance, a verified contact route, a usable route to the business

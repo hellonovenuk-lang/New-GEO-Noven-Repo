@@ -302,10 +302,10 @@ python3 tools/prospect-compiler/scoring_engine.py --input <campaign>.json --in-p
 
 This mechanically computes `visibility_score`, `gap_strength`,
 `final_score`, `overall_rank`, `outreach_rank`, every readiness gate, and a
-proposed `opportunity_type` per §3a's general rule (`DEFEND` is
-`most_named_cohort` — an absolute visibility floor, a relative-position band,
-and, since 2026-09-05, being among the two most-mentioned businesses
-campaign-wide; `GAP` is unconditional at zero visibility). These remain
+proposed `opportunity_type` per §3a's general rule (`DEFEND` is an absolute
+visibility floor plus a relative-position band; `GAP` is unconditional at
+zero visibility). The two-business cold-outreach exclusion is applied
+separately, on top of that classification, and never changes it. These remain
 *proposals*: the owner still approves `priority` and `ready_to_email` exactly as the approval gate below
 already requires — and, new as of 2026-08-24, `disposition_recommendation`
 for a `most_named_cohort` business (defaults to `EXCLUDED`, reason `ALREADY
@@ -396,6 +396,16 @@ auditable, not a silent shortcut, matching `CAMPAIGN-HANDOFF.md` §4's
 evidence-traceability rules.
 
 **On a miss, or no CRM database yet**, research fresh, unchanged.
+
+**Re-assess `research_completeness` before reusing a pre-2026-09-05 record.**
+The completeness bar changed on that date: `research_complete` now means
+`research_completeness >= 3`, where it previously meant `>= 4`. A value
+recorded under the old bar was judged against a different question, so a
+stored `3` must be re-read against the evidence actually on file before it is
+accepted as complete — "3 because two material fields are still open" is not
+the same as "3 because everything the send gate needs is resolved and only
+optional enrichment is missing", and only the second may send. Re-score the
+field on the evidence; never accept the stored number by arithmetic alone.
 
 **Use `tools/companies-house/company_lookup.py` for fresh research, not manual
 browsing, when `COMPANIES_HOUSE_API_KEY` is set:**
@@ -514,7 +524,13 @@ and `CAMPAIGN-HANDOFF.md`. Rules that must hold:
   only their default disposition changes. (2026-09-05: the hold-out is a
   campaign-wide count of two, replacing a rank-within-service-scope cap that
   could hold out five businesses per scope group — see
-  `playbook/decisions.md`'s "Outreach" section.) It is still a *proposal*:
+  `playbook/decisions.md`'s "Outreach" section.)
+- **The exclusion cap never changes a business's `opportunity_type`.** A
+  strongly visible business outside those two places stays `DEFEND` and stays
+  available for an evidence-appropriate `DEFEND` approach — it does not become
+  `GROWTH` because the two places are already filled. Classification describes
+  the market position; the cap only decides how many incumbents this round
+  skips. It is still a *proposal*:
   `DEFEND` remains a real, valid opportunity type for that business (a
   monitoring/retention play), and the owner can override the disposition for
   a specific business at the approval gate.
@@ -534,10 +550,10 @@ and `CAMPAIGN-HANDOFF.md`. Rules that must hold:
   shape: `DEFEND`, `EXCLUDED` from this round, both true at once.
 - **A business scored per Stage 4's auditable model gets its
   `opportunity_type` from `scoring_engine.py`, not hand judgement** —
-  `CAMPAIGN-HANDOFF.md` §3a's general rule (`DEFEND` is `most_named_cohort`
-  — an absolute visibility floor, a relative-position band, and being among
-  the two most-mentioned campaign-wide; `GAP` is unconditional at zero
-  visibility; `GROWTH` is everything else). The engine never produces `REVIEW` as a scored business's `opportunity_type` any
+  `CAMPAIGN-HANDOFF.md` §3a's general rule (`DEFEND` is an absolute
+  visibility floor plus a relative-position band, independently of the
+  two-business exclusion cap; `GAP` is unconditional at zero visibility;
+  `GROWTH` is everything else). The engine never produces `REVIEW` as a scored business's `opportunity_type` any
   more — an unresolved-evidence business still carries that state on
   `disposition`/`priority` instead, same as the unscored path above.
 

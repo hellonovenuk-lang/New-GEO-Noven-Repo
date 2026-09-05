@@ -57,7 +57,7 @@ def narrative_signature(entry):
     "field=value|field=value" string, not an opaque hash - auditable by
     inspection, the same standard as everything else in this pipeline."""
     # Generator changes must invalidate narratives even when scores are unchanged.
-    return "v2|" + "|".join(f"{f}={entry.get(f)}" for f in NARRATIVE_SIGNATURE_FIELDS)
+    return "v3|" + "|".join(f"{f}={entry.get(f)}" for f in NARRATIVE_SIGNATURE_FIELDS)
 
 
 def _fmt_num(x):
@@ -147,6 +147,14 @@ def generate_competitive_gap_finding(entry, run):
     return opening + "." + competitor_clause + coverage_clause + _provider_split_note(entry)
 
 
+def leads_its_group(entry):
+    """True when this business holds its service-scope group's highest
+    relevance-aware visibility rate - a tie at the top included, and a group
+    where nobody registers any visibility included. Narrative wording must
+    never tell a group leader it sits behind a rate that is its own."""
+    return entry.get("visibility_rate", 0) >= entry.get("group_top_visibility_rate", 0)
+
+
 def generate_why_prospect(entry, run):
     """Deterministic why_prospect for a scored outreach entry, branched by
     opportunity_type - always the commercial case (why this opportunity
@@ -164,23 +172,47 @@ def generate_why_prospect(entry, run):
 
     core = f"{business} appears in {_fmt_num(ra)} of {_fmt_num(ro)} relevant opportunities ({rate:.1f}%)"
 
+    leads = leads_its_group(entry)
+
     if opp == "DEFEND":
-        text = (
-            f"{core}, already one of the strongest AI-recommendation positions in its service scope "
-            f"— {relpos * 100:.0f}% of the group's highest visibility rate ({top_rate:.1f}%). The opportunity is "
-            f"understanding what supports that position and monitoring whether it holds."
-        )
+        if leads:
+            text = (
+                f"{core}, the strongest AI-recommendation position in its service scope — the group's "
+                f"own highest visibility rate ({top_rate:.1f}%). The opportunity is understanding what "
+                f"supports that position and monitoring whether it holds."
+            )
+        else:
+            text = (
+                f"{core}, already one of the strongest AI-recommendation positions in its service scope "
+                f"— {relpos * 100:.0f}% of the group's highest visibility rate ({top_rate:.1f}%). The opportunity is "
+                f"understanding what supports that position and monitoring whether it holds."
+            )
     elif opp == "GAP":
-        text = (
-            f"{core}, materially underrepresented against the group's highest visibility rate ({top_rate:.1f}%) despite evidenced "
-            f"credibility ({cred}/5). This is a real, actionable gap, not explained by being new, tiny, "
-            f"specialist, or out of market."
-        )
+        if top_rate <= 0:
+            text = (
+                f"{core} — no business in its service-scope group registers any relevance-aware "
+                f"visibility, so nobody in this market is being recommended, despite evidenced "
+                f"credibility ({cred}/5). This is a real, actionable gap, not explained by being new, "
+                f"tiny, specialist, or out of market."
+            )
+        else:
+            text = (
+                f"{core}, materially underrepresented against the group's highest visibility rate ({top_rate:.1f}%) despite evidenced "
+                f"credibility ({cred}/5). This is a real, actionable gap, not explained by being new, tiny, "
+                f"specialist, or out of market."
+            )
     elif opp == "GROWTH":
-        text = (
-            f"{core}, real and worth having, but sitting materially behind the group's highest visibility rate ({top_rate:.1f}%) "
-            f"(gap strength {gap}/5). There is clear, evidenced room to strengthen this position."
-        )
+        if leads:
+            text = (
+                f"{core}, the highest visibility rate in its own service-scope group, but short of a "
+                f"dominant position in absolute terms (gap strength {gap}/5). There is clear, evidenced "
+                f"room to strengthen this position."
+            )
+        else:
+            text = (
+                f"{core}, real and worth having, but sitting materially behind the group's highest visibility rate ({top_rate:.1f}%) "
+                f"(gap strength {gap}/5). There is clear, evidenced room to strengthen this position."
+            )
     else:  # REVIEW or unset
         text = (
             f"{core}. Evidence is not yet sufficient to classify this business's commercial opportunity "
@@ -416,21 +448,24 @@ def score_pool(run, entries):
         entry["group_top_visibility_rate"] = top
         entry["relative_position"] = round(entry["visibility_rate"] / top, 3) if top > 0 else 0.0
 
-    # Campaign-wide incumbent rank: the candidates that clear both cohort
-    # conditions, ordered most-mentioned first, so INCUMBENT_EXCLUSION_COUNT
-    # can hold out a fixed number of businesses per campaign rather than a
-    # fixed number per service_scope group. Read from each entry's own
-    # relative_position, freshly computed just above, never a stale
-    # last-iterated group value (see IncumbentExclusionTests). Ties break on
-    # visibility_rate then business name for a deterministic order, matching
-    # the file's other tiebreak keys.
+    # Dominance: the two conditions that say a business already holds a strong
+    # AI-recommendation position in its own service scope. This alone decides
+    # DEFEND. Read from each entry's own relative_position, freshly computed
+    # just above, never a stale last-iterated group value (see
+    # IncumbentExclusionTests).
     for _, _, entry in scored:
-        entry["_incumbent_candidate"] = (
+        entry["_dominant_visibility"] = (
             entry["visibility_score"] >= MOST_NAMED_COHORT_MIN_VISIBILITY_SCORE
             and entry["relative_position"] >= MOST_NAMED_COHORT_MIN_RELATIVE_POSITION
         )
+    # Campaign-wide incumbent rank among those dominant businesses, ordered
+    # most-mentioned first, so INCUMBENT_EXCLUSION_COUNT holds out a fixed
+    # number per campaign rather than a fixed number per service_scope group.
+    # This is a batching decision layered on top of the classification above,
+    # never an input to it. Ties break on visibility_rate then business name
+    # for a deterministic order, matching the file's other tiebreak keys.
     candidates = sorted(
-        (e for _, _, e in scored if e["_incumbent_candidate"]),
+        (e for _, _, e in scored if e["_dominant_visibility"]),
         key=lambda e: (-e["relevant_appearances"], -e["visibility_rate"], e["business"]),
     )
     for rank, member in enumerate(candidates, 1):
@@ -482,11 +517,20 @@ def score_pool(run, entries):
 
         entry["accessibility_grade"] = ACCESSIBILITY_GRADE_BY_DM_ROUTE[entry["direct_dm_route"]]
 
+        # 2026-09-05: opportunity CLASSIFICATION and the cold-outreach
+        # EXCLUSION are two separate judgements and must not be collapsed.
+        # A business that clears both dominance conditions is DEFEND because
+        # that is what its market position is; whether it is also held out of
+        # this round's batch depends on the campaign-wide count cap, which is
+        # a batching decision. Collapsing them made a strongly visible
+        # business silently become GROWTH once the two exclusion places were
+        # filled - a false classification, and one that then produced
+        # "materially behind" wording about a rate that was its own.
         entry["most_named_cohort"] = (
-            entry["_incumbent_candidate"]
+            entry["_dominant_visibility"]
             and entry["_incumbent_rank"] <= INCUMBENT_EXCLUSION_COUNT
         )
-        if entry["most_named_cohort"]:
+        if entry["_dominant_visibility"]:
             opp = "DEFEND"
         elif vis_score == 0:
             opp = "GAP"
@@ -582,7 +626,7 @@ def score_pool(run, entries):
     for _, _, entry in scored:
         entry.pop("_ready_recommendation", None)
         entry.pop("_priority_recommendation", None)
-        entry.pop("_incumbent_candidate", None)
+        entry.pop("_dominant_visibility", None)
         entry.pop("_incumbent_rank", None)
 
     return scored
