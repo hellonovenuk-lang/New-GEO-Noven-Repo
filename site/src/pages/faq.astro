@@ -147,14 +147,14 @@ const isFlag = (text: string) => text.trim().startsWith('[PLACEHOLDER');
     <div class="wrap">
       {
         faqs.map((item) => (
-          <div class="qa" data-reveal>
-            <h2>{item.q}</h2>
+          <details class="qa">
+            <summary>{item.q}</summary>
             <div class="qa-answer">
               {item.a.map((para) =>
                 isFlag(para) ? <p class="flag">{para}</p> : <p>{para}</p>,
               )}
             </div>
-          </div>
+          </details>
         ))
       }
     </div>
