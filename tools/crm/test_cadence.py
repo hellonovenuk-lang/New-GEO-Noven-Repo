@@ -20,12 +20,12 @@ class TestWeekendHandling(unittest.TestCase):
 
 
 class TestDueDateCalculation(unittest.TestCase):
-    def test_due_date_adds_cadence_days_with_no_weekend_crossing(self):
+    def test_due_date_adds_business_days_with_no_weekend_crossing(self):
         self.assertEqual(date(2026, 8, 10).isoweekday(), 1)  # Monday
         self.assertEqual(c.due_date(date(2026, 8, 10), 1), date(2026, 8, 11))  # Tuesday, no adjustment
 
-    def test_due_date_lands_on_weekend_and_is_pushed_forward(self):
-        # 2026-08-10 is a Monday; +5 days = 2026-08-15, a Saturday -> pushed to Monday 08-17.
+    def test_due_date_counts_weekdays_not_calendar_days(self):
+        # Monday + five business days is the following Monday.
         self.assertEqual(date(2026, 8, 10).isoweekday(), 1)
         self.assertEqual(c.due_date(date(2026, 8, 10), 5), date(2026, 8, 17))
 
@@ -42,7 +42,7 @@ class TestCadenceEditability(unittest.TestCase):
             {}, [{"activity_type": "EMAIL_1_SENT", "activity_date": date(2026, 8, 3)}],
             cadence=table, today=date(2026, 8, 10),
         )
-        self.assertEqual(state["next_action_due_date"], date(2026, 8, 13))  # Mon 08-03 + 10 = Thu 08-13
+        self.assertEqual(state["next_action_due_date"], date(2026, 8, 17))  # Mon 08-03 + 10 business days = Mon 08-17
 
 
 class TestProspectState(unittest.TestCase):
@@ -84,7 +84,7 @@ class TestProspectState(unittest.TestCase):
             today=date(2026, 8, 12),
         )
         self.assertEqual(state["stage"], "Contacted")
-        self.assertEqual(state["next_action"], "Send Email 2 / follow-up")
+        self.assertEqual(state["next_action"], "Send Email 2")
         self.assertFalse(state["overdue"])
 
     def test_overdue_contact_becomes_follow_up_due(self):
@@ -168,7 +168,37 @@ class TestProspectState(unittest.TestCase):
             manual_do_not_contact=True, today=date(2026, 8, 20),
         )
         self.assertTrue(state["blocked"])
-        self.assertEqual(state["stage"], "Do Not Contact")
+        self.assertFalse(state["do_not_contact"])
+        self.assertEqual(state["stage"], "Contact hold")
+
+    def test_email_2_sent_recommends_email_3_after_seven_business_days(self):
+        state = c.compute_prospect_state(
+            {}, [{"activity_type": "EMAIL_2_SENT", "activity_date": date(2026, 9, 14)}],
+            today=date(2026, 9, 22),
+        )
+        self.assertEqual(state["next_action"], "Send Email 3")
+        self.assertEqual(state["next_action_due_date"], date(2026, 9, 23))
+
+    def test_email_3_completes_cold_sequence(self):
+        state = c.compute_prospect_state(
+            {}, [{"activity_type": "EMAIL_3_SENT", "activity_date": date(2026, 9, 23)}],
+            today=date(2026, 10, 1),
+        )
+        self.assertEqual(state["stage"], "Cold sequence complete")
+        self.assertEqual(state["next_action"], "")
+        self.assertTrue(state["sequence_complete"])
+
+    def test_linkedin_view_cannot_overwrite_reply_or_sale_stage(self):
+        reply = c.compute_prospect_state({}, [
+            {"activity_type": "REPLY_RECEIVED", "activity_date": date(2026, 9, 5)},
+            {"activity_type": "LINKEDIN_VIEWED", "activity_date": date(2026, 9, 6)},
+        ])
+        sold = c.compute_prospect_state({}, [
+            {"activity_type": "AUDIT_SOLD", "activity_date": date(2026, 9, 5)},
+            {"activity_type": "LINKEDIN_VIEWED", "activity_date": date(2026, 9, 6)},
+        ])
+        self.assertEqual(reply["stage"], "Replied")
+        self.assertEqual(sold["stage"], "Audit")
 
     def test_audit_sold_is_a_revenue_event_and_recommends_delivery(self):
         state = c.compute_prospect_state(

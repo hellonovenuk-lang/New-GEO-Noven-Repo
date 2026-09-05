@@ -207,8 +207,20 @@ Every send goes in the client record as it goes out — who, when, what the
 finding was, what came back. **Nothing goes in this repository**; prospect names
 are personal data. A reply asking not to be contacted is recorded permanently.
 
-No chasing sequence. One finding, one offer. If it is not interesting enough to
-answer once, sending it again does not improve it.
+### 6. Follow up with restraint
+
+The cold sequence has three emails and no automatic sending:
+
+1. **Email 1** — one evidenced finding and the £250 Audit offer.
+2. **Email 2** — useful additional context from the same recorded evidence,
+   or a clarification of what the Audit covers. Default: five business days
+   after the actual Email 1 send.
+3. **Email 3** — a brief final invitation. Default: seven business days after
+   the actual Email 2 send. Then record `EMAIL_3_SENT` and close the sequence.
+
+Never invent a second finding. A reply pauses the cold sequence for human
+handling. An opt-out or manual contact hold blocks it. Sales and client stages
+survive incidental activity such as LinkedIn views.
 
 ---
 

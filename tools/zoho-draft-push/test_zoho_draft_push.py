@@ -14,6 +14,7 @@ import os
 import subprocess
 import sys
 import tempfile
+import sqlite3
 import unittest
 import urllib.error
 from unittest.mock import patch
@@ -136,6 +137,48 @@ class LoadCredentialsTests(unittest.TestCase):
             with self.assertRaises(zdp.ZohoAPIError) as ctx:
                 zdp.load_credentials(path)
         self.assertIn("account_id", str(ctx.exception))
+
+
+class CrmDraftGuardTests(unittest.TestCase):
+    def _crm(self, business="Sampleford Plumbing Ltd", activity=None, hold=False):
+        tmp = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
+        tmp.close()
+        self.addCleanup(lambda: os.unlink(tmp.name))
+        conn = sqlite3.connect(tmp.name)
+        conn.executescript("""
+            CREATE TABLE prospects (prospect_id TEXT, business TEXT, do_not_contact_manual INTEGER);
+            CREATE TABLE activities (prospect_id TEXT, activity_type TEXT);
+        """)
+        conn.execute("INSERT INTO prospects VALUES ('p1', ?, ?)", (business, int(hold)))
+        if activity:
+            conn.execute("INSERT INTO activities VALUES ('p1', ?)", (activity,))
+        conn.commit()
+        conn.close()
+        return tmp.name
+
+    def test_missing_crm_blocks_real_cli_style_draft_creation(self):
+        status = zdp.crm_draft_guard({"business": "Sampleford Plumbing Ltd"}, "/missing/wardith.db")
+        self.assertIn("reconciliation required", status)
+
+    def test_sent_history_blocks_recreation_of_missing_draft(self):
+        path = self._crm(activity="EMAIL_1_SENT")
+        status = zdp.crm_draft_guard({"business": "Sampleford Plumbing Ltd"}, path)
+        self.assertIn("history records outreach", status)
+
+    def test_manual_hold_blocks_draft_without_calling_it_an_opt_out(self):
+        path = self._crm(hold=True)
+        status = zdp.crm_draft_guard({"business": "Sampleford Plumbing Ltd"}, path)
+        self.assertEqual(status, "SKIPPED: CRM contact hold is active")
+
+    def test_clean_unique_crm_record_allows_draft(self):
+        path = self._crm()
+        self.assertIsNone(zdp.crm_draft_guard({"business": "Sampleford Plumbing Ltd"}, path))
+
+    def test_inactive_sequence_copy_is_never_pushed(self):
+        entry = {"business": "Sampleford Plumbing Ltd", "withheld": False, "active_draft": False}
+        result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok",
+                                crm_db_path=self._crm())
+        self.assertEqual(result["zoho_push_status"], "SKIPPED (not the currently due sequence step)")
 
 
 class RefreshAccessTokenTests(unittest.TestCase):
@@ -400,16 +443,15 @@ class PushEntryTests(unittest.TestCase):
         self.assertNotEqual(result.get("zoho_push_action"), "updated")
 
     @patch("urllib.request.urlopen")
-    def test_update_path_404_clears_the_stored_draft_id(self, mock_urlopen):
-        """The owner deleting the draft in Zoho must not leave this entry
-        permanently stuck retrying a PUT at a message id that no longer
-        exists - clear the id so the next run creates a fresh draft."""
+    def test_update_path_404_requires_reconciliation_before_replacement(self, mock_urlopen):
+        """A missing Zoho draft may have been sent, so never recreate it
+        automatically."""
         mock_urlopen.side_effect = _http_error(404, {"status": {"code": 404}})
         entry = self._entry(zoho_draft_id="999888777")
         result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
         self.assertTrue(result["zoho_push_status"].startswith("FAILED"))
-        self.assertIn("deleted", result["zoho_push_status"])
-        self.assertIsNone(result["zoho_draft_id"])
+        self.assertIn("reconcile CRM sales history", result["zoho_push_status"])
+        self.assertNotIn("zoho_draft_id", result)
 
     @patch("urllib.request.urlopen")
     def test_create_path_404_is_not_treated_as_a_deleted_draft(self, mock_urlopen):
@@ -429,16 +471,12 @@ class PushEntryTests(unittest.TestCase):
         self.assertNotIn("zoho_draft_id", result)
 
     @patch("urllib.request.urlopen")
-    def test_cleared_draft_id_makes_the_next_run_create_instead_of_update(self, mock_urlopen):
+    def test_missing_draft_is_not_automatically_recreated(self, mock_urlopen):
         entry = self._entry(zoho_draft_id="999888777")
         mock_urlopen.side_effect = _http_error(404, {"status": {"code": 404}})
         entry.update(zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok"))
-        mock_urlopen.side_effect = None
-        mock_urlopen.return_value = _FakeResponse({"data": {"messageId": "444"}})
-        result = zdp.push_entry(entry, "hello@wardith.co.uk", "https://mail.zoho.eu", "111", "tok")
-        self.assertEqual(result["zoho_push_action"], "created")
-        self.assertEqual(result["zoho_draft_id"], "444")
-        self.assertEqual(mock_urlopen.call_args[0][0].get_method(), "POST")
+        self.assertEqual(entry["zoho_draft_id"], "999888777")
+        self.assertIn("reconcile CRM sales history", entry["zoho_push_status"])
 
     @patch("urllib.request.urlopen")
     def test_http_error_recorded_as_failed_not_raised(self, mock_urlopen):
@@ -637,9 +675,18 @@ class MainCliTests(unittest.TestCase):
         }]
         with tempfile.TemporaryDirectory() as d:
             input_path = self._write_json(d, "prep.json", entries)
+            crm_path = os.path.join(d, "wardith.db")
+            conn = sqlite3.connect(crm_path)
+            conn.executescript("""
+                CREATE TABLE prospects (prospect_id TEXT, business TEXT, do_not_contact_manual INTEGER);
+                CREATE TABLE activities (prospect_id TEXT, activity_type TEXT);
+            """)
+            conn.execute("INSERT INTO prospects VALUES ('p1', 'Sampleford Glazing', 0)")
+            conn.commit()
+            conn.close()
             script = os.path.join(os.path.dirname(__file__), "zoho_draft_push.py")
             result = subprocess.run(
-                [sys.executable, script, "--input", input_path, "--in-place", "--dry-run"],
+                [sys.executable, script, "--input", input_path, "--in-place", "--dry-run", "--crm-db", crm_path],
                 capture_output=True, text=True, timeout=30,
             )
             self.assertEqual(result.returncode, 0, result.stderr)

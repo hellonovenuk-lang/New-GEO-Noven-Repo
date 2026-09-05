@@ -59,10 +59,10 @@ class TestCadenceSeeding(unittest.TestCase):
         self.conn.close()
         self.tmp.cleanup()
 
-    def test_seed_populates_18_activity_types(self):
+    def test_seed_populates_20_activity_types(self):
         models.seed_cadence_if_empty(self.conn)
         rows = models.list_cadence_settings(self.conn)
-        self.assertEqual(len(rows), 18)
+        self.assertEqual(len(rows), 20)
 
     def test_seed_is_a_noop_once_populated(self):
         models.seed_cadence_if_empty(self.conn)
@@ -75,6 +75,19 @@ class TestCadenceSeeding(unittest.TestCase):
         row = models.cadence_dict_from_db(self.conn)["EMAIL_1_SENT"]
         self.assertEqual(row["next_action_label"], "Custom")
         self.assertEqual(row["cadence_days"], 3)
+
+    def test_migration_adds_sequence_rows_and_preserves_manual_email_2_edit(self):
+        models.seed_cadence_if_empty(self.conn)
+        self.conn.execute("DELETE FROM cadence_settings WHERE key IN ('EMAIL_3_SENT', 'EMAIL_BOUNCED')")
+        models.update_cadence_setting(
+            self.conn, "EMAIL_2_SENT", "Owner's custom next step", 11, "Custom",
+            False, False, False,
+        )
+        models.migrate_cadence_defaults(self.conn)
+        rows = models.cadence_dict_from_db(self.conn)
+        self.assertIn("EMAIL_3_SENT", rows)
+        self.assertIn("EMAIL_BOUNCED", rows)
+        self.assertEqual(rows["EMAIL_2_SENT"]["next_action_label"], "Owner's custom next step")
 
 
 if __name__ == "__main__":

@@ -102,6 +102,22 @@ covered by the scope above.
 
 ## Stage 1 — Load the campaign and gate the working set
 
+### Follow-up sequence gate
+
+For a new campaign, this skill prepares **Email 1**: the evidenced finding
+and the £250 Audit offer. For an already-contacted prospect, read its CRM
+activity history before drafting: only the CRM's currently due step may be
+an active Zoho draft. Email 2 is useful additional context or a clarification
+drawn from the same recorded evidence, five business days after the actual
+Email 1 send. Email 3 is a brief final invitation, seven business days after
+the actual Email 2 send; record `EMAIL_3_SENT` and close the cold sequence.
+
+Prepare later copy from existing evidence only. Never invent a further
+finding, expose multiple steps as active drafts, or recreate a missing draft:
+it may have been sent. Replies pause the sequence; opt-outs and manual holds
+block it. LinkedIn activity does not change a reply, sale/client stage, hold,
+or completed sequence.
+
 Load the campaign JSON. Confirm it validates against
 `tools/prospect-compiler/schema.json` in shape (it should already, as
 `/qualify`'s own output) — if it doesn't, stop; this skill does not fix a
@@ -358,6 +374,8 @@ with exactly these fields:
     "route_verified_date": "YYYY-MM-DD"
   },
   "outreach_angle": "one or two sentences, the Stage 2/3 synthesis",
+  "sequence_step": "EMAIL_1 / EMAIL_2 / EMAIL_3",
+  "active_draft": true,
   "email_subject": "...",
   "email_body": "...",
   "linkedin_draft": "... or null",
@@ -386,13 +404,15 @@ On Windows, run the command below through `scripts/wardith-secrets.ps1 run`;
 the wrapper supplies a temporary Zoho credential file from Bitwarden and
 removes it when the process exits.
 
-Immediately after writing both Stage 7 files, push every drafted email into
-Zoho Mail as a real draft:
+Before this step, ingest the campaign into the CRM, then push only the
+currently due active draft. The draft tool reads CRM history before every
+create or update; a missing Zoho draft may have been sent and is never
+recreated automatically:
 
 ```
 python3 tools/zoho-draft-push/zoho_draft_push.py \
     --input ~/wardith-runs/<slug>/outreach/outreach-prep-<slug>-<date>.json \
-    --in-place
+    --in-place --crm-db ~/wardith-runs/crm/wardith.db
 ```
 
 This is the one point in this skill's pipeline that touches an external
@@ -400,9 +420,9 @@ API — see `tools/zoho-draft-push/README.md` and the script's own docstring
 for the exact, narrow set of calls it's capable of making (create/update a
 draft only; never send, reply, or delete). `--in-place` writes
 `zoho_draft_id`/`zoho_push_status`/`zoho_push_action`/`zoho_pushed_at` back
-into each processed entry in the same JSON file, so re-running `/outreach`
-on this campaign later updates the existing Zoho draft instead of creating
-a duplicate.
+into each processed entry in the same JSON file. A later run checks CRM
+history before updating an existing draft; if Zoho says it is missing, stop
+for reconciliation rather than creating a duplicate.
 
 **If `tools/zoho-draft-push/README.md`'s one-time setup hasn't been run
 yet**, this step will fail with a clear message pointing at that file — stop

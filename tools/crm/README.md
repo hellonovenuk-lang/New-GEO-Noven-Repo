@@ -72,7 +72,10 @@ notes.
 ## What's in it
 
 - **Today** - overdue/due-today/upcoming/outreach-ready/replies-needing-action,
-  computed live from `cadence.py`'s rules against real database rows.
+  computed live from `cadence.py`'s rules against real database rows. Email 2
+  defaults to five business days after the actual Email 1 send; Email 3 to
+  seven business days after the actual Email 2 send; Email 3 closes the cold
+  sequence.
 - **Prospects** - one page per prospect, full research plus an inline
   activity log.
 - **Activities** - the sales-activity log (append-only; this is what
@@ -120,8 +123,10 @@ unattended.
 ## Files
 
 - `schema.sql` / `db.py` - the SQLite schema and connection/init helpers.
-- `cadence.py` - ported unchanged from `tools/tracker/cadence.py`; keep
-  both in sync until `tools/tracker/` is retired.
+- `cadence.py` - editable cadence and state rules. Replies, manual contact
+  holds, opt-outs, sales stages and Email 3 completion take precedence over
+  incidental activity such as LinkedIn views. Keep it in sync with
+  `tools/tracker/cadence.py` until `tools/tracker/` is retired.
 - `ingest.py` - ported from `tools/tracker/import_tracker.py`; writes SQL
   rows instead of merging into a `tracker.json` dict, since that
   intermediate file existed only for `build_crm.py` to render Excel from

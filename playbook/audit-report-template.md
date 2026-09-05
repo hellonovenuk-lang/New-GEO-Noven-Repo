@@ -299,4 +299,4 @@ Short. The report is the document; the email is a note attached to it.
 >
 > Kieran
 
-**No follow-up sequence.** `contact.astro` says so publicly, and it is true.
+**No automatic follow-up sequence.** `contact.astro` says so publicly, and it is true.

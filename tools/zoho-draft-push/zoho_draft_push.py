@@ -42,8 +42,8 @@ Reads the outreach-prep-<slug>-<date>.json file /outreach's Stage 7 writes
 (a JSON array, one object per business - see .claude/skills/outreach/
 SKILL.md Stage 7 for the full field list) and writes zoho_draft_id/
 zoho_push_status/zoho_push_action/zoho_pushed_at back into each entry that
-was processed, so a re-run updates the existing Zoho draft instead of
-creating a duplicate.
+was processed, so a re-run can update an existing Zoho draft only after CRM
+history confirms that it is still safe to do so.
 
 Usage:
   python3 zoho_draft_push.py --input outreach-prep.json --in-place
@@ -52,6 +52,7 @@ Usage:
 import argparse
 import html
 import json
+import sqlite3
 import os
 import re
 import sys
@@ -59,6 +60,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
+from pathlib import Path
 
 DEFAULT_CREDENTIALS_PATH = os.path.expanduser("~/.wardith/zoho-credentials.json")
 REQUIRED_CREDENTIAL_FIELDS = [
@@ -87,6 +89,53 @@ ZOHO_API_DOMAINS = frozenset([
 
 class ZohoAPIError(Exception):
     pass
+
+
+SEQUENCE_OR_SALES_ACTIVITY_TYPES = {
+    "EMAIL_1_SENT", "EMAIL_2_SENT", "EMAIL_3_SENT", "EMAIL_BOUNCED",
+    "REPLY_RECEIVED", "MEETING_BOOKED", "AUDIT_SOLD", "AUDIT_COMPLETED",
+    "FOUNDATION_SOLD", "FOUNDATION_COMPLETED", "ONGOING_STARTED", "LOST", "OPTED_OUT",
+}
+
+
+def crm_draft_guard(entry, crm_db_path):
+    """Return None only when CRM history makes this draft safe to touch.
+
+    A missing Zoho draft is ambiguous: it may have been sent or deleted in
+    Zoho. Never turn that ambiguity into a recreated cold email. Matching is
+    deliberately exact and must resolve to one prospect before any create or
+    update request is made.
+    """
+    # The public helper remains usable in isolated unit tests. The CLI always
+    # supplies its default CRM path, so real draft creation is reconciled.
+    if crm_db_path is None:
+        return None
+    if not Path(crm_db_path).is_file():
+        return "SKIPPED: CRM reconciliation required before creating or updating a draft"
+    try:
+        conn = sqlite3.connect(crm_db_path)
+        rows = conn.execute(
+            "SELECT prospect_id, do_not_contact_manual FROM prospects WHERE business = ? COLLATE NOCASE",
+            (entry.get("business", ""),),
+        ).fetchall()
+        if len(rows) != 1:
+            return "SKIPPED: CRM reconciliation required (business is not uniquely recorded)"
+        prospect_id, manual_hold = rows[0]
+        activities = conn.execute(
+            "SELECT activity_type FROM activities WHERE prospect_id = ?", (prospect_id,)
+        ).fetchall()
+    except sqlite3.Error:
+        return "SKIPPED: CRM reconciliation required (CRM history could not be read)"
+    finally:
+        try:
+            conn.close()
+        except UnboundLocalError:
+            pass
+    if manual_hold:
+        return "SKIPPED: CRM contact hold is active"
+    if any(activity_type in SEQUENCE_OR_SALES_ACTIVITY_TYPES for (activity_type,) in activities):
+        return "SKIPPED: CRM history records outreach or a sales event; reconcile before drafting"
+    return None
 
 
 # Every message built from a remote response goes through this. Those
@@ -223,7 +272,7 @@ def _extract_draft_id(resp_data):
         f"unexpected Zoho response shape (no data.messageId): {_safe_detail(resp_data)}")
 
 
-def push_entry(entry, from_address, api_domain, account_id, access_token, dry_run=False):
+def push_entry(entry, from_address, api_domain, account_id, access_token, dry_run=False, crm_db_path=None):
     """Creates or updates exactly one Zoho draft for one outreach-prep
     entry. Never raises - every failure mode (HTTP error, connection
     failure, a read that dies mid-response, unexpected response shape, and
@@ -232,6 +281,12 @@ def push_entry(entry, from_address, api_domain, account_id, access_token, dry_ru
     never costs the batch the draft ids it has already earned."""
     if entry.get("withheld"):
         return {"zoho_push_status": "SKIPPED (withheld)"}
+    if entry.get("active_draft") is False:
+        return {"zoho_push_status": "SKIPPED (not the currently due sequence step)"}
+
+    guard = crm_draft_guard(entry, crm_db_path)
+    if guard:
+        return {"zoho_push_status": guard}
 
     existing_id = entry.get("zoho_draft_id")
     action = "updated" if existing_id else "created"
@@ -273,15 +328,12 @@ def push_entry(entry, from_address, api_domain, account_id, access_token, dry_ru
     except urllib.error.HTTPError as e:
         detail = _safe_detail(e.read().decode("utf-8", errors="replace"))
         if existing_id and e.code == 404:
-            # The stored draft is gone - most likely the owner deleted or sent
-            # it in Zoho. Clear the id rather than leaving this entry stuck
-            # PUTting forever at a message that no longer exists; the next run
-            # takes the create branch and makes a fresh draft.
+            # A missing draft may have been sent or deliberately deleted.
+            # Preserve the id and require CRM reconciliation; a retry must not
+            # silently manufacture a second cold email.
             return {
-                "zoho_draft_id": None,
-                "zoho_push_status": "FAILED: HTTP 404 - the stored draft may have been deleted "
-                                    "in Zoho; its id has been cleared, so the next run will "
-                                    "create a new draft",
+                "zoho_push_status": "FAILED: HTTP 404 - stored draft is missing; reconcile CRM sales history "
+                                    "before deliberately replacing it",
             }
         return {"zoho_push_status": f"FAILED: HTTP {e.code} {detail}"}
     except urllib.error.URLError as e:
@@ -318,7 +370,7 @@ def push_entry(entry, from_address, api_domain, account_id, access_token, dry_ru
     }
 
 
-def process_outreach_prep(entries, credentials, access_token, dry_run=False):
+def process_outreach_prep(entries, credentials, access_token, dry_run=False, crm_db_path=None):
     """entries: the JSON array from an outreach-prep-<slug>-<date>.json
     file, loaded and passed in by main(). Mutates each entry in place with
     the zoho_* fields; returns the same information as a flat list for
@@ -329,7 +381,8 @@ def process_outreach_prep(entries, credentials, access_token, dry_run=False):
 
     results = []
     for entry in entries:
-        outcome = push_entry(entry, from_address, api_domain, account_id, access_token, dry_run=dry_run)
+        outcome = push_entry(entry, from_address, api_domain, account_id, access_token, dry_run=dry_run,
+                             crm_db_path=crm_db_path)
         entry.update(outcome)
         results.append({"business": entry.get("business", "?"), **outcome})
     return results
@@ -368,6 +421,8 @@ def main():
     ap.add_argument("--in-place", action="store_true", help="Overwrite --input instead")
     ap.add_argument("--credentials", help="Path to Zoho credentials JSON (default: ~/.wardith/zoho-credentials.json or $WARDITH_ZOHO_CREDENTIALS)")
     ap.add_argument("--dry-run", action="store_true", help="Log what would be pushed without calling Zoho or requiring credentials")
+    ap.add_argument("--crm-db", default=str(Path.home() / "wardith-runs" / "crm" / "wardith.db"),
+                    help="CRM SQLite database used to reconcile sales history before every draft")
     args = ap.parse_args()
     if not args.output and not args.in_place:
         print("Specify --output PATH or --in-place", file=sys.stderr)
@@ -391,7 +446,8 @@ def main():
         except ZohoAPIError:
             credentials = None  # dry-run works even before setup_zoho_oauth.py has ever run
 
-    results = process_outreach_prep(entries, credentials, access_token, dry_run=args.dry_run)
+    results = process_outreach_prep(entries, credentials, access_token, dry_run=args.dry_run,
+                                    crm_db_path=args.crm_db)
 
     out_path = args.input if args.in_place else args.output
     with open(out_path, "w", encoding="utf-8") as f:

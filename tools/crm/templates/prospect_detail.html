@@ -36,7 +36,7 @@
     <h2>Manual fields</h2>
     <form method="post" class="stack">
       <input type="hidden" name="form" value="manual_fields">
-      <label><input type="checkbox" name="do_not_contact_manual" {{ 'checked' if prospect.do_not_contact_manual else '' }}> Do not contact (permanent)</label>
+      <label><input type="checkbox" name="do_not_contact_manual" {{ 'checked' if prospect.do_not_contact_manual else '' }}> Cold-sequence contact hold (not an opt-out)</label>
       <label>Notes<textarea name="notes" rows="3">{{ prospect.notes or '' }}</textarea></label>
       <button type="submit">Save</button>
     </form>

@@ -98,7 +98,9 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
   informs commercial priority as one factor among several; it never
   automatically sets or overrides it. 2026-08-15.
 - **Companies House is the filter, never the source of the list.** 2026-08-10.
-- **One finding, one offer, no chasing sequence.**
+- **Three-email cold sequence: evidence and £250 Audit; useful clarification;
+  brief final invitation, then close.** Defaults are five business days after
+  the actual first send and seven after the actual second send. 2026-09-05.
 - **2026-08-23 — Recognition lists of named businesses may be published:**
   positive-only, no rank numbers, nobody below the named set identified
   individually or by implication, removal on request. Ranked league tables

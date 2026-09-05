@@ -28,4 +28,8 @@ def init_db(conn):
     """Idempotent - safe to call on every startup. CREATE TABLE IF NOT
     EXISTS means a rerun never touches existing data."""
     conn.executescript(SCHEMA_PATH.read_text(encoding="utf-8"))
+    # Existing databases already have editable cadence rows; add only missing
+    # sequence defaults and preserve any owner changes.
+    from models import migrate_cadence_defaults
+    migrate_cadence_defaults(conn)
     conn.commit()

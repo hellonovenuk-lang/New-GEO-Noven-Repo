@@ -147,6 +147,39 @@ def seed_cadence_if_empty(conn):
     conn.commit()
 
 
+def migrate_cadence_defaults(conn):
+    """Add sequence rows to existing databases without overwriting edits."""
+    existing = {r["key"]: dict(r) for r in conn.execute("SELECT * FROM cadence_settings")}
+    if not existing:
+        return
+    next_order = max(r["sort_order"] for r in existing.values()) + 1
+    for row in cadence.default_cadence_table():
+        if row["key"] not in existing:
+            conn.execute(
+                """INSERT INTO cadence_settings
+                   (key, label, next_action_label, cadence_days, stage_label,
+                    stops_cold_followup, blocks_outreach, is_revenue_event, sort_order)
+                   VALUES (:key, :label, :next_action_label, :cadence_days, :stage_label,
+                           :stops_cold_followup, :blocks_outreach, :is_revenue_event, :sort_order)""",
+                {**row, "stops_cold_followup": int(row["stops_cold_followup"]),
+                 "blocks_outreach": int(row["blocks_outreach"]),
+                 "is_revenue_event": int(row["is_revenue_event"]), "sort_order": next_order},
+            )
+            next_order += 1
+    legacy = existing.get("EMAIL_2_SENT")
+    if legacy and (legacy["next_action_label"], legacy["cadence_days"], legacy["stage_label"]) == (
+        "Try LinkedIn or call", 5, "Contacted"
+    ):
+        new = cadence.cadence_by_key()["EMAIL_2_SENT"]
+        conn.execute(
+            """UPDATE cadence_settings SET label=?, next_action_label=?, cadence_days=?,
+               stage_label=?, stops_cold_followup=?, blocks_outreach=?, is_revenue_event=?
+               WHERE key='EMAIL_2_SENT'""",
+            (new["label"], new["next_action_label"], new["cadence_days"], new["stage_label"],
+             int(new["stops_cold_followup"]), int(new["blocks_outreach"]), int(new["is_revenue_event"])),
+        )
+
+
 def list_cadence_settings(conn):
     rows = conn.execute("SELECT * FROM cadence_settings ORDER BY sort_order").fetchall()
     return [dict(r) for r in rows]
@@ -189,7 +222,7 @@ def compute_state_for_prospect(conn, prospect, cadence_table=None, today=None):
         "withheld_at_outreach": bool(prospect.get("withheld_at_outreach")),
     }
     activities = [
-        {"activity_type": a["activity_type"], "activity_date": date.fromisoformat(a["activity_date"])}
+        {"id": a["id"], "activity_type": a["activity_type"], "activity_date": date.fromisoformat(a["activity_date"])}
         for a in list_activities(conn, prospect["prospect_id"])
     ]
     return cadence.compute_prospect_state(

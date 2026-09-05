@@ -20,10 +20,14 @@ from datetime import date, timedelta
 ACTIVITY_TYPES = [
     ("OUTREACH_PREPARED", "Outreach prepared", "Send Email 1", 1, "Prepared",
      False, False, False),
-    ("EMAIL_1_SENT", "Email 1 sent", "Send Email 2 / follow-up", 5, "Contacted",
+    ("EMAIL_1_SENT", "Email 1 sent", "Send Email 2", 5, "Contacted",
      False, False, False),
-    ("EMAIL_2_SENT", "Email 2 / follow-up sent", "Try LinkedIn or call", 5, "Contacted",
+    ("EMAIL_2_SENT", "Email 2 sent", "Send Email 3", 7, "Contacted",
      False, False, False),
+    ("EMAIL_3_SENT", "Email 3 sent", "", None, "Cold sequence complete",
+     True, False, False),
+    ("EMAIL_BOUNCED", "Email bounced", "Verify contact route before reopening", None, "Contact hold",
+     True, False, False),
     ("LINKEDIN_VIEWED", "LinkedIn viewed", "Send LinkedIn connection request", 2, "Contacted",
      False, False, False),
     ("LINKEDIN_FOLLOWED", "LinkedIn followed", "Send LinkedIn connection request", 2, "Contacted",
@@ -74,21 +78,25 @@ def cadence_by_key(table=None):
 
 
 def adjust_for_weekend(d):
-    """Saturday -> Monday, Sunday -> Monday. Mirrors the workbook's own
-    WEEKDAY(cell,2) formula (Monday=1..Sunday=7) so Python and Excel never
-    disagree on a due date."""
-    wd = d.isoweekday()
-    if wd == 6:
-        return d + timedelta(days=2)
-    if wd == 7:
-        return d + timedelta(days=1)
+    """Kept for callers outside the CRM: move a weekend date to Monday."""
+    while d.isoweekday() > 5:
+        d += timedelta(days=1)
+    return d
+
+
+def add_business_days(d, business_days):
+    """Return the date after N Monday-Friday business days."""
+    for _ in range(business_days):
+        d += timedelta(days=1)
+        while d.isoweekday() > 5:
+            d += timedelta(days=1)
     return d
 
 
 def due_date(last_activity_date, cadence_days):
     if last_activity_date is None or cadence_days is None:
         return None
-    return adjust_for_weekend(last_activity_date + timedelta(days=cadence_days))
+    return add_business_days(last_activity_date, cadence_days)
 
 
 def compute_prospect_state(research, activities, manual_do_not_contact=False, cadence=None, today=None):
@@ -103,19 +111,29 @@ def compute_prospect_state(research, activities, manual_do_not_contact=False, ca
     today = today or date.today()
     activities = list(activities)
 
-    permanently_blocked = bool(manual_do_not_contact) or any(
+    opted_out = any(
         cadence.get(a["activity_type"], {}).get("blocks_outreach") for a in activities
     )
-    sorted_activities = sorted(activities, key=lambda a: a["activity_date"])
+    sorted_activities = sorted(activities, key=lambda a: (a["activity_date"], a.get("id", 0)))
     last = sorted_activities[-1] if sorted_activities else None
 
-    if permanently_blocked:
+    if opted_out:
         return {
             "stage": "Do Not Contact",
             "last_activity_type": last["activity_type"] if last else None,
             "last_activity_date": last["activity_date"] if last else None,
             "next_action": "", "next_action_due_date": None,
-            "blocked": True, "do_not_contact": True, "overdue": False,
+            "blocked": True, "do_not_contact": True, "overdue": False, "sequence_complete": False,
+        }
+
+    if manual_do_not_contact:
+        return {
+            "stage": "Contact hold",
+            "last_activity_type": last["activity_type"] if last else None,
+            "last_activity_date": last["activity_date"] if last else None,
+            "next_action": "Verify contact route before reopening",
+            "next_action_due_date": None,
+            "blocked": True, "do_not_contact": False, "overdue": False, "sequence_complete": False,
         }
 
     if last is None:
@@ -127,7 +145,7 @@ def compute_prospect_state(research, activities, manual_do_not_contact=False, ca
             return {
                 "stage": "Outreach ready", "last_activity_type": None, "last_activity_date": None,
                 "next_action": "Send Email 1", "next_action_due_date": today,
-                "blocked": False, "do_not_contact": False, "overdue": False,
+                "blocked": False, "do_not_contact": False, "overdue": False, "sequence_complete": False,
             }
         if pipeline_stage == "RESEARCHED":
             stage = "Research complete"
@@ -142,19 +160,25 @@ def compute_prospect_state(research, activities, manual_do_not_contact=False, ca
         return {
             "stage": stage, "last_activity_type": None, "last_activity_date": None,
             "next_action": "", "next_action_due_date": None,
-            "blocked": False, "do_not_contact": False, "overdue": False,
+            "blocked": False, "do_not_contact": False, "overdue": False, "sequence_complete": False,
         }
 
-    rule = cadence.get(last["activity_type"], {})
+    state_activity = next(
+        (a for a in reversed(sorted_activities)
+         if cadence.get(a["activity_type"], {}).get("stops_cold_followup")),
+        last,
+    )
+    rule = cadence.get(state_activity["activity_type"], {})
     stage = rule.get("stage_label", "")
     next_action = rule.get("next_action_label") or ""
-    due = due_date(last["activity_date"], rule.get("cadence_days"))
+    due = due_date(state_activity["activity_date"], rule.get("cadence_days"))
     overdue = bool(due and due < today)
     if stage in NON_TERMINAL_STAGES and overdue:
         stage = "Follow-up due"
 
     return {
-        "stage": stage, "last_activity_type": last["activity_type"], "last_activity_date": last["activity_date"],
+        "stage": stage, "last_activity_type": state_activity["activity_type"], "last_activity_date": state_activity["activity_date"],
         "next_action": next_action, "next_action_due_date": due,
         "blocked": False, "do_not_contact": False, "overdue": overdue,
+        "sequence_complete": state_activity["activity_type"] == "EMAIL_3_SENT",
     }
