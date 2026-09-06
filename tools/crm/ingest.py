@@ -232,7 +232,13 @@ def build_prospect_research(entry, prep_match):
         research["outreach_angle"] = prep_entry.get("outreach_angle")
         research["email_subject"] = prep_entry.get("email_subject")
         research["email_body"] = prep_entry.get("email_body")
-        research["linkedin_draft"] = prep_entry.get("linkedin_draft")
+        # /outreach writes linkedin_draft as either a plain string or a
+        # {url, note} object; the column is TEXT, so serialise the object
+        # form rather than handing sqlite3 a dict it cannot bind.
+        linkedin_draft = prep_entry.get("linkedin_draft")
+        if isinstance(linkedin_draft, (dict, list)):
+            linkedin_draft = json.dumps(linkedin_draft)
+        research["linkedin_draft"] = linkedin_draft
         research["caveats_json"] = json.dumps(prep_entry.get("caveats"))
         research["source_outreach_prep_json"] = str(prep_path)
         research["withheld_at_outreach"] = 1 if prep_entry.get("withheld") is True else 0
