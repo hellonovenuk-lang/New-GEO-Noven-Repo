@@ -404,7 +404,7 @@ On Windows, run the command below through `scripts/wardith-secrets.ps1 run`;
 the wrapper supplies a temporary Zoho credential file from Bitwarden and
 removes it when the process exits.
 
-Before this step, ingest the campaign into the CRM, then push only the
+Run Stage 7.6's ingest before this step, then push only the
 currently due active draft. The draft tool reads CRM history before every
 create or update; a missing Zoho draft may have been sent and is never
 recreated automatically:
@@ -434,6 +434,27 @@ transient network error) does not stop this stage** — it's recorded in the
 script's summary and carried into Stage 8's report; every other business's
 draft still gets pushed.
 
+## Stage 7.6 — Ingest into the CRM
+
+Run this before Stage 7.5, so draft creation can reconcile against the
+campaign's own CRM record. Run it again afterwards only if the saved prep
+output needs refreshing:
+
+```
+python3 tools/crm/main.py ingest --slug <slug>
+```
+
+`ingest` is stdlib-only, safe to run at any time, reads only files already
+written under `~/wardith-runs/<slug>/` (`$WARDITH_RUNS_DIR/<slug>/` under the
+Actions adapter), and its only write is to the CRM's own SQLite database.
+
+**This step is what records that Email 1 was prepared.** Stage 1's sequence
+gate and Stage 7.5's duplicate safeguard both read CRM history: without it, a
+later run cannot tell a prepared or already-sent Email 1 from an untouched
+prospect, and `playbook/outreach-process.md`'s "record every send before the
+next email goes out" has nothing to read. Report the result in Stage 8 —
+never skip this silently.
+
 ## Stage 8 — Report
 
 - The campaign processed, and the working set size (how many
@@ -446,6 +467,7 @@ draft still gets pushed.
 - **Zoho push results** from Stage 7.5: how many drafts created, how many
   updated, how many failed and why (business name + reason for each
   failure), how many skipped as withheld.
+- **CRM ingest result** from Stage 7.6: ingested OK, or failed and why.
 - A one-line reminder: **nothing has been sent; the drafts are sitting in
   Zoho Mail's Drafts folder for review, and sending is a separate,
   explicit, later action the owner takes there.**

@@ -181,6 +181,12 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
 - **Pushing to `main` publishes** — Netlify deploys it. Say what a push will
   publish before doing it.
 - **Never invent a business fact.** Unknowns are `[PLACEHOLDER]` and flagged.
+- **Processes are provider-neutral; `.agents/` is canonical.** The skills are
+  written so any agent runtime can run them. `.claude/` holds the same
+  procedures plus a clearly marked runtime-specific adapter, and that adapter
+  is the only place the two trees may differ. Data reaches a remote run
+  through the `wardith-crm-data` deploy key the Actions workflow already
+  uses, never through a runtime-specific repository attach step. 2026-09-06.
 
 ## Site content
 

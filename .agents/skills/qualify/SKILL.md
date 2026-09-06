@@ -544,6 +544,20 @@ strict-validator PASS do not prove live formulas are correct. Hold only the
 affected workbook if recalculation fails; preserve campaign data and report
 the precise repair needed. Do not restart business research for a renderer bug.
 
+## Stage 11.5 — Ingest into the CRM
+
+Once Stage 11 has produced a validated campaign JSON and workbook:
+
+```
+python3 tools/crm/main.py ingest --slug <slug>
+```
+
+`ingest` is stdlib-only, safe to run at any time, reads only files already
+written under `~/wardith-runs/<slug>/` (`$WARDITH_RUNS_DIR/<slug>/` under the
+Actions adapter), and its only write is to the CRM's own SQLite database.
+This is what gives the campaign a CRM record for `/outreach` to reconcile
+against. Report the result in Stage 12 — never skip this silently.
+
 ## Stage 12 — Report
 
 Include the close-out fields from the repeatable execution contract. A bounded
