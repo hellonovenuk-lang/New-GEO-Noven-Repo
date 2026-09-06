@@ -49,11 +49,12 @@ export const business = {
    * is already cached. It is an alias on the same licence, not a second user.
    * See `archive/rename-to-wardith.md` E3.
    *
-   * **Still owed, and it is not visible from the site:** nobody has confirmed
-   * mail sent *from* this address passes SPF, DKIM and DMARC at the receiving
-   * end. DNS being present is not the same as authentication passing, and a new
-   * domain that fails it gets quietly filtered — a failure that looks exactly
-   * like nobody replying. `archive/rename-to-wardith.md` D0.4 step 5 is the test.
+   * **Still owed:** the DMARC policy is `p=none`, so nothing is enforced
+   * against anyone spoofing the domain, and no aggregate report has been read.
+   * The zone was re-read independently on 2026-09-06 and every record is
+   * correct — the step-up to `p=quarantine`, and the two parked domains still
+   * carrying GoDaddy's default record, are in `playbook/accounts-and-dates.md`,
+   * "Mail authentication".
    */
   email: 'hello@wardith.co.uk',
   basedIn: 'the Wirral, UK',

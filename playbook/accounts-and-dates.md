@@ -16,9 +16,10 @@ business, not just in this document.
 | Dependency | Purpose | Cost | Renews | Next action / consequence |
 |---|---|---|---|---|
 | **`wardith.co.uk`** | The live, published address | `[PLACEHOLDER: total paid]` | **~4 Aug 2027**, GoDaddy, one year only. `[PLACEHOLDER: auto-renew status]` | **Extend to 5+ years — in the calendar for 6 Oct 2026, backstop 4 Jun 2027.** Miss it and `.co.uk` recovery after expiry can fail outright |
-| **`wardith.com` / `wardith.uk`** | Owned, redirecting. Never published as a contact detail | `[PLACEHOLDER]` | Same domain project as above | Keep redirecting; no separate action |
+| **`wardith.com` / `wardith.uk`** | Owned, redirecting. Never published as a contact detail, and neither has MX or SPF — they cannot send | `[PLACEHOLDER]` | Same domain project as above | Keep redirecting. **Both still carry GoDaddy's default DMARC record reporting to GoDaddy** — lock them down per "Mail authentication" |
 | **`novenstudio.co.uk`** | Pre-rename domain. Still carries MX for mail and both LinkedIn links until the rename fully lands | `[PLACEHOLDER]` | `[PLACEHOLDER — registrar, expiry and auto-renew all unrecorded. Urgent]` | **Record registrar, expiry and auto-renew status. Keep registered at least three years — do not drop it**, or every redirect dies and the name becomes free for a competitor in the same field to buy |
-| **Namecheap** | DNS: Netlify records, Zoho MX, SPF/DKIM/DMARC, verification TXTs | `[PLACEHOLDER]` | `[PLACEHOLDER]` | Site and mail both depend on this; record cost and renewal |
+| **GoDaddy DNS** | The authoritative DNS for all three Wardith domains — `ns17`/`ns18.domaincontrol.com` on `wardith.co.uk`, `ns13`/`ns14` on `.com`, `ns17`/`ns18` on `.uk` (verified 2026-09-06). Holds the Netlify records, Zoho MX, SPF/DKIM/DMARC and the verification TXTs | Free with the GoDaddy-registered domains | n/a | **Site and mail both depend on this.** Every record in "Mail authentication" below is edited here, not at Namecheap |
+| **Namecheap** | DNS for `novenstudio.co.uk` only — `dns1`/`dns2.registrar-servers.com` (verified 2026-09-06). Carries that domain's Zoho MX, SPF, DKIM and DMARC | `[PLACEHOLDER]` | `[PLACEHOLDER]` | The old domain's mail depends on this; record cost and renewal |
 | **Netlify** | Hosting, build, TLS. Deploys `main`. Also the order form once switched on (Netlify Forms, free to 100 submissions/month) | Free tier | Rolling | No documented alternative host or rollback runbook if it goes down |
 | **GitHub `hellonovenuk-lang`** | This repo — source of truth and deploy trigger | Free | n/a | Deploys stop if lost |
 | **GitHub `hellonovenuk-lang/Noven`** | Second repo, holds brand and image originals | Free | n/a | Only record of this repo's existence is this row |
@@ -55,6 +56,55 @@ is commonly returned.
 | **API accounts** — OpenAI, Google AI Studio, Perplexity | In use for audits and trade runs. Balances at 2026-08-09: OpenAI $16.00, Gemini £8.95, Perplexity $4.49 | Record actual per-provider cost after every run rather than estimating. Confirm Perplexity's auto top-up is off and spending caps are set on all three |
 | **Password vault** | Recommended, no evidence it exists | Set one up (Bitwarden was the decision) — see "the vault" below |
 | **Client data storage** | **Decided 2026-08-10: local, encrypted storage on the owner's own machine.** No processor, so no contract needed and no supplier country to publish | Two conditions before any client or prospect record may exist anywhere, including the outreach list: full-disk encryption on and verified (recovery key held off the disk), and an encrypted external backup drive, kept off-site, restored at least once (~£30–60). Turn OneDrive folder backup off first — it syncs Desktop/Documents to the consumer Microsoft account by default |
+
+---
+
+## Mail authentication
+
+**Verified live 2026-09-06 by public DNS lookup.** Zoho Mail is the only thing
+authorised to send as `wardith.co.uk` — Netlify Forms notifies from Netlify's
+own domain, not ours — so an enforced DMARC policy costs us nothing.
+
+| Record | Host | Live value | State |
+|---|---|---|---|
+| MX | `@` | `mx.zoho.eu` 10, `mx2.zoho.eu` 20, `mx3.zoho.eu` 50 | Correct |
+| SPF | `@` | `v=spf1 include:dc-8e814c8572._spfm.wardith.co.uk ~all` | Correct. Exactly one record; the chain resolves in three of the ten lookups allowed |
+| DKIM | `zmail._domainkey` | 1024-bit RSA | Passing. 2048 is stronger but exceeds the 255-character TXT limit and needs the split-string form — a deliberate trade, not an oversight |
+| DMARC | `_dmarc` | `v=DMARC1; p=none; adkim=r; aspf=r; rua=mailto:hello@wardith.co.uk` | **`p=none` — the step-up below is owed** |
+
+**What DMARC policy does and does not do.** `p=quarantine` tells receivers what
+to do with mail that *fails* authentication while claiming to be from us. It
+does not push our own passing mail into the inbox. It is worth doing because it
+stops anyone spoofing the domain from burning its reputation, and because
+several filters score an unenforced domain lower — not because it fixes a
+deliverability problem we currently have.
+
+### The three DNS edits, in priority order
+
+Edit the existing `_dmarc` row every time. **Two DMARC records is a hard
+failure, not a stricter policy.**
+
+1. **`wardith.co.uk` → quarantine.** Replace the `_dmarc` TXT value with
+   `v=DMARC1; p=quarantine; sp=quarantine; adkim=r; aspf=r; fo=1; rua=mailto:hello@wardith.co.uk`
+   Safe now: every record above is correct and Zoho is the sole sender, so the
+   only mail this can touch is mail that already fails. Read one week of `rua`
+   reports before the next outreach batch — that is also the header-level
+   confirmation nobody has produced yet — and go to `p=reject` only after a
+   month of clean ones. Forwarded mail breaks SPF but keeps DKIM, which is why
+   quarantine comes before reject.
+2. **`wardith.com` and `wardith.uk` → reject.** Both still carry GoDaddy's
+   pre-provisioned record, whose reports go to `dmarc_rua@onsecureserver.net`
+   — GoDaddy, not us. Neither has MX or SPF and neither will ever send: set
+   `_dmarc` to `v=DMARC1; p=reject;`, add `@` TXT `v=spf1 -all`, and a null MX
+   of `0 .`. This is the cheapest anti-spoofing win we have.
+3. **`novenstudio.co.uk` → quarantine.** Also `p=none`, and still an
+   authorised Zoho sender with live MX and DKIM. Same value as (1) with its
+   own `rua`. Lower priority — it receives far more than it sends — but it
+   must stay protected for the twelve months it keeps receiving.
+
+**Reports arrive as zipped XML** to `hello@wardith.co.uk`. If that becomes
+noise, point `rua` at a free Zoho alias rather than turning it off — a policy
+with no reporting address is a policy nobody is watching.
 
 ---
 

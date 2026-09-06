@@ -18,7 +18,7 @@ Wirral, working remotely across the UK. One person, no employees.
 | | |
 |---|---|
 | **Website** | `wardith.co.uk` — ten static Astro pages, deployed from `main` by Netlify. Built as a demonstration of the product: no client-side JavaScript, AI crawlers allowed in `robots.txt`, XML sitemap, JSON-LD. Visible facts and machine-readable facts both read from `site/src/data/business.ts` so they cannot drift |
-| **Email** | `hello@wardith.co.uk` on Zoho Mail. SPF, DKIM and DMARC confirmed passing in a real delivered message. DMARC is at `p=none` — raise to `p=quarantine` once a batch has gone out clean |
+| **Email** | `hello@wardith.co.uk` on Zoho Mail, the only authorised sender for the domain. MX, SPF and DKIM verified correct in public DNS 2026-09-06. **DMARC is still `p=none`, and `wardith.com`/`wardith.uk` still carry GoDaddy's default record reporting to GoDaddy** — three DNS edits, in `accounts-and-dates.md`, "Mail authentication" |
 | **Search Console / Bing** | `wardith.co.uk` verified, Change of Address running from `novenstudio.co.uk` to ~Feb 2027. Bing matters because Copilot answers out of its index |
 | **Legal** | ICO registration `C1995412`. Address for service: Lytchett House, 13 Freeland Park, Wareham Road, Poole, Dorset, BH16 6FA. `/terms/` and `/privacy/` published 2026-08-10 |
 | **Money** | Revolut Pro business account. No payment has ever been taken |
