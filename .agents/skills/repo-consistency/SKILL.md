@@ -35,9 +35,9 @@ nothing. Judgement is yours. Do not read files at random hoping to spot drift â€
 run the scan first and let it tell you where to look.
 
 ```
-python3 .Codex/skills/repo-consistency/scripts/check.py
-python3 .Codex/skills/repo-consistency/scripts/check.py --only facts,names
-python3 .Codex/skills/repo-consistency/scripts/check.py --json
+python3 .agents/skills/repo-consistency/scripts/check.py
+python3 .agents/skills/repo-consistency/scripts/check.py --only facts,names
+python3 .agents/skills/repo-consistency/scripts/check.py --json
 ```
 
 Findings come in three grades, and the grade tells you how far to trust it:

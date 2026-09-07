@@ -69,6 +69,15 @@ this is the one input this skill genuinely cannot infer.
    in a plaintext local file. Check it first with
    `pwsh -File scripts/wardith-secrets.ps1 status`; a failure is a blocking
    preflight error. Every command in Step 4 and Step 5 must use the wrapper.
+
+   **On macOS or Linux outside the Actions adapter, use the bash wrapper
+   instead — `scripts/wardith-secrets.sh run <command>`.** It is the same
+   allowlisted Bitwarden loader (`scripts/wardith_secrets.py`) the workflow
+   already uses, and it is not specific to CI: the only thing it does
+   differently under Actions is mask the values in the log. The same rule
+   applies as on Windows — every command in Step 4 and Step 5 goes through
+   it, and a failure here is a blocking preflight error, not something to
+   work around.
 3. **Confirm the loaded models are the intended prospecting models, not
    stale or leftover values — before Step 4 spends anything.** Two named
    failure modes, both observed on a real run, plus a general check:
