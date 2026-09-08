@@ -215,11 +215,13 @@ are personal data. A reply asking not to be contacted is recorded permanently.
 The cold sequence has three emails and no automatic sending:
 
 1. **Email 1** — one evidenced finding and the £250 Audit offer.
-2. **Email 2** — useful additional context from the same recorded evidence,
-   or a clarification of what the Audit covers. Default: five business days
-   after the actual Email 1 send.
+2. **Email 2** — delivers what Email 1 offered: what the Audit checks.
+   Carries no finding. Default: five business days after the actual Email 1
+   send.
 3. **Email 3** — a brief final invitation. Default: seven business days after
    the actual Email 2 send. Then record `EMAIL_3_SENT` and close the sequence.
+
+The copy for all three is in `## The letters`.
 
 Never invent a second finding. A reply pauses the cold sequence for human
 handling. An opt-out or manual contact hold blocks it. Sales and client stages
@@ -233,7 +235,10 @@ survive incidental activity such as LinkedIn views.
   — in a reception inbox a person's name reads as correspondence.
 - **One recipient per email. Never a CC, never a BCC list.** Twenty addresses
   visible to each other is a data breach and the end of the pitch at once.
-- The normal Wardith signature goes on, image and all.
+- **The signature is text only, no wordmark image (2026-09-06).** Images are
+  blocked by default in Outlook desktop and many corporate gateways, so an
+  image signature degrades for exactly the reception inboxes this is written
+  for. Text renders identically everywhere and cannot break.
 - No mail-merge, no tracking pixel, no read receipt.
 - Weekday mornings beat evenings — reception triages first thing.
 - To a named person wherever the site gives one.
@@ -248,124 +253,163 @@ Three things, all legal rather than stylistic:
    Article 14 disclosure. If they came off a directory, say the directory.
 3. **A working opt-out**, honoured permanently.
 
+**Emails 2 and 3 are replies on the Email 1 thread (2026-09-06).** It reads as
+correspondence rather than a campaign, and the Article 14 disclosure stays
+visible in the thread below. In-thread, they carry the opt-out and the
+signature; the source disclosure is not repeated. A standalone follow-up would
+have to carry all three again.
+
 ## The letters
 
-**Subject: the practice's own name, plus routing.** `{Business} — for {named
-person}`, or `— for the practice owner` on a generic inbox. **No claim in the
-subject and no technology word** — "ChatGPT" is the most common word in the
-marketing email they already delete.
+**Status: rewritten 2026-09-06**, to the short form the owner refined and
+sent. The previous four letters ran to roughly 400 words and read as a report
+rather than a note. They are in git history and superseded.
+
+**Subject: the business's own name, plus routing.** `{Business} — for {named
+person}`, or `— for the owner` on a generic inbox. **No claim in the subject
+and no technology word** — "ChatGPT" is the most common word in the marketing
+email they already delete.
 
 **Only quote questions the business is geographically eligible for.** Citing a
 question that names a town they are not in hands them a fair objection.
 
 **Never state a total count of businesses named** until the counting method is
-settled — two methods have given two answers. State what was verified: that we
-searched every answer for them and they are not there.
+settled — two methods have given two answers. State what was verified.
 
-### The absent letter
+### Email 1, in eight blocks
 
-> Hello,
->
-> I'm Kieran Smith. I run a small business on the Wirral that checks what the AI
-> assistants say when somebody asks them to recommend a local business.
->
-> Last week I asked ChatGPT, Google's Gemini and Perplexity for a {trade} on
-> {area}. Six different ways of asking, five times each, so ninety answers.
->
-> Three of the questions, and what came back:
->
-> "{q1}" — {A} in {n} of the fifteen answers, {B} in {n}.
->
-> "{q2}" — {C} and {D} in all fifteen, {E} in fourteen.
->
-> "{q3}" — {E} in all fifteen, {B} in thirteen.
->
-> I went through all ninety answers looking for {business}. It isn't in any of
-> them. Those are the exact words I used, if you want to try them yourself.
->
-> One thing worth saying, because it's the first thing I'd want to test. I didn't
-> ask about {business} by name. If you type the name in, all three will probably
-> tell you plenty, and accurately. I asked the way somebody looks for a {trade}
-> when they don't have one yet and don't know who you are. That's the question
-> that brings in new customers, and it's a different question.
->
-> A {business type} can be missing for a few different reasons and they aren't
-> equally hard to fix. What I sell is finding out which one applies to you. Ten
-> questions on {business} across all three assistants, where their answers are
-> actually coming from, and a written report on what to change. It's £250,
-> that's the entire cost, and the report is yours to act on with me or without
-> me.
->
-> If you want to see what one looks like first, I ran the same thing on my own
-> business and published all of it, including what came back badly:
-> wardith.co.uk/ask-your-ai/self-audit/
->
-> Worth a look?
->
-> Kieran Smith
-> Birkenhead, Wirral
->
-> I found {business} on {where}, and the rest from your own website. If you'd
-> rather I didn't keep your details, tell me and I'll delete them.
->
-> *[normal signature follows — it carries the postal address]*
+Every first email is these eight, in this order. Nothing else goes in. About
+150 words; if a draft is materially longer, a block has grown a second idea.
 
-**Named once or twice:** change "It isn't in any of them" to "It came up once,
-in ninety answers."
+1. **Greeting.** `Hi {name},` to a person, `Hello,` to an inbox.
+2. **Who you are, one sentence.** "I'm Kieran Smith, based in Birkenhead. I
+   check which local businesses ChatGPT, Gemini and Perplexity recommend."
+   Who you are before what you found — `playbook/voice.md`'s structural rule,
+   and the one that matters most.
+3. **The finding, one paragraph.** What was checked, this business's own
+   number, and the single sharpest contrast. One comparison, never a table of
+   competitors. Quote a question only where the question itself is the
+   finding.
+4. **The offer, restating their finding.** "For £250, I'll find out why {the
+   specific thing block 3 just said}, then give you a written report showing
+   what, if anything, is worth changing. It's yours to act on with me or
+   without me." The offer sentence carries their own result, which is what
+   stops it reading as a template.
+5. **Proof.** "Here's the same audit on my own business:
+   wardith.co.uk/ask-your-ai/self-audit/"
+6. **The ask.** "Would you like me to send over what I'd check for
+   {Business}?" Ask for a reply, not a £250 decision. Email 2 then delivers
+   exactly this.
+7. **Source and opt-out, one line.** "Your email came from {where}; I checked
+   the business details against Companies House and {source}. Reply if you
+   would rather not hear from me again." {source} must be a publisher in this
+   business's own evidence, never one borrowed from another business in the
+   same campaign.
+8. **The signature.** Text only, see `## Sending`.
 
-**Writing to a gatekeeper:** open to reception, ask them to pass it on, and say
-what it is in one line. Then cut the second greeting.
+### Quoting the numbers
 
-> Hello,
->
+**"{n} of {N} relevant answers", never "of ninety".** N is the answers to the
+questions this business is actually eligible for, so the figure survives the
+eligibility rule above. Both come from the campaign JSON:
+`relevant_appearances` and `relevant_opportunities`.
+
+**Quote whole numbers only.** `relevant_appearances` is relevance-weighted and
+can be fractional. Where it is not whole, do not round it into a claim — sum
+`question_appearances` across the questions counted relevant and quote that.
+
+### The three shapes of block 3
+
+Write the sentence from this business's own evidence every time. Never reuse
+another business's wording with the nouns swapped.
+
+**Absent.** "I went through all {N} relevant answers looking for {Business}.
+It isn't in any of them."
+
+This shape, and only this shape, adds one more paragraph, because the
+objection is live here and nowhere else:
+
+> I didn't ask about {Business} by name. If you type the name in, all three
+> will probably tell you plenty, and accurately. I asked the way somebody
+> looks for a {trade} when they don't have one yet. That's the question that
+> brings in new customers, and it's a different question.
+
+**One assistant, not the others.** "{Business} appeared in {n} of {N} relevant
+answers, but every mention came from {assistant}. {The other two} didn't name
+you."
+
+**Behind the leader.** "{Business} came up in {n}. {Leader}, the one named most
+often in this research, came up in {m}." Never claim a per-question absence is
+a gap unless the leader actually scores on that question — some phrasings get
+no business named by anyone, and citing one is a false comparison.
+
+**DEFEND still has no letter.** No DEFEND outreach has run. Write one from the
+framing principle in step 4 when that day comes.
+
+**Writing to a gatekeeper:** open to reception, ask them to pass it on, say
+what it is in one line, then cut the second greeting.
+
 > You're probably getting a lot of AI emails at the moment. This one has an
-> actual finding about {business} in it rather than a pitch — could you pass it
-> to {named person}?
+> actual finding about {Business} in it rather than a pitch — could you pass
+> it to {named person}?
 
-### The ChatGPT-gap letter
+### Email 2 — the delivery
 
-Same shape, with the middle replaced:
+Five business days after the actual Email 1 send, as a reply on the same
+thread. It delivers what block 6 offered. **It contains no finding at all**,
+which is what keeps "never invent a second finding" out of play rather than
+merely satisfied.
 
-> Here is what ChatGPT gave back to three of them:
+> Hi {name},
 >
-> "{q1}" — {A}, four times out of five.
+> I said I'd send over what I'd check for {Business}. Here it is, whether or
+> not you want the audit.
 >
-> "{q2}" — {B}, {C}, {D} and {E}. All of them five times out of five.
+> Four things, in this order:
 >
-> "{q3}" — {B}, {F} and {E}, again all five.
+> - Whether the assistants can reach your site at all.
+> - Whether what's on it is readable by a machine, not just by a person.
+> - Whether your facts (name, address, phone, hours, services) match
+>   everywhere they appear.
+> - Whether anything on the site actually answers the question a customer
+>   types.
 >
-> {Business} wasn't named once, on any of the six. It does come up on Gemini and
-> on Perplexity, so this is specific to ChatGPT.
+> Then ten questions about {Business} specifically, across ChatGPT, Gemini and
+> Perplexity, to find which of the four is costing you.
+>
+> That last part is the £250: the answers for your business, and what to
+> change. The list above is yours regardless. If it is more useful as
+> something you work through yourself, genuinely, help yourself.
+>
+> If you'd rather not hear from me again, tell me and I'll delete your
+> details.
+>
+> Kieran
 
-...and the offer paragraph becomes "What I sell is the reason behind it."
+The four lines are Groups 1 to 4 of `playbook/audit-site-checklist.md` in
+plain words. Keep them that way. The method is already published on the
+self-audit page; the answers for their business are the product.
 
-### The GROWTH letter
+### Email 3 — the close
 
-Drafted 2026-08-15, the first time GROWTH outreach actually ran
-(`/outreach`, against the Chester dentists campaign). Same shape, with the
-middle replaced — used when a business already has real, checkable
-visibility but sits materially behind the market leader, including on a
-specific question where the leader scores and this business doesn't:
+Seven business days after the actual Email 2 send, as a reply on the same
+thread. About 45 words. Then record `EMAIL_3_SENT` and the sequence is over.
 
-> {Business} came up in {n} of them, which is real and worth having.
-> {Leader}, the {business type} named most often in this research, came up
-> in {m}. And on one question specifically — "{q}" — {Business} wasn't
-> named once, in fifteen answers. {Leader} was, {k} times.
+> Hi {name},
+>
+> Last one from me.
+>
+> {The same finding, in one sentence.}
+>
+> If it becomes worth a look later, the research is on file and I'm easy to
+> find. Otherwise I'll leave you to it.
+>
+> Tell me if you'd rather I deleted your details.
+>
+> Kieran
 
-...and the offer paragraph becomes "A gap like this can come from a few
-different places and they aren't equally easy to close. What I sell is
-finding out which one applies to you."
-
-**Never claim the per-question absence is a gap unless the leader actually
-scores on that question** — some question phrasings get no business named
-by any assistant, and citing one of those as a competitive gap is a false
-comparison, not a finding.
-
-DEFEND still has no drafted letter — no DEFEND outreach has run yet. Write
-one from the framing principle above when that day comes, the same way
-this section was written from it.
-
----
+No new claim, no manufactured deadline, no "just circling back". The finding
+is the one Email 1 already used, shorter.
 
 ## What the email gives away, and what it doesn't
 

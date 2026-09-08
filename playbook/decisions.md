@@ -149,6 +149,27 @@ reasoning. If you need the argument, it is in `git log` or `archive/`.*
   2026-08-25 after checking Zoho's API docs.
 - **Cold calling is not started.** Separate rules, no work done.
 - **LinkedIn outreach is later, not now.**
+- **The cold emails are the short form: eight blocks, about 150 words.**
+  2026-09-06, replacing four letters of roughly 400 words that read as a
+  report rather than a note. The offer sentence restates that business's own
+  finding, which is what stops it reading as a template. Copy in
+  `playbook/outreach-process.md`.
+- **Email 1 asks for a reply, not a purchase.** It closes "would you like me
+  to send over what I'd check for {Business}?" 2026-09-06.
+- **Email 2 delivers what Email 1 offered, and carries no finding.** The four
+  things the Audit checks, from `playbook/audit-site-checklist.md`'s own
+  groups. This retires the problem of what to write when a second finding may
+  not be invented: there is no finding in it. 2026-09-06.
+- **Emails 2 and 3 are replies on the Email 1 thread.** They carry the opt-out
+  and the signature; the Article 14 source line is not repeated because it is
+  visible in the thread. 2026-09-06.
+- **Findings are quoted as "{n} of {N} relevant answers", never "of ninety".**
+  `relevant_appearances` over `relevant_opportunities`, both already on the
+  campaign JSON. Whole numbers only — a weighted fraction is never rounded
+  into a claim. 2026-09-06.
+- **The email signature is text only, no wordmark image.** Images are blocked
+  by default in Outlook desktop and many corporate gateways, which is exactly
+  the reception inbox this is written for. 2026-09-06.
 
 ## Name, brand and site
 

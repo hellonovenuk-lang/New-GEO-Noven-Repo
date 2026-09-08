@@ -124,10 +124,12 @@ whether that folder came from *this* session or a prior one.
 For a new campaign, this skill prepares **Email 1**: the evidenced finding
 and the £250 Audit offer. For an already-contacted prospect, read its CRM
 activity history before drafting: only the CRM's currently due step may be
-an active Zoho draft. Email 2 is useful additional context or a clarification
-drawn from the same recorded evidence, five business days after the actual
-Email 1 send. Email 3 is a brief final invitation, seven business days after
-the actual Email 2 send; record `EMAIL_3_SENT` and close the cold sequence.
+an active Zoho draft. Email 2 delivers what Email 1 offered — the four things
+the Audit checks — and carries no finding at all, five business days after
+the actual Email 1 send. Email 3 is a brief final invitation, seven business
+days after the actual Email 2 send; record `EMAIL_3_SENT` and close the cold
+sequence. Emails 2 and 3 are replies on the Email 1 thread. The copy for all
+three is in `playbook/outreach-process.md`, "The letters".
 
 Prepare later copy from existing evidence only. Never invent a further
 finding, expose multiple steps as active drafts, or recreate a missing draft:
@@ -249,14 +251,15 @@ picking the shape, not marketing copy.
   conversation and sell the Audit — not to explain AI visibility, Wardith's
   methodology, or the difference between GAP/GROWTH/DEFEND.
 
-**Letter shapes already drafted and approved live in
-`playbook/outreach-process.md`** — the absent letter and the ChatGPT-gap
-letter are GAP-shaped templates ready to adapt. A GROWTH letter is drafted
-there too as of this skill's first run (see the file for the current text);
-if a business's shape doesn't match any letter drafted there yet (most
-likely: a genuine DEFEND case), draft one from the framing principle above,
-follow the structural rules below, and flag it in the caveats (Stage 7) as
-a first-of-its-kind letter for the owner to read with extra care.
+**The approved copy lives in `playbook/outreach-process.md`, "The
+letters"** — Email 1's eight blocks, and three shapes for block 3 (absent,
+one-assistant, behind-the-leader). Follow the block structure exactly; it is
+about 150 words, and a materially longer draft means a block has grown a
+second idea. Only the absent shape carries the "I didn't ask about you by
+name" paragraph. If a business matches none of the three shapes (most
+likely: a genuine DEFEND case, which still has no letter), write block 3
+from the framing principle above and flag it in the caveats (Stage 7) as a
+first-of-its-kind letter for the owner to read with extra care.
 
 ## Stage 4 — Verify the contact route, bounded
 
@@ -316,12 +319,16 @@ One email per business in the working set (unless Stage 4 withheld it).
 - **The finding**, in the business's own real numbers and (where the
   question set supports it) a real quoted question from
   `run.questions` — never a paraphrase of the question actually asked.
-  **For "how many answers came back" framing, use `run.expected_responses`
-  and `run.successful_responses` directly** (both are plain structured
-  fields on every campaign) rather than re-deriving the figure from
-  `methodology_notes` free text — say "ninety questions, all ninety came
-  back" when they're equal, or the honest split ("ninety questions, N came
-  back with an answer") when they're not.
+  **Quote the finding as "{n} of {N} relevant answers", never "of ninety"**
+  (`playbook/outreach-process.md`, "Quoting the numbers"). N is
+  `relevant_opportunities` and n is `relevant_appearances`, both plain
+  structured fields on the campaign entry — never re-derived from
+  `methodology_notes` free text. `relevant_appearances` is
+  relevance-weighted and can be fractional: where it is not a whole number,
+  do not round it into a claim, sum `question_appearances` across the
+  questions counted relevant and quote that instead.
+  `run.expected_responses` and `run.successful_responses` describe the run,
+  not this business's eligible subset, so they do not go in the email.
 - **The offer**: the Audit only, £250, what it covers, "yours to act on
   with me or without me" — the existing letters' own phrasing is already
   approved copy, reuse its shape.
@@ -339,7 +346,9 @@ One email per business in the working set (unless Stage 4 withheld it).
   website." Do not name a source that isn't in this business's own
   `evidence_source_ids`.
 - **The opt-out line** and a note that the normal Wardith signature
-  (`assets/brand/email-signature.html`) is appended when this is actually
+  (`assets/brand/email-signature.txt`, text only for cold outreach — see
+  `playbook/outreach-process.md`'s "Sending") is appended when this is
+  actually
   sent — do not hand-copy the signature markup into the draft.
 - **Run it against `playbook/voice.md` before finishing** — the rule-of-
   three, staccato rhythm, em dashes and machine vocabulary this skill's own
