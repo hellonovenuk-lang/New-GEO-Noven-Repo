@@ -1,0 +1,46 @@
+---
+const panels = [
+  { id: 'visibility', title: 'Are you in the answer?', description: 'The questions your customers ask, tested repeatedly across the assistants. Your report records what comes back.', rows: [['Customer questions', 'Tested in fresh runs'], ['Your business', 'Appearances recorded'], ['Other businesses', 'Names in the answers']], outcome: 'Know where you appear, and where you are missing.' },
+  { id: 'accuracy', title: 'Is it the right story?', description: 'A recommendation is only useful if it describes your business correctly. We check the details against public sources.', rows: [['Your services', 'Description checked'], ['Your location', 'Coverage checked'], ['Your business facts', 'Sources cross-checked']], outcome: 'See the inaccuracies and conflicting details worth fixing.' },
+  { id: 'priorities', title: 'What should you do next?', description: 'Findings become a practical recommendation, tied to the evidence. You decide who carries out the work.', rows: [['Website access', 'Barriers investigated'], ['Business information', 'Corrections identified'], ['Customer questions', 'Content gaps examined']], outcome: 'A clear recommendation, including when no more work is needed.' },
+];
+---
+<div class="audit-explorer" data-explorer>
+  <div class="explorer-tabs" aria-label="Explore your audit" data-tablist>
+    {panels.map((panel, i) => <button type="button" id={`tab-${panel.id}`} data-tab={panel.id} class:list={['explorer-tab', i === 0 && 'active']}>0{i+1}<span>{['Visibility', 'Accuracy', 'Next steps'][i]}</span></button>)}
+  </div>
+  {panels.map((panel, i) => <section class:list={['explorer-panel', i === 0 && 'active']} id={`panel-${panel.id}`} data-panel={panel.id} aria-labelledby={`tab-${panel.id}`}>
+    <div class="explorer-heading"><span class="eyebrow">Inside your report</span><span class="fine">0{i+1} / 03</span></div>
+    <h3>{panel.title}</h3><p>{panel.description}</p>
+    <div class="report-table" role="table" aria-label="Audit coverage outline">
+      {panel.rows.map(([label, value]) => <div role="row"><span role="cell">{label}</span><span role="cell">{value}</span></div>)}
+    </div>
+    <div class="explorer-outcome"><span aria-hidden="true">↳</span><p>{panel.outcome}</p></div>
+    <p class="explorer-note">Report outline. No example scores or client results.</p>
+  </section>)}
+</div>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-explorer]').forEach((explorer) => {
+    const tabs = Array.from(explorer.querySelectorAll<HTMLButtonElement>('[data-tab]'));
+    const panels = Array.from(explorer.querySelectorAll<HTMLElement>('[data-panel]'));
+    explorer.querySelector('[data-tablist]')?.setAttribute('role', 'tablist');
+    const activate = (index: number, focus = false) => {
+      tabs.forEach((tab, i) => {tab.setAttribute('role', 'tab');tab.setAttribute('aria-controls', `panel-${tab.dataset.tab}`);tab.setAttribute('aria-selected', String(i === index));tab.tabIndex = i === index ? 0 : -1;tab.classList.toggle('active', i === index);});
+      panels.forEach((panel, i) => {panel.setAttribute('role', 'tabpanel');panel.hidden = i !== index;panel.tabIndex = 0;});
+      if (focus) tabs[index].focus();
+    };
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => activate(index));
+      tab.addEventListener('keydown', (event) => {
+        let next = index;
+        if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+        else if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = tabs.length - 1;
+        else return;
+        event.preventDefault(); activate(next, true);
+      });
+    });
+    activate(0);
+  });
+</script>
